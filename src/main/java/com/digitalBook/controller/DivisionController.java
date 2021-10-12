@@ -7,7 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping(value = "/data")
-//기초정보 > 조사방법
+//기초정보 > 조사방법 
 public class DivisionController {
 	
 	//조사방법 목록
