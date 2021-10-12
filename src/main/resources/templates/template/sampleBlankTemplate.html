@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en" dir="ltr"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+	
+<!-- 해당 페이지 고유 css 등이 필요하면 head 태그 직접 선언 후 넣으면 자동으로 head에 추가됨 -->
+
+<!-- 해당 페이지 고유  content 작성 공간 -->
+<th:block layout:fragment="content">
+    
+    <div class="container-fluid">
+    	<div class="row">
+	        <div class="col-lg-12">
+	        	
+	        </div>
+        </div>
+    </div>
+
+</th:block>
+
+<!-- 해당 페이지 고유  script 작성 공간 -->
+<th:block layout:fragment="scripts">
+	<script type="text/javascript">
+		
+	</script>
+</th:block>
+
+</html>

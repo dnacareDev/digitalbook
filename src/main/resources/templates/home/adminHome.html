@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en" dir="ltr"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<th:block layout:fragment="content">
+
+	<div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+				<div class="card">
+                      <p class="color-primary fa-lg mb-3 mt-5 ml-3">연구자별 진행상황</p>
+                      <div class="card-body">
+                          <div>
+                              <canvas id="chartExample"></canvas>
+                          </div>
+                      </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+    
+	<div class="atbd-page-content">
+		<div class="container-fluid mt-25">
+			<div class="row calendar-grid justify-content-center">
+				<div class="col-lg-5">
+					<div class="card">
+			            <p class="color-primary fa-lg mb-0 mt-3 ml-3">진행 이력</p>
+			            <div class="card-body overflow-auto" style="height: 323px;">
+			            	<div class="card-content">
+	                        	<div class="atbd-collapse atbd-collapse-custom">
+	                        		<div class="atbd-collapse-item">
+	                                    <p class="item-link" data-toggle="collapse" data-target="#coll-1" style="text-decoration: underline;">
+	                                        Card content
+	                                    </p>
+	                                    <div id="coll-1" class="collapse atbd-collapse-item__body" style="background-color: #fafef5;">
+	                                        <div class="collapse-body-text">
+	                                            <p>
+	                                                A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a
+	                                                welcome guest in many households across the world.
+	                                            </p>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                                <div class="atbd-collapse-item">
+	                                    <p class="item-link" data-toggle="collapse" data-target="#coll-2" style="text-decoration: underline;">
+	                                        Card content
+	                                    </p>
+	                                    <div id="coll-2" class="collapse atbd-collapse-item__body" style="background-color: #fafef5;">
+	                                        <div class="collapse-body-text">
+	                                            <p>
+	                                                A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a
+	                                                welcome guest in many households across the world.
+	                                            </p>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                                <div class="atbd-collapse-item">
+	                                    <p class="item-link" data-toggle="collapse" data-target="#coll-3" style="text-decoration: underline;">
+	                                        Card content
+	                                    </p>
+	                                    <div id="coll-3" class="collapse atbd-collapse-item__body" style="background-color: #fafef5;">
+	                                        <div class="collapse-body-text">
+	                                            <p>
+	                                                A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a
+	                                                welcome guest in many households across the world.
+	                                            </p>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                        	</div>
+	                        </div>
+			            </div>
+		           	</div>
+		            <div class="card mt-25 mb-md-50 mb-25">
+			            <p class="color-primary fa-lg mb-0 mt-3 ml-3">전달 사항</p>
+			            <div class="card-body overflow-auto" style="height: 323px;">
+			            	<div class="card-content" style="text-decoration: underline;">
+	                               <p>Card content</p>
+	                               <p>Card content</p>
+	                               <p>Card content</p>
+	                               <p>Card content</p>
+	                               <p>Card content</p>
+	                               <p>Card content</p>
+	                               <p>Card content</p>
+	                               <p>Card content</p>
+	                               <p>Card content</p>
+	                               <p>Card content</p>
+	                               <p>Card content</p>
+	                               <p>Card content</p>
+	                           </div>
+			            </div>
+		            </div>
+				</div>
+				<div class="col-lg-7">
+	                <div class="card card-default card-md mb-4">
+	                    <div class="card-body">
+	                        <div id='fulled-calendar'></div>
+	                    </div>
+	                </div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</th:block>
+
+<!-- 해당 페이지 고유  script 작성 공간 -->
+<th:block layout:fragment="scripts">
+<script type="text/javascript">
+
+	//chart example
+	chartExample("chartExample");
+	
+	function chartExample(selector, label = "Bar chart stacked") {
+	  	var ctx = document.getElementById(selector);
+		if (ctx) {
+		  ctx.getContext("2d");
+		  ctx.height = 100;
+		  var chart = new Chart(ctx, {
+		    type: "bar",
+		    data: {
+		      labels: [
+		        "Jan",
+		        "Feb",
+		        "Mar",
+		        "Apr",
+		        "May",
+		        "Jun",
+		        "Jul",
+		        "Aug",
+		        "Sep",
+		        "Oct",
+		        "Nov",
+		        "Dec",
+		      ],
+		      datasets: [{
+		          data: [20, 60, 50, 45, 50, 60, 70, 40, 45, 35, 25, 30],
+		          backgroundColor: "#5F63F280",
+		          hoverBackgroundColor: "#5F63F2",
+		          label: "Profit",
+		        },
+		        {
+		          data: [10, 40, 30, 40, 60, 55, 45, 35, 30, 20, 15, 20],
+		          backgroundColor: "#FF4D4F80",
+		          hoverBackgroundColor: "#FF4D4F",
+		          label: "Lose",
+		        },
+		      ],
+		    },
+		    options: {
+		      maintainAspectRatio: true,
+		      responsive: true,
+		      legend: {
+		        display: true,
+		        position: "top",
+		        align : "end",
+		        labels: {
+		          boxWidth: 40,
+		          padding : 30,
+		          display: true,
+		          usePointStyle: true,
+		        },
+		      },
+		      layout: {
+		        padding: {
+		          left: "0",
+		          right: 0,
+		          top: 0,
+		          bottom: "0",
+		        },
+		      },
+		      scales: {
+		        yAxes: [{
+		          stacked: true,
+		          gridLines: {
+		            color: "#e5e9f2",
+		          },
+		          ticks: {
+		            beginAtZero: true,
+		            fontSize: 10,
+		            fontColor: "#182b49",
+		            max: 80,
+		            stepSize: 20,
+		          },
+		        }, ],
+		        xAxes: [{
+		          stacked: true,
+		          gridLines: {
+		            display: false,
+		          },
+		          barPercentage: 0.6,
+		          ticks: {
+		            beginAtZero: true,
+		            fontSize: 20,
+		            fontColor: "#182b49",
+		          },
+		        }, ],
+		      },
+		    },
+		  });
+		}
+	}
+	
+	document.addEventListener("DOMContentLoaded", function () {
+	    var fullCalendar = document.getElementById("fulled-calendar");
+	    if (fullCalendar) {
+	      var calendar = new FullCalendar.Calendar(fullCalendar, {
+	        headerToolbar: {
+	          left: "today,prev,title,next",
+	          right: "timeGridDay,timeGridWeek,dayGridMonth",
+	        },
+	        editable: false,//캘린더 이벤트 수정 가능 여부
+	        /* eventSources: [data1, data2, data3], */ //이벤트 내용 소스 넣는곳
+	        contentHeight: 550,//달력 높이
+	        expandRows: true,//화면에 맞게 높이 재설정
+	        initialView: "dayGridMonth",//초기로딩시 보여줄 화면 월로 맞춤
+	        navLinks : true,//날짜 선택하면 day 화면으로 이동
+	        dayMaxEvents: true,//이벤트가 오버되면 높이 제한(+ 몇 개식으로 표현)
+	      });
+	      calendar.render();
+	    }
+	});
+	
+</script>
+</th:block>
+
+</html>

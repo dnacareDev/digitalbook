@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="en" dir="ltr"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<head>
+
+<style>
+  #ModalTable1 table {
+    width: 99%;
+    height: 50%;
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+    border-collapse: collapse;
+  }
+  #ModalTable1 th, td {
+    padding: 10px;
+    text-align: center;
+    font-weight: initial;
+    font-size: 12px;
+  }
+  #ModalTable1 th {
+    background-color: white;
+  }
+  #ModalTable1 td {
+    background-color: #fafef5;
+  }
+  #ModalTable2 table {
+    width: 100%;
+    height: 50%;
+    border: 1px solid #dcdcdc;
+  }
+  #ModalTable2 th, td {
+  	border: 1px solid #dcdcdc;
+    padding: 10px;
+    text-align: center;
+    font-weight: initial;
+    font-size: 12px;
+  }
+  #ModalTable2 th {
+    background-color: #FDF5E6;
+  }
+</style>
+
+</head>
+
+<th:block layout:fragment="content">
+    
+	<div class="atbd-page-content">
+		<div class="container-fluid mt-25">
+			<div class="row calendar-grid justify-content-center">
+				<div class="col-lg-5">
+					<div class="card">
+						<div class="atbd-nav-controller fa-lg mb-0 mt-3 ml-3">
+                            <div class="btn-group atbd-button-group btn-group-normal nav" role="tablist">
+                                <a href="#content1" class="btn btn-sm btn-outline-light fa-xs nav-link active" id="tab1" data-toggle="tab" role="tab" aria-selected="true">금일 일정</a>
+                                <a href="#content2" class="btn btn-sm btn-outline-light fa-xs nav-link" id="tab2" data-toggle="tab" role="tab">지연 일정</a>
+                            </div>
+                        </div>
+			            <div class="card-body overflow-auto" style="height: 295px;">
+			            	<div class="tab-content">
+	                        	<div class="tab-pane show active" id="content1" role="tabpanel">
+	                        		<div class="atbd-collapse atbd-collapse-custom">
+		                        		<div class="atbd-collapse-item">
+		                                    <p class="item-link" data-toggle="collapse" data-target="#coll-1" style="text-decoration: underline;">
+		                                        1. 쌀 수량 조사 (2021.08.05 - 2021.08.25)
+		                                    </p>
+		                                    <div id="coll-1" class="collapse atbd-collapse-item__body" style="background-color: #fafef5;">
+		                                        <div class="collapse-body-text" style="position: static;">
+		                                            <div class="row">
+		                                            	<p>과제번호 :</p><p>PJ13487022020</p>
+		                                            </div>
+		                                            <div class="row">
+		                                            	<p>과제명 :</p><p>옥수수, 메밀의 기능 성분 최대 생선에 적합한 기술 개발</p>
+		                                            </div>
+		                                            <div class="row">
+		                                            	<p>과제 책임자 :</p><p>김길중</p>
+		                                            </div>
+		                                            <div class="row">
+		                                            	<p>과제 진행 완료 단계 :</p><p>3/9</p>
+		                                            </div>
+		                                            <div class="row">
+		                                            	<p>진행 이력</p>
+		                                            </div>
+		                                        </div>
+		                                        <div class="d-flex justify-content-end">
+								                	<button class="btn btn-xs btn-light btn-rounded modalBtn">조사시작</button>
+								                </div>
+		                                    </div>
+		                                </div>
+		                                <div class="atbd-collapse-item">
+		                                    <p class="item-link" data-toggle="collapse" data-target="#coll-2" style="text-decoration: underline;">
+		                                        Card content
+		                                    </p>
+		                                    <div id="coll-2" class="collapse atbd-collapse-item__body" style="background-color: #fafef5;">
+		                                        <div class="collapse-body-text">
+		                                            <p>
+		                                                A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a
+		                                                welcome guest in many households across the world.
+		                                            </p>
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                                <div class="atbd-collapse-item">
+		                                    <p class="item-link" data-toggle="collapse" data-target="#coll-3" style="text-decoration: underline;">
+		                                        Card content
+		                                    </p>
+		                                    <div id="coll-3" class="collapse atbd-collapse-item__body" style="background-color: #fafef5;">
+		                                        <div class="collapse-body-text">
+		                                            <p>
+		                                                A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a
+		                                                welcome guest in many households across the world.
+		                                            </p>
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                        	</div>
+	                        	</div>
+	                        	<div class="tab-pane" id="content2" role="tabpanel" style="text-decoration: underline;">
+	                        		<p>Card content2</p>
+	                                <p>Card content2</p>
+	                                <p>Card content2</p>
+	                        	</div>
+	                        </div>
+			            </div>
+		           	</div>
+		            <div class="card mt-25 mb-md-50 mb-25">
+			            <div class="atbd-nav-controller fa-lg mb-0 mt-3 ml-3">
+                            <div class="btn-group atbd-button-group btn-group-normal nav" role="tablist">
+                                <a href="#content3" class="btn btn-sm btn-outline-light fa-xs nav-link active" id="tab3" data-toggle="tab" role="tab" aria-selected="true">진행 이력</a>
+                                <a href="#content4" class="btn btn-sm btn-outline-light fa-xs nav-link" id="tab4" data-toggle="tab" role="tab">전달 사항</a>
+                            </div>
+                        </div>
+			            <div class="card-body overflow-auto" style="height: 295px;">
+			            	<div class="tab-content">
+	                        	<div class="tab-pane show active" id="content3" role="tabpanel">
+	                        		<div class="atbd-collapse atbd-collapse-custom">
+		                        		<div class="atbd-collapse-item">
+		                                    <p class="item-link" data-toggle="collapse" data-target="#coll-b-1" style="text-decoration: underline;">
+		                                        Card content
+		                                    </p>
+		                                    <div id="coll-b-1" class="collapse atbd-collapse-item__body" style="background-color: #fafef5;">
+		                                        <div class="collapse-body-text">
+		                                            <p>
+		                                                A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a
+		                                                welcome guest in many households across the world.
+		                                            </p>
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                                <div class="atbd-collapse-item">
+		                                    <p class="item-link" data-toggle="collapse" data-target="#coll-b-2" style="text-decoration: underline;">
+		                                        Card content
+		                                    </p>
+		                                    <div id="coll-b-2" class="collapse atbd-collapse-item__body" style="background-color: #fafef5;">
+		                                        <div class="collapse-body-text">
+		                                            <p>
+		                                                A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a
+		                                                welcome guest in many households across the world.
+		                                            </p>
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                                <div class="atbd-collapse-item">
+		                                    <p class="item-link" data-toggle="collapse" data-target="#coll-b-3" style="text-decoration: underline;">
+		                                        Card content
+		                                    </p>
+		                                    <div id="coll-b-3" class="collapse atbd-collapse-item__body" style="background-color: #fafef5;">
+		                                        <div class="collapse-body-text">
+		                                            <p>
+		                                                A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a
+		                                                welcome guest in many households across the world.
+		                                            </p>
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                        	</div>
+	                        	</div>
+	                        	<div class="tab-pane" id="content4" role="tabpanel" style="text-decoration: underline;">
+	                        		<p>Card content2</p>
+	                                <p>Card content2</p>
+	                                <p>Card content2</p>
+	                        	</div>
+	                        </div>
+			            </div>
+		            </div>
+				</div>
+				<div class="col-lg-7">
+	                <div class="card card-default card-md mb-4">
+	                    <div class="card-body">
+	                        <div id='fulled-calendar'></div>
+	                    </div>
+	                </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div class="modal-basic modal fade show" id="userModal" tabindex="-1" role="dialog" aria-hidden="true">
+	    <div class="modal-dialog modal-xl" role="document">
+	        <div class="modal-content modal-bg-white ">
+	            <div class="modal-body">
+	            	<div class="d-flex justify-content-end">
+                		<a data-dismiss="modal" style="cursor: pointer;"><span data-feather="x"></span></a>
+                	</div>
+                	<div class="atbd-nav-controller d-flex fa-lg mb-0">
+                        <div class="btn-group atbd-button-group btn-group-normal nav" role="tablist">
+                            <a href="#modal-content1" class="btn btn-sm btn-outline-light fa-xs nav-link active"
+                            	id="modal-tab1" data-toggle="tab" role="tab" aria-selected="true">구획정보</a>
+                            <a href="#modal-content2" class="btn btn-sm btn-outline-light fa-xs nav-link"
+                            	id="modal-tab2" data-toggle="tab" role="tab">토양/기상 정보</a>
+                        </div>
+                    </div>
+                    <div class="tab-content">
+                    	<!-- 구획정보 content -->
+                    	<div class="tab-pane show active" id="modal-content1" role="tabpanel">
+                    		<div class="row">
+                    			<div class="col-lg-12">
+                    				<div class="breadcrumb-main ml-2">
+                    					<h6 class="text-capitalize breadcrumb-title">구획정보</h6>
+                    				</div>
+                    			</div>
+                    		</div>
+                    		<div class="row" id="ModalTable1">
+                    			<div class="col-lg-6">
+                    				<div class="bg-white">
+                    					<div class="table-responsive">
+                    						<div style="font-size: 12px; color: initial;">집구1</div>
+                            				<table class="table">
+                            					<thead>
+			                            			<tr>
+			                            				<th>구획번호</th>
+			                            				<th>구획ID</th>
+			                            				<th>처리종류</th>
+			                            				<th>반복</th>
+			                            			</tr>
+			                            		</thead>
+			                            		<tbody>
+			                            			<tr>
+			                            				<td><span>1</span></td>
+			                            				<td><span>A1-B1-1</span></td>
+			                            				<td><span>콩(방사),60x20</span></td>
+			                            				<td><span>1</span></td>
+			                            			</tr>
+			                            			<tr>
+			                            				<td><span>1</span></td>
+			                            				<td><span>A1-B1-2</span></td>
+			                            				<td><span>콩(방사),60x20</span></td>
+			                            				<td><span>1</span></td>
+			                            			</tr>
+			                            		</tbody>
+                            				</table>
+                            			</div>
+                            			<div class="table-responsive">
+                    						<div style="font-size: 12px; color: initial;">집구2</div>
+                            				<table class="table">
+                            					<thead>
+			                            			<tr>
+			                            				<th>구획번호</th>
+			                            				<th>구획ID</th>
+			                            				<th>처리종류</th>
+			                            				<th>반복</th>
+			                            			</tr>
+			                            		</thead>
+			                            		<tbody>
+			                            			<tr>
+			                            				<td><span>1</span></td>
+			                            				<td><span>A1-B1-1</span></td>
+			                            				<td><span>콩(방사),60x20</span></td>
+			                            				<td><span>1</span></td>
+			                            			</tr>
+			                            			<tr>
+			                            				<td><span>1</span></td>
+			                            				<td><span>A1-B1-2</span></td>
+			                            				<td><span>콩(방사),60x20</span></td>
+			                            				<td><span>1</span></td>
+			                            			</tr>
+			                            		</tbody>
+                            				</table>
+                            			</div>
+                            			<div class="table-responsive">
+                    						<div style="font-size: 12px; color: initial;">집구3</div>
+                            				<table class="table">
+                            					<thead>
+			                            			<tr>
+			                            				<th>구획번호</th>
+			                            				<th>구획ID</th>
+			                            				<th>처리종류</th>
+			                            				<th>반복</th>
+			                            			</tr>
+			                            		</thead>
+			                            		<tbody>
+			                            			<tr>
+			                            				<td><span>1</span></td>
+			                            				<td><span>A1-B1-1</span></td>
+			                            				<td><span>콩(방사),60x20</span></td>
+			                            				<td><span>1</span></td>
+			                            			</tr>
+			                            			<tr>
+			                            				<td><span>1</span></td>
+			                            				<td><span>A1-B1-2</span></td>
+			                            				<td><span>콩(방사),60x20</span></td>
+			                            				<td><span>1</span></td>
+			                            			</tr>
+			                            		</tbody>
+                            				</table>
+                            			</div>
+                    				</div>
+                    			</div>
+                    			<div class="col-lg-6">
+                    				<div style="border: 1px solid dark; background: grey; height: 300px;">
+                    					<p style="color: white;">구획 이미지 들어갈 자리</p>
+                    				</div>
+                    			</div>
+                    		</div>
+                    		<div class="row">
+                    			<div class="col-lg-12">
+	                    			<div class="d-flex justify-content-end">
+	                    				<select class="form-control b-light" style="width: 200px;">
+			                                <option></option>
+			                                <option>option1</option>
+			                                <option>option2</option>
+			                            </select>
+	                    			</div>
+	                    			<div class="d-flex justify-content-end mt-2">
+	                    			<a href="#"><span>구획정보확인</span></a>
+	                    			</div>
+	                    		</div>
+	                    	</div>
+	                    	<div class="row">
+	                    		<div class="col-lg-12">
+	                    			<div class="bg-white">
+                    					<div class="table-responsive" id="ModalTable2">
+                    						<table class="table">
+                    							<thead>
+			                            			<tr>
+			                            				<th>개체</th>
+			                            				<th>초장</th>
+			                            				<th>협수</th>
+			                            				<th>분지수</th>
+			                            				<th>역병</th>
+			                            			</tr>
+			                            		</thead>
+			                            		<tbody>
+			                            			<tr>
+			                            				<td><span>1</span></td>
+			                            				<td>
+			                            					<span class="text-center">58</span>
+			                            					<a href="#" class="" style="float: right;">
+                                                            <span data-feather="camera"></span></a>
+			                            				</td>
+			                            				<td>
+			                            					<span>-</span>
+			                            					<a href="#" class="" style="float: right;">
+                                                            <span data-feather="camera"></span></a>
+			                            				</td>
+			                            				<td><span></span></td>
+			                            				<td><span></span></td>
+			                            			</tr>
+			                            			<tr>
+			                            				<td><span>1</span></td>
+			                            				<td>
+			                            					<span class="text-center">58</span>
+			                            					<a href="#" class="" style="float: right;">
+                                                            <span data-feather="camera"></span></a>
+			                            				</td>
+			                            				<td>
+			                            					<span>-</span>
+			                            					<a href="#" class="" style="float: right;">
+                                                            <span data-feather="camera"></span></a>
+			                            				</td>
+			                            				<td><span></span></td>
+			                            				<td><span></span></td>
+			                            			</tr>
+			                            		</tbody>
+                    						</table>
+                    					</div>
+                    				</div>
+	                    		</div>
+	                    	</div>
+                    	</div>
+                    	<!-- 토양/기상 정보 content -->
+                    	<div class="tab-pane" id="modal-content2" role="tabpanel">
+                    	
+                    	</div>
+                    </div>
+	            </div>
+	            <div class="button-group d-flex justify-content-end mb-2 mr-4">
+                   <button class="btn btn-primary btn-default btn-squared">저장</button>
+           		</div>
+	        </div>
+	    </div>
+	</div>
+     <!-- ends: .modal-Basic -->
+
+</th:block>
+
+<!-- 해당 페이지 고유  script 작성 공간 -->
+<th:block layout:fragment="scripts">
+<script type="text/javascript">
+	
+	//modal show
+	$(".modalBtn").on("click", function(){
+		$("#userModal").modal("show");
+	})
+	
+	//캘린더
+	document.addEventListener("DOMContentLoaded", function () {
+	    var fullCalendar = document.getElementById("fulled-calendar");
+	    if (fullCalendar) {
+	      var calendar = new FullCalendar.Calendar(fullCalendar, {
+	        headerToolbar: {
+	          left: "today,prev,title,next",
+	          right: "timeGridDay,timeGridWeek,dayGridMonth",
+	        },
+	        editable: false,//캘린더 이벤트 수정 가능 여부
+	        /* eventSources: [data1, data2, data3], */ //이벤트 내용 소스 넣는곳
+	        contentHeight: 550,//달력 높이
+	        expandRows: true,//화면에 맞게 높이 재설정
+	        initialView: "dayGridMonth",//초기로딩시 보여줄 화면 월로 맞춤
+	        navLinks : true,//날짜 선택하면 day 화면으로 이동
+	        dayMaxEvents: true,//이벤트가 오버되면 높이 제한(+ 몇 개식으로 표현)
+	      });
+	      calendar.render();
+	    }
+	});
+	
+</script>
+</th:block>
+
+</html>
