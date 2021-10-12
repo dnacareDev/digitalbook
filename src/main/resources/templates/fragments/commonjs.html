@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-
-<th:block th:fragment="commonjsFragment">
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
 	
 	<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDduF2tLXicDEPDMAtC6-NLOekX0A5vlnY"></script>
     <!-- inject:js-->
@@ -54,7 +51,16 @@
     <script th:src="@{/assets/theme_assets/js/main.js}"></script>
     <!-- endinject-->
     
-    <th:block layout:fragment="scripts"></th:block>
-	
-</th:block>
+<script type="text/javascript">
+
+	//해당 페이지 탭 active css 주기
+	var pathname = window.location.pathname;
+	var pathArray = pathname.split("/");
+	$("#"+pathArray[1]).addClass("active");
+	if(pathArray[2] != null){
+		$("."+pathArray[2]).addClass("active");
+	}
+		
+</script>
+    
 </html>

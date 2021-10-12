@@ -1,29 +1,47 @@
 <!doctype html>
 <html lang="en" dir="ltr"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/layout}">
+	xmlns:th="http://www.thymeleaf.org">
 	
-<!-- 해당 페이지 고유 css 등이 필요하면 head 태그 직접 선언 후 넣으면 자동으로 head에 추가됨 -->
+<head>
 
-<!-- 해당 페이지 고유  content 작성 공간 -->
-<th:block layout:fragment="content">
+<!-- 공통 헤더 -->
+<th:block th:include="@{/fragments/header.html}"></th:block>
+
+</head>
+
+<body class="layout-light top-menu overlayScroll">
+	<div class="mobile-search"></div>
+	
+	<div class="mobile-author-actions"></div>
+	
+	<!-- 공통 topbar -->
+	<th:block th:include="@{/fragments/topbar.html}"></th:block>
+	
+	<main class="main-content" style="background-color: #fafef5;">
+	
+		<div class="contents" style="background-color: #fafef5;">
     
-    <div class="container-fluid">
-    	<div class="row">
-	        <div class="col-lg-12">
-	        	
-	        </div>
-        </div>
-    </div>
-
-</th:block>
-
-<!-- 해당 페이지 고유  script 작성 공간 -->
-<th:block layout:fragment="scripts">
-	<script type="text/javascript">
+		    <div class="container-fluid">
+		    	<div class="row">
+			        <div class="col-lg-12">
+			        	
+			        </div>
+		        </div>
+		    </div>
+    
+    	</div>
+    
+    </main>
+    
+    <!-- 공통 하단 -->
+    <th:block th:include="@{/fragments/footer.html}"></th:block>
+    <!-- 공통 js -->
+    <th:block th:include="@{/fragments/commonjs.html}"></th:block>
+    
+<script type="text/javascript">
 		
-	</script>
-</th:block>
+</script>
+    
+</body>
 
 </html>

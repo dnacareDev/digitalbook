@@ -1,114 +1,133 @@
 <!doctype html>
 <html lang="en" dir="ltr"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/layout}">
+	xmlns:th="http://www.thymeleaf.org">
+	
+<head>
 
-<th:block layout:fragment="content">
+<!-- 공통 헤더 -->
+<th:block th:include="@{/fragments/header.html}"></th:block>
 
-	<div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12">
-				<div class="card">
-                      <p class="color-primary fa-lg mb-3 mt-5 ml-3">연구자별 진행상황</p>
-                      <div class="card-body">
-                          <div>
-                              <canvas id="chartExample"></canvas>
-                          </div>
-                      </div>
-                  </div>
-            </div>
-        </div>
-    </div>
-    
-	<div class="atbd-page-content">
-		<div class="container-fluid mt-25">
-			<div class="row calendar-grid justify-content-center">
-				<div class="col-lg-5">
-					<div class="card">
-			            <p class="color-primary fa-lg mb-0 mt-3 ml-3">진행 이력</p>
-			            <div class="card-body overflow-auto" style="height: 323px;">
-			            	<div class="card-content">
-	                        	<div class="atbd-collapse atbd-collapse-custom">
-	                        		<div class="atbd-collapse-item">
-	                                    <p class="item-link" data-toggle="collapse" data-target="#coll-1" style="text-decoration: underline;">
-	                                        Card content
-	                                    </p>
-	                                    <div id="coll-1" class="collapse atbd-collapse-item__body" style="background-color: #fafef5;">
-	                                        <div class="collapse-body-text">
-	                                            <p>
-	                                                A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a
-	                                                welcome guest in many households across the world.
-	                                            </p>
-	                                        </div>
-	                                    </div>
-	                                </div>
-	                                <div class="atbd-collapse-item">
-	                                    <p class="item-link" data-toggle="collapse" data-target="#coll-2" style="text-decoration: underline;">
-	                                        Card content
-	                                    </p>
-	                                    <div id="coll-2" class="collapse atbd-collapse-item__body" style="background-color: #fafef5;">
-	                                        <div class="collapse-body-text">
-	                                            <p>
-	                                                A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a
-	                                                welcome guest in many households across the world.
-	                                            </p>
-	                                        </div>
-	                                    </div>
-	                                </div>
-	                                <div class="atbd-collapse-item">
-	                                    <p class="item-link" data-toggle="collapse" data-target="#coll-3" style="text-decoration: underline;">
-	                                        Card content
-	                                    </p>
-	                                    <div id="coll-3" class="collapse atbd-collapse-item__body" style="background-color: #fafef5;">
-	                                        <div class="collapse-body-text">
-	                                            <p>
-	                                                A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a
-	                                                welcome guest in many households across the world.
-	                                            </p>
-	                                        </div>
-	                                    </div>
-	                                </div>
-	                        	</div>
-	                        </div>
-			            </div>
-		           	</div>
-		            <div class="card mt-25 mb-md-50 mb-25">
-			            <p class="color-primary fa-lg mb-0 mt-3 ml-3">전달 사항</p>
-			            <div class="card-body overflow-auto" style="height: 323px;">
-			            	<div class="card-content" style="text-decoration: underline;">
-	                               <p>Card content</p>
-	                               <p>Card content</p>
-	                               <p>Card content</p>
-	                               <p>Card content</p>
-	                               <p>Card content</p>
-	                               <p>Card content</p>
-	                               <p>Card content</p>
-	                               <p>Card content</p>
-	                               <p>Card content</p>
-	                               <p>Card content</p>
-	                               <p>Card content</p>
-	                               <p>Card content</p>
-	                           </div>
-			            </div>
+</head>
+
+<body class="layout-light top-menu overlayScroll">
+	<div class="mobile-search"></div>
+	
+	<div class="mobile-author-actions"></div>
+	
+	<!-- 공통 topbar -->
+	<th:block th:include="@{/fragments/topbar.html}"></th:block>
+	
+	<main class="main-content" style="background-color: #fafef5;">
+	
+		<div class="contents" style="background-color: #fafef5;">
+
+			<div class="container-fluid">
+		        <div class="row">
+		            <div class="col-lg-12">
+						<div class="card">
+		                      <p class="color-primary fa-lg mb-3 mt-5 ml-3">연구자별 진행상황</p>
+		                      <div class="card-body">
+		                          <div>
+		                              <canvas id="chartExample"></canvas>
+		                          </div>
+		                      </div>
+		                  </div>
 		            </div>
-				</div>
-				<div class="col-lg-7">
-	                <div class="card card-default card-md mb-4">
-	                    <div class="card-body">
-	                        <div id='fulled-calendar'></div>
-	                    </div>
-	                </div>
+		        </div>
+		    </div>
+		    
+			<div class="atbd-page-content">
+				<div class="container-fluid mt-25">
+					<div class="row calendar-grid justify-content-center">
+						<div class="col-lg-5">
+							<div class="card">
+					            <p class="color-primary fa-lg mb-0 mt-3 ml-3">진행 이력</p>
+					            <div class="card-body overflow-auto" style="height: 323px;">
+					            	<div class="card-content">
+			                        	<div class="atbd-collapse atbd-collapse-custom">
+			                        		<div class="atbd-collapse-item">
+			                                    <p class="item-link" data-toggle="collapse" data-target="#coll-1" style="text-decoration: underline;">
+			                                        Card content
+			                                    </p>
+			                                    <div id="coll-1" class="collapse atbd-collapse-item__body" style="background-color: #fafef5;">
+			                                        <div class="collapse-body-text">
+			                                            <p>
+			                                                A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a
+			                                                welcome guest in many households across the world.
+			                                            </p>
+			                                        </div>
+			                                    </div>
+			                                </div>
+			                                <div class="atbd-collapse-item">
+			                                    <p class="item-link" data-toggle="collapse" data-target="#coll-2" style="text-decoration: underline;">
+			                                        Card content
+			                                    </p>
+			                                    <div id="coll-2" class="collapse atbd-collapse-item__body" style="background-color: #fafef5;">
+			                                        <div class="collapse-body-text">
+			                                            <p>
+			                                                A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a
+			                                                welcome guest in many households across the world.
+			                                            </p>
+			                                        </div>
+			                                    </div>
+			                                </div>
+			                                <div class="atbd-collapse-item">
+			                                    <p class="item-link" data-toggle="collapse" data-target="#coll-3" style="text-decoration: underline;">
+			                                        Card content
+			                                    </p>
+			                                    <div id="coll-3" class="collapse atbd-collapse-item__body" style="background-color: #fafef5;">
+			                                        <div class="collapse-body-text">
+			                                            <p>
+			                                                A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a
+			                                                welcome guest in many households across the world.
+			                                            </p>
+			                                        </div>
+			                                    </div>
+			                                </div>
+			                        	</div>
+			                        </div>
+					            </div>
+				           	</div>
+				            <div class="card mt-25 mb-md-50 mb-25">
+					            <p class="color-primary fa-lg mb-0 mt-3 ml-3">전달 사항</p>
+					            <div class="card-body overflow-auto" style="height: 323px;">
+					            	<div class="card-content" style="text-decoration: underline;">
+			                               <p>Card content</p>
+			                               <p>Card content</p>
+			                               <p>Card content</p>
+			                               <p>Card content</p>
+			                               <p>Card content</p>
+			                               <p>Card content</p>
+			                               <p>Card content</p>
+			                               <p>Card content</p>
+			                               <p>Card content</p>
+			                               <p>Card content</p>
+			                               <p>Card content</p>
+			                               <p>Card content</p>
+			                           </div>
+					            </div>
+				            </div>
+						</div>
+						<div class="col-lg-7">
+			                <div class="card card-default card-md mb-4">
+			                    <div class="card-body">
+			                        <div id='fulled-calendar'></div>
+			                    </div>
+			                </div>
+						</div>
+					</div>
 				</div>
 			</div>
+	
 		</div>
-	</div>
+	
+	</main>
+	
+	<!-- 공통 하단 -->
+    <th:block th:include="@{/fragments/footer.html}"></th:block>
+    <!-- 공통 js -->
+    <th:block th:include="@{/fragments/commonjs.html}"></th:block>
 
-
-</th:block>
-
-<!-- 해당 페이지 고유  script 작성 공간 -->
-<th:block layout:fragment="scripts">
 <script type="text/javascript">
 
 	//chart example
@@ -225,6 +244,7 @@
 	});
 	
 </script>
-</th:block>
+
+</body>
 
 </html>
