@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en" dir="ltr"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<!-- 공통 헤더 -->
+<th:block th:include="@{/fragments/header.html}"></th:block>
+
+</head>
+
+<body class="layout-light top-menu overlayScroll">
+	<div class="mobile-search"></div>
+	
+	<div class="mobile-author-actions"></div>
+	
+	<!-- 공통 topbar -->
+	<th:block th:include="@{/fragments/topbar.html}"></th:block>
+	
+	<main class="main-content" style="background-color: #fafef5;">
+	
+		<div class="contents" style="background-color: #fafef5;">
+    
+		    <div class="container-fluid">
+		    	<div class="row">
+			        <div class="col-lg-12">
+			        	<div class="breadcrumb-main" style="float: left;">
+			        		<h4 class="text-capitalize breadcrumb-title">시약•농약•비료</h4>
+			        		<span class="ml-20 mt-1">기초정보-시약•농약•비료</span>
+			        	</div>
+			        	<div class="d-flex justify-content-end mt-20">
+		               		<button class="btn btn-lg btn-primary" id="excelBtn"><span data-feather="upload"></span>엑셀 등록</button>
+		                </div>
+			        </div>
+		        </div>
+		    	<div class="row">
+			        <div class="col-lg-12">
+			        	<form action="#">
+				        	<div class="card">
+				        		<div class="card-body">
+			        				<div class="row">
+			        					<div class="col-sm-2 d-flex aling-items-center">
+			                            	<label for="reagent_type" class="col-form-label color-dark align-center">종류<span style="color: red;">*</span></label>
+		                                </div>
+		                                <div class="col-sm-5">
+		                                   <select class="form-control b-light" id="reagent_type">
+			                                <option>종류 선택</option>
+			                                <option>시약</option>
+			                                <option>농약</option>
+			                                <option>비료</option>
+			                               </select>
+		                                </div>
+			                         </div>
+			                         <div class="row mt-3">
+			        					<div class="col-sm-2 d-flex aling-items-center">
+			                            	<label for="reagent_name" class="color-dark align-center">품명<span style="color: red;">*</span></label>
+			                            </div>
+			                            <div class="col-sm-5">
+			                                <input type="text" class="form-control b-light" id="reagent_name">
+			                            </div>
+			                    	</div>
+			                    	<div class="row mt-3">
+			        					<div class="col-sm-2 d-flex aling-items-center">
+			                            	<label for="reagent_standard" class="color-dark align-center">규격</label>
+			                            </div>
+			                            <div class="col-sm-5">
+			                                <input type="text" class="form-control b-light" id="reagent_standard">
+			                            </div>
+			                    	</div>
+			                    	<div class="row mt-3">
+			        					<div class="col-sm-2 d-flex aling-items-center">
+			                            	<label for="reagent_formula" class="color-dark align-center">화학식</label>
+			                            </div>
+			                            <div class="col-sm-5">
+			                                <input type="text" class="form-control b-light" id="reagent_formula">
+			                            </div>
+			                    	</div>
+			                    	<div class="row mt-3">
+			        					<div class="col-sm-2 d-flex aling-items-center">
+			                            	<label for="reagent_nick_e" class="color-dark align-center">영문별칭</label>
+			                            </div>
+			                            <div class="col-sm-5">
+			                                <input type="text" class="form-control b-light" id="reagent_nick_e">
+			                            </div>
+			                    	</div>
+			                    	<div class="row mt-3">
+			        					<div class="col-sm-2 d-flex aling-items-center">
+			                            	<label for="reagent_nick_k" class="color-dark align-center">국문별칭</label>
+			                            </div>
+			                            <div class="col-sm-5">
+			                                <input type="text" class="form-control b-light" id="reagent_nick_k">
+			                            </div>
+			                    	</div>
+			                    	<div class="row mt-3">
+			        					<div class="col-sm-2 d-flex aling-items-center">
+			                            	<label for="reagent_manufacturer" class="color-dark align-center">제조사</label>
+			                            </div>
+			                            <div class="col-sm-5">
+			                                <input type="text" class="form-control b-light" id="reagent_manufacturer">
+			                            </div>
+			                    	</div>
+			                    	<div class="row mt-3">
+			        					<div class="col-sm-2 d-flex aling-items-center">
+			                            	<label for="reagent_quantity" class="color-dark align-center">수량</label>
+			                            </div>
+			                            <div class="col-sm-5">
+			                                <input type="text" class="form-control b-light" id="reagent_quantity">
+			                            </div>
+			                            <div class="col-sm-2">
+			                                <select class="form-control b-light" name="each">
+				                                <option>단위 선택</option>
+				                                <option>옵션 1</option>
+				                                <option>옵션 2</option>
+				                                <option>옵션 3</option>
+				                            </select>
+			                            </div>
+			                    	</div>
+			                    	<div class="row mt-3">
+			        					<div class="col-sm-2 d-flex aling-items-center">
+			                            	<label for="reagent_purpose" class="color-dark align-center">용도</label>
+			                            </div>
+			                            <div class="col-sm-5">
+			                                <input type="text" class="form-control b-light" id="reagent_purpose">
+			                            </div>
+			                    	</div>
+				        		</div>
+				        	</div>
+			        	</form>
+			        	<div class="d-flex justify-content-end mt-20">
+		                	<a href="/data/reagent" class="btn btn-light btn-default btn-primary mr-10">목록</a>
+		                	<a href="#" class="btn btn-default btn-primary">등록</a>
+		                </div>
+			        </div>
+		        </div>
+		    </div>
+		    
+		    <div class="modal-basic modal fade show" id="reagentModal" tabindex="-1" role="dialog" aria-hidden="true">
+			    <div class="modal-dialog modal-md" role="document">
+			        <div class="modal-content modal-bg-white">
+			        	<div class="modal-header">
+			        		<h6 class="modal-title">엑셀 업로드</h6>
+		                    	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		                        	<span data-feather="x"></span>
+		                        </button>
+			        	</div>
+			            <div class="modal-body">
+			            	<div class="col-12">
+				            	<form action="#">
+				            		<div class="row">
+				            			<div class="col-sm-3 d-flex aling-items-center mt-4">
+		                                    <label class="color-dark align-center">엑셀 파일</label>
+		                                </div>
+		                                <div class="col-sm-5 mb-2">
+		                                	<label for="uploadFile"></label>
+		                                    <input type="file" id="uploadFile">
+		                                </div>
+				            		</div>
+				            		<div class="button-group d-flex justify-content-end">
+					                   <button class="btn btn-primary btn-default btn-squared">업로드</button>
+					           		</div>
+				            	</form>
+			            	</div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+		    <!-- ends: .modal-Basic -->
+     
+     	</div>
+     
+     </main>
+     
+     <!-- 공통 하단 -->
+    <th:block th:include="@{/fragments/footer.html}"></th:block>
+    <!-- 공통 js -->
+    <th:block th:include="@{/fragments/commonjs.html}"></th:block>
+
+<script type="text/javascript">
+
+	//modal show
+	$("#excelBtn").on("click", function(){
+		$("#reagentModal").modal("show");
+	});
+	
+</script>
+
+</body>
+
+</html>
