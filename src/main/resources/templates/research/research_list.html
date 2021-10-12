@@ -1,11 +1,7 @@
 <!doctype html>
-<html lang="en" dir="ltr"
-	xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
 <head>
-
 <th:block th:include="@{/fragments/header.html}"></th:block>
-
 <style>
   table {
     border-top: 1px solid grey;
@@ -28,21 +24,14 @@
     background-color: #fafef5;
   }
 </style>
-
 </head>
-
 <body class="layout-light top-menu overlayScroll">
 	<div class="mobile-search"></div>
-	
 	<div class="mobile-author-actions"></div>
-	
 	<!-- 공통 topbar -->
 	<th:block th:include="@{/fragments/topbar.html}"></th:block>
-	
 	<main class="main-content" style="background-color: #fafef5;">
-		
 		<div class="contents" style="background-color: #fafef5;">
-    
 		    <div class="container-fluid">
 		    	<div class="row">
 			        <div class="col-lg-12">
@@ -58,7 +47,7 @@
 		       				<div class="card-extra mt-20 mr-20">
 		       					<div class="d-flex justify-content-start" style="float: left;">
 		       						<span class="ml-30 mt-20 mr-10">show</span>
-		    						<select class="form-control form-control-lg mt-10 mb-10 mr-10" name="page-number">
+		    						<select class="form-control form-control-lg mt-10 mb-10 mr-10" id="limit" name="page-number">
 		                          		<option value="10">10</option>
 		                          		<option value="20">20</option>
 		                          		<option value="30">30</option>
@@ -68,17 +57,18 @@
 		       					<!-- 버튼 등록하는 곳 -->
 		       					<div class="action-btn d-flex justify-content-end">
 				      				<div class="atbd-button-list d-flex flex-wrap">
-				      					<form action="/data/division" name="searchForm" class="d-flex align-items-center add-contact__form my-sm-0 my-2">
-				                            <select class="form-control form-control-lg mt-10 mb-10 mr-10" style="width: 250px;">
-				                                <option>전체</option>
-				                                <option>아이디</option>
-				                                <option>이름</option>
-				                            </select>
-				                            <div class="input-container icon-right position-relative mr-10">
-			                                    <a href="javascript:searchForm.submit();" class="input-icon icon-right"><span data-feather="search"></span></a>
-			                                    <input type="text" class="form-control form-control-lg" placeholder="Search">
-			                                </div>
-				      					</form>
+			                            <select class="form-control form-control-lg mt-10 mb-10 mr-10" id="search_type" style="width: 250px;">
+			                                <option value="0">전체</option>
+			                                <option value="1">조사방법 ID</option>
+			                                <option value="2">조사방법</option>
+			                                <option value="3">작목</option>
+			                                <option value="4">분류</option>
+			                                <option value="5">항목</option>
+			                            </select>
+			                            <div class="input-container icon-right position-relative mr-10">
+		                                    <a href="javascript:searchForm.submit();" class="input-icon icon-right"><span data-feather="search"></span></a>
+		                                    <input type="text" class="form-control form-control-lg" id="keyword" placeholder="Search">
+		                                </div>
 				      					<button class="btn btn-lg btn-primary"><span data-feather="upload"></span>엑셀</button>
 				      					<button class="btn btn-lg btn-primary"><span data-feather="download"></span>템플릿</button>
 				      					<button class="btn btn-lg btn-primary"><span data-feather="download"></span>CSV</button>
@@ -100,7 +90,7 @@
 		                            				<th>등록일</th>
 		                            			</tr>
 		                            		</thead>
-		                            		<tbody class="text-center">
+		                            		<tbody class="text-center" id="research_list">
 		                            			<tr>
 		                            				<td><input type="checkbox"></td>
 		                            				<td><span>ac-0-001-00001</span></td>
@@ -132,9 +122,8 @@
 		                            	</table>
 		                        	</div>
 		                        	<div class="row">
-		                        		<div class="col-4">
-			                        	
-				                        </div>
+			                        	<div id="pageNum" style="text-align:center; margin: 2% 0 0 0;"></div>
+			                        	<!--
 				                        <div class="col-4">
 				                        	<div class="d-flex justify-content-center mt-30">
 				                        		<nav class="atbd-page">
@@ -154,9 +143,10 @@
 				                        		</nav>
 				                        	</div>
 				                        </div>
+				                        -->
 				                        <div class="col-4">
 				                        	<div class="action-btn d-flex justify-content-end mt-30">
-			                                    <a href="/data/division/insert" class="btn btn-lg btn-primary">등록</a>
+			                                    <a href="/data/research/insert" class="btn btn-lg btn-primary">등록</a>
 			                                </div>
 				                        </div>
 		                        	</div>
@@ -166,20 +156,77 @@
 		        	</div>
 		        </div>
 		    </div>
-    	
     	</div>
-    
     </main>
-    
     <!-- 공통 하단 -->
     <th:block th:include="@{/fragments/footer.html}"></th:block>
     <!-- 공통 js -->
     <th:block th:include="@{/fragments/commonjs.html}"></th:block>
-
 <script type="text/javascript">
-	
+	$(document).ready(function()
+	{
+		SearchResearch(1);
+	})
+
+	function SearchResearch(e)
+	{
+		var limit = $("#limit").val();
+		var search_type = $("#search_type").val();
+		var keyword = $("#keyword").val();
+		
+		var data = {"search_type" : search_type, "keyword" : keyword, "page_num" : e, "limit" : limit};
+		
+		$.ajax(
+		{
+			url : 'research/searchResearch',
+			method : 'POST',
+			dataType : 'json',
+			data : data,
+			success : function(result)
+			{
+				var research_list = $("#research_list");
+				var add_list = "";
+				
+				var pageNum = $("#pageNum");
+				var page_add = "";
+				
+				for(var i = 0; i < result.research.length; i++)
+				{
+					add_list += '<tr>';
+					add_list += '<td><input type="checkbox"></td>';
+					add_list += '<td><span>' + result.research[i].research_code + '</span></td>';
+					add_list += '<td><span>' + result.research[i].research_contents + '</span></td>';
+					add_list += '<td><span>' + result.research[i].d1 + '</span></td>';
+					add_list += '<td><span>' + result.research[i].d2 + '</span></td>';
+					add_list += '<td><span>' + result.research[i].d3 + '</span></td>';
+					add_list += '<td><span>' + result.research[i].create_date + '</span></td>';
+					add_list += '</tr>';
+				}
+				
+				page_add += '<a href="#" class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></a>';
+				
+				for(var i = 0; i < result.end_page; i++)
+				{
+					if(result.page_num == (i + 1))
+					{
+						page_add += '<button class="atbd-pagination__link active" onclick="SearchResearch(' + (i + 1) + ')">' + (i + 1) + '</button>';
+					}
+					else
+					{
+						page_add += '<button class="atbd-pagination__link" onclick="SearchResearch(' + (i + 1) + ')">' + (i + 1) + '</button>';
+					}
+				}
+				
+				page_add += '<a href="#" class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></a>';
+				
+				research_list.empty();
+				research_list.append(add_list);
+				
+				pageNum.empty();
+				pageNum.append(page_add);
+			}
+		});
+	}
 </script>
-
 </body>
-
 </html>
