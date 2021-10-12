@@ -1,79 +1,271 @@
 <!doctype html>
 <html lang="en" dir="ltr"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/layout}">
+	xmlns:th="http://www.thymeleaf.org">
 
-<th:block layout:fragment="content">
+<head>
+
+<!-- 공통 헤더 -->
+<th:block th:include="@{/fragments/header.html}"></th:block>
+
+</head>
+
+<body class="layout-light top-menu overlayScroll">
+	<div class="mobile-search"></div>
+	
+	<div class="mobile-author-actions"></div>
+	
+	<!-- 공통 topbar -->
+	<th:block th:include="@{/fragments/topbar.html}"></th:block>
+	
+	<main class="main-content" style="background-color: #fafef5;">
+	
+		<div class="contents" style="background-color: #fafef5;">
     
-    <div class="container-fluid">
-    	<div class="row">
-	        <div class="col-lg-12">
-	        	<div class="breadcrumb-main" style="float: left;">
-	        		<h4 class="text-capitalize breadcrumb-title">종자(시료)</h4>
-	        		<span class="ml-20 mt-1">기초정보-종자(시료)</span>
-	        	</div>
-	        </div>
-        </div>
-    	<div class="row">
-    		<div class="col-1"></div>
-	        <div class="col-10">
-	        	<div class="card">
-	        		<div class="card-body">
-	        			<form action="#">
-	        				<div class="row">
-	        					<div class="col-sm-2 d-flex aling-items-center">
-                                    <label for="report_year" class="col-form-label color-dark align-center">년도</label>
-                                </div>
-                                <div class="col-sm-5">
-                                    <select class="form-control b-light" id="report_year">
-		                                <option>년도 선택</option>
-		                                <option>option1</option>
-		                                <option>option2</option>
-		                            </select>
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-	        					<div class="col-sm-2 d-flex aling-items-center">
-                                    <label for="report_contents" class="color-dark align-center">설명</label>
-                                </div>
-                                <div class="col-sm-5">
-                                    <textarea class="form-control" id="report_contents" rows="5"></textarea>
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-	        					<div class="col-sm-2 d-flex aling-items-center">
-                                    <label class="color-dark align-center mt-1">ATIS 파일</label>
-                                </div>
-                                <div class="col-sm-5">
-                                	<label for="uploadFile"></label>
-                                    <input type="file" id="uploadFile">
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-	        					<div class="col-sm-5">
-                                    <label class="color-danger">*탭으로 분리 된 txt만 업로드 가능.</label>
-                                </div>
-                            </div>
-	        			</form>
-	        		</div>
-	        	</div>
-	        	<div class="d-flex justify-content-end mt-20">
-                	<a href="/data/report" class="btn btn-light btn-default btn-primary mr-10">목록</a>
-                	<a href="#" class="btn btn-default btn-primary">등록</a>
-                </div>
-	        </div>
-	        <div class="col-1"></div>
-        </div>
-    </div>
+		    <div class="container-fluid">
+		    	<div class="row">
+			        <div class="col-lg-12">
+			        	<div class="breadcrumb-main" style="float: left;">
+			        		<h4 class="text-capitalize breadcrumb-title">종자(시료)</h4>
+			        		<span class="ml-20 mt-1">기초정보-종자(시료)</span>
+			        	</div>
+			        	<div class="d-flex justify-content-end mt-20">
+		               		<button class="btn btn-lg btn-primary" id="excelBtn"><span data-feather="upload"></span>엑셀 등록</button>
+		                </div>
+			        </div>
+		        </div>
+		    	<div class="row">
+			        <div class="col-lg-12">
+			        	<form action="#">
+				        	<div class="card">
+				        		<div class="card-body">
+				        			<div class="row">
+				        				<div class="col-sm-2 checkbox-theme-default custom-checkbox">
+				        					<input type="checkbox" id="not_report" class="checkbox">
+				        					<label for="not_report">
+				        						<span class="checkbox-text color-dark">과제 비연계</span>
+				        					</label>
+				        				</div>
+				        			</div>
+			        				<div class="row">
+			        					<div class="col-sm-2 d-flex aling-items-center">
+			                                   <label for="report_year" class="col-form-label color-dark align-center">과제명</label>
+		                                </div>
+		                                <div class="col-sm-8">
+		                                   <select class="form-control b-light" id="report_year">
+			                                <option>과제 선택</option>
+			                                <option>option1</option>
+			                                <option>option2</option>
+			                               </select>
+		                                </div>
+			                         </div>
+			                         <div class="row mt-3">
+			        					<div class="col-sm-2 d-flex aling-items-center">
+			                            	<label for="report_contents" class="color-dark align-center">과제설명</label>
+			                            </div>
+			                            <div class="col-sm-8">
+			                                <textarea class="form-control" id="report_contents" rows="5"></textarea>
+			                            </div>
+			                    	</div>
+				        		</div>
+				        	</div>
+				        	<div class="card mt-4">
+				        		<div class="card-body">
+				        			<div class="columnGrid-wrapper">
+					        			<div class="row">
+				        					<div class="col-12">
+				        						<div class="card card-bordered">
+					        						<div class="card-body ml-2 mt-3">
+					        							<div class="col-12 ml-1">
+													        <div class="row">
+													        	<div style="font-size: 17px; color: initial;">종자 및 시료관리</div>
+													        </div>
+												        </div>
+					        							<div class="col-12">
+					        								<div class="row mt-1">
+					        									<div class="col-md-2 mb-25 d-flex aling-items-center">
+					        										<label for="genetic" class="color-dark fw-500 align-center mt-1">품종/유전자원정보<span style="color: red;">*</span></label>
+					        									</div>
+					        									<div class="col-md-4 mb-25">
+					        										<input type="text" class="form-control b-light" id="genetic">
+					        									</div>
+					        									<div class="col-md-2 mb-25 d-flex aling-items-center">
+								                                    <label for="seed_manager" class="color-dark fw-500 align-center">담당자<span style="color: red;">*</span></label>
+								                                </div>
+								                                <div class="col-md-4 mb-25">
+					        										<select class="form-control b-light" id="seed_manager">
+										                                <option>담당자 선택</option>
+										                                <option>option1</option>
+										                                <option>option2</option>
+										                            </select>
+					        									</div>
+					        								</div>
+					        								<div class="row">
+					        									<div class="col-md-2 mb-25 d-flex aling-items-center">
+					        										<label for="seed_area" class="color-dark fw-500 align-center mt-1">생산지역<span style="color: red;">*</span></label>
+					        									</div>
+					        									<div class="col-md-4 mb-25">
+					        										<input type="text" class="form-control b-light" id="seed_area">
+					        									</div>
+					        									<div class="col-md-2 mb-25 d-flex aling-items-center">
+								                                    <label for="seed_year" class="color-dark fw-500 align-center">생산연도<span style="color: red;">*</span></label>
+								                                </div>
+								                                <div class="col-md-4 mb-25">
+					        										<input type="text" class="form-control b-light" id="seed_year">
+					        									</div>
+					        								</div>
+					        								<div class="row">
+					        									<div class="col-md-2 mb-25 d-flex aling-items-center">
+					        										<label for="seed_method" class="color-dark fw-500 align-center mt-1">생산방법</label>
+					        									</div>
+					        									<div class="col-md-4 mb-25">
+					        										<input type="text" class="form-control b-light" id="seed_method">
+					        									</div>
+					        									<div class="col-md-2 mb-25 d-flex aling-items-center">
+								                                    <label for="seed_amount" class="color-dark fw-500 align-center">수량(개수)<span style="color: red;">*</span></label>
+								                                </div>
+								                                <div class="col-md-2 mb-25">
+					        										<input type="text" class="form-control b-light" id="seed_amount">
+					        									</div>
+					        									<div class="col-md-2 mb-25">
+					        										<select class="form-control b-light" name="each">
+										                                <option>단위 선택</option>
+										                                <option>ea</option>
+										                                <option>g</option>
+										                                <option>kg</option>
+										                            </select>
+					        									</div>
+					        								</div>
+					        								<div class="row">
+					        									<div class="col-md-2 mb-25 d-flex aling-items-center">
+					        										<label for="warehouse" class="color-dark fw-500 align-center mt-1">저장장소<span style="color: red;">*</span></label>
+					        									</div>
+					        									<div class="col-md-4 mb-25">
+					        										<select class="form-control b-light" name="warehouse">
+										                                <option>저장 장소 선택</option>
+										                                <option>option1</option>
+										                                <option>option2</option>
+										                            </select>
+					        									</div>
+					        									<div class="col-md-2 mb-25 d-flex aling-items-center">
+								                                    <label for="ware_condition" class="color-dark fw-500 align-center">저장조건</label>
+								                                </div>
+								                                <div class="col-md-4 mb-25">
+					        										<input type="text" class="form-control b-light" id="ware_condition" readonly="readonly">
+					        									</div>
+					        								</div>
+					        								<div class="row">
+					        									<div class="col-md-2 mb-25 d-flex aling-items-center">
+					        										<label for="seed_comment" class="color-dark fw-500 align-center">Comment</label>
+					        									</div>
+					        									<div class="col-md-10 mb-25">
+					        										<textarea class="form-control" id="seed_comment" rows="5"></textarea>
+					        									</div>
+					        								</div>
+					        							</div>
+					        							<div class="col-12 ml-1">
+													        <div class="row">
+													        	<div style="font-size: 17px; color: initial;">기타정보</div>
+													        </div>
+												        </div>
+												        <div class="col-12">
+					        								<div class="row mt-1">
+					        									<div class="col-md-2 mb-25 d-flex aling-items-center">
+					        										<label for="seed_sender" class="color-dark fw-500 align-center mt-1">발송인 정보</label>
+					        									</div>
+					        									<div class="col-md-4 mb-25">
+					        										<input type="text" class="form-control b-light" id="seed_sender">
+					        									</div>
+					        									<div class="col-md-2 mb-25 d-flex aling-items-center">
+								                                    <label for="seed_receiver" class="color-dark fw-500 align-center">수취인 정보</label>
+								                                </div>
+								                                <div class="col-md-4 mb-25">
+					        										<select class="form-control b-light" name="seed_receiver">
+										                                <option>수취인 선택</option>
+										                                <option>option1</option>
+										                                <option>option2</option>
+										                            </select>
+					        									</div>
+					        								</div>
+					        								<div class="row">
+					        									<div class="col-md-2 mb-25 d-flex aling-items-center">
+					        										<label for="send_date" class="color-dark fw-500 align-center mt-1">발송일자</label>
+					        									</div>
+					        									<div class="col-md-4 mb-25">
+					        										<input type="text" class="form-control b-light" id="send_date">
+					        									</div>
+					        									<div class="col-md-2 mb-25 d-flex aling-items-center">
+								                                    <label class="color-dark fw-500 align-center">수취일자</label>
+								                                </div>
+								                                <div class="col-md-4 mb-25">
+					        										<input type="text" class="form-control b-light" id="receive_date" readonly="readonly">
+					        									</div>
+					        								</div>
+					        							</div>
+					        						</div>
+					        					</div>
+				        					</div>
+			                        	</div>
+			                    	</div>
+				        		</div>
+				        		<div class="d-flex justify-content-end mr-20 mb-20">
+				                	<a href="#" class="btn btn-default btn-success">+추가</a>
+				                </div>
+				        	</div>
+			        	</form>
+			        	<div class="d-flex justify-content-end mt-20">
+		                	<a href="/data/seed" class="btn btn-light btn-default btn-primary mr-10">목록</a>
+		                	<a href="#" class="btn btn-default btn-primary">등록</a>
+		                </div>
+			        </div>
+		        </div>
+		    </div>
+			
+			<div class="modal-basic modal fade show" id="seedModal" tabindex="-1" role="dialog" aria-hidden="true">
+			    <div class="modal-dialog modal-md" role="document">
+			        <div class="modal-content modal-bg-white">
+			        	<div class="modal-header">
+			        		<h6 class="modal-title">Basic title</h6>
+		                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		                                <span data-feather="x"></span></button>
+			        	</div>
+			            <div class="modal-body">
+			            	
+			            </div>
+			            <div class="button-group d-flex justify-content-end mb-2 mr-4">
+		                   <button class="btn btn-primary btn-default btn-squared">업로드</button>
+		           		</div>
+			        </div>
+			    </div>
+			</div>
+		     <!-- ends: .modal-Basic -->
+     
+     	</div>
+     
+     </main>
+     
+     <!-- 공통 하단 -->
+    <th:block th:include="@{/fragments/footer.html}"></th:block>
+    <!-- 공통 js -->
+    <th:block th:include="@{/fragments/commonjs.html}"></th:block>
 
-</th:block>
-
-<!-- 해당 페이지 고유  script 작성 공간 -->
-<th:block layout:fragment="scripts">
 <script type="text/javascript">
+
+	//modal show
+	$("#excelBtn").on("click", function(){
+		$("#seedModal").modal("show");
+	});
+	
+	//발송일자 datepicker
+	$("#send_date").datepicker({
+		dateFormat: "yy-mm-dd",
+      	duration: "medium",
+      	changeMonth: true,
+      	changeYear: true,
+      	yearRange: "2010:2030",
+	});
 	
 </script>
-</th:block>
+
+</body>
 
 </html>

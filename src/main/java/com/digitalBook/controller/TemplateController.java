@@ -17,20 +17,4 @@ public class TemplateController {
 		return mv;
 	}
 	
-	@GetMapping("/list")
-	public ModelAndView getListPage(ModelAndView mv) {
-		
-		mv.setViewName("template/sampleListTemplate");
-		
-		return mv;
-	}
-	
-	@GetMapping("/form")
-	public ModelAndView getFormPage(ModelAndView mv) {
-		
-		mv.setViewName("template/sampleFormTemplate");
-		
-		return mv;
-	}
-	
 }
