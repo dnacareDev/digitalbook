@@ -37,13 +37,6 @@ public class ResearchServiceImpl implements ResearchService
 		return mapper.SelectLastResearch();
 	}
 
-	// 조사방법 등록
-	@Override
-	public int InsertResearch(Research research)
-	{
-		return mapper.InsertResearch(research);
-	}
-
 	// 조사방법 갯수 검색
 	@Override
 	public int SearchResearchCount(int search_type, String keyword)
@@ -56,5 +49,26 @@ public class ResearchServiceImpl implements ResearchService
 	public List<Research> SearchResearch(int search_type, String keyword, int offset, int limit)
 	{
 		return mapper.SearchResearch(search_type, keyword, offset, limit);
+	}
+	
+	// 조사방법 등록
+	@Override
+	public int InsertResearch(Research research)
+	{
+		return mapper.InsertResearch(research);
+	}
+
+	// 조사방법 수정
+	@Override
+	public int UpdateResearch(int research_id, int division_id, String research_contents)
+	{
+		return mapper.UpdateResearch(research_id, division_id, research_contents);
+	}
+
+	// 조사방법 삭제
+	@Override
+	public int DeleteResearch(int research_id)
+	{
+		return mapper.DeleteResearch(research_id);
 	}
 }

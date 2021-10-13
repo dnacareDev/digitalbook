@@ -20,7 +20,10 @@ public class Research
 	
 	private int division_id;					// 조사항목 번호
 	
+	private int d1_id;
 	private String d1;							// 조사항목(작목)
+	private int d2_id;
 	private String d2;							// 조사항목(분류)
+	private int d3_id;
 	private String d3;							// 조사항목(항목)
 }

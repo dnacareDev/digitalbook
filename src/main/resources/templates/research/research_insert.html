@@ -26,8 +26,8 @@
 			        		<div class="card-body">
 			        				<div class="row">
 				        				<div class="col-md-6 mb-25">
-		                                    <label for="divison_depth1" class="color-dark fw-500">대상작목</label>
-		                                    <select class="form-control b-light" id="divison_depth1">
+		                                    <label for="division_depth1" class="color-dark fw-500">대상작목</label>
+		                                    <select class="form-control b-light" id="division_depth1">
 				                                <option value="0">대상 작목 선택</option>
 				                                <th:block th:each="dvs : ${division}">
 					                                <option th:value="${dvs.division_id}" th:text="${dvs.division}"></option>
@@ -35,16 +35,16 @@
 				                            </select>
 		                                </div>
 		                                <div class="col-md-6 mb-25">
-		                                    <label for="divison_depth2" class="color-dark fw-500">분류</label>
-		                                    <select class="form-control b-light" id="divison_depth2">
+		                                    <label for="division_depth2" class="color-dark fw-500">분류</label>
+		                                    <select class="form-control b-light" id="division_depth2">
 				                                <option value="0">분류 선택</option>
 				                            </select>
 		                                </div>
 		                            </div>
 		                            <div class="row">
 				        				<div class="col-md-6 mb-25">
-		                                    <label for="divison_depth3" class="color-dark fw-500">항목</label>
-		                                    <select class="form-control b-light" id="divison_depth3">
+		                                    <label for="division_depth3" class="color-dark fw-500">항목</label>
+		                                    <select class="form-control b-light" id="division_depth3">
 				                                <option value="0">항목 선택</option>
 				                            </select>
 		                                </div>
@@ -93,7 +93,7 @@
 	$(".b-light").change(function()
 	{
 		var division_id = $(this).val();
-		var division_depth = this.id.slice(13, 14);
+		var division_depth = this.id.slice(14, 15);
 		
 		var data = {"division_id" : division_id, "division_depth" : division_depth};
 		
@@ -106,7 +106,7 @@
 			success : function(result)
 			{
 				var depth = (division_depth * 1) + 1;
-				var depth_list = $("#divison_depth" + depth);
+				var depth_list = $("#division_depth" + depth);
 				var add_list = "";
 				
 				if(depth == 2)
@@ -131,7 +131,7 @@
 	
 	function InsertBtn()
 	{
-		var division_id = $("#divison_depth3").val();
+		var division_id = $("#division_depth3").val();
 		var research_contents = $("#research_contents").val();
 
 		if(division_id == 0)

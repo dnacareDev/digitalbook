@@ -51,10 +51,14 @@ public class ResearchController
 	{
 		Research research = service.SelectResearchDetail(research_id);
 		
-		List<Division> division = service.SelectDivision(0, 0);
+		List<Division> d1 = service.SelectDivision(0, 0);
+		List<Division> d2 = service.SelectDivision(research.getD1_id(), 1);
+		List<Division> d3 = service.SelectDivision(research.getD2_id(), 2);
 		
 		mv.addObject("research", research);
-		mv.addObject("division", division);
+		mv.addObject("d1", d1);
+		mv.addObject("d2", d2);
+		mv.addObject("d3", d3);
 		
 		mv.setViewName("research/research_modify");
 		
@@ -67,6 +71,28 @@ public class ResearchController
 	public List<Division> SelectDivision(@RequestParam("division_id") int division_id, @RequestParam("division_depth") int division_depth)
 	{
 		List<Division> result = service.SelectDivision(division_id, division_depth);
+		
+		return result;
+	}
+	
+	// 조사방법 검색
+	@ResponseBody
+	@RequestMapping("/research/searchResearch")
+	public Map<String, Object> SearchResearch(@RequestParam("search_type") int search_type, @RequestParam("keyword") String keyword, @RequestParam("page_num") int page_num, @RequestParam("limit") int limit)
+	{
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+		
+		int count = service.SearchResearchCount(search_type, keyword);
+		
+		int offset = (page_num - 1) * limit;
+		int end_page = (count + limit - 1) / limit;
+		
+		List<Research> research = service.SearchResearch(search_type, keyword, offset, limit);
+		
+		result.put("research", research);
+		result.put("page_num", page_num);
+		result.put("end_page", end_page);
+		result.put("offset", offset);
 		
 		return result;
 	}
@@ -100,24 +126,22 @@ public class ResearchController
 		return result;
 	}
 	
-	// 조사방법 검색
+	// 조사방법 수정
 	@ResponseBody
-	@RequestMapping("/research/searchResearch")
-	public Map<String, Object> SearchResearch(@RequestParam("search_type") int search_type, @RequestParam("keyword") String keyword, @RequestParam("page_num") int page_num, @RequestParam("limit") int limit)
+	@RequestMapping("/research/updateResearch")
+	public int UpdateResearch(@RequestParam("research_id") int research_id, @RequestParam("division_id") int division_id, @RequestParam("research_contents") String research_contents)
 	{
-		Map<String, Object> result = new LinkedHashMap<String, Object>();
+		int result = service.UpdateResearch(research_id, division_id, research_contents);
 		
-		int count = service.SearchResearchCount(search_type, keyword);
-		
-		int offset = (page_num - 1) * limit;
-		int end_page = (count + limit - 1) / limit;
-		
-		List<Research> research = service.SearchResearch(search_type, keyword, offset, limit);
-		
-		result.put("research", research);
-		result.put("page_num", page_num);
-		result.put("end_page", end_page);
-		result.put("offset", offset);
+		return result;
+	}
+	
+	// 조사방법 삭제
+	@ResponseBody
+	@RequestMapping("/research/deleteResearch")
+	public int DeleteResearch(@RequestParam("research_id") int research_id)
+	{
+		int result = service.DeleteResearch(research_id);
 		
 		return result;
 	}
