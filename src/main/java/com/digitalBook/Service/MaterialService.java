@@ -18,4 +18,13 @@ public interface MaterialService {
 	//최근 농자재 ID 조회
 	String selectLastMeterialCode();
 	
+	//농자재 상세 조회
+	Material selectMaterialDetail(int material_id);
+	
+	//농자재 수정
+	int updateMaterial(Material material);
+	
+	//농자재 삭제
+	int deleteMaterial(int material_id);
+	
 }

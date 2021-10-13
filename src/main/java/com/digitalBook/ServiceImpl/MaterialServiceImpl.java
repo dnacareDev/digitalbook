@@ -42,5 +42,26 @@ public class MaterialServiceImpl implements MaterialService {
 		
 		return mapper.selectLastMeterialCode();
 	}
+	
+	//농자재 상세 조회
+	@Override
+	public Material selectMaterialDetail(int material_id) {
+		
+		return mapper.selectMaterialDetail(material_id);
+	}
+	
+	//농자재 수정
+	@Override
+	public int updateMaterial(Material material) {
+		
+		return mapper.updateMaterial(material);
+	}
+	
+	//농자재 삭제
+	@Override
+	public int deleteMaterial(int material_id) {
+		
+		return mapper.deleteMaterial(material_id);
+	}
 
 }

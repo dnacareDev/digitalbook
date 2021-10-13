@@ -24,8 +24,8 @@ public class MaterialController {
 	private MaterialService service;
 	
 	//기타(농자재) 목록
-	@GetMapping(value = "/material")
-	public ModelAndView getMaterial(ModelAndView mv) {
+	@RequestMapping(value = "/material")
+	public ModelAndView material(ModelAndView mv) {
 		
 		mv.setViewName("material/material_list");
 		
@@ -33,8 +33,8 @@ public class MaterialController {
 	}
 	
 	//기타(농자재) 등록화면
-	@GetMapping(value = "/material/insert")
-	public ModelAndView getMaterialInsert(ModelAndView mv) {
+	@RequestMapping(value = "/material/insert")
+	public ModelAndView materialInsert(ModelAndView mv) {
 		
 		mv.setViewName("material/material_insert");
 		
@@ -72,8 +72,6 @@ public class MaterialController {
 	@RequestMapping("/material/insertMaterial")
 	public int insertMaterial(@RequestParam(name = "material_name", required = true) String material_name) {
 		
-		int result = 0;
-		
 		Material material = new Material();
 		String last_material_code = service.selectLastMeterialCode();
 		
@@ -87,7 +85,44 @@ public class MaterialController {
 		}//end else
 		
 		material.setMaterial_name(material_name);
-		result = service.insertMaterial(material);
+		int result = service.insertMaterial(material);
+		
+		return result;
+	}
+	
+	//농자재 수정 화면
+	@RequestMapping("/material/modify")
+	public ModelAndView materialModify(ModelAndView mv, @RequestParam(name = "material_id", required = true) int material_id) {
+		
+		Material material = service.selectMaterialDetail(material_id);
+		
+		mv.addObject("material", material);
+		
+		mv.setViewName("material/material_modify");
+		
+		return mv;
+	}
+	
+	//농자재 수정
+	@ResponseBody
+	@RequestMapping("/material/updateMaterial")
+	public int updateMaterial(@RequestParam(name = "material_id", required = true) int material_id,
+							@RequestParam(name = "material_name", required = true) String material_name) {
+		
+		Material material = service.selectMaterialDetail(material_id);
+		material.setMaterial_name(material_name);
+		
+		int result = service.updateMaterial(material);
+		
+		return result;
+	}
+	
+	//농자재 삭제
+	@ResponseBody
+	@RequestMapping("/material/deleteMaterial")
+	public int deleteMaterial(@RequestParam(name = "material_id", required = true) int material_id) {
+		
+		int result = service.deleteMaterial(material_id);
 		
 		return result;
 	}
