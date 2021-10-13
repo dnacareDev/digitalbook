@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.digitalBook.Mapper.MaterialMapper">
+	
+	<!-- 농자재 검색 -->
+	<select id="SearchMaterial" resultType="Material">
+		SELECT * FROM material
+		WHERE 1=1
+		<choose>
+			<when test="search_type == null || search_type.equals('none')">
+				AND (material_code LIKE CONCAT('%', #{keyword}, '%') OR material_name LIKE CONCAT('%', #{keyword}, '%'))
+			</when>
+			<otherwise>
+				AND ${search_type} LIKE CONCAT('%', #{keyword}, '%')
+			</otherwise>
+		</choose>
+		ORDER BY material_id DESC
+		LIMIT #{offset}, #{limit}
+	</select>
+	
+	<!-- 농자재  갯수 검색 -->
+	<select id="SearchMaterialCount" resultType="int">
+		SELECT COUNT(*) FROM material
+		WHERE 1=1
+		<choose>
+			<when test="search_type == null || search_type.equals('none')">
+				
+			</when>
+			<otherwise>
+				AND ${search_type} LIKE CONCAT('%', #{keyword}, '%')
+			</otherwise>
+		</choose>
+	</select>
+	
+	<!-- 농자재 등록 -->
+	<insert id="insertMaterial" parameterType="Material">
+		INSERT INTO material
+		(user_id, material_code, material_name, material_status, create_date, modify_date)
+		VALUES
+		(#{user_id}, #{material_code}, #{material_name}, 1, NOW(), NOW())
+	</insert>
+	
+	<!-- 최근 농자재 ID -->
+	<select id="selectLastMeterialCode" resultType="String">
+		SELECT material_code FROM material
+		ORDER BY material_id DESC
+		LIMIT 1
+	</select>
+	
+</mapper>

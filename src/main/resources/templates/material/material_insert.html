@@ -30,27 +30,44 @@
 			        	</div>
 			        </div>
 		        </div>
-		    	<div class="row">
+		    	<div class="row" style="display: flex;justify-content: center;">
 			        <div class="col-lg-12">
-			        	<form action="#">
-				        	<div class="card">
-				        		<div class="card-body">
-			        				<div class="row">
-			        					<div class="col-sm-2 d-flex aling-items-center">
-			                            	<label for="material_name" class="col-form-label color-dark align-center">항목명<span style="color: red;">*</span></label>
-		                                </div>
-		                                <div class="col-sm-5">
-		                                   <input type="text" class="form-control b-light" id="material_name">
-		                                </div>
-			                         </div>
-				        		</div>
-				        	</div>
-			        	</form>
+			        	<div class="card">
+			        		<div class="card-body">
+		        				<div class="row">
+		        					<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="material_name" class="col-form-label color-dark align-center">항목명<span style="color: red;">*</span></label>
+	                                </div>
+	                                <div class="col-sm-5">
+	                                   <input type="text" class="form-control b-light" id="material_name">
+	                                </div>
+		                         </div>
+			        		</div>
+			        	</div>
 			        	<div class="d-flex justify-content-end mt-20">
 		                	<a href="/data/material" class="btn btn-light btn-default btn-primary mr-10">목록</a>
-		                	<a href="#" class="btn btn-default btn-primary">등록</a>
+		                	<button type="button" class="btn btn-default btn-primary" onclick="insertBtn();">등록</button>
 		                </div>
 			        </div>
+		        </div>
+		        <div class="atbd-notice" id="success_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
+		        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 30%; height: 40%;">
+		        		<div class="card-body">
+		        			<div class="atbd-notice__content">
+		        				<div class="atbd-notice__top text-center">
+		        					<div class="atbd-notice__icon bg-success">
+		        						<i class="fas fa-check color-white"></i>
+		        					</div>
+		        					<div class="atbd-notice__text">
+		        						<h4>등록이 완료되었습니다.</h4>
+		        					</div>
+		        					<div style="display: flex; justify-content: center; margin: 10% auto;">
+		        						<a class="btn btn-default btn-success" href="/data/material" style="color: #FFFFFF;">확인</a>
+		        					</div>
+		        				</div>
+		        			</div>
+		        		</div>
+		        	</div>
 		        </div>
 		    </div>
      
@@ -64,8 +81,34 @@
     <th:block th:include="@{/fragments/commonjs.html}"></th:block>
 
 <script type="text/javascript">
-
 	
+	//농자재 등록
+	function insertBtn(){
+		
+		var material_name = $.trim($("#material_name").val());
+		
+		if(material_name == ""){
+			alert("항목명을 입력하세요.");
+			$("#material_name").focus();
+		}else{
+			var data = {"material_name" : material_name};
+			
+			$.ajax({
+				url : "/data/material/insertMaterial",
+				method : "POST",
+				dataType : "json",
+				data : data,
+				success : function(result){
+					if(result == 0){
+						
+					}else {
+						$("#success_popup").css("display", "flex");
+					}
+				}
+			});//end ajax
+		}
+		
+	}//end 농자재 등록
 	
 </script>
 
