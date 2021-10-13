@@ -121,34 +121,9 @@
 		                            		</tbody>
 		                            	</table>
 		                        	</div>
-		                        	<div class="row">
+                                    <a href="/data/research/insert" class="btn btn-lg btn-primary" style="float: right;">등록</a>
+		                        	<div class="row" style="justify-content: center;">
 			                        	<div id="pageNum" style="text-align:center; margin: 2% 0 0 0;"></div>
-			                        	<!--
-				                        <div class="col-4">
-				                        	<div class="d-flex justify-content-center mt-30">
-				                        		<nav class="atbd-page">
-				                        			<ul class="atbd-pagination d-flex">
-				                        				<li class="atbd-pagination__item">
-				                                            <a href="#" class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></a>
-				                                            <a href="#" class="atbd-pagination__link"><span class="page-number">1</span></a>
-				                                            <a href="#" class="atbd-pagination__link active"><span class="page-number">2</span></a>
-				                                            <a href="#" class="atbd-pagination__link"><span class="page-number">3</span></a>
-				                                            <a href="#" class="atbd-pagination__link pagination-control"><span class="page-number">...</span></a>
-				                                            <a href="#" class="atbd-pagination__link"><span class="page-number">12</span></a>
-				                                            <a href="#" class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></a>
-				                                            <a href="#" class="atbd-pagination__option">
-				                                            </a>
-				                                        </li>
-				                        			</ul>
-				                        		</nav>
-				                        	</div>
-				                        </div>
-				                        -->
-				                        <div class="col-4">
-				                        	<div class="action-btn d-flex justify-content-end mt-30">
-			                                    <a href="/data/research/insert" class="btn btn-lg btn-primary">등록</a>
-			                                </div>
-				                        </div>
 		                        	</div>
 		                        </div>
 		        			</div>
@@ -194,7 +169,7 @@
 				{
 					add_list += '<tr>';
 					add_list += '<td><input type="checkbox"></td>';
-					add_list += '<td><span>' + result.research[i].research_code + '</span></td>';
+					add_list += '<td><a href="research/modify?research_id='+ result.research[i].research_id + '">' + result.research[i].research_code + '</a></td>';
 					add_list += '<td><span>' + result.research[i].research_contents + '</span></td>';
 					add_list += '<td><span>' + result.research[i].d1 + '</span></td>';
 					add_list += '<td><span>' + result.research[i].d2 + '</span></td>';
@@ -202,8 +177,15 @@
 					add_list += '<td><span>' + result.research[i].create_date + '</span></td>';
 					add_list += '</tr>';
 				}
-				
-				page_add += '<a href="#" class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></a>';
+
+				if(result.page_num == 1)
+				{
+					page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
+				}
+				else
+				{
+					page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchResearch(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
+				}
 				
 				for(var i = 0; i < result.end_page; i++)
 				{
@@ -217,7 +199,14 @@
 					}
 				}
 				
-				page_add += '<a href="#" class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></a>';
+				if(result.page_num == result.end_page)
+				{
+					page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
+				}
+				else
+				{
+					page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchResearch(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
+				}
 				
 				research_list.empty();
 				research_list.append(add_list);

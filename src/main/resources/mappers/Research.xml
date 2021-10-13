@@ -12,6 +12,17 @@
 		</choose>
 	</select>
 	
+	<!-- 조사방법 상세 조회 -->
+	<select id="SelectResearchDetail" parameterType="int" resultType="Research">
+		SELECT r.research_code, r.research_contents, d1.division AS d1, d2.division AS d2, d3.division AS d3, r.create_date, r.modify_date
+		FROM research r
+		LEFT JOIN division d3 ON r.division_id = d3.division_id
+		LEFT JOIN division d2 ON d3.division_parents = d2.division_id
+		LEFT JOIN division d1 ON d2.division_parents = d1.division_id
+		WHERE r.research_id = #{research_id}
+	</select>
+	
+	
 	<!-- 최근 조사방법 조회 -->
 	<select id="SelectLastResearch" resultType="Research">
 		SELECT * FROM research
@@ -59,7 +70,7 @@
 	
 	<!-- 조사방법 검색 -->
 	<select id="SearchResearch" resultType="Research">
-		SELECT r.research_code, r.research_contents, d1.division AS d1, d2.division AS d2, d3.division AS d3, r.create_date, r.modify_date
+		SELECT r.research_id, r.research_code, r.research_contents, d1.division AS d1, d2.division AS d2, d3.division AS d3, r.create_date, r.modify_date
 		FROM research r
 		LEFT JOIN division d3 ON r.division_id = d3.division_id
 		LEFT JOIN division d2 ON d3.division_parents = d2.division_id

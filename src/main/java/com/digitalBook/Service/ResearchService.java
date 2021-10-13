@@ -10,6 +10,9 @@ public interface ResearchService
 	// 조사항목 조회
 	List<Division> SelectDivision(int division_id, int division_depth);
 
+	// 조사방법 상세 조회
+	Research SelectResearchDetail(int research_id);
+
 	// 최근 조사방법 조회
 	Research SelectLastResearch();
 

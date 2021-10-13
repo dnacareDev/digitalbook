@@ -45,6 +45,22 @@ public class ResearchController
 		return mv;
 	}
 	
+	// 조사방법 수정 페이지
+	@RequestMapping(value = "/research/modify")
+	public ModelAndView ResearchModify(ModelAndView mv, @RequestParam("research_id") int research_id)
+	{
+		Research research = service.SelectResearchDetail(research_id);
+		
+		List<Division> division = service.SelectDivision(0, 0);
+		
+		mv.addObject("research", research);
+		mv.addObject("division", division);
+		
+		mv.setViewName("research/research_modify");
+		
+		return mv;
+	}
+	
 	// 조사항목 조회
 	@ResponseBody
 	@RequestMapping("/research/selectDivision")
@@ -93,7 +109,6 @@ public class ResearchController
 		
 		int count = service.SearchResearchCount(search_type, keyword);
 		
-		limit = 2;
 		int offset = (page_num - 1) * limit;
 		int end_page = (count + limit - 1) / limit;
 		
