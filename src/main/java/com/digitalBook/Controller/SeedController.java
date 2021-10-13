@@ -14,7 +14,7 @@ public class SeedController {
 	@GetMapping(value = "seed")
 	public ModelAndView getReport(ModelAndView mv) {
 		
-		mv.setViewName("seed/seedList");
+		mv.setViewName("seed/seed_list");
 		
 		return mv;
 	}
@@ -23,7 +23,7 @@ public class SeedController {
 	@GetMapping(value = "seed/insert")
 	public ModelAndView getReportInsert(ModelAndView mv) {
 		
-		mv.setViewName("seed/seedInsert");
+		mv.setViewName("seed/seed_insert");
 		
 		return mv;
 	}

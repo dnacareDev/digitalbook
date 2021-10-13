@@ -14,7 +14,7 @@ public class ReagentController {
 	@GetMapping(value = "/reagent")
 	public ModelAndView getReagent(ModelAndView mv) {
 		
-		mv.setViewName("reagent/reagentList");
+		mv.setViewName("reagent/reagent_list");
 		
 		return mv;
 	}
@@ -23,7 +23,7 @@ public class ReagentController {
 	@GetMapping(value = "/reagent/insert")
 	public ModelAndView getReagentInsert(ModelAndView mv) {
 		
-		mv.setViewName("reagent/reagentInsert");
+		mv.setViewName("reagent/reagent_insert");
 		
 		return mv;
 	}

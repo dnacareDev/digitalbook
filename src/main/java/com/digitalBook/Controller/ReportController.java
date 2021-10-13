@@ -14,7 +14,7 @@ public class ReportController {
 	@GetMapping(value = "report")
 	public ModelAndView getReport(ModelAndView mv) {
 		
-		mv.setViewName("report/reportList");
+		mv.setViewName("report/report_list");
 		
 		return mv;
 	}
@@ -23,7 +23,7 @@ public class ReportController {
 	@GetMapping(value = "report/insert")
 	public ModelAndView getReportInsert(ModelAndView mv) {
 		
-		mv.setViewName("report/reportInsert");
+		mv.setViewName("report/report_insert");
 		
 		return mv;
 	}

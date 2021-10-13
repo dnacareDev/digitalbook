@@ -14,7 +14,7 @@ public class MachineController {
 	@GetMapping(value = "/machine")
 	public ModelAndView getMachine(ModelAndView mv) {
 		
-		mv.setViewName("machine/machineList");
+		mv.setViewName("machine/machine_list");
 		
 		return mv;
 	}
@@ -23,7 +23,7 @@ public class MachineController {
 	@GetMapping(value = "/machine/insert")
 	public ModelAndView getMachineInsert(ModelAndView mv) {
 		
-		mv.setViewName("machine/machineInsert");
+		mv.setViewName("machine/machine_insert");
 		
 		return mv;
 	}

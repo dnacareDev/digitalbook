@@ -14,7 +14,7 @@ public class UserController {
 	@GetMapping(value = "user")
 	public ModelAndView getUser(ModelAndView mv) {
 		
-		mv.setViewName("user/userList");
+		mv.setViewName("user/user_list");
 		
 		return mv;
 	}

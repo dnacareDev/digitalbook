@@ -12,7 +12,7 @@ public class HomeController {
 	@GetMapping("/home")
 	public ModelAndView getHome(ModelAndView mv) {
 		
-		mv.setViewName("home/adminHome");
+		mv.setViewName("home/admin_home");
 		
 		return mv;
 	}
@@ -20,7 +20,7 @@ public class HomeController {
 	@GetMapping("/home/user")
 	public ModelAndView getUserHome(ModelAndView mv) {
 		
-		mv.setViewName("home/userHome");
+		mv.setViewName("home/user_home");
 		
 		return mv;
 	}

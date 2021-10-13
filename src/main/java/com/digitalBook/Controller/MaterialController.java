@@ -14,7 +14,7 @@ public class MaterialController {
 	@GetMapping(value = "/material")
 	public ModelAndView getMaterial(ModelAndView mv) {
 		
-		mv.setViewName("material/materialList");
+		mv.setViewName("material/material_list");
 		
 		return mv;
 	}
@@ -23,7 +23,7 @@ public class MaterialController {
 	@GetMapping(value = "/material/insert")
 	public ModelAndView getMaterialInsert(ModelAndView mv) {
 		
-		mv.setViewName("material/materialInsert");
+		mv.setViewName("material/material_insert");
 		
 		return mv;
 	}
