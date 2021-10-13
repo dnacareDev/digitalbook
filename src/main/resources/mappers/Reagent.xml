@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.digitalBook.Mapper.ReagentMapper">
+	
+	<!-- 시약 검색 -->
+	<select id="SearchReagent" resultType="Reagent">
+		SELECT r.*, e.eaches_name 
+		FROM reagent r
+		LEFT JOIN eaches e ON r.reagent_id = e.eaches_id
+		WHERE 1=1
+		<choose>
+			<when test="search_type == null || search_type.equals('none')">
+				
+			</when>
+			<otherwise>
+				AND ${search_type} LIKE CONCAT('%', #{keyword}, '%')
+			</otherwise>
+		</choose>
+		ORDER BY reagent_id DESC
+		LIMIT #{offset}, #{limit}
+	</select>
+	
+	<!-- 시약  갯수 검색 -->
+	<select id="SearchReagentCount" resultType="int">
+		SELECT COUNT(*)
+		FROM reagent r
+		LEFT JOIN eaches e ON r.reagent_id = e.eaches_id
+		WHERE 1=1
+		<choose>
+			<when test="search_type == null || search_type.equals('none')">
+				
+			</when>
+			<otherwise>
+				AND ${search_type} LIKE CONCAT('%', #{keyword}, '%')
+			</otherwise>
+		</choose>
+	</select>
+	
+	<!-- 단위 조회 -->
+	<select id="selectEaches" resultType="Eaches">
+		SELECT * FROM eaches
+		WHERE eaches_type = '시약'
+	</select>
+	
+	<!-- 시약 등록 -->
+	<insert id="insertReagent" parameterType="Reagent">
+		INSERT INTO reagent
+		(reagent_code, reagent_name, reagent_standard, reagent_formula, reagent_nick_k, reagent_nick_e, reagent_manufacturer,
+		reagent_quantity, eaches_id, reagent_purpose, reagent_type, reagent_status, create_date, modify_date)
+		VALUES
+		(#{reagent_code}, #{reagent_name}, #{reagent_standard}, #{reagent_formula}, #{reagent_nick_k}, #{reagent_nick_e}, #{reagent_manufacturer},
+		#{reagent_quantity}, #{eaches_id}, #{reagent_purpose}, #{reagent_type}, 1, NOW(), NOW())
+	</insert>
+	
+	<!-- 최근 시약 ID -->
+	<select id="selectLastReagnetCode" resultType="String">
+		SELECT reagent_code FROM reagent
+		ORDER BY reagent_id DESC
+		LIMIT 1
+	</select>
+	
+	<!-- 시약 상세 조회 -->
+	<select id="selectReagentDetail" parameterType="int" resultType="Reagent">
+		SELECT * FROM reagent
+		WHERE reagent_id = #{reagent_id}
+	</select>
+	
+	<!-- 시약 수정 -->
+	<update id="updateReagent" parameterType="Reagent">
+		UPDATE reagent
+		SET reagent_name = #{reagent_name},
+			reagent_type = #{reagent_type},
+			reagent_standard = #{reagent_standard},
+			reagent_formula = #{reagent_formula},
+			reagent_nick_e = #{reagent_nick_e},
+			reagent_nick_k = #{reagent_nick_k},
+			reagent_manufacturer = #{reagent_manufacturer},
+			reagent_quantity = #{reagent_quantity},
+			eaches_id = #{eaches_id},
+			reagent_purpose = #{reagent_purpose},
+			modify_date = NOW()
+		WHERE reagent_id = #{reagent_id}
+	</update>
+	
+	<!-- 시약 삭제 -->
+	<delete id="deleteReagent" parameterType="int">
+		DELETE FROM reagent
+		WHERE reagent_id = #{reagent_id}
+	</delete>
+	
+</mapper>

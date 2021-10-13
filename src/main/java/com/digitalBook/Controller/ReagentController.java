@@ -1,14 +1,29 @@
 package com.digitalBook.Controller;
 
+import java.util.Calendar;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.digitalBook.Entity.Eaches;
+import com.digitalBook.Entity.Reagent;
+import com.digitalBook.Service.ReagentService;
 
 @Controller
 @RequestMapping(value = "/data")
 //기초정보 > 시약,농약,비료
 public class ReagentController {
+	
+	@Autowired
+	private ReagentService service;
 	
 	//시약,농약,비료 목록
 	@GetMapping(value = "/reagent")
@@ -23,9 +38,95 @@ public class ReagentController {
 	@GetMapping(value = "/reagent/insert")
 	public ModelAndView getReagentInsert(ModelAndView mv) {
 		
+		List<Eaches> eaches = service.selectEaches();
+		mv.addObject("eaches", eaches);
+		
 		mv.setViewName("reagent/reagent_insert");
 		
 		return mv;
+	}
+	
+	//시약 검색
+	@ResponseBody
+	@RequestMapping("/reagent/searchReagent")
+	public Map<String, Object> searchReagent(@RequestParam(name = "search_type", required = false) String search_type,
+											@RequestParam(name = "keyword", required = false) String keyword,
+											@RequestParam("page_num") int page_num,
+											@RequestParam("limit") int limit){
+		
+		Map<String, Object> result = new LinkedHashMap<>();
+		
+		int count = service.SearchReagentCount(search_type, keyword);
+		
+		int offset = (page_num - 1) * limit;
+		int end_page = (count + limit - 1) / limit;
+		
+		List<Reagent> reagent = service.SearchReagent(search_type, keyword, offset, limit);
+		
+		result.put("reagent", reagent);
+		result.put("page_num", page_num);
+		result.put("end_page", end_page);
+		result.put("offset", offset);
+		
+		return result;
+	}
+	
+	//시약 등록
+	@ResponseBody
+	@RequestMapping("/reagent/insertReagent")
+	public int insertReagent(Reagent reagent) {
+		System.out.println(reagent);
+		Calendar cal = Calendar.getInstance();
+		
+		String last_reagent_code = service.selectLastReagnetCode();
+		String code1 = "re-";
+		String code2 = String.valueOf(cal.get(Calendar.YEAR))+"-";
+		
+		if(last_reagent_code == null || last_reagent_code.equals("")) {
+			reagent.setReagent_code(code1+code2+"00001");
+		}else {
+			String[] strArr = last_reagent_code.split("-");
+			int code3 = Integer.parseInt(strArr[2]) + 1;
+			reagent.setReagent_code(code1+code2+String.format("%05d", code3));
+		}
+		
+		int result = service.insertReagent(reagent);
+		
+		return result;
+	}
+	
+	//시약 수정화면
+	@RequestMapping("/reagent/modify")
+	public ModelAndView reagentModify(ModelAndView mv, @RequestParam(name = "reagent_id", required = true) int reagent_id) {
+		
+		Reagent reagent = service.selectReagentDetail(reagent_id);
+		List<Eaches> eaches = service.selectEaches();
+		
+		mv.addObject("reagent", reagent);
+		mv.addObject("eaches", eaches);
+		
+		mv.setViewName("reagent/reagent_modify");
+		
+		return mv;
+	}
+	
+	//시약 수정
+	@ResponseBody
+	@RequestMapping("/reagent/updateReagent")
+	public int updateReagent(Reagent reagnet) {
+		
+		int result = service.updateReagent(reagnet);
+		
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/reagent/deleteReagent")
+	public int deleteReagent(@RequestParam(name = "reagent_id", required = true) int reagent_id) {
+		
+		int result = service.deleteReagent(reagent_id);
+		
+		return result;
 	}
 
 }
