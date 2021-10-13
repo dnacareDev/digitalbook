@@ -101,7 +101,7 @@
 		        						<h4>수정하시겠습니까?</h4>
 		        					</div>
 		        					<div style="display: flex; justify-content: center; margin: 10% auto;">
-		        						<button class="btn btn-default btn-primary mr-10" onclick="UpdateConfirm();" style="color: #FFFFFF;">수정</button>
+		        						<button class="btn btn-default btn-primary mr-10" onclick="UpdateResearch();" style="color: #FFFFFF;">수정</button>
 		        						<button class="btn btn-default btn-danger" onclick="CancelBtn();" style="color: #FFFFFF;">취소</button>
 		        					</div>
 		        				</div>
@@ -121,7 +121,7 @@
 		        						<h4>삭제하시겠습니까?</h4>
 		        					</div>
 		        					<div style="display: flex; justify-content: center; margin: 10% auto;">
-		        						<button class="btn btn-default btn-primary mr-10" onclick="DeleteConfirm();" style="color: #FFFFFF;">삭제</button>
+		        						<button class="btn btn-default btn-primary mr-10" onclick="DeleteResearch();" style="color: #FFFFFF;">삭제</button>
 		        						<button class="btn btn-default btn-danger" onclick="CancelBtn();" style="color: #FFFFFF;">취소</button>
 		        					</div>
 		        				</div>
@@ -193,7 +193,7 @@
 		$("#delete_popup").css("display", "none");
 	}
 	
-	function UpdateConfirm()
+	function UpdateResearch()
 	{
 		var division_id = $("#division_depth3").val();
 		var research_contents = $("#research_contents").val();
@@ -220,7 +220,7 @@
 				{
 					if(result == 0)
 					{
-						
+						$("#update_popup").css("display", "none");
 					}
 					else
 					{
@@ -232,7 +232,7 @@
 		}
 	}
 	
-	function DeleteConfirm()
+	function DeleteResearch()
 	{
 		var data = {"research_id" : $("#research_id").val()};
 		
@@ -246,7 +246,7 @@
 			{
 				if(result == 0)
 				{
-					
+					$("#delete_popup").css("display", "none");
 				}
 				else
 				{

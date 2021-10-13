@@ -25,7 +25,7 @@
 	<!-- 최근 조사방법 조회 -->
 	<select id="SelectLastResearch" resultType="Research">
 		SELECT * FROM research
-		ORDER BY modify_date DESC
+		ORDER BY research_id DESC
 		LIMIT 1
 	</select>
 

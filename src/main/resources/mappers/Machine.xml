@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.digitalBook.Mapper.MachineMapper">
+	<!-- 장비 상세 조회 -->
+	<select id="SelectMachineDetail" parameterType="int" resultType="Machine">
+		SELECT * FROM machine m
+		LEFT JOIN user u ON m.user_id = u.user_id
+		WHERE machine_id = #{machine_id}
+	</select>
+	
+	<!-- 최근 장비 조회 -->
+	<select id="SelectLastMachine" resultType="Machine">
+		SELECT * FROM machine
+		ORDER BY machine_id DESC
+		LIMIT 1
+	</select>
+	
+	<!-- 장비 갯수 검색 -->
+	<select id="SearchMachineCount" resultType="int">
+		SELECT COUNT(*) FROM machine m
+		LEFT JOIN user u ON m.user_id = u.user_id
+		<where>
+			<choose>
+				<when test="search_type == 0">
+					AND (m.machine_code LIKE CONCAT('%', #{keyword}, '%') OR m.machine_name LIKE CONCAT('%', #{keyword}, '%') OR m.machine_model LIKE CONCAT('%', #{keyword}, '%') OR m.machine_purpose LIKE CONCAT('%', #{keyword}, '%') OR u.user_name LIKE CONCAT('%', #{keyword}, '%'))
+				</when>
+				<when test="search_type == 1">
+					AND m.machine_code LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<when test="search_type == 2">
+					AND m.machine_name LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<when test="search_type == 3">
+					AND m.machine_model LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<when test="search_type == 4">
+					AND m.machine_purpose LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<when test="search_type == 5">
+					AND u.user_name LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+			</choose>
+		</where>
+	</select>
+	
+	<!-- 장비 검색 -->
+	<select id="SearchMachine" resultType="Machine">
+		SELECT * FROM machine m
+		LEFT JOIN user u ON m.user_id = u.user_id
+		<where>
+			<choose>
+				<when test="search_type == 0">
+					AND (m.machine_code LIKE CONCAT('%', #{keyword}, '%') OR m.machine_name LIKE CONCAT('%', #{keyword}, '%') OR m.machine_model LIKE CONCAT('%', #{keyword}, '%') OR m.machine_purpose LIKE CONCAT('%', #{keyword}, '%') OR u.user_name LIKE CONCAT('%', #{keyword}, '%'))
+				</when>
+				<when test="search_type == 1">
+					AND m.machine_code LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<when test="search_type == 2">
+					AND m.machine_name LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<when test="search_type == 3">
+					AND m.machine_model LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<when test="search_type == 4">
+					AND m.machine_purpose LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<when test="search_type == 5">
+					AND u.user_name LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+			</choose>
+		</where>
+		LIMIT #{offset}, #{limit}
+	</select>
+
+	<!-- 장비 등록 -->
+	<insert id="InsertMachine" parameterType="Machine">
+		INSERT INTO machine
+		(user_id, machine_code, machine_name, machine_model, machine_price, machine_range, machine_public, machine_purpose, machine_place, machine_regist, machine_manage, machine_status, machine_date, create_date, modify_date)
+		VALUES
+		(#{user_id}, #{machine_code}, #{machine_name}, #{machine_model}, #{machine_price}, #{machine_range}, #{machine_public}, #{machine_purpose}, #{machine_place}, #{machine_regist}, #{machine_manage}, 1, #{machine_date}, NOW(), NOW())
+	</insert>
+	
+	<!-- 장비 수정 -->
+	<update id="UpdateMachine" parameterType="Machine">
+		UPDATE machine
+		SET machine_name = #{machine_name}, machine_model = #{machine_model}, machine_price = #{machine_price}, machine_range = #{machine_range}, machine_public = #{machine_public}, machine_purpose = #{machine_purpose}, machine_place = #{machine_place}, machine_regist = #{machine_regist}, machine_manage = #{machine_manage}, machine_date = #{machine_date}, modify_date = NOW()
+		WHERE machine_id = #{machine_id}
+	</update>
+	
+	<!-- 장비 삭제 -->
+	<delete id="DeleteMachine" parameterType="int">
+		DELETE FROM machine
+		WHERE machine_id = #{machine_id}
+	</delete>
+</mapper>

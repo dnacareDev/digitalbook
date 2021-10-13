@@ -1,5 +1,6 @@
 package com.digitalBook.Controller;
 
+import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,7 @@ public class ResearchController
 	@Autowired
 	private ResearchService service;
 	
-	//조사방법 목록
+	// 조사방법 목록
 	@RequestMapping(value = "/research")
 	public ModelAndView Research(ModelAndView mv)
 	{
@@ -32,7 +33,7 @@ public class ResearchController
 		return mv;
 	}
 	
-	//조사방법 등록 페이지
+	// 조사방법 등록 페이지
 	@RequestMapping(value = "/research/insert")
 	public ModelAndView ResearchInsert(ModelAndView mv)
 	{
@@ -105,9 +106,13 @@ public class ResearchController
 		Research research = new Research();
 		Research last_research = service.SelectLastResearch();
 		
+		Calendar cal = Calendar.getInstance();
+		
+		int now = cal.get(Calendar.YEAR);
+		
 		if(last_research == null)
 		{
-			research.setResearch_code("ac-o-002-00001");
+			research.setResearch_code("ac-" + now + "-00001");
 			research.setDivision_id(division_id);
 			research.setResearch_contents(research_contents);
 		}
@@ -115,8 +120,8 @@ public class ResearchController
 		{
 			String[] strArr = last_research.getResearch_code().split("-");
 			
-			int code = Integer.parseInt(strArr[3]) + 1;
-			research.setResearch_code("ac-o-002-" + String.format("%05d", code));
+			int code = Integer.parseInt(strArr[2]) + 1;
+			research.setResearch_code("ac-" + now + "-" + String.format("%05d", code));
 			research.setDivision_id(division_id);
 			research.setResearch_contents(research_contents);
 		}
