@@ -79,6 +79,7 @@
 				                                <option value="r.reagent_nick_e">영문별칭</option>
 				                                <option value="r.reagent_nick_k">국문별칭</option>
 				                                <option value="r.reagent_manufacturer">제조사</option>
+				                                <option value="r.reagent_quantity">수량</option>
 				                            </select>
 				                            <div class="input-container icon-right position-relative mr-10">
 			                                    <a href="#" onclick="searchReagent(1); return false;" class="input-icon icon-right"><span data-feather="search"></span></a>
@@ -191,7 +192,7 @@
 						add_list += '<td><span>' + result.reagent[i].reagent_nick_k + '</span></td>';
 						add_list += '<td><span>' + result.reagent[i].reagent_manufacturer + '</span></td>';
 						add_list += '<td><span>' + result.reagent[i].reagent_quantity.toLocaleString() + '</span></td>';
-						add_list += '<td><span>' + '김길중' + '</span></td>';
+						add_list += '<td><span>' + result.reagent[i].user_name_k + '</span></td>';
 						add_list += '<td><span>' + status + '</span></td>';
 						add_list += '<td><span>' + result.reagent[i].create_date + '</span></td>';
 						add_list += '</tr>';

@@ -4,7 +4,8 @@
 	
 	<!-- 농자재 검색 -->
 	<select id="SearchMaterial" resultType="Material">
-		SELECT * FROM material
+		SELECT m.*, u.* FROM material m
+		LEFT JOIN user u ON m.user_id = u.user_id
 		WHERE 1=1
 		<choose>
 			<when test="search_type == null || search_type.equals('none')">
@@ -20,7 +21,8 @@
 	
 	<!-- 농자재  갯수 검색 -->
 	<select id="SearchMaterialCount" resultType="int">
-		SELECT COUNT(*) FROM material
+		SELECT COUNT(*) FROM material m
+		LEFT JOIN user u ON m.user_id = u.user_id
 		WHERE 1=1
 		<choose>
 			<when test="search_type == null || search_type.equals('none')">
