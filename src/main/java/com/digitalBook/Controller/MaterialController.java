@@ -1,5 +1,6 @@
 package com.digitalBook.Controller;
 
+import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,15 +74,19 @@ public class MaterialController {
 	public int insertMaterial(@RequestParam(name = "material_name", required = true) String material_name) {
 		
 		Material material = new Material();
+		
+		Calendar cal = Calendar.getInstance();
 		String last_material_code = service.selectLastMeterialCode();
+		String code1 = "ms-";
+		String code2 = String.valueOf(cal.get(Calendar.YEAR))+"-";
 		
 		if(last_material_code == null || last_material_code.equals("")) {
-			material.setMaterial_code("ms-o-002-00001");
+			material.setMaterial_code(code1+code2+"00001");
 		}else {
 			String[] strArr = last_material_code.split("-");
 			
-			int code = Integer.parseInt(strArr[3]) + 1;
-			material.setMaterial_code("ms-o-002-" + String.format("%05d", code));
+			int code3 = Integer.parseInt(strArr[2]) + 1;
+			material.setMaterial_code(code1+code2+String.format("%05d", code3));
 		}//end else
 		
 		material.setMaterial_name(material_name);
