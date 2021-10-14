@@ -75,7 +75,7 @@ public class ReagentController {
 	@ResponseBody
 	@RequestMapping("/reagent/insertReagent")
 	public int insertReagent(Reagent reagent) {
-		System.out.println(reagent);
+		
 		Calendar cal = Calendar.getInstance();
 		
 		String last_reagent_code = service.selectLastReagnetCode();

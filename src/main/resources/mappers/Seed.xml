@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.digitalBook.Mapper.SeedMapper">
+	
+	<!-- 시약 검색 -->
+	<select id="SearchSeed" resultType="Seed">
+		SELECT s.*, u1.user_name as manager_name, u2.user_name as sender_name,
+		 u2.*, e.*, g.*, r.*, w.*, d.* 
+		FROM seed s
+		LEFT JOIN user u1 ON s.seed_manager = u1.user_id
+		LEFT JOIN user u2 ON s.seed_sender = u2.user_id
+		LEFT JOIN eaches e ON s.eaches_id = e.eaches_id
+		LEFT JOIN genetic g ON s.genetic_id = g.genetic_id
+		LEFT JOIN division d ON g.division_id = d.division_id
+		LEFT JOIN report r ON s.report_id = r.report_id
+		LEFT JOIN warehouse w ON s.ware_id = w.ware_id
+		WHERE 1=1
+		<choose>
+			<when test="search_type == null || search_type.equals('none')">
+				
+			</when>
+			<when test="search_type.equals('r.reagent_quantity')">
+				AND ${search_type} = #{keyword}
+			</when>
+			<otherwise>
+				AND ${search_type} LIKE CONCAT('%', #{keyword}, '%')
+			</otherwise>
+		</choose>
+		ORDER BY seed_id DESC
+		LIMIT #{offset}, #{limit}
+	</select>
+	
+	<!-- 시약  갯수 검색 -->
+	<select id="SearchSeedCount" resultType="int">
+		SELECT COUNT(*)
+		FROM seed s
+		LEFT JOIN user u1 ON s.seed_manager = u1.user_id
+		LEFT JOIN user u2 ON s.seed_sender = u2.user_id
+		LEFT JOIN eaches e ON s.eaches_id = e.eaches_id
+		LEFT JOIN genetic g ON s.genetic_id = g.genetic_id
+		LEFT JOIN division d ON g.division_id = d.division_id
+		LEFT JOIN report r ON s.report_id = r.report_id
+		LEFT JOIN warehouse w ON s.ware_id = w.ware_id
+		WHERE 1=1
+		<choose>
+			<when test="search_type == null || search_type.equals('none')">
+				
+			</when>
+			<when test="search_type.equals('r.reagent_quantity')">
+				AND ${search_type} = #{keyword}
+			</when>
+			<otherwise>
+				AND ${search_type} LIKE CONCAT('%', #{keyword}, '%')
+			</otherwise>
+		</choose>
+	</select>
+	
+	<!-- 과제 전체 조회 -->
+	<select id="selectReportList" resultType="Report">
+		SELECT * FROM report
+	</select>
+	
+	<!-- 사용자 전체 조회 -->
+	<select id="selectUserList" resultType="User">
+		SELECT * FROM user
+	</select>
+	
+	<!-- 단위 전체 조회 -->
+	<select id="selectEachesList" resultType="Eaches">
+		SELECT * FROM eaches
+		WHERE eaches_type = '시료'
+	</select>
+	
+	<!-- 저장 장소 전체 조회 -->
+	<select id="selectWarehouseList" resultType="Warehouse">
+		SELECT * FROM warehouse
+	</select>
+	
+	<!-- 조사 항목(작목) 전체 조회 -->
+	<select id="selectDivisionList" resultType="Division">
+		SELECT * FROM division
+		WHERE division_depth = 0
+	</select>
+	
+	<!-- 품종/유전정보 전체 조회 -->
+	<select id="selectGeneticList" parameterType="int" resultType="Genetic">
+		SELECT * FROM genetic
+		WHERE division_id = #{division_id} and genetic_type = #{genetic_type}
+	</select>
+	
+	<!-- 시료 등록 -->
+	<insert id="insertSeed" parameterType="Seed">
+		INSERT INTO seed
+		(seed_manager,
+		seed_code,
+		seed_area,
+		seed_year,
+		seed_method,
+		seed_amount,
+		eaches_id,
+		seed_comment,
+		genetic_id,
+		report_id,
+		seed_report,
+		ware_id,
+		seed_sender,
+		send_date,
+		seed_receiver,
+		create_date,
+		modify_date
+		)
+		VALUES
+		(#{seed_manager},
+		#{seed_code},
+		#{seed_area},
+		#{seed_year},
+		#{seed_method},
+		#{seed_amount},
+		#{eaches_id},
+		#{seed_comment},
+		#{genetic_id},
+		#{report_id},
+		#{seed_report},
+		#{ware_id},
+		#{seed_sender},
+		#{send_date},
+		#{seed_receiver},
+		NOW(),
+		NOW()
+		)
+	</insert>
+	
+	<!-- 최근 시료 ID -->
+	<select id="selectLastSeedCode" resultType="String">
+		SELECT seed_code FROM seed
+		ORDER BY seed_id DESC
+		LIMIT 1
+	</select>
+	
+</mapper>
