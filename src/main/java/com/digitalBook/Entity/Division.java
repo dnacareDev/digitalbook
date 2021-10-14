@@ -16,6 +16,4 @@ public class Division
 	private String division;				// 조사항목
 	private int division_depth;				// 조사항목 깊이
 	private int division_parents;			// 부모 조사항목
-	
-	private int genetic_id;					// 품종/유전 정보 번호
 }

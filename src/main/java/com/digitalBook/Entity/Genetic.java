@@ -14,7 +14,7 @@ public class Genetic
 {
 	private int genetic_id;					// 품종/유전 정보 번호
 	private String genetic;					// 품종/유전 정보
-	private int genetic_type;				// 품종/유전 정보 유형
-	private int genetic_depth;				// 품종/유전 정보 깊이
-	private int genetic_parents;			// 부모 품종/유전 정보
+	private int genetic_type;				// 품종/유전 정보 유형(0: 품종, 1: 유전자원, 2: 기타)
+	
+	private int division_id;
 }
