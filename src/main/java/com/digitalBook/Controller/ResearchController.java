@@ -17,7 +17,7 @@ import com.digitalBook.Entity.Research;
 import com.digitalBook.Service.ResearchService;
 
 @Controller
-@RequestMapping(value = "/data")
+@RequestMapping("/data")
 //기초정보 > 조사방법 
 public class ResearchController
 {
@@ -25,7 +25,7 @@ public class ResearchController
 	private ResearchService service;
 	
 	// 조사방법 목록
-	@RequestMapping(value = "/research")
+	@RequestMapping("/research")
 	public ModelAndView Research(ModelAndView mv)
 	{
 		mv.setViewName("research/research_list");
@@ -34,7 +34,7 @@ public class ResearchController
 	}
 	
 	// 조사방법 등록 페이지
-	@RequestMapping(value = "/research/insert")
+	@RequestMapping("/research/insert")
 	public ModelAndView ResearchInsert(ModelAndView mv)
 	{
 		List<Division> division = service.SelectDivision(0, 0);
@@ -47,7 +47,7 @@ public class ResearchController
 	}
 	
 	// 조사방법 수정 페이지
-	@RequestMapping(value = "/research/modify")
+	@RequestMapping("/research/modify")
 	public ModelAndView ResearchModify(ModelAndView mv, @RequestParam("research_id") int research_id)
 	{
 		Research research = service.SelectResearchDetail(research_id);

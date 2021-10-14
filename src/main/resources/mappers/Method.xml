@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.digitalBook.Mapper.MethodMapper">
+	<!-- 입력단위 조회 -->
+	<select id="SelectEaches" parameterType="String" resultType="Eaches">
+		SELECT * FROM eaches
+		WHERE eaches_type = #{eaches_type}
+	</select>
+	
+	<!-- 조사방법 조회 -->
+	<select id="SelectResearch" parameterType="int" resultType="Research">
+		SELECT * FROM research
+		WHERE division_id = #{division_id}
+	</select>
+</mapper>
