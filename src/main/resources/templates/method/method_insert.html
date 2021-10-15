@@ -88,18 +88,25 @@
 				<div class="row mt-20">
 					<div class="col-lg-12">
 						<div class="card">
-							<div class="card-body">
+							<div class="card-body"> 
 								<span class="color-dark align-center">Step 설정</span>
 								<input type="text" class="form-control b-light" id="method_contents">
-								<button class="btn btn-primary">조사방법 추가</button>
-								<div class="table-responsive">
-									<table class="table table--default sm">
+								<button class="btn btn-primary" onclick="InsertPopup();">조사방법 추가</button>
+								<div class="table-responsive" style="width: 25%; display: inline-block;">
+								<button onclick="CheckResearch();"><span data-feather="plus"></span></button>
+									<table class="table">
 										<thead>
 											<tr>
 												<th>조사방법</th>
 											</tr>
 										</thead>
-										<tbody id="research_list">
+										<tbody class="research_table" id="research_list">
+										</tbody>
+									</table>
+								</div>
+								<div class="table-responsive" style="width: 70%; height: 500px; display: inline-block; float: right; background: #f4f5f7;">
+									<table class="table">
+										<tbody id="research_table">
 										</tbody>
 									</table>
 								</div>
@@ -120,40 +127,38 @@
 			        	</div>
 			            <div class="modal-body">
 			            	<div class="col-12">
-				            	<form action="#">
-			        				<div class="row">
-				        				<div class="col-md-6 mb-25">
-		                                    <label for="division_depth1" class="color-dark fw-500">대상작목</label>
-		                                    <select class="form-control b-light select" id="division_depth1">
-				                                <option value="0">대상 작목 선택</option>
-				                                <th:block th:each="dvs : ${division}">
-					                                <option th:value="${dvs.division_id}" th:text="${dvs.division}"></option>
-				                                </th:block>
-				                            </select>
-		                                </div>
-		                                <div class="col-md-6 mb-25">
-		                                    <label for="division_depth2" class="color-dark fw-500">분류</label>
-		                                    <select class="form-control b-light select" id="division_depth2">
-				                                <option value="0">분류 선택</option>
-				                            </select>
-		                                </div>
-		                            </div>
-		                            <div class="row">
-				        				<div class="col-md-6 mb-25">
-		                                    <label for="division_depth3" class="color-dark fw-500">항목</label>
-		                                    <select class="form-control b-light select" id="division_depth3">
-				                                <option value="0">항목 선택</option>
-				                            </select>
-		                                </div>
-		                                <div class="col-md-6 mb-25">
-		                                    <label for="research_contents" class="color-dark fw-500">Method 명</label>
-		                                    <input type="text" class="form-control b-deep" id="method_title">
-		                                </div>
-		                            </div>
-				            		<div class="button-group d-flex justify-content-end">
-					                   <button class="btn btn-primary btn-default btn-squared" id="titleBtn" onclick="TitleBtn();">사용</button>
-					           		</div>
-				            	</form>
+		        				<div class="row">
+			        				<div class="col-md-6 mb-25">
+	                                    <label for="division_depth1" class="color-dark fw-500">대상작목</label>
+	                                    <select class="form-control b-light select" id="division_depth1">
+			                                <option value="0">대상 작목 선택</option>
+			                                <th:block th:each="dvs : ${division}">
+				                                <option th:value="${dvs.division_id}" th:text="${dvs.division}"></option>
+			                                </th:block>
+			                            </select>
+	                                </div>
+	                                <div class="col-md-6 mb-25">
+	                                    <label for="division_depth2" class="color-dark fw-500">분류</label>
+	                                    <select class="form-control b-light select" id="division_depth2">
+			                                <option value="0">분류 선택</option>
+			                            </select>
+	                                </div>
+	                            </div>
+	                            <div class="row">
+			        				<div class="col-md-6 mb-25">
+	                                    <label for="division_depth3" class="color-dark fw-500">항목</label>
+	                                    <select class="form-control b-light select" id="division_depth3">
+			                                <option value="0">항목 선택</option>
+			                            </select>
+	                                </div>
+	                                <div class="col-md-6 mb-25">
+	                                    <label for="research_contents" class="color-dark fw-500">Method 명</label>
+	                                    <input type="text" class="form-control b-deep" id="method_title">
+	                                </div>
+	                            </div>
+			            		<div class="button-group d-flex justify-content-end">
+				                   <button class="btn btn-primary btn-default btn-squared" id="titleBtn" onclick="TitleBtn();">사용</button>
+				           		</div>
 			            	</div>
 			            </div>
 			        </div>
@@ -179,6 +184,27 @@
 	        		</div>
 	        	</div>
 	        </div>
+	        
+	        <div class="atbd-notice" id="insert_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
+	        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+	        		<div class="card-body">
+	        			<div class="atbd-notice__content">
+	        				<div class="atbd-notice__top text-center">
+	        					<div class="atbd-notice__icon bg-success">
+	        						<i class="fas fa-check color-white"></i>
+	        					</div>
+	        					<div class="atbd-notice__text">
+	        						<h4>등록이 완료되었습니다.</h4>
+	        					</div>
+	        					<div style="display: flex; justify-content: center; margin: 10% auto;">
+	        						<a class="btn btn-default btn-success" href="/data/machine" style="color: #FFFFFF;">확인</a>
+	        					</div>
+	        				</div>
+	        			</div>
+	        		</div>
+	        	</div>
+	        </div>
+
 	        
      	</div>
      </main>
@@ -270,22 +296,21 @@
 				var research_list = $("#research_list");
 				var add_list = "";
 				
-				
 				for(var i = 0; i < result.length; i++)
 				{
 					add_list += '<tr>';
-					add_list += '<td value="'+ result[i].research_id + '" draggable="true">' + result[i].research_contents + '</td>';
+					add_list += '<td><input type="checkbox" class="checkbox" name="chk_research" value="' + result[i].research_id + '"></td>';
+					add_list += '<td>' + result[i].research_contents + '</td>';
 					add_list += '</tr>';
 				}
 				
-				
 				research_list.empty();
 				research_list.append(add_list);
+				
+				$("#input_title").val(d1.text() + " > " + d2.text() + " > " +  d3.text() + " > " +  method_title);
+				$("#divisionModal").modal("hide");
 			}
 		});
-		
-		$("#input_title").val(d1.text() + " > " + d2.text() + " > " +  d3.text() + " > " +  method_title);
-		$("#divisionModal").modal("hide");
 	}
 	
 	// 입력단위 선택
@@ -318,6 +343,33 @@
 			}
 		});
 	});
+	
+	function InsertPopup()
+	{
+		$("#insert_popup").modal("show");
+	}
+	
+	function CheckResearch()
+	{
+		var research_table = $("#research_table");
+		var add_list = "";
+		
+		$("input:checkbox[name=chk_research]:checked").each(function()
+		{
+			var research_id = $(this).val();
+			var research_title = $(this).parent().parent().children()[1].innerHTML;
+			
+			console.log(research_id);
+			console.log(research_title);
+			
+			add_list += '<tr>';
+			add_list += '<td>' + research_title + '</td>';
+			add_list += '</tr>';
+		});
+		
+		research_table.empty();
+		research_table.append(add_list);
+	}
 </script>
 </body>
 </html>
