@@ -73,144 +73,151 @@
 				        		<div class="card-body">
 				        			<div class="columnGrid-wrapper">
 					        			<div class="row">
-				        					<div class="col-12">
+				        					<div class="col-12" id="seed_form">
 				        						<div class="card card-bordered">
 					        						<div class="card-body ml-2 mt-3">
-					        							<div class="col-12 ml-1">
-													        <div class="row">
-													        	<div style="font-size: 17px; color: initial;">종자 및 시료관리</div>
-													        </div>
-												        </div>
-					        							<div class="col-12">
-					        								<div class="row mt-1">
-					        									<div class="col-md-2 mb-25 d-flex aling-items-center">
-					        										<label class="color-dark fw-500 align-center mt-1">품종/유전자원정보<span style="color: red;">*</span></label>
-					        									</div>
-					        									<div class="col-md-4 mb-25">
-					        										<input type="text" class="form-control b-light" id="genetic" style="float: left; width: 365px;">
-					        										<label class="btn btn-light" for="genetic">조회</label>
-					        									</div>
-					        									<div class="col-md-2 mb-25 d-flex aling-items-center">
-								                                    <label for="seed_manager" class="color-dark fw-500 align-center">담당자<span style="color: red;">*</span></label>
-								                                </div>
-								                                <div class="col-md-4 mb-25">
-					        										<select class="form-control b-light" id="seed_manager">
-										                                <option disabled="disabled" selected="selected" hidden="hidden">담당자 선택</option>
-										                                <th:block th:each="user : ${user}">
-										                                	<option th:value="${user.user_id}" th:text="${user.user_name}"></option>
-										                                </th:block>
-										                            </select>
-					        									</div>
-					        								</div>
-					        								<div class="row">
-					        									<div class="col-md-2 mb-25 d-flex aling-items-center">
-					        										<label for="seed_area" class="color-dark fw-500 align-center mt-1">생산지역<span style="color: red;">*</span></label>
-					        									</div>
-					        									<div class="col-md-4 mb-25">
-					        										<input type="text" class="form-control b-light" id="seed_area">
-					        									</div>
-					        									<div class="col-md-2 mb-25 d-flex aling-items-center">
-								                                    <label for="seed_year" class="color-dark fw-500 align-center">생산연도<span style="color: red;">*</span></label>
-								                                </div>
-								                                <div class="col-md-4 mb-25">
-					        										<input type="number" class="form-control b-light" id="seed_year">
-					        									</div>
-					        								</div>
-					        								<div class="row">
-					        									<div class="col-md-2 mb-25 d-flex aling-items-center">
-					        										<label for="seed_method" class="color-dark fw-500 align-center mt-1">생산방법</label>
-					        									</div>
-					        									<div class="col-md-4 mb-25">
-					        										<select class="form-control b-light" name="seed_method">
-										                                <option value="">생산 방법 선택</option>
-										                                <option value="시험연구">시험연구</option>
-										                                <option value="증식">증식</option>
-										                                <option value="구매">구매</option>
-										                                <option value="외부농가">외부농가</option>
-										                            </select>
-					        									</div>
-					        									<div class="col-md-2 mb-25 d-flex aling-items-center">
-								                                    <label for="seed_amount" class="color-dark fw-500 align-center">수량(개수)<span style="color: red;">*</span></label>
-								                                </div>
-								                                <div class="col-md-2 mb-25">
-					        										<input type="number" class="form-control b-light" id="seed_amount">
-					        									</div>
-					        									<div class="col-md-2 mb-25">
-					        										<select class="form-control b-light" name="each" id="eaches_id">
-										                                <option disabled="disabled" selected="selected" hidden="hidden">단위 선택</option>
-										                                <th:block th:each="eaches : ${eaches}">
-										                                	<option th:value="${eaches.eaches_id}" th:text="${eaches.eaches_name}"></option>
-										                                </th:block>
-										                            </select>
-					        									</div>
-					        								</div>
-					        								<div class="row">
-					        									<div class="col-md-2 mb-25 d-flex aling-items-center">
-					        										<label for="ware_id" class="color-dark fw-500 align-center mt-1">저장장소<span style="color: red;">*</span></label>
-					        									</div>
-					        									<div class="col-md-4 mb-25">
-					        										<select class="form-control b-light" name="ware_id" id="ware_id">
-										                                <option disabled="disabled" selected="selected" hidden="hidden">저장 장소 선택</option>
-										                                <th:block th:each="ware : ${warehouse}">
-										                                	<option th:value="${ware.ware_id}" th:text="${ware.warehouse}"></option>
-										                                </th:block>
-										                            </select>
-					        									</div>
-					        									<div class="col-md-2 mb-25 d-flex aling-items-center">
-								                                    <label for="ware_condition" class="color-dark fw-500 align-center">저장조건</label>
-								                                </div>
-								                                <div class="col-md-4 mb-25">
-					        										<input type="text" class="form-control b-light" id="ware_condition" readonly="readonly">
-					        									</div>
-					        								</div>
-					        								<div class="row">
-					        									<div class="col-md-2 mb-25 d-flex aling-items-center">
-					        										<label for="seed_comment" class="color-dark fw-500 align-center">Comment</label>
-					        									</div>
-					        									<div class="col-md-10 mb-25">
-					        										<textarea class="form-control" id="seed_comment" rows="5"></textarea>
-					        									</div>
-					        								</div>
-					        							</div>
-					        							<div class="col-12 ml-1">
-													        <div class="row">
-													        	<div style="font-size: 17px; color: initial;">기타정보</div>
-													        </div>
-												        </div>
-												        <div class="col-12">
-					        								<div class="row mt-1">
-					        									<div class="col-md-2 mb-25 d-flex aling-items-center">
-								                                    <label for="seed_sender" class="color-dark fw-500 align-center">발송인 정보</label>
-								                                </div>
-								                                <div class="col-md-4 mb-25">
-					        										<select class="form-control b-light" name="seed_sender" id="seed_sender">
-										                                <option th:value=0>발송인 선택</option>
-										                                <th:block th:each="user : ${user}">
-										                                	<option th:value="${user.user_id}" th:text="${user.user_name}"></option>
-										                                </th:block>
-										                            </select>
-					        									</div>
-					        									<div class="col-md-2 mb-25 d-flex aling-items-center">
-					        										<label for="seed_receiver" class="color-dark fw-500 align-center mt-1">수취인 정보</label>
-					        									</div>
-					        									<div class="col-md-4 mb-25">
-					        										<input type="text" class="form-control b-light" id="seed_receiver">
-					        									</div>
-					        								</div>
-					        								<div class="row">
-					        									<div class="col-md-2 mb-25 d-flex aling-items-center">
-								                                    <label for="send_date" class="color-dark fw-500 align-center">발송일자</label>
-								                                </div>
-								                                <div class="col-md-4 mb-25">
-					        										<input type="text" class="form-control b-light" id="send_date">
-					        									</div>
-					        									<div class="col-md-2 mb-25 d-flex aling-items-center">
-					        										<label class="color-dark fw-500 align-center mt-1">수취일자</label>
-					        									</div>
-					        									<div class="col-md-4 mb-25">
-					        										<input type="text" class="form-control b-light" id="receive_date" readonly="readonly">
-					        									</div>
-					        								</div>
+					        							<div class="row">
+					        								<div class="col-11 col-md-11 col-lg-11">
+						        								<div class="col-12 ml-1">
+															        <div class="row">
+															        	<div style="font-size: 17px; color: initial;">종자 및 시료관리</div>
+															        </div>
+														        </div>
+							        							<div class="col-12">
+							        								<div class="row mt-1">
+							        									<div class="col-md-2 mb-25 d-flex aling-items-center">
+							        										<label class="color-dark fw-500 align-center mt-1">품종/유전자원정보<span style="color: red;">*</span></label>
+							        									</div>
+							        									<div class="col-md-4 mb-25">
+							        										<input type="text" class="form-control b-light genetic" style="float: left; width: 315px;" readonly="readonly">
+							        										<label class="btn btn-light genetic_show">조회</label>
+							        									</div>
+							        									<div class="col-md-2 mb-25 d-flex aling-items-center">
+										                                    <label for="seed_manager" class="color-dark fw-500 align-center">담당자<span style="color: red;">*</span></label>
+										                                </div>
+										                                <div class="col-md-4 mb-25">
+							        										<select class="form-control b-light seed_manager" id="seed_manager">
+												                                <option disabled="disabled" selected="selected" hidden="hidden">담당자 선택</option>
+												                                <th:block th:each="user : ${user}">
+												                                	<option th:value="${user.user_id}" th:text="${user.user_name}"></option>
+												                                </th:block>
+												                            </select>
+							        									</div>
+							        								</div>
+							        								<div class="row">
+							        									<div class="col-md-2 mb-25 d-flex aling-items-center">
+							        										<label for="seed_area" class="color-dark fw-500 align-center mt-1">생산지역<span style="color: red;">*</span></label>
+							        									</div>
+							        									<div class="col-md-4 mb-25">
+							        										<input type="text" class="form-control b-light seed_area" id="seed_area">
+							        									</div>
+							        									<div class="col-md-2 mb-25 d-flex aling-items-center">
+										                                    <label for="seed_year" class="color-dark fw-500 align-center">생산연도<span style="color: red;">*</span></label>
+										                                </div>
+										                                <div class="col-md-4 mb-25">
+							        										<input type="number" class="form-control b-light seed_year" id="seed_year">
+							        									</div>
+							        								</div>
+							        								<div class="row">
+							        									<div class="col-md-2 mb-25 d-flex aling-items-center">
+							        										<label for="seed_method" class="color-dark fw-500 align-center mt-1">생산방법</label>
+							        									</div>
+							        									<div class="col-md-4 mb-25">
+							        										<select class="form-control b-light seed_method" name="seed_method">
+												                                <option value="">생산 방법 선택</option>
+												                                <option value="시험연구">시험연구</option>
+												                                <option value="증식">증식</option>
+												                                <option value="구매">구매</option>
+												                                <option value="외부농가">외부농가</option>
+												                            </select>
+							        									</div>
+							        									<div class="col-md-2 mb-25 d-flex aling-items-center">
+										                                    <label for="seed_amount" class="color-dark fw-500 align-center">수량(개수)<span style="color: red;">*</span></label>
+										                                </div>
+										                                <div class="col-md-2 mb-25">
+							        										<input type="number" class="form-control b-light seed_amount" id="seed_amount">
+							        									</div>
+							        									<div class="col-md-2 mb-25">
+							        										<select class="form-control b-light eaches_id" name="each" id="eaches_id">
+												                                <option disabled="disabled" selected="selected" hidden="hidden">단위 선택</option>
+												                                <th:block th:each="eaches : ${eaches}">
+												                                	<option th:value="${eaches.eaches_id}" th:text="${eaches.eaches_name}"></option>
+												                                </th:block>
+												                            </select>
+							        									</div>
+							        								</div>
+							        								<div class="row">
+							        									<div class="col-md-2 mb-25 d-flex aling-items-center">
+							        										<label for="ware_id" class="color-dark fw-500 align-center mt-1">저장장소<span style="color: red;">*</span></label>
+							        									</div>
+							        									<div class="col-md-4 mb-25">
+							        										<select class="form-control b-light ware_id" name="ware_id" id="ware_id">
+												                                <option disabled="disabled" selected="selected" hidden="hidden">저장 장소 선택</option>
+												                                <th:block th:each="ware : ${warehouse}">
+												                                	<option th:value="${ware.ware_id}" th:data-condition="${ware.ware_condition}" th:text="${ware.warehouse}"></option>
+												                                </th:block>
+												                            </select>
+							        									</div>
+							        									<div class="col-md-2 mb-25 d-flex aling-items-center">
+										                                    <label for="ware_condition" class="color-dark fw-500 align-center">저장조건</label>
+										                                </div>
+										                                <div class="col-md-4 mb-25">
+							        										<input type="text" class="form-control b-light ware_condition" id="ware_condition" readonly="readonly">
+							        									</div>
+							        								</div>
+							        								<div class="row">
+							        									<div class="col-md-2 mb-25 d-flex aling-items-center">
+							        										<label for="seed_comment" class="color-dark fw-500 align-center">Comment</label>
+							        									</div>
+							        									<div class="col-md-10 mb-25">
+							        										<textarea class="form-control seed_comment" id="seed_comment" rows="5"></textarea>
+							        									</div>
+							        								</div>
+							        							</div>
+							        							<div class="col-12 ml-1">
+															        <div class="row">
+															        	<div style="font-size: 17px; color: initial;">기타정보</div>
+															        </div>
+														        </div>
+														        <div class="col-12">
+							        								<div class="row mt-1">
+							        									<div class="col-md-2 mb-25 d-flex aling-items-center">
+										                                    <label for="seed_receiver" class="color-dark fw-500 align-center">발송인 정보</label>
+										                                </div>
+										                                <div class="col-md-4 mb-25">
+							        										<input type="text" class="form-control b-light seed_receiver" id="seed_receiver">
+							        									</div>
+							        									<div class="col-md-2 mb-25 d-flex aling-items-center">
+							        										<label for="seed_sender" class="color-dark fw-500 align-center mt-1">수취인 정보</label>
+							        									</div>
+							        									<div class="col-md-4 mb-25">
+							        										<select class="form-control b-light seed_sender" name="seed_sender" id="seed_sender">
+												                                <option th:value=0>수취인 선택</option>
+												                                <th:block th:each="user : ${user}">
+												                                	<option th:value="${user.user_id}" th:text="${user.user_name}"></option>
+												                                </th:block>
+												                            </select>
+							        									</div>
+							        								</div>
+							        								<div class="row">
+							        									<div class="col-md-2 mb-25 d-flex aling-items-center">
+										                                    <label for="send_date" class="color-dark fw-500 align-center">발송일자</label>
+										                                </div>
+										                                <div class="col-md-4 mb-25">
+							        										<input type="text" class="form-control b-light send_date" id="send_date">
+							        									</div>
+							        									<div class="col-md-2 mb-25 d-flex aling-items-center">
+							        										<label class="color-dark fw-500 align-center mt-1">수취일자</label>
+							        									</div>
+							        									<div class="col-md-4 mb-25">
+							        										<input type="text" class="form-control b-light receive_date" id="receive_date">
+							        									</div>
+							        								</div>
+							        							</div>
+						        							</div>
+						        							<div class="col-1 col-md-1 col-lg-1 del_btn_div">
+						        								
+						        							</div>
 					        							</div>
 					        						</div>
 					        					</div>
@@ -219,7 +226,7 @@
 			                    	</div>
 				        		</div>
 				        		<div class="d-flex justify-content-end mr-20 mb-20">
-				                	<a href="#" class="btn btn-default btn-success">+추가</a>
+				                	<a class="btn btn-default" id="addseedFormBtn" style="background-color: #64DB99; color: white;">+추가</a>
 				                </div>
 				        	</div>
 			        	</form>
@@ -365,7 +372,7 @@
      								</div>
 				            	</div>
 				            	<div class="button-group d-flex justify-content-end">
-				                   <button class="btn btn-primary btn-default btn-squared" id="input_btn">사용</button>
+				                   <button class="btn btn-primary btn-default btn-squared input_btn">사용</button>
 				           		</div>
 			            	</div>
 			            </div>
@@ -384,6 +391,8 @@
     <th:block th:include="@{/fragments/commonjs.html}"></th:block>
 
 <script type="text/javascript">
+
+	var this_1;
 	
 	var division_col = $("#division_col");
 	var genetic_col = $("#genetic_col");
@@ -455,13 +464,15 @@
 	});//end 작목명 선택 이벤트
 	
 	//품종, 유전정보 등록 버튼 이벤트
-	$("#input_btn").on("click", function(){
-		var genetic_id = $(".genetic_input").val();
+	$(".input_btn").on("click", function(){
 		var str1 = $("#division_slt option:selected").text();
 		var str2 = $(".genetic_input option:selected").text();
 		var str = str1 + " > " + str2;
 		
-		$("#genetic").val(str);
+		this_1.val(str);
+		var genetic_id = $(".genetic_input").val();
+		this_1.attr('data-genetic-id', genetic_id);
+		
 		$("#geneticModal").modal("hide");
 	});
 	
@@ -474,6 +485,40 @@
 			$("#report_id").prop("disabled", false);
 		}
 	});
+	
+	//저장장소 선택에 따른 저장조건 이벤트
+	$(document).on("change", ".ware_id", function(){
+		ware_condition = $(this).find("option:selected").attr("data-condition");
+		console.log(ware_condition);
+		$(this).parent().parent().find(".ware_condition").val(ware_condition);
+	});
+	
+	//등록 폼 추가 이벤트
+	$("#addseedFormBtn").on("click", function(){
+		var seed_form = $("#seed_form");
+		var seed_form_inner = $("#seed_form").children(":first").html();
+		
+		var str = "";
+		str += '<div class="card card-bordered">';
+		str += seed_form_inner;
+		str += '</div>';
+		
+		seed_form.append(str);
+		
+		/* del_btn_div */
+		
+		var delbtn = "";
+		delbtn += '<button type="button" class="btn mt-25 mr-25 seed_form_del" style="background-color: red; color: white; width: 70px;">-</button>';
+		
+		del_btn_form = $("#seed_form").children(":last").find(".del_btn_div");
+		del_btn_form.append(delbtn);
+		
+	});//end 등록 폼 추가 이벤트
+	
+	//동적으로 추가된 form 삭제 버튼 이벤트
+	$(document).on("click", ".seed_form_del", function(){
+		$(this).parent().parent().parent().parent().remove();
+	});
 
 	//modal show
 	$("#excelBtn").on("click", function(){
@@ -481,16 +526,23 @@
 	});
 	
 	//품종, 유전자정보 모달 show
-	$("#genetic").on("click", function(){
+	$(document).on("click", ".genetic_show", function(){
+		
+		$("#division_slt").val(0).prop("selected",true);
+		$(".genetic_input").val(0).prop("selected",true);
+		
 		$("#geneticModal").modal("show");
 		genetic_col.remove();
 		etc_col.remove();
+		
+		this_1 = $(this).prev();
+		
 	});
 	
 	//시료 등록
 	function insertBtn(){
 		
-		var seed_manager = $.trim($("#seed_manager").val());
+		/* var seed_manager = $.trim($("#seed_manager").val());
 		var seed_area = $.trim($("#seed_area").val());
 		var seed_year = $.trim($("#seed_year").val());
 		var seed_method = $.trim($("#seed_method").val());
@@ -503,9 +555,41 @@
 		var ware_id = $.trim($("#ware_id").val());
 		var seed_sender = $.trim($("#seed_sender").val());
 		var send_date = $.trim($("#send_date").val());
-		var seed_receiver = $.trim($("#seed_receiver").val());
+		var seed_receiver = $.trim($("#seed_receiver").val()); */
 		
-		if(genetic_id == 0){
+		var form_length = $(".card-bordered").length;
+		
+		var dataArr = new Array();
+		
+		//폼별로 값 가져오기 위한 each문
+		$(".card-bordered").each(function(index){
+			/* console.log($(this).find(".seed_area").val());
+			console.log(index); */
+			
+			var data = {
+					"seed_manager" : $(this).find(".seed_manager").val(),
+					"seed_area" : $(this).find(".seed_area").val(),
+					"seed_year" : $(this).find(".seed_year").val(),
+					"seed_method" : $(this).find(".seed_method").val(),
+					"seed_amount" : $(this).find(".seed_amount").val(),
+					"eaches_id" : $(this).find(".eaches_id").val(),
+					"seed_comment" : $(this).find(".seed_comment").val(),
+					"genetic_id" : $(this).find(".genetic_id").attr("data-genetic-id"),
+					"report_id" : $("#report_id").val(),
+					"seed_report" : $("#seed_report").val(),
+					"ware_id" : $(this).find(".ware_id").val(),
+					"seed_sender" : $(this).find(".seed_sender").val(),
+					"send_date" : $(this).find(".send_date").val(),
+					"seed_receiver" : $(this).find(".seed_receiver").val()
+					};
+			
+			dataArr.push(data);
+			
+		});
+		
+		console.log(dataArr);
+		
+		/* if(genetic_id == 0){
 			alert("품종/유전자 정보를 선택해주세요.");
 			$("#genetic_id").focus();
 		}else if(seed_manager == ""){
@@ -554,17 +638,26 @@
 					}
 				}
 			});//end ajax
-		}//end else
+		}//end else */
 		
 	}//end 시료 등록
 	
 	//발송일자 datepicker
-	$("#send_date").datepicker({
+	$.datepicker.setDefaults({
 		dateFormat: "yy-mm-dd",
       	duration: "medium",
       	changeMonth: true,
       	changeYear: true,
       	yearRange: "2010:2030",
+	});
+	
+	//날짜 캘린더 동적 생성 다음주 와서 다시하기
+	$(document).on("click", ".send_date", function(){
+		$(this).datepicker();
+	});
+	
+	$(document).on("click", ".receive_date", function(){
+		$(this).datepicker();
 	});
 	
 </script>
