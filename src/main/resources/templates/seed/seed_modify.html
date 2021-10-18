@@ -53,7 +53,7 @@
 		                                <div class="col-sm-8">
 		                                   <select class="form-control b-light" id="report_id">
 			                                <option th:value=0>과제 선택</option>
-			                                <th:block th:each="report : ${report}">
+			                                <th:block th:each="report : ${reports}">
 			                                	<option th:value="${report.report_id}" th:text="${report.report_title}"></option>
 			                                </th:block>
 			                               </select>

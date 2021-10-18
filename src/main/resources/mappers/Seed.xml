@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.digitalBook.Mapper.SeedMapper">
 	
-	<!-- 시약 검색 -->
+	<!-- 시료 검색 -->
 	<select id="SearchSeed" resultType="Seed">
-		SELECT s.*, u1.user_name as manager_name, u2.user_name as sender_name,
+		SELECT s.*, u1.user_name as manager_name, u2.user_name as recieve_name,
 		 u2.*, e.*, g.*, r.*, w.*, d.* 
 		FROM seed s
 		LEFT JOIN user u1 ON s.seed_manager = u1.user_id
@@ -14,7 +14,7 @@
 		LEFT JOIN division d ON g.division_id = d.division_id
 		LEFT JOIN report r ON s.report_id = r.report_id
 		LEFT JOIN warehouse w ON s.ware_id = w.ware_id
-		WHERE 1=1
+		WHERE s.user_group = 1
 		<choose>
 			<when test="search_type == null || search_type.equals('none')">
 				
@@ -30,7 +30,7 @@
 		LIMIT #{offset}, #{limit}
 	</select>
 	
-	<!-- 시약  갯수 검색 -->
+	<!-- 시료  갯수 검색 -->
 	<select id="SearchSeedCount" resultType="int">
 		SELECT COUNT(*)
 		FROM seed s
@@ -41,7 +41,7 @@
 		LEFT JOIN division d ON g.division_id = d.division_id
 		LEFT JOIN report r ON s.report_id = r.report_id
 		LEFT JOIN warehouse w ON s.ware_id = w.ware_id
-		WHERE 1=1
+		WHERE s.user_group = 1
 		<choose>
 			<when test="search_type == null || search_type.equals('none')">
 				
@@ -106,6 +106,8 @@
 		seed_sender,
 		send_date,
 		seed_receiver,
+		receive_date,
+		seed_share,
 		create_date,
 		modify_date
 		)
@@ -125,6 +127,8 @@
 		#{seed_sender},
 		#{send_date},
 		#{seed_receiver},
+		#{receive_date},
+		#{seed_share},
 		NOW(),
 		NOW()
 		)
@@ -135,6 +139,23 @@
 		SELECT seed_code FROM seed
 		ORDER BY seed_id DESC
 		LIMIT 1
+	</select>
+	
+	<!-- 시료 detail list -->
+	<select id="selectSeedDetailList" resultType="Seed">
+		SELECT s.*, u1.user_name as manager_name, u2.user_name as recieve_name,
+		 u2.*, e.*, g.*, r.*, w.*, d.* 
+		FROM seed s
+		LEFT JOIN user u1 ON s.seed_manager = u1.user_id
+		LEFT JOIN user u2 ON s.seed_sender = u2.user_id
+		LEFT JOIN eaches e ON s.eaches_id = e.eaches_id
+		LEFT JOIN genetic g ON s.genetic_id = g.genetic_id
+		LEFT JOIN division d ON g.division_id = d.division_id
+		LEFT JOIN report r ON s.report_id = r.report_id
+		LEFT JOIN warehouse w ON s.ware_id = w.ware_id
+		WHERE s.user_group = 1
+			AND s.report_id = #{report_id}
+		ORDER BY seed_id
 	</select>
 	
 </mapper>

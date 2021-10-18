@@ -8,6 +8,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -99,26 +101,57 @@ public class SeedController {
 	//시료 등록
 	@ResponseBody
 	@RequestMapping("/seed/insertSeed")
-	public int insertSeed(Seed seed) {
+	public int[] insertSeed(@RequestBody List<Seed> seeds) {
 		
-		System.out.println(seed);
+		int seeds_size = seeds.size();
+		int result[] = new int[seeds_size];
 		
 		Calendar cal = Calendar.getInstance();
-		String last_seed_code =service.selectLastSeedCode();
 		String code1 = "si-";
 		String code2 = String.valueOf(cal.get(Calendar.YEAR))+"-";
+		int code3 = 0;
 		
-		if(last_seed_code == null || last_seed_code.equals("")) {
-			seed.setSeed_code(code1+code2+"00001");
-		}else {
-			String[] strArr = last_seed_code.split("-");
-			int code3 = Integer.parseInt(strArr[2]) + 1;
-			seed.setSeed_code(code1+code2+String.format("%05d", code3));
+		String last_seed_code =service.selectLastSeedCode();
+		String[] strArr = {};
+		
+		if(last_seed_code != null) {
+			strArr = last_seed_code.split("-");
+			code3 = Integer.parseInt(strArr[2]);
 		}
 		
-		int result = service.insertSeed(seed);
+		for(int i = 0; i < seeds.size(); i++) {
+			code3++;
+			seeds.get(i).setSeed_code(code1+code2+String.format("%05d", code3));
+			
+			result[i] = service.insertSeed(seeds.get(i));
+			
+		}//end for
 		
 		return result;
+	}
+	
+	@RequestMapping("/seed/modify")
+	public ModelAndView seedModify(ModelAndView mv, @RequestParam(name = "report_id", required = true) int report_id) {
+		
+		List<Seed> seeds = service.selectSeedDetailList(report_id);
+		
+		List<Report> reports = service.selectReportList();
+		List<User> user = service.selectUserList();
+		List<Eaches> eaches = service.selectEachesList();
+		List<Warehouse> warehouse = service.selectWarehouseList();
+		List<Division> division = service.selectDivisionList();
+		
+		mv.addObject("seeds", seeds);
+		mv.addObject("report", reports);
+		mv.addObject("user", user);
+		mv.addObject("eaches", eaches);
+		mv.addObject("warehouse", warehouse);
+		mv.addObject("division", division);
+		
+		mv.setViewName("seed/seed_modify");
+		
+		
+		return mv;
 	}
 	
 }

@@ -47,4 +47,7 @@ public interface SeedMapper {
 	//최근 시약 ID
 	String selectLastSeedCode();
 	
+	//시료 detail list
+	List<Seed> selectSeedDetailList(int report_id);
+	
 }

@@ -91,6 +91,13 @@ public class SeedServiceImpl implements SeedService {
 		return mapper.selectLastSeedCode();
 	}
 	
+	//시료 detail list
+	@Override
+	public List<Seed> selectSeedDetailList(int report_id) {
+		
+		return mapper.selectSeedDetailList(report_id);
+	}
+	
 	
 
 }

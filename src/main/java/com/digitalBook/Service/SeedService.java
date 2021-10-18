@@ -42,4 +42,7 @@ public interface SeedService {
 	//최근 시료 ID
 	String selectLastSeedCode();
 	
+	//시료 detail list
+	List<Seed> selectSeedDetailList(int report_id);
+	
 }

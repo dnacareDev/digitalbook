@@ -2,13 +2,17 @@ package com.digitalBook.Entity;
 
 import org.apache.ibatis.type.Alias;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Alias("Seed")
 public class Seed {
 	
@@ -25,9 +29,9 @@ public class Seed {
 	private int report_id;					//과제 고유번호
 	private String seed_report;				//과제 설명
 	private int ware_id;					//저장장소 고유번호
-	private int seed_sender;				//발송인
+	private String seed_sender;				//발송인
 	private String send_date;				//발송일자
-	private String seed_receiver;			//수취인
+	private int seed_receiver;				//수취인
 	private String receive_date;			//수취일자;
 	private int seed_share;					//수확후 이용과 공유
 	private String create_date;				//등록일
@@ -51,7 +55,7 @@ public class Seed {
 	private String manager_name;			//담당자 명
 	
 	//발송인 컬럼
-	private String sender_name;				//발송인명
+	private String recieve_name;			//수취인 명
 	
 	
 }
