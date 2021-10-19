@@ -45,4 +45,13 @@ public interface SeedService {
 	//시료 detail list
 	List<Seed> selectSeedDetailList(int report_id);
 	
+	//시료 수정
+	int updateSeed(Seed seed);
+	
+	//시료 삭제
+	int deleteSeed(int seed_id);
+	
+	//시료 detail
+	Seed selectSeedDetail(int seed_id);
+	
 }

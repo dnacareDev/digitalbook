@@ -109,7 +109,8 @@
 		receive_date,
 		seed_share,
 		create_date,
-		modify_date
+		modify_date,
+		user_group
 		)
 		VALUES
 		(#{seed_manager},
@@ -130,7 +131,8 @@
 		#{receive_date},
 		#{seed_share},
 		NOW(),
-		NOW()
+		NOW(),
+		1
 		)
 	</insert>
 	
@@ -156,6 +158,41 @@
 		WHERE s.user_group = 1
 			AND s.report_id = #{report_id}
 		ORDER BY seed_id
+	</select>
+	
+	<!-- 시료 수정 -->
+	<update id="updateSeed" parameterType="Seed">
+		UPDATE seed
+		SET seed_manager = #{seed_manager},
+			seed_area = #{seed_area},
+			seed_year = #{seed_year},
+			seed_method = #{seed_method},
+			seed_amount = #{seed_amount},
+			eaches_id = #{eaches_id},
+			seed_comment = #{seed_comment},
+			genetic_id = #{genetic_id},
+			report_id = #{report_id},
+			seed_report = #{seed_report},
+			ware_id = #{ware_id},
+			seed_sender = #{seed_sender},
+			send_date = #{send_date},
+			seed_receiver = #{seed_receiver},
+			receive_date = #{receive_date},
+			seed_share = #{seed_share},
+			modify_date = NOW()
+		WHERE seed_id = #{seed_id}
+	</update>
+	
+	<!-- 시료 삭제 -->
+	<delete id="deleteSeed" parameterType="int">
+		DELETE FROM seed
+		WHERE seed_id = #{seed_id}
+	</delete>
+	
+	<!-- 시료 detail -->
+	<select id="selectSeedDetail" parameterType="int" resultType="Seed">
+		SELECT * FROM seed
+		WHERE seed_id = #{seed_id}
 	</select>
 	
 </mapper>

@@ -44,10 +44,19 @@ public interface SeedMapper {
 	//시료 등록
 	int insertSeed(Seed seed);
 	
-	//최근 시약 ID
+	//최근 시료 ID
 	String selectLastSeedCode();
 	
 	//시료 detail list
 	List<Seed> selectSeedDetailList(int report_id);
+	
+	//시료 수정
+	int updateSeed(Seed seed);
+	
+	//시료 삭제
+	int deleteSeed(int seed_id);
+	
+	//시료 detail
+	Seed selectSeedDetail(int seed_id);
 	
 }

@@ -488,7 +488,7 @@
 	//과제 비연계 이벤트
 	$("#not_report").on("change", function(){
 		if($("#not_report").is(':checked')){
-			$("#report_id").val(0).prop("checked", true);
+			$("#report_id").val(0).prop("selected", true);
 			$("#report_id").prop("disabled", true);
 		}else{
 			$("#report_id").prop("disabled", false);
@@ -648,7 +648,7 @@
 				
 		});//end $(".card-bordered").each
 		
-		/* $.ajax({
+		$.ajax({
 			url : "/data/seed/insertSeed",
 			method : "POST",
 			contentType : "application/json; charset=utf-8",
@@ -660,7 +660,7 @@
 					$("#success_popup").css("display", "flex");
 				}
 			}
-		});//end ajax */
+		});//end ajax
 		
 	}//end 시료 등록
 	
