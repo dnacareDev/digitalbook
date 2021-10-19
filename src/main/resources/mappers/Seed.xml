@@ -4,7 +4,7 @@
 	
 	<!-- 시료 검색 -->
 	<select id="SearchSeed" resultType="Seed">
-		SELECT s.*, u1.user_name as manager_name, u2.user_name as recieve_name,
+		SELECT s.*, u1.user_name_k as manager_name, u2.user_name_k as recieve_name,
 		 u2.*, e.*, g.*, r.*, w.*, d.* 
 		FROM seed s
 		LEFT JOIN user u1 ON s.seed_manager = u1.user_id
@@ -145,7 +145,7 @@
 	
 	<!-- 시료 detail list -->
 	<select id="selectSeedDetailList" resultType="Seed">
-		SELECT s.*, u1.user_name as manager_name, u2.user_name as recieve_name,
+		SELECT s.*, u1.user_name_k as manager_name, u2.user_name_k as recieve_name,
 		 u2.*, e.*, g.*, r.*, w.*, d.* 
 		FROM seed s
 		LEFT JOIN user u1 ON s.seed_manager = u1.user_id

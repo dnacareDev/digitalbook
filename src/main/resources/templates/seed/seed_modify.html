@@ -98,7 +98,7 @@
 						        										<select class="form-control b-light seed_manager" id="seed_manager">
 											                                <option disabled="disabled" selected="selected" hidden="hidden">담당자 선택</option>
 											                                <th:block th:each="user : ${user}">
-											                                	<option th:value="${user.user_id}" th:text="${user.user_name}"></option>
+											                                	<option th:value="${user.user_id}" th:text="${user.user_name_k}"></option>
 											                                </th:block>
 											                            </select>
 						        									</div>
@@ -193,7 +193,7 @@
 						        										<select class="form-control b-light seed_receiver" name="seed_receiver" id="seed_receiver">
 											                                <option th:value=0>수취인 선택</option>
 											                                <th:block th:each="user : ${user}">
-											                                	<option th:value="${user.user_id}" th:text="${user.user_name}"></option>
+											                                	<option th:value="${user.user_id}" th:text="${user.user_name_k}"></option>
 											                                </th:block>
 											                            </select>
 						        									</div>

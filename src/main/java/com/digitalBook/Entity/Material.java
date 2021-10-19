@@ -20,4 +20,7 @@ public class Material {
 	private String create_date;					// 농자재 등록일
 	private String modify_date;					// 농자재 수정일
 	
+	//사용자 user 컬럼
+	private String user_name_k;					// 등록자
+	
 }

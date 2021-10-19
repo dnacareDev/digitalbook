@@ -8,6 +8,9 @@
 <th:block th:include="@{/fragments/header.html}"></th:block>
 
 <style>
+  .breadcrumb-main{
+  float: left;
+  }
   table {
     border-top: 1px solid grey;
     
@@ -26,8 +29,41 @@
     background-color: white;
   }
   tbody tr:nth-child(2n+1) {
-    background-color: #fafef5;
+    background-color: #F4F8FB;
   }
+  button{ 
+   width: 101px;
+   height: 40px;
+   }
+   .page-numder{
+   	width:80px;
+   	height: 35px;
+   	
+   }
+   .atbd-button-list{
+   margin:0 5px;
+   }
+   .end-button{
+   width:150px;
+   height:45px;
+   background-color:#768BF5;
+   border:0px;
+   margin-top:-15px;
+   }
+   .end{
+   margin-left:10px;
+   }
+   .page-item a{
+    color:#7C8798;
+   }
+   .page-item.active{
+   background:none;
+   color: #768BF5;
+   }
+   .atbd-pagination__link{
+   width: 30px;
+   height: 10px;
+   }
 </style>
 
 </head>
@@ -40,14 +76,14 @@
 	<!-- 공통 topbar -->
 	<th:block th:include="@{/fragments/topbar.html}"></th:block>
 	
-	<main class="main-content" style="background-color: #fafef5;">
+	<main class="main-content" style="background-color: #F9FBFD;">
 	
-		<div class="contents" style="background-color: #fafef5;">
+		<div class="contents" style="background-color: #F9FBFD;">
     
 		    <div class="container-fluid">
 		    	<div class="row">
 			        <div class="col-lg-12">
-			        	<div class="breadcrumb-main" style="float: left;">
+			        	<div class="breadcrumb-main">
 			        		<h4 class="text-capitalize breadcrumb-title">기타(농자재)</h4>
 			        		<span class="ml-20 mt-1">기초정보-기타(농자재)</span>
 			        	</div>
@@ -59,7 +95,7 @@
 		       				<div class="card-extra mt-20 mr-20">
 		       					<div class="d-flex justify-content-start" style="float: left;">
 		       						<span class="ml-30 mt-20 mr-10">show</span>
-		    						<select class="form-control form-control-lg mt-10 mb-10 mr-10" id="limit" name="page-number">
+		    						<select class="form-control form-control-lg mt-15 mr-10 page-numder" id="limit" name="page-number">
 		                          		<option value="10">10</option>
 		                          		<option value="20">20</option>
 		                          		<option value="30">30</option>
@@ -70,19 +106,19 @@
 		       					<div class="action-btn d-flex justify-content-end">
 				      				<div class="atbd-button-list d-flex flex-wrap add-contact__form ">
 				      					<div class="d-flex align-items-center add-contact__form my-sm-0 my-2">
-				                            <select class="form-control form-control-lg mt-10 mb-10 mr-10" id="search_type" style="width: 250px;">
+				                            <select class="form-control form-control-lg mt-10 mb-10 mr-10" id="search_type" style="width: 238px;height:40px;">
 				                                <option value="none">전체</option>
 				                                <option value="material_code">농자재 ID</option>
 				                                <option value="material_name">농자재명</option>
 				                            </select>
 				                            <div class="input-container icon-right position-relative mr-10">
 			                                    <a href="#" onclick="searchMaterial(1); return false;" class="input-icon icon-right"><span data-feather="search"></span></a>
-			                                    <input type="text" class="form-control form-control-lg" id="keyword" placeholder="Search">
+			                                    <input type="text" class="form-control form-control-lg" id="keyword" placeholder="Search" style="width: 238px;height:40px;">
 			                                </div>
 				      					</div>
-				      					<button class="btn btn-lg btn-primary"><span data-feather="upload"></span>엑셀</button>
-				      					<button class="btn btn-lg btn-primary"><span data-feather="download"></span>템플릿</button>
-				      					<button class="btn btn-lg btn-primary"><span data-feather="download"></span>CSV</button>
+				      					<!-- <button class="btn btn-primary" style="margin:10px 0 0 0">엑셀<span data-feather="upload"style="margin:0;"></span></button>
+				      					<button class="btn btn-primary" style="margin:10px 0 0 0">템플릿<span data-feather="download"style="margin:0;"></span></button> -->
+				      					<button class="btn btn-primary" style="margin:10px 0 0 0">CSV<span data-feather="download"style="margin:0;"></span></button>
 				      				</div>
 			      				</div>
 		       				</div>
@@ -105,9 +141,36 @@
 		                            		</tbody>
 		                            	</table>
 		                        	</div>
-		                        	<a href="/data/material/insert" class="btn btn-lg btn-primary" style="float: right;">등록</a>
-		                        	<div class="row" style="justify-content: center;">
-			                        	<div id="pageNum" style="text-align:center; margin: 2% 0 0 0;"></div>
+		                        	<div class="row">
+		                        		<div class="col-4">
+			                        		<div class="action-btn d-flex justify-content-frist mt-30">
+				                        		<a href="#" class="btn btn-lg btn-primary end-button">활용</a>
+			                                </div>
+				                        </div>
+				                        <div class="col-4">
+				                        	<!-- <div class="d-flex justify-content-center mt-30">
+				                        		<nav class="atbd-page">
+				                        			<ul class="pagination pagination-sm">
+													  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+													  <li class="page-item"><a class="page-link" href="#">1</a></li>
+													  <li class="page-item"><a class="page-link" href="#">2</a></li>
+													  <li class="page-item"><a class="page-link" href="#">3</a></li>
+													  <li class="page-item"><a class="page-link" href="#">4</a></li>
+													  <li class="page-item"><a class="page-link" href="#">5</a></li>
+													  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+													</ul>
+				                        		</nav>
+				                        	</div> -->
+				                        	<div class="row" style="justify-content: center;">
+					                        	<div id="pageNum" style="text-align:center; margin: 2% 0 0 0;"></div>
+				                        	</div>
+				                        </div>
+				                        <div class="col-4">
+				                        	<div class="action-btn d-flex justify-content-end mt-30">
+				                        		<a href="#" class="btn btn-primary end-button end">나의 Method</a>
+			                                    <a href="/data/material/insert" class="btn btn-primary end-button end">등록</a>
+			                                </div>
+				                        </div>
 		                        	</div>
 		                        </div>
 		        			</div>
