@@ -5,18 +5,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+//기초정보 > 사용자
 @Controller
 @RequestMapping(value = "/data")
-//기초정보 > 사용자
-public class UserController {
-	
+public class UserController
+{
 	//사용자 목록
-	@GetMapping(value = "user")
-	public ModelAndView getUser(ModelAndView mv) {
-		
+	@RequestMapping(value = "user")
+	public ModelAndView UserList(ModelAndView mv)
+	{
 		mv.setViewName("user/user_list");
 		
 		return mv;
 	}
-	
 }
