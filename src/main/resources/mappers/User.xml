@@ -1,9 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.digitalBook.Mapper.UserMapper">
+	<!-- 사용자 수 검색 -->	
+	<select id="SearchUserCount" resultType="int">
+		SELECT COUNT(*) FROM user u
+		LEFT JOIN department d1 ON u.depart_id = d1.depart_id
+		LEFT JOIN department d2 ON d1.depart_parents = d2.depart_id
+		LEFT JOIN department d3 ON d2.depart_parents = d3.depart_id
+		LEFT JOIN department d4 ON d3.depart_parents = d4.depart_id
+		WHERE 1=1
+		<choose>
+			<when test="search_type == null || search_type.equals('none')">
+				
+			</when>
+			<otherwise>
+				AND ${search_type} LIKE CONCAT('%', #{keyword}, '%')
+			</otherwise>
+		</choose>
+	</select>
 	
 	<!-- 사용자 검색 -->
-	<select id="searchUser" resultType="User">
+	<select id="SearchUser" resultType="User">
 		SELECT u.*, d1.*, d2.*, d3.*, d4.*, d1.department as d1_department_name FROM user u
 		LEFT JOIN department d1 ON u.depart_id = d1.depart_id
 		LEFT JOIN department d2 ON d1.depart_parents = d2.depart_id
@@ -22,21 +39,17 @@
 		LIMIT #{offset}, #{limit}
 	</select>
 	
-	<select id="searchUserCount" resultType="int">
-		SELECT COUNT(*) FROM user u
-		LEFT JOIN department d1 ON u.depart_id = d1.depart_id
-		LEFT JOIN department d2 ON d1.depart_parents = d2.depart_id
-		LEFT JOIN department d3 ON d2.depart_parents = d3.depart_id
-		LEFT JOIN department d4 ON d3.depart_parents = d4.depart_id
-		WHERE 1=1
-		<choose>
-			<when test="search_type == null || search_type.equals('none')">
-				
-			</when>
-			<otherwise>
-				AND ${search_type} LIKE CONCAT('%', #{keyword}, '%')
-			</otherwise>
-		</choose>
+	<!-- 소속실 조회 -->
+	<select id="SelectDepartment" resultType="Department">
+		SELECT * FROM department
+		WHERE depart_depth = #{depart_depth} AND depart_parents = #{depart_id}
 	</select>
 	
+	<!-- 사용자 등록 -->
+	<insert id="InsertUser" parameterType="User">
+		INSERT INTO user
+		(user_username, user_password, user_name_k, user_name_e, user_post, user_address, user_address_detail, user_tel, user_phone, user_pax, user_type, user_status, depart_id, user_group, user_position, user_level, user_scientist, user_authority, login_date, create_date, modify_date)
+		VALUES
+		(#{user_username}, #{user_password}, #{user_name_k}, #{user_name_e}, #{user_post}, #{user_address}, #{user_address_detail}, #{user_tel}, #{user_phone}, #{user_pax}, #{user_type}, #{user_status}, #{depart_id}, #{user_group}, #{user_position}, #{user_level}, #{user_scientist}, 'USER', NOW(), NOW(), NOW())
+	</insert>
 </mapper>

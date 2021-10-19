@@ -160,31 +160,34 @@
     <th:block th:include="@{/fragments/commonjs.html}"></th:block>
 </body>
 <script type="text/javascript">
-	
-	$(document).ready(function(){
-		searchUser(1);
+	$(document).ready(function()
+	{
+		SearchUser(1);
 	});
 	
 	//페이지 보기 변경시 시약 검색 실행
-	$("#limit").on("change", function(){
-		searchSeed(1);
+	$("#limit").on("change", function()
+	{
+		SearchUser(1);
 	});
 	
 	//사용자 검색
-	function searchUser(e){
+	function SearchUser(e)
+	{
 		var limit = $("#limit").val();
 		var search_type = $("#search_type").val();
 		var keyword = $("#keyword").val();
 		
 		var data = {"search_type" : search_type, "keyword" : keyword, "page_num" : e, "limit" : limit};
 		
-		$.ajax({
+		$.ajax(
+		{
 			url : '/data/user/searchUser',
 			method : 'POST',
 			dataType : 'json',
 			data : data,
-			success : function(result){
-				console.log(result);
+			success : function(result)
+			{
 				var user_list = $("#user_list");
 				var add_list = "";
 				
@@ -193,14 +196,17 @@
 				
 				var length = result.user.length;
 				
-				if(length == 0){
+				if(length == 0)
+				{
 					add_list = '<tr>' + '<td colspan="9">' + '<span>' + '등록된 데이터가 없습니다.' + '</span>' + '</td>' + '</tr>';
 					
 					user_list.empty();
 					user_list.append(add_list);
-				}else {
-					
-					for(var i = 0; i < length; i++){
+				}
+				else
+				{
+					for(var i = 0; i < length; i++)
+					{
 						add_list += '<tr>';
 						add_list += '<td><input type="checkbox"></td>';
 						add_list += '<td><a href="/data/user/modify?user_id='+ result.user[i].user_id + '">' + result.user[i].user_username+ '</a></td>';
@@ -208,56 +214,72 @@
 						add_list += '<td><span>' + result.user[i].d1_department_name + '</span></td>';
 						add_list += '<td><span>' + result.user[i].user_position + '</span></td>';
 						add_list += '<td><span>' + result.user[i].user_level + '</span></td>';
-						if(result.user[i].user_type == 0){
+						
+						if(result.user[i].user_type == 0)
+						{
 							add_list += '<td><span>최고관리자</span></td>';
-						}else if(result.user[i].user_type == 1){
+						}
+						else if(result.user[i].user_type == 1)
+						{
 							add_list += '<td><span>관리자</span></td>';
-						}else if(result.user[i].user_type == 2){
+						}
+						else if(result.user[i].user_type == 2)
+						{
 							add_list += '<td><span>운영자</span></td>';
-						}else if(result.user[i].user_type == 3){
+						}
+						else if(result.user[i].user_type == 3)
+						{
 							add_list += '<td><span>연구직</span></td>';
-						}else if(result.user[i].user_type == 4){
+						}
+						else if(result.user[i].user_type == 4)
+						{
 							add_list += '<td><span>공무직</span></td>';
 						}
+						
 						add_list += '<td><span>' + (result.user[i].user_type == 0 ? "N" : "Y") + '</span></td>';
 						add_list += '<td><span>' + result.user[i].create_date + '</span></td>';
 						add_list += '</tr>';
-					}//end for
+					}
 					
-					if(result.page_num == 1){
+					if(result.page_num == 1)
+					{
 						page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
-					}else{
+					}
+					else
+					{
 						page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchResearch(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
-					}//end else
+					}
 					
-					for(var i = 0; i < result.end_page; i++){
-						if(result.page_num == (i + 1)){
+					for(var i = 0; i < result.end_page; i++)
+					{
+						if(result.page_num == (i + 1))
+						{
 							page_add += '<button class="atbd-pagination__link active" onclick="searchMaterial(' + (i + 1) + ')">' + (i + 1) + '</button>';
-						}else{
+						}
+						else
+						{
 							page_add += '<button class="atbd-pagination__link" onclick="searchMaterial(' + (i + 1) + ')">' + (i + 1) + '</button>';
-						}//end else
-					}//end for
+						}
+					}
 					
-					if(result.page_num == result.end_page){
+					if(result.page_num == result.end_page)
+					{
 						page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
-					}else{
+					}
+					else
+					{
 						page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchResearch(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
-					}//end else
+					}
 					
 					user_list.empty();
 					user_list.append(add_list);
 					
 					pageNum.empty();
 					pageNum.append(page_add);
-						
-					
-				}//end else
-				
-				
+				}
 			}
 		});
 		return true;
-	}//end 사용자 검색
-	
+	}	
 </script>
 </html>
