@@ -28,4 +28,7 @@ public class Reagent {
 	private String create_date;				//등록일
 	private String modify_date;				//수정일
 	
+	//user table 사용 컬럼
+	private String user_name_k;				//등록자
+	
 }

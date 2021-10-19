@@ -22,7 +22,7 @@
 		<where>
 			<choose>
 				<when test="search_type == 0">
-					AND (m.machine_code LIKE CONCAT('%', #{keyword}, '%') OR m.machine_name LIKE CONCAT('%', #{keyword}, '%') OR m.machine_model LIKE CONCAT('%', #{keyword}, '%') OR m.machine_purpose LIKE CONCAT('%', #{keyword}, '%') OR u.user_name LIKE CONCAT('%', #{keyword}, '%'))
+					AND (m.machine_code LIKE CONCAT('%', #{keyword}, '%') OR m.machine_name LIKE CONCAT('%', #{keyword}, '%') OR m.machine_model LIKE CONCAT('%', #{keyword}, '%') OR m.machine_purpose LIKE CONCAT('%', #{keyword}, '%') OR u.user_name_k LIKE CONCAT('%', #{keyword}, '%'))
 				</when>
 				<when test="search_type == 1">
 					AND m.machine_code LIKE CONCAT('%', #{keyword}, '%')
@@ -37,7 +37,7 @@
 					AND m.machine_purpose LIKE CONCAT('%', #{keyword}, '%')
 				</when>
 				<when test="search_type == 5">
-					AND u.user_name LIKE CONCAT('%', #{keyword}, '%')
+					AND u.user_name_k LIKE CONCAT('%', #{keyword}, '%')
 				</when>
 			</choose>
 		</where>
@@ -50,7 +50,7 @@
 		<where>
 			<choose>
 				<when test="search_type == 0">
-					AND (m.machine_code LIKE CONCAT('%', #{keyword}, '%') OR m.machine_name LIKE CONCAT('%', #{keyword}, '%') OR m.machine_model LIKE CONCAT('%', #{keyword}, '%') OR m.machine_purpose LIKE CONCAT('%', #{keyword}, '%') OR u.user_name LIKE CONCAT('%', #{keyword}, '%'))
+					AND (m.machine_code LIKE CONCAT('%', #{keyword}, '%') OR m.machine_name LIKE CONCAT('%', #{keyword}, '%') OR m.machine_model LIKE CONCAT('%', #{keyword}, '%') OR m.machine_purpose LIKE CONCAT('%', #{keyword}, '%') OR u.user_name_k LIKE CONCAT('%', #{keyword}, '%'))
 				</when>
 				<when test="search_type == 1">
 					AND m.machine_code LIKE CONCAT('%', #{keyword}, '%')
@@ -65,7 +65,7 @@
 					AND m.machine_purpose LIKE CONCAT('%', #{keyword}, '%')
 				</when>
 				<when test="search_type == 5">
-					AND u.user_name LIKE CONCAT('%', #{keyword}, '%')
+					AND u.user_name_k LIKE CONCAT('%', #{keyword}, '%')
 				</when>
 			</choose>
 		</where>

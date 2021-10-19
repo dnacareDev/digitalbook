@@ -30,4 +30,7 @@ public class Machine
 	private String modify_date;
 	
 	private int user_id;
+	
+	//user table 사용 컬럼
+	private String user_name_k;					//	등록자
 }

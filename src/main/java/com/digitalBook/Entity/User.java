@@ -35,4 +35,7 @@ public class User {
 	private String user_scientist;			//과학기술인번호
 	private int user_group;					//사용자 그룹번호
 	
+	//소속실(department) 사용 컬럼
+	private String d1_department_name;		//소속실명
+	
 }

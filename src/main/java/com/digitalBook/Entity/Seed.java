@@ -11,8 +11,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
 @Alias("Seed")
 public class Seed {
 	
@@ -54,9 +52,6 @@ public class Seed {
 	
 	//담당자 컬럼
 	private String manager_name;			//담당자 명
-	
-	//발송인 컬럼
-	private String recieve_name;			//수취인 명
 	
 	
 }

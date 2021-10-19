@@ -8,6 +8,9 @@
 <th:block th:include="@{/fragments/header.html}"></th:block>
 
 <style>
+  .breadcrumb-main{
+  float: left;
+  }
   table {
     border-top: 1px solid grey;
     
@@ -15,11 +18,52 @@
   }
   th, td {
   	border-bottom: 2px solid #E5E9F2;
-  	background-color: white;
     padding: 10px;
     text-align: center;
     font-weight: initial;
   }
+  th {
+    background-color: white;
+  }
+  tbody tr:nth-child(2n) {
+    background-color: white;
+  }
+  tbody tr:nth-child(2n+1) {
+    background-color: #F4F8FB;
+  }
+  button{ 
+   width: 101px;
+   height: 40px;
+   }
+   .page-numder{
+   	width:80px;
+   	height: 35px;
+   	
+   }
+   .atbd-button-list{
+   margin:0 5px;
+   }
+   .end-button{
+   width:150px;
+   height:45px;
+   background-color:#768BF5;
+   border:0px;
+   margin-top:-15px;
+   }
+   .end{
+   margin-left:10px;
+   }
+   .page-item a{
+    color:#7C8798;
+   }
+   .page-item.active{
+   background:none;
+   color: #768BF5;
+   }
+   .atbd-pagination__link{
+   width: 30px;
+   height: 10px;
+   }
 </style>
 
 </head>
@@ -32,14 +76,14 @@
 	<!-- 공통 topbar -->
 	<th:block th:include="@{/fragments/topbar.html}"></th:block>
 	
-	<main class="main-content" style="background-color: #fafef5;">
+	<main class="main-content" style="background-color: #F9FBFD;">
 	
-		<div class="contents" style="background-color: #fafef5;">
+		<div class="contents" style="background-color: #F9FBFD;">
     
 		    <div class="container-fluid">
 		    	<div class="row">
 			        <div class="col-lg-12">
-			        	<div class="breadcrumb-main" style="float: left;">
+			        	<div class="breadcrumb-main">
 			        		<h4 class="text-capitalize breadcrumb-title">시험장소</h4>
 			        		<span class="ml-20 mt-1">기초정보-시험장소</span>
 			        	</div>
