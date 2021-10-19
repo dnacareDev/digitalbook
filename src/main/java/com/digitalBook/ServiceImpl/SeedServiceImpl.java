@@ -98,6 +98,27 @@ public class SeedServiceImpl implements SeedService {
 		return mapper.selectSeedDetailList(report_id);
 	}
 	
+	//시료 수정
+	@Override
+	public int updateSeed(Seed seed) {
+		
+		return mapper.updateSeed(seed);
+	}
+	
+	//시료 삭제
+	@Override
+	public int deleteSeed(int seed_id) {
+		
+		return mapper.deleteSeed(seed_id);
+	}
+	
+	//시료 detail
+	@Override
+	public Seed selectSeedDetail(int seed_id) {
+		
+		return mapper.selectSeedDetail(seed_id);
+	}
+	
 	
 
 }

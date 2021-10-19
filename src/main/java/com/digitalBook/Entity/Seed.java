@@ -50,6 +50,7 @@ public class Seed {
 	
 	//보관장소 컬럼(warehouse)
 	private String warehouse;				//저장 장소명
+	private String ware_condition;			//저장 조건
 	
 	//담당자 컬럼
 	private String manager_name;			//담당자 명

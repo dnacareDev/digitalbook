@@ -120,6 +120,7 @@ public class ReagentController {
 		return result;
 	}
 	
+	//시약 삭제
 	@ResponseBody
 	@RequestMapping("/reagent/deleteReagent")
 	public int deleteReagent(@RequestParam(name = "reagent_id", required = true) int reagent_id) {
