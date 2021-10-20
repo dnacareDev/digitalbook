@@ -1,6 +1,18 @@
 <!doctype html>
 <html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
 <head>
+<style>
+	.content-header{margin-top:30px;}
+	.end-button
+	{
+		width:85px;
+		height:40px;
+		background-color:#768BF5;
+		border:0px;
+		margin-top:-15px;
+	}
+	.end{margin-left:10px;}
+</style>
 <!-- 공통 헤더 -->
 <th:block th:include="@{/fragments/header.html}"></th:block>
 </head>
@@ -9,8 +21,8 @@
 	<div class="mobile-author-actions"></div>
 	<!-- 공통 topbar -->
 	<th:block th:include="@{/fragments/topbar.html}"></th:block>
-	<main class="main-content" style="background-color: #fafef5;">
-		<div class="contents" style="background-color: #fafef5;">
+	<main class="main-content" style="background-color: #F9FBFD;">
+		<div class="contents" style="background-color: #F9FBFD;">
 		    <div class="container-fluid">
 		    	<div class="row">
 			        <div class="col-lg-12">
@@ -29,7 +41,7 @@
 		                            	<label for="input_title" class="col-form-label color-dark align-center">Method 명<span style="color: red;">*</span></label>
 	                                </div>
 	                                <div class="col-sm-5">
-	                                   <input type="text" class="form-control" id="input_title" readonly>
+	                                   <input type="text" class="form-control" style="float: left; width: 465px;" id="input_title" readonly>
 	                                   <button class="btn btn-primary" onclick="DivisionBtn();">항목 조회</button>
 	                                </div>
 		                         </div>
@@ -45,8 +57,8 @@
 		        					<div class="col-sm-2 d-flex aling-items-center">
 		                            	<label for="method_input" class="color-dark align-center">입력 단위</label>
 		                            </div>
-		                            <div class="col-sm-5">
-		                                <select class="form-control b-light col-5 col-md-5" id="method_input">
+		                            <div class="col-sm-2">
+		                                <select class="form-control b-light" id="method_input">
 			                                <option value="">입력단위 선택</option>
 			                                <option value="길이">길이</option>
 			                                <option value="넓이">넓이</option>
@@ -59,7 +71,9 @@
 			                                <option value="시간">시간</option>
 			                                <option value="기타">기타</option>
 		                                </select>
-		                                <select class="form-control b-light col-5 col-md-5" id="method_eaches">
+		                            </div>
+		                            <div class="col-sm-2">
+		                            	<select class="form-control b-light" id="method_eaches">
 			                                <option value="">단위 종류 선택</option>
 		                                </select>
 		                            </div>
@@ -89,31 +103,73 @@
 					<div class="col-lg-12">
 						<div class="card">
 							<div class="card-body"> 
-								<span class="color-dark align-center">Step 설정</span>
-								<input type="text" class="form-control b-light" id="method_contents">
-								<button class="btn btn-primary" onclick="InsertPopup();">조사방법 추가</button>
-								<div class="table-responsive" style="width: 25%; display: inline-block;">
-								<button onclick="CheckResearch();"><span data-feather="plus"></span></button>
-									<table class="table">
-										<thead>
-											<tr>
-												<th>조사방법</th>
-											</tr>
-										</thead>
-										<tbody class="research_table" id="research_list">
-										</tbody>
-									</table>
+								<div class="row">
+									<div class="col-lg-12">
+										<span class="color-dark align-center" style="font-size: 20px;">Step 설정</span>
+									</div>
 								</div>
-								<div class="table-responsive" style="width: 70%; height: 500px; display: inline-block; float: right; background: #f4f5f7;">
-									<table class="table">
-										<tbody id="research_table">
-										</tbody>
-									</table>
+								<div class="row mt-4">
+									<div class="col-lg-3">
+										<div class="row">
+											<input type="text" class="form-control b-light" id="method_contents">
+										</div>
+										<div class="row">
+											<button class="btn btn-dark mt-2" onclick="InsertPopup();">조사방법 추가</button>
+										</div>
+										<div class="row">
+											<div class="table-responsive mt-2">
+												<table class="table">
+													<thead>
+														<tr>
+															<th></th>
+															<th>조사방법</th>
+														</tr>
+													</thead>
+													<tbody class="research_table" id="research_list">
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-1">
+										<div class="d-flex justify-content-center" style="padding-top: 200px;">
+											<div class="col-sm-12">
+												<button onclick="CheckResearch();"><span data-feather="plus"></span></button>
+											</div>
+											<div class="col-sm12">
+												<button onclick="aaa();"><span data-feather="minus"></span></button>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-8">
+										<div class="table-responsive" style="min-height: 500px; background: #f4f5f7;">
+											<table class="table">
+												<tbody id="research_table">
+												</tbody>
+											</table>
+										</div>
+									</div>
 								</div>
 			        		</div>
 			        	</div>
 			        </div>
 		        </div>
+		        <div class="row">
+					<div class="col-4">
+						<div class="action-btn d-flex justify-content-frist mt-30">
+							<button type="button" class="btn btn-primary end-button" onclick="pirnt();">인쇄</button>
+						</div>
+					</div>
+					<div class="col-4">
+						<div class="d-flex justify-content-center mt-30"></div>
+					</div>
+					<div class="col-4">
+						<div class="action-btn d-flex justify-content-end mt-30">
+							<a href="/method/list" class="btn btn-primary end-button end">목록</a>
+							<button type="button" class="btn btn-primary end-button end" onclick="InsertBtn();">등록</button>
+						</div>
+					</div>
+				</div>
 		    </div>
 		    
 		    <div class="modal-basic modal fade show" id="divisionModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -177,7 +233,7 @@
 	        						<h4>등록이 완료되었습니다.</h4>
 	        					</div>
 	        					<div style="display: flex; justify-content: center; margin: 10% auto;">
-	        						<a class="btn btn-default btn-success" href="/data/machine" style="color: #FFFFFF;">확인</a>
+	        						<a class="btn btn-default btn-success" href="/method/list" style="color: #FFFFFF;">확인</a>
 	        					</div>
 	        				</div>
 	        			</div>
@@ -185,25 +241,34 @@
 	        	</div>
 	        </div>
 	        
-	        <div class="atbd-notice" id="insert_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
-	        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
-	        		<div class="card-body">
-	        			<div class="atbd-notice__content">
-	        				<div class="atbd-notice__top text-center">
-	        					<div class="atbd-notice__icon bg-success">
-	        						<i class="fas fa-check color-white"></i>
-	        					</div>
-	        					<div class="atbd-notice__text">
-	        						<h4>등록이 완료되었습니다.</h4>
-	        					</div>
-	        					<div style="display: flex; justify-content: center; margin: 10% auto;">
-	        						<a class="btn btn-default btn-success" href="/data/machine" style="color: #FFFFFF;">확인</a>
-	        					</div>
-	        				</div>
-	        			</div>
-	        		</div>
-	        	</div>
-	        </div>
+	        <div class="modal-basic modal fade show" id="researchAddModal" tabindex="-1" role="dialog" aria-hidden="true">
+			    <div class="modal-dialog modal-lg" role="document">
+			        <div class="modal-content modal-bg-white">
+			        	<div class="modal-header">
+			        		<h6 class="modal-title">조사방법 등록</h6>
+		                    	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		                        	<span data-feather="x"></span>
+		                        </button>
+			        	</div>
+			            <div class="modal-body">
+			            	<div class="col-12">
+			            		<div class="row">
+			            			<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="storage_out_address" class="col-form-label color-dark align-center">조사방법<span style="color: red;">*</span></label>
+	                                </div>
+	                                <div class="col-sm-10">
+		                                <input type="text" class="form-control b-light" id="research_contents">
+		                            </div>
+			            		</div>
+			            		<div class="button-group d-flex justify-content-end mt-2">
+				                   <button class="btn btn-primary btn-default btn-squared">추가</button>
+				           		</div>
+			            	</div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+		    <!-- ends: .modal-Basic -->
 
 	        
      	</div>
@@ -346,7 +411,7 @@
 	
 	function InsertPopup()
 	{
-		$("#insert_popup").modal("show");
+		$("#researchAddModal").modal("show");
 	}
 	
 	function CheckResearch()
