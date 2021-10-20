@@ -216,7 +216,7 @@
 						add_list += '<td><input type="checkbox"></td>';
 						add_list += '<td><a href="/data/user/modify?user_id='+ result.user[i].user_id + '">' + result.user[i].user_username+ '</a></td>';
 						add_list += '<td><span>' + result.user[i].user_name_k + '</span></td>';
-						add_list += '<td><span>' + result.user[i].d4_department_name + '</span></td>';
+						add_list += '<td><span>' + (result.user[i].d4_department_name == null ? "-" : result.user[i].d4_department_name) + '</span></td>';
 						add_list += '<td><span>' + result.user[i].user_position + '</span></td>';
 						add_list += '<td><span>' + result.user[i].user_level + '</span></td>';
 						
@@ -252,18 +252,18 @@
 					}
 					else
 					{
-						page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchResearch(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
+						page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchUser(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
 					}
 					
 					for(var i = 0; i < result.end_page; i++)
 					{
 						if(result.page_num == (i + 1))
 						{
-							page_add += '<button class="atbd-pagination__link active" onclick="searchMaterial(' + (i + 1) + ')">' + (i + 1) + '</button>';
+							page_add += '<button class="atbd-pagination__link active" onclick="SearchUser(' + (i + 1) + ')">' + (i + 1) + '</button>';
 						}
 						else
 						{
-							page_add += '<button class="atbd-pagination__link" onclick="searchMaterial(' + (i + 1) + ')">' + (i + 1) + '</button>';
+							page_add += '<button class="atbd-pagination__link" onclick="SearchUser(' + (i + 1) + ')">' + (i + 1) + '</button>';
 						}
 					}
 					
@@ -273,7 +273,7 @@
 					}
 					else
 					{
-						page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchResearch(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
+						page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchUser(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
 					}
 					
 					user_list.empty();

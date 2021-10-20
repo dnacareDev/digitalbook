@@ -228,7 +228,7 @@
 					if(result.page_num == 1){
 						page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
 					}else{
-						page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchResearch(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
+						page_add += '<button class="atbd-pagination__link pagination-control" onclick="searchMaterial(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
 					}//end else
 					
 					for(var i = 0; i < result.end_page; i++){

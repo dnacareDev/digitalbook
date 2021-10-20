@@ -248,21 +248,21 @@
 					if(result.page_num == 1){
 						page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
 					}else{
-						page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchResearch(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
+						page_add += '<button class="atbd-pagination__link pagination-control" onclick="searchReagent(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
 					}//end else
 					
 					for(var i = 0; i < result.end_page; i++){
 						if(result.page_num == (i + 1)){
-							page_add += '<button class="atbd-pagination__link active" onclick="searchMaterial(' + (i + 1) + ')">' + (i + 1) + '</button>';
+							page_add += '<button class="atbd-pagination__link active" onclick="searchReagent(' + (i + 1) + ')">' + (i + 1) + '</button>';
 						}else{
-							page_add += '<button class="atbd-pagination__link" onclick="searchMaterial(' + (i + 1) + ')">' + (i + 1) + '</button>';
+							page_add += '<button class="atbd-pagination__link" onclick="searchReagent(' + (i + 1) + ')">' + (i + 1) + '</button>';
 						}//end else
 					}//end for
 					
 					if(result.page_num == result.end_page){
 						page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
 					}else{
-						page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchResearch(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
+						page_add += '<button class="atbd-pagination__link pagination-control" onclick="searchReagent(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
 					}//end else
 					
 					reagent_list.empty();
