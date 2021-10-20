@@ -43,4 +43,27 @@ public class UserServiceImpl implements UserService
 	{
 		return mapper.InsertUser(user);
 	}
+	
+	// 사용자 상세 조회
+	@Override
+	public User SelectUserDetail(int user_id) 
+	{
+		
+		return mapper.SelectUserDetail(user_id);
+	}
+	
+	// 사용자 수정
+	@Override
+	public int UpdateUser(User user) 
+	{
+		
+		return mapper.UpdateUser(user);
+	}
+	
+	// 사용자 삭제
+	@Override
+	public int DeleteUser(int user_id) {
+		
+		return mapper.DeleteUser(user_id);
+	}
 }

@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<head>
+<style>
+	.content-header{margin-top:30px;}
+	.end-button
+	{
+		width:85px;
+		height:40px;
+		background-color:#768BF5;
+		border:0px;
+		margin-top:-15px;
+	}
+	.end{margin-left:10px;}
+</style>
+<!-- 공통 헤더 -->
+<th:block th:include="@{/fragments/header.html}"></th:block>
+</head>
+<body class="layout-light top-menu overlayScroll">
+	<div class="mobile-search"></div>
+	<div class="mobile-author-actions"></div>
+	<!-- 공통 topbar -->
+	<th:block th:include="@{/fragments/topbar.html}"></th:block>
+	<main class="main-content" style="background-color: #F9FBFD;">
+		<div class="contents" style="background-color: #F9FBFD;">
+			<div class="container-fluid">
+				<form action="/data/user/updateUser" id="updateUser" method="POST" enctype="multipart/form-data">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="breadcrumb-main" style="float: left;">
+							<h4 class="text-capitalize breadcrumb-title">사용자</h4>
+							<span class="ml-20 mt-1">기초정보 - 사용자수정</span>
+						</div>
+					</div>
+				</div>
+				<div class="card">
+					<div class="pb-5 card-body">
+						<div class="row form-group">
+							<div class="col-4 col-md-2 col-lg-2">
+								<label class="" for="user_username">사용자 ID <span style="color: red;">*</span></label>
+							</div>
+							<div class="col-8 col-md-4 col-lg-2">
+								<input type="text" class="form-control inputText" id="user_username" name="user_username" th:value="${user.user_username}" readonly="readonly">
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="col-4 col-md-2 col-lg-2">
+								<label class="" for="user_password">비밀번호 <span style="color: red;">*</span></label>
+							</div>
+							<div class="col-8 col-md-4 col-lg-2">
+								<input type="password" class="form-control inputText" id="user_password" name="user_password" th:value="${user.user_password}">
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="pr-0 col-4 col-md-2 col-lg-2">
+								<label class="" for="chk_password">비밀번호 확인 <span style="color: red;">*</span></label>
+							</div><div class="col-8 col-md-4 col-lg-2">
+								<input type="password" class="form-control inputText" id="chk_password" name="chk_password" th:value="${user.user_password}">
+							</div>
+						</div>
+						<div class="row form-group md-0">
+							<div class="pr-0 col-4 col-md-2 col-lg-2">
+								<label class="" for="user_name_k">성명 <span style="color: red;">*</span></label>
+							</div><div class="col-8 col-md-4 col-lg-2">
+								<input type="text" class="form-control inputText" id="user_name_k" name="user_name_k" th:value="${user.user_name_k}">
+							</div>
+							<div class="pr-0 col-4 col-md-2 col-lg-2">
+								<label class="" for="user_name_e">영문</label>
+							</div>
+							<div class="col-8 col-md-4 col-lg-2">
+								<input type="text" class="form-control inputText" id="user_name_e" name="user_name_e" th:value="${user.user_name_e}">
+							</div>
+						</div>
+						<div class="row form-group md-0">
+							<div class="mb-2 col-4 col-md-2 col-lg-2">
+								<label class="" for="depart_depth1">원 <span style="color: red;">*</span></label>
+							</div>
+							<div class="col-8 col-md-4 col-lg-2">
+								<select class="form-control b-light department" id="depart_depth1">
+									<option value="0">원 선택</option>
+									<th:block th:each="d1 : ${d1}">
+		                                <option th:value="${d1.depart_id}" th:text="${d1.department}" th:selected="${d1.depart_id == user.d1_id}"></option>
+	                                </th:block>
+								</select>
+							</div>
+							<div class="mb-2 col-4 col-md-2 col-lg-2">
+								<label class="" for="depart_depth2">부</label>
+							</div>
+							<div class="col-8 col-md-4 col-lg-2">
+								<select class="form-control b-light department" id="depart_depth2">
+									<option value="0">부 선택</option>
+									<th:block th:each="d2 : ${d2}">
+		                                <option th:value="${d2.depart_id}" th:text="${d2.department}" th:selected="${d2.depart_id == user.d2_id}"></option>
+	                                </th:block>
+								</select>
+							</div>
+							<div class="mb-2 col-4 col-md-2 col-lg-2">
+								<label class="" for="depart_depth3">과<span style="color: red;">*</span></label>
+							</div>
+							<div class="col-8 col-md-4 col-lg-2">
+								<select class="form-control b-light department" id="depart_depth3" name="user_group">
+									<option value="0">과 선택</option>
+									<th:block th:each="d3 : ${d3}">
+		                                <option th:value="${d3.depart_id}" th:text="${d3.department}" th:selected="${d3.depart_id == user.d3_id}"></option>
+	                                </th:block>
+								</select>
+							</div>
+						</div>
+						<div class="row form-group md-0">
+							<div class="mb-2 col-4 col-md-2 col-lg-2">
+								<label class="" for="depart_depth4">소속실</label>
+							</div>
+							<div class="col-8 col-md-4 col-lg-2">
+								<select class="form-control b-light department" id="depart_depth4" name="depart_id">
+									<option value="0">소속실 선택</option>
+									<th:block th:each="d4 : ${d4}">
+		                                <option th:value="${d4.depart_id}" th:text="${d4.department}" th:selected="${d4.depart_id == user.d4_id}"></option>
+	                                </th:block>
+								</select>
+							</div>
+							<div class="mb-2 col-4 col-md-2 col-lg-2">
+								<label class="" for="user_position">직종<span style="color: red;">*</span></label>
+							</div>
+							<div class="col-8 col-md-4 col-lg-2">
+								<select class="form-control b-light" id="user_position" name="user_position">
+									<option value="">직종 선택</option>
+									<option value="연구직">연구직</option>
+									<option value="전문연구직">전문연구직</option>
+									<option value="공무직">공무직</option>
+									<option value="실무관">실무관</option>
+								</select>
+							</div>
+							<div class="mb-2 col-4 col-md-2 col-lg-2">
+								<label class="" for="user_level">직급<span style="color: red;">*</span></label>
+							</div>
+							<div class="col-8 col-md-4 col-lg-2">
+								<select class="form-control b-light" id="user_level" name="user_level">
+									<option value="">직급 선택</option>
+									<option value="수확후이용과">농업연구관</option>
+									<option value="농업연구사">농업연구사</option>
+									<option value="박사후전문연구원">박사후전문연구원</option>
+									<option value="연구원">연구원</option>
+									<option value="공업서기">공업서기</option>
+									<option value="포장온실관리원">포장온실관리원</option>
+									<option value="행정실무원">행정실무원</option>
+									<option value="시설관리원">시설관리원</option>
+									<option value="운전원">운전원</option>
+								</select>
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="col-4 col-md-2 col-lg-2">
+								<label class="" for="user_post">주소</label>
+							</div>
+							<div class="col-8 col-md-4 col-lg-2">
+								<input type="text" class="form-control inputText" id="user_post" name="user_post" th:value="${user.user_post}" placeholder="우편번호">
+							</div>
+						</div>
+						<div class="mb-0 row form-group">
+							<div class="mb-2 col-4 col-md-2 col-lg-2">
+								<label class="">&nbsp;</label>
+							</div>
+							<div class="mb-2 col-8 col-md-5 col-lg-4">
+								<input type="text" class="form-control inputText" id="user_address" name="user_address" th:value="${user.user_address}" placeholder="주소">
+							</div>
+							<div class="d-flex d-md-none mb-2 col-4 col-md-2 col-lg-2">
+								<label class="">&nbsp;</label>
+							</div>
+							<div class="mb-2 col-8 col-md-5 col-lg-4">
+								<input type="text" class="form-control inputText" id="user_address_detail" name="user_address_detail" th:value="${user.user_address_detail}" placeholder="상세주소">
+							</div>
+						</div>
+						<div class="mb-0 row form-group">
+							<div class="mb-2 col-4 col-md-2 col-lg-2">
+								<label class="" for="user_tel">전화번호</label>
+							</div>
+							<div class="mb-2 col-8 col-md-4 col-lg-2">
+								<input type="text" class="form-control inputText" id="user_tel" name="user_tel" th:value="${user.user_tel}">
+							</div>
+							<div class="mb-2 col-4 col-md-2 col-lg-2">
+								<label class="" for="user_pax">팩스번호</label>
+							</div>
+							<div class="mb-2 col-8 col-md-4 col-lg-2">
+								<input type="text" class="form-control inputText" id="user_pax" name="user_pax" th:value="${user.user_pax}">
+							</div>
+							<div class="mb-2 col-4 col-md-2 col-lg-2">
+								<label class="" for="user_phone">휴대전화번호</label>
+							</div>
+							<div class="mb-2 col-8 col-md-4 col-lg-2">
+								<input type="text" class="form-control inputText" id="user_phone" name="user_phone" th:value="${user.user_phone}">
+							</div>
+						</div>
+						<div class="mb-0 row form-group">
+							<div class="mb-2 col-4 col-md-2 col-lg-2">
+								<label class="" for="user_scientist">과학기술인번호</label>
+							</div>
+							<div class="mb-2 col-8 col-md-4 col-lg-2">
+								<input type="text" class="form-control inputText" id="user_scientist" name="user_scientist" th:value="${user.user_scientist}">
+							</div>
+							<div class="mb-2 col-4 col-md-2 col-lg-2">
+								<label class="" for="user_type">권한<span style="color: red;">*</span></label>
+							</div>
+							<div class="mb-2 col-8 col-md-4 col-lg-2">
+								<select class="form-control b-light authority" id="user_type" name="user_type">
+									<option value="">권한 선택</option>
+									<option value="0">최고관리자</option>
+									<option value="1">운영자</option>
+									<option value="2">연구직</option>
+									<option value="3">공무직</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-4">
+						<div class="action-btn d-flex justify-content-frist mt-30"></div>
+					</div>
+					<div class="col-4">
+						<div class="d-flex justify-content-center mt-30"></div>
+					</div>
+					<div class="col-4">
+						<div class="action-btn d-flex justify-content-end mt-30">
+							<a href="/data/user" class="btn btn-primary end-button end">목록</a>
+							<button type="button" class="btn btn-default btn-danger end-button end" onclick="DeleteBtn();">삭제</button>
+		                	<button type="button" class="btn btn-default btn-primary end-button end" onclick="UpdateBtn();">수정</button>
+		                	<input type="hidden" id="user_id" name="user_id" th:value="${user.user_id}">
+						</div>
+					</div>
+				</div>
+				</form>
+				<div class="atbd-notice" id="success_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
+		        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+		        		<div class="card-body">
+		        			<div class="atbd-notice__content">
+		        				<div class="atbd-notice__top text-center">
+		        					<div class="atbd-notice__icon bg-success">
+		        						<i class="fas fa-check color-white"></i>
+		        					</div>
+		        					<div class="atbd-notice__text">
+		        						<h4>완료되었습니다.</h4>
+		        					</div>
+		        					<div style="display: flex; justify-content: center; margin: 10% auto;">
+		        						<a class="btn btn-default btn-success" href="/data/research" style="color: #FFFFFF;">확인</a>
+		        					</div>
+		        				</div>
+		        			</div>
+		        		</div>
+		        	</div>
+		        </div>
+		        <div class="atbd-notice" id="update_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
+		        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+		        		<div class="card-body">
+		        			<div class="atbd-notice__content">
+		        				<div class="atbd-notice__top text-center">
+		        					<div class="atbd-notice__icon bg-info">
+		        						<i class="fas fa-exclamation color-white"></i>
+		        					</div>
+		        					<div class="atbd-notice__text">
+		        						<h4>수정하시겠습니까?</h4>
+		        					</div>
+		        					<div style="display: flex; justify-content: center; margin: 10% auto;">
+		        						<button class="btn btn-default btn-primary mr-10" onclick="UpdateUser();" style="color: #FFFFFF;">수정</button>
+		        						<button class="btn btn-default btn-danger" onclick="CancelBtn();" style="color: #FFFFFF;">취소</button>
+		        					</div>
+		        				</div>
+		        			</div>
+		        		</div>
+		        	</div>
+		        </div>
+		        <div class="atbd-notice" id="delete_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
+		        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+		        		<div class="card-body">
+		        			<div class="atbd-notice__content">
+		        				<div class="atbd-notice__top text-center">
+		        					<div class="atbd-notice__icon bg-danger">
+		        						<i class="fas fa-exclamation-triangle color-white"></i>
+		        					</div>
+		        					<div class="atbd-notice__text">
+		        						<h4>삭제하시겠습니까?</h4>
+		        					</div>
+		        					<div style="display: flex; justify-content: center; margin: 10% auto;">
+		        						<a th:href="@{/data/user/deleteUser(user_id=${user.user_id})}" class="btn btn-default btn-primary mr-10" onclick="DeleteUser();" style="color: #FFFFFF;">삭제</a>
+		        						<button class="btn btn-default btn-danger" onclick="CancelBtn();" style="color: #FFFFFF;">취소</button>
+		        					</div>
+		        				</div>
+		        			</div>
+		        		</div>
+		        	</div>
+		        </div>
+			</div>
+		</div>
+	</main>
+     <!-- 공통 하단 -->
+    <th:block th:include="@{/fragments/footer.html}"></th:block>
+    <!-- 공통 js -->
+    <th:block th:include="@{/fragments/commonjs.html}"></th:block>
+</body>
+<script type="text/javascript" th:inline="javascript">
+	
+	var user = /*[[${user}]]*/ "null";
+	
+	//직종, 직급 , 권한 selected 이벤트
+	$("#user_position").val(user.user_position).prop("selected", true);
+	$("#user_level").val(user.user_level).prop("selected", true);
+	$("#user_type").val(user.user_type).prop("selected", true);
+	
+	$('.inputText').bind('keydown', function(e)
+   	{
+   		if(e.keyCode == 13)
+   		{
+   			/* e.preventDefault(); */ 
+   			return false;
+   		}
+   	});
+
+	$(".department").change(function()
+	{
+		var depart_id = $(this).val();
+		var depart_depth = this.id.slice(12, 13);
+		
+		var data = {"depart_id" : depart_id, "depart_depth" : depart_depth};
+		
+		$.ajax(
+		{
+			url : 'selectDepartment',
+			method : 'POST',
+			dataType : 'json',
+			data : data,
+			success : function(result)
+			{
+				console.log(result);
+				var depth = (depart_depth * 1) + 1;
+				var depart_list = $("#depart_depth" + depth);
+				var add_list = "";
+				
+				if(depth == 2)
+				{
+					add_list += '<option value="0">부 선택</option>';
+				}
+				else if(depth == 3)
+				{
+					add_list += '<option value="0">과 선택</option>';
+				}
+				else if(depth == 4)
+				{
+					add_list += '<option value="0">소속실 선택</option>';
+				}
+				
+				for(var i = 0; i < result.length; i++)
+				{
+					add_list += '<option value="' + result[i].depart_id + '">' + result[i].department + '</option>';
+				}
+				
+				depart_list.empty();
+				depart_list.append(add_list);
+			}
+		});
+	});
+	
+	function UpdateBtn()
+	{
+		$("#update_popup").css("display", "flex");
+	}
+	
+	function DeleteBtn()
+	{
+		$("#delete_popup").css("display", "flex");
+	}
+	
+	function CancelBtn()
+	{
+		$("#update_popup").css("display", "none");
+		$("#delete_popup").css("display", "none");
+	}
+	
+	function UpdateUser()
+	{
+		var user_username = $("#user_username").val();
+		var user_password = $("#user_password").val();
+		var chk_password = $("#chk_password").val();
+		var user_name_k = $("#user_name_k").val();
+		var depart_depth1 = $("#depart_depth1").val();
+		var depart_depth2 = $("#depart_depth2").val();
+		var depart_depth3 = $("#depart_depth3").val();
+		var user_position = $("#user_position").val();
+		var user_level = $("#user_level").val();
+		
+		console.log("1 : " + user_username);
+		console.log("2 : " + user_password);
+		console.log("3 : " + chk_password);
+		console.log("4 : " + user_name_k);
+		console.log("5 : " + depart_depth1);
+		console.log("6 : " + depart_depth2);
+		console.log("7 : " + depart_depth3);
+		console.log("8 : " + user_position);
+		console.log("9 : " + user_level);
+		if(user_username == "")
+		{
+			alert("사용자 ID를 입력하세요.");
+			$("#update_popup").css("display", "none");
+		}
+		else if(user_password == "")
+		{
+			alert("비밀번호를 입력하세요.");
+			$("#update_popup").css("display", "none");
+		}
+		else if(chk_password == "")
+		{
+			alert("비밀번호 다시 한번 입력하세요.");
+			$("#update_popup").css("display", "none");
+		}
+		else if(user_name_k == "")
+		{
+			alert("성명을 입력하세요.");
+			$("#update_popup").css("display", "none");
+		}
+		else if(depart_depth1 == 0)
+		{
+			alert("소속원을 선택해주세요.");
+			$("#update_popup").css("display", "none");
+		}
+		else if(depart_depth2 == 0)
+		{
+			alert("소속부을 선택해주세요.");
+			$("#update_popup").css("display", "none");
+		}
+		else if(depart_depth3 == 0)
+		{
+			alert("소속과를 선택해주세요.");
+			$("#update_popup").css("display", "none");
+		}
+		else if(user_position == "")
+		{
+			alert("직종을 선택해주세요.");
+			$("#update_popup").css("display", "none");
+		}
+		else if(user_level == "")
+		{
+			alert("직급을 선택해주세요");
+			$("#update_popup").css("display", "none");
+		}
+		else if(user_password != chk_password)
+		{
+			alert("비밀번호가 일치하지 않습니다.");
+			$("#update_popup").css("display", "none");
+		}
+		else
+		{
+			$("#updateUser").submit();
+		}
+	}
+</script>
+</html>

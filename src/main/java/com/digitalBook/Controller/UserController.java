@@ -96,4 +96,65 @@ public class UserController
 		
 		return mv;
 	}
+	
+	// 사용자 수정 화면
+	@RequestMapping("/user/modify")
+	public ModelAndView UserModify(ModelAndView mv, @RequestParam(name = "user_id", required = true) int user_id) {
+		
+		User user = service.SelectUserDetail(user_id);
+		
+		List<Department> d1 = service.SelectDepartment(0, 0);
+		List<Department> d2 = service.SelectDepartment(user.getD1_id(), 1);
+		List<Department> d3 = service.SelectDepartment(user.getD2_id(), 2);
+		List<Department> d4 = service.SelectDepartment(user.getD3_id(), 3);
+		
+		mv.addObject("user", user);
+		mv.addObject("d1", d1);
+		mv.addObject("d2", d2);
+		mv.addObject("d3", d3);
+		mv.addObject("d4", d4);
+		
+		mv.setViewName("user/user_modify");
+		
+		return mv;
+	}
+	
+	// 사용자 수정
+	@RequestMapping("/user/updateUser")
+	public ModelAndView UpdateUser(ModelAndView mv, @ModelAttribute User user) 
+	{
+		System.out.println(user);
+		int result = service.UpdateUser(user);
+		
+		if(result == 0)
+		{
+			mv.setViewName("redirect:/user/modify");
+		}
+		else
+		{
+			mv.setViewName("redirect:/data/user");
+		}
+		
+		return mv;
+	}
+	
+	// 사용자 삭제
+	@RequestMapping("/user/deleteUser")
+	public ModelAndView DeleteUser(ModelAndView mv, @RequestParam(name = "user_id", required = true) int user_id) 
+	{
+		
+		int result = service.DeleteUser(user_id);
+		
+		if(result == 0)
+		{
+			mv.setViewName("redirect:/user/modify");
+		}
+		else
+		{
+			mv.setViewName("redirect:/data/user");
+		}
+		
+		return mv;
+	}
+	
 }

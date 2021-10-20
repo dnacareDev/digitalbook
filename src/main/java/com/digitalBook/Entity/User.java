@@ -36,6 +36,10 @@ public class User {
 	private int user_group;					//사용자 그룹번호
 	
 	//소속실(department) 사용 컬럼
-	private String d1_department_name;		//소속실명
+	private String d4_department_name;		//소속실명
+	private int d4_id;						//소속실 depart_id
+	private int d3_id;						//과 depart_id
+	private int d2_id;						//부 depart_id
+	private int d1_id;						//원 depart_id
 	
 }

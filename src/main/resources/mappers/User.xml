@@ -4,10 +4,10 @@
 	<!-- 사용자 수 검색 -->	
 	<select id="SearchUserCount" resultType="int">
 		SELECT COUNT(*) FROM user u
-		LEFT JOIN department d1 ON u.depart_id = d1.depart_id
-		LEFT JOIN department d2 ON d1.depart_parents = d2.depart_id
-		LEFT JOIN department d3 ON d2.depart_parents = d3.depart_id
-		LEFT JOIN department d4 ON d3.depart_parents = d4.depart_id
+		LEFT JOIN department d4 ON u.depart_id = d4.depart_id
+		LEFT JOIN department d3 ON u.user_group = d3.depart_id
+		LEFT JOIN department d2 ON d3.depart_parents = d2.depart_id
+		LEFT JOIN department d1 ON d2.depart_parents = d1.depart_id
 		WHERE 1=1
 		<choose>
 			<when test="search_type == null || search_type.equals('none')">
@@ -31,11 +31,11 @@
 	
 	<!-- 사용자 검색 -->
 	<select id="SearchUser" resultType="User">
-		SELECT u.*, d1.*, d2.*, d3.*, d4.*, d1.department as d1_department_name FROM user u
-		LEFT JOIN department d1 ON u.depart_id = d1.depart_id
-		LEFT JOIN department d2 ON d1.depart_parents = d2.depart_id
-		LEFT JOIN department d3 ON d2.depart_parents = d3.depart_id
-		LEFT JOIN department d4 ON d3.depart_parents = d4.depart_id
+		SELECT u.*, d1.*, d2.*, d3.*, d4.*, d4.department as d4_department_name FROM user u
+		LEFT JOIN department d4 ON u.depart_id = d4.depart_id
+		LEFT JOIN department d3 ON u.user_group = d3.depart_id
+		LEFT JOIN department d2 ON d3.depart_parents = d2.depart_id
+		LEFT JOIN department d1 ON d2.depart_parents = d1.depart_id
 		WHERE 1=1
 		<choose>
 			<when test="search_type == null || search_type.equals('none')">
@@ -62,7 +62,13 @@
 	<!-- 소속실 조회 -->
 	<select id="SelectDepartment" resultType="Department">
 		SELECT * FROM department
-		WHERE depart_depth = #{depart_depth} AND depart_parents = #{depart_id}
+		WHERE depart_depth = #{depart_depth}
+		<choose>
+			<when test="depart_depth != 0">
+				AND depart_parents = #{depart_id}
+			</when>
+		</choose>
+		
 	</select>
 	
 	<!-- 사용자 등록 -->
@@ -70,6 +76,48 @@
 		INSERT INTO user
 		(user_username, user_password, user_name_k, user_name_e, user_post, user_address, user_address_detail, user_tel, user_phone, user_pax, user_type, user_status, depart_id, user_group, user_position, user_level, user_scientist, user_authority, login_date, create_date, modify_date)
 		VALUES
-		(#{user_username}, #{user_password}, #{user_name_k}, #{user_name_e}, #{user_post}, #{user_address}, #{user_address_detail}, #{user_tel}, #{user_phone}, #{user_pax}, #{user_type}, #{user_status}, #{depart_id}, #{user_group}, #{user_position}, #{user_level}, #{user_scientist}, 'USER', NOW(), NOW(), NOW())
+		(#{user_username}, #{user_password}, #{user_name_k}, #{user_name_e}, #{user_post}, #{user_address}, #{user_address_detail}, #{user_tel}, #{user_phone}, #{user_pax}, #{user_type}, 1, #{depart_id}, #{user_group}, #{user_position}, #{user_level}, #{user_scientist}, 'USER', NOW(), NOW(), NOW())
 	</insert>
+	
+	<!-- 사용자 상세 조회 -->
+	<select id="SelectUserDetail" parameterType="int" resultType="User">
+		SELECT u.*, d1.*, d2.*, d3.*, d4.*,
+			d4.depart_id as d4_id, d3.depart_id as d3_id, d2.depart_id as d2_id, d1.depart_id as d1_id
+		FROM user u
+		LEFT JOIN department d4 ON u.depart_id = d4.depart_id
+		LEFT JOIN department d3 ON u.user_group = d3.depart_id
+		LEFT JOIN department d2 ON d3.depart_parents = d2.depart_id
+		LEFT JOIN department d1 ON d2.depart_parents = d1.depart_id
+		WHERE u.user_id = #{user_id}
+	</select>
+	
+	<!-- 사용자 수정 -->
+	<update id="UpdateUser" parameterType="User">
+		UPDATE user
+		SET user_password = #{user_password},
+			user_name_k = #{user_name_k},
+			user_name_e = #{user_name_e},
+			user_post = #{user_post},
+			user_address = #{user_address},
+			user_address_detail = #{user_address_detail},
+			user_tel = #{user_tel},
+			user_phone = #{user_phone},
+			user_pax = #{user_pax},
+			user_type = #{user_type},
+			depart_id = #{depart_id},
+			user_group = #{user_group},
+			user_position = #{user_position},
+			user_level = #{user_level},
+			user_scientist = #{user_scientist},
+			modify_date = NOW()
+		WHERE user_id = #{user_id}
+	</update>
+	
+	<!-- 사용자 삭제 -->
+	<update id="DeleteUser" parameterType="int">
+		UPDATE user
+		SET user_status = 0
+		WHERE user_id = #{user_id}
+	</update>
+	
 </mapper>

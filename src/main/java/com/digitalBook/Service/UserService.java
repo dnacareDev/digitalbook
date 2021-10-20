@@ -18,4 +18,14 @@ public interface UserService
 
 	// 사용자 등록
 	int InsertUser(User user);
+	
+	// 사용자 상세 조회
+	User SelectUserDetail(int user_id);
+	
+	// 사용자 수정
+	int UpdateUser(User user);
+	
+	// 사용자 삭제
+	int DeleteUser(int user_id);
+	
 }

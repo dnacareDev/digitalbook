@@ -99,7 +99,7 @@
 				                                <option value="none">전체</option>
 				                                <option value="u.user_username">사용자 ID</option>
 				                                <option value="u.user_name_k">성명</option>
-				                                <option value="d1.department">소속실</option>
+				                                <option value="d4.department">소속실</option>
 				                                <option value="u.user_position">직종</option>
 				                                <option value="u.user_level">직급</option>
 				                            </select>
@@ -216,7 +216,7 @@
 						add_list += '<td><input type="checkbox"></td>';
 						add_list += '<td><a href="/data/user/modify?user_id='+ result.user[i].user_id + '">' + result.user[i].user_username+ '</a></td>';
 						add_list += '<td><span>' + result.user[i].user_name_k + '</span></td>';
-						add_list += '<td><span>' + result.user[i].d1_department_name + '</span></td>';
+						add_list += '<td><span>' + result.user[i].d4_department_name + '</span></td>';
 						add_list += '<td><span>' + result.user[i].user_position + '</span></td>';
 						add_list += '<td><span>' + result.user[i].user_level + '</span></td>';
 						
@@ -241,7 +241,7 @@
 							add_list += '<td><span>공무직</span></td>';
 						}
 						
-						add_list += '<td><span>' + (result.user[i].user_type == 0 ? "N" : "Y") + '</span></td>';
+						add_list += '<td><span>' + (result.user[i].user_status == 0 ? "N" : "Y") + '</span></td>';
 						add_list += '<td><span>' + result.user[i].create_date + '</span></td>';
 						add_list += '</tr>';
 					}
