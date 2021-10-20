@@ -11,7 +11,17 @@
 		WHERE 1=1
 		<choose>
 			<when test="search_type == null || search_type.equals('none')">
-				
+				AND (
+					u.user_username LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					u.user_name_k LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					d1.department LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					u.user_position LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					u.user_level LIKE CONCAT('%', #{keyword}, '%')
+				)
 			</when>
 			<otherwise>
 				AND ${search_type} LIKE CONCAT('%', #{keyword}, '%')
@@ -29,7 +39,17 @@
 		WHERE 1=1
 		<choose>
 			<when test="search_type == null || search_type.equals('none')">
-				
+				AND (
+					u.user_username LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					u.user_name_k LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					d1.department LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					u.user_position LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					u.user_level LIKE CONCAT('%', #{keyword}, '%')
+				)
 			</when>
 			<otherwise>
 				AND ${search_type} LIKE CONCAT('%', #{keyword}, '%')

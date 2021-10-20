@@ -17,7 +17,19 @@
 		WHERE s.user_group = 1
 		<choose>
 			<when test="search_type == null || search_type.equals('none')">
-				
+				AND (
+					r.report_code LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					r.report_title LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					d.division LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					s.seed_amount = #{keyword}
+					OR
+					s.seed_sender LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					w.warehouse LIKE CONCAT('%', #{keyword}, '%')
+				)
 			</when>
 			<when test="search_type.equals('s.seed_amount')">
 				AND ${search_type} = #{keyword}
@@ -44,7 +56,19 @@
 		WHERE s.user_group = 1
 		<choose>
 			<when test="search_type == null || search_type.equals('none')">
-				
+				AND (
+					r.report_code LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					r.report_title LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					d.division LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					s.seed_amount = #{keyword}
+					OR
+					s.seed_sender LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					w.warehouse LIKE CONCAT('%', #{keyword}, '%')
+				)
 			</when>
 			<when test="search_type.equals('s.seed_amount')">
 				AND ${search_type} = #{keyword}
