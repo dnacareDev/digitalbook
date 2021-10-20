@@ -1,6 +1,18 @@
 <!doctype html>
 <html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
 <head>
+<style>
+	.content-header{margin-top:30px;}
+	.end-button
+	{
+		width:85px;
+		height:40px;
+		background-color:#768BF5;
+		border:0px;
+		margin-top:-15px;
+	}
+	.end{margin-left:10px;}
+</style>
 <!-- 공통 헤더 -->
 <th:block th:include="@{/fragments/header.html}"></th:block>
 </head>
@@ -9,8 +21,8 @@
 	<div class="mobile-author-actions"></div>
 	<!-- 공통 topbar -->
 	<th:block th:include="@{/fragments/topbar.html}"></th:block>
-	<main class="main-content" style="background-color: #fafef5;">
-		<div class="contents" style="background-color: #fafef5;">
+	<main class="main-content" style="background-color: #F9FBFD;">
+		<div class="contents" style="background-color: #F9FBFD;">
 		    <div class="container-fluid">
 		    	<div class="row">
 			        <div class="col-lg-12">
@@ -122,14 +134,24 @@
 				        		</div>
 				        	</div>
 			        	</form>
-			        	<div class="d-flex justify-content-end mt-20">
-		                	<a href="/data/machine" class="btn btn-light btn-default btn-primary mr-10">목록</a>
-		                	<button class="btn btn-default btn-danger mr-10" onclick="DeleteBtn();">삭제</button>
-		                	<button class="btn btn-default btn-primary" onclick="UpdateBtn();">수정</button>
-		                	<input type="hidden" id="machine_id" th:value="${machine.machine_id}">
-		                </div>
+		                <input type="hidden" id="machine_id" th:value="${machine.machine_id}">
 			        </div>
 		        </div>
+		        <div class="row">
+					<div class="col-4">
+						<div class="action-btn d-flex justify-content-frist mt-30"></div>
+					</div>
+					<div class="col-4">
+						<div class="d-flex justify-content-center mt-30"></div>
+					</div>
+					<div class="col-4">
+						<div class="action-btn d-flex justify-content-end mt-30">
+							<a href="/data/user" class="btn btn-primary end-button end">목록</a>
+							<button type="button" class="btn btn-default btn-danger end-button end" onclick="DeleteBtn();">삭제</button>
+		                	<button type="button" class="btn btn-default btn-primary end-button end" onclick="UpdateBtn();">수정</button>
+						</div>
+					</div>
+				</div>
 		    </div>
 		    
 	        <div class="atbd-notice" id="success_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">

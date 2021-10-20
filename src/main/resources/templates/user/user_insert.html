@@ -24,7 +24,7 @@
 	<main class="main-content" style="background-color: #F9FBFD;">
 		<div class="contents" style="background-color: #F9FBFD;">
 			<div class="container-fluid">
-				<form action="insertUser" id="insertUser" method="POST" enctype="multipart/form-data">
+				<form action="#" id="insertUser" method="POST" enctype="multipart/form-data">
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="breadcrumb-main" style="float: left;">
@@ -216,6 +216,25 @@
 					</div>
 				</div>
 				</form>
+				<div class="atbd-notice" id="success_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
+	        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+	        		<div class="card-body">
+	        			<div class="atbd-notice__content">
+	        				<div class="atbd-notice__top text-center">
+	        					<div class="atbd-notice__icon bg-success">
+	        						<i class="fas fa-check color-white"></i>
+	        					</div>
+	        					<div class="atbd-notice__text">
+	        						<h4>등록이 완료되었습니다.</h4>
+	        					</div>
+	        					<div style="display: flex; justify-content: center; margin: 10% auto;">
+	        						<a class="btn btn-default btn-success" href="/data/user" style="color: #FFFFFF;">확인</a>
+	        					</div>
+	        				</div>
+	        			</div>
+	        		</div>
+	        	</div>
+	        </div>
 			</div>
 		</div>
 	</main>
@@ -341,7 +360,27 @@
 		}
 		else
 		{
-			$("#insertUser").submit();
+			/* $("#insertUser").submit(); */
+			var insertUser_form = $("#insertUser").serialize();
+			
+			$.ajax(
+			{
+				url : 'insertUser',
+				method : 'POST',
+				dataType : 'json',
+				data : insertUser_form,
+				success : function(result)
+				{
+					if(result == 0)
+					{
+						
+					}
+					else
+					{
+						$("#success_popup").css("display", "flex");
+					}
+				}
+			});
 		}
 	}
 </script>

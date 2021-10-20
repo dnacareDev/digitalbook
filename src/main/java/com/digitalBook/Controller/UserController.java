@@ -78,23 +78,14 @@ public class UserController
 	}
 	
 	// 사용자 등록
+	@ResponseBody
 	@RequestMapping("/user/insertUser")
-	public ModelAndView InsertUser(ModelAndView mv, @ModelAttribute User user)
+	public int InsertUser(@ModelAttribute User user)
 	{
-		System.out.println(user);
+		
 		int result = service.InsertUser(user);
 		
-		if(result == 0)
-		{
-			mv.setViewName("redirect:/user/insert");
-		}
-		else
-		{
-			mv.setViewName("redirect:/data/user");
-		}
-		
-		
-		return mv;
+		return result;
 	}
 	
 	// 사용자 수정 화면
@@ -120,41 +111,25 @@ public class UserController
 	}
 	
 	// 사용자 수정
+	@ResponseBody
 	@RequestMapping("/user/updateUser")
-	public ModelAndView UpdateUser(ModelAndView mv, @ModelAttribute User user) 
+	public int UpdateUser(@ModelAttribute User user) 
 	{
-		System.out.println(user);
+		
 		int result = service.UpdateUser(user);
 		
-		if(result == 0)
-		{
-			mv.setViewName("redirect:/user/modify");
-		}
-		else
-		{
-			mv.setViewName("redirect:/data/user");
-		}
-		
-		return mv;
+		return result;
 	}
 	
 	// 사용자 삭제
+	@ResponseBody
 	@RequestMapping("/user/deleteUser")
-	public ModelAndView DeleteUser(ModelAndView mv, @RequestParam(name = "user_id", required = true) int user_id) 
+	public int DeleteUser(@RequestParam(name = "user_id", required = true) int user_id) 
 	{
 		
 		int result = service.DeleteUser(user_id);
 		
-		if(result == 0)
-		{
-			mv.setViewName("redirect:/user/modify");
-		}
-		else
-		{
-			mv.setViewName("redirect:/data/user");
-		}
-		
-		return mv;
+		return result;
 	}
 	
 }
