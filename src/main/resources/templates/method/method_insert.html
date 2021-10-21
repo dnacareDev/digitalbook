@@ -80,18 +80,18 @@
 		                    	</div>
 		                    	<div class="row mt-3">
 		        					<div class="col-sm-2 d-flex aling-items-center">
-		                            	<label for="machine_price" class="color-dark">Protocol</label>
+		                            	<label for="protocol" class="color-dark">Protocol</label>
 		                            </div>
 		                            <div class="col-sm-5">
-		                                <textarea class="form-control" id="machine_price" rows="10" readonly></textarea>
+		                                <textarea id="protocol" class="form-control" rows="10" readonly></textarea>
 		                            </div>
 		                    	</div>
 		                    	<div class="row mt-3">
 		        					<div class="col-sm-2 d-flex aling-items-center">
-		                            	<label for="machine_range" class="color-dark">기타</label>
+		                            	<label for="method_comment" class="color-dark">기타</label>
 		                            </div>
 		                            <div class="col-sm-5">
-		                                <textarea class="form-control b-light" id="machine_price" rows="5"></textarea>
+		                                <textarea id="method_comment" class="form-control b-light" rows="5"></textarea>
 		                            </div>
 		                    	</div>
 			        		</div>
@@ -111,10 +111,10 @@
 								<div class="row mt-4">
 									<div class="col-lg-3">
 										<div class="row">
-											<input type="text" class="form-control b-light" id="method_contents">
+											<input type="text" class="form-control b-light" id="searchResearch">
 										</div>
 										<div class="row">
-											<button class="btn btn-dark mt-2" onclick="InsertPopup();">조사방법 추가</button>
+											<button id="addResearchBtn" class="btn btn-dark mt-2" onclick="InsertPopup();">조사방법 추가</button>
 										</div>
 										<div class="row">
 											<div class="table-responsive mt-2">
@@ -134,20 +134,18 @@
 									<div class="col-lg-1">
 										<div class="d-flex justify-content-center" style="padding-top: 200px;">
 											<div class="col-sm-12">
-												<button onclick="CheckResearch();"><span data-feather="plus"></span></button>
+												<button onclick="PlusResearch();"><span data-feather="plus"></span></button>
 											</div>
 											<div class="col-sm12">
-												<button onclick="aaa();"><span data-feather="minus"></span></button>
+												<button onclick="MinusResearch();"><span data-feather="minus"></span></button>
 											</div>
 										</div>
 									</div>
 									<div class="col-lg-8">
-										<div class="table-responsive" style="min-height: 500px; background: #f4f5f7;">
-											<table class="table">
-												<tbody id="research_table">
-												</tbody>
-											</table>
-										</div>
+										<ul class="list-group" id="step-container" style="min-height: 500px; max-height: 500px;
+											overflow-y: auto; background-color: rgb(243, 243, 243) ">
+											
+										</ul>
 									</div>
 								</div>
 			        		</div>
@@ -240,6 +238,25 @@
 	        		</div>
 	        	</div>
 	        </div>
+	        <div class="atbd-notice" id="research_success_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
+	        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+	        		<div class="card-body">
+	        			<div class="atbd-notice__content">
+	        				<div class="atbd-notice__top text-center">
+	        					<div class="atbd-notice__icon bg-success">
+	        						<i class="fas fa-check color-white"></i>
+	        					</div>
+	        					<div class="atbd-notice__text">
+	        						<h4>등록이 완료되었습니다.</h4>
+	        					</div>
+	        					<div style="display: flex; justify-content: center; margin: 10% auto;">
+	        						<button class="btn btn-default btn-success" onclick="confirmResearch();" style="color: #FFFFFF;">확인</button>
+	        					</div>
+	        				</div>
+	        			</div>
+	        		</div>
+	        	</div>
+	        </div>
 	        
 	        <div class="modal-basic modal fade show" id="researchAddModal" tabindex="-1" role="dialog" aria-hidden="true">
 			    <div class="modal-dialog modal-lg" role="document">
@@ -261,7 +278,7 @@
 		                            </div>
 			            		</div>
 			            		<div class="button-group d-flex justify-content-end mt-2">
-				                   <button class="btn btn-primary btn-default btn-squared">추가</button>
+				                   <button class="btn btn-primary btn-default btn-squared" onclick="InsertResearch();">추가</button>
 				           		</div>
 			            	</div>
 			            </div>
@@ -278,6 +295,13 @@
     <!-- 공통 js -->
     <th:block th:include="@{/fragments/commonjs.html}"></th:block>
 <script type="text/javascript">
+
+	// step data array
+	var dataArr = new Array();
+	
+	// 조사방법 추가 비활성화
+	$("#addResearchBtn").prop("disabled", true);
+	
 	// 항목 조회 Modal
 	function DivisionBtn()
 	{
@@ -373,6 +397,7 @@
 				research_list.append(add_list);
 				
 				$("#input_title").val(d1.text() + " > " + d2.text() + " > " +  d3.text() + " > " +  method_title);
+				$("#addResearchBtn").prop("disabled", false);
 				$("#divisionModal").modal("hide");
 			}
 		});
@@ -414,27 +439,245 @@
 		$("#researchAddModal").modal("show");
 	}
 	
-	function CheckResearch()
+	//조사방법 체크박스 추가
+	function PlusResearch()
 	{
-		var research_table = $("#research_table");
+		var step_container = $("#step-container");
+		var length = $("#step-container").children().length;
+		
 		var add_list = "";
 		
-		$("input:checkbox[name=chk_research]:checked").each(function()
+		
+		$(document).find("input:checkbox[name=chk_research]:checked").each(function()
 		{
 			var research_id = $(this).val();
 			var research_title = $(this).parent().parent().children()[1].innerHTML;
 			
-			console.log(research_id);
-			console.log(research_title);
+			if(length == 0){
+				length = 1;
+			}else {
+				length++;
+			}
 			
-			add_list += '<tr>';
-			add_list += '<td>' + research_title + '</td>';
-			add_list += '</tr>';
+			/* console.log(research_id);
+			console.log(research_title); */
+			
+			add_list += '<div th:data-id='+research_id+' class="list-group step">';
+			add_list += '<li class="list-group-item-sm list-group-item">';
+			add_list += '<div class="row">';
+			
+			add_list += '<div class="mb-1 col-2">';
+			add_list += '<input type="checkbox" class="checkbox mr-2" name="mis_research">';
+			add_list += '<span class="step-text">step ' + length + '</span>';
+			add_list += '</div>';
+			
+			add_list += '<div class="mb-1 col-6">';
+			add_list += '<span class="research-title">'+research_title+'</span>';
+			add_list += '</div>';
+			
+			add_list += '<div class="mb-1 col-4">';
+			add_list += '<textarea rows="2" class="form-control step_comment" placeholder="comment">';
+			add_list += '</textarea>';
+			add_list += '</div>';
+				
+			add_list += '</div>';
+			add_list += '</li>';
+			add_list += '</div>';
+			
 		});
 		
-		research_table.empty();
-		research_table.append(add_list);
+		step_container.append(add_list);
+		inputProtocol();
+	}//end 조사방법 체크박스 추가
+	
+	//조사방법 체크박스 삭제
+	function MinusResearch()
+	{
+		
+		var step_container = $("#step-container");
+		var add_list = "";
+		
+		//체크박스 삭제
+		$(document).find("input:checkbox[name=mis_research]:checked").each(function()
+		{	
+			var del_div = $(this).parent().parent().parent().parent();
+			del_div.remove();
+		});
+		
+		//삭제 후 step 번호 수정
+		var length = 1;
+		$(document).find(".step-text").each(function()
+		{
+			$(this).text("step " + length++);
+		});
+		inputProtocol();
+	}//end 조사방법 체크박스 삭제
+	
+	// 조사방법 등록
+	function InsertResearch()
+	{
+		var division_id = $("#division_depth3 option:checked").val();
+		var research_contents = $("#research_contents").val();
+		
+		if(division_id == 0)
+		{
+			alert("조사 항목을 선택하세요.");
+		}
+		else if(research_contents == "")
+		{
+			alert("조사 방법을 입력하세요.");
+		}
+		else
+		{
+			var data = {"division_id" : division_id, "research_contents" : research_contents};
+			
+			$.ajax(
+			{
+				url : '/method/insertResearch',
+				method : 'POST',
+				dataType : 'json',
+				data : data,
+				success : function(result)
+				{
+					if(result == 0)
+					{
+						
+					}
+					else
+					{
+						$("#researchAddModal").modal("hide");
+						$("#research_contents").val('');
+						$("#research_success_popup").css("display", "flex");
+					}
+				}
+			});
+			
+		}
+		
+	}//end 조사방법 등록
+	
+	//조사방법 등록 후 완료 팝업 닫기
+	function confirmResearch(){
+		TitleBtn();//조사방법 등록 완료 후 조사방법 테이블 다시 만들어주기
+		$("#research_success_popup").css("display", "none");
 	}
+	
+	//프로토콜 등록 버튼 함수
+	function InsertBtn(){
+		
+		//메소드 등록 후 실행 함수
+		getMethodId().then(function(result){
+			
+			if(result == 0){
+				alert("프로토콜 등록이 실패했습니다. 다시등록해 주세요.");
+			}else{
+				
+				var method_id = result;
+				
+				//선택한 step
+				$(document).find(".step").each(function(index, item){
+					var step_index = $(this).find(".step-text").text().split(" ");
+					console.log(step_index);
+					var data = {
+							"method_id" : method_id,
+							"research_id" : $(this).attr("th:data-id"),
+							"step_index" : step_index[1],
+							"step_comment" : $(this).find(".step_comment").val(),
+							};
+					dataArr.push(data);
+				});
+				console.log(dataArr);
+				
+				$.ajax({
+					url : "/method/insertStep",
+					method : "POST",
+					contentType : "application/json; charset=utf-8",
+					data : JSON.stringify(dataArr),
+					success : function(result){
+						
+						if(result == 0){
+							
+						}else {
+							$("#success_popup").css("display", "flex");
+						}
+					}
+				});//end ajax
+				
+			}//emd else
+			
+		});
+		
+	}//end InsertBtn
+	
+	//프로토콜 insert 함수
+	function insertMethod(){
+		return new Promise(function(resolve){
+			
+			var division_id = $("#division_depth3 option:checked").val();
+			var method_title = $("#method_title").val();
+			var method_contents = $("#method_contents").val();
+			var method_input = $("#method_input").val();
+			var eaches_id = $("#method_eaches").val();
+			var method_comment = $("#method_comment").val();
+			
+			if(method_title == "")
+			{
+				alert("method 명을 선택해주세요.");
+				$("#input_title").focus();
+			}
+			else
+			{
+				var data = {
+						"division_id" : division_id,
+						"method_title" : method_title,
+						"method_contents" : method_contents,
+						"method_input" : method_input,
+						"eaches_id" : eaches_id,
+						"method_comment" : method_comment
+				};
+				/* console.log(data); */
+				$.ajax(
+				{
+					url : "/method/insertMethod",
+					method : "POST",
+					dataType : 'json',
+					data : data,
+					success : function(result){
+						resolve(result);
+					}//end success
+					
+				});//end ajax
+				
+			}//end else
+			
+		});//end return
+	}//end insertMethod
+	
+	//재배 프로토콜 등록 후 result에 방금 등록한 프로토콜의 pk값 result로 넘기는 함수
+	async function getMethodId(){
+		var result = await insertMethod();
+		return result;
+	}
+	
+	function inputProtocol(){
+		
+		var protocol = $("#protocol");
+		var add_list = "";
+		
+		$(document).find(".step").each(function(index, item){
+			var step = $(this).find(".step-text").text();
+			var research_title = $(this).find(".research-title").text();
+			
+			add_list += step + " : " + research_title + "\n";
+			
+		});
+		
+		protocol.val(add_list);
+		
+	}
+	
+	
+	
 </script>
 </body>
 </html>

@@ -1,6 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.digitalBook.Mapper.MethodMapper">
+	
+	<!-- 재배 프로토콜 검색 -->
+	<select id="SearchMethod" resultType="Method">
+		SELECT m.*, d3.*, d2.*, d1.*, e.*, d1.division as d1_name, d2.division as d2_name, d3.division as d3_name,
+		(SELECT COUNT(*) FROM step s WHERE s.method_id = m.method_id) as step_no
+		FROM method m
+		LEFT JOIN division d3 ON m.division_id = d3.division_id
+		LEFT JOIN division d2 ON d3.division_parents = d2.division_id
+		LEFT JOIN division d1 ON d2.division_parents = d1.division_id
+		LEFT JOIN eaches e ON m.eaches_id = e.eaches_id
+		WHERE 1 = 1
+		<choose>
+			<when test="search_type == null || search_type.equals('none')">
+				AND (
+					m.method_code LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					m.method_title LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					d1.division LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					d2.division LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					d3.division LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					m.method_contents LIKE CONCAT('%', #{keyword}, '%')
+				)
+			</when>
+			<otherwise>
+				AND ${search_type} LIKE CONCAT('%', #{keyword}, '%')
+			</otherwise>
+		</choose>
+		ORDER BY method_id DESC
+		LIMIT #{offset}, #{limit}
+	</select>
+	
+	<!-- 재배 프로토콜 갯수 검색 -->
+	<select id="SearchMethodCount" resultType="int">
+		SELECT COUNT(*)
+		FROM method m
+		LEFT JOIN division d3 ON m.division_id = d3.division_id
+		LEFT JOIN division d2 ON d3.division_parents = d2.division_id
+		LEFT JOIN division d1 ON d2.division_parents = d1.division_id
+		LEFT JOIN eaches e ON m.eaches_id = e.eaches_id
+		WHERE 1 = 1
+		<choose>
+			<when test="search_type == null || search_type.equals('none')">
+				AND (
+					m.method_code LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					m.method_title LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					d1.division LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					d2.division LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					d3.division LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					m.method_contents LIKE CONCAT('%', #{keyword}, '%')
+				)
+			</when>
+			<otherwise>
+				AND ${search_type} LIKE CONCAT('%', #{keyword}, '%')
+			</otherwise>
+		</choose>
+	</select>
+	
 	<!-- 입력단위 조회 -->
 	<select id="SelectEaches" parameterType="String" resultType="Eaches">
 		SELECT * FROM eaches
@@ -12,4 +78,64 @@
 		SELECT * FROM research
 		WHERE division_id = #{division_id}
 	</select>
+	
+	<!-- 재배 프로토콜 등록 -->
+	<insert id="InsertMethod" parameterType="Method" useGeneratedKeys="true" keyProperty="last_method_id">
+		INSERT INTO method
+		(
+			division_id,
+			method_code,
+			method_title,
+			method_contents,
+			method_input,
+			eaches_id,
+			method_comment,
+			method_status,
+			create_date,
+			modify_date
+		)
+		VALUES
+		(
+			#{division_id},
+			#{method_code},
+			#{method_title},
+			#{method_contents},
+			#{method_input},
+			#{eaches_id},
+			#{method_comment},
+			0,
+			NOW(),
+			NOW()
+		)
+	</insert>
+	
+	<!-- 최근 재배 프로토콜 ID -->
+	<select id="selectLastMethodCode" resultType="String">
+		SELECT method_code FROM method
+		ORDER BY method_id DESC
+		LIMIT 1
+	</select>
+	
+	<!-- 실험 / 재배 단계 등록(Step) -->
+	<insert id="InsertStep" parameterType="Step">
+		INSERT INTO step
+		(
+			method_id,
+			research_id,
+			step_index,
+			step_comment,
+			step_depth,
+			step_parents
+		)
+		VALUES
+		(
+			#{method_id},
+			#{research_id},
+			#{step_index},
+			#{step_comment},
+			0,
+			0
+		)
+	</insert>
+	
 </mapper>

@@ -1,9 +1,14 @@
 package com.digitalBook.Controller;
 
+import java.util.Calendar;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -11,7 +16,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.digitalBook.Entity.Division;
 import com.digitalBook.Entity.Eaches;
+import com.digitalBook.Entity.Method;
 import com.digitalBook.Entity.Research;
+import com.digitalBook.Entity.Step;
 import com.digitalBook.Service.MethodService;
 import com.digitalBook.Service.ResearchService;
 
@@ -32,6 +39,32 @@ public class MethodController
 		mv.setViewName("method/method_list");
 		
 		return mv;
+	}
+	
+	// 재배 프로토콜 검색
+	@ResponseBody
+	@RequestMapping("searchMethod")
+	public Map<String, Object> SearchMethod(@RequestParam(name = "search_type", required = false) String search_type,
+											@RequestParam(name = "keyword", required = false) String keyword,
+											@RequestParam("page_num") int page_num,
+											@RequestParam("limit") int limit)
+	{
+		
+		Map<String, Object> result = new LinkedHashMap<>();
+		
+		int count = service.SearchMethodCount(search_type, keyword);
+		
+		int offset = (page_num - 1) * limit;
+		int end_page = (count + limit - 1) / limit;
+		
+		List<Method> method = service.SearchMethod(search_type, keyword, offset, limit);
+		
+		result.put("method", method);
+		result.put("page_num", page_num);
+		result.put("end_page", end_page);
+		result.put("offset", offset);
+		
+		return result;
 	}
 	
 	// 재배 프로토콜 등록 페이지
@@ -76,4 +109,88 @@ public class MethodController
 		
 		return result;
 	}
+	
+	// 조사방법 등록
+	@ResponseBody
+	@RequestMapping("insertResearch")
+	public int InsertResearch(@RequestParam("division_id") int division_id, @RequestParam("research_contents") String research_contents)
+	{
+		Research research = new Research();
+		Research last_research = researchService.SelectLastResearch();
+		
+		Calendar cal = Calendar.getInstance();
+		
+		String last_research_code = last_research.getResearch_code();
+		String code1 = "ac-";
+		String code2 = String.valueOf(cal.get(Calendar.YEAR))+"-";
+		
+		if(last_research_code == null || last_research_code.equals("")) {
+			research.setResearch_code(code1+code2+"00001");
+		}else {
+			String[] strArr = last_research_code.split("-");
+			int code3 = Integer.parseInt(strArr[2]) + 1;
+			research.setResearch_code(code1+code2+String.format("%05d", code3));
+		}
+		
+		research.setDivision_id(division_id);
+		research.setResearch_contents(research_contents);
+		
+		int result = researchService.InsertResearch(research);
+		
+		return result;
+	}
+	
+	// 재배 프로토콜 등록
+	@ResponseBody
+	@RequestMapping("insertMethod")
+	public int InsertMethod(Method method)
+	{
+		
+		Calendar cal = Calendar.getInstance();
+		
+		String last_reagent_code = service.selectLastMethodCode();
+		String code1 = "mv-";
+		String code2 = String.valueOf(cal.get(Calendar.YEAR))+"-";
+		
+		if(last_reagent_code == null || last_reagent_code.equals("")) {
+			method.setMethod_code(code1+code2+"00001");
+		}else {
+			String[] strArr = last_reagent_code.split("-");
+			int code3 = Integer.parseInt(strArr[2]) + 1;
+			method.setMethod_code(code1+code2+String.format("%05d", code3));
+		}
+		
+		int result = service.InsertMethod(method);
+		
+		if(result != 0) {
+			result = method.getLast_method_id();
+		}
+		
+		return result;
+	}
+	
+	// 실험, 재배 단계 등록
+	@ResponseBody
+	@RequestMapping("/insertStep")
+	public int InsertStep(@RequestBody List<Step> steps)
+	{
+		
+		int insertResult[] = new int[steps.size()];
+		int result = 0;
+		
+		for(int i = 0; i < steps.size(); i++) {
+			insertResult[i] = service.InsertStep(steps.get(i));
+		}
+		
+		Boolean isInsert = IntStream.of(insertResult).noneMatch(x -> x == 0);
+		
+		if(isInsert) {
+			result = 1;
+		}else {
+			result = 0;
+		}
+		
+		return result;
+	}
+	
 }
