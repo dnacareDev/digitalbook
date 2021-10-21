@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +25,8 @@ public class UserController
 	@Autowired
 	private UserService service;
 	
-//	@Autowired
-//	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	// 사용자 목록
 	@RequestMapping("/user")
@@ -82,6 +83,9 @@ public class UserController
 	@RequestMapping("/user/insertUser")
 	public int InsertUser(@ModelAttribute User user)
 	{
+		String password = passwordEncoder.encode(user.getUser_password());
+		
+		user.setUser_password(password);
 		
 		int result = service.InsertUser(user);
 		
@@ -90,8 +94,8 @@ public class UserController
 	
 	// 사용자 수정 화면
 	@RequestMapping("/user/modify")
-	public ModelAndView UserModify(ModelAndView mv, @RequestParam(name = "user_id", required = true) int user_id) {
-		
+	public ModelAndView UserModify(ModelAndView mv, @RequestParam(name = "user_id", required = true) int user_id)
+	{
 		User user = service.SelectUserDetail(user_id);
 		
 		List<Department> d1 = service.SelectDepartment(0, 0);
@@ -113,8 +117,14 @@ public class UserController
 	// 사용자 수정
 	@ResponseBody
 	@RequestMapping("/user/updateUser")
-	public int UpdateUser(@ModelAttribute User user) 
+	public int UpdateUser(@ModelAttribute User user, @RequestParam("origin_pwd") String origin_pwd) 
 	{
+		if(!user.getUser_password().equals(origin_pwd))
+		{
+			String password = passwordEncoder.encode(user.getUser_password());
+			
+			user.setUser_password(password);
+		}
 		
 		int result = service.UpdateUser(user);
 		
@@ -126,7 +136,6 @@ public class UserController
 	@RequestMapping("/user/deleteUser")
 	public int DeleteUser(@RequestParam(name = "user_id", required = true) int user_id) 
 	{
-		
 		int result = service.DeleteUser(user_id);
 		
 		return result;

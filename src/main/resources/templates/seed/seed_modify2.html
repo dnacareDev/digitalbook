@@ -75,7 +75,7 @@
 			        			<div class="columnGrid-wrapper">
 				        			<div class="row">
 			        					<div class="col-12" id="seed_form">
-			        						<div class="card card-bordered form-standard">
+			        						<div class="card card-bordered form-standard" th:each="seed : ${seeds}">
 				        						<div class="card-body ml-2 mt-3">
 				        							<div class="row">
 				        								<div class="col-11 col-md-11 col-lg-11">
@@ -100,7 +100,7 @@
 						        										<select class="form-control b-light seed_manager" id="seed_manager">
 											                                <option disabled="disabled" selected="selected" hidden="hidden">담당자 선택</option>
 											                                <th:block th:each="user : ${user}">
-											                                	<option th:value="${user.user_id}" th:text="${user.user_name_k}"></option>
+											                                	<option th:value="${user.user_id}" th:text="${user.user_name_k}" th:selected="${seed.manager_name == user.user_name_k}"></option>
 											                                </th:block>
 											                            </select>
 						        									</div>
@@ -110,13 +110,13 @@
 						        										<label for="seed_area" class="color-dark fw-500 align-center mt-1">생산지역<span style="color: red;">*</span></label>
 						        									</div>
 						        									<div class="col-md-4 mb-25">
-						        										<input type="text" class="form-control b-light seed_area" id="seed_area">
+						        										<input type="text" class="form-control b-light seed_area" id="seed_area" th:value="${seed.seed_area}">
 						        									</div>
 						        									<div class="col-md-2 mb-25 d-flex aling-items-center">
 									                                    <label for="seed_year" class="color-dark fw-500 align-center">생산연도<span style="color: red;">*</span></label>
 									                                </div>
 									                                <div class="col-md-4 mb-25">
-						        										<input type="number" class="form-control b-light seed_year" id="seed_year">
+						        										<input type="number" class="form-control b-light seed_year" id="seed_year" th:value="${seed.seed_year}">
 						        									</div>
 						        								</div>
 						        								<div class="row">
@@ -126,23 +126,23 @@
 						        									<div class="col-md-4 mb-25">
 						        										<select class="form-control b-light seed_method" name="seed_method">
 											                                <option value="">생산 방법 선택</option>
-											                                <option value="시험연구">시험연구</option>
-											                                <option value="증식">증식</option>
-											                                <option value="구매">구매</option>
-											                                <option value="외부농가">외부농가</option>
+											                                <option value="시험연구" th:selected="${seed.seed_method == '시험연구'}">시험연구</option>
+											                                <option value="증식" th:selected="${seed.seed_method == '증식'}">증식</option>
+											                                <option value="구매" th:selected="${seed.seed_method == '구매'}">구매</option>
+											                                <option value="외부농가" th:selected="${seed.seed_method == '외부농가'}">외부농가</option>
 											                            </select>
 						        									</div>
 						        									<div class="col-md-2 mb-25 d-flex aling-items-center">
 									                                    <label for="seed_amount" class="color-dark fw-500 align-center">수량(개수)<span style="color: red;">*</span></label>
 									                                </div>
 									                                <div class="col-md-2 mb-25">
-						        										<input type="number" class="form-control b-light seed_amount" id="seed_amount">
+						        										<input type="number" class="form-control b-light seed_amount" id="seed_amount" th:value="${seed.seed_amount}">
 						        									</div>
 						        									<div class="col-md-2 mb-25">
 						        										<select class="form-control b-light eaches_id" name="each" id="eaches_id">
 											                                <option disabled="disabled" selected="selected" hidden="hidden">단위 선택</option>
 											                                <th:block th:each="eaches : ${eaches}">
-											                                	<option th:value="${eaches.eaches_id}" th:text="${eaches.eaches_name}"></option>
+											                                	<option th:value="${eaches.eaches_id}" th:text="${eaches.eaches_name}" th:selected="${seed.eaches_id == eaches.eaches_id}"></option>
 											                                </th:block>
 											                            </select>
 						        									</div>
@@ -155,7 +155,7 @@
 						        										<select class="form-control b-light ware_id" name="ware_id" id="ware_id">
 											                                <option disabled="disabled" selected="selected" hidden="hidden">저장 장소 선택</option>
 											                                <th:block th:each="ware : ${warehouse}">
-											                                	<option th:value="${ware.ware_id}" th:data-condition="${ware.ware_condition}" th:text="${ware.warehouse}"></option>
+											                                	<option th:value="${ware.ware_id}" th:data-condition="${ware.ware_condition}" th:text="${ware.warehouse}" th:selected="${seed.ware_id == ware.ware_id}"></option>
 											                                </th:block>
 											                            </select>
 						        									</div>
@@ -163,7 +163,7 @@
 									                                    <label for="ware_condition" class="color-dark fw-500 align-center">저장조건</label>
 									                                </div>
 									                                <div class="col-md-4 mb-25">
-						        										<input type="text" class="form-control b-light ware_condition" id="ware_condition" readonly="readonly">
+						        										<input type="text" class="form-control b-light ware_condition" id="ware_condition" th:value="${seed.ware_condition}" readonly="readonly">
 						        									</div>
 						        								</div>
 						        								<div class="row">
@@ -171,7 +171,7 @@
 						        										<label for="seed_comment" class="color-dark fw-500 align-center">Comment</label>
 						        									</div>
 						        									<div class="col-md-10 mb-25">
-						        										<textarea class="form-control seed_comment" id="seed_comment" rows="5"></textarea>
+						        										<textarea class="form-control seed_comment" id="seed_comment" th:text="${seed.seed_comment}" rows="5"></textarea>
 						        									</div>
 						        								</div>
 						        							</div>
@@ -186,16 +186,16 @@
 									                                    <label for="seed_sender" class="color-dark fw-500 align-center">발송인 정보</label>
 									                                </div>
 									                                <div class="col-md-4 mb-25">
-						        										<input type="text" class="form-control b-light seed_sender" id="seed_sender">
+						        										<input type="text" class="form-control b-light seed_sender" id="seed_sender" th:value="${seed.seed_sender}">
 						        									</div>
 						        									<div class="col-md-2 mb-25 d-flex aling-items-center">
 						        										<label for="seed_sender" class="color-dark fw-500 align-center mt-1">수취인 정보</label>
 						        									</div>
 						        									<div class="col-md-4 mb-25">
 						        										<select class="form-control b-light seed_receiver" name="seed_receiver" id="seed_receiver">
-											                                <option th:value=0>수취인 선택</option>
+											                                <option value="0">수취인 선택</option>
 											                                <th:block th:each="user : ${user}">
-											                                	<option th:value="${user.user_id}" th:text="${user.user_name_k}"></option>
+											                                	<option th:value="${user.user_id}" th:text="${user.user_name_k}" th:selected="${seed.receive_name == user.user_name_k}"></option>
 											                                </th:block>
 											                            </select>
 						        									</div>
@@ -205,18 +205,18 @@
 									                                    <label class="color-dark fw-500 align-center mt-1">발송일자</label>
 									                                </div>
 									                                <div class="col-md-4 mb-25">
-						        										<input type="text" class="form-control b-light send_date send-datepicker0">
+						        										<input type="text" class="form-control b-light send_date send-datepicker0" th:value="${seed.send_date}">
 						        									</div>
 						        									<div class="col-md-2 mb-25 d-flex aling-items-center">
 						        										<label class="color-dark fw-500 align-center mt-1">수취일자</label>
 						        									</div>
 						        									<div class="col-md-4 mb-25">
-						        										<input type="text" class="form-control b-light receive_date receive-datepicker0">
+						        										<input type="text" class="form-control b-light receive_date receive-datepicker0" th:value="${seed.receive_date}">
 						        									</div>
 						        								</div>
 						        								<div class="row">
 											        				<div class="col-sm-2 mb-4">
-											        					<input type="checkbox" class="seed_share" th:value="0">
+											        					<input type="checkbox" class="seed_share" th:checked="${seed.seed_share == 1}">
 											        					<label>
 											        						<span class="color-dark">수확 후 이용과 공유</span>
 											        					</label>
@@ -468,9 +468,6 @@
 	col_arr[1] = genetic_col;
 	col_arr[2] = etc_col;
 	
-	//종자 및 시료관리 폼 load 함수 실행
-	loadSeedForm(seeds);
-	
 	//품종, 유전정보 모달에서 선택박스 선택 이벤트
 	$("input:radio[name=radio]").on("change", function(){
 		$("#division_slt").val(0).prop("selected",true);
@@ -565,124 +562,6 @@
 		console.log(ware_condition);
 		$(this).parent().parent().find(".ware_condition").val(ware_condition);
 	});
-	
-	// seed 길이만큼 종자 및 시료관리 폼 load
-	function loadSeedForm(seeds)
-	{
-		$("#seed_form").children(".form-standard").hide();									// 복사할 첫번째 폼은 숨기기
-		
-		var seed_form = $("#seed_form");
-		var seed_form_inner = $("#seed_form").children(".form-standard").html();
-		
-		var str = "";																		// seed_form에 append 해줄 내용
-		str += '<div class="card card-bordered copy-form-standard">';						// 실제 사용할 폼에 copy-form-standard 클래스 추가
-		str += seed_form_inner;
-		str += '</div>';
-		
-		// 과제 데이터 기존값 노출
-		if(seeds[0].report_id === 0)
-		{
-			$("#not_report").prop("checked", true);
-			$("#report_id").val(0).prop("selected", true);
-			$("#report_id").prop("disabled", true);
-		}
-		else
-		{
-			$("#report_id").val(seeds[0].report_id).prop("checked", true);
-		}
-		
-		$("#seed_report").val(seeds[0].seed_report);
-		
-		// seeds 사이즈 만큼 seed_form 동적 생성
-		var length = seeds.length;
-		for(var i = 0; i < length; i++)
-		{
-			if(i === 0)
-			{
-				seed_form.append(str);
-			}
-			else
-			{
-				seed_form.append(str);
-				
-				var delbtn = "";																//삭제 버튼내용
-				delbtn += '<button type="button" class="btn mt-25 mr-25 seed_form_del" th:data-seed-id="0" style="background-color: red; color: white; width: 70px;">-</button>';
-				
-				del_btn_form = $("#seed_form").children(":last").find(".del_btn_div");
-				del_btn_form.append(delbtn);
-			}
-		}
-		
-		var hidden_seed_id = "";
-		hidden_seed_id += '<input type="hidden" id="hidden_seed_id" value='+seeds[0].seed_id+'>';
-		
-		//동적 생성한 태그에 기존 값 노출
-		$(document).find(".copy-form-standard").each(function(index, item)
-		{
-			if(index === 0)
-			{
-				$(this).find(".card-body").append(hidden_seed_id);
-			}
-			
-			$(this).find(".seed_manager").val(seeds[index].seed_manager).prop("selected", true);
-			$(this).find(".seed_area").val(seeds[index].seed_area);
-			$(this).find(".seed_year").val(seeds[index].seed_year);
-			$(this).find(".seed_method").val(seeds[index].seed_method);
-			$(this).find(".seed_amount").val(seeds[index].seed_amount);
-			$(this).find(".eaches_id").val(seeds[index].eaches_id).prop("selected", true);
-			$(this).find(".seed_comment").val(seeds[index].seed_comment);
-			$(this).find(".genetic_id").attr("th:data-genetic-id", seeds[index].genetic_id);
-			$(this).find(".genetic_id").val(seeds[index].division + " > " + seeds[index].genetic);
-			$(this).find(".ware_id").val(seeds[index].ware_id).prop("selected", true);
-			$(this).find(".ware_condition").val(seeds[index].ware_condition);
-			$(this).find(".seed_sender").val(seeds[index].seed_sender);
-			$(this).find(".send_date").val(seeds[index].send_date);
-			$(this).find(".seed_receiver").val(seeds[index].seed_receiver);
-			$(this).find(".receive_date").val(seeds[index].receive_date);
-			$(this).find(".send_date").val(seeds[index].send_date);
-			
-			if(seeds[index].seed_share != 0)
-			{
-				$(this).find(".seed_share").val(seeds[index].seed_share).prop("checked", true);
-			}
-			
-			if($(this).find(".seed_form_del").attr("th:data-seed-id") != undefined)
-			{
-				$(this).find(".seed_form_del").attr("th:data-seed-id", seeds[index].seed_id);
-			}
-		});
-		
-		//동적 생성된 datepicker 클래스에 datepicker 이벤트 주기
-		$(".send_date").each(function(index)
-		{
-			if(index == 0)
-			{
-				return true;
-			}
-			else
-			{
-				$(this).addClass("send-datepicker"+index);
-				
-				$(".ui-datepicker-trigger").remove();
-				$(".send-datepicker"+index).removeClass("hasDatepicker").removeAttr("id").datepicker();
-			}
-		});
-		
-		$(".receive_date").each(function(index)
-		{
-			if(index == 0)
-			{
-				return true;
-			}
-			else
-			{
-				$(this).addClass("receive-datepicker"+index);
-				
-				$(".ui-datepicker-trigger").remove();
-				$(".receive-datepicker"+index).removeClass("hasDatepicker").removeAttr("id").datepicker();
-			}
-		});
-	};
 	
 	//등록 폼 추가 이벤트
 	$("#addseedFormBtn").on("click", function(){

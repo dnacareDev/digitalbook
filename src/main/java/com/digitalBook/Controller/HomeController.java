@@ -7,24 +7,21 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping(value = "/")
-public class HomeController {
-	
+public class HomeController
+{
 	@GetMapping("/home")
-	public ModelAndView getHome(ModelAndView mv) {
-		
+	public ModelAndView getHome(ModelAndView mv)
+	{
 		mv.setViewName("home/admin_home");
 		
 		return mv;
 	}
 	
 	@GetMapping("/home/user")
-	public ModelAndView getUserHome(ModelAndView mv) {
-		
+	public ModelAndView getUserHome(ModelAndView mv)
+	{
 		mv.setViewName("home/user_home");
 		
 		return mv;
 	}
-	
-	
-	
 }

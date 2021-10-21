@@ -192,20 +192,22 @@
 	});
 	
 	//시료 검색
-	function searchSeed(e){
+	function searchSeed(e)
+	{
 		var limit = $("#limit").val();
 		var search_type = $("#search_type").val();
 		var keyword = $("#keyword").val();
 		
 		var data = {"search_type" : search_type, "keyword" : keyword, "page_num" : e, "limit" : limit};
 		
-		$.ajax({
+		$.ajax(
+		{
 			url : '/data/seed/searchSeed',
 			method : 'POST',
 			dataType : 'json',
 			data : data,
-			success : function(result){
-				
+			success : function(result)
+			{
 				var seed_list = $("#seed_list");
 				var add_list = "";
 				
@@ -214,19 +216,23 @@
 				
 				var length = result.seed.length;
 				
-				if(length == 0){
+				if(length == 0)
+				{
 					add_list = '<tr>' + '<td colspan="10">' + '<span>' + '등록된 데이터가 없습니다.' + '</span>' + '</td>' + '</tr>';
 					
 					seed_list.empty();
 					seed_list.append(add_list);
-				}else {
-					
-					for(var i = 0; i < length; i++){
+				}
+				else
+				{
+					for(var i = 0; i < length; i++)
+					{
+						console.log(result.seed[i]);
 						add_list += '<tr>';
 						add_list += '<td><input type="checkbox"></td>';
-						add_list += '<td><a href="/data/seed/modify?report_id='+ result.seed[i].report_id + '">' + result.seed[i].report_code + '</a></td>';
+						add_list += '<td><a href="/data/seed/modify?report_id=' + result.seed[i].report_id + '">' + result.seed[i].report_code + '</a></td>';
 						add_list += '<td><span>' + result.seed[i].report_title + '</span></td>';
-						add_list += '<td><span>' + result.seed[i].division + '</span></td>';
+						add_list += '<td><span>' + result.seed[i].division + ' 외 ' + (result.seed[i].seed_count - 1) + '개</span></td>';
 						add_list += '<td><span>' + result.seed[i].genetic + '</span></td>';
 						add_list += '<td><span>' + result.seed[i].seed_amount + '</span></td>';
 						add_list += '<td><span>' + result.seed[i].seed_sender + '</span></td>';
@@ -234,47 +240,49 @@
 						add_list += '<td><span>' + result.seed[i].send_date + '</span></td>';
 						add_list += '<td><span>' + result.seed[i].receive_date + '</span></td>';
 						add_list += '</tr>';
-					}//end for
+					}
 					
-					if(result.page_num == 1){
+					if(result.page_num == 1)
+					{
 						page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
-					}else{
+					}
+					else
+					{
 						page_add += '<button class="atbd-pagination__link pagination-control" onclick="searchSeed(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
-					}//end else
+					}
 					
-					for(var i = 0; i < result.end_page; i++){
-						if(result.page_num == (i + 1)){
+					for(var i = 0; i < result.end_page; i++)
+					{
+						if(result.page_num == (i + 1))
+						{
 							page_add += '<button class="atbd-pagination__link active" onclick="searchSeed(' + (i + 1) + ')">' + (i + 1) + '</button>';
-						}else{
+						}
+						else
+						{
 							page_add += '<button class="atbd-pagination__link" onclick="searchSeed(' + (i + 1) + ')">' + (i + 1) + '</button>';
-						}//end else
-					}//end for
+						}
+					}
 					
-					if(result.page_num == result.end_page){
+					if(result.page_num == result.end_page)
+					{
 						page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
-					}else{
+					}
+					else
+					{
 						page_add += '<button class="atbd-pagination__link pagination-control" onclick="searchSeed(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
-					}//end else
+					}
 					
 					seed_list.empty();
 					seed_list.append(add_list);
 					
 					pageNum.empty();
 					pageNum.append(page_add);
-						
-					
-				}//end else
-				
-				
+				}
 			}
 		});
+		
 		return true;
-	}//end 시료 검색
-	
-	
-	
+	}
 </script>
-
 </body>
-
 </html>

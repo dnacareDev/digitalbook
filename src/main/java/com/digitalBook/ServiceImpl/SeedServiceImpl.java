@@ -16,109 +16,106 @@ import com.digitalBook.Mapper.SeedMapper;
 import com.digitalBook.Service.SeedService;
 
 @Service
-public class SeedServiceImpl implements SeedService {
-	
+public class SeedServiceImpl implements SeedService
+{
 	@Autowired
 	private SeedMapper mapper;
 	
-	//시료 검색
-	@Override
-	public List<Seed> SearchSeed(String search_type, String keyword, int offset, int limit) {
-		
-		return mapper.SearchSeed(search_type, keyword, offset, limit);
-	}
-	
 	//시료 개수 검색
 	@Override
-	public int SearchSeedCount(String search_type, String keyword) {
-		
-		return mapper.SearchSeedCount(search_type, keyword);
+	public int SearchSeedCount(String search_type, String keyword, int user_group)
+	{
+		return mapper.SearchSeedCount(search_type, keyword, user_group);
+	}
+	
+	//시료 검색
+	@Override
+	public List<Seed> SearchSeed(String search_type, String keyword, int user_group, int offset, int limit)
+	{
+		return mapper.SearchSeed(search_type, keyword, user_group, offset, limit);
 	}
 	
 	//과제 전체 조회
 	@Override
-	public List<Report> selectReportList() {
-		
-		return mapper.selectReportList();
+	public List<Report> SelectReportList()
+	{
+		return mapper.SelectReportList();
 	}
 	
 	//사용자 전체 조회
 	@Override
-	public List<User> selectUserList() {
-		
-		return mapper.selectUserList();
+	public List<User> SelectUserList(int user_group)
+	{
+		return mapper.SelectUserList(user_group);
 	}
 	
 	//단위 전체 조회
 	@Override
-	public List<Eaches> selectEachesList() {
-		
-		return mapper.selectEachesList();
+	public List<Eaches> SelectEachesList()
+	{
+		return mapper.SelectEachesList();
 	}
 	
 	//저장 장소 전체 조회
 	@Override
-	public List<Warehouse> selectWarehouseList() {
-		
-		return mapper.selectWarehouseList();
+	public List<Warehouse> SelectWarehouseList()
+	{
+		return mapper.SelectWarehouseList();
 	}
 	
 	//조사 항목(작목) 전체 조회
 	@Override
-	public List<Division> selectDivisionList() {
-		
-		return mapper.selectDivisionList();
+	public List<Division> SelectDivisionList()
+	{
+		return mapper.SelectDivisionList();
 	}
 	
 	//품종, 유전정보 전체 조회
 	@Override
-	public List<Genetic> selectGeneticList(int division_id, int genetic_type) {
-		
-		return mapper.selectGeneticList(division_id, genetic_type);
+	public List<Genetic> SelectGeneticList(int division_id, int genetic_type)
+	{
+		return mapper.SelectGeneticList(division_id, genetic_type);
 	}
 	
 	//시료 등록
 	@Override
-	public int insertSeed(Seed seed) {
-		
-		return mapper.insertSeed(seed);
+	public int InsertSeed(Seed seed)
+	{
+		return mapper.InsertSeed(seed);
 	}
 	
 	//최근 시료 ID
 	@Override
-	public String selectLastSeedCode() {
-		
-		return mapper.selectLastSeedCode();
+	public String SelectLastSeedCode()
+	{
+		return mapper.SelectLastSeedCode();
 	}
 	
 	//시료 detail list
 	@Override
-	public List<Seed> selectSeedDetailList(int report_id) {
-		
-		return mapper.selectSeedDetailList(report_id);
+	public List<Seed> SelectSeedDetailList(int report_id)
+	{
+		return mapper.SelectSeedDetailList(report_id);
 	}
 	
 	//시료 수정
 	@Override
-	public int updateSeed(Seed seed) {
-		
-		return mapper.updateSeed(seed);
+	public int UpdateSeed(Seed seed)
+	{
+		return mapper.UpdateSeed(seed);
 	}
 	
 	//시료 삭제
 	@Override
-	public int deleteSeed(int seed_id) {
-		
-		return mapper.deleteSeed(seed_id);
+	public int DeleteSeed(int seed_id)
+	{
+		return mapper.DeleteSeed(seed_id);
 	}
 	
 	//시료 detail
 	@Override
-	public Seed selectSeedDetail(int seed_id) {
-		
-		return mapper.selectSeedDetail(seed_id);
+	public Seed SelectSeedDetail(int seed_id)
+	{
+		return mapper.SelectSeedDetail(seed_id);
 	}
-	
-	
-
 }

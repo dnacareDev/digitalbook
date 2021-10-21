@@ -14,49 +14,48 @@ import com.digitalBook.Entity.User;
 import com.digitalBook.Entity.Warehouse;
 
 @Mapper
-public interface SeedMapper {
+public interface SeedMapper
+{
+	//시료 개수 검색
+	int SearchSeedCount(@Param("search_type") String search_type, @Param("keyword") String keyword, @Param("user_group") int user_group);
 	
 	//시료 검색
-	List<Seed> SearchSeed(@Param("search_type") String search_type, @Param("keyword") String keyword,
-			@Param("offset") int offset, @Param("limit") int limit);
-	
-	//시료 개수 검색
-	int SearchSeedCount(@Param("search_type") String search_type, @Param("keyword") String keyword);
+	List<Seed> SearchSeed(@Param("search_type") String search_type, @Param("keyword") String keyword, @Param("user_group") int user_group, @Param("offset") int offset, @Param("limit") int limit);
 	
 	//과제 전체 조회
-	List<Report> selectReportList();
+	List<Report> SelectReportList();
 	
 	//사용자 전체 조회
-	List<User> selectUserList();
+	List<User> SelectUserList(int user_group);
 	
 	//단위 전체 조회
-	List<Eaches> selectEachesList();
+	List<Eaches> SelectEachesList();
 	
 	//저장 장소 전체 조회
-	List<Warehouse> selectWarehouseList();
+	List<Warehouse> SelectWarehouseList();
 	
 	//조사 항목(작목) 전체 조회
-	List<Division> selectDivisionList();
+	List<Division> SelectDivisionList();
 	
 	//품종, 유전정보 전체 조회
-	List<Genetic> selectGeneticList(@Param("division_id") int division_id, @Param("genetic_type") int genetic_type);
+	List<Genetic> SelectGeneticList(@Param("division_id") int division_id, @Param("genetic_type") int genetic_type);
 	
 	//시료 등록
-	int insertSeed(Seed seed);
+	int InsertSeed(Seed seed);
 	
 	//최근 시료 ID
-	String selectLastSeedCode();
+	String SelectLastSeedCode();
 	
 	//시료 detail list
-	List<Seed> selectSeedDetailList(int report_id);
+	List<Seed> SelectSeedDetailList(int report_id);
 	
 	//시료 수정
-	int updateSeed(Seed seed);
+	int UpdateSeed(Seed seed);
 	
 	//시료 삭제
-	int deleteSeed(int seed_id);
+	int DeleteSeed(int seed_id);
 	
 	//시료 detail
-	Seed selectSeedDetail(int seed_id);
+	Seed SelectSeedDetail(int seed_id);
 	
 }
