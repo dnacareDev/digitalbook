@@ -20,4 +20,8 @@ public class Step {
 	private int step_depth;					// 실험, 재배 단계 깊이
 	private int step_parents;				// 부모 실험, 재배 단계 index
 	
+	
+	//조사 방법 사용 컬럼
+	private String research_contents;		//조사방법 명
+	
 }

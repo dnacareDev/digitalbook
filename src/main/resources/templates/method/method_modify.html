@@ -1,0 +1,841 @@
+<!doctype html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<head>
+<style>
+	.content-header{margin-top:30px;}
+	.end-button
+	{
+		width:85px;
+		height:40px;
+		background-color:#768BF5;
+		border:0px;
+		margin-top:-15px;
+	}
+	.end{margin-left:10px;}
+</style>
+<!-- 공통 헤더 -->
+<th:block th:include="@{/fragments/header.html}"></th:block>
+</head>
+<body class="layout-light top-menu overlayScroll">
+	<div class="mobile-search"></div>
+	<div class="mobile-author-actions"></div>
+	<!-- 공통 topbar -->
+	<th:block th:include="@{/fragments/topbar.html}"></th:block>
+	<main class="main-content" style="background-color: #F9FBFD;">
+		<div class="contents" style="background-color: #F9FBFD;">
+		    <div class="container-fluid">
+		    	<div class="row">
+			        <div class="col-lg-12">
+			        	<div class="breadcrumb-main" style="float: left;">
+			        		<h4 class="text-capitalize breadcrumb-title">재배 프로토콜 수정</h4>
+			        		<span class="ml-20 mt-1">프로토콜 - 재배 프로토콜 수정</span>
+			        	</div>
+			        </div>
+		        </div>
+		    	<div class="row">
+			        <div class="col-lg-12">
+			        	<div class="card">
+			        		<div class="card-body">
+		        				<div class="row">
+		        					<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="input_title" class="col-form-label color-dark align-center">Method 명<span style="color: red;">*</span></label>
+	                                </div>
+	                                <div class="col-sm-5">
+	                                   <input type="text" class="form-control" style="float: left; width: 465px;" id="input_title" readonly>
+	                                   <button class="btn btn-primary" onclick="DivisionBtn();">항목 수정</button>
+	                                </div>
+		                         </div>
+		                         <div class="row mt-3">
+		        					<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="method_contents" class="color-dark align-center">Method 설명</label>
+		                            </div>
+		                            <div class="col-sm-5">
+		                                <input type="text" class="form-control b-light" id="method_contents" th:value="${method.method_contents}">
+		                            </div>
+		                    	</div>
+		                    	<div class="row mt-3">
+		        					<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="method_input" class="color-dark align-center">입력 단위</label>
+		                            </div>
+		                            <div class="col-sm-2">
+		                                <select class="form-control b-light" id="method_input">
+			                                <option value="">입력단위 선택</option>
+			                                <option value="길이">길이</option>
+			                                <option value="넓이">넓이</option>
+			                                <option value="무게">무게</option>
+			                                <option value="부피">부피</option>
+			                                <option value="온도">온도</option>
+			                                <option value="압력">압력</option>
+			                                <option value="속도">속도</option>
+			                                <option value="회전수">회전수</option>
+			                                <option value="시간">시간</option>
+			                                <option value="기타">기타</option>
+		                                </select>
+		                            </div>
+		                            <div class="col-sm-2">
+		                            	<select class="form-control b-light" id="method_eaches">
+			                                <option value="">단위 종류 선택</option>
+		                                </select>
+		                            </div>
+		                    	</div>
+		                    	<div class="row mt-3">
+		        					<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="protocol" class="color-dark">Protocol</label>
+		                            </div>
+		                            <div class="col-sm-5">
+		                                <textarea id="protocol" class="form-control" rows="10" readonly></textarea>
+		                            </div>
+		                    	</div>
+		                    	<div class="row mt-3">
+		        					<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="method_comment" class="color-dark">기타</label>
+		                            </div>
+		                            <div class="col-sm-5">
+		                                <textarea id="method_comment" class="form-control b-light" rows="5" th:text="${method.method_comment}"></textarea>
+		                            </div>
+		                    	</div>
+			        		</div>
+			        	</div>
+			        </div>
+		        </div>
+		        
+				<div class="row mt-20">
+					<div class="col-lg-12">
+						<div class="card">
+							<div class="card-body"> 
+								<div class="row">
+									<div class="col-lg-12">
+										<span class="color-dark align-center" style="font-size: 20px;">Step 설정</span>
+									</div>
+								</div>
+								<div class="row mt-4">
+									<div class="col-lg-3">
+										<div class="row">
+											<input type="text" class="form-control b-light" id="searchResearch">
+										</div>
+										<div class="row">
+											<button id="addResearchBtn" class="btn btn-dark mt-2" onclick="InsertPopup();">조사방법 추가</button>
+										</div>
+										<div class="row">
+											<div class="table-responsive mt-2">
+												<table class="table">
+													<thead>
+														<tr>
+															<th></th>
+															<th>조사방법</th>
+														</tr>
+													</thead>
+													<tbody class="research_table" id="research_list">
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-1">
+										<div class="d-flex justify-content-center" style="padding-top: 200px;">
+											<div class="col-sm-12">
+												<button onclick="PlusResearch();"><span data-feather="plus"></span></button>
+											</div>
+											<div class="col-sm12">
+												<button onclick="MinusResearch();"><span data-feather="minus"></span></button>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-8">
+										<ul class="list-group" id="step-container" style="min-height: 500px; max-height: 500px;
+											overflow-y: auto; background-color: rgb(243, 243, 243) ">
+											
+										</ul>
+									</div>
+								</div>
+			        		</div>
+			        	</div>
+			        </div>
+		        </div>
+		        <div class="row">
+					<div class="col-4">
+						<div class="action-btn d-flex justify-content-frist mt-30"></div>
+					</div>
+					<div class="col-4">
+						<div class="d-flex justify-content-center mt-30"></div>
+					</div>
+					<div class="col-4">
+						<div class="action-btn d-flex justify-content-end mt-30">
+							<a href="/method/list" class="btn btn-primary end-button end">목록</a>
+							<button type="button" class="btn btn-default btn-danger end-button end" onclick="DeleteBtn();">삭제</button>
+		                	<button type="button" class="btn btn-default btn-primary end-button end" onclick="UpdateBtn();">수정</button>
+						</div>
+					</div>
+				</div>
+		    </div>
+		    
+		    <div class="modal-basic modal fade show" id="divisionModal" tabindex="-1" role="dialog" aria-hidden="true">
+			    <div class="modal-dialog modal-xl" role="document">
+			        <div class="modal-content modal-bg-white">
+			        	<div class="modal-header">
+			        		<h6 class="modal-title">조사항목 조회</h6>
+	                    	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	                        	<span data-feather="x"></span>
+	                        </button>
+			        	</div>
+			            <div class="modal-body">
+			            	<div class="col-12">
+		        				<div class="row">
+			        				<div class="col-md-6 mb-25">
+	                                    <label for="division_depth1" class="color-dark fw-500">대상작목</label>
+	                                    <select class="form-control b-light select" id="division_depth1" disabled="disabled">
+			                                <th:block th:each="d1 : ${d1}">
+				                                <option th:value="${d1.division_id}" th:text="${d1.division}" th:selected="${d1.division_id == method.d1_id}"></option>
+			                                </th:block>
+			                            </select>
+	                                </div>
+	                                <div class="col-md-6 mb-25">
+	                                    <label for="division_depth2" class="color-dark fw-500">분류</label>
+	                                    <select class="form-control b-light select" id="division_depth2" disabled="disabled">
+			                                <th:block th:each="d2 : ${d2}">
+				                                <option th:value="${d2.division_id}" th:text="${d2.division}" th:selected="${d2.division_id == method.d2_id}"></option>
+			                                </th:block>
+			                            </select>
+	                                </div>
+	                            </div>
+	                            <div class="row">
+			        				<div class="col-md-6 mb-25">
+	                                    <label for="division_depth3" class="color-dark fw-500">항목</label>
+	                                    <select class="form-control b-light select" id="division_depth3" disabled="disabled">
+			                                <th:block th:each="d3 : ${d3}">
+				                                <option th:value="${d3.division_id}" th:text="${d3.division}" th:selected="${d3.division_id == method.d3_id}"></option>
+			                                </th:block>
+			                            </select>
+	                                </div>
+	                                <div class="col-md-6 mb-25">
+	                                    <label for="research_contents" class="color-dark fw-500">Method 명</label>
+	                                    <input type="text" class="form-control b-deep" id="method_title" th:value="${method.method_title}">
+	                                </div>
+	                            </div>
+			            		<div class="button-group d-flex justify-content-end">
+				                   <button class="btn btn-primary btn-default btn-squared" id="titleBtn" onclick="TitleBtn();">사용</button>
+				           		</div>
+			            	</div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+
+	        <div class="atbd-notice" id="success_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
+	        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+	        		<div class="card-body">
+	        			<div class="atbd-notice__content">
+	        				<div class="atbd-notice__top text-center">
+	        					<div class="atbd-notice__icon bg-success">
+	        						<i class="fas fa-check color-white"></i>
+	        					</div>
+	        					<div class="atbd-notice__text">
+	        						<h4>등록이 완료되었습니다.</h4>
+	        					</div>
+	        					<div style="display: flex; justify-content: center; margin: 10% auto;">
+	        						<a class="btn btn-default btn-success" href="/method/list" style="color: #FFFFFF;">확인</a>
+	        					</div>
+	        				</div>
+	        			</div>
+	        		</div>
+	        	</div>
+	        </div>
+	        <div class="atbd-notice" id="research_success_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
+	        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+	        		<div class="card-body">
+	        			<div class="atbd-notice__content">
+	        				<div class="atbd-notice__top text-center">
+	        					<div class="atbd-notice__icon bg-success">
+	        						<i class="fas fa-check color-white"></i>
+	        					</div>
+	        					<div class="atbd-notice__text">
+	        						<h4>완료되었습니다.</h4>
+	        					</div>
+	        					<div style="display: flex; justify-content: center; margin: 10% auto;">
+	        						<button class="btn btn-default btn-success" onclick="confirmResearch();" style="color: #FFFFFF;">확인</button>
+	        					</div>
+	        				</div>
+	        			</div>
+	        		</div>
+	        	</div>
+	        </div>
+	        <div class="atbd-notice" id="update_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
+		        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+		        		<div class="card-body">
+		        			<div class="atbd-notice__content">
+		        				<div class="atbd-notice__top text-center">
+		        					<div class="atbd-notice__icon bg-info">
+		        						<i class="fas fa-exclamation color-white"></i>
+		        					</div>
+		        					<div class="atbd-notice__text">
+		        						<h4>수정하시겠습니까?</h4>
+		        					</div>
+		        					<div style="display: flex; justify-content: center; margin: 10% auto;">
+		        						<button class="btn btn-default btn-primary mr-10" onclick="UpdateStep();" style="color: #FFFFFF;">수정</button>
+		        						<button class="btn btn-default btn-danger" onclick="CancelBtn();" style="color: #FFFFFF;">취소</button>
+		        					</div>
+		        				</div>
+		        			</div>
+		        		</div>
+		        	</div>
+		        </div>
+		        <div class="atbd-notice" id="delete_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
+		        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+		        		<div class="card-body">
+		        			<div class="atbd-notice__content">
+		        				<div class="atbd-notice__top text-center">
+		        					<div class="atbd-notice__icon bg-danger">
+		        						<i class="fas fa-exclamation-triangle color-white"></i>
+		        					</div>
+		        					<div class="atbd-notice__text">
+		        						<h4>삭제하시겠습니까?</h4>
+		        					</div>
+		        					<div style="display: flex; justify-content: center; margin: 10% auto;">
+		        						<button class="btn btn-default btn-primary mr-10" onclick="deleteConfirm();" style="color: #FFFFFF;">삭제</button>
+		        						<button class="btn btn-default btn-danger" onclick="CancelBtn();" style="color: #FFFFFF;">취소</button>
+		        					</div>
+		        				</div>
+		        			</div>
+		        		</div>
+		        	</div>
+		        </div>
+	        
+	        <div class="modal-basic modal fade show" id="researchAddModal" tabindex="-1" role="dialog" aria-hidden="true">
+			    <div class="modal-dialog modal-lg" role="document">
+			        <div class="modal-content modal-bg-white">
+			        	<div class="modal-header">
+			        		<h6 class="modal-title">조사방법 등록</h6>
+		                    	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		                        	<span data-feather="x"></span>
+		                        </button>
+			        	</div>
+			            <div class="modal-body">
+			            	<div class="col-12">
+			            		<div class="row">
+			            			<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="storage_out_address" class="col-form-label color-dark align-center">조사방법<span style="color: red;">*</span></label>
+	                                </div>
+	                                <div class="col-sm-10">
+		                                <input type="text" class="form-control b-light" id="research_contents">
+		                            </div>
+			            		</div>
+			            		<div class="button-group d-flex justify-content-end mt-2">
+				                   <button class="btn btn-primary btn-default btn-squared" onclick="InsertResearch();">추가</button>
+				           		</div>
+			            	</div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+		    <!-- ends: .modal-Basic -->
+
+	        
+     	</div>
+     </main>
+     <!-- 공통 하단 -->
+    <th:block th:include="@{/fragments/footer.html}"></th:block>
+    <!-- 공통 js -->
+    <th:block th:include="@{/fragments/commonjs.html}"></th:block>
+<script type="text/javascript" th:inline="javascript">
+	
+	var method = /*[[${method}]]*/ "null";
+	
+	var step = /*[[${step}]]*/ "null";
+	
+	//입력 단위 selected 이벤트
+	$("#method_input").val(method.method_input).prop("selected", true);
+	(function(){
+		
+		var method_input = method.method_input;
+		
+		var data = {"eaches_type" : method_input};
+		
+		$.ajax(
+		{
+			url : 'selectEaches',
+			method : 'POST',
+			dataType : 'json',
+			data : data,
+			success : function(result)
+			{
+				var method_eaches = $("#method_eaches");
+				var add_list = "";
+				
+				add_list += '<option value="">단위 종류 선택</option>';
+				
+				for(var i = 0; i < result.length; i++)
+				{
+					add_list += '<option value="'+ result[i].eaches_id + '"';
+					if(result[i].eaches_id == method.eaches_id){
+						add_list += 'selected="selected"';
+					}
+					add_list += '>';
+					add_list += result[i].eaches_name
+					add_list += '</option>';
+				}
+				
+				method_eaches.empty();
+				method_eaches.append(add_list);
+			}
+		});
+	})();//end 입력단위 seleted 이벤트
+	
+	//method 명 초기 입력 이벤트
+	(function(){
+		var d1 = $("#division_depth1 option:checked");
+		var d2 = $("#division_depth2 option:checked");
+		var d3 = $("#division_depth3 option:checked");
+		
+		var method_title = method.method_title;
+		$("#input_title").val(d1.text() + " > " + d2.text() + " > " +  d3.text() + " > " +  method_title);
+		
+		var data = {"division_id" : method.d3_id};
+		
+		$.ajax(
+		{
+			url : 'selectResearch',
+			method : 'POST',
+			dataType : 'json',
+			data : data,
+			success : function(result)
+			{
+				var research_list = $("#research_list");
+				var add_list = "";
+				
+				for(var i = 0; i < result.length; i++)
+				{
+					add_list += '<tr>';
+					add_list += '<td><input type="checkbox" class="checkbox" name="chk_research" value="' + result[i].research_id + '"></td>';
+					add_list += '<td>' + result[i].research_contents + '</td>';
+					add_list += '</tr>';
+				}
+				
+				research_list.empty();
+				research_list.append(add_list);
+			}
+		});
+		
+	})();//end method 명 초기 입력 이벤트
+	
+	//step 초기 그려주기 이벤트
+	(function(){
+		var step_container = $("#step-container");
+		var length = step.length;
+		
+		var add_list = "";
+		
+		for(var i = 0; i < step.length; i++){
+			add_list += '<div th:data-id='+step[i].research_id+' class="list-group step">';
+			add_list += '<li class="list-group-item-sm list-group-item">';
+			add_list += '<div class="row">';
+			
+			add_list += '<div class="mb-1 col-2">';
+			add_list += '<input type="checkbox" class="checkbox mr-2" name="mis_research">';
+			add_list += '<span class="step-text">step ' + step[i].step_index + '</span>';
+			add_list += '</div>';
+			
+			add_list += '<div class="mb-1 col-6">';
+			add_list += '<span class="research-title">'+step[i].research_contents+'</span>';
+			add_list += '</div>';
+			
+			add_list += '<div class="mb-1 col-4">';
+			add_list += '<textarea rows="2" class="form-control step_comment" placeholder="comment">';
+			add_list += step[i].step_comment;
+			add_list += '</textarea>';
+			add_list += '</div>';
+				
+			add_list += '</div>';
+			add_list += '</li>';
+			add_list += '</div>';
+		}//end for
+		
+		step_container.append(add_list);
+		inputProtocol();
+	})();//end step 초기 그려주기 이벤트
+	
+	// step data array
+	var dataArr = new Array();
+	
+	// 항목 조회 Modal
+	function DivisionBtn()
+	{
+		$("#divisionModal").modal("show");
+		
+		$("#titleBtn").prop("disabled", true);
+	}
+	
+	// method명 사용 버튼 활성화
+	$("#method_title").keyup(function()
+	{
+		var d1 = $("#division_depth1 option:checked");
+		var d2 = $("#division_depth2 option:checked");
+		var d3 = $("#division_depth3 option:checked");
+		
+		if(d1.val() != 0 || d2.val() != 0 || d3.val() != 0)
+		{
+			$("#titleBtn").prop("disabled", false);
+		}
+	});
+	
+	// method명 사용
+	function TitleBtn()
+	{
+		var d1 = $("#division_depth1 option:checked");
+		var d2 = $("#division_depth2 option:checked");
+		var d3 = $("#division_depth3 option:checked");
+		
+		var method_title = $("#method_title").val();
+		
+		var data = {"division_id" : d3.val()};
+		
+		$.ajax(
+		{
+			url : 'selectResearch',
+			method : 'POST',
+			dataType : 'json',
+			data : data,
+			success : function(result)
+			{
+				var research_list = $("#research_list");
+				var add_list = "";
+				
+				for(var i = 0; i < result.length; i++)
+				{
+					add_list += '<tr>';
+					add_list += '<td><input type="checkbox" class="checkbox" name="chk_research" value="' + result[i].research_id + '"></td>';
+					add_list += '<td>' + result[i].research_contents + '</td>';
+					add_list += '</tr>';
+				}
+				
+				research_list.empty();
+				research_list.append(add_list);
+				
+				$("#input_title").val(d1.text() + " > " + d2.text() + " > " +  d3.text() + " > " +  method_title);
+				
+				$("#divisionModal").modal("hide");
+			}
+		});
+	}
+	
+	// 입력단위 선택
+	$("#method_input").change(function()
+	{
+		var method_input = $("#method_input").val();
+		
+		var data = {"eaches_type" : method_input};
+		
+		$.ajax(
+		{
+			url : 'selectEaches',
+			method : 'POST',
+			dataType : 'json',
+			data : data,
+			success : function(result)
+			{
+				var method_eaches = $("#method_eaches");
+				var add_list = "";
+				
+				add_list += '<option value="">단위 종류 선택</option>';
+				
+				for(var i = 0; i < result.length; i++)
+				{
+					add_list += '<option value="'+ result[i].eaches_id + '">' + result[i].eaches_name + '</option>';
+				}
+				
+				method_eaches.empty();
+				method_eaches.append(add_list);
+			}
+		});
+	});
+	
+	function InsertPopup()
+	{
+		$("#researchAddModal").modal("show");
+	}
+	
+	//조사방법 체크박스 추가
+	function PlusResearch()
+	{
+		var step_container = $("#step-container");
+		var length = $("#step-container").children().length;
+		
+		var add_list = "";
+		
+		
+		$(document).find("input:checkbox[name=chk_research]:checked").each(function()
+		{
+			var research_id = $(this).val();
+			var research_title = $(this).parent().parent().children()[1].innerHTML;
+			
+			if(length == 0){
+				length = 1;
+			}else {
+				length++;
+			}
+			
+			/* console.log(research_id);
+			console.log(research_title); */
+			
+			add_list += '<div th:data-id='+research_id+' class="list-group step">';
+			add_list += '<li class="list-group-item-sm list-group-item">';
+			add_list += '<div class="row">';
+			
+			add_list += '<div class="mb-1 col-2">';
+			add_list += '<input type="checkbox" class="checkbox mr-2" name="mis_research">';
+			add_list += '<span class="step-text">step ' + length + '</span>';
+			add_list += '</div>';
+			
+			add_list += '<div class="mb-1 col-6">';
+			add_list += '<span class="research-title">'+research_title+'</span>';
+			add_list += '</div>';
+			
+			add_list += '<div class="mb-1 col-4">';
+			add_list += '<textarea rows="2" class="form-control step_comment" placeholder="comment">';
+			add_list += '</textarea>';
+			add_list += '</div>';
+				
+			add_list += '</div>';
+			add_list += '</li>';
+			add_list += '</div>';
+			
+		});
+		
+		step_container.append(add_list);
+		inputProtocol();
+	}//end 조사방법 체크박스 추가
+	
+	//조사방법 체크박스 삭제
+	function MinusResearch()
+	{
+		
+		var step_container = $("#step-container");
+		var add_list = "";
+		
+		//체크박스 삭제
+		$(document).find("input:checkbox[name=mis_research]:checked").each(function()
+		{	
+			var del_div = $(this).parent().parent().parent().parent();
+			del_div.remove();
+		});
+		
+		//삭제 후 step 번호 수정
+		var length = 1;
+		$(document).find(".step-text").each(function()
+		{
+			$(this).text("step " + length++);
+		});
+		inputProtocol();
+	}//end 조사방법 체크박스 삭제
+	
+	// 조사방법 등록
+	function InsertResearch()
+	{
+		var division_id = $("#division_depth3 option:checked").val();
+		var research_contents = $("#research_contents").val();
+		
+		if(division_id == 0)
+		{
+			alert("조사 항목을 선택하세요.");
+		}
+		else if(research_contents == "")
+		{
+			alert("조사 방법을 입력하세요.");
+		}
+		else
+		{
+			var data = {"division_id" : division_id, "research_contents" : research_contents};
+			
+			$.ajax(
+			{
+				url : '/method/insertResearch',
+				method : 'POST',
+				dataType : 'json',
+				data : data,
+				success : function(result)
+				{
+					if(result == 0)
+					{
+						
+					}
+					else
+					{
+						$("#researchAddModal").modal("hide");
+						$("#research_contents").val('');
+						$("#research_success_popup").css("display", "flex");
+					}
+				}
+			});
+			
+		}
+		
+	}//end 조사방법 등록
+	
+	//조사방법 등록 후 완료 팝업 닫기
+	function confirmResearch(){
+		TitleBtn();//조사방법 등록 완료 후 조사방법 테이블 다시 만들어주기
+		$("#research_success_popup").css("display", "none");
+	}
+	
+	//프로토콜 등록 버튼 함수
+	function UpdateStep(){
+		
+		//메소드 등록 후 실행 함수
+		getUpdateMethod().then(function(result){
+			
+			if(result == 0){
+				alert("프로토콜 수정이 실패했습니다. 다시수정해 주세요.");
+			}else{
+				
+				getDeleteStep().then(function(result){
+					
+					var method_id = method.method_id;
+					
+					//선택한 step
+					$(document).find(".step").each(function(index, item){
+						var step_index = $(this).find(".step-text").text().split(" ");
+						console.log(step_index);
+						var data = {
+								"method_id" : method_id,
+								"research_id" : $(this).attr("th:data-id"),
+								"step_index" : step_index[1],
+								"step_comment" : $(this).find(".step_comment").val(),
+								};
+						dataArr.push(data);
+					});
+					console.log(dataArr);
+					
+					$.ajax({
+						url : "/method/insertStep",
+						method : "POST",
+						contentType : "application/json; charset=utf-8",
+						data : JSON.stringify(dataArr),
+						success : function(result){
+							
+							if(result == 0){
+								
+							}else {
+								$("#update_popup").css("display", "none");
+								$("#success_popup").css("display", "flex");
+							}
+						}
+					});//end ajax
+					
+				});//end deleteStep.then()
+				
+			}//end else
+			
+		});//end getUpdateMethod().then
+		
+	}//end UpdateStep
+	
+	function deleteStep(){
+		return new Promise(function(resolve){
+			var cancelArr = new Array();
+			for(var i = 0; i < step.length; i++){
+				cancelArr.push(step[i].step_id);
+			}
+			
+			$.ajax(
+			{
+				url : "/method/deleteStep?cancelArr="+cancelArr,
+				method : "POST",
+				success : function(result){
+					resolve(result);
+				}//end success
+				
+			});//end ajax
+			
+		});
+	}//end deleteStep
+	
+	//프로토콜 Update 함수
+	function UpdateMethod(){
+		return new Promise(function(resolve){
+			
+			var method_id = method.method_id;
+			var method_title = $("#method_title").val();
+			var method_contents = $("#method_contents").val();
+			var method_input = $("#method_input").val();
+			var eaches_id = $("#method_eaches").val();
+			var method_comment = $("#method_comment").val();
+			
+			if(method_title == "")
+			{
+				alert("method 명을 선택해주세요.");
+				$("#input_title").focus();
+			}
+			else
+			{
+				var data = {
+						"method_id" : method_id,
+						"method_title" : method_title,
+						"method_contents" : method_contents,
+						"method_input" : method_input,
+						"eaches_id" : eaches_id,
+						"method_comment" : method_comment
+				};
+				/* console.log(data); */
+				$.ajax(
+				{
+					url : "/method/updateMethod",
+					method : "POST",
+					dataType : 'json',
+					data : data,
+					success : function(result){
+						resolve(result);
+					}//end success
+					
+				});//end ajax
+				
+			}//end else
+			
+		});//end return
+	}//end insertMethod
+	
+	//재배 프로토콜 ajax 통신 완료 후 진행하는 함수
+	async function getUpdateMethod(){
+		var result = await UpdateMethod();
+		return result;
+	}
+	
+	async function getDeleteStep(){
+		var result = await deleteStep();
+		return result;
+	}
+	
+	//프로토콜 step 선택여부에 따라 protocol textarea 값 넣어주는 함수
+	function inputProtocol(){
+		
+		var protocol = $("#protocol");
+		var add_list = "";
+		
+		$(document).find(".step").each(function(index, item){
+			var step = $(this).find(".step-text").text();
+			var research_title = $(this).find(".research-title").text();
+			
+			add_list += step + " : " + research_title + "\n";
+			
+		});
+		
+		protocol.val(add_list);
+		
+	}
+	
+	//
+	function UpdateBtn(){
+		$("#update_popup").css("display", "flex");
+	}
+	
+	//삭제 버튼 안내 팝업
+	function DeleteBtn() {
+		$("#delete_popup").css("display", "flex");
+	}
+	//팝업 취소
+	function CancelBtn() {
+		$("#update_popup").css("display", "none");
+		$("#delete_popup").css("display", "none");
+	}
+	
+</script>
+</body>
+</html>

@@ -174,7 +174,7 @@ public class MethodController
 	@RequestMapping("/insertStep")
 	public int InsertStep(@RequestBody List<Step> steps)
 	{
-		
+		System.out.println("등록된 step 개수 : " + steps.size());
 		int insertResult[] = new int[steps.size()];
 		int result = 0;
 		
@@ -193,4 +193,62 @@ public class MethodController
 		return result;
 	}
 	
+	// 재배 프로토콜 수정 화면
+	@RequestMapping("modify")
+	public ModelAndView MethodModify(ModelAndView mv, @RequestParam(name = "method_id", required = true) int method_id)
+	{
+		
+		Method method = service.selectMethodDetail(method_id);
+		List<Division> d1 = researchService.SelectDivision(0, 0);
+		List<Division> d2 = researchService.SelectDivision(method.getD1_id(), 1);
+		List<Division> d3 = researchService.SelectDivision(method.getD2_id(), 2);
+		
+		List<Step> step = service.selectStepDetailList(method_id);
+		
+		mv.addObject("method", method);
+		mv.addObject("d1", d1);
+		mv.addObject("d2", d2);
+		mv.addObject("d3", d3);
+		mv.addObject("step", step);
+		
+		mv.setViewName("method/method_modify");
+		
+		return mv;
+	}
+	
+	// 재배 프로토콜 수정
+	@ResponseBody
+	@RequestMapping("updateMethod")
+	public int UpdateMethod(Method method)
+	{
+		System.out.println("업데이트");
+		System.out.println(method);
+		int result = service.updateMethod(method);
+		
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping("deleteStep")
+	public int DeleteStep(@RequestParam(name = "cancelArr") List<Integer> cancel)
+	{
+		
+		int deleteResult[] = new int[cancel.size()];
+		int result = 0;
+		
+		for(int i = 0; i < cancel.size(); i++) {
+			deleteResult[i] = service.deleteStep(cancel.get(i));
+			System.out.println("step 삭제 id : " + cancel.get(i));
+		}
+		
+		Boolean isDelete = IntStream.of(deleteResult).noneMatch(x -> x == 0);
+		
+		if(isDelete) {
+			result = 1;
+		}else {
+			result = 0;
+		}
+		
+		return result;
+	}
 }

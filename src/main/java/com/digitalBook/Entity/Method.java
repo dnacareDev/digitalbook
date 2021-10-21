@@ -33,4 +33,9 @@ public class Method {
 	private String d1_name;					// 작목 명
 	private String d2_name;					// 분류 명
 	private String d3_name;					// 항목 명
+	
+	private int d1_id;						// 작목 pk
+	private int d2_id;						// 분류 pk
+	private int d3_id;						// 항목 pk
+	
 }

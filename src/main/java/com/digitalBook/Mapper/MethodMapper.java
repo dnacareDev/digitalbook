@@ -35,4 +35,16 @@ public interface MethodMapper
 	// 재배 프로토콜 개수 검색
 	int SearchMethodCount(@Param("search_type") String search_type, @Param("keyword") String keyword);
 	
+	// 재배 프로토콜 detail
+	Method selectMethodDetail(int method_id);
+	
+	// 재배 프로토콜 step detail list
+	List<Step> selectStepDetailList(int method_id);
+	
+	// 재배 프로토콜 수정
+	int updateMethod(Method method);
+	
+	// step 삭제
+	int deleteStep(int step_id);
+	
 }

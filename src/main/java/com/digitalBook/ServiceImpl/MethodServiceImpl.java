@@ -66,4 +66,32 @@ public class MethodServiceImpl implements MethodService
 		
 		return mapper.SearchMethodCount(search_type, keyword);
 	}
+	
+	// 재배 프로토콜 detail
+	@Override
+	public Method selectMethodDetail(int method_id) {
+		
+		return mapper.selectMethodDetail(method_id);
+	}
+	
+	// 재배 프로토콜 step detail list
+	@Override
+	public List<Step> selectStepDetailList(int method_id) {
+		
+		return mapper.selectStepDetailList(method_id);
+	}
+	
+	// 재배 프로토콜 수정
+	@Override
+	public int updateMethod(Method method) {
+		
+		return mapper.updateMethod(method);
+	}
+	
+	// step 삭제
+	@Override
+	public int deleteStep(int step_id) {
+		
+		return mapper.deleteStep(step_id);
+	}
 }

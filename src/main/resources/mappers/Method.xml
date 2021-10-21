@@ -138,4 +138,40 @@
 		)
 	</insert>
 	
+	<!-- 재배 프로토콜 detial -->
+	<select id="selectMethodDetail" resultType="Method">
+		SELECT m.*, d1.*, d2.*, d3.*, e.*, d1.division_id as d1_id, d2.division_id as d2_id, d3.division_id as d3_id
+		FROM method m
+		LEFT JOIN division d3 ON m.division_id = d3.division_id
+		LEFT JOIN division d2 ON d3.division_parents = d2.division_id
+		LEFT JOIN division d1 ON d2.division_parents = d1.division_id
+		LEFT JOIN eaches e ON m.eaches_id = e.eaches_id
+		WHERE method_id = #{method_id}
+	</select>
+	
+	<!-- 재배 프로토콜 step detail list -->
+	<select id="selectStepDetailList" resultType="Step">
+		SELECT s.*, r.research_contents as research_contents FROM step s
+		LEFT JOIN research r ON s.research_id = r.research_id
+		WHERE method_id = #{method_id}
+	</select>
+	
+	<!-- 재배 프로토콜 수정 -->
+	<update id="updateMethod" parameterType="Method">
+		UPDATE method
+		SET method_title = #{method_title},
+			method_contents = #{method_contents},
+			method_input = #{method_input},
+			eaches_id = #{eaches_id},
+			method_comment = #{method_comment},
+			modify_date = NOW()
+		WHERE method_id = #{method_id}
+	</update>
+	
+	<!-- step 삭제 -->
+	<delete id="deleteStep" parameterType="int">
+		DELETE FROM step
+		WHERE step_id = #{step_id}
+	</delete>
+	
 </mapper>
