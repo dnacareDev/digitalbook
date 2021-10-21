@@ -27,8 +27,8 @@
 		    	<div class="row">
 			        <div class="col-lg-12">
 			        	<div class="breadcrumb-main" style="float: left;">
-			        		<h4 class="text-capitalize breadcrumb-title">재배 프로토콜 등록</h4>
-			        		<span class="ml-20 mt-1">프로토콜 - 재배 프로토콜 등록</span>
+			        		<h4 class="text-capitalize breadcrumb-title">재배 프로토콜 수정</h4>
+			        		<span class="ml-20 mt-1">프로토콜 - 재배 프로토콜 수정</span>
 			        	</div>
 			        </div>
 		        </div>
@@ -42,7 +42,7 @@
 	                                </div>
 	                                <div class="col-sm-5">
 	                                   <input type="text" class="form-control" style="float: left; width: 465px;" id="input_title" readonly>
-	                                   <button class="btn btn-primary" onclick="DivisionBtn();">항목 조회</button>
+	                                   <button class="btn btn-primary" onclick="DivisionBtn();">항목 수정</button>
 	                                </div>
 		                         </div>
 		                         <div class="row mt-3">
@@ -50,7 +50,7 @@
 		                            	<label for="method_contents" class="color-dark align-center">Method 설명</label>
 		                            </div>
 		                            <div class="col-sm-5">
-		                                <input type="text" class="form-control b-light" id="method_contents">
+		                                <input type="text" class="form-control b-light" id="method_contents" th:value="${method.method_contents}">
 		                            </div>
 		                    	</div>
 		                    	<div class="row mt-3">
@@ -91,7 +91,7 @@
 		                            	<label for="method_comment" class="color-dark">기타</label>
 		                            </div>
 		                            <div class="col-sm-5">
-		                                <textarea id="method_comment" class="form-control b-light" rows="5"></textarea>
+		                                <textarea id="method_comment" class="form-control b-light" rows="5" th:text="${method.method_comment}"></textarea>
 		                            </div>
 		                    	</div>
 			        		</div>
@@ -154,9 +154,7 @@
 		        </div>
 		        <div class="row">
 					<div class="col-4">
-						<div class="action-btn d-flex justify-content-frist mt-30">
-							<button type="button" class="btn btn-primary end-button" onclick="pirnt();">인쇄</button>
-						</div>
+						<div class="action-btn d-flex justify-content-frist mt-30"></div>
 					</div>
 					<div class="col-4">
 						<div class="d-flex justify-content-center mt-30"></div>
@@ -164,7 +162,8 @@
 					<div class="col-4">
 						<div class="action-btn d-flex justify-content-end mt-30">
 							<a href="/method/list" class="btn btn-primary end-button end">목록</a>
-							<button type="button" class="btn btn-primary end-button end" onclick="InsertBtn();">등록</button>
+							<button type="button" class="btn btn-default btn-danger end-button end" onclick="DeleteBtn();">삭제</button>
+		                	<button type="button" class="btn btn-default btn-primary end-button end" onclick="UpdateBtn();">수정</button>
 						</div>
 					</div>
 				</div>
@@ -184,30 +183,33 @@
 		        				<div class="row">
 			        				<div class="col-md-6 mb-25">
 	                                    <label for="division_depth1" class="color-dark fw-500">대상작목</label>
-	                                    <select class="form-control b-light select" id="division_depth1">
-			                                <option value="0">대상 작목 선택</option>
-			                                <th:block th:each="dvs : ${division}">
-				                                <option th:value="${dvs.division_id}" th:text="${dvs.division}"></option>
+	                                    <select class="form-control b-light select" id="division_depth1" disabled="disabled">
+			                                <th:block th:each="d1 : ${d1}">
+				                                <option th:value="${d1.division_id}" th:text="${d1.division}" th:selected="${d1.division_id == method.d1_id}"></option>
 			                                </th:block>
 			                            </select>
 	                                </div>
 	                                <div class="col-md-6 mb-25">
 	                                    <label for="division_depth2" class="color-dark fw-500">분류</label>
-	                                    <select class="form-control b-light select" id="division_depth2">
-			                                <option value="0">분류 선택</option>
+	                                    <select class="form-control b-light select" id="division_depth2" disabled="disabled">
+			                                <th:block th:each="d2 : ${d2}">
+				                                <option th:value="${d2.division_id}" th:text="${d2.division}" th:selected="${d2.division_id == method.d2_id}"></option>
+			                                </th:block>
 			                            </select>
 	                                </div>
 	                            </div>
 	                            <div class="row">
 			        				<div class="col-md-6 mb-25">
 	                                    <label for="division_depth3" class="color-dark fw-500">항목</label>
-	                                    <select class="form-control b-light select" id="division_depth3">
-			                                <option value="0">항목 선택</option>
+	                                    <select class="form-control b-light select" id="division_depth3" disabled="disabled">
+			                                <th:block th:each="d3 : ${d3}">
+				                                <option th:value="${d3.division_id}" th:text="${d3.division}" th:selected="${d3.division_id == method.d3_id}"></option>
+			                                </th:block>
 			                            </select>
 	                                </div>
 	                                <div class="col-md-6 mb-25">
 	                                    <label for="research_contents" class="color-dark fw-500">Method 명</label>
-	                                    <input type="text" class="form-control b-deep" id="method_title">
+	                                    <input type="text" class="form-control b-deep" id="method_title" th:value="${method.method_title}">
 	                                </div>
 	                            </div>
 			            		<div class="button-group d-flex justify-content-end">
@@ -247,7 +249,7 @@
 	        						<i class="fas fa-check color-white"></i>
 	        					</div>
 	        					<div class="atbd-notice__text">
-	        						<h4>등록이 완료되었습니다.</h4>
+	        						<h4>완료되었습니다.</h4>
 	        					</div>
 	        					<div style="display: flex; justify-content: center; margin: 10% auto;">
 	        						<button class="btn btn-default btn-success" onclick="confirmResearch();" style="color: #FFFFFF;">확인</button>
@@ -257,6 +259,46 @@
 	        		</div>
 	        	</div>
 	        </div>
+	        <div class="atbd-notice" id="update_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
+		        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+		        		<div class="card-body">
+		        			<div class="atbd-notice__content">
+		        				<div class="atbd-notice__top text-center">
+		        					<div class="atbd-notice__icon bg-info">
+		        						<i class="fas fa-exclamation color-white"></i>
+		        					</div>
+		        					<div class="atbd-notice__text">
+		        						<h4>수정하시겠습니까?</h4>
+		        					</div>
+		        					<div style="display: flex; justify-content: center; margin: 10% auto;">
+		        						<button class="btn btn-default btn-primary mr-10" onclick="UpdateStep();" style="color: #FFFFFF;">수정</button>
+		        						<button class="btn btn-default btn-danger" onclick="CancelBtn();" style="color: #FFFFFF;">취소</button>
+		        					</div>
+		        				</div>
+		        			</div>
+		        		</div>
+		        	</div>
+		        </div>
+		        <div class="atbd-notice" id="delete_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
+		        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+		        		<div class="card-body">
+		        			<div class="atbd-notice__content">
+		        				<div class="atbd-notice__top text-center">
+		        					<div class="atbd-notice__icon bg-danger">
+		        						<i class="fas fa-exclamation-triangle color-white"></i>
+		        					</div>
+		        					<div class="atbd-notice__text">
+		        						<h4>삭제하시겠습니까?</h4>
+		        					</div>
+		        					<div style="display: flex; justify-content: center; margin: 10% auto;">
+		        						<button class="btn btn-default btn-primary mr-10" onclick="deleteConfirm();" style="color: #FFFFFF;">삭제</button>
+		        						<button class="btn btn-default btn-danger" onclick="CancelBtn();" style="color: #FFFFFF;">취소</button>
+		        					</div>
+		        				</div>
+		        			</div>
+		        		</div>
+		        	</div>
+		        </div>
 	        
 	        <div class="modal-basic modal fade show" id="researchAddModal" tabindex="-1" role="dialog" aria-hidden="true">
 			    <div class="modal-dialog modal-lg" role="document">
@@ -294,13 +336,125 @@
     <th:block th:include="@{/fragments/footer.html}"></th:block>
     <!-- 공통 js -->
     <th:block th:include="@{/fragments/commonjs.html}"></th:block>
-<script type="text/javascript">
-
+<script type="text/javascript" th:inline="javascript">
+	
+	var method = /*[[${method}]]*/ "null";
+	
+	var step = /*[[${step}]]*/ "null";
+	
+	//입력 단위 selected 이벤트
+	$("#method_input").val(method.method_input).prop("selected", true);
+	(function(){
+		
+		var method_input = method.method_input;
+		
+		var data = {"eaches_type" : method_input};
+		
+		$.ajax(
+		{
+			url : 'selectEaches',
+			method : 'POST',
+			dataType : 'json',
+			data : data,
+			success : function(result)
+			{
+				var method_eaches = $("#method_eaches");
+				var add_list = "";
+				
+				add_list += '<option value="">단위 종류 선택</option>';
+				
+				for(var i = 0; i < result.length; i++)
+				{
+					add_list += '<option value="'+ result[i].eaches_id + '"';
+					if(result[i].eaches_id == method.eaches_id){
+						add_list += 'selected="selected"';
+					}
+					add_list += '>';
+					add_list += result[i].eaches_name
+					add_list += '</option>';
+				}
+				
+				method_eaches.empty();
+				method_eaches.append(add_list);
+			}
+		});
+	})();//end 입력단위 seleted 이벤트
+	
+	//method 명 초기 입력 이벤트
+	(function(){
+		var d1 = $("#division_depth1 option:checked");
+		var d2 = $("#division_depth2 option:checked");
+		var d3 = $("#division_depth3 option:checked");
+		
+		var method_title = method.method_title;
+		$("#input_title").val(d1.text() + " > " + d2.text() + " > " +  d3.text() + " > " +  method_title);
+		
+		var data = {"division_id" : method.d3_id};
+		
+		$.ajax(
+		{
+			url : 'selectResearch',
+			method : 'POST',
+			dataType : 'json',
+			data : data,
+			success : function(result)
+			{
+				var research_list = $("#research_list");
+				var add_list = "";
+				
+				for(var i = 0; i < result.length; i++)
+				{
+					add_list += '<tr>';
+					add_list += '<td><input type="checkbox" class="checkbox" name="chk_research" value="' + result[i].research_id + '"></td>';
+					add_list += '<td>' + result[i].research_contents + '</td>';
+					add_list += '</tr>';
+				}
+				
+				research_list.empty();
+				research_list.append(add_list);
+			}
+		});
+		
+	})();//end method 명 초기 입력 이벤트
+	
+	//step 초기 그려주기 이벤트
+	(function(){
+		var step_container = $("#step-container");
+		var length = step.length;
+		
+		var add_list = "";
+		
+		for(var i = 0; i < step.length; i++){
+			add_list += '<div th:data-id='+step[i].research_id+' class="list-group step">';
+			add_list += '<li class="list-group-item-sm list-group-item">';
+			add_list += '<div class="row">';
+			
+			add_list += '<div class="mb-1 col-2">';
+			add_list += '<input type="checkbox" class="checkbox mr-2" name="mis_research">';
+			add_list += '<span class="step-text">step ' + step[i].step_index + '</span>';
+			add_list += '</div>';
+			
+			add_list += '<div class="mb-1 col-6">';
+			add_list += '<span class="research-title">'+step[i].research_contents+'</span>';
+			add_list += '</div>';
+			
+			add_list += '<div class="mb-1 col-4">';
+			add_list += '<textarea rows="2" class="form-control step_comment" placeholder="comment">';
+			add_list += step[i].step_comment;
+			add_list += '</textarea>';
+			add_list += '</div>';
+				
+			add_list += '</div>';
+			add_list += '</li>';
+			add_list += '</div>';
+		}//end for
+		
+		step_container.append(add_list);
+		inputProtocol();
+	})();//end step 초기 그려주기 이벤트
+	
 	// step data array
 	var dataArr = new Array();
-	
-	// 조사방법 추가 비활성화
-	$("#addResearchBtn").prop("disabled", true);
 	
 	// 항목 조회 Modal
 	function DivisionBtn()
@@ -309,46 +463,6 @@
 		
 		$("#titleBtn").prop("disabled", true);
 	}
-	
-	// division 선택 이벤트
-	$(".select").change(function()
-	{
-		var division_id = $(this).val();
-		var division_depth = this.id.slice(14, 15);
-		
-		var data = {"division_id" : division_id, "division_depth" : division_depth};
-		
-		$.ajax(
-		{
-			url : 'selectDivision',
-			method : 'POST',
-			dataType : 'json',
-			data : data,
-			success : function(result)
-			{
-				var depth = (division_depth * 1) + 1;
-				var depth_list = $("#division_depth" + depth);
-				var add_list = "";
-				
-				if(depth == 2)
-				{
-					add_list += '<option value="0">분류 선택</option>';
-				}
-				else if(depth == 3)
-				{
-					add_list += '<option value="0">항목 선택</option>';
-				}
-				
-				for(var i = 0; i < result.length; i++)
-				{
-					add_list += '<option value="' + result[i].division_id + '">' + result[i].division + '</option>';
-				}
-				
-				depth_list.empty();
-				depth_list.append(add_list);
-			}
-		});
-	});
 	
 	// method명 사용 버튼 활성화
 	$("#method_title").keyup(function()
@@ -397,7 +511,7 @@
 				research_list.append(add_list);
 				
 				$("#input_title").val(d1.text() + " > " + d2.text() + " > " +  d3.text() + " > " +  method_title);
-				$("#addResearchBtn").prop("disabled", false);
+				
 				$("#divisionModal").modal("hide");
 			}
 		});
@@ -563,57 +677,82 @@
 	}
 	
 	//프로토콜 등록 버튼 함수
-	function InsertBtn(){
+	function UpdateStep(){
 		
 		//메소드 등록 후 실행 함수
-		getMethodId().then(function(result){
+		getUpdateMethod().then(function(result){
 			
 			if(result == 0){
-				alert("프로토콜 등록이 실패했습니다. 다시등록해 주세요.");
+				alert("프로토콜 수정이 실패했습니다. 다시수정해 주세요.");
 			}else{
 				
-				var method_id = result;
-				
-				//선택한 step
-				$(document).find(".step").each(function(index, item){
-					var step_index = $(this).find(".step-text").text().split(" ");
-					console.log(step_index);
-					var data = {
-							"method_id" : method_id,
-							"research_id" : $(this).attr("th:data-id"),
-							"step_index" : step_index[1],
-							"step_comment" : $(this).find(".step_comment").val(),
-							};
-					dataArr.push(data);
-				});
-				console.log(dataArr);
-				
-				$.ajax({
-					url : "/method/insertStep",
-					method : "POST",
-					contentType : "application/json; charset=utf-8",
-					data : JSON.stringify(dataArr),
-					success : function(result){
-						
-						if(result == 0){
+				getDeleteStep().then(function(result){
+					
+					var method_id = method.method_id;
+					
+					//선택한 step
+					$(document).find(".step").each(function(index, item){
+						var step_index = $(this).find(".step-text").text().split(" ");
+						console.log(step_index);
+						var data = {
+								"method_id" : method_id,
+								"research_id" : $(this).attr("th:data-id"),
+								"step_index" : step_index[1],
+								"step_comment" : $(this).find(".step_comment").val(),
+								};
+						dataArr.push(data);
+					});
+					console.log(dataArr);
+					
+					$.ajax({
+						url : "/method/insertStep",
+						method : "POST",
+						contentType : "application/json; charset=utf-8",
+						data : JSON.stringify(dataArr),
+						success : function(result){
 							
-						}else {
-							$("#success_popup").css("display", "flex");
+							if(result == 0){
+								
+							}else {
+								$("#update_popup").css("display", "none");
+								$("#success_popup").css("display", "flex");
+							}
 						}
-					}
-				});//end ajax
+					});//end ajax
+					
+				});//end deleteStep.then()
 				
-			}//emd else
+			}//end else
+			
+		});//end getUpdateMethod().then
+		
+	}//end UpdateStep
+	
+	function deleteStep(){
+		return new Promise(function(resolve){
+			var cancelArr = new Array();
+			for(var i = 0; i < step.length; i++){
+				cancelArr.push(step[i].step_id);
+			}
+			
+			$.ajax(
+			{
+				url : "/method/deleteStep?cancelArr="+cancelArr,
+				method : "POST",
+				success : function(result){
+					resolve(result);
+				}//end success
+				
+			});//end ajax
 			
 		});
-		
-	}//end InsertBtn
+	}//end deleteStep
 	
-	//프로토콜 insert 함수
-	function insertMethod(){
+	//프로토콜 Update 함수
+	function UpdateMethod(){
 		return new Promise(function(resolve){
 			
-			var division_id = $("#division_depth3 option:checked").val();
+			var method_id = method.method_id;
 			var method_title = $("#method_title").val();
 			var method_contents = $("#method_contents").val();
 			var method_input = $("#method_input").val();
@@ -628,7 +767,7 @@
 			else
 			{
 				var data = {
-						"division_id" : division_id,
+						"method_id" : method_id,
 						"method_title" : method_title,
 						"method_contents" : method_contents,
 						"method_input" : method_input,
@@ -638,7 +777,7 @@
 				/* console.log(data); */
 				$.ajax(
 				{
-					url : "/method/insertMethod",
+					url : "/method/updateMethod",
 					method : "POST",
 					dataType : 'json',
 					data : data,
@@ -653,12 +792,18 @@
 		});//end return
 	}//end insertMethod
 	
-	//재배 프로토콜 등록 후 result에 방금 등록한 프로토콜의 pk값 result로 넘기는 함수
-	async function getMethodId(){
-		var result = await insertMethod();
+	//재배 프로토콜 ajax 통신 완료 후 진행하는 함수
+	async function getUpdateMethod(){
+		var result = await UpdateMethod();
 		return result;
 	}
 	
+	async function getDeleteStep(){
+		var result = await deleteStep();
+		return result;
+	}
+	
+	//프로토콜 step 선택여부에 따라 protocol textarea 값 넣어주는 함수
 	function inputProtocol(){
 		
 		var protocol = $("#protocol");
@@ -676,7 +821,20 @@
 		
 	}
 	
+	//
+	function UpdateBtn(){
+		$("#update_popup").css("display", "flex");
+	}
 	
+	//삭제 버튼 안내 팝업
+	function DeleteBtn() {
+		$("#delete_popup").css("display", "flex");
+	}
+	//팝업 취소
+	function CancelBtn() {
+		$("#update_popup").css("display", "none");
+		$("#delete_popup").css("display", "none");
+	}
 	
 </script>
 </body>
