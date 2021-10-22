@@ -13,7 +13,7 @@
 	}
 	.end{margin-left:10px;}
 	.itemBoxHighlight { 
-	border:solid 1px black; height: 80px; background-color:#768BF5; 
+	border:solid 1px black; min-height: 80px; background-color:#768BF5; 
 	}
 </style>
 <!-- 공통 헤더 -->
@@ -114,23 +114,14 @@
 								<div class="row mt-4">
 									<div class="col-lg-3">
 										<div class="row">
-											<input type="text" class="form-control b-light" id="searchResearch">
+											<input type="text" onkeyup="filter();" class="form-control b-light" id="searchResearch" placeholder="조사방법 검색">
 										</div>
 										<div class="row">
 											<button id="addResearchBtn" class="btn btn-dark mt-2" onclick="InsertPopup();">조사방법 추가</button>
 										</div>
 										<div class="row">
-											<div class="table-responsive mt-2">
-												<table class="table">
-													<thead>
-														<tr>
-															<th></th>
-															<th>조사방법</th>
-														</tr>
-													</thead>
-													<tbody class="research_table" id="research_list">
-													</tbody>
-												</table>
+											<div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;" id="research_list">
+												
 											</div>
 										</div>
 									</div>
@@ -407,10 +398,10 @@
 				
 				for(var i = 0; i < result.length; i++)
 				{
-					add_list += '<tr>';
-					add_list += '<td><input type="checkbox" class="checkbox" name="chk_research" value="' + result[i].research_id + '"></td>';
-					add_list += '<td>' + result[i].research_contents + '</td>';
-					add_list += '</tr>';
+					add_list += '<li class="list-group-item step-list" style="width: 355px;">';
+					add_list += '<input type="checkbox" class="checkbox mr-2" name="chk_research" value="' + result[i].research_id + '">';
+					add_list += '<span>'+ result[i].research_contents + '</span>';
+					add_list += '</li>';
 				}
 				
 				research_list.empty();
@@ -504,10 +495,10 @@
 				
 				for(var i = 0; i < result.length; i++)
 				{
-					add_list += '<tr>';
-					add_list += '<td><input type="checkbox" class="checkbox" name="chk_research" value="' + result[i].research_id + '"></td>';
-					add_list += '<td>' + result[i].research_contents + '</td>';
-					add_list += '</tr>';
+					add_list += '<li class="list-group-item step-list" style="width: 355px;">';
+					add_list += '<input type="checkbox" class="checkbox mr-2" name="chk_research" value="' + result[i].research_id + '">';
+					add_list += '<span>'+ result[i].research_contents + '</span>';
+					add_list += '</li>';
 				}
 				
 				research_list.empty();
@@ -568,7 +559,7 @@
 		$(document).find("input:checkbox[name=chk_research]:checked").each(function()
 		{
 			var research_id = $(this).val();
-			var research_title = $(this).parent().parent().children()[1].innerHTML;
+			var research_title = $(this).next().text();
 			
 			if(length == 0){
 				length = 1;
@@ -896,6 +887,23 @@
 	function CancelBtn() {
 		$("#update_popup").css("display", "none");
 		$("#delete_popup").css("display", "none");
+	}
+	
+	//조사방법 검색 함수
+	function filter(){
+		var search = $("#searchResearch").val().toLowerCase();
+		var list = $(".step-list");
+		
+		$(document).find(".step-list").each(function(i, item){
+			var text = $(this).children(":last").text();
+			
+			if(text.toLowerCase().includes(search)){
+				$(this).css("display", "flex");
+			}else{
+				$(this).css("display", "none");
+			}
+		});
+		
 	}
 	
 </script>
