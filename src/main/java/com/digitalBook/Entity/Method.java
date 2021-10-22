@@ -23,6 +23,7 @@ public class Method {
 	private int method_status;				// 재배 상태 0(승인요청), 1(수정 승인요청), 2(승인완료)
 	private String create_date;				// 등록일
 	private String modify_date;				// 수정일
+	private int user_group;					// 사용자 그룹번호
 	
 	private int last_method_id;				// insert 수행 후 반환되는 해당 pk 값
 	

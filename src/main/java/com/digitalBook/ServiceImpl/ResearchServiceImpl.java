@@ -32,23 +32,23 @@ public class ResearchServiceImpl implements ResearchService
 
 	// 최근 조사방법 조회
 	@Override
-	public Research SelectLastResearch()
+	public Research SelectLastResearch(int user_group)
 	{
-		return mapper.SelectLastResearch();
+		return mapper.SelectLastResearch(user_group);
 	}
 
 	// 조사방법 갯수 검색
 	@Override
-	public int SearchResearchCount(int search_type, String keyword)
+	public int SearchResearchCount(int search_type, String keyword, int user_group)
 	{
-		return mapper.SearchResearchCount(search_type, keyword);
+		return mapper.SearchResearchCount(search_type, keyword, user_group);
 	}
 
 	// 조사방법 검색
 	@Override
-	public List<Research> SearchResearch(int search_type, String keyword, int offset, int limit)
+	public List<Research> SearchResearch(int search_type, String keyword, int offset, int limit, int user_group)
 	{
-		return mapper.SearchResearch(search_type, keyword, offset, limit);
+		return mapper.SearchResearch(search_type, keyword, offset, limit, user_group);
 	}
 	
 	// 조사방법 등록

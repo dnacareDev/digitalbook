@@ -6,7 +6,7 @@
 	<select id="SearchMaterial" resultType="Material">
 		SELECT m.*, u.* FROM material m
 		LEFT JOIN user u ON m.user_id = u.user_id
-		WHERE 1=1
+		WHERE m.user_group = #{user_group}
 		<choose>
 			<when test="search_type == null || search_type.equals('none')">
 				AND (material_code LIKE CONCAT('%', #{keyword}, '%') OR material_name LIKE CONCAT('%', #{keyword}, '%'))
@@ -23,7 +23,7 @@
 	<select id="SearchMaterialCount" resultType="int">
 		SELECT COUNT(*) FROM material m
 		LEFT JOIN user u ON m.user_id = u.user_id
-		WHERE 1=1
+		WHERE m.user_group = #{user_group}
 		<choose>
 			<when test="search_type == null || search_type.equals('none')">
 				AND (material_code LIKE CONCAT('%', #{keyword}, '%') OR material_name LIKE CONCAT('%', #{keyword}, '%'))
@@ -37,14 +37,15 @@
 	<!-- 농자재 등록 -->
 	<insert id="insertMaterial" parameterType="Material">
 		INSERT INTO material
-		(user_id, material_code, material_name, material_status, create_date, modify_date)
+		(user_id, material_code, material_name, material_status, user_group, create_date, modify_date)
 		VALUES
-		(#{user_id}, #{material_code}, #{material_name}, 1, NOW(), NOW())
+		(#{user_id}, #{material_code}, #{material_name}, 1, #{user_group}, NOW(), NOW())
 	</insert>
 	
 	<!-- 최근 농자재 ID -->
-	<select id="selectLastMeterialCode" resultType="String">
+	<select id="selectLastMeterialCode" parameterType="int" resultType="String">
 		SELECT material_code FROM material
+		WHERE user_group = #{user_group}
 		ORDER BY material_id DESC
 		LIMIT 1
 	</select>

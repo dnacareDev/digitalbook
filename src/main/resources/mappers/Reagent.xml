@@ -8,7 +8,7 @@
 		FROM reagent r
 		LEFT JOIN eaches e ON r.reagent_id = e.eaches_id
 		LEFT JOIN user u ON r.user_id = u.user_id
-		WHERE 1=1
+		WHERE r.user_group = #{user_group}
 		<choose>
 			<when test="search_type == null || search_type.equals('none')">
 				AND (
@@ -46,7 +46,7 @@
 		FROM reagent r
 		LEFT JOIN eaches e ON r.reagent_id = e.eaches_id
 		LEFT JOIN user u ON r.user_id = u.user_id
-		WHERE 1=1
+		WHERE r.user_group = #{user_group}
 		<choose>
 			<when test="search_type == null || search_type.equals('none')">
 				AND (
@@ -86,15 +86,16 @@
 	<insert id="insertReagent" parameterType="Reagent">
 		INSERT INTO reagent
 		(reagent_code, reagent_name, reagent_standard, reagent_formula, reagent_nick_k, reagent_nick_e, reagent_manufacturer,
-		reagent_quantity, eaches_id, reagent_purpose, reagent_type, reagent_status, create_date, modify_date)
+		reagent_quantity, eaches_id, reagent_purpose, reagent_type, reagent_status, create_date, modify_date, user_id, user_group)
 		VALUES
 		(#{reagent_code}, #{reagent_name}, #{reagent_standard}, #{reagent_formula}, #{reagent_nick_k}, #{reagent_nick_e}, #{reagent_manufacturer},
-		#{reagent_quantity}, #{eaches_id}, #{reagent_purpose}, #{reagent_type}, 1, NOW(), NOW())
+		#{reagent_quantity}, #{eaches_id}, #{reagent_purpose}, #{reagent_type}, 1, NOW(), NOW(), #{user_id}, #{user_group})
 	</insert>
 	
 	<!-- 최근 시약 ID -->
-	<select id="selectLastReagnetCode" resultType="String">
+	<select id="selectLastReagnetCode" parameterType="int" resultType="String">
 		SELECT reagent_code FROM reagent
+		WHERE user_group = #{user_group}
 		ORDER BY reagent_id DESC
 		LIMIT 1
 	</select>

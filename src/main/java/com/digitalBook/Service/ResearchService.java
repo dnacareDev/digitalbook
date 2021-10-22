@@ -14,13 +14,13 @@ public interface ResearchService
 	Research SelectResearchDetail(int research_id);
 
 	// 최근 조사방법 조회
-	Research SelectLastResearch();
+	Research SelectLastResearch(int user_group);
 
 	// 조사방법 갯수 검색
-	int SearchResearchCount(int search_type, String keyword);
+	int SearchResearchCount(int search_type, String keyword, int user_group);
 
 	// 조사방법 검색
-	List<Research> SearchResearch(int search_type, String keyword, int offset, int limit);
+	List<Research> SearchResearch(int search_type, String keyword, int offset, int limit, int user_group);
 	
 	// 조사방법 등록
 	int InsertResearch(Research research);

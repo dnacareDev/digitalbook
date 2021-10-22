@@ -18,13 +18,13 @@ public interface ResearchMapper
 	Research SelectResearchDetail(int research_id);
 
 	// 최근 조사방법 조회
-	Research SelectLastResearch();
+	Research SelectLastResearch(int user_group);
 
 	// 조사방법 갯수 검색
-	int SearchResearchCount(@Param("search_type") int search_type, @Param("keyword") String keyword);
+	int SearchResearchCount(@Param("search_type") int search_type, @Param("keyword") String keyword, @Param("user_group") int user_group);
 
 	// 조사방법 검색
-	List<Research> SearchResearch(@Param("search_type") int search_type, @Param("keyword") String keyword, @Param("offset") int offset, @Param("limit") int limit);
+	List<Research> SearchResearch(@Param("search_type") int search_type, @Param("keyword") String keyword, @Param("offset") int offset, @Param("limit") int limit, @Param("user_group") int user_group);
 	
 	// 조사방법 등록
 	int InsertResearch(Research research);

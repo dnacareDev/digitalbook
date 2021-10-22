@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.digitalBook.Entity.Material;
+import com.digitalBook.Entity.User;
 import com.digitalBook.Service.MaterialService;
 
 @Controller
@@ -45,19 +47,24 @@ public class MaterialController {
 	//농자재 검색
 	@ResponseBody
 	@RequestMapping("/material/searchMaterial")
-	public Map<String, Object> searchMaterial(@RequestParam(name = "search_type", required = false) String search_type,
+	public Map<String, Object> searchMaterial(Authentication auth,
+											@RequestParam(name = "search_type", required = false) String search_type,
 											@RequestParam(name = "keyword", required = false) String keyword,
 											@RequestParam("page_num") int page_num,
 											@RequestParam("limit") int limit){
 		
 		Map<String, Object> result = new LinkedHashMap<>();
 		
-		int count = service.SearchMaterialCount(search_type, keyword);
+		User prin = (User)auth.getPrincipal();
+		
+		int user_group = prin.getUser_group();
+		
+		int count = service.SearchMaterialCount(search_type, keyword, user_group);
 		
 		int offset = (page_num - 1) * limit;
 		int end_page = (count + limit - 1) / limit;
 		
-		List<Material> material = service.SearchMaterial(search_type, keyword, offset, limit);
+		List<Material> material = service.SearchMaterial(search_type, keyword, offset, limit, user_group);
 		
 		result.put("material", material);
 		result.put("page_num", page_num);
@@ -71,12 +78,15 @@ public class MaterialController {
 	//농자재 등록
 	@ResponseBody
 	@RequestMapping("/material/insertMaterial")
-	public int insertMaterial(@RequestParam(name = "material_name", required = true) String material_name) {
+	public int insertMaterial(Authentication auth, 
+							@RequestParam(name = "material_name", required = true) String material_name) {
+		
+		User prin = (User)auth.getPrincipal();
 		
 		Material material = new Material();
 		
 		Calendar cal = Calendar.getInstance();
-		String last_material_code = service.selectLastMeterialCode();
+		String last_material_code = service.selectLastMeterialCode(prin.getUser_group());
 		String code1 = "ms-";
 		String code2 = String.valueOf(cal.get(Calendar.YEAR))+"-";
 		
@@ -89,6 +99,8 @@ public class MaterialController {
 			material.setMaterial_code(code1+code2+String.format("%05d", code3));
 		}//end else
 		
+		material.setUser_id(prin.getUser_id());
+		material.setUser_group(prin.getUser_group());
 		material.setMaterial_name(material_name);
 		int result = service.insertMaterial(material);
 		

@@ -24,23 +24,23 @@ public class MachineServiceImpl implements MachineService
 
 	// 최신 장비 조회
 	@Override
-	public Machine SelectLastMachine()
+	public Machine SelectLastMachine(int user_group)
 	{
-		return mapper.SelectLastMachine();
+		return mapper.SelectLastMachine(user_group);
 	}
 
 	// 장비 갯수 검색
 	@Override
-	public int SearchMachineCount(int search_type, String keyword)
+	public int SearchMachineCount(int search_type, String keyword, int user_group)
 	{
-		return mapper.SearchMachineCount(search_type, keyword);
+		return mapper.SearchMachineCount(search_type, keyword, user_group);
 	}
 
 	// 장비 검색
 	@Override
-	public List<Machine> SearchMachine(int search_type, String keyword, int offset, int limit)
+	public List<Machine> SearchMachine(int search_type, String keyword, int offset, int limit, int user_group)
 	{
-		return mapper.SearchMachine(search_type, keyword, offset, limit);
+		return mapper.SearchMachine(search_type, keyword, offset, limit, user_group);
 	}
 
 	// 장비 등록

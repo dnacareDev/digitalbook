@@ -14,13 +14,13 @@ public interface MachineMapper
 	Machine SelectMachineDetail(int machine_id);
 	
 	// 최신 장비 조회
-	Machine SelectLastMachine();
+	Machine SelectLastMachine(int user_group);
 
 	// 장비 갯수 검색
-	int SearchMachineCount(@Param("search_type") int search_type, @Param("keyword") String keyword);
+	int SearchMachineCount(@Param("search_type") int search_type, @Param("keyword") String keyword, @Param("user_group") int user_group);
 	
 	// 장비 검색
-	List<Machine> SearchMachine(@Param("search_type") int search_type, @Param("keyword") String keyword, @Param("offset") int offset, @Param("limit") int limit);
+	List<Machine> SearchMachine(@Param("search_type") int search_type, @Param("keyword") String keyword, @Param("offset") int offset, @Param("limit") int limit, @Param("user_group") int user_group);
 	
 	// 장비 등록
 	int InsertMachine(Machine machine);

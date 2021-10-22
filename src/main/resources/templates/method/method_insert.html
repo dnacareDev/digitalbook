@@ -12,6 +12,9 @@
 		margin-top:-15px;
 	}
 	.end{margin-left:10px;}
+	.itemBoxHighlight { 
+	border:solid 1px black; height: 80px; background-color:#768BF5; 
+	}
 </style>
 <!-- 공통 헤더 -->
 <th:block th:include="@{/fragments/header.html}"></th:block>
@@ -674,6 +677,25 @@
 		
 		protocol.val(add_list);
 		
+	}
+	
+	//jquery sortable 적용	
+	$(document).find("#step-container").sortable({
+		placeholder : "itemBoxHighlight",
+		start : function(event, ui){
+			
+		},
+		stop : function(event, ui){
+			reorder();
+			inputProtocol();
+		}
+	});//end sortable
+	
+	//번호 재입력
+	function reorder(){
+		$(document).find(".step").each(function(i, item){
+			$(this).find(".step-text").text("step " + (i+1));
+		});
 	}
 	
 	

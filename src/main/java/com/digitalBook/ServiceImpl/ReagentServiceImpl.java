@@ -18,16 +18,16 @@ public class ReagentServiceImpl implements ReagentService {
 	
 	//시약 검색
 	@Override
-	public List<Reagent> SearchReagent(String search_type, String keyword, int offset, int limit) {
+	public List<Reagent> SearchReagent(String search_type, String keyword, int offset, int limit, int user_group) {
 		
-		return mapper.SearchReagent(search_type, keyword, offset, limit);
+		return mapper.SearchReagent(search_type, keyword, offset, limit, user_group);
 	}
 	
 	//시약 갯수 검색
 	@Override
-	public int SearchReagentCount(String search_type, String keyword) {
+	public int SearchReagentCount(String search_type, String keyword, int user_group) {
 		
-		return mapper.SearchReagentCount(search_type, keyword);
+		return mapper.SearchReagentCount(search_type, keyword, user_group);
 	}
 	
 	//단위 조회
@@ -46,9 +46,9 @@ public class ReagentServiceImpl implements ReagentService {
 	
 	//최근 시약 ID
 	@Override
-	public String selectLastReagnetCode() {
+	public String selectLastReagnetCode(int user_group) {
 		
-		return mapper.selectLastReagnetCode();
+		return mapper.selectLastReagnetCode(user_group);
 	}
 	
 	//시약 상세조회

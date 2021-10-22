@@ -23,8 +23,9 @@
 	</select>
 	
 	<!-- 최근 조사방법 조회 -->
-	<select id="SelectLastResearch" resultType="Research">
+	<select id="SelectLastResearch" parameterType="int" resultType="Research">
 		SELECT * FROM research
+		WHERE user_group = #{user_group}
 		ORDER BY research_id DESC
 		LIMIT 1
 	</select>
@@ -36,7 +37,7 @@
 		LEFT JOIN division d3 ON r.division_id = d3.division_id
 		LEFT JOIN division d2 ON d3.division_parents = d2.division_id
 		LEFT JOIN division d1 ON d2.division_parents = d1.division_id
-		<where>
+		WHERE r.user_group = #{user_group}
 			<choose>
 				<when test="search_type == 0">
 					AND (r.research_code LIKE CONCAT('%', #{keyword}, '%') OR r.research_contents LIKE CONCAT('%', #{keyword}, '%') OR d1.division LIKE CONCAT('%', #{keyword}, '%') OR d2.division LIKE CONCAT('%', #{keyword}, '%') OR d3.division LIKE CONCAT('%', #{keyword}, '%'))
@@ -57,7 +58,6 @@
 					AND d3.division LIKE CONCAT('%', #{keyword}, '%')
 				</when>
 			</choose>
-		</where>
 	</select>
 	
 	<!-- 조사방법 검색 -->
@@ -67,7 +67,7 @@
 		LEFT JOIN division d3 ON r.division_id = d3.division_id
 		LEFT JOIN division d2 ON d3.division_parents = d2.division_id
 		LEFT JOIN division d1 ON d2.division_parents = d1.division_id
-		<where>
+		WHERE r.user_group = #{user_group}
 			<choose>
 				<when test="search_type == 0">
 					AND (r.research_code LIKE CONCAT('%', #{keyword}, '%') OR r.research_contents LIKE CONCAT('%', #{keyword}, '%') OR d1.division LIKE CONCAT('%', #{keyword}, '%') OR d2.division LIKE CONCAT('%', #{keyword}, '%') OR d3.division LIKE CONCAT('%', #{keyword}, '%'))
@@ -88,16 +88,16 @@
 					AND d3.division LIKE CONCAT('%', #{keyword}, '%')
 				</when>
 			</choose>
-		</where>
+		ORDER BY research_id DESC
 		LIMIT #{offset}, #{limit}
 	</select>
 	
 	<!-- 조사방법 등록 -->
 	<insert id="InsertResearch" parameterType="Research">
 		INSERT INTO research
-		(division_id, research_code, research_contents, create_date, modify_date)
+		(division_id, research_code, research_contents, create_date, modify_date, user_group)
 		VALUES
-		(#{division_id}, #{research_code}, #{research_contents}, NOW(), NOW())
+		(#{division_id}, #{research_code}, #{research_contents}, NOW(), NOW(), #{user_group})
 	</insert>
 	
 	<!-- 조사방법 수정 -->

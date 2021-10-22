@@ -11,7 +11,7 @@
 		LEFT JOIN division d2 ON d3.division_parents = d2.division_id
 		LEFT JOIN division d1 ON d2.division_parents = d1.division_id
 		LEFT JOIN eaches e ON m.eaches_id = e.eaches_id
-		WHERE 1 = 1
+		WHERE m.user_group = #{user_group}
 		<choose>
 			<when test="search_type == null || search_type.equals('none')">
 				AND (
@@ -44,7 +44,7 @@
 		LEFT JOIN division d2 ON d3.division_parents = d2.division_id
 		LEFT JOIN division d1 ON d2.division_parents = d1.division_id
 		LEFT JOIN eaches e ON m.eaches_id = e.eaches_id
-		WHERE 1 = 1
+		WHERE m.user_group = #{user_group}
 		<choose>
 			<when test="search_type == null || search_type.equals('none')">
 				AND (
@@ -76,7 +76,7 @@
 	<!-- 조사방법 조회 -->
 	<select id="SelectResearch" parameterType="int" resultType="Research">
 		SELECT * FROM research
-		WHERE division_id = #{division_id}
+		WHERE division_id = #{division_id} AND user_group = #{user_group}
 	</select>
 	
 	<!-- 재배 프로토콜 등록 -->
@@ -92,7 +92,8 @@
 			method_comment,
 			method_status,
 			create_date,
-			modify_date
+			modify_date,
+			user_group
 		)
 		VALUES
 		(
@@ -105,13 +106,15 @@
 			#{method_comment},
 			0,
 			NOW(),
-			NOW()
+			NOW(),
+			#{user_group}
 		)
 	</insert>
 	
 	<!-- 최근 재배 프로토콜 ID -->
-	<select id="selectLastMethodCode" resultType="String">
+	<select id="selectLastMethodCode" parameterType="int" resultType="String">
 		SELECT method_code FROM method
+		WHERE user_group = #{user_group}
 		ORDER BY method_id DESC
 		LIMIT 1
 	</select>
@@ -172,6 +175,12 @@
 	<delete id="deleteStep" parameterType="int">
 		DELETE FROM step
 		WHERE step_id = #{step_id}
+	</delete>
+	
+	<!-- 재배 프로토콜 삭제 -->
+	<delete id="deleteMethod" parameterType="int">
+		DELETE FROM method
+		WHERE method_id = #{method_id}
 	</delete>
 	
 </mapper>

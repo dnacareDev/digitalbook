@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import com.digitalBook.Entity.Eaches;
 import com.digitalBook.Entity.Method;
 import com.digitalBook.Entity.Research;
 import com.digitalBook.Entity.Step;
+import com.digitalBook.Entity.User;
 import com.digitalBook.Service.MethodService;
 import com.digitalBook.Service.ResearchService;
 
@@ -44,20 +46,23 @@ public class MethodController
 	// 재배 프로토콜 검색
 	@ResponseBody
 	@RequestMapping("searchMethod")
-	public Map<String, Object> SearchMethod(@RequestParam(name = "search_type", required = false) String search_type,
+	public Map<String, Object> SearchMethod(Authentication auth,
+											@RequestParam(name = "search_type", required = false) String search_type,
 											@RequestParam(name = "keyword", required = false) String keyword,
 											@RequestParam("page_num") int page_num,
 											@RequestParam("limit") int limit)
 	{
 		
+		User prin = (User)auth.getPrincipal();
+		
 		Map<String, Object> result = new LinkedHashMap<>();
 		
-		int count = service.SearchMethodCount(search_type, keyword);
+		int count = service.SearchMethodCount(search_type, keyword, prin.getUser_group());
 		
 		int offset = (page_num - 1) * limit;
 		int end_page = (count + limit - 1) / limit;
 		
-		List<Method> method = service.SearchMethod(search_type, keyword, offset, limit);
+		List<Method> method = service.SearchMethod(search_type, keyword, offset, limit, prin.getUser_group());
 		
 		result.put("method", method);
 		result.put("page_num", page_num);
@@ -103,9 +108,12 @@ public class MethodController
 	// 조사방법 조회
 	@ResponseBody
 	@RequestMapping("/selectResearch")
-	public List<Research> SelectResearch(@RequestParam("division_id") int division_id)
+	public List<Research> SelectResearch(Authentication auth, @RequestParam("division_id") int division_id)
 	{
-		List<Research> result = service.SelectResearch(division_id);
+		
+		User prin = (User)auth.getPrincipal();
+		
+		List<Research> result = service.SelectResearch(division_id, prin.getUser_group());
 		
 		return result;
 	}
@@ -113,10 +121,12 @@ public class MethodController
 	// 조사방법 등록
 	@ResponseBody
 	@RequestMapping("insertResearch")
-	public int InsertResearch(@RequestParam("division_id") int division_id, @RequestParam("research_contents") String research_contents)
+	public int InsertResearch(Authentication auth, @RequestParam("division_id") int division_id, @RequestParam("research_contents") String research_contents)
 	{
+		User prin = (User)auth.getPrincipal();
+		
 		Research research = new Research();
-		Research last_research = researchService.SelectLastResearch();
+		Research last_research = researchService.SelectLastResearch(prin.getUser_group());
 		
 		Calendar cal = Calendar.getInstance();
 		
@@ -132,6 +142,7 @@ public class MethodController
 			research.setResearch_code(code1+code2+String.format("%05d", code3));
 		}
 		
+		research.setUser_group(prin.getUser_group());
 		research.setDivision_id(division_id);
 		research.setResearch_contents(research_contents);
 		
@@ -143,12 +154,14 @@ public class MethodController
 	// 재배 프로토콜 등록
 	@ResponseBody
 	@RequestMapping("insertMethod")
-	public int InsertMethod(Method method)
+	public int InsertMethod(Authentication auth, Method method)
 	{
+		
+		User prin = (User)auth.getPrincipal();
 		
 		Calendar cal = Calendar.getInstance();
 		
-		String last_reagent_code = service.selectLastMethodCode();
+		String last_reagent_code = service.selectLastMethodCode(prin.getUser_group());
 		String code1 = "mv-";
 		String code2 = String.valueOf(cal.get(Calendar.YEAR))+"-";
 		
@@ -160,6 +173,7 @@ public class MethodController
 			method.setMethod_code(code1+code2+String.format("%05d", code3));
 		}
 		
+		method.setUser_group(prin.getUser_group());
 		int result = service.InsertMethod(method);
 		
 		if(result != 0) {
@@ -228,6 +242,7 @@ public class MethodController
 		return result;
 	}
 	
+	// step 삭제
 	@ResponseBody
 	@RequestMapping("deleteStep")
 	public int DeleteStep(@RequestParam(name = "cancelArr") List<Integer> cancel)
@@ -251,4 +266,17 @@ public class MethodController
 		
 		return result;
 	}
+	
+	// 재배 프로토콜 삭제
+	@ResponseBody
+	@RequestMapping("deleteMethod")
+	public int DeleteMethod(@RequestParam(name = "method_id") int method_id)
+	{
+		
+		int result = service.deleteMethod(method_id);
+		
+		return result;
+	}
+	
+	
 }

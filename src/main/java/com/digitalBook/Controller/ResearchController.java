@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.digitalBook.Entity.Division;
 import com.digitalBook.Entity.Research;
+import com.digitalBook.Entity.User;
 import com.digitalBook.Service.ResearchService;
 
 @Controller
@@ -79,16 +81,18 @@ public class ResearchController
 	// 조사방법 검색
 	@ResponseBody
 	@RequestMapping("/research/searchResearch")
-	public Map<String, Object> SearchResearch(@RequestParam("search_type") int search_type, @RequestParam("keyword") String keyword, @RequestParam("page_num") int page_num, @RequestParam("limit") int limit)
+	public Map<String, Object> SearchResearch(Authentication auth, @RequestParam("search_type") int search_type, @RequestParam("keyword") String keyword, @RequestParam("page_num") int page_num, @RequestParam("limit") int limit)
 	{
+		User prin = (User)auth.getPrincipal();
+		
 		Map<String, Object> result = new LinkedHashMap<String, Object>();
 		
-		int count = service.SearchResearchCount(search_type, keyword);
+		int count = service.SearchResearchCount(search_type, keyword, prin.getUser_group());
 		
 		int offset = (page_num - 1) * limit;
 		int end_page = (count + limit - 1) / limit;
 		
-		List<Research> research = service.SearchResearch(search_type, keyword, offset, limit);
+		List<Research> research = service.SearchResearch(search_type, keyword, offset, limit, prin.getUser_group());
 		
 		result.put("research", research);
 		result.put("page_num", page_num);
@@ -101,10 +105,12 @@ public class ResearchController
 	// 조사방법 등록
 	@ResponseBody
 	@RequestMapping("/research/insertResearch")
-	public int InsertResearch(@RequestParam("division_id") int division_id, @RequestParam("research_contents") String research_contents)
+	public int InsertResearch(Authentication auth, @RequestParam("division_id") int division_id, @RequestParam("research_contents") String research_contents)
 	{
+		User prin = (User)auth.getPrincipal();
+		
 		Research research = new Research();
-		Research last_research = service.SelectLastResearch();
+		Research last_research = service.SelectLastResearch(prin.getUser_group());
 		
 		Calendar cal = Calendar.getInstance();
 		
@@ -126,6 +132,7 @@ public class ResearchController
 			research.setResearch_contents(research_contents);
 		}
 		
+		research.setUser_group(prin.getUser_group());
 		int result = service.InsertResearch(research);
 		
 		return result;

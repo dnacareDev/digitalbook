@@ -10,13 +10,13 @@ public interface MachineService
 	Machine SelectMachineDetail(int machine_id);
 	
 	// 최신 장비 조회
-	Machine SelectLastMachine();
+	Machine SelectLastMachine(int user_group);
 
 	// 장비 갯수 검색
-	int SearchMachineCount(int search_type, String keyword);
+	int SearchMachineCount(int search_type, String keyword, int user_group);
 	
 	// 장비 검색
-	List<Machine> SearchMachine(int search_type, String keyword, int offset, int limit);
+	List<Machine> SearchMachine(int search_type, String keyword, int offset, int limit, int user_group);
 	
 	// 장비 등록
 	int InsertMachine(Machine machine);

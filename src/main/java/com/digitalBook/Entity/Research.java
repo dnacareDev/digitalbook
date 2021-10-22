@@ -17,6 +17,7 @@ public class Research
 	private String research_contents;			// 조사방법 내용
 	private String create_date;
 	private String modify_date;
+	private int user_group;						// 사용자 그룹번호
 	
 	private int division_id;					// 조사항목 번호
 	

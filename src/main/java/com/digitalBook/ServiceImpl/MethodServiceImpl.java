@@ -27,9 +27,9 @@ public class MethodServiceImpl implements MethodService
 
 	// 조사방법 조회
 	@Override
-	public List<Research> SelectResearch(int division_id)
+	public List<Research> SelectResearch(int division_id, int user_group)
 	{
-		return mapper.SelectResearch(division_id);
+		return mapper.SelectResearch(division_id, user_group);
 	}
 	
 	// 재배 프로토콜 등록
@@ -41,9 +41,9 @@ public class MethodServiceImpl implements MethodService
 	
 	// 최근 재배 프로토콜 ID
 	@Override
-	public String selectLastMethodCode() {
+	public String selectLastMethodCode(int user_group) {
 		
-		return mapper.selectLastMethodCode();
+		return mapper.selectLastMethodCode(user_group);
 	}
 	
 	// 실험, 재배 단계 등록(step)
@@ -55,16 +55,16 @@ public class MethodServiceImpl implements MethodService
 	
 	// 재배 프로토콜 검색
 	@Override
-	public List<Method> SearchMethod(String search_type, String keyword, int offset, int limit) {
+	public List<Method> SearchMethod(String search_type, String keyword, int offset, int limit, int user_group) {
 		
-		return mapper.SearchMethod(search_type, keyword, offset, limit);
+		return mapper.SearchMethod(search_type, keyword, offset, limit, user_group);
 	}
 	
 	// 재배 프로토콜 개수 검색
 	@Override
-	public int SearchMethodCount(String search_type, String keyword) {
+	public int SearchMethodCount(String search_type, String keyword, int user_group) {
 		
-		return mapper.SearchMethodCount(search_type, keyword);
+		return mapper.SearchMethodCount(search_type, keyword, user_group);
 	}
 	
 	// 재배 프로토콜 detail
@@ -93,5 +93,12 @@ public class MethodServiceImpl implements MethodService
 	public int deleteStep(int step_id) {
 		
 		return mapper.deleteStep(step_id);
+	}
+	
+	// 재배 프로토콜 삭제
+	@Override
+	public int deleteMethod(int method_id) {
+		
+		return mapper.deleteMethod(method_id);
 	}
 }

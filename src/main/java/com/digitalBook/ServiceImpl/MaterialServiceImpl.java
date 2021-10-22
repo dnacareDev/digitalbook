@@ -17,16 +17,16 @@ public class MaterialServiceImpl implements MaterialService {
 	
 	//농자재 검색
 	@Override
-	public List<Material> SearchMaterial(String search_type, String keyword, int offset, int limit) {
+	public List<Material> SearchMaterial(String search_type, String keyword, int offset, int limit, int user_group) {
 		
-		return mapper.SearchMaterial(search_type, keyword, offset, limit);
+		return mapper.SearchMaterial(search_type, keyword, offset, limit, user_group);
 	}
 	
 	//농자재 검색 개수
 	@Override
-	public int SearchMaterialCount(String search_type, String keyword) {
+	public int SearchMaterialCount(String search_type, String keyword, int user_group) {
 		
-		return mapper.SearchMaterialCount(search_type, keyword);
+		return mapper.SearchMaterialCount(search_type, keyword, user_group);
 	}
 	
 	//농자재 등록
@@ -38,9 +38,9 @@ public class MaterialServiceImpl implements MaterialService {
 	
 	//최근 농자재 ID 조회
 	@Override
-	public String selectLastMeterialCode() {
+	public String selectLastMeterialCode(int user_group) {
 		
-		return mapper.selectLastMeterialCode();
+		return mapper.selectLastMeterialCode(user_group);
 	}
 	
 	//농자재 상세 조회

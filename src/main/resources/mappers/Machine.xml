@@ -9,8 +9,9 @@
 	</select>
 	
 	<!-- 최근 장비 조회 -->
-	<select id="SelectLastMachine" resultType="Machine">
+	<select id="SelectLastMachine" parameterType="int" resultType="Machine">
 		SELECT * FROM machine
+		WHERE user_group = #{user_group}
 		ORDER BY machine_id DESC
 		LIMIT 1
 	</select>
@@ -19,7 +20,7 @@
 	<select id="SearchMachineCount" resultType="int">
 		SELECT COUNT(*) FROM machine m
 		LEFT JOIN user u ON m.user_id = u.user_id
-		<where>
+		WHERE m.user_group = #{user_group}
 			<choose>
 				<when test="search_type == 0">
 					AND (m.machine_code LIKE CONCAT('%', #{keyword}, '%') OR m.machine_name LIKE CONCAT('%', #{keyword}, '%') OR m.machine_model LIKE CONCAT('%', #{keyword}, '%') OR m.machine_purpose LIKE CONCAT('%', #{keyword}, '%') OR u.user_name_k LIKE CONCAT('%', #{keyword}, '%'))
@@ -40,14 +41,13 @@
 					AND u.user_name_k LIKE CONCAT('%', #{keyword}, '%')
 				</when>
 			</choose>
-		</where>
 	</select>
 	
 	<!-- 장비 검색 -->
 	<select id="SearchMachine" resultType="Machine">
 		SELECT * FROM machine m
 		LEFT JOIN user u ON m.user_id = u.user_id
-		<where>
+		WHERE m.user_group = #{user_group}
 			<choose>
 				<when test="search_type == 0">
 					AND (m.machine_code LIKE CONCAT('%', #{keyword}, '%') OR m.machine_name LIKE CONCAT('%', #{keyword}, '%') OR m.machine_model LIKE CONCAT('%', #{keyword}, '%') OR m.machine_purpose LIKE CONCAT('%', #{keyword}, '%') OR u.user_name_k LIKE CONCAT('%', #{keyword}, '%'))
@@ -68,16 +68,15 @@
 					AND u.user_name_k LIKE CONCAT('%', #{keyword}, '%')
 				</when>
 			</choose>
-		</where>
 		LIMIT #{offset}, #{limit}
 	</select>
 
 	<!-- 장비 등록 -->
 	<insert id="InsertMachine" parameterType="Machine">
 		INSERT INTO machine
-		(user_id, machine_code, machine_name, machine_model, machine_price, machine_range, machine_public, machine_purpose, machine_place, machine_regist, machine_manage, machine_status, machine_date, create_date, modify_date)
+		(user_id, machine_code, machine_name, machine_model, machine_price, machine_range, machine_public, machine_purpose, machine_place, machine_regist, machine_manage, machine_status, machine_date, user_group, create_date, modify_date)
 		VALUES
-		(#{user_id}, #{machine_code}, #{machine_name}, #{machine_model}, #{machine_price}, #{machine_range}, #{machine_public}, #{machine_purpose}, #{machine_place}, #{machine_regist}, #{machine_manage}, 1, #{machine_date}, NOW(), NOW())
+		(#{user_id}, #{machine_code}, #{machine_name}, #{machine_model}, #{machine_price}, #{machine_range}, #{machine_public}, #{machine_purpose}, #{machine_place}, #{machine_regist}, #{machine_manage}, 1, #{machine_date}, #{user_group}, NOW(), NOW())
 	</insert>
 	
 	<!-- 장비 수정 -->

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.digitalBook.Entity.Machine;
+import com.digitalBook.Entity.User;
 import com.digitalBook.Service.MachineService;
 
 @Controller
@@ -58,16 +60,19 @@ public class MachineController
 	// 장비 검색
 	@ResponseBody
 	@RequestMapping("/machine/searchMachine")
-	public Map<String, Object> SearchMachine(@RequestParam("search_type") int search_type, @RequestParam("keyword") String keyword, @RequestParam("page_num") int page_num, @RequestParam("limit") int limit)
+	public Map<String, Object> SearchMachine(Authentication auth, @RequestParam("search_type") int search_type, @RequestParam("keyword") String keyword, @RequestParam("page_num") int page_num, @RequestParam("limit") int limit)
 	{
+		
+		User prin = (User)auth.getPrincipal();
+		
 		Map<String, Object> result = new LinkedHashMap<String, Object>();
 		
-		int count = service.SearchMachineCount(search_type, keyword);
+		int count = service.SearchMachineCount(search_type, keyword, prin.getUser_group());
 		
 		int offset = (page_num - 1) * limit;
 		int end_page = (count + limit - 1) / limit;
 		
-		List<Machine> machine = service.SearchMachine(search_type, keyword, offset, limit);
+		List<Machine> machine = service.SearchMachine(search_type, keyword, offset, limit, prin.getUser_group());
 		
 		result.put("machine", machine);
 		result.put("page_num", page_num);
@@ -80,9 +85,11 @@ public class MachineController
 	// 장비 등록
 	@ResponseBody
 	@RequestMapping("/machine/insertMachine")
-	public int InsertMachine(@ModelAttribute Machine machine)
+	public int InsertMachine(Authentication auth, @ModelAttribute Machine machine)
 	{
-		Machine last_machine = service.SelectLastMachine();
+		User prin = (User)auth.getPrincipal();
+		
+		Machine last_machine = service.SelectLastMachine(prin.getUser_group());
 
 		Calendar cal = Calendar.getInstance();
 		
@@ -100,6 +107,8 @@ public class MachineController
 			machine.setMachine_code("eq-" + now + "-" + String.format("%05d", code));
 		}
 		
+		machine.setUser_id(prin.getUser_id());
+		machine.setUser_group(prin.getUser_group());
 		int result = service.InsertMachine(machine);
 		
 		return result;

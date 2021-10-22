@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.digitalBook.Entity.Eaches;
 import com.digitalBook.Entity.Reagent;
+import com.digitalBook.Entity.User;
 import com.digitalBook.Service.ReagentService;
 
 @Controller
@@ -49,19 +51,22 @@ public class ReagentController {
 	//시약 검색
 	@ResponseBody
 	@RequestMapping("/reagent/searchReagent")
-	public Map<String, Object> searchReagent(@RequestParam(name = "search_type", required = false) String search_type,
+	public Map<String, Object> searchReagent(Authentication auth,
+											@RequestParam(name = "search_type", required = false) String search_type,
 											@RequestParam(name = "keyword", required = false) String keyword,
 											@RequestParam("page_num") int page_num,
 											@RequestParam("limit") int limit){
 		
+		User prin = (User)auth.getPrincipal();
+		
 		Map<String, Object> result = new LinkedHashMap<>();
 		
-		int count = service.SearchReagentCount(search_type, keyword);
+		int count = service.SearchReagentCount(search_type, keyword, prin.getUser_group());
 		
 		int offset = (page_num - 1) * limit;
 		int end_page = (count + limit - 1) / limit;
 		
-		List<Reagent> reagent = service.SearchReagent(search_type, keyword, offset, limit);
+		List<Reagent> reagent = service.SearchReagent(search_type, keyword, offset, limit, prin.getUser_group());
 		
 		result.put("reagent", reagent);
 		result.put("page_num", page_num);
@@ -74,11 +79,13 @@ public class ReagentController {
 	//시약 등록
 	@ResponseBody
 	@RequestMapping("/reagent/insertReagent")
-	public int insertReagent(Reagent reagent) {
+	public int insertReagent(Authentication auth, Reagent reagent) {
+		
+		User prin = (User)auth.getPrincipal();
 		
 		Calendar cal = Calendar.getInstance();
 		
-		String last_reagent_code = service.selectLastReagnetCode();
+		String last_reagent_code = service.selectLastReagnetCode(prin.getUser_group());
 		String code1 = "re-";
 		String code2 = String.valueOf(cal.get(Calendar.YEAR))+"-";
 		
@@ -90,6 +97,8 @@ public class ReagentController {
 			reagent.setReagent_code(code1+code2+String.format("%05d", code3));
 		}
 		
+		reagent.setUser_id(prin.getUser_id());
+		reagent.setUser_group(prin.getUser_group());
 		int result = service.insertReagent(reagent);
 		
 		return result;

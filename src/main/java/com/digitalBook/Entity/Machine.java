@@ -26,6 +26,7 @@ public class Machine
 	private String machine_manage;				// 장비 고정 자산 관리 번호
 	private int machine_status;					// 장비 상태(0: 미사용, 1: 사용)
 	private String machine_date;				// 취득 일자
+	private int user_group;						// 사용자 그룹번호
 	private String create_date;
 	private String modify_date;
 	

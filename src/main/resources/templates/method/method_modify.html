@@ -12,6 +12,9 @@
 		margin-top:-15px;
 	}
 	.end{margin-left:10px;}
+	.itemBoxHighlight { 
+	border:solid 1px black; height: 80px; background-color:#768BF5; 
+	}
 </style>
 <!-- 공통 헤더 -->
 <th:block th:include="@{/fragments/header.html}"></th:block>
@@ -230,7 +233,7 @@
 	        						<i class="fas fa-check color-white"></i>
 	        					</div>
 	        					<div class="atbd-notice__text">
-	        						<h4>등록이 완료되었습니다.</h4>
+	        						<h4>완료되었습니다.</h4>
 	        					</div>
 	        					<div style="display: flex; justify-content: center; margin: 10% auto;">
 	        						<a class="btn btn-default btn-success" href="/method/list" style="color: #FFFFFF;">확인</a>
@@ -291,7 +294,7 @@
 		        						<h4>삭제하시겠습니까?</h4>
 		        					</div>
 		        					<div style="display: flex; justify-content: center; margin: 10% auto;">
-		        						<button class="btn btn-default btn-primary mr-10" onclick="deleteConfirm();" style="color: #FFFFFF;">삭제</button>
+		        						<button class="btn btn-default btn-primary mr-10" onclick="ConfirmDeleteMethod();" style="color: #FFFFFF;">삭제</button>
 		        						<button class="btn btn-default btn-danger" onclick="CancelBtn();" style="color: #FFFFFF;">취소</button>
 		        					</div>
 		        				</div>
@@ -792,6 +795,46 @@
 		});//end return
 	}//end insertMethod
 	
+	//재배 프로토콜 삭제 함수
+	function DeleteMethod(){
+		return new Promise(function(resolve){
+			
+			var data = {"method_id" : method.method_id};
+			
+			$.ajax(
+			{
+				url : "/method/deleteMethod",
+				method : "POST",
+				dataType : 'json',
+				data : data,
+				success : function(result){
+					resolve(result);
+				}//end success
+				
+			});//end ajax
+		});
+	}//end 재배 프로토콜 삭제 함수
+	
+	function ConfirmDeleteMethod(){
+		DeleteMethod().then(function(result){
+			if(result == 0){
+				alert("프로토콜 삭제가 실패했습니다. 다시수정해 주세요.");
+			}else{
+				getDeleteStep().then(function(result){
+					if(result == 0){
+						
+					}else {
+						$("#delete_popup").css("display", "none");
+						$("#success_popup").css("display", "flex");
+					}
+				});//end getDeleteStep
+				
+			}//end else
+				
+		});//end DeleteMethod
+		
+	}//end confiemdeletemethod
+	
 	//재배 프로토콜 ajax 통신 완료 후 진행하는 함수
 	async function getUpdateMethod(){
 		var result = await UpdateMethod();
@@ -819,6 +862,25 @@
 		
 		protocol.val(add_list);
 		
+	}
+	
+	//jquery sortable 적용	
+	$(document).find("#step-container").sortable({
+		placeholder : "itemBoxHighlight",
+		start : function(event, ui){
+			
+		},
+		stop : function(event, ui){
+			reorder();
+			inputProtocol();
+		}
+	});//end sortable
+	
+	//번호 재입력
+	function reorder(){
+		$(document).find(".step").each(function(i, item){
+			$(this).find(".step-text").text("step " + (i+1));
+		});
 	}
 	
 	//
