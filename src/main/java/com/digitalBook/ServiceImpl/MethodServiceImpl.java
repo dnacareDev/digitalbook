@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.digitalBook.Entity.Eaches;
 import com.digitalBook.Entity.Method;
+import com.digitalBook.Entity.Record;
 import com.digitalBook.Entity.Research;
 import com.digitalBook.Entity.Step;
 import com.digitalBook.Mapper.MethodMapper;
@@ -100,5 +101,26 @@ public class MethodServiceImpl implements MethodService
 	public int deleteMethod(int method_id) {
 		
 		return mapper.deleteMethod(method_id);
+	}
+	
+	// 변경 이력 등록
+	@Override
+	public int insertRecord(Record record) {
+		
+		return mapper.insertRecord(record);
+	}
+	
+	// 프로토콜 변경 이력 조회
+	@Override
+	public List<Record> selectRecordList(int record_type) {
+		
+		return mapper.selectRecordList(record_type);
+	}
+	
+	// 프로토콜 승인
+	@Override
+	public int updateMethodStatus(int method_id) {
+		
+		return mapper.updateMethodStatus(method_id);
 	}
 }

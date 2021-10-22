@@ -167,7 +167,8 @@
 			method_input = #{method_input},
 			eaches_id = #{eaches_id},
 			method_comment = #{method_comment},
-			modify_date = NOW()
+			modify_date = NOW(),
+			method_status = 1
 		WHERE method_id = #{method_id}
 	</update>
 	
@@ -182,5 +183,27 @@
 		DELETE FROM method
 		WHERE method_id = #{method_id}
 	</delete>
+	
+	<!-- 변경 이력 등록 -->
+	<insert id="insertRecord" parameterType="Record">
+		INSERT INTO record
+		(record_status, record_type, record_date)
+		VALUES
+		(#{record_status}, #{record_type}, NOW())
+	</insert>
+	
+	<!-- 프로토콜 변경 이력 조회 -->
+	<select id="selectRecordList" parameterType="int" resultType="Record">
+		SELECT * FROM record
+		WHERE record_type = #{record_type}
+		ORDER BY record_date DESC
+	</select>
+	
+	<!-- 프로토콜 승인 -->
+	<update id="updateMethodStatus" parameterType="int">
+		UPDATE method
+		SET method_status = 2
+		WHERE method_id = #{method_id}
+	</update>
 	
 </mapper>

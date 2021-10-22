@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.digitalBook.Entity.Division;
 import com.digitalBook.Entity.Eaches;
 import com.digitalBook.Entity.Method;
+import com.digitalBook.Entity.Record;
 import com.digitalBook.Entity.Research;
 import com.digitalBook.Entity.Step;
 import com.digitalBook.Entity.User;
@@ -178,6 +179,11 @@ public class MethodController
 		
 		if(result != 0) {
 			result = method.getLast_method_id();
+			//등록 성공 후 record 등록
+			Record record = new Record();
+			record.setRecord_status(0);
+			record.setRecord_type(method.getLast_method_id());
+			service.insertRecord(record);
 		}
 		
 		return result;
@@ -219,11 +225,14 @@ public class MethodController
 		
 		List<Step> step = service.selectStepDetailList(method_id);
 		
+		List<Record> record = service.selectRecordList(method_id);
+		
 		mv.addObject("method", method);
 		mv.addObject("d1", d1);
 		mv.addObject("d2", d2);
 		mv.addObject("d3", d3);
 		mv.addObject("step", step);
+		mv.addObject("record", record);
 		
 		mv.setViewName("method/method_modify");
 		
@@ -238,6 +247,14 @@ public class MethodController
 		System.out.println("업데이트");
 		System.out.println(method);
 		int result = service.updateMethod(method);
+		
+		if(result != 0) {
+			//수정 성공 후 변경 이력 등록
+			Record record = new Record();
+			record.setRecord_status(1);
+			record.setRecord_type(method.getMethod_id());
+			service.insertRecord(record);
+		}
 		
 		return result;
 	}
@@ -274,6 +291,24 @@ public class MethodController
 	{
 		
 		int result = service.deleteMethod(method_id);
+		
+		return result;
+	}
+	
+	// 프로토콜 승인
+	@ResponseBody
+	@RequestMapping("updateStatus")
+	public int UpdateStatus(@RequestParam(name = "method_id") int method_id)
+	{
+		
+		int result = service.updateMethodStatus(method_id);
+		
+		if(result != 0) {
+			Record record = new Record();
+			record.setRecord_status(2);
+			record.setRecord_type(method_id);
+			service.insertRecord(record);
+		}
 		
 		return result;
 	}

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	
 	<header class="header-top">
         <nav class="navbar navbar-light">
@@ -19,39 +19,20 @@
 
                     <div class="strikingDash-top-menu position-relative">
                         <ul>
-                        	<!-- 로그인 기능 추가되면 권한에 따라 홈 바뀌게 하기 -->
-                            <!-- <li>
-                                <a href="/home" class="active">
+                            <li>
+                                <a href="/home" class="home" id="home">
                                 	<span data-feather="home" class="nav-icon"></span>
 		                            <span class="menu-text">홈</span>
                                 </a>
-                            </li> -->
-                            <!-- 일단 관리자/사용자 홈 화면 템플릿만 볼수 있도록 함 추후 위의 주석처리 내용으로 사용예정 -->
-                            <li class="has-subMenu">
-                                <a href="#" id="home">
-                                	<span data-feather="home" class="nav-icon"></span>
-		                            <span class="menu-text">홈</span>
-                                </a>
-                                <ul class="subMenu">
-                                    <li>
-                                        <a href="/home" class="home">관리자 홈</a>
-                                    </li>
-                                    <li>
-                                        <a href="/home/user" class="user">사용자 홈</a>
-                                    </li>
-                                </ul>
                             </li>
                             <li class="has-subMenu">
-                                <a href="#" class="">
+                                <a href="#" id="plan">
                                 	<span data-feather="sun" class="nav-icon"></span>
 		                            <span class="menu-text">재배관리</span>
                                 </a>
                                 <ul class="subMenu">
                                     <li>
-                                        <a href="#">계획수립</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">일정등록</a>
+                                        <a href="/plan/planning" class="planning">계획수립</a>
                                     </li>
                                     <li>
                                         <a href="#">결과입력</a>
@@ -227,8 +208,8 @@
                                         <img src="/img/author-nav.jpg" alt="" class="rounded-circle">
                                     </div>
                                     <div>
-                                        <h6>Abdullah Bin Talha</h6>
-                                        <span>UI Designer</span>
+                                        <h6 th:text="${#authentication.principal.user_name_k}"></h6>
+                                        <span th:text="${#authentication.principal.user_level}"></span>
                                     </div>
                                 </div>
                                 <div class="nav-author__options">

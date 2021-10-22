@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.digitalBook.Entity.Eaches;
 import com.digitalBook.Entity.Method;
+import com.digitalBook.Entity.Record;
 import com.digitalBook.Entity.Research;
 import com.digitalBook.Entity.Step;
 
@@ -44,5 +45,14 @@ public interface MethodService
 	
 	// 재배 프로토콜 삭제
 	int deleteMethod(int method_id);
+	
+	// 변경 이력 등록
+	int insertRecord(Record record);
+	
+	// 프로토콜 변경 이력 조회
+	List<Record> selectRecordList(int record_type);
+	
+	// 프로토콜 승인
+	int updateMethodStatus(int method_id);
 	
 }
