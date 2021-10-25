@@ -1,5 +1,6 @@
 package com.digitalBook.Controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.digitalBook.Entity.Division;
 import com.digitalBook.Entity.Eaches;
 import com.digitalBook.Entity.Genetic;
+import com.digitalBook.Entity.Record;
 import com.digitalBook.Entity.Report;
 import com.digitalBook.Entity.Seed;
 import com.digitalBook.Entity.User;
@@ -115,8 +117,8 @@ public class SeedController
 		
 		String code1 = "si-";
 		String code2 = String.valueOf(cal.get(Calendar.YEAR))+"-";
-		
 		int code3 = 0;
+		String resultCode = "";
 		
 		String last_seed_code =service.SelectLastSeedCode(prin.getUser_group());
 		String[] strArr = {};
@@ -129,11 +131,25 @@ public class SeedController
 		
 		for(int i = 0; i < seeds.size(); i++)
 		{
-			code3++;
+			if(seeds.get(i).getSend_date() == "") {
+				seeds.get(i).setSend_date(null);
+			}
+			if(seeds.get(i).getReceive_date() == "") {
+				seeds.get(i).setReceive_date(null);
+			}
 			
-			seeds.get(i).setSeed_code(code1+code2+String.format("%05d", code3));
+			code3++;
+			resultCode = code1+code2+String.format("%05d", code3);
+			seeds.get(i).setSeed_code(resultCode);
 			seeds.get(i).setUser_group(prin.getUser_group());
 			result[i] = service.InsertSeed(seeds.get(i));
+			if(result[i] != 0) {
+				Record record = new Record();
+				record.setRecord_status(0);
+				record.setRecord_type(seeds.get(i).getLast_seed_id());
+				record.setRecord_type_code(resultCode);
+				service.insertRecord(record);
+			}
 		}
 		
 		return result;
@@ -153,12 +169,15 @@ public class SeedController
 		List<Warehouse> warehouse = service.SelectWarehouseList();				// 저장장소 list
 		List<Division> division = service.SelectDivisionList();					// 품종, 유전자원명 list
 		
+		List<Record> record = service.selectRecordList(report_id);
+		
 		mv.addObject("seeds", seeds);
 		mv.addObject("report", reports);
 		mv.addObject("user", user);
 		mv.addObject("eaches", eaches);
 		mv.addObject("warehouse", warehouse);
 		mv.addObject("division", division);
+		mv.addObject("record", record);
 		
 		mv.setViewName("seed/seed_modify");
 		
@@ -181,8 +200,8 @@ public class SeedController
 		
 		String code1 = "si-";
 		String code2 = String.valueOf(cal.get(Calendar.YEAR))+"-";
-		
 		int code3 = 0;
+		String resultCode = "";
 		
 		String last_seed_code =service.SelectLastSeedCode(prin.getUser_group());
 		String[] strArr = {};
@@ -204,17 +223,44 @@ public class SeedController
 			if(exist.isPresent())
 			{
 				// 해당 시료가 있으면 update
+				if(seeds.get(i).getSend_date() == "") {
+					seeds.get(i).setSend_date(null);
+				}
+				if(seeds.get(i).getReceive_date() == "") {
+					seeds.get(i).setReceive_date(null);
+				}
 				updateResult[i] = service.UpdateSeed(seeds.get(i));
+				if(updateResult[i] != 0) {
+					Record record = new Record();
+					record.setRecord_status(1);
+					record.setRecord_type(seeds.get(i).getSeed_id());
+					record.setRecord_type_code(seeds.get(i).getSeed_code());
+					service.insertRecord(record);
+				}
 			}
 			else
 			{
 				// 해당 시료가 없으면 insert
-				code3++;
+				if(seeds.get(i).getSend_date() == "") {
+					seeds.get(i).setSend_date(null);
+				}
+				if(seeds.get(i).getReceive_date() == "") {
+					seeds.get(i).setReceive_date(null);
+				}
 				
-				seeds.get(i).setSeed_code(code1+code2+String.format("%05d", code3));
+				code3++;
+				resultCode = code1+code2+String.format("%05d", code3);
+				seeds.get(i).setSeed_code(resultCode);
 				seeds.get(i).setUser_group(prin.getUser_group());
 				
 				updateResult[i] = service.InsertSeed(seeds.get(i));
+				if(updateResult[i] != 0) {
+					Record record = new Record();
+					record.setRecord_status(3);
+					record.setRecord_type(seeds.get(i).getLast_seed_id());
+					record.setRecord_type_code(resultCode);
+					service.insertRecord(record);
+				}
 			}
 		}
 		
@@ -269,4 +315,77 @@ public class SeedController
 		
 		return result;
 	}
+	
+	//과제 비연계 등록
+	@ResponseBody
+	@RequestMapping("/seed/insertReport")
+	public int InsertReport(Authentication auth)
+	{
+		
+		Report report = new Report();
+		
+		int result = 0;
+		
+		User prin = (User)auth.getPrincipal();
+		
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		
+		String last_report_code = service.selectLastNonReportCode(prin.getUser_group());
+		String code1 = "N" + sdf.format(cal.getTime());//N+년월일
+		String code2 = String.format("%02d", prin.getUser_group());//user 그룹
+		
+		if(last_report_code == null || last_report_code.equals("")) {
+			report.setReport_code(code1+code2+"01");
+		}else {
+			int code3 = Integer.parseInt(last_report_code.substring(11, 13)) + 1;
+			report.setReport_code(code1+code2+String.format("%02d", code3));
+		}
+		
+		report.setUser_group(prin.getUser_group());
+		result = service.InsertNonReport(report);
+		
+		if(result != 0) {	//과제 등록 성공 후
+			result = report.getLast_report_id(); //result에 등록된 report_id 값 담기
+		}
+		
+		return result;
+	}
+	
+	//시료 승인
+	@ResponseBody
+	@RequestMapping("seed/updateStatus")
+	public int UpdateStatus(@RequestBody List<Seed> seeds)
+	{
+		
+		int result = 0;
+		
+		int updateResult[] = new int[seeds.size()];
+		
+		for(int i = 0; i < seeds.size(); i++)
+		{
+			updateResult[i] = service.updateSeedStatus(seeds.get(i).getSeed_id());
+			if(updateResult[i] != 0) {
+				Record record = new Record();
+				record.setRecord_status(2);
+				record.setRecord_type(seeds.get(i).getSeed_id());
+				record.setRecord_type_code(seeds.get(i).getSeed_code());
+				service.insertRecord(record);
+			}
+		}
+		
+		Boolean isUpdate = IntStream.of(updateResult).noneMatch(x -> x == 0);
+		
+		if(isUpdate)
+		{
+			result = 1;
+		}
+		else
+		{
+			result = 0;
+		}
+		
+		return result;
+	}
+	
 }

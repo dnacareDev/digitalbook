@@ -35,12 +35,16 @@ public class Seed
 	private String create_date;				// 등록일
 	private String modify_date;				// 수정일
 	private int user_group;					// 사용자 그룹번호
+	private int seed_status;				// 시료 상태 0(승인요청), 1(수정요청), 2(승인)
 	
 	private int seed_count;					// 과제당 시료수
+	
+	private int last_seed_id;				// 시료 등록시 해당 시료 고유번호 반환 받는 변수
 	
 	// 과제(report) 컬럼
 	private String report_code;				// 과제 ID
 	private String report_title;			// 과제명
+	private int report_user_id;				// 과제 user_id
 	
 	// 작목 컬럼(division)
 	private String division;				// 작목명(조사항목)

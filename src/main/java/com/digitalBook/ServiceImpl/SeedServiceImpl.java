@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.digitalBook.Entity.Division;
 import com.digitalBook.Entity.Eaches;
 import com.digitalBook.Entity.Genetic;
+import com.digitalBook.Entity.Record;
 import com.digitalBook.Entity.Report;
 import com.digitalBook.Entity.Seed;
 import com.digitalBook.Entity.User;
@@ -117,5 +118,40 @@ public class SeedServiceImpl implements SeedService
 	public Seed SelectSeedDetail(int seed_id)
 	{
 		return mapper.SelectSeedDetail(seed_id);
+	}
+	
+	//과제 비연계 등록
+	@Override
+	public int InsertNonReport(Report report) {
+		
+		return mapper.InsertNonReport(report);
+	}
+	
+	//최근 비연계 과제 ID 조회
+	@Override
+	public String selectLastNonReportCode(int user_group) {
+		
+		return mapper.selectLastNonReportCode(user_group);
+	}
+	
+	//변경 이력 등록
+	@Override
+	public int insertRecord(Record record) {
+		
+		return mapper.insertRecord(record);
+	}
+	
+	//시료 변경 이력 조회
+	@Override
+	public List<Record> selectRecordList(int report_id) {
+		
+		return mapper.selectRecordList(report_id);
+	}
+	
+	//시료 승인
+	@Override
+	public int updateSeedStatus(int seed_id) {
+		
+		return mapper.updateSeedStatus(seed_id);
 	}
 }

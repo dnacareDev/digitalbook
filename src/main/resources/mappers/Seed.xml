@@ -63,7 +63,7 @@
 	
 	<!-- 과제 전체 조회 -->
 	<select id="SelectReportList" parameterType="int" resultType="Report">
-		SELECT * FROM report WHERE user_group = #{user_group}
+		SELECT * FROM report WHERE user_group = #{user_group} and user_id != 0
 	</select>
 	
 	<!-- 사용자 전체 조회 -->
@@ -96,7 +96,7 @@
 	</select>
 	
 	<!-- 시료 등록 -->
-	<insert id="InsertSeed" parameterType="Seed">
+	<insert id="InsertSeed" parameterType="Seed" useGeneratedKeys="true" keyProperty="last_seed_id">
 		INSERT INTO seed
 		(seed_manager,
 		seed_code,
@@ -117,7 +117,8 @@
 		seed_share,
 		create_date,
 		modify_date,
-		user_group
+		user_group,
+		seed_status
 		)
 		VALUES
 		(#{seed_manager},
@@ -139,7 +140,8 @@
 		#{seed_share},
 		NOW(),
 		NOW(),
-		#{user_group}
+		#{user_group},
+		0
 		)
 	</insert>
 	
@@ -153,7 +155,7 @@
 	
 	<!-- 시료 detail list -->
 	<select id="SelectSeedDetailList" resultType="Seed">
-		SELECT s.*, u1.user_name_k AS manager_name, u2.user_name_k AS receive_name, u2.*, e.*, g.*, r.*, w.*, d.* 
+		SELECT s.*, u1.user_name_k AS manager_name, u2.user_name_k AS receive_name, r.user_id as report_user_id, u2.*, e.*, g.*, r.*, w.*, d.* 
 		FROM seed s
 		LEFT JOIN user u1 ON s.seed_manager = u1.user_id
 		LEFT JOIN user u2 ON s.seed_sender = u2.user_id
@@ -200,5 +202,45 @@
 		SELECT * FROM seed
 		WHERE seed_id = #{seed_id}
 	</select>
+	
+	<!-- 과제 비연계 등록 -->
+	<insert id="InsertNonReport" parameterType="Report" useGeneratedKeys="true" keyProperty="Last_report_id">
+		INSERT INTO report
+		(user_id, report_code, report_title, create_date, modify_date, user_group)
+		VALUES
+		(0, #{report_code}, '과제 비연계', NOW(), NOW(), #{user_group})
+	</insert>
+	
+	<!-- 최근 비연계 과제 ID 조회 -->
+	<select id="selectLastNonReportCode" parameterType="int" resultType="String">
+		SELECT report_code FROM report
+		WHERE user_group = #{user_group}
+			AND DATE(create_date) = DATE(NOW())
+		ORDER BY report_id DESC
+		LIMIT 1
+	</select>
+	
+	<!-- 시료 변경 이력 등록 -->
+	<insert id="insertRecord" parameterType="Record">
+		INSERT INTO record
+		(record_status, record_type, record_type_code, record_date)
+		VALUES
+		(#{record_status}, #{record_type}, #{record_type_code}, NOW())
+	</insert>
+	
+	<!-- 시료 변경 이력 조회 -->
+	<select id="selectRecordList" parameterType="int" resultType="Record">
+		SELECT * FROM record r
+		LEFT JOIN seed s ON r.record_type = s.seed_id
+		WHERE s.report_id = #{report_id}
+		ORDER BY record_id DESC
+	</select>
+	
+	<!-- 시료 승인 -->
+	<update id="updateSeedStatus" parameterType="int">
+		UPDATE seed
+		SET seed_status = 2
+		WHERE seed_id = #{seed_id}
+	</update>
 	
 </mapper>

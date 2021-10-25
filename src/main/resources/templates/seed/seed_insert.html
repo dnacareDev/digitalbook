@@ -605,8 +605,35 @@
 		}
 	});
 	
-	//시료 등록
+	//시료 등록 버튼 함수
 	function insertBtn(){
+		
+		var report_id = $("#report_id").val();
+		
+		if(report_id == 0){
+			//과제 비연계시
+			insertReport().then(function(result){
+				if(result == 0){
+					
+				}else{
+					report_id = result;
+					insertData(report_id);
+					
+				}
+			});//end insertReport().then
+			
+		}else{
+			//과제 비연계 아닐 시
+			insertData(report_id);
+			
+		}
+		
+		
+		
+	}//end 시료 등록 버튼 함수
+	
+	//시료 등록 함수
+	function insertData(report_id){
 		
 		var form_length = $(".card-bordered").length;
 		
@@ -654,7 +681,7 @@
 						"eaches_id" : $(this).find(".eaches_id").val(),
 						"seed_comment" : $.trim($(this).find(".seed_comment").val()),
 						"genetic_id" : $(this).find(".genetic_id").attr("th:data-genetic-id"),
-						"report_id" : $("#report_id").val(),
+						"report_id" : report_id,
 						"seed_report" : $.trim($("#seed_report").val()),
 						"ware_id" : $(this).find(".ware_id").val(),
 						"seed_sender" : $.trim($(this).find(".seed_sender").val()),
@@ -683,8 +710,24 @@
 				}
 			}
 		});//end ajax
-		
-	}//end 시료 등록
+	}//end 시료 등록 함수
+	
+	//과제 비연계시 과제 등록
+	function insertReport(){
+		return new Promise(function(resolve){
+			
+			$.ajax(
+					{
+						url : "/data/seed/insertReport",
+						method : "GET",
+						success : function(result){
+							resolve(result);
+						}//end success
+						
+					});//end ajax
+			
+		});//end return
+	}//end insertReport
 	
 	//발송일자 datepicker
 	$.datepicker.setDefaults({
