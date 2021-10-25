@@ -21,7 +21,7 @@ public class PlanController
 	@RequestMapping("/insert")
 	public ModelAndView PlanInsert(ModelAndView mv)
 	{
-		mv.setViewName("plan/plan_insert2");
+		mv.setViewName("plan/plan_insert");
 		
 		return mv;
 	}
