@@ -49,7 +49,7 @@ public class SeedController
 	{
 		User prin = (User)auth.getPrincipal();
 		
-		List<Report> report = service.SelectReportList();								// 과제 list
+		List<Report> report = service.SelectReportList(prin.getUser_group());								// 과제 list
 		List<User> user = service.SelectUserList(prin.getUser_group());					// 사용자 list
 		List<Eaches> eaches = service.SelectEachesList();								// 단위 list
 		List<Warehouse> warehouse = service.SelectWarehouseList();						// 저장장소 list
@@ -103,8 +103,11 @@ public class SeedController
 	// 시료 등록
 	@ResponseBody
 	@RequestMapping("/seed/insertSeed")
-	public int[] InsertSeed(@RequestBody List<Seed> seeds)
+	public int[] InsertSeed(Authentication auth, @RequestBody List<Seed> seeds)
 	{
+		
+		User prin = (User)auth.getPrincipal();
+		
 		int seeds_size = seeds.size();
 		int result[] = new int[seeds_size];
 		
@@ -115,7 +118,7 @@ public class SeedController
 		
 		int code3 = 0;
 		
-		String last_seed_code =service.SelectLastSeedCode();
+		String last_seed_code =service.SelectLastSeedCode(prin.getUser_group());
 		String[] strArr = {};
 		
 		if(last_seed_code != null)
@@ -129,7 +132,7 @@ public class SeedController
 			code3++;
 			
 			seeds.get(i).setSeed_code(code1+code2+String.format("%05d", code3));
-			
+			seeds.get(i).setUser_group(prin.getUser_group());
 			result[i] = service.InsertSeed(seeds.get(i));
 		}
 		
@@ -144,7 +147,7 @@ public class SeedController
 		
 		List<Seed> seeds = service.SelectSeedDetailList(report_id);				// 종자(시료) list
 		
-		List<Report> reports = service.SelectReportList();						// 과제 list
+		List<Report> reports = service.SelectReportList(prin.getUser_group());						// 과제 list
 		List<User> user = service.SelectUserList(prin.getUser_group());			// 사용자 list
 		List<Eaches> eaches = service.SelectEachesList();						// 단위 list
 		List<Warehouse> warehouse = service.SelectWarehouseList();				// 저장장소 list
@@ -157,7 +160,7 @@ public class SeedController
 		mv.addObject("warehouse", warehouse);
 		mv.addObject("division", division);
 		
-		mv.setViewName("seed/seed_modify2");
+		mv.setViewName("seed/seed_modify");
 		
 		return mv;
 	}
@@ -165,8 +168,11 @@ public class SeedController
 	// 시료 수정
 	@ResponseBody
 	@RequestMapping("/seed/updateSeed")
-	public int UpdateSeed(@RequestBody List<Seed> seeds, @RequestParam(name = "cancelArr") List<Integer> cancel)
+	public int UpdateSeed(Authentication auth, @RequestBody List<Seed> seeds, @RequestParam(name = "cancelArr") List<Integer> cancel)
 	{
+		
+		User prin = (User)auth.getPrincipal();
+		
 		int updateResult[] = new int[seeds.size()];
 		int deleteResult[] = new int[cancel.size()];
 		int result = 0;
@@ -178,7 +184,7 @@ public class SeedController
 		
 		int code3 = 0;
 		
-		String last_seed_code =service.SelectLastSeedCode();
+		String last_seed_code =service.SelectLastSeedCode(prin.getUser_group());
 		String[] strArr = {};
 		
 		if(last_seed_code != null)
@@ -206,6 +212,7 @@ public class SeedController
 				code3++;
 				
 				seeds.get(i).setSeed_code(code1+code2+String.format("%05d", code3));
+				seeds.get(i).setUser_group(prin.getUser_group());
 				
 				updateResult[i] = service.InsertSeed(seeds.get(i));
 			}

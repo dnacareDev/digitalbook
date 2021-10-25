@@ -62,8 +62,8 @@
 	</select>
 	
 	<!-- 과제 전체 조회 -->
-	<select id="SelectReportList" resultType="Report">
-		SELECT * FROM report
+	<select id="SelectReportList" parameterType="int" resultType="Report">
+		SELECT * FROM report WHERE user_group = #{user_group}
 	</select>
 	
 	<!-- 사용자 전체 조회 -->
@@ -139,13 +139,14 @@
 		#{seed_share},
 		NOW(),
 		NOW(),
-		1
+		#{user_group}
 		)
 	</insert>
 	
 	<!-- 최근 시료 ID -->
-	<select id="SelectLastSeedCode" resultType="String">
+	<select id="SelectLastSeedCode" parameterType="int" resultType="String">
 		SELECT seed_code FROM seed
+		WHERE user_group = #{user_group}
 		ORDER BY seed_id DESC
 		LIMIT 1
 	</select>

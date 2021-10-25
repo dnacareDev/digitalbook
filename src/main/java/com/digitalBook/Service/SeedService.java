@@ -19,7 +19,7 @@ public interface SeedService
 	List<Seed> SearchSeed(String search_type, String keyword, int user_group, int offset, int limit);
 	
 	// 과제 전체 조회
-	List<Report> SelectReportList();
+	List<Report> SelectReportList(int user_group);
 	
 	// 사용자 전체 조회
 	List<User> SelectUserList(int user_group);
@@ -40,7 +40,7 @@ public interface SeedService
 	int InsertSeed(Seed seed);
 	
 	// 최근 시료 ID
-	String SelectLastSeedCode();
+	String SelectLastSeedCode(int user_group);
 	
 	// 시료 detail list
 	List<Seed> SelectSeedDetailList(int report_id);

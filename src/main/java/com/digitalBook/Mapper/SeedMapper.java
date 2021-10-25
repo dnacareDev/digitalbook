@@ -23,7 +23,7 @@ public interface SeedMapper
 	List<Seed> SearchSeed(@Param("search_type") String search_type, @Param("keyword") String keyword, @Param("user_group") int user_group, @Param("offset") int offset, @Param("limit") int limit);
 	
 	//과제 전체 조회
-	List<Report> SelectReportList();
+	List<Report> SelectReportList(int user_group);
 	
 	//사용자 전체 조회
 	List<User> SelectUserList(int user_group);
@@ -44,7 +44,7 @@ public interface SeedMapper
 	int InsertSeed(Seed seed);
 	
 	//최근 시료 ID
-	String SelectLastSeedCode();
+	String SelectLastSeedCode(int user_group);
 	
 	//시료 detail list
 	List<Seed> SelectSeedDetailList(int report_id);

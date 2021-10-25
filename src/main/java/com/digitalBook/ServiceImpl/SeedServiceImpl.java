@@ -37,9 +37,9 @@ public class SeedServiceImpl implements SeedService
 	
 	//과제 전체 조회
 	@Override
-	public List<Report> SelectReportList()
+	public List<Report> SelectReportList(int user_group)
 	{
-		return mapper.SelectReportList();
+		return mapper.SelectReportList(user_group);
 	}
 	
 	//사용자 전체 조회
@@ -86,9 +86,9 @@ public class SeedServiceImpl implements SeedService
 	
 	//최근 시료 ID
 	@Override
-	public String SelectLastSeedCode()
+	public String SelectLastSeedCode(int user_group)
 	{
-		return mapper.SelectLastSeedCode();
+		return mapper.SelectLastSeedCode(user_group);
 	}
 	
 	//시료 detail list

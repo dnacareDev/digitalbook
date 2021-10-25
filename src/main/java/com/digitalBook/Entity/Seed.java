@@ -34,6 +34,7 @@ public class Seed
 	private int seed_share;					// 수확후 이용과 공유
 	private String create_date;				// 등록일
 	private String modify_date;				// 수정일
+	private int user_group;					// 사용자 그룹번호
 	
 	private int seed_count;					// 과제당 시료수
 	

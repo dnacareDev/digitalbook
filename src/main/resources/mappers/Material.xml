@@ -39,7 +39,7 @@
 		INSERT INTO material
 		(user_id, material_code, material_name, material_status, user_group, create_date, modify_date)
 		VALUES
-		(#{user_id}, #{material_code}, #{material_name}, 1, #{user_group}, NOW(), NOW())
+		(#{user_id}, #{material_code}, #{material_name}, 0, #{user_group}, NOW(), NOW())
 	</insert>
 	
 	<!-- 최근 농자재 ID -->

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <style>
 	.content-header{margin-top:30px;}
@@ -218,7 +218,7 @@
 											        				<div class="col-sm-2 mb-4">
 											        					<input type="checkbox" class="seed_share" th:value="0">
 											        					<label>
-											        						<span class="color-dark">수확 후 이용과 공유</span>
+											        						<span class="color-dark" th:text="${#authentication.principal.user_level} + | 공유|"></span>
 											        					</label>
 											        				</div>
 											        			</div>

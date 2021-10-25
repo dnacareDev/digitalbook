@@ -76,7 +76,7 @@
 		INSERT INTO machine
 		(user_id, machine_code, machine_name, machine_model, machine_price, machine_range, machine_public, machine_purpose, machine_place, machine_regist, machine_manage, machine_status, machine_date, user_group, create_date, modify_date)
 		VALUES
-		(#{user_id}, #{machine_code}, #{machine_name}, #{machine_model}, #{machine_price}, #{machine_range}, #{machine_public}, #{machine_purpose}, #{machine_place}, #{machine_regist}, #{machine_manage}, 1, #{machine_date}, #{user_group}, NOW(), NOW())
+		(#{user_id}, #{machine_code}, #{machine_name}, #{machine_model}, #{machine_price}, #{machine_range}, #{machine_public}, #{machine_purpose}, #{machine_place}, #{machine_regist}, #{machine_manage}, 0, #{machine_date}, #{user_group}, NOW(), NOW())
 	</insert>
 	
 	<!-- 장비 수정 -->
