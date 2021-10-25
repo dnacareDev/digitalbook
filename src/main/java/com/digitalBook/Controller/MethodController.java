@@ -165,13 +165,16 @@ public class MethodController
 		String last_reagent_code = service.selectLastMethodCode(prin.getUser_group());
 		String code1 = "mv-";
 		String code2 = String.valueOf(cal.get(Calendar.YEAR))+"-";
+		String resultCode = "";
 		
 		if(last_reagent_code == null || last_reagent_code.equals("")) {
-			method.setMethod_code(code1+code2+"00001");
+			resultCode = code1+code2+"00001";
+			method.setMethod_code(resultCode);
 		}else {
 			String[] strArr = last_reagent_code.split("-");
 			int code3 = Integer.parseInt(strArr[2]) + 1;
-			method.setMethod_code(code1+code2+String.format("%05d", code3));
+			resultCode = code1+code2+String.format("%05d", code3);
+			method.setMethod_code(resultCode);
 		}
 		
 		method.setUser_group(prin.getUser_group());
@@ -183,6 +186,7 @@ public class MethodController
 			Record record = new Record();
 			record.setRecord_status(0);
 			record.setRecord_type(method.getLast_method_id());
+			record.setRecord_type_code(resultCode);
 			service.insertRecord(record);
 		}
 		
@@ -253,6 +257,7 @@ public class MethodController
 			Record record = new Record();
 			record.setRecord_status(1);
 			record.setRecord_type(method.getMethod_id());
+			record.setRecord_type_code(method.getMethod_code());
 			service.insertRecord(record);
 		}
 		
@@ -298,7 +303,7 @@ public class MethodController
 	// 프로토콜 승인
 	@ResponseBody
 	@RequestMapping("updateStatus")
-	public int UpdateStatus(@RequestParam(name = "method_id") int method_id)
+	public int UpdateStatus(@RequestParam(name = "method_id") int method_id, @RequestParam(name = "method_code") String method_code)
 	{
 		
 		int result = service.updateMethodStatus(method_id);
@@ -307,6 +312,7 @@ public class MethodController
 			Record record = new Record();
 			record.setRecord_status(2);
 			record.setRecord_type(method_id);
+			record.setRecord_type_code(method_code);
 			service.insertRecord(record);
 		}
 		

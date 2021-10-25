@@ -30,9 +30,6 @@
 			        		<h4 class="text-capitalize breadcrumb-title">종자(시료)</h4>
 			        		<span class="ml-20 mt-1">기초정보-종자(시료)</span>
 			        	</div>
-			        	<div class="d-flex justify-content-end mt-20">
-		               		<button class="btn btn-lg btn-primary" id="excelBtn"><span data-feather="upload"></span>엑셀 등록</button>
-		                </div>
 			        </div>
 		        </div>
 		    	<div class="row">
@@ -82,6 +79,19 @@
 					        								<div class="col-12 ml-1">
 														        <div class="row">
 														        	<div style="font-size: 17px; color: initial;">종자 및 시료관리</div>
+														        </div>
+													        </div>
+													        <div class="col-12">
+														        <div class="row mt-1">
+														        	<div class="col-md-2 mb-25 d-flex aling-items-center">
+						        										<label for="seed_code" class="color-dark fw-500 align-center mt-1">샘플 ID</label>
+						        									</div>
+						        									<div class="col-md-2 mb-25">
+						        										<input type="text" class="form-control b-light seed_code" id="seed_code" readonly="readonly" style="width: 200px;">
+						        									</div>
+						        									<div class="col-md-2 mb-25">
+						        										<button type="button" class="btn btn-sm btn-info">QR Code</button>
+						        									</div>
 														        </div>
 													        </div>
 						        							<div class="col-12">
@@ -240,7 +250,11 @@
 		        </div>
 		        <div class="row">
 					<div class="col-4">
-						<div class="action-btn d-flex justify-content-frist mt-30"></div>
+						<div class="action-btn d-flex justify-content-frist mt-30">
+							<th:block th:if="${#authentication.principal.user_type == 0 and seeds.get(0).seed_status == 0 or seeds.get(0).seed_status == 1 or seeds.get(0).seed_status == 3}">
+								<button type="button" class="btn btn-default btn-info end-button end" onclick="UpdateStatusBtn();">승인</button>
+							</th:block>
+						</div>
 					</div>
 					<div class="col-4">
 						<div class="d-flex justify-content-center mt-30"></div>
@@ -250,6 +264,41 @@
 							<a href="/data/seed" class="btn btn-primary end-button end">목록</a>
 							<button type="button" class="btn btn-default btn-danger end-button end" onclick="DeleteBtn();">삭제</button>
 		                	<button type="button" class="btn btn-default btn-primary end-button end" onclick="UpdateBtn();">수정</button>
+						</div>
+					</div>
+				</div>
+				<div class="row mt-4">
+					<div class="col-lg-12">
+						<div class="card card-default">
+							<div class="row ml-3 mt-3">
+								<span class="color-dark align-center" style="font-size: 20px;">변경 이력</span>
+							</div>
+							<div class="card-body" style="height: 325px; overflow-y: auto;">
+								<div class="row">
+									<div class="col-lg-12">
+										<ul>
+											<th:block th:each="r : ${record}">
+												<li class="mt-2">
+													<span class="avatar avatar-success avatar-md avatar-circle" style="float: left;">
+	                                                    <span class="avatar-icon" data-feather="check"></span>
+	                                                </span>
+													<div>
+														<span class="font-weight-bold mb-0">시료 </span>
+														<span class="font-weight-bold mb-0" th:text="${r.record_type_code}"></span>
+														<th:block th:switch="${r.record_status}">
+															<span th:case="0" class="font-weight-bold mb-0">승인요청</span>
+															<span th:case="1" class="font-weight-bold mb-0">수정요청</span>
+															<span th:case="2" class="font-weight-bold mb-0">승인</span>
+															<span th:case="3" class="font-weight-bold mb-0">추가요청</span>
+														</th:block>
+													</div>
+													<small th:text="${r.record_date}"></small>
+												</li>
+											</th:block>
+										</ul>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -266,6 +315,26 @@
 		        					</div>
 		        					<div style="display: flex; justify-content: center; margin: 10% auto;">
 		        						<a class="btn btn-default btn-success" href="/data/seed" style="color: #FFFFFF;">확인</a>
+		        					</div>
+		        				</div>
+		        			</div>
+		        		</div>
+		        	</div>
+		        </div>
+		        <div class="atbd-notice" id="updateStatus_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
+		        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+		        		<div class="card-body">
+		        			<div class="atbd-notice__content">
+		        				<div class="atbd-notice__top text-center">
+		        					<div class="atbd-notice__icon bg-info">
+		        						<i class="fas fa-exclamation color-white"></i>
+		        					</div>
+		        					<div class="atbd-notice__text">
+		        						<h4>승인 하시겠습니까?</h4>
+		        					</div>
+		        					<div style="display: flex; justify-content: center; margin: 10% auto;">
+		        						<button class="btn btn-default btn-primary mr-10" onclick="UpdateStatus();" style="color: #FFFFFF;">승인</button>
+		        						<button class="btn btn-default btn-danger" onclick="CancelBtn();" style="color: #FFFFFF;">취소</button>
 		        					</div>
 		        				</div>
 		        			</div>
@@ -580,7 +649,7 @@
 		str += '</div>';
 		
 		// 과제 데이터 기존값 노출
-		if(seeds[0].report_id === 0)
+		if(seeds[0].report_user_id === 0)
 		{
 			$("#not_report").prop("checked", true);
 			$("#report_id").val(0).prop("selected", true);
@@ -590,11 +659,12 @@
 		{
 			$("#report_id").val(seeds[0].report_id).prop("checked", true);
 		}
-		
+		$("#not_report").prop("disabled", true);
 		$("#seed_report").val(seeds[0].seed_report);
 		
 		// seeds 사이즈 만큼 seed_form 동적 생성
 		var length = seeds.length;
+		
 		for(var i = 0; i < length; i++)
 		{
 			if(i === 0)
@@ -624,6 +694,7 @@
 				$(this).find(".card-body").append(hidden_seed_id);
 			}
 			
+			$(this).find(".seed_code").val(seeds[index].seed_code);
 			$(this).find(".seed_manager").val(seeds[index].seed_manager).prop("selected", true);
 			$(this).find(".seed_area").val(seeds[index].seed_area);
 			$(this).find(".seed_year").val(seeds[index].seed_year);
@@ -843,17 +914,7 @@
 		//폼별로 값 가져오기 위한 each문
 		$(".copy-form-standard").each(function(index, item)
 		{
-			if($("#report_id").val() == 0 && $("#not_report").is(':checked') == false)
-			{
-				alert("과제 또는 과제비연계를 선택해 주세요.");
-				
-				$("#report_id").focus();
-				
-				isValidate = false;
-				
-				return false;
-			}
-			else if($(this).find(".genetic_id").attr("th:data-genetic-id") == undefined)
+			if($(this).find(".genetic_id").attr("th:data-genetic-id") == undefined)
 			{
 				alert("품종/유전자 정보를 선택해주세요.");
 				
@@ -935,7 +996,7 @@
 						"eaches_id" : $(this).find(".eaches_id").val(),
 						"seed_comment" : $.trim($(this).find(".seed_comment").val()),
 						"genetic_id" : $(this).find(".genetic_id").attr("th:data-genetic-id"),
-						"report_id" : $("#report_id").val(),
+						"report_id" : seeds[0].report_id,
 						"seed_report" : $.trim($("#seed_report").val()),
 						"ware_id" : $(this).find(".ware_id").val(),
 						"seed_sender" : $.trim($(this).find(".seed_sender").val()),
@@ -943,7 +1004,8 @@
 						"seed_receiver" : $(this).find(".seed_receiver").val(),
 						"receive_date" : $.trim($(this).find(".receive_date").val()),
 						"seed_share" : $(this).find(".seed_share").val(),
-						"seed_id" : seed_id
+						"seed_id" : seed_id,
+						"seed_code" : $(this).find(".seed_code").val()
 						};
 				
 				dataArr.push(data);
@@ -969,6 +1031,34 @@
 		$("#update_popup").css("display", "none");
 		$("#delete_popup").css("display", "none");
 	}
+	
+	//승인 버튼 안내 팝업
+	function UpdateStatusBtn(){
+		$("#updateStatus_popup").css("display", "flex");
+	}
+	
+	//승인 함수
+	function UpdateStatus(){
+		
+		$.ajax({
+			url : "/data/seed/updateStatus",
+			method : "POST",
+			contentType : "application/json; charset=utf-8",
+			data : JSON.stringify(seeds),
+			success : function(result){
+				
+				if(result == 0){
+					
+				}else {
+					$("#updateStatus_popup").css("display", "none");
+					$("#success_text").text("승인 완료되었습니다.");
+					$("#success_popup").css("display", "flex");
+				}
+			}
+		});//end ajax
+		
+	}//end 승인 함수
+	
 </script>
 </body>
 </html>

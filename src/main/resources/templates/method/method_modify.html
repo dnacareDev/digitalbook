@@ -182,7 +182,7 @@
 	                                                </span>
 													<div>
 														<span class="font-weight-bold mb-0">Method ID : </span>
-														<span class="font-weight-bold mb-0" th:text="${method.method_code}"></span>
+														<span class="font-weight-bold mb-0" th:text="${r.record_type_code}"></span>
 														<th:block th:switch="${r.record_status}">
 															<span th:case="0" class="font-weight-bold mb-0">승인요청</span>
 															<span th:case="1" class="font-weight-bold mb-0">수정요청</span>
@@ -810,6 +810,7 @@
 			var method_input = $("#method_input").val();
 			var eaches_id = $("#method_eaches").val();
 			var method_comment = $("#method_comment").val();
+			var method_code = method.method_code;
 			
 			if(method_title == "")
 			{
@@ -824,7 +825,8 @@
 						"method_contents" : method_contents,
 						"method_input" : method_input,
 						"eaches_id" : eaches_id,
-						"method_comment" : method_comment
+						"method_comment" : method_comment,
+						"method_code" : method_code
 				};
 				/* console.log(data); */
 				$.ajax(
@@ -972,7 +974,7 @@
 	//승인 함수
 	function UpdateStatus(){
 		
-		var data = {"method_id" : method.method_id};
+		var data = {"method_id" : method.method_id, "method_code" : method.method_code};
 		
 		$.ajax(
 		{
