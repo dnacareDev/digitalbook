@@ -141,7 +141,7 @@
 		NOW(),
 		NOW(),
 		#{user_group},
-		0
+		#{seed_status}
 		)
 	</insert>
 	
@@ -187,7 +187,8 @@
 			seed_receiver = #{seed_receiver},
 			receive_date = #{receive_date},
 			seed_share = #{seed_share},
-			modify_date = NOW()
+			modify_date = NOW(),
+			seed_status = #{seed_status}
 		WHERE seed_id = #{seed_id}
 	</update>
 	
