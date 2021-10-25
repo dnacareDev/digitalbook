@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<style>
+* {
+	box-sizing: border-box;
+}
+:root {
+    --swiper-theme-color: #000;
+}
+body, h1, h2, h3, h4, h5, h6, p, ul, ol, dd, dl {
+	margin: 0;
+	padding: 0;
+}
+ul, ol {
+	list-style: none;
+}
+a {
+	text-decoration:none;
+    color: #000;
+}
+img {
+	vertical-align: top;
+	border: 0;
+}
+.clearfix::before{
+	content: "";
+	display: block;
+}
+.clearfix::after{
+	content: "";
+	display: block;
+	clear: both;
+}
+table{
+    border-spacing: 0;
+    border-collapse:collapse;
+    border: none;
+}
+.wrapper{
+    padding: 100px 0;
+    background-color: #F8F8F8;
+}
+.btn_ver{
+    width: 50%;
+}
+.btn_ver button{
+    float: right;
+}
+select {
+    display: block;
+    width: 100%;
+    height: 44px;
+    border-radius: 5px;
+    padding: 0 20px;
+    border-color: #222222;
+}
+#section select:focus{
+    border-color: #7888FC;
+}
+#section .step .step_inner .content .btn.sub_btn select{
+    width: calc((100% - 24px)/1.2);
+    float: left;
+}
+button{
+    display: block;
+	padding: 5px 20px;
+	font-size: 0.875em; /* 14 */
+	color: #fff;
+	background-color: #7888FC;
+	border: none;
+	outline: 0;
+	box-sizing: border-box;
+	border: none;
+	cursor: pointer;
+	border-radius: 4px;
+	font-weight:500;
+}
+.submit button{
+    padding: 12px 28px;
+}
+.submit.off button{
+    cursor: auto;
+    background-color: rgba(233, 233, 253);
+}
+#section .step, .submit_btn{
+    width: 100%;
+    padding: 15px 0;
+}
+#section .step .step_inner{
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #fff;
+    border: none;
+    border-radius: .5rem;
+    box-shadow: 0 4px 25px 0 rgb(0 0 0 / 10%);
+}
+.submit_btn .submit_btn-inner{
+    max-width: 1200px;
+    margin: 0 auto;
+}
+#section .step .step_inner > .title{
+    padding: 20px;
+    cursor: pointer;
+}
+#section .step .step_inner > .title.active{
+    cursor: auto;
+}
+#section .step .step_inner > .title.active h3 span{
+    position: absolute;
+    right: 0;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+#section .step .step_inner > .title h3 span::before,
+#section .step .step_inner > .title h3 span::after{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    content: "";
+    display: block;
+    width: 10px;
+    height: 1px;
+    transform: rotate(-45deg);
+    background-color: #666666;
+    transition: transform 0.3s;
+}
+#section .step .step_inner > .title h3 span::after{
+    right: 7px;
+    transform: rotate(45deg);
+}
+#section .step .step_inner > .title.active h3 span::before{
+    transform: rotate(45deg);
+}
+#section .step .step_inner > .title.active h3 span::after{
+    transform: rotate(-45deg);
+}
+#section .step .step_inner .title h3{
+    font-weight: 500;
+    font-size: 18px;
+    color: #2c2c2c;
+    position: relative;
+}
+#section .step .step_inner .content{
+    display: none;
+    width: 100%;
+    padding: 50px 20px;
+} 
+#section .step .step_inner .content span.title{
+    float: left;
+}
+#section .step .step_inner .content .btn{
+    position: relative;
+    width: 80%;
+}
+#section .step .step_inner .content .btn.btn2{
+    width: 30%;
+    margin-top: 50px;
+}
+#section .step .step_inner .content .btn.sub_btn{
+    float: left;
+    width: calc((100% - 60px)/3);
+    margin-left: 30px;
+}
+#section .step .step_inner .content .btn.sub_btn:first-child{
+    margin-left: 0;
+}
+#section .step .step_inner .content .btn.sub_btn span.sub_title{
+    float: left;
+    width: 100%;
+}
+#section .step .step_inner .content .btn.sub_btn .select{
+    width: calc((100% - 24px)/1.2);
+    float: left;
+    padding-bottom: 15px;
+}
+#section .step .step_inner .submit{
+    width: 80%;
+    margin-left: 181.63px;
+}
+.btn_button{
+    float: left;
+}
+#section .step .step_inner .submit button{
+    float: right;
+    background-color: #E9E9FD;
+    color: #5F63F2;
+    padding: 15px 50px;
+    border-radius: 5px;
+    font-weight: 700;
+}
+span.red{
+    color:#FF0101;
+} 
+#section .step .step_inner .content .btn.btn_new{
+    float: left;
+    width: 50%;
+    margin-left: 0;
+    padding: 28px 10px 10px 10px;
+    height: 325px;
+    overflow: auto;
+    clear: both;
+}
+#step6 .top2{
+    width: 100%;
+    overflow: auto;
+    clear: both;
+}
+#section .step .step_inner .content .btn.btn_new button{
+    float: right;
+    margin-bottom: 10px;
+    margin-right: -30px;
+}
+#step5 .content_right{
+    float: left;
+    width: calc((100% - 20px) /2);
+    overflow: auto;
+    margin-left: 10px;
+    margin-top: -36px;
+    border-radius: 5px;
+    border: 1px solid #d9d9d9;
+    height: 372px;
+}
+.content_right{
+    float: left;
+    width: calc((100% - 20px) /2);
+    overflow: auto;
+    margin-left: 10px;
+}
+.content_right img{
+    width: 100%;
+}
+#table1, #table2, #table3, #table4{
+    float: none;
+    clear: both;
+    width: max-content;
+    text-align: center;
+}
+#step6 table{
+    width: 100%;
+    float: none;
+    clear: both;
+    text-align: center;
+}
+#table1 tr.title, #step6 thead tr{
+    background-color: #F7F7F8;
+    border-bottom: 2px solid #E4E4E4;
+}
+#table2 tr.title, #table3 tr.title{
+    border-top:1px solid #E6E9F1;
+    border-bottom: 2px solid #E4E4E4;
+}
+#table1 th, #table2 th, #step6 thead tr th{
+    padding: 10px 0;
+    font-size: 14px;
+    color: #222222;
+}
+#table3 th{
+    padding: 10px 30px;
+    font-weight: 500;
+}
+#table1 td.ad{
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+#table1 td.ad a {
+    color: #5F63F2;
+}
+#table1 tr.table_content, #step6 tbody tr{
+    border-bottom: 1px solid #E4E4E4;
+}
+#table1 td, #table2 td, #table3 td, #step6 tbody tr td{
+    padding: 12px 35px;
+}
+#table3 td, #table4 td{
+    font-weight: 300;
+}
+h6{
+    font-size: 14px;
+    color: #666666;
+    font-weight: 300;
+    padding-bottom: 10px;
+}
+#section .step .step_inner .content .btn.btn_select1{
+    width: 100%;
+    margin-left: 0;
+    float: none;
+}
+#section .step .step_inner .content .btn.btn_select1 .submit{
+    margin: 0;
+    width: 100%;
+    padding-top: 20px;
+}
+button.setting{
+    padding: 13px 20px;
+    margin-left: 10px;
+}
+ul.select_list{
+    padding-top: 20px;
+}
+.choi_select{
+    width: 100%;
+    height: 50px;
+    background-color: #F7F7F8;
+    border: 1px solid #D9D9D9;
+    clear: both;
+    border-radius: 5px;
+    margin-top: 80px;
+}
+.repeat{
+    padding: 30px 0;
+}
+input[type="text"]{
+    width: calc((100% - 60px)/3);
+    padding: 20px 20px;
+    font-size: 0.875em; /* 14px */
+    font-family: "Open Sans", sans-serif;
+    background-color: #fff;
+    border: none;
+    outline: 0;
+    box-sizing: border-box;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+}
+#mil{
+    width: 100%;
+    padding: 5px;
+}
+#mil2{
+    padding: 5px;
+}
+#step4 .background-content{
+    height: 287px;
+    background: url(img/04.png) no-repeat center center;
+    clear: both;
+}
+.top_btn-left{
+    width: 50%;
+    float: left;
+}
+.top_btn-left h6, #mil2, .top_btn-left.button{
+    float:left;
+
+}
+.top_btn-left h6{
+    margin-top: 5px;
+}
+.top_btn-right{
+    float: right;
+    width: 50%;
+    text-align: right;
+}
+.top_btn-right li{
+    display: inline-block;
+}
+.background-content ul li{
+    padding: 5px 20px;
+    position: relative;
+    background-color: #F6FFF2;
+    border: 1px solid #DBEFD2;
+    border-radius: 3px;
+    float: left;
+    margin-top: 10px;
+}
+.background-content ul li:nth-child(2n + 1){
+    margin-left: 50px;
+    clear: both;
+}
+.background-content ul li::after,
+.background-content ul li::before{
+    content: "";
+    position: absolute;
+    display: block;
+    left: 5px;
+    top: 13px;
+    width: 7px;
+    height: 2px;
+    transform: rotate(-45deg);
+    background-color: #95AA8D;
+}
+.background-content ul li::before{
+    top: 17px;
+    transform: rotate(45deg);
+}
+.background-content ul li a::after,
+.background-content ul li a::before{
+    content: "";
+    position: absolute;
+    display: block;
+    right: 5px;
+    top: 13px;
+    width: 7px;
+    height: 2px;
+    transform: rotate(45deg);
+    background-color: #95AA8D;
+}
+.background-content ul li a::before{
+    top: 17px;
+    transform: rotate(-45deg);
+}
+.background-content ul li a{
+    color: #5E7156;
+}
+.refresh{
+    position: absolute;
+    right: -30px;
+    top: -1px;
+    display: block;
+    width: 30px;
+    height: 33px;
+    border: 1px solid #D8D8D8;
+    clear: both;
+    text-align: center;
+    font-size: 20px;
+    color: #A7A7A7;
+    background-color: #F8F7F7;
+    border-radius: 3px;
+    cursor: pointer
+}
+.refresh img {
+    width: 80%;
+    vertical-align: middle;
+    margin-top: 2.5px;
+}
+.search_btn{
+    float: left;
+    width: 5%;
+    font-size: 20px;
+    border-radius: 0 25px 25px 0;
+    color: #9299B8;
+    font-weight: 700;
+    border: 1px solid #cccccc;
+    border-left: 0;
+    padding: 4px 0;
+    text-align: center;
+    cursor: pointer;
+}
+#step5 .background-content{
+    display: table;
+    height: 353px;
+    width: 100%;
+    background-color: #F7F7F8;
+    clear: both;
+}
+#step5 .background-content .back_inner{
+    display: table-cell;
+    vertical-align: middle;
+    margin: 0 auto;
+    text-align: center;
+    border-radius: 5px;
+}
+#step4 .table_content{
+    background-color: #F6FFF2;
+    border-bottom: 1px solid #E6E9F1;
+}
+.pointers{
+    cursor: pointer;
+}
+.arrowMove{
+    position: absolute;
+    left: -30px;
+    top: -1px;
+    display: block;
+    width: 30px;
+    height: 33px;
+    border: 1px solid #D8D8D8;
+    clear: both;
+    text-align: center;
+    font-size: 20px;
+    color: #A7A7A7;
+    background-color: #F8F7F7;
+    border-radius: 3px;
+    cursor: pointer
+}
+.arrowMove{
+    vertical-align: middle;
+}
+input[type=search]{
+    border: 1px solid #cccccc;
+}
+input[type=search]:focus{
+    border: 1px solid #cccccc;
+}
+#table4 th{
+    padding: 15px 50px;
+    background-color: #fff;
+    font-weight: 500;
+}
+#table4 thead tr{
+    border-bottom: 2px solid #E5E9F2;
+}
+#table4 th a{
+    display: block;
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+    background-color: #F7F7F8;
+    color: #5C67EA; 
+}
+#table4 th a img{
+    width: auto;
+    vertical-align: middle;
+}
+#table4 tbody tr{
+    background-color: #fff;
+    margin: 10px;
+    border: 5px solid #F7F7F8;
+}
+#table4 tbody td{
+    padding: 20px 10px;
+}
+#table3 .table_content{
+    border-bottom: 1px solid #E5E9F2;
+}
+#table4 span.line{
+    display: block;
+    width: 23px;
+    height: 2.5px;
+    background-color: #7C8798;
+    text-align: center;
+    margin: 0 auto;
+    border-radius: 50px;
+    cursor: pointer;
+}
+#step6 .top1, #step6 .top2, #step6 .top3, #step6 .top4{
+    padding-top: 50px;
+}
+#step6 span.title_sub{
+    color: #9299B8;
+    font-size: 18px;
+}
+#step6 li{
+    float:left;
+    width: calc((100% - 60px)/3);
+    margin-left: 30px;
+}
+#step6 li:first-child{
+    margin-left: 0;
+}
+#step6 #step6_inner .content .btn{
+    clear: both;
+    width: 100%;
+    text-align: right;
+    padding: 30px 0;
+}
+#step6 #step6_inner .content .btn button{
+    display: inline-block;
+    padding: 15px 50px;
+    background-color: #E9E9FD;
+    color: #5F63F2;
+    font-weight: 700;
+}
+#step6 #step6_inner ul{
+    padding-top: 50px;
+}
+#step6 #step6_inner select, .pop select{
+    margin-top: 10px;
+    color: #666666;
+    font-weight: 300;
+    border:1px solid #E4E4E4;
+}
+#step6 #step6_inner li span, .pop .box > span{
+    color: #222;
+    font-weight: 300;
+}
+#step6 table button {
+    background-color: #7C8798;
+    border-radius: 18px;
+    color: #fff;
+    font-size: 14px;
+}
+#step5 #step5_inner .content .submit{
+    clear: both;
+    margin-left: 0;
+    width: 100%;
+    padding-top: 20px;
+}
+.submit_btn .submit_btn-inner .list{
+    float: left;
+    background-color: #E2E3E5;
+    color: #666666;
+    border-radius: 5px;
+    padding: 15px 50px;
+    font-weight: 700;
+}
+.submit_btn .submit_btn-inner .submit{
+    float: right;
+    background-color: #E9E9FD;
+    color: #5F63F2;
+    border-radius: 5px;
+    padding: 15px 50px;
+    font-weight: 700;
+}
+#step6 #step6_inner input[type="text"], .pop .pop_inner .box input[type='text'].regdate{
+    clear: both;
+    width: 80%;
+    float: left;
+    padding: 11.5px 10px;
+    margin-top: 10px;
+    border: 1px solid #E4E4E4;
+    border-right: none;
+    border-radius: 5px 0 0 5px;
+    
+}
+#step6 #step6_inner .cal, .pop .cal{
+    float: left;
+    width: 20%;
+    margin-top: 10px;
+    border: 1px solid #E4E4E4;
+    border-left: none;
+    border-radius: 0 5px 5px 0;
+    color: #7E8796;
+    padding: 11.5px 10px;
+    font-size: 0.875em;
+    text-align: right;
+}
+    
+.dim{
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0,0,0, .5);
+    z-index: 9;
+}
+.pop .pop_inner h6{
+    font-weight: 700;
+    font-size: 18px;
+    float: left;
+}
+.pop .pop_inner span.close{
+    width: 30px;
+    height: 30px;
+    position: relative;
+    float: right;
+    cursor: pointer;
+}
+.pop .pop_inner span.close::after{
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2px;
+    height: 20px;
+    transform: rotate(45deg);
+    background-color: #666666;
+    border-radius: 50px;
+}
+.pop .pop_inner span.close::before{
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2px;
+    height: 20px;
+    transform: rotate(-45deg);
+    background-color: #666666;
+    border-radius: 50px;
+}
+.pop{
+    display: none;
+    width: 100%;
+    position: fixed;
+    height: 100vh;
+    z-index: 10;
+}
+.pop .pop_inner{
+    max-width: 950px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 50px;
+    border-radius: 5px;
+    margin-top: 20px;
+    overflow: auto;
+    max-height: 900px;
+}
+.pop .pop_inner .box{
+    padding-top: 20px;
+    clear: both;
+}
+.pop .pop_inner input[type='text']{
+    margin-top: 10px;
+    width: 100%;
+}
+.pop .pop_inner img {
+    margin-top: 10px;
+    width: 100%;
+}
+.pop .pop_inner .input_submit{
+    padding: 30px 0;
+    clear: both;
+}
+.pop .pop_inner .input_submit button{
+    float: right;
+    padding: 15px 50px;
+    background-color: #E9E9FD;
+    color: #5F63F2;
+    font-weight: 700;
+}
+.pop .pop_inner li{
+    float: left;
+    margin-left: 30px;
+    width: calc((100% - 30px)/ 2);
+}
+.pop .pop_inner li:first-child{
+    margin-left: 0;
+}
+</style>
+<script>
+window.addEventListener("load", function(){ //javascript
+    let section = document.getElementById("section"),
+    step = section.children,  
+    n = 0;
+    
+    
+    let slideUp = (title, target, duration=500) => {
+        title.classList.remove("active");
+        target.style.transitionProperty = 'height, margin, padding';
+        target.style.transitionDuration = duration + 'ms';
+        target.style.boxSizing = 'border-box';
+        target.style.height = target.offsetHeight + 'px';
+        target.offsetHeight;
+        target.style.overflow = 'hidden';
+        target.style.height = 0;
+        target.style.paddingTop = 0;
+        target.style.paddingBottom = 0;
+        target.style.marginTop = 0;
+        target.style.marginBottom = 0;
+        window.setTimeout( () => {
+            target.style.display = 'none';
+            target.style.removeProperty('height');
+            target.style.removeProperty('padding-top');
+            target.style.removeProperty('padding-bottom');
+            target.style.removeProperty('margin-top');
+            target.style.removeProperty('margin-bottom');
+            target.style.removeProperty('overflow');
+            target.style.removeProperty('transition-duration');
+            target.style.removeProperty('transition-property');
+        }, duration);
+    }
+    let slideDown = (title, target, duration=500) => {
+        target.style.removeProperty('display');
+        let display = window.getComputedStyle(target).display;
+        if (display === 'none')
+        display = 'block';
+        title.classList.add("active");
+        target.style.display = display;
+        let height = target.offsetHeight;
+        target.style.overflow = 'hidden';
+        target.style.height = 0;
+        target.style.paddingTop = 0;
+        target.style.paddingBottom = 0;
+        target.style.marginTop = 0;
+        target.style.marginBottom = 0;
+        target.offsetHeight;
+        target.style.boxSizing = 'border-box';
+        target.style.transitionProperty = "height, margin, padding";
+        target.style.transitionDuration = duration + 'ms';
+        target.style.height = height + 'px';
+        target.style.removeProperty('padding-top');
+        target.style.removeProperty('padding-bottom');
+        target.style.removeProperty('margin-top');
+        target.style.removeProperty('margin-bottom');
+        window.setTimeout( () => {
+            target.style.removeProperty('height');
+            target.style.removeProperty('overflow');
+            target.style.removeProperty('transition-duration');
+            target.style.removeProperty('transition-property');
+        }, duration);
+    }
+    let slideToggle = (title, target, duration = 500) => {
+        if (window.getComputedStyle(target).display === 'none') {
+            return slideDown(title, target, duration);
+        } else {
+            return slideUp(title, target, duration);
+        }
+    }
+    
+    for(let i=0; i<step.length; i++){
+        let stepInner = step[i].children;
+        for(let k=0; k<stepInner.length; k++){
+            let [title, content] = stepInner[k].children;
+            
+            title.addEventListener("click", function(e){
+                slideToggle(title, content);
+            });
+        }
+    }
+    
+});
+function popupView(display, e){
+    const popup = document.getElementsByClassName("pop"),
+          dim = document.getElementsByClassName("dim")[0];
+    for(let i=0; i < popup.length; i++){
+        
+        popup[e].style.display=display;
+    }
+    dim.style.display=display;
+}    
+    
+function closeFunction(e){ //팝업 닫기
+    popupView("none", e);
+}
+    
+function registration(e){ //신규등록 버튼
+    popupView("block", e);
+}
+</script>
+</head>
+<body>
+     <div class="pop"> <!-- pop1 -->
+        <div class="pop_inner">
+            <h6>포장 신규</h6>
+            <span class="close" onclick="return closeFunction(0);"></span>
+            <div class="box box-1">
+                <span>주소</span>
+                <input type="text" name="">
+            </div>
+            <div class="box box-2">
+                <ul>
+                    <li><span>포장번호</span><input type="text" name=""></li>
+                    <li><span>면적</span><input type="text" name=""></li>
+                </ul>
+            </div>
+            <div class="box box-3">
+                <span>위치</span>
+                <img src="img/step1.png" alt="map">
+            </div>
+            <div class="input_submit">
+                <button onclick="closeFunction(0);">저장</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="pop"> <!-- pop2 -->
+        <div class="pop_inner" style="max-width: 600px">
+            <h6>담당자 및 일정 변경</h6>
+            <span class="close" onclick="return closeFunction(1);"></span>
+            <div class="box box-1">
+                <span><span class="red">*</span>담당자(정)</span>
+                <select>
+                    <option>담당자 선택</option>
+                    <option>담당자 선택</option>
+                    <option>담당자 선택</option>
+                    <option>담당자 선택</option>
+                </select>
+            </div>
+            <div class="box box-2">
+                <span>담당자(부)</span>
+                <select>
+                    <option>담당자 선택</option>
+                    <option>담당자 선택</option>
+                    <option>담당자 선택</option>
+                    <option>담당자 선택</option>
+                </select>
+            </div>
+            <div class="box box-3">
+                <span style="float: left;">일정등록</span>
+                <input type="text" name="" class="regdate">
+                <div class="cal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                      <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="input_submit">
+                <button onclick="closeFunction(1);">저장</button>
+            </div>
+        </div>
+    </div>
+     <!-- popup background -->
+    <div class="dim"></div>
+    <div class="wrapper clearfix">
+        <section id="section">
+            <div class="step" id="step1">
+                <div class="step_inner clearfix" id="step1_inner">
+                    <div class="title">
+                        <h3>Step 1. 포장선택<span></span></h3>
+                    </div>
+                    <div class="content clearfix">
+                        <div class="btn_ver">
+                            <button onclick="return registration(0);">신규등록</button>
+                        </div>
+                        <div class="btn btn_new">
+                            
+                            <table id="table1">
+                                <thead>
+                                <tr class="title">
+                                    <th>위치 ID</th>
+                                    <th>주소</th>
+                                    <th>포장번호</th>
+                                    <th>면적(㎡)</th>
+                                </tr>
+                                </thead>
+                                <tr class="table_content">
+                                    <td>1</td>
+                                    <td class="ad"><a href="">경기도 수원시 권선구 서호로 54</a></td>
+                                    <td>작물A-1</td>
+                                    <td>2</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="content_right">
+                            <div class="img_inner">
+                                <h6>* 위치 ID 클릭 시 해당 포장 표시</h6>
+                                <img src="img/step1.png" alt="지도">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="step" id="step2">
+                <div class="step_inner clearfix" id="step2_inner">
+                    <div class="title">
+                        <h3>Step 2. 과제 선택<span></span></h3>
+                    </div>
+                    <div class="content clearfix">
+                        <div class="btn btn_select1">
+                            <select class="form-control b-light department" id="select_view1" name="">
+                                <option value="">2021 - (PJ015744012021) "콩 불마름병, 역병 저항성 품종 개발을 위한 플랫폼 구축"</option>
+                                <option value="">1</option>
+                            </select>
+                            <div class="submit clearfix">
+                                <button>다음</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="step" id="step3">
+                <div class="step_inner clearfix" id="step3_inner">
+                    <div class="title">
+                        <h3>Step 3. 시험구배치<span></span></h3>
+                    </div>
+                    <div class="content clearfix">
+                        <span class="title">시험구배치 종류</span>
+                        <div class="btn btn2">
+                            <select id="select_view2" class="select_view" name="">
+                                <option value="완전임의배치">완전임의배치</option>
+                                <option value="난괴법">난괴법</option>
+                                <option value="분할구배치법">분할구배치법</option>
+                                <option value="세세구배치법">세세구배치법</option>
+                            </select>
+                        </div>
+                        <ul class="select_list clearfix"> <!-- select list -->
+                            <li class="btn sub_btn">
+                                <span class="sub_title">요인1</span>
+                                <select id="select_view2" class="select_view" name="">
+                                    <option value="완전임의배치">완전임의배치</option>
+                                    <option value="난괴법">난괴법</option>
+                                    <option value="분할구배치법">분할구배치법</option>
+                                    <option value="세세구배치법">세세구배치법</option>
+                                </select>
+                                <div class="btn_button">
+                                    <button class="setting">설정</button>
+                                </div>
+                                <div class="choi_select">
+                                    <div class="text_inner"></div>
+                                </div>
+                            </li>
+                            <li class="btn sub_btn">
+                                <span class="sub_title">요인2</span>
+                                <select id="select_view2" class="select_view" name="">
+                                    <option value="완전임의배치">완전임의배치</option>
+                                    <option value="난괴법">난괴법</option>
+                                    <option value="분할구배치법">분할구배치법</option>
+                                    <option value="세세구배치법">세세구배치법</option>
+                                </select>
+                                <div class="btn_button">
+                                    <button class="setting">설정</button>
+                                </div>
+                                <div class="choi_select">
+                                    <div class="text_inner"></div>
+                                </div>
+                            </li>
+                            <li class="btn sub_btn">
+                                <span class="sub_title">요인3</span>
+                                <select id="select_view2" class="select_view" name="">
+                                    <option value="완전임의배치">완전임의배치</option>
+                                    <option value="난괴법">난괴법</option>
+                                    <option value="분할구배치법">분할구배치법</option>
+                                    <option value="세세구배치법">세세구배치법</option>
+                                </select>
+                                <div class="btn_button">
+                                    <button class="setting">설정</button>
+                                </div>
+                                <div class="choi_select">
+                                    <div class="text_inner"></div>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="repeat">
+                            <h6><span class="red" style="color: #FF4141">*</span>반복</h6>
+                            <input type="text" value="1">
+                        </div>
+                        <div class="submit clearfix">
+                            <button>다음</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="step" id="step4">
+                <div class="step_inner clearfix" id="step4_inner">
+                    <div class="title">
+                        <h3>Step 4. 구획 설정<span></span></h3>
+                    </div>
+                    <div class="content clearfix">
+                        <div class="btn btn_new">
+                            <table id="table2">
+                                <thead>
+                                <tr class="title">
+                                    <th></th>
+                                    <th>구획번호</th>
+                                    <th>구획ID</th>
+                                    <th>처리종류</th>
+                                    <th>반복</th>
+                                    <th>처리포장면적(㎡)</th>
+                                </tr>
+                                </thead>
+                                <tr class="table_content">
+                                    <td class="pointers"><img src="img/araw.png" alt="pointer"></td>
+                                    <td>1</td>
+                                    <td>A1-B1-1</td>
+                                    <td>콩 (williams),K1(기타)</td>
+                                    <td>1</td>
+                                    <td><input type="text" id="mil" value="0"></td>
+                                </tr>
+                                <tr class="table_content">
+                                    <td class="pointers"><img src="img/araw.png" alt="pointer"></td>
+                                    <td>1</td>
+                                    <td>A1-B1-1</td>
+                                    <td>콩 (williams),K1(기타)</td>
+                                    <td>1</td>
+                                    <td><input type="text" id="mil" value="0"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="content_right">
+                            <div class="img_inner">
+                                <div class="top_btn-left">
+                                    <h6><span class="red" style="color: #FF4141">*</span>열의 갯수</h6>
+                                    <input type="text" value="0" id="mil2" style="border-radius: 5px 0 0 5px; width: 40%; margin-left: 10px;">
+                                    <button style="height: 31px; border-radius: 0 5px 5px 0; ">적용</button>
+                                </div>
+                                <div class="top_btn-right clearfix">
+                                    <ul>
+                                        <li><button>요인 랜덤화</button></li>
+                                        <li><button>수준 랜덤화</button></li>
+                                    </ul>
+                                </div>
+                                <div class="background-content">
+                                    <ul>
+                                        <li><a href="">A1-B1-1</a>
+                                            <div class="arrowMove">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-move" viewBox="0 0 16 16">
+                                                  <path fill-rule="evenodd" d="M7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708l2-2zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10zM.146 8.354a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L1.707 7.5H5.5a.5.5 0 0 1 0 1H1.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2zM10 8a.5.5 0 0 1 .5-.5h3.793l-1.147-1.146a.5.5 0 0 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L14.293 8.5H10.5A.5.5 0 0 1 10 8z"/>
+                                                </svg>
+                                            </div>
+                                        </li>
+                                        <li><a href="">A1-B1-1</a>
+                                            <div class="refresh">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                                                  <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                                                  <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+                                                </svg>
+                                            </div>
+                                        </li>
+                                        <li><a href="">A1-B1-1</a>
+                                            <div class="arrowMove">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-move" viewBox="0 0 16 16">
+                                                  <path fill-rule="evenodd" d="M7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708l2-2zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10zM.146 8.354a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L1.707 7.5H5.5a.5.5 0 0 1 0 1H1.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2zM10 8a.5.5 0 0 1 .5-.5h3.793l-1.147-1.146a.5.5 0 0 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L14.293 8.5H10.5A.5.5 0 0 1 10 8z"/>
+                                                </svg>
+                                            </div>
+                                        </li>
+                                        <li><a href="">A1-B1-1</a>
+                                            <div class="refresh">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                                                  <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                                                  <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+                                                </svg>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="step" id="step5">
+                <div class="step_inner clearfix" id="step5_inner">
+                    <div class="title">
+                        <h3>Step 5. 조사 항목 선택<span></span></h3>
+                    </div>
+                    <div class="content clearfix">
+                        <!--<input type="search" name="" class="searchs" placeholder="조사 항목명, Method ID" style="width: 45%; border-right: none; border-radius: 25px 0 0 25px; float: left; padding: 10px">-->
+                        <input type="text" name="" class="searchs" placeholder="조사 항목명, Method ID" style="width: 45%; border-right: none; border-radius: 25px 0 0 25px; float: left; padding: 8px">
+                        <div class="search_btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                            </svg>
+                        </div>
+                        <div class="btn btn_new"  style="border-radius: 5px; border: 1px solid #d9d9d9;padding: 0; margin-top: 10px">
+                            <table id="table3">
+                                <thead>
+                                <tr class="title">
+                                    <th></th>
+                                    <th>분류</th>
+                                    <th>조사항목</th>
+                                    <th>Method 명</th>
+                                    <th>Method 설명</th>
+                                </tr>
+                                </thead>
+                                <tr class="table_content">
+                                    <td><input type="checkbox" name=""></td>
+                                    <td>1</td>
+                                    <td>A1-B1-1</td>
+                                    <td>콩 (williams),K1(기타)</td>
+                                    <td>1</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="content_right">
+                            <div class="img_inner">
+                                <div class="background-content">
+                                    <div class="back_inner">
+                                        <span style="display: none">선택 항목을 추가해주세요.</span>
+                                    </div>
+                                    <table id="table4">
+                                        <thead>
+                                            <tr>
+                                                <th><a><img src="img/araw.png" alt="arrow"></a></th>
+                                                <th>분류</th>
+                                                <th>조사 항목</th>
+                                                <th>작목</th>
+                                                <th>Method 명</th>
+                                                <th>Method 설명</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><span class="line"></span></td>
+                                                <td>재배</td>
+                                                <td>최초 꼬투리가 달리는 높이</td>
+                                                <td>참깨</td>
+                                                <td>최초 꼬투리가 달리는 높이</td>
+                                                <td>최초 꼬투리가 달리는 높이</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="submit clearfix">
+                            <button>다음</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="step" id="step6">
+                <div class="step_inner clearfix" id="step6_inner">
+                    <div class="title">
+                        <h3>Step 6. 담당자 및 일정<span></span></h3>
+                    </div>
+                    <div class="content clearfix">
+                        <div class="top1">
+                            <span class="title_sub">[조사항목:쌀단백질]</span>
+                            <ul>
+                                <li>
+                                    <span><span class="red" style="color: #FF4141">*</span>담당자(정)</span>
+                                    <select>
+                                        <option>담당자 선택</option>
+                                        <option>담당자 선택</option>
+                                        <option>담당자 선택</option>
+                                        <option>담당자 선택</option>
+                                    </select>
+                                </li>
+                                <li>
+                                    <span>담당자(부)</span>
+                                    <select>
+                                        <option>담당자 선택</option>
+                                        <option>담당자 선택</option>
+                                        <option>담당자 선택</option>
+                                        <option>담당자 선택</option>
+                                    </select>
+                                </li>
+                                <li>
+                                    <span style="float: left;">일정등록</span>
+                                    <input type="text" name="">
+                                    <div class="cal">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                                          <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                                        </svg>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="btn">
+                                <button>추가</button>
+                            </div>
+                            
+                        </div>
+                        <div class="top2">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>담당자(정)</th>
+                                        <th>담당자(부)</th>
+                                        <th>일정</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>담당자</td>
+                                        <td>담당자</td>
+                                        <td>2021.00.00</td>
+                                        <td><button onclick="registration(1)">변경</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>담당자</td>
+                                        <td>담당자</td>
+                                        <td>2021.00.00</td>
+                                        <td><button onclick="registration(1)">변경</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="top3">
+                            <span class="title_sub">[조사항목:치환성칼륨]</span>
+                             <ul>
+                                <li>
+                                    <span>담당자(정)</span>
+                                    <select>
+                                        <option>담당자 선택</option>
+                                        <option>담당자 선택</option>
+                                        <option>담당자 선택</option>
+                                        <option>담당자 선택</option>
+                                    </select>
+                                </li>
+                                <li>
+                                    <span>담당자(부)</span>
+                                    <select>
+                                        <option>담당자 선택</option>
+                                        <option>담당자 선택</option>
+                                        <option>담당자 선택</option>
+                                        <option>담당자 선택</option>
+                                    </select>
+                                </li>
+                                <li>
+                                    <span style="float: left;">일정등록</span>
+                                    <input type="text" name="">
+                                    <div class="cal">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                                          <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                                        </svg>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="btn">
+                                <button>추가</button>
+                            </div>
+                        </div>
+                        <div class="top4">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>담당자(정)</th>
+                                        <th>담당자(부)</th>
+                                        <th>일정</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>담당자</td>
+                                        <td>담당자</td>
+                                        <td>2021.00.00</td>
+                                        <td><button onclick="registration(1)">변경</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>담당자</td>
+                                        <td>담당자</td>
+                                        <td>2021.00.00</td>
+                                        <td><button onclick="registration(1)">변경</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="submit_btn">
+                <div class="submit_btn-inner">
+                    <button class="list">목록</button>
+                    <button class="submit">등록</button>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>    
+</html>

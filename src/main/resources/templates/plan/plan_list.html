@@ -1,12 +1,8 @@
 <!doctype html>
-<html lang="en" dir="ltr"
-	xmlns:th="http://www.thymeleaf.org">
-	
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
 <head>
-
 <!-- 공통 헤더 -->
 <th:block th:include="@{/fragments/header.html}"></th:block>
-
 <style>
   .breadcrumb-main{
   float: left;
@@ -65,9 +61,7 @@
    height: 10px;
    }
 </style>
-
 </head>
-
 <body class="layout-light top-menu overlayScroll">
 	<div class="mobile-search"></div>
 	
@@ -155,7 +149,7 @@
 				                        </div>
 				                        <div class="col-4">
 				                        	<div class="action-btn d-flex justify-content-end mt-30">
-			                                    <a href="/data/report/insert" class="btn btn-primary end-button end">등록</a>
+			                                    <a href="/plan/insert" class="btn btn-primary end-button end">등록</a>
 			                                </div>
 				                        </div>
 		                        	</div>
@@ -174,11 +168,8 @@
     <th:block th:include="@{/fragments/footer.html}"></th:block>
     <!-- 공통 js -->
     <th:block th:include="@{/fragments/commonjs.html}"></th:block>
-
+</body>
 <script type="text/javascript">
 	
 </script>
-
-</body>
-
 </html>

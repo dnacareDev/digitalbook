@@ -36,35 +36,35 @@
 			        <div class="col-12">
 			        	<div class="card card-Vertical">
 			        		<div class="card-body">
-			        				<div class="row">
-				        				<div class="col-md-6 mb-25">
-		                                    <label for="division_depth1" class="color-dark fw-500">대상작목</label>
-		                                    <select class="form-control b-light" id="division_depth1">
-				                                <option value="0">대상 작목 선택</option>
-				                                <th:block th:each="dvs : ${division}">
-					                                <option th:value="${dvs.division_id}" th:text="${dvs.division}"></option>
-				                                </th:block>
-				                            </select>
-		                                </div>
-		                                <div class="col-md-6 mb-25">
-		                                    <label for="division_depth2" class="color-dark fw-500">분류</label>
-		                                    <select class="form-control b-light" id="division_depth2">
-				                                <option value="0">분류 선택</option>
-				                            </select>
-		                                </div>
-		                            </div>
-		                            <div class="row">
-				        				<div class="col-md-6 mb-25">
-		                                    <label for="division_depth3" class="color-dark fw-500">항목</label>
-		                                    <select class="form-control b-light" id="division_depth3">
-				                                <option value="0">항목 선택</option>
-				                            </select>
-		                                </div>
-		                                <div class="col-md-6 mb-25">
-		                                    <label for="research_contents" class="color-dark fw-500"><span style="color: red;">*</span>조사방법</label>
-		                                    <input type="text" class="form-control b-deep" id="research_contents">
-		                                </div>
-		                            </div>
+		        				<div class="row">
+			        				<div class="col-md-6 mb-25">
+	                                    <label for="division_depth1" class="color-dark fw-500">대상작목</label>
+	                                    <select class="form-control b-light" id="division_depth1">
+			                                <option value="0">대상 작목 선택</option>
+			                                <th:block th:each="dvs : ${division}">
+				                                <option th:value="${dvs.division_id}" th:text="${dvs.division}"></option>
+			                                </th:block>
+			                            </select>
+	                                </div>
+	                                <div class="col-md-6 mb-25">
+	                                    <label for="division_depth2" class="color-dark fw-500">분류</label>
+	                                    <select class="form-control b-light" id="division_depth2">
+			                                <option value="0">분류 선택</option>
+			                            </select>
+	                                </div>
+	                            </div>
+	                            <div class="row">
+			        				<div class="col-md-6 mb-25">
+	                                    <label for="division_depth3" class="color-dark fw-500">항목</label>
+	                                    <select class="form-control b-light" id="division_depth3">
+			                                <option value="0">항목 선택</option>
+			                            </select>
+	                                </div>
+	                                <div class="col-md-6 mb-25">
+	                                    <label for="research_contents" class="color-dark fw-500"><span style="color: red;">*</span>조사방법</label>
+	                                    <input type="text" class="form-control b-deep" id="research_contents">
+	                                </div>
+	                            </div>
 			        		</div>
 			        	</div>
 			        </div>

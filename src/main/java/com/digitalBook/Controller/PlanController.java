@@ -6,15 +6,23 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("plan")
-public class PlanController {
-	
+public class PlanController
+{
 	//재배계획 목록 페이지
-	@RequestMapping("planning")
-	public ModelAndView planList(ModelAndView mv) {
-		
+	@RequestMapping("/list")
+	public ModelAndView PlanList(ModelAndView mv)
+	{
 		mv.setViewName("plan/plan_list");
 		
 		return mv;
 	}
 	
+	// 
+	@RequestMapping("/insert")
+	public ModelAndView PlanInsert(ModelAndView mv)
+	{
+		mv.setViewName("plan/plan_insert");
+		
+		return mv;
+	}
 }
