@@ -142,6 +142,7 @@ public class SeedController
 			resultCode = code1+code2+String.format("%05d", code3);
 			seeds.get(i).setSeed_code(resultCode);
 			seeds.get(i).setUser_group(prin.getUser_group());
+			seeds.get(i).setSeed_status(0);
 			result[i] = service.InsertSeed(seeds.get(i));
 			if(result[i] != 0) {
 				Record record = new Record();
@@ -229,6 +230,7 @@ public class SeedController
 				if(seeds.get(i).getReceive_date() == "") {
 					seeds.get(i).setReceive_date(null);
 				}
+				seeds.get(i).setSeed_status(1);
 				updateResult[i] = service.UpdateSeed(seeds.get(i));
 				if(updateResult[i] != 0) {
 					Record record = new Record();
@@ -252,6 +254,7 @@ public class SeedController
 				resultCode = code1+code2+String.format("%05d", code3);
 				seeds.get(i).setSeed_code(resultCode);
 				seeds.get(i).setUser_group(prin.getUser_group());
+				seeds.get(i).setSeed_status(3);
 				
 				updateResult[i] = service.InsertSeed(seeds.get(i));
 				if(updateResult[i] != 0) {
@@ -364,6 +367,7 @@ public class SeedController
 		
 		for(int i = 0; i < seeds.size(); i++)
 		{
+			
 			updateResult[i] = service.updateSeedStatus(seeds.get(i).getSeed_id());
 			if(updateResult[i] != 0) {
 				Record record = new Record();

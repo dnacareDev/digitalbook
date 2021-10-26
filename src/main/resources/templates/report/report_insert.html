@@ -58,7 +58,6 @@
 		                                    <label class="color-dark align-center mt-1">ATIS 파일</label>
 		                                </div>
 		                                <div class="col-sm-5">
-		                                	<label for="file"></label>
 		                                    <input type="file" id="file" name="file" onchange="readExcel();">
 		                                </div>
 		                            </div>
@@ -83,6 +82,7 @@
 						<div class="action-btn d-flex justify-content-end mt-30">
 							<a href="/data/report" class="btn btn-primary end-button end">목록</a>
 							<button type="button" class="btn btn-primary end-button end" onclick="InsertBtn();">등록</button>
+							<input type="hidden" id="excelJson">
 						</div>
 					</div>
 				</div>
@@ -91,6 +91,7 @@
 	</main>
     <th:block th:include="@{/fragments/footer.html}"></th:block>
     <th:block th:include="@{/fragments/commonjs.html}"></th:block>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.5/xlsx.full.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function()
 	{
@@ -119,35 +120,47 @@
 	{
 		var report_year = $("#report_year").val();
 		var report_contents = $("#report_contents").val();
-		var file = $("#file");
+		
+		var excelJson = JSON.parse($("#excelJson").val());
+		
+		var data = new Array(excelJson.length);
+		
+		for(var i = 0; i < excelJson.length; i++)
+		{
+			data[i] = {"report_year" : excelJson[i]['어젠다년도(등록시 어젠다)'], "report_code" : excelJson[i].과제번호, "report_convention" : excelJson[i].협약번호, "report_title" : excelJson[i].과제명, "report_manager" : excelJson[i].책임자};
+		}
+		
+		for(var i = 0; i < data.length; i++)
+		{
+			console.log(data[i]);
+		}
 		
 		// $("#insertForm").submit();
-		readExcel(file);
 	}
 	
 	function readExcel()
 	{
         var input = event.target;
         var reader = new FileReader();
-       	console.log(input);
-
-        reader.onload = function()
+        
+        var excelJson = $("#excelJson");
+        
+        reader.onload = function ()
         {
-        	console.log(2);
-        	/*
-            var fileData = reader.result;
-            var wb = XLSX.read(fileData, {type : 'binary'});
-            var sheetNameList = wb.SheetNames; // 시트 이름 목록 가져오기
-            var secondSheetName = sheetNameList[1]; // 두번째 시트명
-            var secondSheet = wb.Sheets[secondSheetName]; // 첫번째 시트
-            callback(secondSheet);
-
-            var rowdata = XLSX.utils.sheet_to_json(wb.Sheets[secondSheetName]);
-            console.log(JSON.stringify(rowdata));
-            */
+            var data = reader.result;
+            var workBook = XLSX.read(data, { type: 'binary' });
+            
+            workBook.SheetNames.forEach(function (sheetName)
+            {
+                var rows = XLSX.utils.sheet_to_json(workBook.Sheets[sheetName]);
+                
+                xlsxData = JSON.parse(JSON.stringify(rows));
+                
+                excelJson.val(JSON.stringify(xlsxData));
+            });
         };
 
-        // reader.readAsBinaryString(input.files[0]);
+         reader.readAsBinaryString(input.files[0]);
     }
 </script>
 </body>

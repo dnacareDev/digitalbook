@@ -1,12 +1,8 @@
 <!doctype html>
-<html lang="en" dir="ltr"
-	xmlns:th="http://www.thymeleaf.org">
-	
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
 <head>
-
 <!-- 공통 헤더 -->
 <th:block th:include="@{/fragments/header.html}"></th:block>
-
 <style>
   .breadcrumb-main{
   float: left;
@@ -65,27 +61,20 @@
    height: 10px;
    }
 </style>
-
 </head>
-
 <body class="layout-light top-menu overlayScroll">
 	<div class="mobile-search"></div>
-	
 	<div class="mobile-author-actions"></div>
-	
 	<!-- 공통 topbar -->
 	<th:block th:include="@{/fragments/topbar.html}"></th:block>
-	
 	<main class="main-content" style="background-color: #F9FBFD;">
-	
 		<div class="contents" style="background-color: #F9FBFD;">
-    
 		    <div class="container-fluid">
 		    	<div class="row">
 			        <div class="col-lg-12">
 			        	<div class="breadcrumb-main">
 			        		<h4 class="text-capitalize breadcrumb-title">시험장소</h4>
-			        		<span class="ml-20 mt-1">기초정보-시험장소</span>
+			        		<span class="ml-20 mt-1">기초정보 - 시험장소</span>
 			        	</div>
 			        </div>
 		        </div>
@@ -97,16 +86,7 @@
 		        					<div class="atbd-tab tab-horizontal">
 		        						<ul class="nav nav-tabs vertical-tabs" role="tablist">
                                             <li class="nav-item">
-                                                <a class="nav-link active" id="tab-v-1-tab" data-toggle="tab" href="#tab-v-1" role="tab" aria-controls="tab-v-1" aria-selected="true">작물연구동</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="tab-v-2-tab" data-toggle="tab" href="#tab-v-2" role="tab" aria-controls="tab-v-2" aria-selected="false">가공이용연구동</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="tab-v-3-tab" data-toggle="tab" href="#tab-v-3" role="tab" aria-controls="tab-v-3" aria-selected="false">연천시험지</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="tab-v-4-tab" data-toggle="tab" href="#tab-v-4" role="tab" aria-controls="tab-v-4" aria-selected="false">외부포장</a>
+                                                <a class="nav-link active" id="tab-v-1-tab" data-toggle="tab" href="#tab-v-1" role="tab" aria-controls="tab-v-1" aria-selected="true">등록장소</a>
                                             </li>
                                         </ul>
                                         <div class="tab-content">
@@ -153,141 +133,9 @@
 					                    				</div>
                                                 	</div>
                                                 </div>
-                                            </div>
-                                            <div class="tab-pane fade" id="tab-v-2" role="tabpanel" aria-labelledby="tab-v-2-tab">
-                                                <div class="row">
-                                                	<!-- 테이블 들어갈 자리 -->
-                                                	<div class="col-lg-6">
-                                                		<div class="bg-white">
-								                        	<div class="table-responsive">
-								                            	<table class="table">
-								                            		<thead>
-								                            			<tr>
-								                            				<th>위치ID</th>
-								                            				<th>위치</th>
-								                            				<th>구획구분</th>
-								                            				<th>크기</th>
-								                            				<th>이용과</th>
-								                            			</tr>
-								                            		</thead>
-								                            		<tbody>
-								                            			<tr>
-								                            				<td><span>fi-o-002-001</span></td>
-								                            				<td><span>작물연구동</span></td>
-								                            				<td><span>C-A-1</span></td>
-								                            				<td><span>0.4 ha</span></td>
-								                            				<td><span>중부작물과</span></td>
-								                            			</tr>
-								                            			<tr>
-								                            				<td><span>fi-o-002-002</span></td>
-								                            				<td><span>작물연구동</span></td>
-								                            				<td><span>C-A-2</span></td>
-								                            				<td><span>0.67 ha</span></td>
-								                            				<td><span>중부작물과</span></td>
-								                            			</tr>
-								                            		</tbody>
-								                            	</table>
-								                            </div>
-								                        </div>
-                                                	</div>
-                                                	<!-- 시험장소 이미지 들어갈 자리 -->
-                                                	<div class="col-lg-6">
-                                                		<div style="border: 1px solid dark; background: grey; height: 300px;">
-					                    					<p style="color: white;">시험장소 이미지 들어갈 자리</p>
-					                    				</div>
-                                                	</div>
-                                                </div>
-                                            </div>
-                                            <div class="tab-pane fade" id="tab-v-3" role="tabpanel" aria-labelledby="tab-v-3-tab">
-                                                <div class="row">
-                                                	<!-- 테이블 들어갈 자리 -->
-                                                	<div class="col-lg-6">
-                                                		<div class="bg-white">
-								                        	<div class="table-responsive">
-								                            	<table class="table">
-								                            		<thead>
-								                            			<tr>
-								                            				<th>위치ID</th>
-								                            				<th>위치</th>
-								                            				<th>구획구분</th>
-								                            				<th>크기</th>
-								                            				<th>이용과</th>
-								                            			</tr>
-								                            		</thead>
-								                            		<tbody>
-								                            			<tr>
-								                            				<td><span>fi-o-002-001</span></td>
-								                            				<td><span>작물연구동</span></td>
-								                            				<td><span>C-A-1</span></td>
-								                            				<td><span>0.4 ha</span></td>
-								                            				<td><span>중부작물과</span></td>
-								                            			</tr>
-								                            			<tr>
-								                            				<td><span>fi-o-002-002</span></td>
-								                            				<td><span>작물연구동</span></td>
-								                            				<td><span>C-A-2</span></td>
-								                            				<td><span>0.67 ha</span></td>
-								                            				<td><span>중부작물과</span></td>
-								                            			</tr>
-								                            		</tbody>
-								                            	</table>
-								                            </div>
-								                        </div>
-                                                	</div>
-                                                	<!-- 시험장소 이미지 들어갈 자리 -->
-                                                	<div class="col-lg-6">
-                                                		<div style="border: 1px solid dark; background: grey; height: 300px;">
-					                    					<p style="color: white;">시험장소 이미지 들어갈 자리</p>
-					                    				</div>
-                                                	</div>
-                                                </div>
-                                            </div>
-                                            <div class="tab-pane fade" id="tab-v-4" role="tabpanel" aria-labelledby="tab-v-4-tab">
-                                                <div class="row">
-                                                	<!-- 테이블 들어갈 자리 -->
-                                                	<div class="col-lg-12">
-                                                		<div class="bg-white">
-								                        	<div class="table-responsive">
-								                            	<table class="table">
-								                            		<thead>
-								                            			<tr>
-								                            				<th>위치ID</th>
-								                            				<th>주소</th>
-								                            				<th>농가(연락처)</th>
-								                            				<th>면적(㎡)</th>
-								                            				<th>작물재배 정보</th>
-								                            				<th>결과</th>
-								                            				<th>등록일</th>
-								                            			</tr>
-								                            		</thead>
-								                            		<tbody>
-								                            			<tr>
-								                            				<td><span>ef-o-002-00006</span></td>
-								                            				<td><span>경기도 이천시 대월면 송라리 353-2</span></td>
-								                            				<td><span>정한석 농가. 이정호 지도사(010-8070-5304)</span></td>
-								                            				<td><span>4272</span></td>
-								                            				<td><span>논벼</span></td>
-								                            				<td><span>이천시농업기술센터 협조</span></td>
-								                            				<td><span>2021-05-20 16:59:17</span></td>
-								                            			</tr>
-								                            			<tr>
-								                            				<td><span>ef-o-002-00006</span></td>
-								                            				<td><span>경기도 이천시 대월면 송라리 353-2</span></td>
-								                            				<td><span>정한석 농가. 이정호 지도사(010-8070-5304)</span></td>
-								                            				<td><span>4272</span></td>
-								                            				<td><span>논벼</span></td>
-								                            				<td><span>이천시농업기술센터 협조</span></td>
-								                            				<td><span>2021-05-20 16:59:17</span></td>
-								                            			</tr>
-								                            		</tbody>
-								                            	</table>
-								                            </div>
-								                            <div class="action-btn d-flex justify-content-end mt-30">
-							                                    <a href="#" class="btn btn-lg btn-primary" id="outBtn">+신규등록</a>
-							                                </div>
-								                        </div>
-                                                	</div>
-                                                </div>
+					                            <div class="action-btn d-flex justify-content-end mt-30">
+				                                    <button class="btn btn-lg btn-primary" id="outBtn" onclick="InsertBtn();">+신규등록</button>
+				                                </div>
                                             </div>
                                         </div>
 		        					</div>
@@ -359,24 +207,18 @@
 			        </div>
 			    </div>
 			</div>
-		    <!-- ends: .modal-Basic -->
-    
     	</div>
-    
     </main>
-    
     <!-- 공통 하단 -->
     <th:block th:include="@{/fragments/footer.html}"></th:block>
     <!-- 공통 js -->
     <th:block th:include="@{/fragments/commonjs.html}"></th:block>
-
 <script type="text/javascript">
-	
 	//modal show
-	$("#outBtn").on("click", function(){
+	function InsertBtn()
+	{
 		$("#storageOutModal").modal("show");
-	});
-	
+	}
 </script>
 
 </body>

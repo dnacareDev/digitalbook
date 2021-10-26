@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- 공통 헤더 -->
+<th:block th:include="@{/fragments/header.html}"></th:block>
+<style>
+  .breadcrumb-main{
+  float: left;
+  }
+  table {
+    border-top: 1px solid grey;
+    
+    border-collapse: collapse;
+  }
+  th, td {
+  	border-bottom: 2px solid #E5E9F2;
+    padding: 10px;
+    text-align: center;
+    font-weight: initial;
+  }
+  th {
+    background-color: white;
+  }
+  tbody tr:nth-child(2n) {
+    background-color: white;
+  }
+  tbody tr:nth-child(2n+1) {
+    background-color: #F4F8FB;
+  }
+  button{ 
+   width: 101px;
+   height: 40px;
+   }
+   .page-numder{
+   	width:80px;
+   	height: 35px;
+   	
+   }
+   .atbd-button-list{
+   margin:0 5px;
+   }
+   .end-button{
+   width:150px;
+   height:45px;
+   background-color:#768BF5;
+   border:0px;
+   margin-top:-15px;
+   }
+   .end{
+   margin-left:10px;
+   }
+   .page-item a{
+    color:#7C8798;
+   }
+   .page-item.active{
+   background:none;
+   color: #768BF5;
+   }
+   .atbd-pagination__link{
+   width: 30px;
+   height: 10px;
+   }
+</style>
+</head>
+<body class="layout-light top-menu overlayScroll">
+	<div class="mobile-search"></div>
+	<div class="mobile-author-actions"></div>
+	<!-- 공통 topbar -->
+	<th:block th:include="@{/fragments/topbar.html}"></th:block>
+	<main class="main-content" style="background-color: #F9FBFD;">
+		<div class="contents" style="background-color: #F9FBFD;">
+		    <div class="container-fluid">
+		    	<div class="row">
+			        <div class="col-lg-12">
+			        	<div class="breadcrumb-main">
+			        		<h4 class="text-capitalize breadcrumb-title">시험장소</h4>
+			        		<span class="ml-20 mt-1">기초정보-시험장소</span>
+			        	</div>
+			        </div>
+		        </div>
+		        <div class="row">
+		        	<div class="col-lg-12 mb-30">
+		        		<div class="card">
+		        			<div class="card-body">
+		        				<div class="tab-wrapper">
+		        					<div class="atbd-tab tab-horizontal">
+		        						<ul class="nav nav-tabs vertical-tabs" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" id="tab-v-1-tab" data-toggle="tab" href="#tab-v-1" role="tab" aria-controls="tab-v-1" aria-selected="true">작물연구동</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="tab-v-2-tab" data-toggle="tab" href="#tab-v-2" role="tab" aria-controls="tab-v-2" aria-selected="false">가공이용연구동</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="tab-v-3-tab" data-toggle="tab" href="#tab-v-3" role="tab" aria-controls="tab-v-3" aria-selected="false">연천시험지</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="tab-v-4-tab" data-toggle="tab" href="#tab-v-4" role="tab" aria-controls="tab-v-4" aria-selected="false">외부포장</a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane fade show active" id="tab-v-1" role="tabpanel" aria-labelledby="tab-v-1-tab">
+                                                <div class="row">
+                                                	<!-- 테이블 들어갈 자리 -->
+                                                	<div class="col-lg-6">
+                                                		<div class="bg-white">
+								                        	<div class="table-responsive">
+								                            	<table class="table">
+								                            		<thead>
+								                            			<tr>
+								                            				<th>위치ID</th>
+								                            				<th>위치</th>
+								                            				<th>구획구분</th>
+								                            				<th>크기</th>
+								                            				<th>이용과</th>
+								                            			</tr>
+								                            		</thead>
+								                            		<tbody>
+								                            			<tr>
+								                            				<td><span>fi-o-002-001</span></td>
+								                            				<td><span>작물연구동</span></td>
+								                            				<td><span>C-A-1</span></td>
+								                            				<td><span>0.4 ha</span></td>
+								                            				<td><span>중부작물과</span></td>
+								                            			</tr>
+								                            			<tr>
+								                            				<td><span>fi-o-002-002</span></td>
+								                            				<td><span>작물연구동</span></td>
+								                            				<td><span>C-A-2</span></td>
+								                            				<td><span>0.67 ha</span></td>
+								                            				<td><span>중부작물과</span></td>
+								                            			</tr>
+								                            		</tbody>
+								                            	</table>
+								                            </div>
+								                        </div>
+                                                	</div>
+                                                	<!-- 시험장소 이미지 들어갈 자리 -->
+                                                	<div class="col-lg-6">
+                                                		<div style="border: 1px solid dark; background: grey; height: 300px;">
+					                    					<p style="color: white;">시험장소 이미지 들어갈 자리</p>
+					                    				</div>
+                                                	</div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="tab-v-2" role="tabpanel" aria-labelledby="tab-v-2-tab">
+                                                <div class="row">
+                                                	<!-- 테이블 들어갈 자리 -->
+                                                	<div class="col-lg-6">
+                                                		<div class="bg-white">
+								                        	<div class="table-responsive">
+								                            	<table class="table">
+								                            		<thead>
+								                            			<tr>
+								                            				<th>위치ID</th>
+								                            				<th>위치</th>
+								                            				<th>구획구분</th>
+								                            				<th>크기</th>
+								                            				<th>이용과</th>
+								                            			</tr>
+								                            		</thead>
+								                            		<tbody>
+								                            			<tr>
+								                            				<td><span>fi-o-002-001</span></td>
+								                            				<td><span>작물연구동</span></td>
+								                            				<td><span>C-A-1</span></td>
+								                            				<td><span>0.4 ha</span></td>
+								                            				<td><span>중부작물과</span></td>
+								                            			</tr>
+								                            			<tr>
+								                            				<td><span>fi-o-002-002</span></td>
+								                            				<td><span>작물연구동</span></td>
+								                            				<td><span>C-A-2</span></td>
+								                            				<td><span>0.67 ha</span></td>
+								                            				<td><span>중부작물과</span></td>
+								                            			</tr>
+								                            		</tbody>
+								                            	</table>
+								                            </div>
+								                        </div>
+                                                	</div>
+                                                	<!-- 시험장소 이미지 들어갈 자리 -->
+                                                	<div class="col-lg-6">
+                                                		<div style="border: 1px solid dark; background: grey; height: 300px;">
+					                    					<p style="color: white;">시험장소 이미지 들어갈 자리</p>
+					                    				</div>
+                                                	</div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="tab-v-3" role="tabpanel" aria-labelledby="tab-v-3-tab">
+                                                <div class="row">
+                                                	<!-- 테이블 들어갈 자리 -->
+                                                	<div class="col-lg-6">
+                                                		<div class="bg-white">
+								                        	<div class="table-responsive">
+								                            	<table class="table">
+								                            		<thead>
+								                            			<tr>
+								                            				<th>위치ID</th>
+								                            				<th>위치</th>
+								                            				<th>구획구분</th>
+								                            				<th>크기</th>
+								                            				<th>이용과</th>
+								                            			</tr>
+								                            		</thead>
+								                            		<tbody>
+								                            			<tr>
+								                            				<td><span>fi-o-002-001</span></td>
+								                            				<td><span>작물연구동</span></td>
+								                            				<td><span>C-A-1</span></td>
+								                            				<td><span>0.4 ha</span></td>
+								                            				<td><span>중부작물과</span></td>
+								                            			</tr>
+								                            			<tr>
+								                            				<td><span>fi-o-002-002</span></td>
+								                            				<td><span>작물연구동</span></td>
+								                            				<td><span>C-A-2</span></td>
+								                            				<td><span>0.67 ha</span></td>
+								                            				<td><span>중부작물과</span></td>
+								                            			</tr>
+								                            		</tbody>
+								                            	</table>
+								                            </div>
+								                        </div>
+                                                	</div>
+                                                	<!-- 시험장소 이미지 들어갈 자리 -->
+                                                	<div class="col-lg-6">
+                                                		<div style="border: 1px solid dark; background: grey; height: 300px;">
+					                    					<p style="color: white;">시험장소 이미지 들어갈 자리</p>
+					                    				</div>
+                                                	</div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="tab-v-4" role="tabpanel" aria-labelledby="tab-v-4-tab">
+                                                <div class="row">
+                                                	<!-- 테이블 들어갈 자리 -->
+                                                	<div class="col-lg-12">
+                                                		<div class="bg-white">
+								                        	<div class="table-responsive">
+								                            	<table class="table">
+								                            		<thead>
+								                            			<tr>
+								                            				<th>위치ID</th>
+								                            				<th>주소</th>
+								                            				<th>농가(연락처)</th>
+								                            				<th>면적(㎡)</th>
+								                            				<th>작물재배 정보</th>
+								                            				<th>결과</th>
+								                            				<th>등록일</th>
+								                            			</tr>
+								                            		</thead>
+								                            		<tbody>
+								                            			<tr>
+								                            				<td><span>ef-o-002-00006</span></td>
+								                            				<td><span>경기도 이천시 대월면 송라리 353-2</span></td>
+								                            				<td><span>정한석 농가. 이정호 지도사(010-8070-5304)</span></td>
+								                            				<td><span>4272</span></td>
+								                            				<td><span>논벼</span></td>
+								                            				<td><span>이천시농업기술센터 협조</span></td>
+								                            				<td><span>2021-05-20 16:59:17</span></td>
+								                            			</tr>
+								                            			<tr>
+								                            				<td><span>ef-o-002-00006</span></td>
+								                            				<td><span>경기도 이천시 대월면 송라리 353-2</span></td>
+								                            				<td><span>정한석 농가. 이정호 지도사(010-8070-5304)</span></td>
+								                            				<td><span>4272</span></td>
+								                            				<td><span>논벼</span></td>
+								                            				<td><span>이천시농업기술센터 협조</span></td>
+								                            				<td><span>2021-05-20 16:59:17</span></td>
+								                            			</tr>
+								                            		</tbody>
+								                            	</table>
+								                            </div>
+								                            <div class="action-btn d-flex justify-content-end mt-30">
+							                                    <a href="#" class="btn btn-lg btn-primary" id="outBtn">+신규등록</a>
+							                                </div>
+								                        </div>
+                                                	</div>
+                                                </div>
+                                            </div>
+                                        </div>
+		        					</div>
+		        				</div>
+		        			</div>
+		        		</div>
+		        	</div>
+		        </div>
+		    </div>
+		    
+		    <div class="modal-basic modal fade show" id="storageOutModal" tabindex="-1" role="dialog" aria-hidden="true">
+			    <div class="modal-dialog modal-xl" role="document">
+			        <div class="modal-content modal-bg-white">
+			        	<div class="modal-header">
+			        		<h6 class="modal-title">외부포장등록</h6>
+		                    	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		                        	<span data-feather="x"></span>
+		                        </button>
+			        	</div>
+			            <div class="modal-body">
+			            	<div class="col-12">
+				            	<form action="#">
+				            		<div class="row">
+				            			<div class="col-sm-2 d-flex aling-items-center">
+			                            	<label for="storage_out_address" class="col-form-label color-dark align-center">주소<span style="color: red;">*</span></label>
+		                                </div>
+		                                <div class="col-sm-10">
+			                                <input type="text" class="form-control b-light" id="storage_out_address">
+			                            </div>
+				            		</div>
+				            		<div class="row mt-3">
+				            			<div class="col-sm-2 d-flex aling-items-center">
+			                            	<label for="storage_out_phone" class="col-form-label color-dark align-center">농가(연락처)<span style="color: red;">*</span></label>
+		                                </div>
+		                                <div class="col-sm-10">
+			                                <input type="text" class="form-control b-light" id="storage_out_phone">
+			                            </div>
+				            		</div>
+				            		<div class="row mt-3">
+				            			<div class="col-sm-2 d-flex aling-items-center">
+			                            	<label for="storage_out_area" class="col-form-label color-dark align-center">면적(㎡)<span style="color: red;">*</span></label>
+		                                </div>
+		                                <div class="col-sm-5">
+			                                <input type="text" class="form-control b-light" id="storage_out_area">
+			                            </div>
+				            		</div>
+				            		<div class="row mt-3">
+				            			<div class="col-sm-2 d-flex aling-items-center">
+			                            	<label for="storage_out_crops" class="col-form-label color-dark align-center">작물재배 정보<span style="color: red;">*</span></label>
+		                                </div>
+		                                <div class="col-sm-5">
+			                                <input type="text" class="form-control b-light" id="storage_out_crops">
+			                            </div>
+				            		</div>
+				            		<div class="row mt-3">
+				            			<div class="col-sm-2 d-flex aling-items-center">
+			                            	<label for="storage_out_result" class="col-form-label color-dark align-center">토양분석 결과<span style="color: red;">*</span></label>
+		                                </div>
+		                                <div class="col-sm-5">
+			                                <textarea class="form-control" id="storage_out_result" rows="5"></textarea>
+			                            </div>
+				            		</div>
+				            		<div class="button-group d-flex justify-content-end mt-2">
+					                   <button class="btn btn-primary btn-default btn-squared">저장</button>
+					           		</div>
+				            	</form>
+			            	</div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+    	</div>
+    </main>
+    <!-- 공통 하단 -->
+    <th:block th:include="@{/fragments/footer.html}"></th:block>
+    <!-- 공통 js -->
+    <th:block th:include="@{/fragments/commonjs.html}"></th:block>
+<script type="text/javascript">
+	function InsertBtn()
+	{
+		$("#storageOutModal").modal("show");
+	}
+</script>
+</body>
+</html>

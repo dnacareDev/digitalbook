@@ -103,7 +103,7 @@
 				                                <option value="5">항목</option>
 				                            </select>
 				                            <div class="input-container icon-right position-relative mr-10">
-			                                    <a href="javascript:searchForm.submit();" class="input-icon icon-right"><span data-feather="search"></span></a>
+			                                    <a href="#" onclick="SearchResearch(1)" class="input-icon icon-right"><span data-feather="search"></span></a>
 			                                    <input type="text" class="form-control form-control-lg" id="keyword" placeholder="Search" style="width: 238px;height:40px;">
 			                                </div>
 			                            </div>
@@ -164,6 +164,10 @@
 	{
 		SearchResearch(1);
 	})
+	
+	$("#limit").on("change", function(){
+		SearchResearch(1);
+	});
 
 	function SearchResearch(e)
 	{
