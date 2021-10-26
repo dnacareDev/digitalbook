@@ -126,8 +126,18 @@ public class ResearchController
 		{
 			String[] strArr = last_research.getResearch_code().split("-");
 			
-			int code = Integer.parseInt(strArr[2]) + 1;
-			research.setResearch_code("ac-" + now + "-" + String.format("%05d", code));
+			int year = Integer.parseInt(strArr[1]);
+			
+			if(year == now)
+			{
+				int code = Integer.parseInt(strArr[2]) + 1;
+				research.setResearch_code("ac-" + now + "-" + String.format("%05d", code));
+			}
+			else
+			{
+				research.setResearch_code("ac-" + now + "-00001");
+			}
+			
 			research.setDivision_id(division_id);
 			research.setResearch_contents(research_contents);
 		}

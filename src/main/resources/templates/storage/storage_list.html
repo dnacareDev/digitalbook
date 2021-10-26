@@ -107,7 +107,7 @@
 								                            				<th>이용과</th>
 								                            			</tr>
 								                            		</thead>
-								                            		<tbody>
+								                            		<tbody id="storage_list">
 								                            			<tr>
 								                            				<td><span>fi-o-002-001</span></td>
 								                            				<td><span>작물연구동</span></td>
@@ -134,6 +134,11 @@
 					                    				</div>
                                                 	</div>
                                                 </div>
+				                        <div class="col-4">
+				                        	<div class="row" style="justify-content: center;">
+					                        	<div id="pageNum" style="text-align:center; margin: 2% 0 0 0;"></div>
+				                        	</div>
+				                        </div>
 					                            <div class="action-btn d-flex justify-content-end mt-30">
 				                                    <button class="btn btn-lg btn-primary" id="outBtn" onclick="InsertBtn();">+신규등록</button>
 				                                </div>
@@ -152,13 +157,13 @@
 			        <div class="modal-content modal-bg-white">
 			        	<div class="modal-header">
 			        		<h6 class="modal-title">신규등록</h6>
-		                    	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		                        	<span data-feather="x"></span>
-		                        </button>
+	                    	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	                        	<span data-feather="x"></span>
+	                        </button>
 			        	</div>
 			            <div class="modal-body">
 			            	<div class="col-12">
-				            	<form action="">
+				            	<form action="storage/insertStorage" id="insertForm" method="POST" enctype="multipart/form-data">
 				            		<div class="row">
 				            			<div class="col-sm-2 d-flex aling-items-center">
 			                            	<label for="storage_name" class="col-form-label color-dark align-center">위치<span style="color: red;">*</span></label>
@@ -185,10 +190,10 @@
 				            		</div>
 				            		<div class="row mt-3">
 				            			<div class="col-sm-2 d-flex aling-items-center">
-			                            	<label for="depart_id" class="col-form-label color-dark align-center">장소유형</label>
+			                            	<label for="storage_type" class="col-form-label color-dark align-center">장소유형<span style="color: red;">*</span></label>
 		                                </div>
 		                                <div class="col-sm-5">
-			                                <select class="form-control b-light" id="depart_id" name="depart_id">
+			                                <select class="form-control b-light" id="storage_type" name="storage_type">
 		                                		<option value="9">유형 선택</option>
 		                                		<option value="0">작물 연구동</option>
 		                                		<option value="1">가공이용 연구동</option>
@@ -219,7 +224,8 @@
 			                            </div>
 				            		</div>
 				            		<div class="button-group d-flex justify-content-end mt-2">
-					                   <button class="btn btn-primary btn-default btn-squared">저장</button>
+				            			<input type="hidden" id="storage_location" name="storage_location">
+				            			<button type="button" class="btn btn-primary btn-default btn-squared" onclick="InsertStorage();">저장</button>
 					           		</div>
 				            	</form>
 			            	</div>
@@ -233,18 +239,122 @@
     <th:block th:include="@{/fragments/footer.html}"></th:block>
     <!-- 공통 js -->
     <th:block th:include="@{/fragments/commonjs.html}"></th:block>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=94aa7b7737c9424541844eb3df0aa649&libraries=clusterer,services"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=	e93e65b3e9a407aa43d05f993408db95&libraries=clusterer,services"></script>
 	<script type="text/javascript">
-	$(function() {
+		$(document).ready(function()
+		{
+			SearchStorage(1);
+		});
+	
 		//modal show
 		function InsertBtn()
 		{
 			$("#storageOutModal").modal("show");
-		}		
+			const coords_data = coords;
+			
+			const storage_location = $("#storage_location");
+			storage_location.val(JSON.stringify(coords_data));
+			
+			coords = [];
+		}
 		
+		function InsertStorage()
+		{
+			var storage_name = $("#storage_name").val();
+			var storage_type = $("#storage_type").val();
+			var storage_location = $("#storage_location").val();
+			console.log(storage_location);
+			console.log(storage_location.length);
+			
+			if(storage_name == "")
+			{
+				alert("위치를 입력하세요.");
+			}
+			else if(storage_type == 9)
+			{
+				alert("장소유형을 입력하세요.");
+			}
+			else if(storage_location.length == 2)
+			{
+				alert("지도에서 영역을 정하세요.");
+			}
+			else
+			{
+				$("#insertForm").submit();
+			}
+		}
 		
+		function SearchStorage(e)
+		{
+			var data = {"page_num" : e};
+			
+			$.ajax(
+			{
+				url : 'storage/searchStorage',
+				method : 'POST',
+				dataType : 'json',
+				data : data,
+				success : function(result)
+				{
+					var storage_list = $("#storage_list");
+					var add_list = "";
+					
+					var pageNum = $("#pageNum");
+					var page_add = "";
+					
+					for(var i = 0; i < result.storage.length; i++)
+					{
+						add_list += '<tr>';
+						add_list += '<td><span>' + result.storage[i].storage_code + '</span></td>';
+						add_list += '<td><span>' + result.storage[i].storage_name + '</span></td>';
+						add_list += '<td><span>' + result.storage[i].storage_division + '</span></td>';
+						add_list += '<td><span>' + result.storage[i].storage_size + '</span></td>';
+						add_list += '<td><span>' + result.storage[i].department + '</span></td>';
+						add_list += '<td><input type="hidden" value="' + result.storage[i].storage_location + '"></td>';
+						add_list += '</tr>';
+					}
+
+					if(result.page_num == 1)
+					{
+						page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
+					}
+					else
+					{
+						page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchStorage(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
+					}
+					
+					for(var i = 0; i < result.end_page; i++)
+					{
+						if(result.page_num == (i + 1))
+						{
+							page_add += '<button class="atbd-pagination__link active" onclick="SearchStorage(' + (i + 1) + ')">' + (i + 1) + '</button>';
+						}
+						else
+						{
+							page_add += '<button class="atbd-pagination__link" onclick="SearchStorage(' + (i + 1) + ')">' + (i + 1) + '</button>';
+						}
+					}
+					
+					if(result.page_num == result.end_page)
+					{
+						page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
+					}
+					else
+					{
+						page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchStorage(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
+					}
+					
+					storage_list.empty();
+					storage_list.append(add_list);
+					
+					pageNum.empty();
+					pageNum.append(page_add);
+				}
+			});
+		}
+	
 	    const container = document.querySelector('#map');
-		console.log(container)
+		
 	    const options = { 
 	        center: new kakao.maps.LatLng(33.450701, 126.570667),
 	        level: 3
@@ -266,12 +376,10 @@
 	        marker.setMap(map);
 	        markers.push(marker);
 	        coords.push({ lat, lng })
-	        console.log(coords, "coords")
-	        console.log(markers, "markers")
 	    }
 
-	    function requestServer(){
-			console.log(markers, coords)
+	    function requestServer()
+	    {
 	        // $.ajax({ 
 	        //     url: "http://localhost:8080/api/",
 	        //     data: JSON.stringify({'coords': coords}),                        
@@ -294,7 +402,7 @@
 	        if (isRequest) {
 	            requestServer();
 	            markers = [];
-	            coords = [];
+// 	            coords = [];
 	        } else {
 	            markers = [];
 	            coords = [];
@@ -452,7 +560,7 @@
 	        }  
 	    });    
 
-	});
+	
 	
 	
 	</script>
