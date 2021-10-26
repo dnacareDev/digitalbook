@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.digitalBook.Mapper.PlanMapper">
+	
+	<!-- 종자(시료) 등록된 과제 list -->
+	<select id="selectReportList" resultType="Report">
+		SELECT * FROM report r 
+		INNER JOIN seed s ON r.report_id = s.report_id
+		GROUP BY r.report_id
+		ORDER BY r.report_id
+	</select>
+	
+	<!-- 시험재료(seed) 조회 list -->
+	<select id="selectSeedList" parameterType="int" resultType="Seed">
+		SELECT s.*, r.*, g.*, d.* FROM seed s
+		LEFT JOIN report r ON s.report_id = r.report_id
+		LEFT JOIN genetic g ON s.genetic_id = g.genetic_id
+		LEFT JOIN division d ON g.division_id = d.division_id
+		WHERE s.user_group = #{user_group} and s.report_id = #{report_id}
+	</select>
+	
+	<!-- 비료 조회 list -->
+	<select id="selectFertilizerList" resultType="Fertilizer">
+		SELECT * FROM fertilizer
+		WHERE fert_depth = #{fert_depth}
+		<choose>
+			<when test="fert_depth != 0">
+				AND fert_parent = #{fert_id}
+			</when>
+		</choose>
+	</select>
+	
+</mapper>
