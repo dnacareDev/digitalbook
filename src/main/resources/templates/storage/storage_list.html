@@ -102,7 +102,7 @@
 								                            				<th>위치ID</th>
 								                            				<th>위치</th>
 								                            				<th>구획구분</th>
-								                            				<th>크기</th>
+								                            				<th>면적</th>
 								                            				<th>이용과</th>
 								                            			</tr>
 								                            		</thead>
@@ -150,52 +150,71 @@
 			    <div class="modal-dialog modal-xl" role="document">
 			        <div class="modal-content modal-bg-white">
 			        	<div class="modal-header">
-			        		<h6 class="modal-title">외부포장등록</h6>
+			        		<h6 class="modal-title">신규등록</h6>
 		                    	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		                        	<span data-feather="x"></span>
 		                        </button>
 			        	</div>
 			            <div class="modal-body">
 			            	<div class="col-12">
-				            	<form action="#">
+				            	<form action="">
 				            		<div class="row">
 				            			<div class="col-sm-2 d-flex aling-items-center">
-			                            	<label for="storage_out_address" class="col-form-label color-dark align-center">주소<span style="color: red;">*</span></label>
+			                            	<label for="storage_name" class="col-form-label color-dark align-center">위치<span style="color: red;">*</span></label>
 		                                </div>
 		                                <div class="col-sm-10">
-			                                <input type="text" class="form-control b-light" id="storage_out_address">
+			                                <input type="text" class="form-control b-light" id="storage_name" name="storage_name">
 			                            </div>
 				            		</div>
 				            		<div class="row mt-3">
 				            			<div class="col-sm-2 d-flex aling-items-center">
-			                            	<label for="storage_out_phone" class="col-form-label color-dark align-center">농가(연락처)<span style="color: red;">*</span></label>
+			                            	<label for="storage_division" class="col-form-label color-dark align-center">구획구분</label>
 		                                </div>
 		                                <div class="col-sm-10">
-			                                <input type="text" class="form-control b-light" id="storage_out_phone">
+			                                <input type="text" class="form-control b-light" id="storage_division" name="storage_division">
 			                            </div>
 				            		</div>
 				            		<div class="row mt-3">
 				            			<div class="col-sm-2 d-flex aling-items-center">
-			                            	<label for="storage_out_area" class="col-form-label color-dark align-center">면적(㎡)<span style="color: red;">*</span></label>
+			                            	<label for="storage_size" class="col-form-label color-dark align-center">면적</label>
 		                                </div>
 		                                <div class="col-sm-5">
-			                                <input type="text" class="form-control b-light" id="storage_out_area">
+			                                <input type="text" class="form-control b-light" id="storage_size" name="storage_size">
 			                            </div>
 				            		</div>
 				            		<div class="row mt-3">
 				            			<div class="col-sm-2 d-flex aling-items-center">
-			                            	<label for="storage_out_crops" class="col-form-label color-dark align-center">작물재배 정보<span style="color: red;">*</span></label>
+			                            	<label for="depart_id" class="col-form-label color-dark align-center">장소유형</label>
 		                                </div>
 		                                <div class="col-sm-5">
-			                                <input type="text" class="form-control b-light" id="storage_out_crops">
+			                                <select class="form-control b-light" id="depart_id" name="depart_id">
+		                                		<option value="9">유형 선택</option>
+		                                		<option value="0">작물 연구동</option>
+		                                		<option value="1">가공이용 연구동</option>
+		                                		<option value="2">연천 시험지</option>
+		                                		<option value="3">외부 포장지</option>
+			                                </select>
 			                            </div>
 				            		</div>
 				            		<div class="row mt-3">
 				            			<div class="col-sm-2 d-flex aling-items-center">
-			                            	<label for="storage_out_result" class="col-form-label color-dark align-center">토양분석 결과<span style="color: red;">*</span></label>
+			                            	<label for="depart_id" class="col-form-label color-dark align-center">이용과</label>
 		                                </div>
 		                                <div class="col-sm-5">
-			                                <textarea class="form-control" id="storage_out_result" rows="5"></textarea>
+			                                <select class="form-control b-light" id="depart_id" name="depart_id">
+		                                		<option value="0">이용과 선택</option>
+			                                	<th:block th:each="depart : ${department}">
+			                                		<option th:value="${depart.depart_id}" th:text="${depart.department}"></option>
+			                                	</th:block>
+			                                </select>
+			                            </div>
+				            		</div>
+				            		<div class="row mt-3">
+				            			<div class="col-sm-2 d-flex aling-items-center">
+			                            	<label for="storage_contents" class="col-form-label color-dark align-center">Comment</label>
+		                                </div>
+		                                <div class="col-sm-10">
+			                                <textarea class="form-control" id="storage_contents" name="storage_contents" rows="10"></textarea>
 			                            </div>
 				            		</div>
 				            		<div class="button-group d-flex justify-content-end mt-2">

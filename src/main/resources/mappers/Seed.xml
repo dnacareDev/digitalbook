@@ -62,8 +62,9 @@
 	</select>
 	
 	<!-- 과제 전체 조회 -->
-	<select id="SelectReportList" parameterType="int" resultType="Report">
-		SELECT * FROM report WHERE user_group = #{user_group} and user_id != 0
+	<select id="SelectReportList" parameterType="String" resultType="Report">
+		SELECT * FROM report
+		WHERE user_name = #{user_name}
 	</select>
 	
 	<!-- 사용자 전체 조회 -->

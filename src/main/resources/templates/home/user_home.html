@@ -8,6 +8,7 @@
 <th:block th:include="@{/fragments/header.html}"></th:block>
 
 <style>
+
   #ModalTable1 table {
     width: 99%;
     height: 50%;
@@ -42,6 +43,100 @@
   #ModalTable2 th {
     background-color: #FDF5E6;
   }
+  
+  /* contents section 여백 */
+	.top-menu .main-content .contents {padding: 104px 40px 72px;}
+	
+	/* card 공통 - 그림자 */
+	.main-content .contents .card {box-shadow: 0 3px 6px rgb(239 241 245 / 100%);}s
+	
+	.col-lg-5 .card .btn-group {position: relative}
+	.col-lg-5 .card .btn-group .qr-code-btn {position: absolute; height: 35px; width:100px; right: 35px; padding-left: 30px; top: 50%; margin-top: -17.5px; border: none; font-size: 14px; background-color: #5F63F2; color: #fff; -webkit-border-radius: 5px; border-radius: 5px;}
+	.col-lg-5 .card .btn-group .qr-code-btn:before {
+		content: '';
+		position: absolute;
+		top: 50%;
+		margin-top: -9px;
+		left: 13px;
+		width: 19px;
+		height: 19px;
+		background: url(../img/icons/qrcode.png) no-repeat;
+		background-size: 100%;
+		z-index: 2;
+	}
+	
+	/* card 공통 - 드룹다운 */
+	.col-lg-5 .card-body .tab-pane .atbd-collapse-item .item-link {color: #222222}
+	.col-lg-5 .card-body .tab-pane .atbd-collapse-item .atbd-collapse-item__body {padding: 10px}
+	.col-lg-5 .card-body .tab-pane .atbd-collapse-item .atbd-collapse-item__body .collapse-body-text {padding-bottom: 0; }
+	.col-lg-5 .card-body .tab-pane .atbd-collapse-item .atbd-collapse-item__body .collapse-body-text .row:not(:last-child) {margin-bottom: 5px; }
+	.col-lg-5 .card-body .tab-pane .atbd-collapse-item .atbd-collapse-item__body .btn {background-color: #7C8798; color: #fff; border: none}
+	
+	
+	/* contents 첫번째 card */
+	.col-lg-5 .card:first-child {padding: 15px 15px 30px}
+	.col-lg-5 .card:first-child .card-body {padding-top: 0; margin-top: 1.56rem;}
+	
+	
+	
+	/* contents 두번째 card */
+	.card.mt-25.mb-md-50.mb-25 {padding: 15px 15px 30px}
+	.color-primary {font-size: 1.8rem; font-weight: 700}
+	.card.mt-25.mb-md-50.mb-25 .card-body {padding-top: 0; margin-top: 1.56rem;}
+	
+	/* 스코롤바 커스텀 */
+	.card-body {
+		scrollbar-arrow-color: #efefef;
+        scrollbar-Track-Color: #efefef; 
+        scrollbar-base-color: #dfdfdf;
+        scrollbar-Face-Color: #dfdfdf;
+        scrollbar-3dLight-Color: #dfdfdf;         
+        scrollbar-DarkShadow-Color: #dfdfdf;
+        scrollbar-Highlight-Color: #dfdfdf;
+        scrollbar-Shadow-Color: #dfdfdf
+       }
+       
+	/* Chrome, Safari용 스크롤 바 */
+	.card-body::-webkit-scrollbar {width: 10px;}
+	.card-body::-webkit-scrollbar-button:start:decrement, 
+	.card-body::-webkit-scrollbar-button:end:increment {display: block; width:0px; height: 0px; background: url() rgba(0,0,0,.05);}
+	.card-body::-webkit-scrollbar-track {background: rgba(0,0,0,.05); -webkit-border-radius: 10px; border-radius:10px;}
+	.card-body::-webkit-scrollbar-thumb { background: rgba(0,0,0,.1); -webkit-border-radius: 8px; border-radius: 8px; border: 3px solid #efefef}
+  
+  
+ 	 /* table card section */
+	/* table card section - thead */
+	.col-lg-7 .card .fc-header-toolbar .fc-toolbar-chunk:first-child > div {display: flex; align-items: center}
+	.fc-toolbar-chunk:first-child > div > .fc-toolbar-title {font-size: 1.5rem; display: block;}
+	.fc-toolbar-chunk:first-child > div > button {height: 34px; position: relative; margin-right: 15px; background-color: #fff; border: 1px solid #E4E4E4}
+	.fc-toolbar-chunk:first-child > div > button:last-child {margin-right: 0; margin-left: 15px}
+	.fc-toolbar-chunk:first-child > div > button.fc-today-button {padding-top: 3px; margin-right: 35px; background-color: #5F63F2; border: 1px solid #5F63F2; color: #fff}
+	
+	.fc-toolbar-chunk:first-child > div > button.fc-today-button:disabled { background-color: #fff; border: 1px solid #E4E4E4; color: #9299B8}
+	.fc-toolbar-chunk:first-child > div > button > span:before {position: absolute; top: 4px; left: 50%;  transform: translate(-50%); color: #9299B8}
+	
+	/* hover */
+	.fc-toolbar-chunk:first-child > div > button:hover { background-color: #5F63F2; border: 1px solid #5F63F2; color: #fff}
+	.fc-toolbar-chunk:first-child > div > button:hover> span:before {color: #fff}
+	
+	/* active */
+	.fc-toolbar-chunk:first-child > div > button:not(:disabled):active:focus { background-color: #4D50CF; border: 1px solid #4D50CF;}
+	.fc-toolbar-chunk:first-child > div > button:not(:disabled):active:focus > span:before {color: #fff}
+	
+	.col-lg-7 .card .fc-header-toolbar .fc-toolbar-chunk:last-child > .fc-button-group > button {background-color: #fff; border: 1px solid #E4E4E4; color: #9299B8}
+	
+	
+	.col-lg-7 .card .fc-header-toolbar .fc-toolbar-chunk:last-child > .fc-button-group > button.fc-button-active {background-color: #5F63F2; border: 1px solid #5F63F2; color: #fff}
+	
+	/* hover */
+	.col-lg-7 .card .fc-header-toolbar .fc-toolbar-chunk:last-child > .fc-button-group > button:hover {background-color: #E9E9E9; border: 1px solid #E4E4E4; color: #9299B8}
+	.col-lg-7 .card .fc-header-toolbar .fc-toolbar-chunk:last-child > .fc-button-group > button.fc-button-active:hover {background-color: #5F63F2; border: 1px solid #5F63F2; color: #fff}
+	
+	/* table card section - tbody */
+	#fulled-calendar {max-width: 985px; width: 100%; margin: 0 auto}
+	#fulled-calendar .fc-view-harness {height: 764px !important;}
+	#fulled-calendar .fc-scrollgrid > thead {text-align: center}
+	#fulled-calendar .fc-view .fc-col-header tr th .fc-scrollgrid-sync-inner .fc-col-header-cell-cushion {display: block; text-align: center; padding-left: 0}
 </style>
 
 </head>
@@ -54,9 +149,9 @@
 	<!-- 공통 topbar -->
 	<th:block th:include="@{/fragments/topbar.html}"></th:block>
 	
-	<main class="main-content" style="background-color: #fafef5;">
+	<main class="main-content" style="background-color: #F8F9FA;">
 	
-		<div class="contents" style="background-color: #fafef5;">
+		<div class="contents" style="background-color: #F8F9FA;">
     
 			<div class="atbd-page-content">
 				<div class="container-fluid mt-25">
@@ -67,6 +162,7 @@
 		                            <div class="btn-group atbd-button-group btn-group-normal nav" role="tablist">
 		                                <a href="#content1" class="btn btn-sm btn-outline-light fa-xs nav-link active" id="tab1" data-toggle="tab" role="tab" aria-selected="true">금일 일정</a>
 		                                <a href="#content2" class="btn btn-sm btn-outline-light fa-xs nav-link" id="tab2" data-toggle="tab" role="tab">지연 일정</a>
+		                                <button class="qr-code-btn">QR코드</button>
 		                            </div>
 		                        </div>
 					            <div class="card-body overflow-auto" style="height: 295px;">
@@ -77,7 +173,7 @@
 				                                    <p class="item-link" data-toggle="collapse" data-target="#coll-1" style="text-decoration: underline;">
 				                                        1. 쌀 수량 조사 (2021.08.05 - 2021.08.25)
 				                                    </p>
-				                                    <div id="coll-1" class="collapse atbd-collapse-item__body" style="background-color: #fafef5;">
+				                                    <div id="coll-1" class="collapse atbd-collapse-item__body" style="background-color: #F7F7F8;">
 				                                        <div class="collapse-body-text" style="position: static;">
 				                                            <div class="row">
 				                                            	<p>과제번호 :</p><p>PJ13487022020</p>
@@ -104,7 +200,7 @@
 				                                    <p class="item-link" data-toggle="collapse" data-target="#coll-2" style="text-decoration: underline;">
 				                                        Card content
 				                                    </p>
-				                                    <div id="coll-2" class="collapse atbd-collapse-item__body" style="background-color: #fafef5;">
+				                                    <div id="coll-2" class="collapse atbd-collapse-item__body" style="background-color: #F7F7F8;">
 				                                        <div class="collapse-body-text">
 				                                            <p>
 				                                                A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a
@@ -117,7 +213,7 @@
 				                                    <p class="item-link" data-toggle="collapse" data-target="#coll-3" style="text-decoration: underline;">
 				                                        Card content
 				                                    </p>
-				                                    <div id="coll-3" class="collapse atbd-collapse-item__body" style="background-color: #fafef5;">
+				                                    <div id="coll-3" class="collapse atbd-collapse-item__body" style="background-color: #F7F7F8;">
 				                                        <div class="collapse-body-text">
 				                                            <p>
 				                                                A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a
@@ -151,7 +247,7 @@
 				                                    <p class="item-link" data-toggle="collapse" data-target="#coll-b-1" style="text-decoration: underline;">
 				                                        Card content
 				                                    </p>
-				                                    <div id="coll-b-1" class="collapse atbd-collapse-item__body" style="background-color: #fafef5;">
+				                                    <div id="coll-b-1" class="collapse atbd-collapse-item__body" style="background-color: #F7F7F8;">
 				                                        <div class="collapse-body-text">
 				                                            <p>
 				                                                A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a
@@ -164,7 +260,7 @@
 				                                    <p class="item-link" data-toggle="collapse" data-target="#coll-b-2" style="text-decoration: underline;">
 				                                        Card content
 				                                    </p>
-				                                    <div id="coll-b-2" class="collapse atbd-collapse-item__body" style="background-color: #fafef5;">
+				                                    <div id="coll-b-2" class="collapse atbd-collapse-item__body" style="background-color: #F7F7F8;">
 				                                        <div class="collapse-body-text">
 				                                            <p>
 				                                                A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a
@@ -177,7 +273,7 @@
 				                                    <p class="item-link" data-toggle="collapse" data-target="#coll-b-3" style="text-decoration: underline;">
 				                                        Card content
 				                                    </p>
-				                                    <div id="coll-b-3" class="collapse atbd-collapse-item__body" style="background-color: #fafef5;">
+				                                    <div id="coll-b-3" class="collapse atbd-collapse-item__body" style="background-color: #F7F7F8;">
 				                                        <div class="collapse-body-text">
 				                                            <p>
 				                                                A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a
