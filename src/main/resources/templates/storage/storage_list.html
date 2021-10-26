@@ -241,123 +241,11 @@
     <th:block th:include="@{/fragments/commonjs.html}"></th:block>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=	e93e65b3e9a407aa43d05f993408db95&libraries=clusterer,services"></script>
 	<script type="text/javascript">
-		$(document).ready(function()
-		{
-			SearchStorage(1);
-		});
-	
-		//modal show
-		function InsertBtn()
-		{
-			$("#storageOutModal").modal("show");
-			const coords_data = coords;
-			
-			const storage_location = $("#storage_location");
-			storage_location.val(JSON.stringify(coords_data));
-			
-			coords = [];
-		}
-		
-		function InsertStorage()
-		{
-			var storage_name = $("#storage_name").val();
-			var storage_type = $("#storage_type").val();
-			var storage_location = $("#storage_location").val();
-			console.log(storage_location);
-			console.log(storage_location.length);
-			
-			if(storage_name == "")
-			{
-				alert("위치를 입력하세요.");
-			}
-			else if(storage_type == 9)
-			{
-				alert("장소유형을 입력하세요.");
-			}
-			else if(storage_location.length == 2)
-			{
-				alert("지도에서 영역을 정하세요.");
-			}
-			else
-			{
-				$("#insertForm").submit();
-			}
-		}
-		
-		function SearchStorage(e)
-		{
-			var data = {"page_num" : e};
-			
-			$.ajax(
-			{
-				url : 'storage/searchStorage',
-				method : 'POST',
-				dataType : 'json',
-				data : data,
-				success : function(result)
-				{
-					var storage_list = $("#storage_list");
-					var add_list = "";
-					
-					var pageNum = $("#pageNum");
-					var page_add = "";
-					
-					for(var i = 0; i < result.storage.length; i++)
-					{
-						add_list += '<tr>';
-						add_list += '<td><span>' + result.storage[i].storage_code + '</span></td>';
-						add_list += '<td><span>' + result.storage[i].storage_name + '</span></td>';
-						add_list += '<td><span>' + result.storage[i].storage_division + '</span></td>';
-						add_list += '<td><span>' + result.storage[i].storage_size + '</span></td>';
-						add_list += '<td><span>' + result.storage[i].department + '</span></td>';
-						add_list += '<td><input type="hidden" value="' + result.storage[i].storage_location + '"></td>';
-						add_list += '</tr>';
-					}
-
-					if(result.page_num == 1)
-					{
-						page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
-					}
-					else
-					{
-						page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchStorage(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
-					}
-					
-					for(var i = 0; i < result.end_page; i++)
-					{
-						if(result.page_num == (i + 1))
-						{
-							page_add += '<button class="atbd-pagination__link active" onclick="SearchStorage(' + (i + 1) + ')">' + (i + 1) + '</button>';
-						}
-						else
-						{
-							page_add += '<button class="atbd-pagination__link" onclick="SearchStorage(' + (i + 1) + ')">' + (i + 1) + '</button>';
-						}
-					}
-					
-					if(result.page_num == result.end_page)
-					{
-						page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
-					}
-					else
-					{
-						page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchStorage(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
-					}
-					
-					storage_list.empty();
-					storage_list.append(add_list);
-					
-					pageNum.empty();
-					pageNum.append(page_add);
-				}
-			});
-		}
-	
-	    const container = document.querySelector('#map');
+		const container = document.querySelector('#map');
 		
 	    const options = { 
 	        center: new kakao.maps.LatLng(33.450701, 126.570667),
-	        level: 3
+	        level: 5
 	    };
 	    const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 
@@ -559,6 +447,159 @@
 	            drawingFlag = false;          
 	        }  
 	    });    
+		$(document).ready(function()
+		{
+			SearchStorage(1);
+		});
+	
+		//modal show
+		function InsertBtn()
+		{
+			$("#storageOutModal").modal("show");
+			const coords_data = coords;
+			
+			const storage_location = $("#storage_location");
+			storage_location.val(JSON.stringify(coords_data));
+			
+			coords = [];
+		}
+		
+		function InsertStorage()
+		{
+			var storage_name = $("#storage_name").val();
+			var storage_type = $("#storage_type").val();
+			var storage_location = $("#storage_location").val();
+			
+			if(storage_name == "")
+			{
+				alert("위치를 입력하세요.");
+			}
+			else if(storage_type == 9)
+			{
+				alert("장소유형을 입력하세요.");
+			}
+			else if(storage_location.length == 2)
+			{
+				alert("지도에서 영역을 정하세요.");
+			}
+			else
+			{
+				$("#insertForm").submit();
+			}
+		}
+		
+		function SearchStorage(e)
+		{
+			var data = {"page_num" : e};
+			
+			$.ajax(
+			{
+				url : 'storage/searchStorage',
+				method : 'POST',
+				dataType : 'json',
+				data : data,
+				success : function(result)
+				{
+					var storage_list = $("#storage_list");
+					var add_list = "";
+					
+					var pageNum = $("#pageNum");
+					var page_add = "";
+					
+					for(var i = 0; i < result.storage.length; i++)
+					{
+						// add_list += '<tr class="storage_tr" data-coord="' + result.storage[i].storage_location + '">';
+						// add_list += '<td><span>' + result.storage[i].storage_code + '</span></td>';
+						// add_list += '<td><span>' + result.storage[i].storage_name + '</span></td>';
+						// add_list += '<td><span>' + result.storage[i].storage_division + '</span></td>';
+						// add_list += '<td><span>' + result.storage[i].storage_size + '</span></td>';
+						// add_list += '<td><span>' + result.storage[i].department + '</span></td>';
+						// add_list += '</tr>';						
+						add_list += `
+						  <tr class='storage_tr' data-coord='${result.storage[i].storage_location}'>
+							<td><span>${result.storage[i].storage_code}</span></td>
+							<td><span>${result.storage[i].storage_name}</span></td>
+							<td><span>${result.storage[i].storage_division}</span></td>
+							<td><span>${result.storage[i].storage_size}</span></td>
+							<td><span>${result.storage[i].department}</span></td>
+						  </tr>';
+						`
+					}
+
+					if(result.page_num == 1)
+					{
+						page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
+					}
+					else
+					{
+						page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchStorage(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
+					}
+					
+					for(var i = 0; i < result.end_page; i++)
+					{
+						if(result.page_num == (i + 1))
+						{
+							page_add += '<button class="atbd-pagination__link active" onclick="SearchStorage(' + (i + 1) + ')">' + (i + 1) + '</button>';
+						}
+						else
+						{
+							page_add += '<button class="atbd-pagination__link" onclick="SearchStorage(' + (i + 1) + ')">' + (i + 1) + '</button>';
+						}
+					}
+					
+					if(result.page_num == result.end_page)
+					{
+						page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
+					}
+					else
+					{
+						page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchStorage(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
+					}
+					
+					storage_list.empty();
+					storage_list.append(add_list);
+					
+					pageNum.empty();
+					pageNum.append(page_add);
+					
+					$(".storage_tr").click(function(){
+						const targetCoord = $(this).data('coord');
+						const lat = targetCoord[0].lat;
+						const lng = targetCoord[0].lng;
+						const position = new kakao.maps.LatLng(lat, lng)
+						map.panTo(position);
+
+						const linePath = [];
+						targetCoord.forEach((v, i) => {
+							const position = new kakao.maps.LatLng(v.lat, v.lng);
+							linePath.push(position);
+						})
+
+						// 지도에 표시할 선을 생성합니다
+						console.log(linePath)
+						const polyline = new kakao.maps.Polygon({
+							path: linePath, // 선을 구성하는 좌표배열 입니다
+							strokeWeight: 3, // 선의 두께입니다
+							strokeColor: '#fff', // 선의 색깔입니다
+							strokeOpacity: 0.2, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+							strokeStyle: 'longdash', // 선의 스타일입니다
+							fillColor: '#4347d9', // 채우기 색깔입니다
+							fillOpacity: 0.5 // 채우기 불투명도 입니다
+						});
+
+						// 지도에 선을 표시합니다 
+						polyline.setMap(map);
+						
+					});
+				}
+			});
+			
+			
+			
+			
+		}
+	
+	    
 
 	
 	
