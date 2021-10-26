@@ -48,6 +48,7 @@ table{
 }
 .btn_ver{
     width: 50%;
+    padding: 0 10px;
 }
 .btn_ver button{
     float: right;
@@ -64,7 +65,7 @@ select {
     border-color: #7888FC;
 }
 #section .step .step_inner .content .btn.sub_btn select{
-    width: calc((100% - 24px)/1.2);
+    width: 65%;
     float: left;
 }
 button{
@@ -80,6 +81,10 @@ button{
 	cursor: pointer;
 	border-radius: 4px;
 	font-weight:500;
+	
+}
+body button{
+	line-height:normal;
 }
 .submit button{
     padding: 12px 28px;
@@ -93,15 +98,17 @@ button{
     padding: 15px 0;
 }
 #section .step .step_inner{
-    max-width: 1200px;
+    max-width: 100%;
     margin: 0 auto;
     background-color: #fff;
     border: none;
     border-radius: .5rem;
     box-shadow: 0 4px 25px 0 rgb(0 0 0 / 10%);
+    padding-left: 30px;
+    padding-right: 30px; 
 }
 .submit_btn .submit_btn-inner{
-    max-width: 1200px;
+    max-width: 100%;
     margin: 0 auto;
 }
 #section .step .step_inner > .title{
@@ -160,13 +167,17 @@ button{
     width: 80%;
 }
 #section .step .step_inner .content .btn.btn2{
+	display:block;
     width: 30%;
     margin-top: 50px;
+    padding:0;
 }
 #section .step .step_inner .content .btn.sub_btn{
+	display:block;
     float: left;
     width: calc((100% - 60px)/3);
     margin-left: 30px;
+    padding: 0;
 }
 #section .step .step_inner .content .btn.sub_btn:first-child{
     margin-left: 0;
@@ -174,6 +185,8 @@ button{
 #section .step .step_inner .content .btn.sub_btn span.sub_title{
     float: left;
     width: 100%;
+    display:block;
+    text-align: left;
 }
 #section .step .step_inner .content .btn.sub_btn .select{
     width: calc((100% - 24px)/1.2);
@@ -181,11 +194,11 @@ button{
     padding-bottom: 15px;
 }
 #section .step .step_inner .submit{
-    width: 80%;
-    margin-left: 181.63px;
+    width: 100%;
 }
 .btn_button{
     float: left;
+    width: 35%;
 }
 #section .step .step_inner .submit button{
     float: right;
@@ -199,6 +212,7 @@ span.red{
     color:#FF0101;
 } 
 #section .step .step_inner .content .btn.btn_new{
+	display:block;
     float: left;
     width: 50%;
     margin-left: 0;
@@ -236,8 +250,14 @@ span.red{
 .content_right img{
     width: 100%;
 }
-#table1, #table2, #table3, #table4{
+#table1, #table3, #table4{
     float: none;
+    clear: both;
+    min-width: 100%;
+    text-align: center;
+}
+#table2{
+	float: none;
     clear: both;
     width: max-content;
     text-align: center;
@@ -281,12 +301,12 @@ span.red{
     border-bottom: 1px solid #E4E4E4;
 }
 #table1 td, #table2 td, #table3 td, #step6 tbody tr td{
-    padding: 12px 35px;
+    padding: 12px 40px;
 }
 #table3 td, #table4 td{
     font-weight: 300;
 }
-h6{
+#section h6{
     font-size: 14px;
     color: #666666;
     font-weight: 300;
@@ -302,21 +322,25 @@ h6{
     width: 100%;
     padding-top: 20px;
 }
-button.setting{
+#section button.setting{
     padding: 13px 20px;
-    margin-left: 10px;
+    width: 80%;
+    line-height: normal;
+    font-size: 14px;
+    float: right;
+    border-radius: 4px;
 }
 ul.select_list{
     padding-top: 20px;
 }
 .choi_select{
-    width: 100%;
+   	width: 100%;
     height: 50px;
     background-color: #F7F7F8;
     border: 1px solid #D9D9D9;
     clear: both;
     border-radius: 5px;
-    margin-top: 80px;
+    margin-top: 100px;
 }
 .repeat{
     padding: 30px 0;
@@ -342,7 +366,7 @@ input[type="text"]{
 }
 #step4 .background-content{
     height: 287px;
-    background: url(img/04.png) no-repeat center center;
+    background: url(../img/icons/04.png) repeat center center;
     clear: both;
 }
 .top_btn-left{
@@ -360,6 +384,7 @@ input[type="text"]{
     float: right;
     width: 50%;
     text-align: right;
+    margin-bottom: 5px;
 }
 .top_btn-right li{
     display: inline-block;
@@ -414,11 +439,11 @@ input[type="text"]{
 }
 .refresh{
     position: absolute;
-    right: -30px;
+    right: -40px;
     top: -1px;
     display: block;
     width: 30px;
-    height: 33px;
+    height: 36px;
     border: 1px solid #D8D8D8;
     clear: both;
     text-align: center;
@@ -426,7 +451,7 @@ input[type="text"]{
     color: #A7A7A7;
     background-color: #F8F7F7;
     border-radius: 3px;
-    cursor: pointer
+    cursor: pointer;
 }
 .refresh img {
     width: 80%;
@@ -442,7 +467,7 @@ input[type="text"]{
     font-weight: 700;
     border: 1px solid #cccccc;
     border-left: 0;
-    padding: 4px 0;
+    padding: 3.5px 0;
     text-align: center;
     cursor: pointer;
 }
@@ -467,13 +492,17 @@ input[type="text"]{
 .pointers{
     cursor: pointer;
 }
+#section .top_btn-right li button{
+	height: 33px;
+	border-radius: 4px;
+}
 .arrowMove{
     position: absolute;
-    left: -30px;
+    left: -40px;
     top: -1px;
     display: block;
     width: 30px;
-    height: 33px;
+    height: 36px;
     border: 1px solid #D8D8D8;
     clear: both;
     text-align: center;
@@ -481,7 +510,7 @@ input[type="text"]{
     color: #A7A7A7;
     background-color: #F8F7F7;
     border-radius: 3px;
-    cursor: pointer
+    cursor: pointer;
 }
 .arrowMove{
     vertical-align: middle;
@@ -493,7 +522,7 @@ input[type=search]:focus{
     border: 1px solid #cccccc;
 }
 #table4 th{
-    padding: 15px 50px;
+    padding: 15px 30px;
     background-color: #fff;
     font-weight: 500;
 }
@@ -523,7 +552,7 @@ input[type=search]:focus{
 #table3 .table_content{
     border-bottom: 1px solid #E5E9F2;
 }
-#table4 span.line{
+#table4 span.lines{
     display: block;
     width: 23px;
     height: 2.5px;
@@ -549,6 +578,7 @@ input[type=search]:focus{
     margin-left: 0;
 }
 #step6 #step6_inner .content .btn{
+	display:block;
     clear: both;
     width: 100%;
     text-align: right;
@@ -560,6 +590,8 @@ input[type=search]:focus{
     background-color: #E9E9FD;
     color: #5F63F2;
     font-weight: 700;
+    line-height: normal;
+    border-radius: 4px;
 }
 #step6 #step6_inner ul{
     padding-top: 50px;
@@ -602,7 +634,7 @@ input[type=search]:focus{
     padding: 15px 50px;
     font-weight: 700;
 }
-#step6 #step6_inner input[type="text"], .pop .pop_inner .box input[type='text'].regdate{
+#step6 #step6_inner input[type="text"], .modal-basic input[type='text'].regdate{
     clear: both;
     width: 80%;
     float: left;
@@ -613,7 +645,7 @@ input[type=search]:focus{
     border-radius: 5px 0 0 5px;
     
 }
-#step6 #step6_inner .cal, .pop .cal{
+#step6 #step6_inner .cal, .modal-basic .cal{
     float: left;
     width: 20%;
     margin-top: 10px;
@@ -636,7 +668,7 @@ input[type=search]:focus{
     background-color: rgba(0,0,0, .5);
     z-index: 9;
 }
-.pop .pop_inner h6{
+.modal-basic h2{
     font-weight: 700;
     font-size: 18px;
     float: left;
@@ -689,9 +721,8 @@ input[type=search]:focus{
     overflow: auto;
     max-height: 900px;
 }
-.pop .pop_inner .box{
+.modal-basic .col-md-12, .modal-basic .col-md-6{
     padding-top: 20px;
-    clear: both;
 }
 .pop .pop_inner input[type='text']{
     margin-top: 10px;
@@ -705,8 +736,7 @@ input[type=search]:focus{
     padding: 30px 0;
     clear: both;
 }
-.pop .pop_inner .input_submit button{
-    float: right;
+.modal-basic .input_submit button{
     padding: 15px 50px;
     background-color: #E9E9FD;
     color: #5F63F2;
@@ -719,6 +749,14 @@ input[type=search]:focus{
 }
 .pop .pop_inner li:first-child{
     margin-left: 0;
+}
+.modal-basic .col-md-12 img{
+	width: 100%;
+}
+@media (min-width: 992px){
+	#chanModal .modal-lg{
+	    max-width: 600px;
+	}
 }
 </style>
 <!-- 공통 헤더 -->
@@ -805,7 +843,7 @@ window.addEventListener("load", function(){ //javascript
     }
     
 });
-function popupView(display, e){
+function popupView(display, e){ //buttonFunctions
     const popup = document.getElementsByClassName("pop"),
           dim = document.getElementsByClassName("dim")[0];
     for(let i=0; i < popup.length; i++){
@@ -815,11 +853,11 @@ function popupView(display, e){
     dim.style.display=display;
 }    
     
-function closeFunction(e){ //팝업 닫기
+function closeFunction(e){ //팝업 닫기 //buttonFunctions
     popupView("none", e);
 }
     
-function registration(e){ //신규등록 버튼
+function registration(e){ //신규등록 버튼 //buttonFunctions
     popupView("block", e);
 }
 </script>
@@ -838,10 +876,10 @@ function registration(e){ //신규등록 버튼
 		<div class="contents" style="background-color: #F9FBFD;">
 			
 			<div class="container-fluid">
-				 <div class="pop"> <!-- pop1 -->
+				 <div class="pop"> <!-- pop1  --> 
         <div class="pop_inner">
             <h6>포장 신규</h6>
-            <span class="close" onclick="return closeFunction(0);"></span>
+            <span class="close" onclick="return closeFunction(0);"></span> <!-- buttonFunctions -->
             <div class="box box-1">
                 <span>주소</span>
                 <input type="text" name="">
@@ -854,7 +892,7 @@ function registration(e){ //신규등록 버튼
             </div>
             <div class="box box-3">
                 <span>위치</span>
-                <img src="img/step1.png" alt="map">
+                <img src="../img/icons/step1.png" alt="map">
             </div>
             <div class="input_submit">
                 <button onclick="closeFunction(0);">저장</button>
@@ -865,7 +903,7 @@ function registration(e){ //신규등록 버튼
     <div class="pop"> <!-- pop2 -->
         <div class="pop_inner" style="max-width: 600px">
             <h6>담당자 및 일정 변경</h6>
-            <span class="close" onclick="return closeFunction(1);"></span>
+            <span class="close" onclick="return closeFunction(1);"></span> <!-- buttonFunctions -->
             <div class="box box-1">
                 <span><span class="red">*</span>담당자(정)</span>
                 <select>
@@ -909,7 +947,7 @@ function registration(e){ //신규등록 버튼
                     </div>
                     <div class="content clearfix">
                         <div class="btn_ver">
-                            <button onclick="return registration(0);">신규등록</button>
+							<button type="button" id="storageBtn">신규등록</button>
                         </div>
                         <div class="btn btn_new">
                             
@@ -933,7 +971,7 @@ function registration(e){ //신규등록 버튼
                         <div class="content_right">
                             <div class="img_inner">
                                 <h6>* 위치 ID 클릭 시 해당 포장 표시</h6>
-                                <img src="img/step1.png" alt="지도">
+                                <img src="../img/icons/step1.png" alt="지도">
                             </div>
                         </div>
                     </div>
@@ -945,7 +983,7 @@ function registration(e){ //신규등록 버튼
                         <h3>Step 2. 과제 선택<span></span></h3>
                     </div>
                     <div class="content clearfix">
-                        <div class="btn btn_select1">
+                        <div class="btn btn_select1" style="display:block">
                             <select class="form-control b-light department" id="select_view1" name="">
                                 <option value="">2021 - (PJ015744012021) "콩 불마름병, 역병 저항성 품종 개발을 위한 플랫폼 구축"</option>
                                 <option value="">1</option>
@@ -1048,7 +1086,7 @@ function registration(e){ //신규등록 버튼
                                 </tr>
                                 </thead>
                                 <tr class="table_content">
-                                    <td class="pointers"><img src="img/araw.png" alt="pointer"></td>
+                                    <td class="pointers"><img src="../img/icons/araw.png" alt="pointer"></td>
                                     <td>1</td>
                                     <td>A1-B1-1</td>
                                     <td>콩 (williams),K1(기타)</td>
@@ -1056,7 +1094,7 @@ function registration(e){ //신규등록 버튼
                                     <td><input type="text" id="mil" value="0"></td>
                                 </tr>
                                 <tr class="table_content">
-                                    <td class="pointers"><img src="img/araw.png" alt="pointer"></td>
+                                    <td class="pointers"><img src="../img/icons/araw.png" alt="pointer"></td>
                                     <td>1</td>
                                     <td>A1-B1-1</td>
                                     <td>콩 (williams),K1(기타)</td>
@@ -1070,7 +1108,7 @@ function registration(e){ //신규등록 버튼
                                 <div class="top_btn-left">
                                     <h6><span class="red" style="color: #FF4141">*</span>열의 갯수</h6>
                                     <input type="text" value="0" id="mil2" style="border-radius: 5px 0 0 5px; width: 40%; margin-left: 10px;">
-                                    <button style="height: 31px; border-radius: 0 5px 5px 0; ">적용</button>
+                                    <button style="height: 33px; border-radius: 0 5px 5px 0; ">적용</button>
                                 </div>
                                 <div class="top_btn-right clearfix">
                                     <ul>
@@ -1132,6 +1170,7 @@ function registration(e){ //신규등록 버튼
                             </svg>
                         </div>
                         <div class="btn btn_new"  style="border-radius: 5px; border: 1px solid #d9d9d9;padding: 0; margin-top: 10px">
+                        	
                             <table id="table3">
                                 <thead>
                                 <tr class="title">
@@ -1160,7 +1199,7 @@ function registration(e){ //신규등록 버튼
                                     <table id="table4">
                                         <thead>
                                             <tr>
-                                                <th><a><img src="img/araw.png" alt="arrow"></a></th>
+                                                <th><a><img src="../img/icons/araw.png" alt="arrow"></a></th>
                                                 <th>분류</th>
                                                 <th>조사 항목</th>
                                                 <th>작목</th>
@@ -1170,7 +1209,7 @@ function registration(e){ //신규등록 버튼
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td><span class="line"></span></td>
+                                                <td><span class="lines"></span></td>
                                                 <td>재배</td>
                                                 <td>최초 꼬투리가 달리는 높이</td>
                                                 <td>참깨</td>
@@ -1247,14 +1286,14 @@ function registration(e){ //신규등록 버튼
                                         <td>담당자</td>
                                         <td>담당자</td>
                                         <td>2021.00.00</td>
-                                        <td><button onclick="registration(1)">변경</button></td>
+                                        <td><button type="button" id="chanBtn1">변경</button></td>
                                     </tr>
                                     <tr>
                                         <td>1</td>
                                         <td>담당자</td>
                                         <td>담당자</td>
                                         <td>2021.00.00</td>
-                                        <td><button onclick="registration(1)">변경</button></td>
+                                        <td><button type="button" id="chanBtn2">변경</button></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -1311,14 +1350,14 @@ function registration(e){ //신규등록 버튼
                                         <td>담당자</td>
                                         <td>담당자</td>
                                         <td>2021.00.00</td>
-                                        <td><button onclick="registration(1)">변경</button></td>
+                                        <td><button type="button" id="chanBtn3">변경</button></td>
                                     </tr>
                                     <tr>
                                         <td>1</td>
                                         <td>담당자</td>
                                         <td>담당자</td>
                                         <td>2021.00.00</td>
-                                        <td><button onclick="registration(1)">변경</button></td>
+                                        <td><button type="button" id="chanBtn4">변경</button></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -1337,13 +1376,169 @@ function registration(e){ //신규등록 버튼
 			</div>
 			
 		</div>
+		<div class="modal-basic modal fade show" id="storageModal" tabindex="-1" role="dialog" aria-hidden="true">
+		    <div class="modal-dialog modal-lg" role="document">
+		        <div class="modal-content modal-bg-white">
+		            <div class="modal-body">
+		            	<div class="row">
+			        		<div class="col-12">
+			        			<h2 style="float: left;">포장 신규</h2>
+					        	<div class="d-flex justify-content-end">
+			                		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span data-feather="x"></span></button>
+			                	</div>
+			        		</div>
+			        	</div>
+		            	<div class="row mt-3">
+		            		<div class="col-md-12">
+		            			<label for="" class="color-dark fw-500">주소</label>
+	                            <input type="text" class="form-control" name="" style="width: 100%; height: 40px; font-size: 0.875em; padding: 20px 20px;">
+		            		</div>
+		            	</div>
+			            <div class="row">
+			            	<div class="col-md-6">
+				                <label for="" class="color-dark fw-500">포장 번호</label>
+	                            <input type="text" class="form-control" name="" style="width: 100%; height: 40px; font-size: 0.875em; padding: 20px 20px;">
+				            </div>
+				            <div class="col-md-6">
+				                <label for="" class="color-dark fw-500">면적</label>
+	                            <input type="text" class="form-control" name="" style="width: 100%; height: 40px; font-size: 0.875em; padding: 20px 20px;">
+				            </div>
+			            </div>
+			            <div class="row">
+			            	<div class="col-md-12">
+			            		<span>위치</span>
+			                	<img src="../img/icons/step1.png" alt="map">
+			            	</div>
+			            </div>
+			            <div class="row" style="flex-direction:row-reverse; padding: 20px 17px;">
+			            	<div class="input_submit">
+				                <button type="button" onclick="">저장</button>
+				            </div>
+			            </div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
 		
+		<div class="modal-basic modal fade show" id="chanModal" tabindex="-1" role="dialog" aria-hidden="true">
+		    <div class="modal-dialog modal-lg" role="document">
+		        <div class="modal-content modal-bg-white">
+		            <div class="modal-body">
+		            	<div class="row">
+			        		<div class="col-12">
+			        			<h2 style="float: left;">담당자 및 일정 변경</h2>
+					        	<div class="d-flex justify-content-end">
+			                		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span data-feather="x"></span></button>
+			                	</div>
+			        		</div>
+			        	</div>
+		            	<div class="row mt-3">
+		            		<div class="col-md-12">
+		            			<label for="" class="color-dark fw-500">담당자(정)</label>
+	                            <select>
+				                    <option>담당자 선택</option>
+				                    <option>담당자 선택</option>
+				                    <option>담당자 선택</option>
+				                    <option>담당자 선택</option>
+				                </select>
+		            		</div>
+		            	</div>
+			            <div class="row">
+			            	<div class="col-md-12">
+				                <label for="" class="color-dark fw-500">담당자(부)</label>
+	                            <select>
+				                    <option>담당자 선택</option>
+				                    <option>담당자 선택</option>
+				                    <option>담당자 선택</option>
+				                    <option>담당자 선택</option>
+				                </select>
+				            </div>
+			            </div>
+			            <div class="row">
+			            	<div class="col-md-12">
+			            		<span style="float:left">일정등록</span>
+			                	<input type="text" name="" class="regdate">
+				                <div class="cal">
+				                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+				                      <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+				                    </svg>
+			                	</div>
+			            	</div>
+			            </div>
+			            <div class="row" style="flex-direction:row-reverse; padding: 20px 17px;">
+			            	<div class="input_submit">
+				                <button type="button" onclick="">저장</button>
+				            </div>
+			            </div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+		<div class="modal-basic modal fade show" id="chanModal2" tabindex="-1" role="dialog" aria-hidden="true">
+		    <div class="modal-dialog modal-lg" role="document">
+		        <div class="modal-content modal-bg-white">
+		            <div class="modal-body">
+		            	<div class="row">
+			        		<div class="col-12">
+			        			<h2 style="float: left;">측정 값</h2>
+					        	<div class="d-flex justify-content-end">
+			                		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span data-feather="x"></span></button>
+			                	</div>
+			        		</div>
+			        	</div>
+		            	<div class="row mt-3">
+		            		<div class="col-md-12">
+		            			<table>
+                                    <thead>
+                                    <tr>
+                                        <th>일시</th>
+                                        <th>색상</th>
+                                        <th>기상정보</th>
+                                        <th>토양정보</th>
+                                        <th>위치정보</th>
+                                        <th>사진</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <td>2021.08.06</td>
+                                        <td>#FFFFCC</td>
+                                        <td class="blue"><a href="">view</a></td>
+                                        <td class="blue"><a href="">view</a></td>
+                                        <td class="blue"><a href="">map</a></td>
+                                        <td class="blue"><a href="">view</a></td>
+                                    </tbody>
+                                </table>
+		            		</div>
+		            	</div>
+			            <div class="row" style="flex-direction:row-reverse; padding: 20px 17px;">
+			            	<div class="submit_btn">
+                                <ul>
+                                    <li><button class="type2">사진 선택</button></li>
+                                    <li><button class="type2">사진 선택</button></li>
+                                </ul>
+                            </div>
+			            </div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+	    <!-- ends: .modal-Basic -->
 	</main>
 	
 	 <!-- 공통 하단 -->
     <th:block th:include="@{/fragments/footer.html}"></th:block>
     <!-- 공통 js -->
     <th:block th:include="@{/fragments/commonjs.html}"></th:block>
-     
+     <script>
+		$("#storageBtn").on("click", function(){
+			$("#storageModal").modal("show");
+		});
+		$("#chanBtn1").on("click", function(){
+			$("#chanModal").modal("show");
+		});
+		$("#chanBtn2").on("click", function(){
+			$("#chanModal2").modal("show");
+		});
+     </script>
 </body>    
 </html>
