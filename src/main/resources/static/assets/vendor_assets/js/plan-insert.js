@@ -79,20 +79,3 @@ window.addEventListener("load", function(){ //javascript
     }
     
 });
-function popupView(display, e){ //buttonFunctions
-    const popup = document.getElementsByClassName("pop"),
-          dim = document.getElementsByClassName("dim")[0];
-    for(let i=0; i < popup.length; i++){
-        
-        popup[e].style.display=display;
-    }
-    dim.style.display=display;
-}    
-    
-function closeFunction(e){ //팝업 닫기 //buttonFunctions
-    popupView("none", e);
-}
-    
-function registration(e){ //신규등록 버튼 //buttonFunctions
-    popupView("block", e);
-}
