@@ -113,7 +113,7 @@
 			                    <div class="content clearfix">
 			                        <span class="title">시험구배치 종류</span>
 			                        <div class="btn btn2">
-			                            <select id="select_view2" class="select_view" name="">
+			                            <select id="grow_type" class="select_view" name="">
 			                            	<option value="none" disabled="disabled" selected="selected" hidden="hidden">시험구배치 선택</option>
 			                                <option value="0">완전임의배치</option>
 			                                <option value="1">난괴법</option>
@@ -176,10 +176,10 @@
 			                        </ul>
 			                        <div class="repeat">
 			                            <h6><span class="red" style="color: #FF4141">*</span>반복</h6>
-			                            <input type="text" value="1">
+			                            <input type="text" id="plan_repeat" value="1">
 			                        </div>
 			                        <div class="submit clearfix">
-			                            <button>다음</button>
+			                            <button type="button" id="step-3-btn">다음</button>
 			                        </div>
 			                    </div>
 			                </div>
@@ -190,35 +190,23 @@
 			                        <h3>Step 4. 구획 설정<span></span></h3>
 			                    </div>
 			                    <div class="content clearfix">
-			                        <div class="btn btn_new">
-			                            <table id="table2">
-			                                <thead>
-			                                <tr class="title">
-			                                    <th></th>
-			                                    <th>구획번호</th>
-			                                    <th>구획ID</th>
-			                                    <th>처리종류</th>
-			                                    <th>반복</th>
-			                                    <th>처리포장면적(㎡)</th>
-			                                </tr>
-			                                </thead>
-			                                <tr class="table_content">
-			                                    <td class="pointers"><img src="../img/icons/araw.png" alt="pointer"></td>
-			                                    <td>1</td>
-			                                    <td>A1-B1-1</td>
-			                                    <td>콩 (williams),K1(기타)</td>
-			                                    <td>1</td>
-			                                    <td><input type="text" id="mil" value="0"></td>
-			                                </tr>
-			                                <tr class="table_content">
-			                                    <td class="pointers"><img src="../img/icons/araw.png" alt="pointer"></td>
-			                                    <td>1</td>
-			                                    <td>A1-B1-1</td>
-			                                    <td>콩 (williams),K1(기타)</td>
-			                                    <td>1</td>
-			                                    <td><input type="text" id="mil" value="0"></td>
-			                                </tr>
-			                            </table>
+			                        <div class="btn btn_new" id="copy-step-4">
+		                            	<div>
+			                            	<table id="table2">
+				                                <thead>
+				                                <tr class="title">
+				                                    <th>구획번호</th>
+				                                    <th>구획ID</th>
+				                                    <th>처리종류</th>
+				                                    <th>반복</th>
+				                                    <th>처리포장면적(㎡)</th>
+				                                </tr>
+				                                </thead>
+				                                <tbody class="step4-container">
+				                                	
+				                                </tbody>
+				                            </table>	
+		                            	</div>
 			                        </div>
 			                        <div class="content_right">
 			                            <div class="img_inner">
@@ -912,7 +900,7 @@
 		                    	</div>
 		            			<div class="row">
 		            				<div class="d-flex justify-content-start">
-						                <button type="button" onclick="PlusAmount();" style="width: 70px; height: 30px; font-size: small;">추가</button>
+						                <button type="button" onclick="PlusManure();" style="width: 70px; height: 30px; font-size: small;">추가</button>
 						            </div>
 					            </div>
 		            		</div>
@@ -1253,9 +1241,7 @@
 			data3.content = content;
 			$("#text_inner3").text(text);
 		}
-		console.log(data1);
-		console.log(data2);
-		console.log(data3);
+		
 		$("#seedModal").modal("hide");
 	};
 	
@@ -1301,9 +1287,7 @@
 			data3.content = content;
 			$("#text_inner3").text(text);
 		}
-		console.log(data1);
-		console.log(data2);
-		console.log(data3);
+		
 		$("#intervalModal").modal("hide");
 		
 		
@@ -1425,9 +1409,7 @@
 			data3.content = content;
 			$("#text_inner3").text(text);
 		}
-		console.log(data1);
-		console.log(data2);
-		console.log(data3);
+		
 		$("#plantsModal").modal("hide");
 		
 		
@@ -1496,9 +1478,7 @@
 			data3.content = content;
 			$("#text_inner3").text(text);
 		}
-		console.log(data1);
-		console.log(data2);
-		console.log(data3);
+		
 		$("#amountModal").modal("hide");
 	});//end 파종량 요인사용 버튼 클릭 이벤트
 	
@@ -1581,7 +1561,7 @@
 	});//end 시비량 값 계산 함수
 	
 	//시비량 추가 버튼 이벤트
-	function PlusAmount(){
+	function PlusManure(){
 		
 		var manure_area = $("#manure_area").val();
 		var manure_type = $("#fert_2").find("option:selected").text();
@@ -1695,7 +1675,7 @@
 			});//end ,manure_te each
 			
 		});//end copy-form-standard each
-		console.log("etcArray : " + JSON.stringify(manureArray));
+		
 		if(index == 1){
 			data1.type = type;
 			data1.content = content;
@@ -1709,9 +1689,7 @@
 			data3.content = content;
 			$("#text_inner3").text(text);
 		}
-		console.log(data1);
-		console.log(data2);
-		console.log(data3);
+		
 		$("#manureModal").modal("hide");
 		
 	});//end 시비량 요인사용 버튼 이벤트
@@ -1783,7 +1761,7 @@
 			etcArray.push(data);
 			
 		});
-		console.log("etcArray : " + JSON.stringify(etcArray));
+		
 		
 		if(index == 1){
 			data1.type = type;
@@ -1803,6 +1781,300 @@
 		console.log(data3);
 		$("#etcModal").modal("hide");
 	});//end 기타 요인 사용 버튼 이벤트
+	
+	//step4에서 사용할 array
+	var factorArray = new Array();
+	var resultArray = new Array();
+	
+	//step3 btn 이벤트
+	$("#step-3-btn").on("click", function(){
+		
+		var factor1 = "";
+		var factor2 = "";
+		var factor3 = "";
+		
+		if(Object.keys(data1).length != 0){
+			factor1 = data1.content.split(",");
+		}
+		if(Object.keys(data2).length != 0){
+			factor2 = data2.content.split(",");
+		}
+		if(Object.keys(data3).length != 0){
+			factor3 = data3.content.split(",");
+		}
+		
+		var plan_repeat = $("#plan_repeat").val();
+		
+		var grow_type = $("#grow_type option:selected").val();
+		console.log(grow_type);
+		var level1 = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+		var level2 = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+		var level3 = ['X','Y','Z'];
+		
+		if(grow_type == "0"){
+			var num = 0;
+			var num1 = 0;
+			var id = "";
+			var id1 = "";
+			var id2 = "";
+			var type = "";
+			var type2 = "";
+			var type3 = "";
+			var repeat = "";
+			
+			if(factor1 != "" && factor2 == "" && factor3 == ""){
+				for(var i = 0; i < factor1.length; i++){
+					id = level1[i];
+					type = factor1[i];
+					num++;
+					var number = num;
+					
+					var data = {"num" : number, "id" : id, "type" : type};
+					factorArray.push(data);
+					
+					id = "";
+					type = "";
+				}
+			}else if(factor1 != "" && factor2 != "" && factor3 == ""){
+				for(var i = 0; i < factor1.length; i++){
+					id = level1[i];
+					type = factor1[i];
+					
+					for(var j = 0; j < factor2.length; j++){
+						id2 = id;
+						id2 = id2 + '-' + level2[j];
+						type2 = type;
+						type2 = type2 + ',' + factor2[j];
+						num++;
+						var number = num;
+						
+						var data = {"num" : number, "id" : id2, "type" : type2};
+						factorArray.push(data);
+					}
+					id = "";
+					type = "";
+				}
+			}else if(factor1 != "" && factor2 != "" && factor3 != ""){
+				for(var i = 0; i < factor1.length; i++){
+					id = level1[i];
+					type = factor1[i];
+					
+					for(var j = 0; j < factor2.length; j++){
+						id2 = id;
+						id2 = id2 + '-' + level2[j];
+						type2 = type;
+						type2 = type2 + ',' + factor2[j];
+						
+						for(var k = 0; k < factor3.length; k++){
+							num++;
+							var number = num;
+							id3 = id2;
+							id3 = id3 + '-'+level3[k];
+							type3 = type2;
+							type3 = type3 + ',' + factor3[k];
+							
+							var data = {"num" : number, "id" : id3, "type" : type3};
+							factorArray.push(data);
+						}//end for3
+						
+					}//end for2
+					id = "";
+					type = "";
+				}//end for1
+			}
+			
+			for(var i = 0; i < plan_repeat; i++){
+				for(var j = 0; j < factorArray.length; j++){
+					num1++;
+					var number = num1;
+					var data = {"num" : number, "id" : factorArray[j].id, "type" : factorArray[j].type, "repeat" : i+1};
+					
+					resultArray.push(data);
+				}
+			}//end for
+			
+			
+			var body = $("#table2");
+			add_list = "";
+			
+			for(var i = 0; i < resultArray.length; i++){
+				add_list += '<tr class="table_content">';
+			    add_list += '<td>'+resultArray[i].num+'</td>';
+			    add_list += '<td>'+resultArray[i].id+'</td>';
+			    add_list += '<td>'+resultArray[i].type+'</td>';
+			    add_list += '<td>'+resultArray[i].repeat+'</td>';
+			    add_list += '<td><input type="text" id="mil" value="0"></td>';
+			    add_list += '</tr>';
+			}
+			
+			body.append(add_list);
+			
+		}else if(grow_type == "1"){
+			var num = 0;
+			var num1 = 0;
+			var id = "";
+			var id1 = "";
+			var id2 = "";
+			var type = "";
+			var type2 = "";
+			var type3 = "";
+			var repeat = "";
+			
+			if(factor1 != "" && factor2 == "" && factor3 == ""){
+				for(var i = 0; i < factor1.length; i++){
+					id = level1[i];
+					type = factor1[i];
+					num++;
+					var number = num;
+					
+					var data = {"num" : number, "id" : id, "type" : type};
+					factorArray.push(data);
+					
+					id = "";
+					type = "";
+				}
+			}else if(factor1 != "" && factor2 != "" && factor3 == ""){
+				for(var i = 0; i < factor1.length; i++){
+					id = level1[i];
+					type = factor1[i];
+					
+					for(var j = 0; j < factor2.length; j++){
+						id2 = id;
+						id2 = id2 + '-' + level2[j];
+						type2 = type;
+						type2 = type2 + ',' + factor2[j];
+						num++;
+						var number = num;
+						
+						var data = {"num" : number, "id" : id2, "type" : type2};
+						factorArray.push(data);
+					}
+					id = "";
+					type = "";
+				}
+			}else if(factor1 != "" && factor2 != "" && factor3 != ""){
+				for(var i = 0; i < factor1.length; i++){
+					id = level1[i];
+					type = factor1[i];
+					
+					for(var j = 0; j < factor2.length; j++){
+						id2 = id;
+						id2 = id2 + '-' + level2[j];
+						type2 = type;
+						type2 = type2 + ',' + factor2[j];
+						
+						for(var k = 0; k < factor3.length; k++){
+							num++;
+							var number = num;
+							id3 = id2;
+							id3 = id3 + '-'+level3[k];
+							type3 = type2;
+							type3 = type3 + ',' + factor3[k];
+							
+							var data = {"num" : number, "id" : id3, "type" : type3};
+							factorArray.push(data);
+						}//end for3
+						
+					}//end for2
+					id = "";
+					type = "";
+				}//end for1
+			}
+			
+			for(var i = 0; i < plan_repeat; i++){
+				for(var j = 0; j < factorArray.length; j++){
+					num1++;
+					var number = num1;
+					var data = {"num" : number, "id" : factorArray[j].id, "type" : factorArray[j].type, "repeat" : i+1};
+					
+					resultArray.push(data);
+				}
+			}//end for
+			
+			var copy_step_4 = $("#copy-step-4");
+			console.log(plan_repeat);
+			
+			var body = $("#table2");
+			
+			add_list = "";
+			var add_div = "";
+			var result_div = "";
+			
+			for(var i = 0; i < plan_repeat; i++){
+				
+				add_list += '<div>집구 '+(i+1)+'</div>';
+				add_list += '<table>';
+				add_list += '<thead>';
+				add_list += '<tr class="title">';
+				add_list += '<td>구획번호</td>';
+				add_list += '<td>구획 ID</td>';
+				add_list += '<td>처리종류</td>';
+				add_list += '<td>반복</td>';
+				add_list += '<td>처리포장면적(㎡)</td>';
+				add_list += '</tr>';
+				add_list += '</thead>';
+				add_list += '<tbody class="step4-container">';
+				
+				
+				for(var j = 0; j < resultArray.length; j++){
+					add_list += '<tr class="table_content">';
+				    add_list += '<td>'+resultArray[j].num+'</td>';
+				    add_list += '<td>'+resultArray[j].id+'</td>';
+				    add_list += '<td>'+resultArray[j].type+'</td>';
+				    add_list += '<td>'+resultArray[j].repeat+'</td>';
+				    add_list += '<td><input type="text" id="mil" value="0"></td>';
+				    add_list += '</tr>';
+				}//end for2
+				
+				add_list += '</tbody>';
+				add_list += '</table>';
+				
+				result_div += add_list;
+				
+				add_list = "";
+			}//end for1
+			
+			copy_step_4.empty();
+			copy_step_4.append(result_div);
+			
+			$(document).find(".step4-container").sortable({
+				placeholder : "itemBoxHighlight",
+				start : function(event, ui){
+					
+				},
+				stop : function(event, ui){
+					/* reorder();
+					inputProtocol(); */
+				}
+			});//end sortable
+		}
+	    
+	    
+	    
+	});//step3 btn 이벤트
+	
+	//jquery sortable 적용	
+	$(document).find("#step-container").sortable({
+		placeholder : "itemBoxHighlight",
+		start : function(event, ui){
+			
+		},
+		stop : function(event, ui){
+			/* reorder();
+			inputProtocol(); */
+		}
+	});//end sortable
+	
+	$(document).find(".step4-container").sortable({
+		placeholder : "itemBoxHighlight",
+		start : function(event, ui){
+			
+		},
+		stop : function(event, ui){
+			/* reorder();
+			inputProtocol(); */
+		}
+	});//end sortable
 
 </script>
 
