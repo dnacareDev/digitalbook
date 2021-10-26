@@ -252,6 +252,7 @@
 	    // 전송데이타 관련 변수들
 	    let markers = [];
 	    let coords = [];
+		let __polygon;
 
 	    function createMarker(lng, lat, map){
 	        const markerPosition  = new kakao.maps.LatLng(lat, lng); 
@@ -424,12 +425,12 @@
 	                polygon.setMap(map); 
 
 	                var area = Math.round(polygon.getArea()), // 다각형의 총면적을 계산합니다
-	                    content = '<div class="info">총면적 <span class="number"> ' + area + '</span> m<sup>2</sup></div>'; // 커스텀오버레이에 추가될 내용입니다
+	                    // content = '<div class="info">총면적 <span class="number"> ' + area + '</span> m<sup>2</sup></div>'; // 커스텀오버레이에 추가될 내용입니다
 	                    
 	                // 면적정보를 지도에 표시합니다
 	                areaOverlay = new kakao.maps.CustomOverlay({
 	                    map: map, // 커스텀오버레이를 표시할 지도입니다 
-	                    content: content,  // 커스텀오버레이에 표시할 내용입니다
+	                    content: "",  // 커스텀오버레이에 표시할 내용입니다
 	                    xAnchor: 0,
 	                    yAnchor: 0,
 	                    position: path[path.length-1]  // 커스텀오버레이를 표시할 위치입니다. 위치는 다각형의 마지막 좌표로 설정합니다
@@ -568,6 +569,7 @@
 						const lng = targetCoord[0].lng;
 						const position = new kakao.maps.LatLng(lat, lng)
 						map.panTo(position);
+						__polygon?.setMap(null);
 
 						const linePath = [];
 						targetCoord.forEach((v, i) => {
@@ -576,7 +578,7 @@
 						})
 
 						// 지도에 표시할 선을 생성합니다
-						console.log(linePath)
+						
 						const polyline = new kakao.maps.Polygon({
 							path: linePath, // 선을 구성하는 좌표배열 입니다
 							strokeWeight: 3, // 선의 두께입니다
@@ -589,6 +591,7 @@
 
 						// 지도에 선을 표시합니다 
 						polyline.setMap(map);
+						__polygon = polyline;
 						
 					});
 				}
