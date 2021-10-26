@@ -96,12 +96,12 @@
 				      					<div class="d-flex align-items-center add-contact__form my-sm-0 my-2">
 				                            <select class="form-control form-control-lg mt-10 mb-10 mr-10" id="search_type" style="width: 238px; height:40px;">
 				                                <option value="all">전체</option>
-				                                <option value="report_year">년도</option>
-				                                <option value="report_contents">설명</option>
-				                                <option value="user_id">등록자</option>
+				                                <option value="r.report_year">년도</option>
+				                                <option value="r.report_contents">설명</option>
+				                                <option value="r.user_id">등록자</option>
 				                            </select>
 				                            <div class="input-container icon-right position-relative mr-10">
-			                                    <button class="input-icon icon-right" onclick="SearchReport(1);"><span data-feather="search"></span></button>
+			                                    <a onclick="SearchReport(1)" class="input-icon icon-right"><span data-feather="search"></span></a>
 			                                    <input type="text" class="form-control form-control-lg" id="keyword" placeholder="Search" style="width: 238px;height:40px;">
 			                                </div>
 				      					</div>
@@ -123,20 +123,6 @@
 		                            			</tr>
 		                            		</thead>
 		                            		<tbody class="text-center" id="report_list">
-		                            			<tr>
-		                            				<td><input type="checkbox"></td>
-		                            				<td><span>2021</span></td>
-		                            				<td><span>null</span></td>
-		                            				<td><span>김길중</span></td>
-		                            				<td><span>2021-07-06 16:58:54</span></td>
-		                            			</tr>
-		                            			<tr>
-		                            				<td><input type="checkbox"></td>
-		                            				<td><span>2022</span></td>
-		                            				<td><span>null</span></td>
-		                            				<td><span>김길중</span></td>
-		                            				<td><span>2021-07-06 16:58:54</span></td>
-		                            			</tr>
 		                            		</tbody>
 		                            	</table>
 		                        	</div>
@@ -175,9 +161,71 @@
 		var keyword = $("#keyword").val();
 		var limit = $("#limit").val();
 		
-		var data = {"search_type" : search_type, "keyword" : keyword, "limit" : limit};
+		var data = {"search_type" : search_type, "keyword" : keyword, "page_num" : e, "limit" : limit};
 		
-		console.log(data);
+		$.ajax(
+		{
+			url : 'report/searchReport',
+			method : 'POST',
+			dataType : 'json',
+			data : data,
+			success : function(result)
+			{
+				var report_list = $("#report_list");
+				var add_list = "";
+				
+				var pageNum = $("#pageNum");
+				var page_add = "";
+				
+				for(var i = 0; i < result.report.length; i++)
+				{
+					console.log(result.report)
+					add_list += '<tr>';
+					add_list += '<td><input type="checkbox"></td>';
+					add_list += '<td><a href="report/modify?report_file_id='+ result.report[i].report_file_id + '">' + result.report[i].report_year + '</a></td>';
+					add_list += '<td><span>' + result.report[i].report_contents + '</span></td>';
+					add_list += '<td><span>' + result.report[i].user_name_k + '</span></td>';
+					add_list += '<td><span>' + result.report[i].create_date + '</span></td>';
+					add_list += '</tr>';
+				}
+
+				if(result.page_num == 1)
+				{
+					page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
+				}
+				else
+				{
+					page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
+				}
+				
+				for(var i = 0; i < result.end_page; i++)
+				{
+					if(result.page_num == (i + 1))
+					{
+						page_add += '<button class="atbd-pagination__link active" onclick="SearchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
+					}
+					else
+					{
+						page_add += '<button class="atbd-pagination__link" onclick="SearchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
+					}
+				}
+				
+				if(result.page_num == result.end_page)
+				{
+					page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
+				}
+				else
+				{
+					page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
+				}
+				
+				report_list.empty();
+				report_list.append(add_list);
+				
+				pageNum.empty();
+				pageNum.append(page_add);
+			}
+		});
 	}
 </script>
 </body>

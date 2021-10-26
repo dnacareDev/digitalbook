@@ -1,13 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.digitalBook.Mapper.ReportMapper">
+	<!-- 과제 갯수 조회 -->
+	<select id="SelectReportFileCount" resultType="int">
+		SELECT COUNT(*) FROM report_file r
+		<choose>
+			<when test="search_type != 'all'">
+				 WHERE #{search_type} LIKE CONCAT('%', #{keyword}, '%')
+			</when>
+		</choose>
+	</select>
+	
+	<!-- 과제 검색 -->
+	<select id="SearchReportFile" resultType="ReportFile">
+		SELECT * FROM report_file r
+		LEFT JOIN user u ON r.user_id = u.user_id
+		<choose>
+			<when test="search_type != 'all'">
+				 WHERE #{search_type} LIKE CONCAT('%', #{keyword}, '%')
+			</when>
+		</choose>
+		LIMIT #{offset}, #{limit}
+	</select>
+	
+	<!-- 과제 상세 조회 -->
+	<select id="SelectReportDetail" parameterType="int" resultType="ReportFile">
+		SELECT * FROM report_file
+		WHERE report_file_id = #{report_file_id}
+	</select>
+	
+	<!-- 과제 파일 등록 -->
+	<insert id="InsertReportFile" parameterType="ReportFile">
+		INSERT INTO report_file
+		(user_id, report_year, report_contents, report_file, report_originFile, create_date, modify_date)
+		VALUES
+		(#{user_id}, #{report_year}, #{report_contents}, #{report_file}, #{report_originFile}, NOW(), NOW())
+		<selectKey resultType="int" keyProperty="report_file_id" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
 	<!-- 과제 등록 -->
 	<insert id="InsertReport" parameterType="java.util.ArrayList">
 		<foreach collection="list" item="item" separator=";">
 			INSERT INTO report
-			(user_name, report_code, report_number, report_title, report_year, report_contents, report_file, report_origin_file, user_id, create_date, modify_date)
+			(user_name, report_code, report_number, report_title, report_file_id, create_date, modify_date)
 			VALUES
-			(#{item.user_name}, #{item.report_code}, #{item.report_number}, #{item.report_title}, #{item.report_year}, #{item.report_contents}, #{item.report_file}, #{item.report_origin_file}, #{item.user_id}, NOW(), NOW())
+			(#{item.user_name}, #{item.report_code}, #{item.report_number}, #{item.report_title}, #{item.report_file_id}, NOW(), NOW())
 		</foreach>
 	</insert>
+	
+	<!-- 과제 수정 -->
+	<update id="UpdateReportFile" parameterType="ReportFile">
+		UPDATE report_file
+		SET report_contents = #{report_contents}, modify_date = NOW()
+		WHERE report_file_id = #{report_file_id}
+	</update>
+	
+	<!-- 과제 파일 삭제 -->
+	<delete id="DeleteReportFile" parameterType="int">
+		DELETE FROM report_file
+		WHERE report_file_id = #{report_file_id}
+	</delete>
+	
+	<!-- 과제 삭제 -->
+	<delete id="DeleteReport" parameterType="int">
+		DELETE FROM report
+		WHERE report_file_id = #{report_file_id}
+	</delete>
 </mapper>
