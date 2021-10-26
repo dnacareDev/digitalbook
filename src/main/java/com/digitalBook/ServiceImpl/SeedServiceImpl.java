@@ -38,9 +38,9 @@ public class SeedServiceImpl implements SeedService
 	
 	//과제 전체 조회
 	@Override
-	public List<Report> SelectReportList(int user_group)
+	public List<Report> SelectReportList(String user_name)
 	{
-		return mapper.SelectReportList(user_group);
+		return mapper.SelectReportList(user_name);
 	}
 	
 	//사용자 전체 조회

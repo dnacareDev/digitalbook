@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.digitalBook.Mapper.StorageMapper">
+	<!-- 이용과 조회 -->
+	<select id="SelectDepartment" resultType="Department">
+		SELECT * FROM department
+		WHERE depart_depth = 2
+	</select>
+</mapper>
