@@ -20,7 +20,7 @@ public interface SeedService
 	List<Seed> SearchSeed(String search_type, String keyword, int user_group, int offset, int limit);
 	
 	// 과제 전체 조회
-	List<Report> SelectReportList(int user_group);
+	List<Report> SelectReportList(String user_name);
 	
 	// 사용자 전체 조회
 	List<User> SelectUserList(int user_group);

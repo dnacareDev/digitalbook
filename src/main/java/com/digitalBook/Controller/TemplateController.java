@@ -7,14 +7,21 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping(value = "template")
-public class TemplateController {
-	
-	@GetMapping("/blank")
-	public ModelAndView getBlankPage(ModelAndView mv) {
-		
+public class TemplateController
+{
+	@RequestMapping("/blank")
+	public ModelAndView BlankPage(ModelAndView mv)
+	{
 		mv.setViewName("template/sampleBlankTemplate");
 		
 		return mv;
 	}
 	
+	@RequestMapping("/result")
+	public ModelAndView ResultPage(ModelAndView mv)
+	{
+		mv.setViewName("template/result");
+		
+		return mv;
+	}
 }

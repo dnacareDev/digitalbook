@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<head>
+<style>
+	.content-header{margin-top:30px;}
+	.end-button
+	{
+		width:85px;
+		height:40px;
+		background-color:#768BF5;
+		border:0px;
+		margin-top:-15px;
+	}
+	.end{margin-left:10px;}
+</style>
+<!-- 공통 헤더 -->
+<th:block th:include="@{/fragments/header.html}"></th:block>
+</head>
+<body class="layout-light top-menu overlayScroll">
+	<div class="mobile-search"></div>
+	<div class="mobile-author-actions"></div>
+	<th:block th:include="@{/fragments/topbar.html}"></th:block>
+	<main class="main-content" style="background-color: #F9FBFD;">
+		<div class="contents" style="background-color: #F9FBFD;">
+		    <div class="container-fluid">
+		    	<div class="row">
+			        <div class="col-lg-12">
+			        	<div class="breadcrumb-main" style="float: left;">
+			        		<h4 class="text-capitalize breadcrumb-title">과제</h4>
+			        		<span class="ml-20 mt-1">기초정보-과제</span>
+			        	</div>
+			        </div>
+		        </div>
+		    	<div class="row">
+			        <div class="col-12">
+			        	<div class="card">
+			        		<div class="card-body">
+			        			<form action="updateReport" id="insertForm" method="POST" enctype="multipart/form-data">
+			        				<div class="row">
+			        					<div class="col-sm-2 d-flex aling-items-center">
+		                                    <label for="report_year" class="col-form-label color-dark align-center">년도</label>
+		                                    <input type="hidden" id="origin_year" th:value="${report.report_year}">
+		                                </div>
+		                                <div class="col-sm-5">
+		                                    <select class="form-control b-light" id="report_year" name="report_year">
+				                            </select>
+		                                </div>
+		                            </div>
+		                            <div class="row mt-3">
+			        					<div class="col-sm-2 d-flex aling-items-center">
+		                                    <label for="report_contents" class="color-dark align-center">설명</label>
+		                                </div>
+		                                <div class="col-sm-5">
+		                                    <textarea class="form-control" id="report_contents" name="report_contents" th:text="${report.report_contents}" rows="5"></textarea>
+		                                </div>
+		                            </div>
+		                            <div class="row mt-3">
+			        					<div class="col-sm-2 d-flex aling-items-center">
+		                                    <label class="color-dark align-center mt-1">기존 파일</label>
+		                                </div>
+		                                <div class="col-sm-5">
+		                                	<input type="checkbox" id="check_file" checked>
+		                                    <a th:href="|downloadFile?report_file=${report.report_file}|" th:text="${report.report_file}"></a>
+		                                </div>
+		                            </div>
+		                            <div class="row mt-3" id="atis" style="display: none;">
+			        					<div class="col-sm-2 d-flex aling-items-center">
+		                                    <label class="color-dark align-center mt-1">ATIS 파일</label>
+		                                </div>
+		                                <div class="col-sm-5">
+		                                    <input type="file" id="file" name="file" onchange="readExcel();">
+		                                </div>
+		                            </div>
+									<input type="hidden" id="excel" name="report">
+									<input type="hidden" id="report_file_id" name="report_file_id" th:value="${report.report_file_id}">
+									<input type="hidden" id="report_file" name="report_file" th:value="${report.report_file}">
+									<input type="hidden" id="type" name="type" value="0">
+			        			</form>
+			        		</div>
+			        	</div>
+			        </div>
+		        </div>
+		        <div class="row">
+					<div class="col-4">
+						<div class="action-btn d-flex justify-content-frist mt-30"></div>
+					</div>
+					<div class="col-4">
+						<div class="d-flex justify-content-center mt-30"></div>
+					</div>
+					<div class="col-4">
+						<div class="action-btn d-flex justify-content-end mt-30">
+							<a href="/data/report" class="btn btn-primary end-button end">목록</a>
+							<button type="button" class="btn btn-danger end-button end" onclick="ModalBtn(1);">삭제</button>
+							<button type="button" class="btn btn-primary end-button end" onclick="ModalBtn(0);">수정</button>
+						</div>
+					</div>
+				</div>
+		        <div class="atbd-notice" id="update_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
+		        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+		        		<div class="card-body">
+		        			<div class="atbd-notice__content">
+		        				<div class="atbd-notice__top text-center">
+		        					<div class="atbd-notice__icon bg-info">
+		        						<i class="fas fa-exclamation color-white"></i>
+		        					</div>
+		        					<div class="atbd-notice__text">
+		        						<h4>수정하시겠습니까?</h4>
+		        					</div>
+		        					<div style="display: flex; justify-content: center; margin: 10% auto;">
+		        						<button class="btn btn-default btn-primary mr-10" onclick="UpdateReport();" style="color: #FFFFFF;">수정</button>
+		        						<button class="btn btn-default btn-danger" onclick="CancelBtn();" style="color: #FFFFFF;">취소</button>
+		        					</div>
+		        				</div>
+		        			</div>
+		        		</div>
+		        	</div>
+		        </div>
+		        <div class="atbd-notice" id="delete_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
+		        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+		        		<div class="card-body">
+		        			<div class="atbd-notice__content">
+		        				<div class="atbd-notice__top text-center">
+		        					<div class="atbd-notice__icon bg-danger">
+		        						<i class="fas fa-exclamation-triangle color-white"></i>
+		        					</div>
+		        					<div class="atbd-notice__text">
+		        						<h4>삭제하시겠습니까?</h4>
+		        					</div>
+		        					<div style="display: flex; justify-content: center; margin: 10% auto;">
+		        						<button class="btn btn-default btn-primary mr-10" onclick="DeleteReport();" style="color: #FFFFFF;">삭제</button>
+		        						<button class="btn btn-default btn-danger" onclick="CancelBtn();" style="color: #FFFFFF;">취소</button>
+		        					</div>
+		        				</div>
+		        			</div>
+		        		</div>
+		        	</div>
+		        </div>
+		    </div>
+    	</div>
+	</main>
+    <th:block th:include="@{/fragments/footer.html}"></th:block>
+    <th:block th:include="@{/fragments/commonjs.html}"></th:block>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.5/xlsx.full.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function()
+	{
+		NowDate();
+	});
+	
+	// 년도 설정
+	function NowDate()
+	{
+		var year = new Date().getYear() + 1900;
+		var origin_year = $("#origin_year").val();
+		
+		
+		var year_list = $("#report_year");
+		var add_list = "";
+		
+		add_list += '<option value="0">년도 선택</option>';
+		
+		for(var i = -1; i < 5; i++)
+		{
+			if((year + i) == origin_year)
+			{
+				add_list += '<option value="' + (year + i) + '" selected>' + (year + i) + '</option>';
+			}
+			else
+			{
+				add_list += '<option value="' + (year + i) + '">' + (year + i) + '</option>';
+			}
+		}
+		
+		year_list.empty();
+		year_list.append(add_list);
+	}
+	
+	// 과제 수정
+	function UpdateReport()
+	{
+		var year = $("#report_year").val();
+		
+		if($("#check_file").is(":checked") == false)
+		{
+			var excel = $("#excel");
+			
+			if(excel.val() != "")
+			{
+				var data = JSON.parse(excel.val());
+				
+				var report = new Array(excel.length);
+				
+				for(var i = 0; i < data.length; i++)
+				{
+					report[i] = {"report_year" : data[i]["어젠다년도(등록시 어젠다)"], "report_number" : data[i].과제번호, "report_code" : data[i].협약번호, "report_title" : data[i].과제명, "user_name" : data[i].책임자, "report_contents" : report_contents};
+				}
+				
+				if(report[0].report_year != year)
+				{
+					alert("선택된 년도가 다릅니다.");
+				}
+				else
+				{
+					excel.val(JSON.stringify(report));
+				}
+				
+				$("#insertForm").submit();
+			}
+			else
+			{
+				$('#update_popup').css('display', 'none');
+				
+				alert("파일을 선택하세요.");
+			}
+		}
+		
+		$("#insertForm").submit();
+	}
+	
+	// 엑셀 to Json
+	function readExcel()
+	{
+        var input = event.target;
+        var reader = new FileReader();
+        
+        var excel = $("#excel");
+        
+        reader.onload = function ()
+        {
+            var data = reader.result;
+            var workBook = XLSX.read(data, { type: 'binary' });
+            
+            workBook.SheetNames.forEach(function(sheetName)
+            {
+                var rows = XLSX.utils.sheet_to_json(workBook.Sheets[sheetName]);
+                
+                xlsxData = JSON.parse(JSON.stringify(rows));
+                
+                excel.val(JSON.stringify(xlsxData));
+            });
+        };
+
+         reader.readAsBinaryString(input.files[0]);
+    }
+	
+	function ModalBtn(e)
+	{
+		if(e == 0)
+		{
+			$('#update_popup').css('display', 'flex');
+		}
+		else
+		{
+			$('#delete_popup').css('display', 'flex');
+		}
+	}
+	
+	function CancelBtn()
+	{
+		$('#update_popup').css('display', 'none');
+		$('#delete_popup').css('display', 'none');
+	}
+	
+	$("#check_file").change(function()
+	{
+		if($(this).is(":checked") == true)
+		{
+			$("#atis").css("display", "none");
+			$("#type").val(0);
+		}
+		else
+		{
+			$("#atis").css("display", "flex");
+			$("#type").val(1);
+		}
+	});
+</script>
+</body>
+</html>

@@ -51,7 +51,7 @@ public class SeedController
 	{
 		User prin = (User)auth.getPrincipal();
 		
-		List<Report> report = service.SelectReportList(prin.getUser_group());								// 과제 list
+		List<Report> report = service.SelectReportList(prin.getUser_name_k());			// 과제 list
 		List<User> user = service.SelectUserList(prin.getUser_group());					// 사용자 list
 		List<Eaches> eaches = service.SelectEachesList();								// 단위 list
 		List<Warehouse> warehouse = service.SelectWarehouseList();						// 저장장소 list
@@ -164,7 +164,7 @@ public class SeedController
 		
 		List<Seed> seeds = service.SelectSeedDetailList(report_id);				// 종자(시료) list
 		
-		List<Report> reports = service.SelectReportList(prin.getUser_group());						// 과제 list
+		List<Report> reports = service.SelectReportList(prin.getUser_name_k());						// 과제 list
 		List<User> user = service.SelectUserList(prin.getUser_group());			// 사용자 list
 		List<Eaches> eaches = service.SelectEachesList();						// 단위 list
 		List<Warehouse> warehouse = service.SelectWarehouseList();				// 저장장소 list
@@ -360,7 +360,6 @@ public class SeedController
 	@RequestMapping("seed/updateStatus")
 	public int UpdateStatus(@RequestBody List<Seed> seeds)
 	{
-		
 		int result = 0;
 		
 		int updateResult[] = new int[seeds.size()];

@@ -63,9 +63,10 @@
 		                            </div>
 		                            <div class="row mt-3">
 			        					<div class="col-sm-5">
-		                                    <label class="color-danger">*탭으로 분리 된 txt만 업로드 가능.</label>
+		                                    <!-- <label class="color-danger">*탭으로 분리 된 txt만 업로드 가능.</label> -->
 		                                </div>
 		                            </div>
+									<input type="hidden" id="excel" name="report">
 			        			</form>
 			        		</div>
 			        	</div>
@@ -82,7 +83,6 @@
 						<div class="action-btn d-flex justify-content-end mt-30">
 							<a href="/data/report" class="btn btn-primary end-button end">목록</a>
 							<button type="button" class="btn btn-primary end-button end" onclick="InsertBtn();">등록</button>
-							<input type="hidden" id="excelJson">
 						</div>
 					</div>
 				</div>
@@ -107,7 +107,7 @@
 		
 		add_list += '<option value="0">년도 선택</option>';
 		
-		for(var i = -1; i < 4; i++)
+		for(var i = -1; i < 5; i++)
 		{
 			add_list += '<option value="' + (year + i) + '">' + (year + i) + '</option>';
 		}
@@ -118,24 +118,30 @@
 	
 	function InsertBtn()
 	{
-		var report_year = $("#report_year").val();
+		var year = $("#report_year").val();
 		var report_contents = $("#report_contents").val();
+		var file = $("#file").val();
 		
-		var excelJson = JSON.parse($("#excelJson").val());
+		var excel = $("#excel");
+		var data = JSON.parse($("#excel").val());
 		
-		var data = new Array(excelJson.length);
-		
-		for(var i = 0; i < excelJson.length; i++)
-		{
-			data[i] = {"report_year" : excelJson[i]['어젠다년도(등록시 어젠다)'], "report_code" : excelJson[i].과제번호, "report_convention" : excelJson[i].협약번호, "report_title" : excelJson[i].과제명, "report_manager" : excelJson[i].책임자};
-		}
+		var report = new Array(excel.length);
 		
 		for(var i = 0; i < data.length; i++)
 		{
-			console.log(data[i]);
+			report[i] = {"report_year" : data[i]["어젠다년도(등록시 어젠다)"], "report_number" : data[i].과제번호, "report_code" : data[i].협약번호, "report_title" : data[i].과제명, "user_name" : data[i].책임자, "report_contents" : report_contents};
 		}
 		
-		// $("#insertForm").submit();
+		if(report[0].report_year != year)
+		{
+			alert("선택된 년도가 다릅니다.");
+		}
+		else
+		{
+			excel.val(JSON.stringify(report));
+			
+			$("#insertForm").submit();
+		}
 	}
 	
 	function readExcel()
@@ -143,25 +149,30 @@
         var input = event.target;
         var reader = new FileReader();
         
-        var excelJson = $("#excelJson");
+        var excel = $("#excel");
         
         reader.onload = function ()
         {
             var data = reader.result;
             var workBook = XLSX.read(data, { type: 'binary' });
             
-            workBook.SheetNames.forEach(function (sheetName)
+            workBook.SheetNames.forEach(function(sheetName)
             {
                 var rows = XLSX.utils.sheet_to_json(workBook.Sheets[sheetName]);
                 
                 xlsxData = JSON.parse(JSON.stringify(rows));
                 
-                excelJson.val(JSON.stringify(xlsxData));
+                excel.val(JSON.stringify(xlsxData));
             });
         };
 
          reader.readAsBinaryString(input.files[0]);
     }
+	
+	function modal()
+	{
+		$('#success_popup').css('display', 'flex');
+	}
 </script>
 </body>
 </html>
