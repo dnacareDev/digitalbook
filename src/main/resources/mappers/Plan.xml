@@ -2,21 +2,88 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.digitalBook.Mapper.PlanMapper">
 	
+	<!-- 재배계획 검색 -->
+	<select id="SearchPlan" resultType="Plan">
+		SELECT p.*, r.*, s.*, m.*
+		FROM plan p
+		LEFT JOIN report r ON p.report_code = r.report_code
+		LEFT JOIN storage s ON p.storage_id = s.storage_id
+		LEFT JOIN method m ON p.plan_method = m.method_id
+		WHERE p.user_group = #{user_group}
+		<choose>
+			<when test="search_type == null || search_type.equals('none')">
+				AND (
+					p.plan_code LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					r.report_title LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					s.storage_name LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					m.method_title LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					p.plan_repeat =  #{keyword}
+					OR
+					p.plan_segment = #{keyword}
+				)
+			</when>
+			<when test="search_type.equals('p.plan_repeat') || search_type.equals('p.plan_segment')">
+				AND ${search_type} = #{keyword}
+			</when>
+			<otherwise>
+				AND ${search_type} LIKE CONCAT('%', #{keyword}, '%')
+			</otherwise>
+		</choose>
+		ORDER BY plan_id DESC
+		LIMIT #{offset}, #{limit}
+	</select>
+	
+	<!-- 재배계획 갯수 검색 -->
+	<select id="SearchPlanCount" resultType="int">
+		SELECT COUNT(*) FROM plan p
+		LEFT JOIN report r ON p.report_code = r.report_code
+		LEFT JOIN storage s ON p.storage_id = s.storage_id
+		LEFT JOIN method m ON p.plan_method = m.method_id
+		WHERE p.user_group = #{user_group}
+		<choose>
+			<when test="search_type == null || search_type.equals('none')">
+				AND (
+					p.plan_code LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					r.report_title LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					s.storage_name LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					m.method_title LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					p.plan_repeat =  #{keyword}
+					OR
+					p.plan_segment = #{keyword}
+				)
+			</when>
+			<when test="search_type.equals('p.plan_repeat') || search_type.equals('p.plan_segment')">
+				AND ${search_type} = #{keyword}
+			</when>
+			<otherwise>
+				AND ${search_type} LIKE CONCAT('%', #{keyword}, '%')
+			</otherwise>
+		</choose>
+	</select>
+	
 	<!-- 종자(시료) 등록된 과제 list -->
 	<select id="selectReportList" resultType="Report">
 		SELECT * FROM report r 
-		INNER JOIN seed s ON r.report_id = s.report_id
-		GROUP BY r.report_id
+		INNER JOIN seed s ON r.report_code = s.report_code
+		GROUP BY r.report_code
 		ORDER BY r.report_id
 	</select>
 	
 	<!-- 시험재료(seed) 조회 list -->
 	<select id="selectSeedList" parameterType="int" resultType="Seed">
 		SELECT s.*, r.*, g.*, d.* FROM seed s
-		LEFT JOIN report r ON s.report_id = r.report_id
+		LEFT JOIN report r ON s.report_code = r.report_code
 		LEFT JOIN genetic g ON s.genetic_id = g.genetic_id
 		LEFT JOIN division d ON g.division_id = d.division_id
-		WHERE s.user_group = #{user_group} and s.report_id = #{report_id}
+		WHERE s.user_group = #{user_group} and s.report_code = #{report_code}
 	</select>
 	
 	<!-- 비료 조회 list -->
@@ -29,5 +96,127 @@
 			</when>
 		</choose>
 	</select>
+	
+	<!-- 조사항목(method 프로토콜) 조회 -->
+	<select id="selectMethodList" parameterType="int" resultType="Method">
+		SELECT m.*, d1.division as d1_name, d2.division as d2_name, d3.division as d3_name
+		FROM method m
+		LEFT JOIN division d3 ON m.division_id = d3.division_id
+		LEFT JOIN division d2 ON d3.division_parents = d2.division_id
+		LEFT JOIN division d1 ON d2.division_parents = d1.division_id
+		WHERE m.user_group = #{user_group}
+		ORDER BY method_id DESC
+	</select>
+	
+	<!-- 재배계획 등록 -->
+	<insert id="insertPlan" parameterType="Plan" useGeneratedKeys="true" keyProperty="last_plan_id">
+		INSERT INTO plan
+		(
+			storage_id,
+			plan_code,
+			report_code,
+			grow_type,
+			plan_status,
+			plan_repeat,
+			plan_segment,
+			plan_method,
+			user_group,
+			create_date,
+			modify_date
+		)
+		VALUES
+		(
+			#{storage_id},
+			#{plan_code},
+			#{report_code},
+			#{grow_type},
+			#{plan_status},
+			#{plan_repeat},
+			#{plan_segment},
+			#{plan_method},
+			#{user_group},
+			NOW(),
+			NOW()
+		)
+		
+	</insert>
+	
+	<!-- 최근 plan ID 조회 -->
+	<select id="selectLastPlanCode" parameterType="int" resultType="String">
+		SELECT plan_code FROM plan
+		WHERE user_group = #{user_group}
+		ORDER BY plan_id DESC
+		LIMIT 1
+	</select>
+	
+	<!-- 시험구배치요인 등록 -->
+	<insert id="insertFactor" parameterType="Factor">
+		INSERT INTO factor
+		(
+			plan_id,
+			factor_index,
+			factor_type,
+			factor_seed,
+			factor_interval,
+			factor_plants,
+			factor_amount,
+			manure_id,
+			etc_id
+		)
+		VALUES
+		(
+			#{plan_id},
+			#{factor_index},
+			#{factor_type},
+			#{factor_seed},
+			#{factor_interval},
+			#{factor_plants},
+			#{factor_amount},
+			#{manure_id},
+			#{etc_id}
+		)
+	</insert>
+	
+	<!-- etc 기타 등록 -->
+	<insert id="insertEtc" parameterType="Etc" useGeneratedKeys="true" keyProperty="last_etc_id">
+		INSERT INTO etc
+		(
+			etc_type,
+			etc_value,
+			etc_comment
+		)
+		VALUES
+		(
+			#{etc_type},
+			#{etc_value},
+			#{etc_comment}
+		)
+	</insert>
+	
+	<!-- manure 시비량 등록 -->
+	<insert id="insertManure" parameterType="Manure" useGeneratedKeys="true" keyProperty="last_manure_id">
+		INSERT INTO manure
+		(
+			fert_id,
+			manure_area,
+			manure_ingredient,
+			manure_type,
+			manure_amount,
+			manure_percent,
+			manure_result,
+			manure_level
+		)
+		VALUES
+		(
+			#{fert_id},
+			#{manure_area},
+			#{manure_ingredient},
+			#{manure_type},
+			#{manure_amount},
+			#{manure_percent},
+			#{manure_result},
+			#{manure_level}
+		)
+	</insert>
 	
 </mapper>
