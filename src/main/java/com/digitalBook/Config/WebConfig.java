@@ -18,10 +18,12 @@ public class WebConfig implements WebMvcConfigurer
 		.allowCredentials(true);
 	}
 	
+	/*
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry)
 	{
 		registry.addViewController("/").setViewName("login/login");
 		registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
 	}
+	*/
 }
