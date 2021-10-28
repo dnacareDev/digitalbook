@@ -45,4 +45,11 @@ public interface PlanService {
 	
 	//재배 계획 검색 개수
 	int SearchPlanCount(String search_type, String keyword, int user_group);
+	
+	//재배 계획 Detail
+	Plan selectPlanDetail(int plan_id);
+	
+	//시험구배치 요인 list
+	List<Factor> selectFactorList(int plan_id);
+	
 }

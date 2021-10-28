@@ -261,4 +261,28 @@ public class PlanController
 		return result;
 	}
 	
+	//재배계획 수정 화면
+	@RequestMapping("/modify")
+	public ModelAndView PlanModify(Authentication auth, ModelAndView mv, @RequestParam(name = "plan_id", required = true) int plan_id)
+	{
+		
+		User prin = (User)auth.getPrincipal();
+		
+		Plan plan = service.selectPlanDetail(plan_id);
+		List<Report> report = service.selectReportList();
+		List<Fertilizer> fert = service.selectFertilizerList(0, 0);
+		List<Method> method = service.selectMethodList(prin.getUser_group());
+		List<Factor> factor = service.selectFactorList(plan_id);
+		
+		mv.addObject("plan", plan);
+		mv.addObject("report", report);
+		mv.addObject("fert", fert);
+		mv.addObject("method", method);
+		mv.addObject("factor", factor);
+		
+		mv.setViewName("plan/plan_modify");
+		
+		return mv;
+	}
+	
 }
