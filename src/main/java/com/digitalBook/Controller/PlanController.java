@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.digitalBook.Entity.Department;
 import com.digitalBook.Entity.Etc;
 import com.digitalBook.Entity.Factor;
 import com.digitalBook.Entity.Fertilizer;
@@ -23,6 +24,7 @@ import com.digitalBook.Entity.Method;
 import com.digitalBook.Entity.Plan;
 import com.digitalBook.Entity.Report;
 import com.digitalBook.Entity.Seed;
+import com.digitalBook.Entity.Storage;
 import com.digitalBook.Entity.User;
 import com.digitalBook.Service.PlanService;
 import com.digitalBook.Service.StorageService;
@@ -41,6 +43,11 @@ public class PlanController
 	@RequestMapping("/list")
 	public ModelAndView PlanList(ModelAndView mv)
 	{
+		
+		List<Department> department = storageService.SelectDepartment();
+		
+		mv.addObject("department", department);
+		
 		mv.setViewName("plan/plan_list");
 		
 		return mv;
@@ -224,6 +231,29 @@ public class PlanController
 		List<Plan> plan = service.SearchPlan(search_type, keyword, offset, limit, prin.getUser_group());
 		
 		result.put("plan", plan);
+		result.put("page_num", page_num);
+		result.put("end_page", end_page);
+		result.put("offset", offset);
+		
+		return result;
+	}
+	
+	//실험장소 검색
+	@ResponseBody
+	@RequestMapping("/searchStorage")
+	public Map<String, Object> SearchStorage(@RequestParam("page_num") int page_num)
+	{
+		Map<String, Object> result = new LinkedHashMap<String, Object>();;
+		
+		int count = storageService.SelectStorageCount();
+		
+		int limit = 10;
+		int offset = (page_num - 1) * limit;
+		int end_page = (count + limit - 1) / limit;
+		
+		List<Storage> storage = storageService.SearchStorage(offset, limit);
+		
+		result.put("storage", storage);
 		result.put("page_num", page_num);
 		result.put("end_page", end_page);
 		result.put("offset", offset);
