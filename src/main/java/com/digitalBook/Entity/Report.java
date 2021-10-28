@@ -22,6 +22,6 @@ public class Report {
 	private String create_date;					// 등록일
 	private String modify_date;					// 수정일
 	
-	private int Last_report_id;					// 과제 등록시 해당 과제 고유번호 반환 받는 변수
+	
 	
 }

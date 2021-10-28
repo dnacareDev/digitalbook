@@ -143,9 +143,9 @@ public class SeedServiceImpl implements SeedService
 	
 	//시료 변경 이력 조회
 	@Override
-	public List<Record> selectRecordList(int report_id) {
+	public List<Record> selectRecordList(String report_code) {
 		
-		return mapper.selectRecordList(report_id);
+		return mapper.selectRecordList(report_code);
 	}
 	
 	//시료 승인

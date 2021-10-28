@@ -24,7 +24,7 @@ public class Seed
 	private int eaches_id;					// 단위 고유번호
 	private String seed_comment;			// 시료 comment
 	private int genetic_id;					// 정보 고유번호
-	private int report_id;					// 과제 고유번호
+	private String report_code;				// 과제 ID
 	private String seed_report;				// 과제 설명
 	private int ware_id;					// 저장장소 고유번호
 	private String seed_sender;				// 발송인
@@ -42,9 +42,9 @@ public class Seed
 	private int last_seed_id;				// 시료 등록시 해당 시료 고유번호 반환 받는 변수
 	
 	// 과제(report) 컬럼
-	private String report_code;				// 과제 ID
+	private int report_id;					//과제 고유번호
 	private String report_title;			// 과제명
-	private int report_user_id;				// 과제 user_id
+	private String report_user_name;		// 과제 책임자명
 	
 	// 작목 컬럼(division)
 	private String division;				// 작목명(조사항목)
