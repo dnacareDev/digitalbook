@@ -358,7 +358,7 @@ input[type="text"]{
 }
 #step4 .background-content{
     height: 287px;
-    background: url(../img/icons/04.png) repeat center center;
+    background: url('/img/icons/04.png') repeat center center;
     clear: both;
 }
 .top_btn-left{

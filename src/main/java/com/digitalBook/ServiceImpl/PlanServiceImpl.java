@@ -1,4 +1,4 @@
-package com.digitalBook.Service;
+package com.digitalBook.ServiceImpl;
 
 import java.util.List;
 
@@ -14,6 +14,7 @@ import com.digitalBook.Entity.Plan;
 import com.digitalBook.Entity.Report;
 import com.digitalBook.Entity.Seed;
 import com.digitalBook.Mapper.PlanMapper;
+import com.digitalBook.Service.PlanService;
 
 @Service
 public class PlanServiceImpl implements PlanService {

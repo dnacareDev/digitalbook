@@ -25,6 +25,7 @@ import com.digitalBook.Entity.Report;
 import com.digitalBook.Entity.Seed;
 import com.digitalBook.Entity.User;
 import com.digitalBook.Service.PlanService;
+import com.digitalBook.Service.StorageService;
 
 @Controller
 @RequestMapping("plan")
@@ -33,6 +34,8 @@ public class PlanController
 	
 	@Autowired
 	private PlanService service;
+	
+	@Autowired StorageService storageService;
 	
 	//재배계획 목록 페이지
 	@RequestMapping("/list")

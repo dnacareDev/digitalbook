@@ -78,7 +78,7 @@
 	</select>
 	
 	<!-- 시험재료(seed) 조회 list -->
-	<select id="selectSeedList" parameterType="int" resultType="Seed">
+	<select id="selectSeedList" resultType="Seed">
 		SELECT s.*, r.*, g.*, d.* FROM seed s
 		LEFT JOIN report r ON s.report_code = r.report_code
 		LEFT JOIN genetic g ON s.genetic_id = g.genetic_id

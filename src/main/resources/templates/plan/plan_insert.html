@@ -95,7 +95,7 @@
 			                            <select class="form-control b-light department" id="select_view1" name="">
 			                                <option th:value=0 disabled="disabled" selected="selected" hidden="hidden">과제 선택</option>
 			                                <th:block th:each="report : ${report}">
-			                                	<option th:value="${report.report_code}" th:text="${report.report_title}"></option>
+			                                	<option th:value="${report.report_code}" th:text="${report.report_title +'('+ report.report_code} +')'"></option>
 			                                </th:block>
 			                            </select>
 			                            <div class="submit clearfix">
@@ -1108,7 +1108,7 @@
 		
 		var data = {"report_code" : report_code};
 		
-		if(report_id == "0"){
+		if(report_code == "0"){
 			alert("과제를 선택해 주세요.");
 		}else{
 			$.ajax({
@@ -1249,16 +1249,19 @@
 		if(index == 1){
 			data1.type = type;
 			data1.content = content;
+			data1.text = text;
 			data1.type1 = "factor_seed";
 			$("#text_inner1").text(text);
 		}else if(index == 2){
 			data2.type = type;
 			data2.content = content;
+			data2.text = text;
 			data2.type1 = "factor_seed";
 			$("#text_inner2").text(text);
 		}else if(index == 3){
 			data3.type = type;
 			data3.content = content;
+			data3.text = text;
 			data3.type1 = "factor_seed";
 			$("#text_inner3").text(text);
 		}
@@ -1865,11 +1868,26 @@
 	});//end 기타 요인 사용 버튼 이벤트
 	
 	//step4에서 사용할 array
-	var factorArray = new Array();
-	var resultArray = new Array();
+	
 	
 	//step3 btn 이벤트
 	$("#step-3-btn").on("click", function(){
+		
+		var grow_type = $("#grow_type option:selected").val();
+		
+		if(grow_type == "none"){
+			alert("시험구배치 종류를 선택해주세요");
+		}else{
+			gridFactors();
+		}
+	    
+	    
+	});//step3 btn 이벤트
+	
+	function gridFactors(){
+		
+		var factorArray = new Array();
+		var resultArray = new Array();
 		
 		var factor1 = "";
 		var factor2 = "";
@@ -1878,6 +1896,8 @@
 		if(Object.keys(data1).length != 0){
 			if(data1.type == "시비량"){
 				factor1 = data1.level.split(",");
+			}else if(data1.type == "시험재료"){
+				factor1 = data1.text.split(",");
 			}else{
 				factor1 = data1.content.split(",");
 			}
@@ -1885,6 +1905,8 @@
 		if(Object.keys(data2).length != 0){
 			if(data2.type == "시비량"){
 				factor2 = data2.level.split(",");
+			}else if(data2.type == "시험재료"){
+				factor2 = data2.text.split(",");
 			}else{
 				factor2 = data2.content.split(",");
 			}
@@ -1892,6 +1914,8 @@
 		if(Object.keys(data3).length != 0){
 			if(data3.type == "시비량"){
 				factor3 = data3.level.split(",");
+			}else if(data3.type == "시험재료"){
+				factor3 = data3.text.split(",");
 			}else{
 				factor3 = data3.content.split(",");
 			}
@@ -2001,6 +2025,7 @@
 			    add_list += '</tr>';
 			}
 			
+			$("#step4-container").empty();
 			body.append(add_list);
 			
 		}else if(grow_type == "1"){
@@ -2142,10 +2167,8 @@
 				}
 			});//end sortable
 		}
-	    
-	    
-	    
-	});//step3 btn 이벤트
+		
+	}//end fridFactors
 	
 	//jquery sortable 적용	
 	$(document).find("#step-container").sortable({
@@ -2253,11 +2276,6 @@
 		console.log(etcArray2);
 		console.log(etcArray3); */
 		
-		console.log(manureArray);
-		console.log(manureArray1);
-		console.log(manureArray2);
-		console.log(manureArray3);
-		
 		if(grow_type == "none"){
 			alert("시험구배치 종류를 선택해주세요.");
 			$("#grow_type").focus();
@@ -2302,11 +2320,6 @@
 			var plan_repeat = $("#plan_repeat").val();
 			var plan_segment = $("#mil2").val();
 			
-			
-				
-			if(report_code == "0" || report_code == ""){
-				report_code = "PJ0152822020";
-			}
 			
 			var data = {
 					"storage_id" : 2,
