@@ -77,10 +77,13 @@
 			                            </table>
 			                        </div>
 			                        <div class="content_right">
-			                            <div class="img_inner">
-			                                <h6>* 위치 ID 클릭 시 해당 포장 표시</h6>
-			                                <img src="../img/icons/step1.png" alt="지도">
-			                            </div>
+ 			                            <div class="img_inner" id="map_regist" style="width:100%; height: 300px;">
+<!--  			                                <h6>* 위치 ID 클릭 시 해당 포장 표시</h6> -->
+<!--  			                                <img src="../img/icons/step1.png" alt="지도"> -->
+<!--  			                                <div style="border: 1px solid dark; background: grey; height: 300px;"> -->
+<!--  		                    					<p style="color: white;">시험장소 이미지 들어갈 자리</p> -->
+<!--  		                    				</div> -->
+ 			                            </div>
 			                        </div>
 			                    </div>
 			                </div>
@@ -99,7 +102,7 @@
 			                                </th:block>
 			                            </select>
 			                            <div class="submit clearfix">
-			                                <button>다음</button>
+			                                <button type="button" id="step-2-btn">다음</button>
 			                            </div>
 			                        </div>
 			                    </div>
@@ -270,7 +273,7 @@
 			                        <div class="row">
 					            		<div class="col-lg-5">
 											<div class="row">
-												<input type="text" onkeyup="filter();" class="form-control b-light" id="searchResearch" placeholder="작목명, 품종명 검색"
+												<input type="text" onkeyup="filterMethod();" class="form-control b-light" id="searchMethod" placeholder="조사항목, Method명 검색"
 														style="width: 100%; padding: 20px 20px;">
 											</div>
 											<div class="row">
@@ -287,7 +290,7 @@
 															</tr>
 														</thead>
 														<tbody style="max-height: 500px; orverfolw-y: auto;" id="method_list">
-															<tr th:Each="m : ${method}">
+															<tr class="method_tr" th:Each="m : ${method}">
 																<td><input type="checkbox" name="chk_method" th:value="${m.method_id}"></td>
 																<td class="d2_name" th:text="${m.d2_name}"></td>
 																<td class="d3_name" th:text="${m.d3_name}"></td>
@@ -318,7 +321,7 @@
 										</div>
 					            	</div>
 			                        <div class="submit clearfix">
-			                            <button>다음</button>
+			                            <button type="button" id="step-5-btn">다음</button>
 			                        </div>
 			                    </div>
 			                </div>
@@ -608,7 +611,7 @@
 		            	<div class="row mt-3">
 		            		<div class="col-lg-5">
 								<div class="row">
-									<input type="text" onkeyup="filter();" class="form-control b-light" id="searchResearch" placeholder="작목명, 품종명 검색"
+									<input type="text" onkeyup="filterSeed();" class="form-control b-light" id="searchSeed" placeholder="작목명, 품종명 검색"
 											style="width: 100%; padding: 20px 20px;">
 								</div>
 								<div class="row">
@@ -1050,9 +1053,9 @@
     <!-- 공통 js -->
     <th:block th:include="@{/fragments/commonjs.html}"></th:block>
     <script th:src="@{/assets/vendor_assets/js/plan-insert.js}"></script>
-
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=	e93e65b3e9a407aa43d05f993408db95&libraries=clusterer,services"></script>
 <script>
-	
+
 	//시험구 배치 데이터
 	var data1 = new Object();
 	var data2 = new Object();
@@ -1122,12 +1125,12 @@
 					var add_list = "";
 					
 					for(var i = 0; i < result.length; i++){
-						add_list += '<tr>';
+						add_list += '<tr class="seed_tr">';
 						
 						add_list += '<td><input type="checkbox" class="checkbox" name="chk_seed" value="' + result[i].seed_id + '"></td>';
 						add_list += '<td>'+result[i].seed_code+'</td>';
-						add_list += '<td>'+result[i].division+'</td>';
-						add_list += '<td>'+result[i].genetic+'</td>';
+						add_list += '<td class="text_1">'+result[i].division+'</td>';
+						add_list += '<td class="text_2">'+result[i].genetic+'</td>';
 						add_list += '<td>'+result[i].seed_year+'</td>';
 						add_list += '</tr>';
 					}//end for
@@ -1875,9 +1878,23 @@
 		
 		var grow_type = $("#grow_type option:selected").val();
 		
+		var check1 = Object.keys(data1).length == 0;
+		var check2 = Object.keys(data2).length == 0;
+		var check3 = Object.keys(data3).length == 0;
+		
 		if(grow_type == "none"){
 			alert("시험구배치 종류를 선택해주세요");
+			$("#grow_type").focus();
+		}else if(check1 && check2 && check3){
+				alert("요인을 최소 하나 이상 설정해주세요.");
 		}else{
+			
+			$("#step3 .content").slideUp();
+			$("#step3 .title").removeClass("active");
+			
+			$("#step4 .content").slideDown();
+			$("#step4 .title").addClass("active");
+			
 			gridFactors();
 		}
 	    
@@ -2136,13 +2153,157 @@
 				
 				
 				for(var j = 0; j < resultArray.length; j++){
-					add_list += '<tr class="table_content">';
-				    add_list += '<td>'+resultArray[j].num+'</td>';
-				    add_list += '<td>'+resultArray[j].id+'</td>';
-				    add_list += '<td>'+resultArray[j].type+'</td>';
-				    add_list += '<td>'+resultArray[j].repeat+'</td>';
-				    add_list += '<td><input type="text" id="mil" value="0"></td>';
-				    add_list += '</tr>';
+					
+					if(resultArray[j].repeat == (i+1)){
+						add_list += '<tr class="table_content">';
+					    add_list += '<td>'+resultArray[j].num+'</td>';
+					    add_list += '<td>'+resultArray[j].id+'</td>';
+					    add_list += '<td>'+resultArray[j].type+'</td>';
+					    add_list += '<td>'+resultArray[j].repeat+'</td>';
+					    add_list += '<td><input type="text" id="mil" value="0"></td>';
+					    add_list += '</tr>';
+					}
+				}//end for2
+				
+				add_list += '</tbody>';
+				add_list += '</table>';
+				
+				result_div += add_list;
+				
+				add_list = "";
+			}//end for1
+			
+			copy_step_4.empty();
+			copy_step_4.append(result_div);
+			
+			$(document).find(".step4-container").sortable({
+				placeholder : "itemBoxHighlight",
+				start : function(event, ui){
+					
+				},
+				stop : function(event, ui){
+					/* reorder();
+					inputProtocol(); */
+				}
+			});//end sortable
+		}else if(grow_type == "2"){
+			var num = 0;
+			var num1 = 0;
+			var id = "";
+			var id1 = "";
+			var id2 = "";
+			var type = "";
+			var type2 = "";
+			var type3 = "";
+			var repeat = "";
+			
+			if(factor1 != "" && factor2 == "" && factor3 == ""){
+				for(var i = 0; i < factor1.length; i++){
+					id = level1[i];
+					type = factor1[i];
+					num++;
+					var number = num;
+					
+					var data = {"num" : number, "id" : id, "type" : type};
+					factorArray.push(data);
+					
+					id = "";
+					type = "";
+				}
+			}else if(factor1 != "" && factor2 != "" && factor3 == ""){
+				for(var i = 0; i < factor1.length; i++){
+					id = level1[i];
+					type = factor1[i];
+					
+					for(var j = 0; j < factor2.length; j++){
+						id2 = id;
+						id2 = id2 + '-' + level2[j];
+						type2 = type;
+						type2 = type2 + ',' + factor2[j];
+						num++;
+						var number = num;
+						
+						var data = {"num" : number, "id" : id2, "type" : type2};
+						factorArray.push(data);
+					}
+					id = "";
+					type = "";
+				}
+			}else if(factor1 != "" && factor2 != "" && factor3 != ""){
+				for(var i = 0; i < factor1.length; i++){
+					id = level1[i];
+					type = factor1[i];
+					
+					for(var j = 0; j < factor2.length; j++){
+						id2 = id;
+						id2 = id2 + '-' + level2[j];
+						type2 = type;
+						type2 = type2 + ',' + factor2[j];
+						
+						for(var k = 0; k < factor3.length; k++){
+							num++;
+							var number = num;
+							id3 = id2;
+							id3 = id3 + '-'+level3[k];
+							type3 = type2;
+							type3 = type3 + ',' + factor3[k];
+							
+							var data = {"num" : number, "id" : id3, "type" : type3};
+							factorArray.push(data);
+						}//end for3
+						
+					}//end for2
+					id = "";
+					type = "";
+				}//end for1
+			}
+			
+			for(var i = 0; i < plan_repeat; i++){
+				for(var j = 0; j < factorArray.length; j++){
+					num1++;
+					var number = num1;
+					var data = {"num" : number, "id" : factorArray[j].id, "type" : factorArray[j].type, "repeat" : i+1};
+					
+					resultArray.push(data);
+				}
+			}//end for
+			
+			var copy_step_4 = $("#copy-step-4");
+			console.log(plan_repeat);
+			
+			var body = $("#table2");
+			
+			add_list = "";
+			var add_div = "";
+			var result_div = "";
+			
+			for(var i = 0; i < plan_repeat; i++){
+				
+				add_list += '<div>집구 '+(i+1)+'</div>';
+				add_list += '<table>';
+				add_list += '<thead>';
+				add_list += '<tr class="title">';
+				add_list += '<td>구획번호</td>';
+				add_list += '<td>구획 ID</td>';
+				add_list += '<td>처리종류</td>';
+				add_list += '<td>반복</td>';
+				add_list += '<td>처리포장면적(㎡)</td>';
+				add_list += '</tr>';
+				add_list += '</thead>';
+				add_list += '<tbody class="step4-container">';
+				
+				
+				for(var j = 0; j < resultArray.length; j++){
+					
+					if(resultArray[j].repeat == (i+1)){
+						add_list += '<tr class="table_content">';
+					    add_list += '<td>'+resultArray[j].num+'</td>';
+					    add_list += '<td>'+resultArray[j].id+'</td>';
+					    add_list += '<td>'+resultArray[j].type+'</td>';
+					    add_list += '<td>'+resultArray[j].repeat+'</td>';
+					    add_list += '<td><input type="text" id="mil" value="0"></td>';
+					    add_list += '</tr>';
+					}
 				}//end for2
 				
 				add_list += '</tbody>';
@@ -2664,6 +2825,283 @@
 			
 		})//end return
 	}//end function
+	
+	//step2 다음 버튼 이벤트 함수
+	$("#step-2-btn").on("click", function(){
+		
+		$("#step2 .content").slideUp();
+		$("#step2 .title").removeClass("active");
+		
+		$("#step3 .content").slideDown();
+		$("#step3 .title").addClass("active");
+		
+	});
+	
+	//step5 다음 버튼 이벤트 함수
+	$("#step-5-btn").on("click", function(){
+		
+		$("#step5 .content").slideUp();
+		$("#step5 .title").removeClass("active");
+		
+		$("#step6 .content").slideDown();
+		$("#step6 .title").addClass("active");
+		
+	});
+	
+	//시험재료 검색 함수
+	function filterSeed(){
+		var search = $("#searchSeed").val().toLowerCase();
+		
+		$(document).find(".seed_tr").each(function(i, item){
+			var text1 = $(this).find(".text_1").text();
+			var text2 = $(this).find(".text_2").text();
+			
+			if(text1.toLowerCase().includes(search) || text2.toLowerCase().includes(search)){
+				$(this).css("display", "");
+			}else{
+				$(this).css("display", "none");
+			}
+		});
+		
+	}
+	
+	//조사항목 검색 함수
+	function filterMethod(){
+		var search = $("#searchMethod").val().toLowerCase();
+		
+		$(document).find(".method_tr").each(function(i, item){
+			var text1 = $(this).find(".d3_name").text();
+			var text2 = $(this).find(".method_title").text();
+			
+			if(text1.toLowerCase().includes(search) || text2.toLowerCase().includes(search)){
+				$(this).css("display", "");
+			}else{
+				$(this).css("display", "none");
+			}
+		});
+		
+	}
+
+</script>
+
+<script type="text/javascript">
+
+	const container = document.querySelector('#map_regist');
+	
+	const options = { 
+	    center: new kakao.maps.LatLng(33.450701, 126.570667),
+	    level: 3
+	};
+	const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+	
+	function resizeMap() {	    
+	    mapContainer.style.width = '650px';
+	    mapContainer.style.height = '650px'; 
+	}
+
+	function relayout() {	    
+	    map.relayout();
+	}
+	
+	// 전송데이타 관련 변수들
+	let markers = [];
+	let coords = [];
+	let __polygon;
+	
+	function createMarker(lng, lat, map){
+	    const markerPosition  = new kakao.maps.LatLng(lat, lng); 
+	
+	    // 마커를 생성합니다
+	    const marker = new kakao.maps.Marker({
+	        position: markerPosition
+	    });
+	
+	    marker.setMap(map);
+	    markers.push(marker);
+	    coords.push({ lat, lng })
+	}
+	
+	function requestServer()
+	{
+	    // $.ajax({ 
+	    //     url: "http://localhost:8080/api/",
+	    //     data: JSON.stringify({'coords': coords}),                        
+	    //     method: "POST",            
+	    //     dataType: "json"      
+	    // }).done(function(json) {
+	    //     console.log(json, "response")
+	    // })        
+	    // .fail(function(xhr, status, errorThrown) {
+	    //    console.error(errorThrown)
+	    // })              
+	}
+	
+	// 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
+	function clearMarkers(isRequest) {
+	    for (var i = 0; i < markers.length; i++) {
+	        markers[i].setMap(null);
+	    }            
+	
+	    if (isRequest) {
+	        requestServer();
+	        markers = [];
+	//         coords = [];
+	    } else {
+	        markers = [];
+	        coords = [];
+	    }
+	}
+	
+	// 이벤트 관련 변수들
+	var drawingFlag = false; 
+	var drawingPolygon; 
+	var polygon; 
+	var areaOverlay; 
+	
+	kakao.maps.event.addListener(map, 'click', function(mouseEvent) { 
+	    // 마커 생성   
+	    const coord = mouseEvent.latLng;
+	    createMarker(coord.La, coord.Ma, map)    
+	    
+	    var clickPosition = mouseEvent.latLng; 
+	    
+	    // 지도 클릭이벤트가 발생했는데 다각형이 그려지고 있는 상태가 아니면
+	    if (!drawingFlag) {
+	        // 상태를 true로, 다각형을 그리고 있는 상태로 변경합니다
+	        drawingFlag = true;
+	        
+	        // 지도 위에 다각형이 표시되고 있다면 지도에서 제거합니다
+	        if (polygon) {  
+	            polygon.setMap(null);      
+	            polygon = null;  
+	        }
+	        
+	        // 지도 위에 면적정보 커스텀오버레이가 표시되고 있다면 지도에서 제거합니다
+	        if (areaOverlay) {
+	            areaOverlay.setMap(null);
+	            areaOverlay = null;
+	        }
+	    
+	        // 그려지고 있는 다각형을 표시할 다각형을 생성하고 지도에 표시합니다
+	        drawingPolygon = new kakao.maps.Polygon({
+	            map: map, // 다각형을 표시할 지도입니다
+	            path: [clickPosition], // 다각형을 구성하는 좌표 배열입니다 클릭한 위치를 넣어줍니다
+	            strokeWeight: 3, // 선의 두께입니다 
+	            strokeColor: '#00a0e9', // 선의 색깔입니다
+	            strokeOpacity: 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
+	            strokeStyle: 'solid', // 선의 스타일입니다
+	            fillColor: '#00a0e9', // 채우기 색깔입니다
+	            fillOpacity: 0.2 // 채우기 불투명도입니다
+	        }); 
+	        
+	        // 그리기가 종료됐을때 지도에 표시할 다각형을 생성합니다 
+	        polygon = new kakao.maps.Polygon({ 
+	            path: [clickPosition], // 다각형을 구성하는 좌표 배열입니다 클릭한 위치를 넣어줍니다 
+	            strokeWeight: 3, // 선의 두께입니다 
+	            strokeColor: '#00a0e9', // 선의 색깔입니다   
+	            strokeOpacity: 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
+	            strokeStyle: 'solid', // 선의 스타일입니다
+	            fillColor: '#00a0e9', // 채우기 색깔입니다
+	            fillOpacity: 0.2 // 채우기 불투명도입니다
+	        });
+	
+	        
+	    } else { // 다각형이 그려지고 있는 상태이면 
+	        
+	        // 그려지고 있는 다각형의 좌표에 클릭위치를 추가합니다
+	        // 다각형의 좌표 배열을 얻어옵니다
+	        var drawingPath = drawingPolygon.getPath();
+	    
+	        // 좌표 배열에 클릭한 위치를 추가하고
+	        drawingPath.push(clickPosition);
+	        
+	        // 다시 다각형 좌표 배열을 설정합니다
+	        drawingPolygon.setPath(drawingPath);
+	        
+	    
+	        // 그리기가 종료됐을때 지도에 표시할 다각형의 좌표에 클릭 위치를 추가합니다
+	        // 다각형의 좌표 배열을 얻어옵니다
+	        var path = polygon.getPath();
+	    
+	        // 좌표 배열에 클릭한 위치를 추가하고
+	        path.push(clickPosition);
+	        
+	        // 다시 다각형 좌표 배열을 설정합니다
+	        polygon.setPath(path);
+	    }
+	
+	});
+	
+	// 지도에 마우스무브 이벤트를 등록합니다
+	// 다각형을 그리고있는 상태에서 마우스무브 이벤트가 발생하면 그려질 다각형의 위치를 동적으로 보여주도록 합니다
+	kakao.maps.event.addListener(map, 'mousemove', function (mouseEvent) {
+	
+	    // 지도 마우스무브 이벤트가 발생했는데 다각형을 그리고있는 상태이면
+	    if (drawingFlag){
+	
+	        // 마우스 커서의 현재 위치를 얻어옵니다 
+	        var mousePosition = mouseEvent.latLng; 
+	        
+	        // 그려지고있는 다각형의 좌표배열을 얻어옵니다
+	        var path = drawingPolygon.getPath();
+	        
+	        // 마우스무브로 추가된 마지막 좌표를 제거합니다
+	        if (path.length > 1) {
+	            path.pop();
+	        } 
+	        
+	        // 마우스의 커서 위치를 좌표 배열에 추가합니다
+	        path.push(mousePosition);
+	
+	        // 그려지고 있는 다각형의 좌표를 다시 설정합니다
+	        drawingPolygon.setPath(path);
+	    }             
+	});     
+	
+	// 지도에 마우스 오른쪽 클릭 이벤트를 등록합니다
+	// 다각형을 그리고있는 상태에서 마우스 오른쪽 클릭 이벤트가 발생하면 그리기를 종료합니다
+	kakao.maps.event.addListener(map, 'rightclick', function (mouseEvent) {
+	
+	    // 지도 오른쪽 클릭 이벤트가 발생했는데 다각형을 그리고있는 상태이면
+	    if (drawingFlag) {
+	        
+	        // 그려지고있는 다각형을  지도에서 제거합니다
+	        drawingPolygon.setMap(null);
+	        drawingPolygon = null;  
+	        
+	        // 클릭된 죄표로 그릴 다각형의 좌표배열을 얻어옵니다
+	        var path = polygon.getPath();
+	    
+	        // 다각형을 구성하는 좌표의 개수가 3개 이상이면 
+	        if (path.length > 2) {
+	            
+	            // 지도에 다각형을 표시합니다
+	            polygon.setMap(map); 
+	
+	            var area = Math.round(polygon.getArea()), // 다각형의 총면적을 계산합니다
+	                // content = '<div class="info">총면적 <span class="number"> ' + area + '</span> m<sup>2</sup></div>'; // 커스텀오버레이에 추가될 내용입니다
+	                
+	            // 면적정보를 지도에 표시합니다
+	            areaOverlay = new kakao.maps.CustomOverlay({
+	                map: map, // 커스텀오버레이를 표시할 지도입니다 
+	                content: "",  // 커스텀오버레이에 표시할 내용입니다
+	                xAnchor: 0,
+	                yAnchor: 0,
+	                position: path[path.length-1]  // 커스텀오버레이를 표시할 위치입니다. 위치는 다각형의 마지막 좌표로 설정합니다
+	            });      
+	            clearMarkers(true)
+	            
+	        } else { 
+	            
+	            // 다각형을 구성하는 좌표가 2개 이하이면 다각형을 지도에 표시하지 않습니다 
+	            polygon = null;  
+	            clearMarkers()
+	        }
+	        
+	        // 상태를 false로, 그리지 않고 있는 상태로 변경합니다
+	        drawingFlag = false;          
+	    }  
+	});
 
 </script>
 

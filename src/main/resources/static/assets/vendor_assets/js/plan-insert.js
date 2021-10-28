@@ -73,6 +73,7 @@ window.addEventListener("load", function(){ //javascript
             let [title, content] = stepInner[k].children;
             
             title.addEventListener("click", function(e){
+            	
                 slideToggle(title, content);
             });
         }
