@@ -235,12 +235,12 @@
 			                                <div class="top_btn-left">
 			                                    <h6><span class="red" style="color: #FF4141">*</span>열의 갯수</h6>
 			                                    <input type="text" value="0" id="mil2" style="border-radius: 5px 0 0 5px; width: 40%; margin-left: 10px;">
-			                                    <button style="height: 33px; border-radius: 0 5px 5px 0; ">적용</button>
+			                                    <button id="step4-columnBtn" style="height: 33px; border-radius: 0 5px 5px 0; ">적용</button>
 			                                </div>
 			                                <div class="top_btn-right clearfix">
 			                                    <ul>
-			                                        <li><button>요인 랜덤화</button></li>
-			                                        <li><button>수준 랜덤화</button></li>
+			                                        <li><button id="random01">요인 랜덤화</button></li>
+			                                        <li><button id="random02">수준 랜덤화</button></li>
 			                                    </ul>
 			                                </div>
 			                                <div class="background-wrap">
@@ -1909,11 +1909,11 @@
 	    
 	    
 	});//step3 btn 이벤트
+	var resultArray = new Array();
+	var factorArray = new Array();
 	
 	function gridFactors(){
 		
-		var factorArray = new Array();
-		var resultArray = new Array();
 		
 		var factor1 = "";
 		var factor2 = "";
@@ -2343,13 +2343,13 @@
 			});//end sortable
 		}
 		//이곳에서 데이터 받아와야함 : important
-		/*
-		testArry = resultArray;
-		console.log('test',testArry);
-		*/
-		testFunc(resultArray);
+		var getDataArr = [...resultArray];
+		getDataResult(getDataArr);
 	}//end fridFactors
-	
+	document.querySelector('#random01').addEventListener('click', onRandomOne);
+	function onRandomOne(){
+		var testData = [...resultArray];
+	}
 	//jquery sortable 적용	
 	$(document).find("#step-container").sortable({
 		placeholder : "itemBoxHighlight",

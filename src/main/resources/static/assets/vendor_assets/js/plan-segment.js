@@ -57,15 +57,35 @@ var dummy = [
 {num: 54, id: 'C-b-Z', type: '60x10,70x15,32', repeat: 3},
 ];
 
-function testFunc(arr){
-	testArry = arr;
-};
+// table query
+var tableWrap = document.querySelector('#copy-step-4');
+var tableEls = document.querySelectorAll('.step4-container .table_content');
+var columnBtn = document.querySelector('#step4-columnBtn');
+var columnInput = document.querySelector('#mil2');
 
+// segment query
 var stepFourWrap = document.getElementById('step4-segment');
 var segmentLi = document.querySelectorAll('#step4-segment li');
 var segmentEls = document.querySelectorAll('#step4-segment li .segment');
 var segmentMove = document.querySelectorAll('#step4-segment li .arrowMove');
 var segmentRotate = document.querySelectorAll('#step4-segment li .refresh');
+
+function getDataResult(getDataArr){
+	dummy = getDataArr;
+	tableEls = document.querySelectorAll('.step4-container .table_content');
+	console.log(tableEls);
+	renderSegment(dummy);
+}
+
+function onClickColumnBtn(){
+	var value = parseInt(columnInput.value, 10);
+	if(value !== 0){
+		column = columnInput.value;
+		renderSegment(dummy);
+	}
+}
+
+
 
 function segmentComp(data){
 	var {id, type, repeat} = data;
@@ -104,6 +124,7 @@ var offsetY = 0;
 var diffX = 0;
 var diffY = 0;
 
+/* 오브젝트와의 차이 */
 var obDiffX = 0;
 var obDiffY = 0;
 
@@ -112,6 +133,7 @@ var posX = 0;
 var posY = 0;
 var rotate = 0;
 
+/* 마우스 포지션 */
 var mX = 0;
 var mY = 0;
 
@@ -128,6 +150,7 @@ function onClickStepFourWrap(e){
 }
 
 function thisTransformGet(){
+	/*클릭한 개체의 transform 정보를 받아옵니다.*/
 	var liTransform = segmentLi[thisIndex].style.transform;
 	var elsTransform = segmentEls[thisIndex].style.transform;
 	
@@ -138,8 +161,17 @@ function thisTransformGet(){
 	thisY = parseInt(translateValue.split(',')[1].split(')')[0].split('px')[0], 10);
 	
 	thisRotate = parseInt(rotateValue.split('(')[1].split(')')[0].split('deg')[0], 10 );
-	
-	console.log(thisRotate);
+}
+
+function transformRotateCheck(index){
+	var elsTransform = segmentEls[index].style.transform;
+	console.log(elsTransform);
+	if(elsTransform !== undefined && elsTransform !== null && elsTransform !== ''){	
+		var rotateValue = elsTransform.split('rotate')[1];
+		return parseInt(rotateValue.split('(')[1].split(')')[0].split('deg')[0], 10 );
+	}else{
+		return undefined;
+	}
 }
 
 function onElDown(e){
@@ -152,8 +184,15 @@ function onElDown(e){
 		if(segmentLi[z].classList.contains('active') && z !== thisIndex){
 			segmentLi[z].classList.remove('active');
 		}
+		if(tableEls[z].classList.contains('active') && z !== thisIndex){
+			tableEls[z].classList.remove('active');
+		}
 	}
 	segmentLi[thisIndex].classList.add('active');
+	tableEls[thisIndex].classList.add('active');
+	
+	var tableElsTop = tableEls[thisIndex].offsetTop - 64;
+	$('#copy-step-4').stop().animate( { scrollTop : tableElsTop } );
 	
 	
 	thisTransformGet(); // transform 속성 가져오기
@@ -228,17 +267,17 @@ var column = 5; // 행수
 var row = 0; // 줄수
 
 var elWidth = 106; // element 가로폭
-var elHeight = 36; // element 세로폭
-var offsetX = 46; // 거터값
-var offsetY = 30;
+var elHeight = 53; // element 세로폭
 
-function renderSegment(){
+var WrapDiff = 46; // wrap diff
 
+function renderSegment(data){
+	var dataGet = data;
 	// 초기화
 	stepFourWrap.innerHTML = '';
 	// 1차 : 컴포넌트 삽입
-	for(var i = 0; i < dummy.length; i++){
-		stepFourWrap.innerHTML += segmentComp(dummy[i]);
+	for(var i = 0; i < dataGet.length; i++){
+		stepFourWrap.innerHTML += segmentComp(dataGet[i]);
 	}
 	// 2차 : query , array 반환, addEvent
 	segmentLi = document.querySelectorAll('#step4-segment li');
@@ -254,23 +293,36 @@ function renderSegment(){
 	// 줄수 계산
 	row = Math.ceil(segmentEls.length / column);
 	elRender = 0;
-	for(var c = 0; c < column; c++){
-		console.log('c:',c);
-		for(var r = 0; r < row; r++){
+	
+	// 제일 큰 width 값 elWidth에 넣기
+	for(var i = 0; i < dataGet.length; i++){
+		elWidth = Math.ceil(segmentEls[i].clientWidth);
+		if(elWidth < Math.ceil(segmentEls[i].clientWidth)){
+			elWidth = Math.ceil(segmentEls[i].clientWidth);
+		}
+	}
+	
+	// 배치 세팅
+	if(row === 0){
+		row = 1;
+	}
+	for(var r = 0; r < row; r++){
+		for(var c = 0; c < column; c++){
 			if(segmentLi[elRender] !== undefined && segmentLi[elRender] !== null){
-				segmentLi[elRender].style.transform = 'translate(' + ( elWidth * r) + 'px, ' + (elHeight * c) + 'px)';
+				segmentLi[elRender].style.transform = 'translate(' + ( ( elWidth * c ) + WrapDiff ) + 'px, ' + ( (elHeight * r) + WrapDiff ) + 'px)';
 				segmentEls[elRender].style.width = elWidth + 'px';
-				segmentEls[elRender].style.transform = 'rotate(' + rotate + 'deg)';
+				
+				if(transformRotateCheck(elRender) !== undefined && transformRotateCheck(elRender) !== null){			
+					segmentEls[elRender].style.transform = 'rotate(' + transformRotateCheck(elRender) + 'deg)';
+				}else{
+					segmentEls[elRender].style.transform = 'rotate(' + 0 + 'deg)';
+				}
 				elRender++;
 			}
-			
 		}
-		
 	}
 	
 	for(var t = 0; t < segmentEls.length; t++){
-		
-		
 		segmentEls[t].addEventListener('mousedown', onElDown);
 		segmentEls[t].addEventListener('touchstart', onElDown);
 		
@@ -291,11 +343,11 @@ function addWindowEvent(){
 	
 	stepFourWrap.addEventListener('mousedown', onClickStepFourWrap);
 	stepFourWrap.addEventListener('touchstart', onClickStepFourWrap);
+	
+	columnBtn.addEventListener('click', onClickColumnBtn);
 }
 
 addWindowEvent();
-
-renderSegment();
 
 
 
