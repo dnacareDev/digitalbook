@@ -61,4 +61,13 @@ public interface PlanService {
 	//재배계획 수정
 	int updatePlan(Plan plan);
 	
+	//시비량 삭제
+	int deleteManure(int manure_id);
+	
+	//기타요인 삭제
+	int deleteEtc(int etc_id);
+	
+	//시험구배치 요인 삭제
+	int deleteFactor(int factor_id);
+	
 }

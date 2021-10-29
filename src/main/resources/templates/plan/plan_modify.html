@@ -1110,8 +1110,6 @@
 			$("#factor"+(i+1)+"_select").val(factor[i].factor_type).prop("selected", true);
 		}//end for
 		
-		console.log(factor);
-		
 		//step3 기존 데이터 그려주기
 		for(var i = 0; i < factor.length; i++){
 			if(factor[i].factor_type == "시험재료"){
@@ -1725,7 +1723,7 @@
 			dataType : 'json',
 			data : data,
 			success : function(result){
-				
+				console.log(result);
 				var body = $("#etc_body");
 				var add_list = "";
 				
@@ -1737,11 +1735,13 @@
 					add_list += '<td class="etc_comment">'+result[i].etc_comment+'</td>';
 					add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusEtc(this);">삭제</button></td>';
 					add_list += '</tr>';
+					
+					$("#etc_type").val(result[i].etc_type).attr("selected", true);
+					$("#etc_value").val(result[i].etc_value);
+					$("#etc_comment").val(result[i].etc_comment);
 				}
 				
-				$("#etc_type").val(result[0].etc_type).attr("selected", true);
-				$("#etc_value").val(result[0].etc_value);
-				$("#etc_comment").val(result[0].etc_comment);
+				
 				
 				body.append(add_list);
 				
@@ -1803,8 +1803,7 @@
 					$("#text_inner3").text(text);
 				}
 				
-				console.log(data1);
-				console.log(etcArray1);
+				
 			}//end success
 			
 		});//end ajax
@@ -1866,10 +1865,6 @@
 	
 	//기존데이터 로드
 	loadPlan();
-	
-	console.log(data1);
-	console.log(data2);
-	console.log(data3);
 
 	$("#listBtn").on("click", function(){
 		window.location.href = "/plan/list";
@@ -3233,7 +3228,7 @@
 	}
 	
 	//등록 버튼 이벤트
-	$("#planInsetBtn").on("click", function(){
+	$("#planUpdateBtn").on("click", function(){
 		
 		/* console.log(data1);
 		console.log(data2);
@@ -3248,17 +3243,14 @@
 			alert("시험구배치 종류를 선택해주세요.");
 			$("#grow_type").focus();
 		}else {
-			UpdatePlan().then(function(result){
-				
-				if(result == 0){
-					alert("재배계획 등록에 실패했습니다. 다시 등록해 주세요.");
-				}else{
-					var plan_id = result;
-					
-					insertFactor(plan_id);
-				}
-				
-			})//end inserPlan().then
+			
+			//플랜 수정
+			UpdatePlan();
+			
+			var plan_id = plan.plan_id;
+			
+			insertFactor(plan_id);
+			
 		}//end else
 		
 		
@@ -3287,6 +3279,7 @@
 		var storage_id = $("#storage_input").attr("th:data-storage-id");
 		
 		var data = {
+				"plan_id" : plan.plan_id,
 				"storage_id" : storage_id,
 				"grow_type" : grow_type,
 				"plan_repeat" : plan_repeat,
@@ -3303,7 +3296,7 @@
 				if(result == 0){
 					
 				}else{
-					resolve(result);
+					console.log("재배계획 등록 완료");
 				}
 			}
 		});//end ajax
@@ -3312,6 +3305,39 @@
 	
 	//시험구 요인 등록
 	async function insertFactor(plan_id){
+		
+		var blank = "";
+		
+		for(var i = 0; i < factor.length; i++){
+			blank += factor[i].factor_id+",";
+		}
+		if(blank != ""){
+			var blankArray = blank.slice(0, -1).split(",");
+			await DeleteFactor(blankArray);
+		}
+		
+		var blank1 = "";
+		var blank2 = "";
+		
+		for(var i = 0; i < factor.length; i++){
+			if(factor[i].factor_type == "시비량"){
+				blank1 += factor[i].manure_id+",";
+			}
+		}
+		if(blank1 != ""){
+			var blankArray1 = blank1.slice(0, -1).split(",");
+			await DeleteManure(blankArray1);
+		}
+		
+		for(var i = 0; i < factor.length; i++){
+			if(factor[i].factor_type == "기타"){
+				blank2 += factor[i].etc_id+",";
+			}
+		}
+		if(blank2 != ""){
+			var blankArray2 = blank2.slice(0, -1).split(",");
+			await DeleteEtc(blankArray2);
+		}
 		
 		const dataArray = [];
 		let inputdata = {};
@@ -3371,6 +3397,8 @@
 					};
 			}else if(data1.type == "기타"){
 				var etc_id = "";
+				
+				var blank = "";
 				
 				await insertEtc(etcArray1).then(function(result){
 					
@@ -3625,6 +3653,72 @@
 			
 		})//end return
 	}//end function
+	console.log(factor);
+	//시비량 삭제
+	function DeleteManure(cancelArr){
+		return new Promise(function(resolve){
+			
+			$.ajax(
+			{
+				url : "/plan/deleteManure?cancelArr="+cancelArr,
+				method : "POST",
+				success : function(result){
+					if(result == 0){
+						console.log("시비량 삭제 실패");
+					}else{
+						console.log("시비량 삭제 성공");
+					}
+					resolve(result);
+				}//end success
+				
+			});//end ajax
+			
+		});
+	}//end 시비량 삭제
+	
+	//기타요인 삭제
+	function DeleteEtc(cancelArr){
+		return new Promise(function(resolve){
+			
+			$.ajax(
+			{
+				url : "/plan/deleteEtc?cancelArr="+cancelArr,
+				method : "POST",
+				success : function(result){
+					if(result == 0){
+						console.log("기타요인 삭제 실패");
+					}else{
+						console.log("기타요인 삭제 성공");
+					}
+					resolve(result);
+				}//end success
+				
+			});//end ajax
+			
+		});
+	}//end 기타요인 삭제
+	
+	//시험구배치 요인 삭제
+	function DeleteFactor(cancelArr){
+		return new Promise(function(resolve){
+			
+			$.ajax(
+			{
+				url : "/plan/deleteFactor?cancelArr="+cancelArr,
+				method : "POST",
+				success : function(result){
+					if(result == 0){
+						console.log("시험구배치 삭제 실패");
+					}else{
+						console.log("시험구배치 삭제 성공");
+					}
+					resolve(result);
+				}//end success
+				
+			});//end ajax
+			
+		});
+	}//end 기타요인 삭제
 	
 	//step1 다음 버튼 이벤트 함수
 	$("#step-1-btn").on("click", function(){
