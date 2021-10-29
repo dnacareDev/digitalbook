@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
 <head>
 <!-- 공통 헤더 -->
-<th:block th:include="@{/fragments/header.html}"></th:block>
+<th:block th:include="/../fragments/header.html"></th:block>
 <style>
   .breadcrumb-main{
   float: left;
@@ -65,7 +65,7 @@
 <body class="layout-light top-menu overlayScroll">
 	<div class="mobile-search"></div>
 	<div class="mobile-author-actions"></div>
-	<th:block th:include="@{/fragments/topbar.html}"></th:block>
+	<th:block th:include="/../fragments/topbar.html"></th:block>
 	<main class="main-content" style="background-color: #F9FBFD;">
 		<div class="contents" style="background-color: #F9FBFD;">
 		    <div class="container-fluid">
@@ -147,8 +147,8 @@
 		    </div>
 		</div>
 	</main>
-	<th:block th:include="@{/fragments/footer.html}"></th:block>
-	<th:block th:include="@{/fragments/commonjs.html}"></th:block>
+	<th:block th:include="/../fragments/footer.html"></th:block>
+	<th:block th:include="/../fragments/commonjs.html"></th:block>
 <script type="text/javascript">
 	$(document).ready(function()
 	{
