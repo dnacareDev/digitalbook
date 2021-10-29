@@ -98,5 +98,19 @@ public class PlanServiceImpl implements PlanService {
 		
 		return mapper.SearchPlanCount(search_type, keyword, user_group);
 	}
+	
+	//재배 계획 detail
+	@Override
+	public Plan selectPlanDetail(int plan_id) {
+		
+		return mapper.selectPlanDetail(plan_id);
+	}
+	
+	//시험구배치 요인 list
+	@Override
+	public List<Factor> selectFactorList(int plan_id) {
+		
+		return mapper.selectFactorList(plan_id);
+	}
 
 }

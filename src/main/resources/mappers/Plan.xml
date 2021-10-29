@@ -219,4 +219,21 @@
 		)
 	</insert>
 	
+	<!-- 재배계획 detail -->
+	<select id="selectPlanDetail" parameterType="int" resultType="Plan">
+		SELECT p.*, r.*, s.*, m.*
+		FROM plan p
+		LEFT JOIN report r ON p.report_code = r.report_code
+		LEFT JOIN storage s ON p.storage_id = s.storage_id
+		LEFT JOIN method m ON p.plan_method = m.method_id
+		WHERE plan_id = #{plan_id}
+	</select>
+	
+	<!-- 시험구배치 요인 list -->
+	<select id="selectFactorList" parameterType="int" resultType="Factor">
+		SELECT * FROM factor
+		WHERE plan_id = #{plan_id}
+		ORDER BY factor_index
+	</select>
+	
 </mapper>

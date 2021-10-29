@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.digitalBook.Entity.Department;
 import com.digitalBook.Entity.Etc;
 import com.digitalBook.Entity.Factor;
 import com.digitalBook.Entity.Fertilizer;
@@ -23,6 +24,7 @@ import com.digitalBook.Entity.Method;
 import com.digitalBook.Entity.Plan;
 import com.digitalBook.Entity.Report;
 import com.digitalBook.Entity.Seed;
+import com.digitalBook.Entity.Storage;
 import com.digitalBook.Entity.User;
 import com.digitalBook.Service.PlanService;
 import com.digitalBook.Service.StorageService;
@@ -41,6 +43,11 @@ public class PlanController
 	@RequestMapping("/list")
 	public ModelAndView PlanList(ModelAndView mv)
 	{
+		
+		List<Department> department = storageService.SelectDepartment();
+		
+		mv.addObject("department", department);
+		
 		mv.setViewName("plan/plan_list");
 		
 		return mv;
@@ -229,6 +236,53 @@ public class PlanController
 		result.put("offset", offset);
 		
 		return result;
+	}
+	
+	//실험장소 검색
+	@ResponseBody
+	@RequestMapping("/searchStorage")
+	public Map<String, Object> SearchStorage(@RequestParam("page_num") int page_num)
+	{
+		Map<String, Object> result = new LinkedHashMap<String, Object>();;
+		
+		int count = storageService.SelectStorageCount();
+		
+		int limit = 10;
+		int offset = (page_num - 1) * limit;
+		int end_page = (count + limit - 1) / limit;
+		
+		List<Storage> storage = storageService.SearchStorage(offset, limit);
+		
+		result.put("storage", storage);
+		result.put("page_num", page_num);
+		result.put("end_page", end_page);
+		result.put("offset", offset);
+		
+		return result;
+	}
+	
+	//재배계획 수정 화면
+	@RequestMapping("/modify")
+	public ModelAndView PlanModify(Authentication auth, ModelAndView mv, @RequestParam(name = "plan_id", required = true) int plan_id)
+	{
+		
+		User prin = (User)auth.getPrincipal();
+		
+		Plan plan = service.selectPlanDetail(plan_id);
+		List<Report> report = service.selectReportList();
+		List<Fertilizer> fert = service.selectFertilizerList(0, 0);
+		List<Method> method = service.selectMethodList(prin.getUser_group());
+		List<Factor> factor = service.selectFactorList(plan_id);
+		
+		mv.addObject("plan", plan);
+		mv.addObject("report", report);
+		mv.addObject("fert", fert);
+		mv.addObject("method", method);
+		mv.addObject("factor", factor);
+		
+		mv.setViewName("plan/plan_modify");
+		
+		return mv;
 	}
 	
 }
