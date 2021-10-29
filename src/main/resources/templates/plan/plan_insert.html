@@ -234,7 +234,7 @@
 			                            <div class="img_inner">
 			                                <div class="top_btn-left">
 			                                    <h6><span class="red" style="color: #FF4141">*</span>열의 갯수</h6>
-			                                    <input type="text" value="0" id="mil2" style="border-radius: 5px 0 0 5px; width: 40%; margin-left: 10px;">
+			                                    <input type="text" value="10" id="mil2" style="border-radius: 5px 0 0 5px; width: 40%; margin-left: 10px;">
 			                                    <button id="step4-columnBtn" style="height: 33px; border-radius: 0 5px 5px 0; ">적용</button>
 			                                </div>
 			                                <div class="top_btn-right clearfix">
@@ -2040,6 +2040,7 @@
 			}//end for
 			
 			
+			//임의 임의배치 컴포넌트
 			var body = $("#table2");
 			add_list = "";
 			
@@ -2144,6 +2145,7 @@
 			var copy_step_4 = $("#copy-step-4");
 			console.log(plan_repeat);
 			
+			//난괴법 컴포넌트
 			var body = $("#table2");
 			
 			add_list = "";
@@ -2189,6 +2191,8 @@
 			
 			copy_step_4.empty();
 			copy_step_4.append(result_div);
+			
+			//end 난괴법 컴포넌트
 			
 			$(document).find(".step4-container").sortable({
 				placeholder : "itemBoxHighlight",
