@@ -285,4 +285,25 @@ public class PlanController
 		return mv;
 	}
 	
+	//시비량 list
+	@ResponseBody
+	@RequestMapping("/selectManure")
+	public List<Manure> SelectManure(@RequestParam("plan_id") int plan_id)
+	{
+		
+		List<Manure> manure = service.selectManureList(plan_id);
+		
+		return manure;
+	}
+	
+	//기타 list
+	@ResponseBody
+	@RequestMapping("/selectEtc")
+	public List<Etc> SelectEtc(@RequestParam("plan_id") int plan_id)
+	{
+		List<Etc> etc = service.selectEtcList(plan_id);
+		
+		return etc;
+	}
+	
 }

@@ -112,5 +112,26 @@ public class PlanServiceImpl implements PlanService {
 		
 		return mapper.selectFactorList(plan_id);
 	}
+	
+	//시비량 list
+	@Override
+	public List<Manure> selectManureList(int plan_id) {
+		
+		return mapper.selectManureList(plan_id);
+	}
+	
+	//기타 list
+	@Override
+	public List<Etc> selectEtcList(int plan_id) {
+		
+		return mapper.selectEtcList(plan_id);
+	}
+	
+	//재배계획 수정
+	@Override
+	public int updatePlan(Plan plan) {
+		
+		return mapper.updatePlan(plan);
+	}
 
 }

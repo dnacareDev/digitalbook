@@ -52,4 +52,13 @@ public interface PlanService {
 	//시험구배치 요인 list
 	List<Factor> selectFactorList(int plan_id);
 	
+	//시비량 ist
+	List<Manure> selectManureList(int plan_id);
+	
+	//기타 list
+	List<Etc> selectEtcList(int plan_id);
+	
+	//재배계획 수정
+	int updatePlan(Plan plan);
+	
 }
