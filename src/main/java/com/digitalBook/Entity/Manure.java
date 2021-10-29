@@ -21,6 +21,8 @@ public class Manure {
 	private Double manure_percent;			//성분량(%)
 	private Double manure_result;			//값(kg)
 	private int manure_level;				//시비량 수준
+	private int plan_id;					//재배 메소드 고유번호
+	private int factor_index;				//요인 순서
 	
 	private int last_manure_id;				//insert 시 생성된 pk값
 	

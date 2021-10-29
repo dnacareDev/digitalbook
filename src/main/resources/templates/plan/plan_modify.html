@@ -1079,6 +1079,7 @@
 
 	var plan = /*[[${plan}]]*/ "null";
 	var factor = /*[[${factor}]]*/ "null";
+	var method = /*[[${method}]]*/ "null";
 	
 	//시험구 배치 데이터
 	var data1 = new Object();
@@ -1097,6 +1098,9 @@
 	//기존 데이터 로드 함수
 	function loadPlan(){
 		
+		//포장에 기존 storage_id값 주기
+		$("#storage_input").attr("th:data-storage-id", plan.storage_id);
+		
 		//시험구배치 종류 선택
 		$("#grow_type").val(plan.grow_type).prop("selected", true);
 		
@@ -1108,6 +1112,7 @@
 		
 		console.log(factor);
 		
+		//step3 기존 데이터 그려주기
 		for(var i = 0; i < factor.length; i++){
 			if(factor[i].factor_type == "시험재료"){
 				var seed_ids = factor[i].factor_seed.split(",");
@@ -1117,9 +1122,31 @@
 				var texts = factor[i].factor_interval;
 				var idx = factor[i].factor_index;
 				loadIntervalGrid(texts, idx);
+			}else if(factor[i].factor_type == "재식주수"){
+				var texts = factor[i].factor_plants;
+				var idx = factor[i].factor_index;
+				loadPlantsGrid(texts, idx);
+			}else if(factor[i].factor_type == "파종량"){
+				var texts = factor[i].factor_amount;
+				var idx = factor[i].factor_index;
+				loadAmountGrid(texts, idx);
+			}else if(factor[i].factor_type == "시비량"){
+				var manure_ids = factor[i].manure_id;
+				var idx = factor[i].factor_index;
+				loadManureGrid(manure_ids, idx);
+			}else if(factor[i].factor_type == "기타"){
+				var etc_ids = factor[i].etc_id;
+				var idx = factor[i].factor_index;
+				loadEtcGrid(etc_ids, idx);
 			}
 		}//end for
 		
+		//step4 기존 데이터 그려주기
+		gridFactors();
+		
+		//step5 기존 데이터 그려주기
+		var method_ids = plan.plan_method;
+		loadMethodGrid(method_ids);
 		
 	}//기존 데이터 로드
 	
@@ -1250,8 +1277,6 @@
 		var content = texts;
 		var text = texts;
 		
-		var length = text.legnth;
-		
 		if(index == 1){
 			data1.type = type;
 			data1.content = content;
@@ -1272,11 +1297,579 @@
 	}//end 기존 시험재료 그리기
 	
 	
+	//기존 재식주수 그리기
+	function loadPlantsGrid(texts, idx){
+		
+		var textArray = texts.split(",");
+		
+		var body = $("#plants_body");
+		var add_list = "";
+		
+		//기존 재식주수 그려주기
+		for(var i = 0; i < textArray.length; i++){
+			add_list += '<tr class="plants_tr">';
+			add_list += '<td class="plants_name">'+textArray[i]+'</td>';
+			add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusPlants(this);">삭제</button></td>';
+			add_list += '</tr>';
+		}
+		
+		body.append(add_list);
+		
+		//기존 재식주수 텍스트 붙여주기
+		var index = idx;
+		var type = "재식주수";
+		var content = texts;
+		var text = texts;
+		
+		if(index == 1){
+			data1.type = type;
+			data1.content = content;
+			data1.type1 = "factor_plants";
+			$("#text_inner1").text(text);
+		}else if(index == 2){
+			data2.type = type;
+			data2.content = content;
+			data2.type1 = "factor_plants";
+			$("#text_inner2").text(text);
+		}else if(index == 3){
+			data3.type = type;
+			data3.content = content;
+			data3.type1 = "factor_plants";
+			$("#text_inner3").text(text);
+		}
+		
+	}//end 기존 재식주수 그리기
+	
+	//기존 파종량 그리기
+	function loadAmountGrid(texts, idx){
+		
+		var textArray = texts.split(",");
+		
+		var body = $("#amount_body");
+		var add_list = "";
+		
+		for(var i = 0; i < textArray.length; i++){
+			add_list += '<tr class="amount_tr">';
+			add_list += '<td class="amount_name">'+textArray[i]+'</td>';
+			add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusAmount(this);">삭제</button></td>';
+			add_list += '</tr>';
+		}
+		
+		body.append(add_list);
+		
+		//기존 파종량 텍스트 붙여주기
+		var index = idx;
+		var type = "파종량";
+		var content = texts;
+		var text = texts;
+		
+		if(index == 1){
+			data1.type = type;
+			data1.content = content;
+			data1.type1 = "factor_amount";
+			$("#text_inner1").text(text);
+		}else if(index == 2){
+			data2.type = type;
+			data2.content = content;
+			data2.type1 = "factor_amount";
+			$("#text_inner2").text(text);
+		}else if(index == 3){
+			data3.type = type;
+			data3.content = content;
+			data3.type1 = "factor_amount";
+			$("#text_inner3").text(text);
+		}
+		
+	}//end 기존 파종량 그리기
+	
+	//기존 시비량 그리기
+	function loadManureGrid(manure_ids, idx){
+		
+		var textArray = manure_ids.split(",");
+		
+		var plan_id = plan.plan_id;
+		
+		var data = {"plan_id" : plan_id};
+		
+		$.ajax({
+			url : "/plan/selectManure",
+			method : "GET",
+			dataType : 'json',
+			data : data,
+			success : function(result){
+				
+				var slice_index = result[0].manure_type.indexOf("(");
+				var check_name = result[0].manure_type.substring(0, slice_index);
+				
+				var fert1_id = result[0].fert_id;
+				
+				//기존 값 중 첫번째 값으로 modal 값 설정해주기
+				getFert2(fert1_id, check_name).then(function(fert2_id){
+					$("#manure_area").val(result[0].manure_area);
+					$("#fert_1").val(result[0].fert_id).attr("selected", true);
+					$("#manure_amount").val(result[0].manure_amount);
+					$("#manure_percent").val(result[0].manure_percent);
+					$("#manure_result").val(result[0].manure_result);
+					
+					$(document).find("#fert_2").val(fert2_id).attr("selected", true);
+				});
+				
+				
+				var copy_form_table = $("#copy_form_table");
+				
+				var str = "";
+				
+				var str_inner1 = "";
+				var str_inner2 = "";
+				var str_inner3 = "";
+				
+				//수준 별 inner 내용 담기
+				for(var i = 0; i < result.length; i++){
+					if(result[i].manure_level == 1){
+						str_inner1 += '<tr class="manure_tr">';
+						str_inner1 += '<td class="manure_area">'+result[i].manure_area+'</td>';
+						str_inner1 += '<td class="manure_type" th:data-type="'+result[i].manure_ingredient+'" th:data-fert-id="'+result[i].fert_id+'">'+result[i].manure_type+'</td>';
+						str_inner1 += '<td class="manure_amount">'+result[i].manure_amount+'</td>';
+						str_inner1 += '<td class="manure_percent">'+result[i].manure_percent+'</td>';
+						str_inner1 += '<td class="manure_result">'+result[i].manure_result+'</td>';
+						str_inner1 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);">삭제</button></td>';
+						str_inner1 += '</tr>';
+					}else if(result[i].manure_level == 2){
+						str_inner2 += '<tr class="manure_tr">';
+						str_inner2 += '<td class="manure_area">'+result[i].manure_area+'</td>';
+						str_inner2 += '<td class="manure_type" th:data-type="'+result[i].manure_ingredient+'" th:data-fert-id="'+result[i].fert_id+'">'+result[i].manure_type+'</td>';
+						str_inner2 += '<td class="manure_amount">'+result[i].manure_amount+'</td>';
+						str_inner2 += '<td class="manure_percent">'+result[i].manure_percent+'</td>';
+						str_inner2 += '<td class="manure_result">'+result[i].manure_result+'</td>';
+						str_inner2 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);">삭제</button></td>';
+						str_inner2 += '</tr>';
+					}else if(result[i].manure_level == 3){
+						str_inner3 += '<tr class="manure_tr">';
+						str_inner3 += '<td class="manure_area">'+result[i].manure_area+'</td>';
+						str_inner3 += '<td class="manure_type" th:data-type="'+result[i].manure_ingredient+'" th:data-fert-id="'+result[i].fert_id+'">'+result[i].manure_type+'</td>';
+						str_inner3 += '<td class="manure_amount">'+result[i].manure_amount+'</td>';
+						str_inner3 += '<td class="manure_percent">'+result[i].manure_percent+'</td>';
+						str_inner3 += '<td class="manure_result">'+result[i].manure_result+'</td>';
+						str_inner3 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);">삭제</button></td>';
+						str_inner3 += '</tr>';
+					}
+				}
+				
+				//각 manure 수준 array에 담기
+				var check_level = "";
+				var check_length = result.length;
+				for(var i = 0; i < result.length; i++){
+					if(i == (check_length-1)){
+						check_level += result[i].manure_level;
+					}else{
+						check_level += result[i].manure_level+",";
+					}
+				}//end for
+				
+				//수준 배열 중복 제거
+				var check_level_array = check_level.split(",");
+				var array_set = Array.from(new Set(check_level_array));
+				
+				//수준 배열만큼 실제 manure 내용 그려주기
+				for(var i = 0; i < array_set.length; i++){
+					if(array_set[i] == 1){
+						str += '<div class="col-lg-12 copy-form-standard">';
+						str += '<div class="level" th:data-level="'+1+'">수준 1</div>';
+						str += '<div class="table-responsive">';
+						str += '<table class="table">';
+						str += '<thead>';
+						str += '<tr style="text-align: center;">';
+						str += '<th>비료성분</th>';
+						str += '<th>비료종류</th>';
+						str += '<th>시비량(kg/10a)</th>';
+						str += '<th>성분량(%)</th>';
+						str += '<th>값(kg)</th>';
+						str += '<th></th>';
+						str += '</tr>';
+						str += '</thead>';
+						str += '<tbody id="manure_body">';
+						str += str_inner1;
+						str += '</tbody>';
+						str += '</table>';
+						str += '</div>';
+						str += '</div>';
+						str += '</div>';
+					}else if(array_set[i] == 2){
+						str += '<div class="col-lg-12 copy-form-standard">';
+						str += '<div class="level" th:data-level="'+2+'">수준 2</div>';
+						str += '<div class="table-responsive">';
+						str += '<table class="table">';
+						str += '<thead>';
+						str += '<tr style="text-align: center;">';
+						str += '<th>비료성분</th>';
+						str += '<th>비료종류</th>';
+						str += '<th>시비량(kg/10a)</th>';
+						str += '<th>성분량(%)</th>';
+						str += '<th>값(kg)</th>';
+						str += '<th></th>';
+						str += '</tr>';
+						str += '</thead>';
+						str += '<tbody id="manure_body">';
+						str += str_inner2;
+						str += '</tbody>';
+						str += '</table>';
+						str += '</div>';
+						str += '</div>';
+						str += '</div>';
+					}else if(array_set[i] == 3){
+						str += '<div class="col-lg-12 copy-form-standard">';
+						str += '<div class="level" th:data-level="'+3+'">수준 3</div>';
+						str += '<div class="table-responsive">';
+						str += '<table class="table">';
+						str += '<thead>';
+						str += '<tr style="text-align: center;">';
+						str += '<th>비료성분</th>';
+						str += '<th>비료종류</th>';
+						str += '<th>시비량(kg/10a)</th>';
+						str += '<th>성분량(%)</th>';
+						str += '<th>값(kg)</th>';
+						str += '<th></th>';
+						str += '</tr>';
+						str += '</thead>';
+						str += '<tbody id="manure_body">';
+						str += str_inner3;
+						str += '</tbody>';
+						str += '</table>';
+						str += '</div>';
+						str += '</div>';
+						str += '</div>';
+					}
+				}//end for
+				
+				//최종 manure 붙여주기
+				copy_form_table.append(str);
+				
+				var index = idx;
+				var type = "시비량";
+				var text1 = "";
+				var text1_title = "";
+				var text2 = "";
+				var text2_title = "";
+				var text3 = "";
+				var text3_title = "";
+				var result_text = "";
+				var level = "";
+				
+				var array_set_length = array_set.length;
+				
+				//level 수준1, 2, 3 만들어주기
+				for(var j = 0; j < array_set_length; j++){
+					
+					if(j == (array_set_length-1)){
+						level += '수준'+(j+1)+'(시)';
+					}else{
+						level += '수준'+(j+1)+'(시),';
+					}
+					
+				}//end for1
+				
+				//text 만들어주기
+				for(var i = 0; i < result.length; i++){
+					
+					if(result[i].manure_level == 1){
+						
+						text1_title = '수준 1 => ';
+						
+						var manure_result = result[i].manure_result;
+						
+						text1 += manure_result + 'kg/10a(' + result[i].manure_ingredient + ')' + '값(kg),';
+						
+						var data = {
+								"fert_id" : result[i].fert_id,
+								"manure_area" : result[i].manure_area,
+								"manure_ingredient" : result[i].manure_ingredient,
+								"manure_type" : result[i].manure_type,
+								"manure_amount" : result[i].manure_amount,
+								"manure_percent" : result[i].manure_percent,
+								"manure_result" : result[i].manure_result,
+								"manure_level" : result[i].manure_level
+						}
+						
+						manureArray.push(data);
+					}else if(result[i].manure_level == 2){
+						text2_title = '수준 2 => ';
+						
+						var manure_result = result[i].manure_result;
+						
+						text2 += manure_result + 'kg/10a(' + result[i].manure_ingredient + ')' + '값(kg),';
+						
+						var data = {
+								"fert_id" : result[i].fert_id,
+								"manure_area" : result[i].manure_area,
+								"manure_ingredient" : result[i].manure_ingredient,
+								"manure_type" : result[i].manure_type,
+								"manure_amount" : result[i].manure_amount,
+								"manure_percent" : result[i].manure_percent,
+								"manure_result" : result[i].manure_result,
+								"manure_level" : result[i].manure_level
+						}
+						
+						manureArray.push(data);
+					}else if(result[i].manure_level == 3){
+						
+						text3_title = '수준 3 => ';
+						
+						var manure_result = result[i].manure_result;
+						
+						text3 += manure_result + 'kg/10a(' + result[i].manure_ingredient + ')' + '값(kg),';
+						
+						var data = {
+								"fert_id" : result[i].fert_id,
+								"manure_area" : result[i].manure_area,
+								"manure_ingredient" : result[i].manure_ingredient,
+								"manure_type" : result[i].manure_type,
+								"manure_amount" : result[i].manure_amount,
+								"manure_percent" : result[i].manure_percent,
+								"manure_result" : result[i].manure_result,
+								"manure_level" : result[i].manure_level
+						}
+						
+						manureArray.push(data);
+					}
+					
+				}//end for2
+				
+				result_text = text1_title+text1+text2_title+text2+text3_title+text3;
+				
+				if(index == 1){
+					data1.type = type;
+					data1.content = level;
+					data1.level = level;
+					data1.type1 = "manure_id";
+					for(var i = 0; i < manureArray.length; i++){
+						manureArray1.push(manureArray[i]);
+					}
+					manureArray = [];
+					$("#text_inner1").text(result_text);
+				}else if(index == 2){
+					data2.type = type;
+					data2.content = level;
+					data2.level = level;
+					data2.type1 = "manure_id";
+					for(var i = 0; i < manureArray.length; i++){
+						manureArray2.push(manureArray[i]);
+					}
+					manureArray = [];
+					$("#text_inner2").text(result_text);
+				}else if(index == 3){
+					data3.type = type;
+					data3.content = level;
+					data3.level = level;
+					data3.type1 = "manure_id";
+					for(var i = 0; i < manureArray.length; i++){
+						manureArray3.push(manureArray[i]);
+					}
+					manureArray = [];
+					$("#text_inner3").text(result_text);
+				}
+				
+			}//end success
+		});//end ajax
+		
+	}//기존 시비량 그리기
+	
+	//fet2 가져와 fet2 id 넘기기
+	function getFert2(fert1_id, check_name){
+		return new Promise(function(resolve){
+			
+			var data = {"fert_id" : fert1_id};
+			
+			$.ajax({
+				url : "/plan/selectFertilizer",
+				method : "GET",
+				dataType : 'json',
+				data : data,
+				success : function(result){
+					
+					var fert2_id = "";
+					
+					var fert_2 = $("#fert_2");
+					var add_list = "";
+					
+					add_list = '<option value="0">비료종류 선택</option>';
+					
+					for(var i = 0; i < result.length; i++){
+						add_list += '<option value="' + result[i].fert_id + '" th:data-amount="'+result[i].fert_amount+'">' + result[i].fertilizer + '(' + result[i].fert_amount + '%' + ')' + '</option>';
+						if(result[i].fertilizer == check_name){
+							fert2_id = result[i].fert_id;
+						}
+					}
+					
+					fert_2.empty();
+					fert_2.append(add_list);
+					
+					resolve(fert2_id);
+					
+				}//end success
+			});//end ajax
+			
+		});
+	}//end function
+	
+	
+	//기존 etc 그리기
+	function loadEtcGrid(etc_ids, idx){
+		
+		var textArray = etc_ids.split(",");
+		
+		var data = {"plan_id" : plan.plan_id};
+		
+		$.ajax({
+			url : "/plan/selectEtc",
+			method : "GET",
+			dataType : 'json',
+			data : data,
+			success : function(result){
+				
+				var body = $("#etc_body");
+				var add_list = "";
+				
+				//기존 데이터 만들어서 그려주기
+				for(var i = 0; i < result.length; i++){
+					add_list += '<tr class="etc_tr">';
+					add_list += '<td class="etc_type">'+result[i].etc_type+'</td>';
+					add_list += '<td class="etc_value">'+result[i].etc_value+'</td>';
+					add_list += '<td class="etc_comment">'+result[i].etc_comment+'</td>';
+					add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusEtc(this);">삭제</button></td>';
+					add_list += '</tr>';
+				}
+				
+				$("#etc_type").val(result[0].etc_type).attr("selected", true);
+				$("#etc_value").val(result[0].etc_value);
+				$("#etc_comment").val(result[0].etc_comment);
+				
+				body.append(add_list);
+				
+				
+				var index = idx;
+				var type = "기타";
+				var content = "";
+				var text = "";
+				
+				var length = result.length;
+				
+				//기존 데이터로 input_text 만들어주고 array객체에 담아주기
+				for(var i = 0; i < result.length; i++){
+					
+					if(i == (length-1)){
+						content += result[i].etc_value + '(' + result[i].etc_type + ')';
+						text += result[i].etc_value + '(' + result[i].etc_type + ')';
+					}else{
+						content += result[i].etc_value + '(' + result[i].etc_type + '),';
+						text += result[i].etc_value + '(' + result[i].etc_type + '),';
+					}
+					
+					var data = {
+							"etc_type" : result[i].etc_type,
+							"etc_value" : result[i].etc_value,
+							"etc_comment" : result[i].etc_comment
+					}
+					
+					etcArray.push(data);
+				}
+				
+				
+				if(index == 1){
+					data1.type = type;
+					data1.content = content;
+					data1.type1 = "etc_id";
+					for(var i = 0; i < etcArray.length; i++){
+						etcArray1.push(etcArray[i]);
+					}
+					etcArray = [];
+					$("#text_inner1").text(text);
+				}else if(index == 2){
+					data2.type = type;
+					data2.content = content;
+					data2.type1 = "etc_id";
+					for(var i = 0; i < etcArray.length; i++){
+						etcArray2.push(etcArray[i]);
+					}
+					etcArray = [];
+					$("#text_inner2").text(text);
+				}else if(index == 3){
+					data3.type = type;
+					data3.content = content;
+					data3.type1 = "etc_id";
+					for(var i = 0; i < etcArray.length; i++){
+						etcArray3.push(etcArray[i]);
+					}
+					etcArray = [];
+					$("#text_inner3").text(text);
+				}
+				
+				console.log(data1);
+				console.log(etcArray1);
+			}//end success
+			
+		});//end ajax
+		
+		
+	}//end function
+	
+	//기존 step4 method 그리기
+	function loadMethodGrid(method_ids){
+		
+		var method_arr = method_ids.split(",");
+		
+		var method_container = $("#method-container");
+		var add_list = "";
+		
+		for(var i = 0; i < method_arr.length; i++){
+			for(var j = 0; j < method.length; j++){
+				
+				if(method[j].method_id == method_arr[i]){
+					add_list += '<div th:data-id='+method[j].method_id+' class="list-group method-step">';
+					add_list += '<li class="list-group-item-sm list-group-item">';
+					add_list += '<div class="row">';
+					
+					add_list += '<div class="mb-1 col-1">';
+					add_list += '<input type="checkbox" class="checkbox mr-2" name="mis_method">';
+					add_list += '</div>';
+					
+					add_list += '<div class="mb-1 col-2">';
+					add_list += '<span class="d2_name">'+method[j].d2_name+'</span>';
+					add_list += '</div>';
+					
+					add_list += '<div class="mb-1 col-2">';
+					add_list += '<span class="d3_name">'+method[j].d3_name+'</span>';
+					add_list += '</div>';
+					
+					add_list += '<div class="mb-1 col-2">';
+					add_list += '<span class="d1_name">'+method[j].d1_name+'</span>';
+					add_list += '</div>';
+					
+					add_list += '<div class="mb-1 col-2">';
+					add_list += '<span class="method_title">'+method[j].method_title+'</span>';
+					add_list += '</div>';
+					
+					add_list += '<div class="mb-1 col-3">';
+					add_list += '<span class="method_contents">'+method[j].method_contents+'</span>';
+					add_list += '</div>';
+						
+					add_list += '</div>';
+					add_list += '</li>';
+					add_list += '</div>';
+				}
+				
+			}//end for2
+		}//end for1
+		
+		method_container.append(add_list);
+		
+	}//end function
+	
 	//기존데이터 로드
 	loadPlan();
 	
 	console.log(data1);
 	console.log(data2);
+	console.log(data3);
 
 	$("#listBtn").on("click", function(){
 		window.location.href = "/plan/list";
@@ -2655,7 +3248,7 @@
 			alert("시험구배치 종류를 선택해주세요.");
 			$("#grow_type").focus();
 		}else {
-			insertPlan().then(function(result){
+			UpdatePlan().then(function(result){
 				
 				if(result == 0){
 					alert("재배계획 등록에 실패했습니다. 다시 등록해 주세요.");
@@ -2671,58 +3264,50 @@
 		
 	});
 	
-	//plan 등록 함수
-	function insertPlan(){
-		return new Promise(function(resolve){
+	//plan 수정 함수
+	function UpdatePlan(){
+		
+		var plan_method = "";
+		
+		var length = $(document).find(".method-step").length;
+		$(document).find(".method-step").each(function(index, item){
+			var id = $(this).attr("th:data-id");
 			
-			var plan_method = "";
+			if(index == (length-1)){
+				plan_method += id;
+			}else{
+				plan_method += id+',';
+			}
 			
-			var length = $(document).find(".method-step").length;
-			$(document).find(".method-step").each(function(index, item){
-				var id = $(this).attr("th:data-id");
-				
-				if(index == (length-1)){
-					plan_method += id;
+		});
+		
+		var grow_type = $("#grow_type option:selected").val();
+		var plan_repeat = $("#plan_repeat").val();
+		var plan_segment = $("#mil2").val();
+		var storage_id = $("#storage_input").attr("th:data-storage-id");
+		
+		var data = {
+				"storage_id" : storage_id,
+				"grow_type" : grow_type,
+				"plan_repeat" : plan_repeat,
+				"plan_segment" : plan_segment,
+				"plan_method" : plan_method
+		};
+		
+		$.ajax({
+			url : "/plan/updatePlan",
+			method : "POST",
+			dataType : 'json',
+			data : data,
+			success : function(result){
+				if(result == 0){
+					
 				}else{
-					plan_method += id+',';
+					resolve(result);
 				}
-				
-			});
-			
-			
-			var report_code = $("#select_view1 option:selected").val();
-			var grow_type = $("#grow_type option:selected").val();
-			var plan_repeat = $("#plan_repeat").val();
-			var plan_segment = $("#mil2").val();
-			var storage_id = $("#storage_input").attr("th:data-storage-id");
-			
-			var data = {
-					"storage_id" : 2,
-					"report_code" : report_code,
-					"grow_type" : grow_type,
-					"plan_repeat" : plan_repeat,
-					"plan_segment" : plan_segment,
-					"plan_method" : plan_method,
-					"storage_id" : storage_id
-			};
-			
-			$.ajax({
-				url : "/plan/insertPlan",
-				method : "POST",
-				dataType : 'json',
-				data : data,
-				success : function(result){
-					if(result == 0){
-						
-					}else{
-						resolve(result);
-					}
-				}
-			});//end ajax
-				
-			
-			
-		});//end return
+			}
+		});//end ajax
+		
 	}//end function
 	
 	//시험구 요인 등록

@@ -2059,7 +2059,7 @@
 			
 			for(var i = 0; i < resultArray.length; i++){
 				add_list += '<tr class="table_content">';
-			    add_list += '<td>'+resultArray[i].num+'</td>';
+			    add_list += '<td class="table_num">'+resultArray[i].num+'</td>';
 			    add_list += '<td>'+resultArray[i].id+'</td>';
 			    add_list += '<td>'+resultArray[i].type+'</td>';
 			    add_list += '<td>'+resultArray[i].repeat+'</td>';
@@ -2184,7 +2184,7 @@
 					
 					if(resultArray[j].repeat == (i+1)){
 						add_list += '<tr class="table_content">';
-					    add_list += '<td>'+resultArray[j].num+'</td>';
+					    add_list += '<td class="table_num">'+resultArray[j].num+'</td>';
 					    add_list += '<td>'+resultArray[j].id+'</td>';
 					    add_list += '<td>'+resultArray[j].type+'</td>';
 					    add_list += '<td>'+resultArray[j].repeat+'</td>';
@@ -2210,8 +2210,7 @@
 					
 				},
 				stop : function(event, ui){
-					/* reorder();
-					inputProtocol(); */
+					reorder();
 				}
 			});//end sortable
 		}else if(grow_type == "2"){
@@ -2325,7 +2324,7 @@
 					
 					if(resultArray[j].repeat == (i+1)){
 						add_list += '<tr class="table_content">';
-					    add_list += '<td>'+resultArray[j].num+'</td>';
+					    add_list += '<td class="table_num">'+resultArray[j].num+'</td>';
 					    add_list += '<td>'+resultArray[j].id+'</td>';
 					    add_list += '<td>'+resultArray[j].type+'</td>';
 					    add_list += '<td>'+resultArray[j].repeat+'</td>';
@@ -2351,8 +2350,7 @@
 					
 				},
 				stop : function(event, ui){
-					/* reorder();
-					inputProtocol(); */
+					reorder();
 				}
 			});//end sortable
 		}
@@ -2366,8 +2364,7 @@
 			
 		},
 		stop : function(event, ui){
-			/* reorder();
-			inputProtocol(); */
+			
 		}
 	});//end sortable
 	
@@ -2377,8 +2374,7 @@
 			
 		},
 		stop : function(event, ui){
-			/* reorder();
-			inputProtocol(); */
+			reorder();
 		}
 	});//end sortable
 	
@@ -2391,6 +2387,14 @@
 			
 		}
 	});//end sortable
+	
+	//번호 재입력
+	function reorder(){
+		console.log("reorder");
+		$(document).find(".step4-container .table_content").each(function(i, item){
+			$(this).find(".table_num").text((i+1));
+		});
+	}
 	
 	//조사 항목 체크박스 추가 이벤트
 	function PlusMethod(){
@@ -2511,13 +2515,12 @@
 			var storage_id = $("#storage_input").attr("th:data-storage-id");
 			
 			var data = {
-					"storage_id" : 2,
+					"storage_id" : storage_id,
 					"report_code" : report_code,
 					"grow_type" : grow_type,
 					"plan_repeat" : plan_repeat,
 					"plan_segment" : plan_segment,
-					"plan_method" : plan_method,
-					"storage_id" : storage_id
+					"plan_method" : plan_method
 			};
 			
 			$.ajax({
@@ -2578,6 +2581,11 @@
 			}else if(data1.type == "시비량"){
 				var manure_id = "";
 				
+				for(var i = 0; i < manureArray1.length; i++){
+					manureArray1[i].plan_id = plan_id;
+					manureArray1[i].factor_index = 1;
+				}
+				
 				await insertManure(manureArray1).then(function(result){
 					
 					
@@ -2601,9 +2609,14 @@
 			}else if(data1.type == "기타"){
 				var etc_id = "";
 				
+				for(var i = 0; i < etcArray1.length; i++){
+					etcArray1[i].plan_id = plan_id;
+					etcArray1[i].factor_index = 1;
+				}
+				
 				await insertEtc(etcArray1).then(function(result){
 					
-					console.log(result);
+					
 					var length = result.length;
 					for(var i = 0; i < length; i++){
 						if(i == (length-1)){
@@ -2659,6 +2672,11 @@
 				
 				var manure_id = "";
 				
+				for(var i = 0; i < manureArray2.length; i++){
+					manureArray2[i].plan_id = plan_id;
+					manureArray2[i].factor_index = 2;
+				}
+				
 				await insertManure(manureArray2).then(function(result){
 					
 					
@@ -2683,6 +2701,11 @@
 			}else if(data2.type == "기타"){
 				
 				var etc_id = "";
+				
+				for(var i = 0; i < etcArray2.length; i++){
+					etcArray2[i].plan_id = plan_id;
+					etcArray2[i].factor_index = 2;
+				}
 				
 				await insertEtc(etcArray2).then(function(result){
 					
@@ -2743,6 +2766,11 @@
 				
 				var manure_id = "";
 				
+				for(var i = 0; i < manureArray3.length; i++){
+					manureArray3[i].plan_id = plan_id;
+					manureArray3[i].factor_index = 3;
+				}
+				
 				await insertManure(manureArray3).then(function(result){
 					
 					
@@ -2767,6 +2795,11 @@
 			}else if(data3.type == "기타"){
 				
 				var etc_id = "";
+				
+				for(var i = 0; i < etcArray3.length; i++){
+					etcArray3[i].plan_id = plan_id;
+					etcArray3[i].factor_index = 3;
+				}
 				
 				await insertEtc(etcArray3).then(function(result){
 					

@@ -183,13 +183,17 @@
 		(
 			etc_type,
 			etc_value,
-			etc_comment
+			etc_comment,
+			plan_id,
+			factor_index
 		)
 		VALUES
 		(
 			#{etc_type},
 			#{etc_value},
-			#{etc_comment}
+			#{etc_comment},
+			#{plan_id},
+			#{factor_index}
 		)
 	</insert>
 	
@@ -204,7 +208,9 @@
 			manure_amount,
 			manure_percent,
 			manure_result,
-			manure_level
+			manure_level,
+			plan_id,
+			factor_index
 		)
 		VALUES
 		(
@@ -215,7 +221,9 @@
 			#{manure_amount},
 			#{manure_percent},
 			#{manure_result},
-			#{manure_level}
+			#{manure_level},
+			#{plan_id},
+			#{factor_index}
 		)
 	</insert>
 	
@@ -235,5 +243,32 @@
 		WHERE plan_id = #{plan_id}
 		ORDER BY factor_index
 	</select>
+	
+	<!-- 시비량 list -->
+	<select id="selectManureList" parameterType="int" resultType="Manure">
+		SELECT * FROM manure
+		WHERE plan_id = #{plan_id}
+		ORDER BY manure_level, manure_id
+	</select>
+	
+	<!-- 기타 list -->
+	<select id="selectEtcList" parameterType="int" resultType="Etc">
+		SELECT * FROM etc
+		WHERE plan_id = #{plan_id}
+		ORDER BY etc_id
+	</select>
+	
+	<!-- plan 수정 -->
+	<update id="updatePlan" parameterType="Plan">
+		UPDATE plan
+		SET storage_id = #{storage_id},
+			grow_type = #{grow_type},
+			plan_status = 1,
+			plan_repeat = #{plan_repeat},
+			plan_segment = #{plan_segment},
+			plan_method = #{plan_method},
+			modify_date = NOW()
+		WHERE plan_id = #{plan_id}
+	</update>
 	
 </mapper>
