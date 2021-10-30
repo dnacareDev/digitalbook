@@ -233,8 +233,8 @@
 			                            <div class="img_inner">
 			                                <div class="top_btn-left">
 			                                    <h6><span class="red" style="color: #FF4141">*</span>열의 갯수</h6>
-			                                    <input type="text" value="0" id="mil2" style="border-radius: 5px 0 0 5px; width: 40%; margin-left: 10px;">
-			                                    <button style="height: 33px; border-radius: 0 5px 5px 0; ">적용</button>
+			                                    <input type="text" value="10" id="mil2" style="border-radius: 5px 0 0 5px; width: 40%; margin-left: 10px;">
+			                                    <button id="step4-columnBtn" style="height: 33px; border-radius: 0 5px 5px 0; ">적용</button>
 			                                </div>
 			                                <div class="top_btn-right clearfix">
 			                                    <ul>
@@ -242,8 +242,8 @@
 			                                        <li><button>수준 랜덤화</button></li>
 			                                    </ul>
 			                                </div>
-			                                <div class="background-content">
-			                                    <ul>
+			                                <div class="background-wrap">
+			                                    <ul id="step4-segment">
 			                                        <li><a href="">A1-B1-1</a>
 			                                            <div class="arrowMove">
 			                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-move" viewBox="0 0 16 16">
@@ -1108,6 +1108,7 @@
     <!-- 공통 js -->
     <th:block th:include="@{/fragments/commonjs.html}"></th:block>
     <script th:src="@{/assets/vendor_assets/js/plan-insert.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/vendor_assets/js/plan-segment.js}"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=	e93e65b3e9a407aa43d05f993408db95&libraries=clusterer,services"></script>
 <script type="text/javascript" th:inline="javascript">
 
@@ -3552,7 +3553,9 @@
 				}
 			});//end sortable
 		}
-		
+		//이곳에서 데이터 받아와야함 : important
+		var getDataArr = [...resultArray];
+		getDataResult(getDataArr);
 	}//end fridFactors
 	
 	//jquery sortable 적용	
