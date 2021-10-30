@@ -285,6 +285,18 @@ public class PlanController
 		return mv;
 	}
 	
+	//재배계획 수정
+	@ResponseBody
+	@RequestMapping("/updatePlan")
+	public int UpdatePlan(Plan plan)
+	{
+		
+		int result = service.updatePlan(plan);
+		System.out.println(plan);
+		
+		return result;
+	}
+	
 	//시비량 list
 	@ResponseBody
 	@RequestMapping("/selectManure")
@@ -304,6 +316,75 @@ public class PlanController
 		List<Etc> etc = service.selectEtcList(plan_id);
 		
 		return etc;
+	}
+	
+	//시비량 삭제
+	@ResponseBody
+	@RequestMapping("/deleteManure")
+	public int DeleteManure(@RequestParam(name = "cancelArr") List<Integer> cancel)
+	{
+		int deleteResult[] = new int[cancel.size()];
+		int result = 0;
+		
+		for(int i = 0; i < cancel.size(); i++) {
+			deleteResult[i] = service.deleteManure(cancel.get(i));
+		}
+		
+		Boolean isDelete = IntStream.of(deleteResult).noneMatch(x -> x == 0);
+		
+		if(isDelete) {
+			result = 1;
+		}else {
+			result = 0;
+		}
+		
+		return result;
+	}
+	
+	//기타 요인 삭제
+	@ResponseBody
+	@RequestMapping("/deleteEtc")
+	public int DeleteEtc(@RequestParam(name = "cancelArr") List<Integer> cancel)
+	{
+		int deleteResult[] = new int[cancel.size()];
+		int result = 0;
+		
+		for(int i = 0; i < cancel.size(); i++) {
+			deleteResult[i] = service.deleteEtc(cancel.get(i));
+		}
+		
+		Boolean isDelete = IntStream.of(deleteResult).noneMatch(x -> x == 0);
+		
+		if(isDelete) {
+			result = 1;
+		}else {
+			result = 0;
+		}
+		
+		return result;
+	}
+	
+	//시험구 배치 요인 삭제
+	@ResponseBody
+	@RequestMapping("/deleteFactor")
+	public int DeleteFactor(@RequestParam(name = "cancelArr") List<Integer> cancel)
+	{
+		int deleteResult[] = new int[cancel.size()];
+		int result = 0;
+		
+		for(int i = 0; i < cancel.size(); i++) {
+			deleteResult[i] = service.deleteFactor(cancel.get(i));
+		}
+		
+		Boolean isDelete = IntStream.of(deleteResult).noneMatch(x -> x == 0);
+		
+		if(isDelete) {
+			result = 1;
+		}else {
+			result = 0;
+		}
+		
+		return result;
 	}
 	
 }

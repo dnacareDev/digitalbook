@@ -271,4 +271,22 @@
 		WHERE plan_id = #{plan_id}
 	</update>
 	
+	<!-- manure 삭제 -->
+	<delete id="deleteManure" parameterType="int">
+		DELETE FROM manure
+		WHERE manure_id = #{manure_id}
+	</delete>
+	
+	<!-- manure 삭제 -->
+	<delete id="deleteEtc" parameterType="int">
+		DELETE FROM etc
+		WHERE etc_id = #{etc_id}
+	</delete>
+	
+	<!-- 시험구배치 삭제 -->
+	<delete id="deleteFactor" parameterType="int">
+		DELETE FROM factor
+		WHERE factor_id = #{factor_id}
+	</delete>
+	
 </mapper>

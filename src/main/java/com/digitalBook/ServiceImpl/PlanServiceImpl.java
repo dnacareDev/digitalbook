@@ -133,5 +133,26 @@ public class PlanServiceImpl implements PlanService {
 		
 		return mapper.updatePlan(plan);
 	}
+	
+	//시비량 삭제
+	@Override
+	public int deleteManure(int manure_id) {
+		
+		return mapper.deleteManure(manure_id);
+	}
+	
+	//기타요인 삭제
+	@Override
+	public int deleteEtc(int etc_id) {
+		
+		return mapper.deleteEtc(etc_id);
+	}
+	
+	//시험구 배치 요인 삭제
+	@Override
+	public int deleteFactor(int factor_id) {
+		
+		return mapper.deleteFactor(factor_id);
+	}
 
 }
