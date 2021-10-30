@@ -1123,14 +1123,14 @@
 		if(report_code == "0"){
 			alert("과제를 선택해 주세요.");
 		}else{
-			console.log(report_code);
+			
 			$.ajax({
 				url : "/plan/selectSeed",
 				method : "GET",
 				dataType : 'json',
 				data : data,
 				success : function(result){
-					console.log(result);
+					
 					var seed_list = $("#seed_list");
 					var add_list = "";
 					
@@ -1147,6 +1147,122 @@
 					
 					seed_list.empty();
 					seed_list.append(add_list);
+					
+					//시험재료 초기화
+					$("#step-container").empty();
+					
+					var step_container = $("#step-container");
+					var str = "";
+					//인덱스에 맞게 기존 시험재료 그리기
+					if(index == 1){
+						if(Object.keys(data1).length != 0){
+							var seed_ids = data1.content.split(",");
+							
+							for(var i = 0; i < seed_ids.length; i++){
+								for(var j = 0; j < result.length; j++){
+									if(seed_ids[i] == result[j].seed_id){
+										str += '<div th:data-id='+result[j].seed_id+' class="list-group list-step">';
+										str += '<li class="list-group-item-sm list-group-item">';
+										str += '<div class="row">';
+										
+										str += '<div class="mb-1 col-4">';
+										str += '<input type="checkbox" class="checkbox mr-2" name="mis_seed">';
+										str += '<span>' + result[j].seed_code + '</span>';
+										str += '</div>';
+										
+										str += '<div class="mb-1 col-2">';
+										str += '<span class="list_division">'+result[j].division+'</span>';
+										str += '</div>';
+										
+										str += '<div class="mb-1 col-4">';
+										str += '<span class="list_genetic">'+result[j].genetic+'</span>';
+										str += '</div>';
+										
+										str += '<div class="mb-1 col-2">';
+										str += '<span>'+result[j].seed_year+'</span>';
+										str += '</div>';
+											
+										str += '</div>';
+										str += '</li>';
+										str += '</div>';
+									}
+								}//end for2
+							}//end for1
+							step_container.append(str);
+						}//end if
+					}else if(index == 2){
+						if(Object.keys(data2).length != 0){
+							var seed_ids = data2.content.split(",");
+							
+							for(var i = 0; i < seed_ids.length; i++){
+								for(var j = 0; j < result.length; j++){
+									if(seed_ids[i] == result[j].seed_id){
+										str += '<div th:data-id='+result[j].seed_id+' class="list-group list-step">';
+										str += '<li class="list-group-item-sm list-group-item">';
+										str += '<div class="row">';
+										
+										str += '<div class="mb-1 col-4">';
+										str += '<input type="checkbox" class="checkbox mr-2" name="mis_seed">';
+										str += '<span>' + result[j].seed_code + '</span>';
+										str += '</div>';
+										
+										str += '<div class="mb-1 col-2">';
+										str += '<span class="list_division">'+result[j].division+'</span>';
+										str += '</div>';
+										
+										str += '<div class="mb-1 col-4">';
+										str += '<span class="list_genetic">'+result[j].genetic+'</span>';
+										str += '</div>';
+										
+										str += '<div class="mb-1 col-2">';
+										str += '<span>'+result[j].seed_year+'</span>';
+										str += '</div>';
+											
+										str += '</div>';
+										str += '</li>';
+										str += '</div>';
+									}
+								}//end for2
+							}//end for1
+							step_container.append(str);
+						}//end if
+					}else if(index == 3){
+						if(Object.keys(data3).length != 0){
+							var seed_ids = data3.content.split(",");
+							
+							for(var i = 0; i < seed_ids.length; i++){
+								for(var j = 0; j < result.length; j++){
+									if(seed_ids[i] == result[j].seed_id){
+										str += '<div th:data-id='+result[j].seed_id+' class="list-group list-step">';
+										str += '<li class="list-group-item-sm list-group-item">';
+										str += '<div class="row">';
+										
+										str += '<div class="mb-1 col-4">';
+										str += '<input type="checkbox" class="checkbox mr-2" name="mis_seed">';
+										str += '<span>' + result[j].seed_code + '</span>';
+										str += '</div>';
+										
+										str += '<div class="mb-1 col-2">';
+										str += '<span class="list_division">'+result[j].division+'</span>';
+										str += '</div>';
+										
+										str += '<div class="mb-1 col-4">';
+										str += '<span class="list_genetic">'+result[j].genetic+'</span>';
+										str += '</div>';
+										
+										str += '<div class="mb-1 col-2">';
+										str += '<span>'+result[j].seed_year+'</span>';
+										str += '</div>';
+											
+										str += '</div>';
+										str += '</li>';
+										str += '</div>';
+									}
+								}//end for2
+							}//end for1
+							step_container.append(str);
+						}//end if
+					}
 					
 					var seedModalUseBtn = $("#useSeed");
 					seedModalUseBtn.attr('th:data-index', index);
@@ -1286,6 +1402,61 @@
 	function getIntervalList(index){
 		$("#intervalModal").modal("show");
 		
+		//재식거리 셀렉트 박스 초기화
+		$("#intervalSelect").val("none").attr("selected", true);
+		$("#interval_body").empty();
+		
+		//기존 데이터 있을시 그려주기
+		if(index == 1){
+			if(Object.keys(data1).length != 0 && data1.type == "재식거리"){
+				
+				var body = $("#interval_body");
+				var add_list = "";
+				
+				var intervals = data1.content.split(",");
+				for(var i = 0; i < intervals.length; i++){
+					add_list += '<tr class="interval_tr">';
+					add_list += '<td class="interval_name">'+intervals[i]+'</td>';
+					add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusInterval(this);">삭제</button></td>';
+					add_list += '</tr>';
+				}
+				
+				body.append(add_list);
+			}//end if
+		}else if(index == 2){
+			if(Object.keys(data2).length != 0 && data2.type == "재식거리"){
+				
+				var body = $("#interval_body");
+				var add_list = "";
+				
+				var intervals = data2.content.split(",");
+				for(var i = 0; i < intervals.length; i++){
+					add_list += '<tr class="interval_tr">';
+					add_list += '<td class="interval_name">'+intervals[i]+'</td>';
+					add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusInterval(this);">삭제</button></td>';
+					add_list += '</tr>';
+				}
+				
+				body.append(add_list);
+			}//end if
+		}else if(index == 3){
+			if(Object.keys(data3).length != 0 && data3.type == "재식거리"){
+				
+				var body = $("#interval_body");
+				var add_list = "";
+				
+				var intervals = data3.content.split(",");
+				for(var i = 0; i < intervals.length; i++){
+					add_list += '<tr class="interval_tr">';
+					add_list += '<td class="interval_name">'+intervals[i]+'</td>';
+					add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusInterval(this);">삭제</button></td>';
+					add_list += '</tr>';
+				}
+				
+				body.append(add_list);
+			}//end if
+		}
+		
 		var intervalModalUseBtn = $("#useInterval");
 		intervalModalUseBtn.attr('th:data-index', index);
 		
@@ -1390,6 +1561,57 @@
 	function getPlantsList(index){
 		$("#plantsModal").modal("show");
 		
+		//재식주수 입력창 초기화
+		$("#plants_text").val("");
+		$("#plants_body").empty();
+		
+		if(index == 1){
+			if(Object.keys(data1).length != 0 && data1.type == "재식주수"){
+				var body = $("#plants_body");
+				var add_list = "";
+				
+				var plants = data1.content.split(",");
+				for(var i = 0; i < plants.length; i++){
+					add_list += '<tr class="plants_tr">';
+					add_list += '<td class="plants_name">'+plants[i]+'</td>';
+					add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusPlants(this);">삭제</button></td>';
+					add_list += '</tr>';
+				}
+				
+				body.append(add_list);
+			}//end if
+		}else if(index == 2){
+			if(Object.keys(data2).length != 0 && data2.type == "재식주수"){
+				var body = $("#plants_body");
+				var add_list = "";
+				
+				var plants = data2.content.split(",");
+				for(var i = 0; i < plants.length; i++){
+					add_list += '<tr class="plants_tr">';
+					add_list += '<td class="plants_name">'+plants[i]+'</td>';
+					add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusPlants(this);">삭제</button></td>';
+					add_list += '</tr>';
+				}
+				
+				body.append(add_list);
+			}//end if
+		}else if(index == 3){
+			if(Object.keys(data3).length != 0 && data3.type == "재식주수"){
+				var body = $("#plants_body");
+				var add_list = "";
+				
+				var plants = data3.content.split(",");
+				for(var i = 0; i < plants.length; i++){
+					add_list += '<tr class="plants_tr">';
+					add_list += '<td class="plants_name">'+plants[i]+'</td>';
+					add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusPlants(this);">삭제</button></td>';
+					add_list += '</tr>';
+				}
+				
+				body.append(add_list);
+			}//end if
+		}
+		
 		var plantsModalUseBtn = $("#usePlants");
 		plantsModalUseBtn.attr('th:data-index', index);
 	}
@@ -1462,6 +1684,58 @@
 	function getAmountList(index){
 		$("#amountModal").modal("show");
 		
+		
+		//파종량 입력창 초기회
+		$("#amount_text").val("");
+		$("#amount_body").empty();
+		
+		if(index == 1){
+			if(Object.keys(data1).length != 0 && data1.type == "파종량"){
+				var body = $("#amount_body");
+				var add_list = "";
+				
+				var amounts = data1.content.split(",");
+				for(var i = 0; i < amounts.length; i++){
+					add_list += '<tr class="amount_tr">';
+					add_list += '<td class="amount_name">'+amounts[i]+'</td>';
+					add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusAmount(this);">삭제</button></td>';
+					add_list += '</tr>';
+				}
+				
+				body.append(add_list);
+			}
+		}else if(index == 2){
+			if(Object.keys(data2).length != 0 && data2.type == "파종량"){
+				var body = $("#amount_body");
+				var add_list = "";
+				
+				var amounts = data2.content.split(",");
+				for(var i = 0; i < amounts.length; i++){
+					add_list += '<tr class="amount_tr">';
+					add_list += '<td class="amount_name">'+amounts[i]+'</td>';
+					add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusAmount(this);">삭제</button></td>';
+					add_list += '</tr>';
+				}
+				
+				body.append(add_list);
+			}
+		}else if(index == 3){
+			if(Object.keys(data3).length != 0 && data3.type == "파종량"){
+				var body = $("#amount_body");
+				var add_list = "";
+				
+				var amounts = data3.content.split(",");
+				for(var i = 0; i < amounts.length; i++){
+					add_list += '<tr class="amount_tr">';
+					add_list += '<td class="amount_name">'+amounts[i]+'</td>';
+					add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusAmount(this);">삭제</button></td>';
+					add_list += '</tr>';
+				}
+				
+				body.append(add_list);
+			}
+		}
+		
 		var amountModalUseBtn = $("#useAmount");
 		amountModalUseBtn.attr('th:data-index', index);
 	}//end 파종량 함수
@@ -1531,6 +1805,390 @@
 	//시비량 함수
 	function getManureList(index){
 		$("#manureModal").modal("show");
+		
+		//시비량 모달 비워주기
+		$("#manure_area").val("");
+		$("#fert_1").val(0).attr("selected", true);
+		$("#fert_2").val(0).attr("selected", true);
+		$("#manure_amount").val("");
+		$("#manure_percent").val("");
+		$("#manure_result").val("");
+		$("#copy_form_table").empty();
+		
+		//선택한 데이터가 있는지 확인 후 모달 내용 변경
+		if(index == 1){
+			if(Object.keys(manureArray1).length != 0){
+				
+				var copy_form_table = $("#copy_form_table");
+				var str = "";
+				var str_inner1 = "";
+				var str_inner2 = "";
+				var str_inner3 = "";
+				
+				//수준 별 inner 내용 담기
+				for(var i = 0; i < manureArray1.length; i++){
+					if(manureArray1[i].manure_level == 1){
+						str_inner1 += '<tr class="manure_tr">';
+						str_inner1 += '<td class="manure_area">'+manureArray1[i].manure_area+'</td>';
+						str_inner1 += '<td class="manure_type" th:data-type="'+manureArray1[i].manure_ingredient+'" th:data-fert-id="'+manureArray1[i].fert_id+'">'+manureArray1[i].manure_type+'</td>';
+						str_inner1 += '<td class="manure_amount">'+manureArray1[i].manure_amount+'</td>';
+						str_inner1 += '<td class="manure_percent">'+manureArray1[i].manure_percent+'</td>';
+						str_inner1 += '<td class="manure_result">'+manureArray1[i].manure_result+'</td>';
+						str_inner1 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);">삭제</button></td>';
+						str_inner1 += '</tr>';
+					}else if(manureArray1[i].manure_level == 2){
+						str_inner2 += '<tr class="manure_tr">';
+						str_inner2 += '<td class="manure_area">'+manureArray1[i].manure_area+'</td>';
+						str_inner2 += '<td class="manure_type" th:data-type="'+manureArray1[i].manure_ingredient+'" th:data-fert-id="'+manureArray1[i].fert_id+'">'+manureArray1[i].manure_type+'</td>';
+						str_inner2 += '<td class="manure_amount">'+manureArray1[i].manure_amount+'</td>';
+						str_inner2 += '<td class="manure_percent">'+manureArray1[i].manure_percent+'</td>';
+						str_inner2 += '<td class="manure_result">'+manureArray1[i].manure_result+'</td>';
+						str_inner2 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);">삭제</button></td>';
+						str_inner2 += '</tr>';
+					}else if(manureArray1[i].manure_level == 3){
+						str_inner3 += '<tr class="manure_tr">';
+						str_inner3 += '<td class="manure_area">'+manureArray1[i].manure_area+'</td>';
+						str_inner3 += '<td class="manure_type" th:data-type="'+manureArray1[i].manure_ingredient+'" th:data-fert-id="'+manureArray1[i].fert_id+'">'+manureArray1[i].manure_type+'</td>';
+						str_inner3 += '<td class="manure_amount">'+manureArray1[i].manure_amount+'</td>';
+						str_inner3 += '<td class="manure_percent">'+manureArray1[i].manure_percent+'</td>';
+						str_inner3 += '<td class="manure_result">'+manureArray1[i].manure_result+'</td>';
+						str_inner3 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);">삭제</button></td>';
+						str_inner3 += '</tr>';
+					}
+				}//end for
+				
+				//각 manure 수준 array에 담기
+				var check_level = "";
+				var check_length = manureArray1.length;
+				for(var i = 0; i < check_length; i++){
+					check_level += manureArray1[i].manure_level+",";
+				}//end for
+				
+				//수준 배열 중복 제거
+				var check_level_array = check_level.slice(0, -1).split(",");
+				var array_set = Array.from(new Set(check_level_array));
+				console.log(array_set);
+				//수준 배열만큼 실제 manure 내용 그려주기
+				for(var i = 0; i < array_set.length; i++){
+					if(array_set[i] == 1){
+						str += '<div class="col-lg-12 copy-form-standard">';
+						str += '<div class="level" th:data-level="'+1+'">수준 1</div>';
+						str += '<div class="table-responsive">';
+						str += '<table class="table">';
+						str += '<thead>';
+						str += '<tr style="text-align: center;">';
+						str += '<th>비료성분</th>';
+						str += '<th>비료종류</th>';
+						str += '<th>시비량(kg/10a)</th>';
+						str += '<th>성분량(%)</th>';
+						str += '<th>값(kg)</th>';
+						str += '<th></th>';
+						str += '</tr>';
+						str += '</thead>';
+						str += '<tbody id="manure_body">';
+						str += str_inner1;
+						str += '</tbody>';
+						str += '</table>';
+						str += '</div>';
+						str += '</div>';
+						str += '</div>';
+					}else if(array_set[i] == 2){
+						str += '<div class="col-lg-12 copy-form-standard">';
+						str += '<div class="level" th:data-level="'+2+'">수준 2</div>';
+						str += '<div class="table-responsive">';
+						str += '<table class="table">';
+						str += '<thead>';
+						str += '<tr style="text-align: center;">';
+						str += '<th>비료성분</th>';
+						str += '<th>비료종류</th>';
+						str += '<th>시비량(kg/10a)</th>';
+						str += '<th>성분량(%)</th>';
+						str += '<th>값(kg)</th>';
+						str += '<th></th>';
+						str += '</tr>';
+						str += '</thead>';
+						str += '<tbody id="manure_body">';
+						str += str_inner2;
+						str += '</tbody>';
+						str += '</table>';
+						str += '</div>';
+						str += '</div>';
+						str += '</div>';
+					}else if(array_set[i] == 3){
+						str += '<div class="col-lg-12 copy-form-standard">';
+						str += '<div class="level" th:data-level="'+3+'">수준 3</div>';
+						str += '<div class="table-responsive">';
+						str += '<table class="table">';
+						str += '<thead>';
+						str += '<tr style="text-align: center;">';
+						str += '<th>비료성분</th>';
+						str += '<th>비료종류</th>';
+						str += '<th>시비량(kg/10a)</th>';
+						str += '<th>성분량(%)</th>';
+						str += '<th>값(kg)</th>';
+						str += '<th></th>';
+						str += '</tr>';
+						str += '</thead>';
+						str += '<tbody id="manure_body">';
+						str += str_inner3;
+						str += '</tbody>';
+						str += '</table>';
+						str += '</div>';
+						str += '</div>';
+						str += '</div>';
+					}
+				}//end for
+				copy_form_table.append(str);
+			}//end if
+		}else if(index == 2){
+			if(Object.keys(manureArray2).length != 0){
+				
+				var copy_form_table = $("#copy_form_table");
+				var str = "";
+				var str_inner1 = "";
+				var str_inner2 = "";
+				var str_inner3 = "";
+				
+				//수준 별 inner 내용 담기
+				for(var i = 0; i < manureArray2.length; i++){
+					if(manureArray2[i].manure_level == 1){
+						str_inner1 += '<tr class="manure_tr">';
+						str_inner1 += '<td class="manure_area">'+manureArray2[i].manure_area+'</td>';
+						str_inner1 += '<td class="manure_type" th:data-type="'+manureArray2[i].manure_ingredient+'" th:data-fert-id="'+manureArray2[i].fert_id+'">'+manureArray2[i].manure_type+'</td>';
+						str_inner1 += '<td class="manure_amount">'+manureArray2[i].manure_amount+'</td>';
+						str_inner1 += '<td class="manure_percent">'+manureArray2[i].manure_percent+'</td>';
+						str_inner1 += '<td class="manure_result">'+manureArray2[i].manure_result+'</td>';
+						str_inner1 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);">삭제</button></td>';
+						str_inner1 += '</tr>';
+					}else if(manureArray2[i].manure_level == 2){
+						str_inner2 += '<tr class="manure_tr">';
+						str_inner2 += '<td class="manure_area">'+manureArray2[i].manure_area+'</td>';
+						str_inner2 += '<td class="manure_type" th:data-type="'+manureArray2[i].manure_ingredient+'" th:data-fert-id="'+manureArray2[i].fert_id+'">'+manureArray2[i].manure_type+'</td>';
+						str_inner2 += '<td class="manure_amount">'+manureArray2[i].manure_amount+'</td>';
+						str_inner2 += '<td class="manure_percent">'+manureArray2[i].manure_percent+'</td>';
+						str_inner2 += '<td class="manure_result">'+manureArray2[i].manure_result+'</td>';
+						str_inner2 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);">삭제</button></td>';
+						str_inner2 += '</tr>';
+					}else if(manureArray2[i].manure_level == 3){
+						str_inner3 += '<tr class="manure_tr">';
+						str_inner3 += '<td class="manure_area">'+manureArray2[i].manure_area+'</td>';
+						str_inner3 += '<td class="manure_type" th:data-type="'+manureArray2[i].manure_ingredient+'" th:data-fert-id="'+manureArray2[i].fert_id+'">'+manureArray2[i].manure_type+'</td>';
+						str_inner3 += '<td class="manure_amount">'+manureArray2[i].manure_amount+'</td>';
+						str_inner3 += '<td class="manure_percent">'+manureArray2[i].manure_percent+'</td>';
+						str_inner3 += '<td class="manure_result">'+manureArray2[i].manure_result+'</td>';
+						str_inner3 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);">삭제</button></td>';
+						str_inner3 += '</tr>';
+					}
+				}//end for
+				
+				//각 manure 수준 array에 담기
+				var check_level = "";
+				var check_length = manureArray2.length;
+				for(var i = 0; i < check_length; i++){
+					check_level += manureArray2[i].manure_level+",";
+				}//end for
+				
+				//수준 배열 중복 제거
+				var check_level_array = check_level.slice(0, -1).split(",");
+				var array_set = Array.from(new Set(check_level_array));
+				console.log(array_set);
+				//수준 배열만큼 실제 manure 내용 그려주기
+				for(var i = 0; i < array_set.length; i++){
+					if(array_set[i] == 1){
+						str += '<div class="col-lg-12 copy-form-standard">';
+						str += '<div class="level" th:data-level="'+1+'">수준 1</div>';
+						str += '<div class="table-responsive">';
+						str += '<table class="table">';
+						str += '<thead>';
+						str += '<tr style="text-align: center;">';
+						str += '<th>비료성분</th>';
+						str += '<th>비료종류</th>';
+						str += '<th>시비량(kg/10a)</th>';
+						str += '<th>성분량(%)</th>';
+						str += '<th>값(kg)</th>';
+						str += '<th></th>';
+						str += '</tr>';
+						str += '</thead>';
+						str += '<tbody id="manure_body">';
+						str += str_inner1;
+						str += '</tbody>';
+						str += '</table>';
+						str += '</div>';
+						str += '</div>';
+						str += '</div>';
+					}else if(array_set[i] == 2){
+						str += '<div class="col-lg-12 copy-form-standard">';
+						str += '<div class="level" th:data-level="'+2+'">수준 2</div>';
+						str += '<div class="table-responsive">';
+						str += '<table class="table">';
+						str += '<thead>';
+						str += '<tr style="text-align: center;">';
+						str += '<th>비료성분</th>';
+						str += '<th>비료종류</th>';
+						str += '<th>시비량(kg/10a)</th>';
+						str += '<th>성분량(%)</th>';
+						str += '<th>값(kg)</th>';
+						str += '<th></th>';
+						str += '</tr>';
+						str += '</thead>';
+						str += '<tbody id="manure_body">';
+						str += str_inner2;
+						str += '</tbody>';
+						str += '</table>';
+						str += '</div>';
+						str += '</div>';
+						str += '</div>';
+					}else if(array_set[i] == 3){
+						str += '<div class="col-lg-12 copy-form-standard">';
+						str += '<div class="level" th:data-level="'+3+'">수준 3</div>';
+						str += '<div class="table-responsive">';
+						str += '<table class="table">';
+						str += '<thead>';
+						str += '<tr style="text-align: center;">';
+						str += '<th>비료성분</th>';
+						str += '<th>비료종류</th>';
+						str += '<th>시비량(kg/10a)</th>';
+						str += '<th>성분량(%)</th>';
+						str += '<th>값(kg)</th>';
+						str += '<th></th>';
+						str += '</tr>';
+						str += '</thead>';
+						str += '<tbody id="manure_body">';
+						str += str_inner3;
+						str += '</tbody>';
+						str += '</table>';
+						str += '</div>';
+						str += '</div>';
+						str += '</div>';
+					}
+				}//end for
+				copy_form_table.append(str);
+			}//end if
+		}else if(index == 3){
+			if(Object.keys(manureArray3).length != 0){
+				
+				var copy_form_table = $("#copy_form_table");
+				var str = "";
+				var str_inner1 = "";
+				var str_inner2 = "";
+				var str_inner3 = "";
+				
+				//수준 별 inner 내용 담기
+				for(var i = 0; i < manureArray3.length; i++){
+					if(manureArray3[i].manure_level == 1){
+						str_inner1 += '<tr class="manure_tr">';
+						str_inner1 += '<td class="manure_area">'+manureArray3[i].manure_area+'</td>';
+						str_inner1 += '<td class="manure_type" th:data-type="'+manureArray3[i].manure_ingredient+'" th:data-fert-id="'+manureArray3[i].fert_id+'">'+manureArray3[i].manure_type+'</td>';
+						str_inner1 += '<td class="manure_amount">'+manureArray3[i].manure_amount+'</td>';
+						str_inner1 += '<td class="manure_percent">'+manureArray3[i].manure_percent+'</td>';
+						str_inner1 += '<td class="manure_result">'+manureArray3[i].manure_result+'</td>';
+						str_inner1 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);">삭제</button></td>';
+						str_inner1 += '</tr>';
+					}else if(manureArray3[i].manure_level == 2){
+						str_inner2 += '<tr class="manure_tr">';
+						str_inner2 += '<td class="manure_area">'+manureArray3[i].manure_area+'</td>';
+						str_inner2 += '<td class="manure_type" th:data-type="'+manureArray3[i].manure_ingredient+'" th:data-fert-id="'+manureArray3[i].fert_id+'">'+manureArray3[i].manure_type+'</td>';
+						str_inner2 += '<td class="manure_amount">'+manureArray3[i].manure_amount+'</td>';
+						str_inner2 += '<td class="manure_percent">'+manureArray3[i].manure_percent+'</td>';
+						str_inner2 += '<td class="manure_result">'+manureArray3[i].manure_result+'</td>';
+						str_inner2 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);">삭제</button></td>';
+						str_inner2 += '</tr>';
+					}else if(manureArray3[i].manure_level == 3){
+						str_inner3 += '<tr class="manure_tr">';
+						str_inner3 += '<td class="manure_area">'+manureArray3[i].manure_area+'</td>';
+						str_inner3 += '<td class="manure_type" th:data-type="'+manureArray3[i].manure_ingredient+'" th:data-fert-id="'+manureArray3[i].fert_id+'">'+manureArray3[i].manure_type+'</td>';
+						str_inner3 += '<td class="manure_amount">'+manureArray3[i].manure_amount+'</td>';
+						str_inner3 += '<td class="manure_percent">'+manureArray3[i].manure_percent+'</td>';
+						str_inner3 += '<td class="manure_result">'+manureArray3[i].manure_result+'</td>';
+						str_inner3 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);">삭제</button></td>';
+						str_inner3 += '</tr>';
+					}
+				}//end for
+				
+				//각 manure 수준 array에 담기
+				var check_level = "";
+				var check_length = manureArray3.length;
+				for(var i = 0; i < check_length; i++){
+					check_level += manureArray3[i].manure_level+",";
+				}//end for
+				
+				//수준 배열 중복 제거
+				var check_level_array = check_level.slice(0, -1).split(",");
+				var array_set = Array.from(new Set(check_level_array));
+				
+				//수준 배열만큼 실제 manure 내용 그려주기
+				for(var i = 0; i < array_set.length; i++){
+					if(array_set[i] == 1){
+						str += '<div class="col-lg-12 copy-form-standard">';
+						str += '<div class="level" th:data-level="'+1+'">수준 1</div>';
+						str += '<div class="table-responsive">';
+						str += '<table class="table">';
+						str += '<thead>';
+						str += '<tr style="text-align: center;">';
+						str += '<th>비료성분</th>';
+						str += '<th>비료종류</th>';
+						str += '<th>시비량(kg/10a)</th>';
+						str += '<th>성분량(%)</th>';
+						str += '<th>값(kg)</th>';
+						str += '<th></th>';
+						str += '</tr>';
+						str += '</thead>';
+						str += '<tbody id="manure_body">';
+						str += str_inner1;
+						str += '</tbody>';
+						str += '</table>';
+						str += '</div>';
+						str += '</div>';
+						str += '</div>';
+					}else if(array_set[i] == 2){
+						str += '<div class="col-lg-12 copy-form-standard">';
+						str += '<div class="level" th:data-level="'+2+'">수준 2</div>';
+						str += '<div class="table-responsive">';
+						str += '<table class="table">';
+						str += '<thead>';
+						str += '<tr style="text-align: center;">';
+						str += '<th>비료성분</th>';
+						str += '<th>비료종류</th>';
+						str += '<th>시비량(kg/10a)</th>';
+						str += '<th>성분량(%)</th>';
+						str += '<th>값(kg)</th>';
+						str += '<th></th>';
+						str += '</tr>';
+						str += '</thead>';
+						str += '<tbody id="manure_body">';
+						str += str_inner2;
+						str += '</tbody>';
+						str += '</table>';
+						str += '</div>';
+						str += '</div>';
+						str += '</div>';
+					}else if(array_set[i] == 3){
+						str += '<div class="col-lg-12 copy-form-standard">';
+						str += '<div class="level" th:data-level="'+3+'">수준 3</div>';
+						str += '<div class="table-responsive">';
+						str += '<table class="table">';
+						str += '<thead>';
+						str += '<tr style="text-align: center;">';
+						str += '<th>비료성분</th>';
+						str += '<th>비료종류</th>';
+						str += '<th>시비량(kg/10a)</th>';
+						str += '<th>성분량(%)</th>';
+						str += '<th>값(kg)</th>';
+						str += '<th></th>';
+						str += '</tr>';
+						str += '</thead>';
+						str += '<tbody id="manure_body">';
+						str += str_inner3;
+						str += '</tbody>';
+						str += '</table>';
+						str += '</div>';
+						str += '</div>';
+						str += '</div>';
+					}
+				}//end for
+				copy_form_table.append(str);
+			}//end if
+		}
 		
 		//추가 버튼 비활성화
 		$("#plusManure").attr("disabled", true);
@@ -1720,7 +2378,7 @@
 				
 				if(i == (length-1)){
 					content += ' ' + manure_result + 'kg/10a(' + type + ')' + '값(kg)';
-					text += ' ' + manure_result + 'kg/10a(' + type + ')' + '값(kg)\n';
+					text += ' ' + manure_result + 'kg/10a(' + type + ')' + '값(kg)';
 				}else{
 					content += ' ' + manure_result + 'kg/10a(' + type + ')' + '값(kg),';
 					text += ' ' + manure_result + 'kg/10a(' + type + ')' + '값(kg),';
@@ -1744,6 +2402,7 @@
 		});//end copy-form-standard each
 		
 		if(index == 1){
+			manureArray1 = [];
 			data1.type = type;
 			data1.content = content;
 			data1.level = level;
@@ -1754,6 +2413,7 @@
 			manureArray = [];
 			$("#text_inner1").text(text);
 		}else if(index == 2){
+			manureArray2 = [];
 			data2.type = type;
 			data2.content = content;
 			data2.level = level;
@@ -1764,6 +2424,7 @@
 			manureArray = [];
 			$("#text_inner2").text(text);
 		}else if(index == 3){
+			manureArray3 = [];
 			data3.type = type;
 			data3.content = content;
 			data3.level = level;
@@ -1784,6 +2445,53 @@
 	function getEtcList(index){
 		$("#etcModal").modal("show");
 		
+		//기타 양식 초기화
+		$("#etc_type").val("none").attr("selected", true);
+		$("#etc_value").val("");
+		$("#etc_comment").val("");
+		$("#etc_body").empty();
+		
+		var body = $("#etc_body");
+		var add_list = "";
+		
+		if(index == 1){
+			if(Object.keys(etcArray1).length != 0){
+				for(var i = 0; i < etcArray1.length; i++){
+					add_list += '<tr class="etc_tr">';
+					add_list += '<td class="etc_type">'+etcArray1[i].etc_type+'</td>';
+					add_list += '<td class="etc_value">'+etcArray1[i].etc_value+'</td>';
+					add_list += '<td class="etc_comment">'+etcArray1[i].etc_comment+'</td>';
+					add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusEtc(this);">삭제</button></td>';
+					add_list += '</tr>';
+				}
+				body.append(add_list);
+			}//end if
+		}else if(index == 2){
+			if(Object.keys(etcArray2).length != 0){
+				for(var i = 0; i < etcArray2.length; i++){
+					add_list += '<tr class="etc_tr">';
+					add_list += '<td class="etc_type">'+etcArray2[i].etc_type+'</td>';
+					add_list += '<td class="etc_value">'+etcArray2[i].etc_value+'</td>';
+					add_list += '<td class="etc_comment">'+etcArray2[i].etc_comment+'</td>';
+					add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusEtc(this);">삭제</button></td>';
+					add_list += '</tr>';
+				}
+				body.append(add_list);
+			}//end if
+		}else if(index == 3){
+			if(Object.keys(etcArray3).length != 0){
+				for(var i = 0; i < etcArray3.length; i++){
+					add_list += '<tr class="etc_tr">';
+					add_list += '<td class="etc_type">'+etcArray3[i].etc_type+'</td>';
+					add_list += '<td class="etc_value">'+etcArray3[i].etc_value+'</td>';
+					add_list += '<td class="etc_comment">'+etcArray3[i].etc_comment+'</td>';
+					add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusEtc(this);">삭제</button></td>';
+					add_list += '</tr>';
+				}
+				body.append(add_list);
+			}//end if
+		}
+			
 		var etcModalUseBtn = $("#useEtc");
 		etcModalUseBtn.attr('th:data-index', index);
 		
@@ -1849,6 +2557,7 @@
 		
 		
 		if(index == 1){
+			etcArray1 = [];
 			data1.type = type;
 			data1.content = content;
 			data1.type1 = "etc_id";
@@ -1858,6 +2567,7 @@
 			etcArray = [];
 			$("#text_inner1").text(text);
 		}else if(index == 2){
+			etcArray2 = [];
 			data2.type = type;
 			data2.content = content;
 			data2.type1 = "etc_id";
@@ -1867,6 +2577,7 @@
 			etcArray = [];
 			$("#text_inner2").text(text);
 		}else if(index == 3){
+			etcArray3 = [];
 			data3.type = type;
 			data3.content = content;
 			data3.type1 = "etc_id";
@@ -1885,7 +2596,7 @@
 	
 	//step3 btn 이벤트
 	$("#step-3-btn").on("click", function(){
-		
+		console.log(data1);
 		var grow_type = $("#grow_type option:selected").val();
 		
 		var check1 = Object.keys(data1).length == 0;
@@ -2456,18 +3167,30 @@
 	//등록 버튼 이벤트
 	$("#planInsetBtn").on("click", function(){
 		
-		/* console.log(data1);
+		/* console.log("data!!!!!");
+		console.log(data1);
 		console.log(data2);
 		console.log(data3);
+		console.log("manure!!!!");
 		console.log(manureArray);
+		console.log(manureArray1);
+		console.log(manureArray2);
+		console.log(manureArray3);
+		console.log("etc!!!!");
 		console.log(etcArray);
 		console.log(etcArray1);
 		console.log(etcArray2);
 		console.log(etcArray3); */
 		
-		if(grow_type == "none"){
+		if($("#grow_type option:selected").val() == "none"){
 			alert("시험구배치 종류를 선택해주세요.");
 			$("#grow_type").focus();
+		}else if($("#storage_input").val() == ""){
+			alert("포장을 선택해 주세요");
+		}else if($("#select_view1 option:selected").val() == "0"){
+			alert("과제를 선택해 주세요");
+		}else if(Object.keys(data1).length == 0 && Object.keys(data2).length == 0 && Object.keys(data3).length == 0){
+			alert("시험구배치 요인을 선택해 주세요");
 		}else {
 			insertPlan().then(function(result){
 				
@@ -2984,6 +3707,7 @@
 			data : data,
 			success : function(result)
 			{
+				console.log(result);
 				var storage_list = $("#storage_list");
 				var add_list = "";
 				
