@@ -11,6 +11,7 @@ import com.digitalBook.Entity.Fertilizer;
 import com.digitalBook.Entity.Manure;
 import com.digitalBook.Entity.Method;
 import com.digitalBook.Entity.Plan;
+import com.digitalBook.Entity.Record;
 import com.digitalBook.Entity.Report;
 import com.digitalBook.Entity.Seed;
 import com.digitalBook.Mapper.PlanMapper;
@@ -153,6 +154,20 @@ public class PlanServiceImpl implements PlanService {
 	public int deleteFactor(int factor_id) {
 		
 		return mapper.deleteFactor(factor_id);
+	}
+	
+	//변경 이력 등록
+	@Override
+	public int insertRecord(Record record) {
+		
+		return mapper.insertRecord(record);
+	}
+
+	//재배계획 변경 이력 조회
+	@Override
+	public List<Record> selectRecordList(int record_type) {
+		
+		return mapper.selectRecordList(record_type);
 	}
 
 }

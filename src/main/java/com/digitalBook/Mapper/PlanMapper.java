@@ -11,6 +11,7 @@ import com.digitalBook.Entity.Fertilizer;
 import com.digitalBook.Entity.Manure;
 import com.digitalBook.Entity.Method;
 import com.digitalBook.Entity.Plan;
+import com.digitalBook.Entity.Record;
 import com.digitalBook.Entity.Report;
 import com.digitalBook.Entity.Seed;
 
@@ -74,5 +75,11 @@ public interface PlanMapper {
 	
 	//시험구 배치 요인 삭제
 	int deleteFactor(int factor_id);
+	
+	//변경 이력 등록
+	int insertRecord(Record record);
+		
+	//재배계획 변경 이력 조회
+	List<Record> selectRecordList(int record_type);
 	
 }

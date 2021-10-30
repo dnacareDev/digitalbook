@@ -493,6 +493,40 @@
 			            </div>
 			        </section>
 			    </div>
+			    <div class="row mt-4">
+					<div class="col-lg-12">
+						<div class="card card-default">
+							<div class="row ml-3 mt-3">
+								<span class="color-dark align-center" style="font-size: 20px;">변경 이력</span>
+							</div>
+							<div class="card-body" style="height: 325px; overflow-y: auto;">
+								<div class="row">
+									<div class="col-lg-12">
+										<ul>
+											<th:block th:each="r : ${record}">
+												<li class="mt-2">
+													<span class="avatar avatar-success avatar-md avatar-circle" style="float: left;">
+	                                                    <span class="avatar-icon" data-feather="check"></span>
+	                                                </span>
+													<div>
+														<span class="font-weight-bold mb-0">생육조사계획 : </span>
+														<span class="font-weight-bold mb-0" th:text="${r.record_type_code}"></span>
+														<th:block th:switch="${r.record_status}">
+															<span th:case="0" class="font-weight-bold mb-0">승인요청</span>
+															<span th:case="1" class="font-weight-bold mb-0">수정요청</span>
+															<span th:case="2" class="font-weight-bold mb-0">승인</span>
+														</th:block>
+													</div>
+													<small th:text="${r.record_date}"></small>
+												</li>
+											</th:block>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 			
 		</div>
@@ -506,7 +540,7 @@
 	        						<i class="fas fa-check color-white"></i>
 	        					</div>
 	        					<div class="atbd-notice__text">
-	        						<h4>등록이 완료되었습니다.</h4>
+	        						<h4>완료되었습니다.</h4>
 	        					</div>
 	        					<div style="display: flex; justify-content: center; margin: 10% auto;">
 	        						<a class="btn btn-default btn-success" href="/plan/list" style="color: #FFFFFF;">확인</a>
@@ -3090,10 +3124,7 @@
 	});//step3 btn 이벤트
 	
 	function gridFactors(){
-		console.log("aa");
-		console.log(data1);
-		console.log(data2);
-		console.log(data3);
+		
 		var factorArray = new Array();
 		var resultArray = new Array();
 		
@@ -3102,7 +3133,7 @@
 		var factor3 = "";
 		
 		if(Object.keys(data1).length != 0){
-			console.log("111");
+			
 			if(data1.type == "시비량"){
 				factor1 = data1.level.split(",");
 			}else if(data1.type == "시험재료"){
@@ -3129,10 +3160,6 @@
 				factor3 = data3.content.split(",");
 			}
 		}
-		
-		console.log(factor1);
-		console.log(factor1);
-		console.log(factor1);
 		
 		var plan_repeat = $("#plan_repeat").val();
 		
@@ -3622,7 +3649,7 @@
 		});
 	}
 	
-	//등록 버튼 이벤트
+	//수정 버튼 이벤트
 	$("#planUpdateBtn").on("click", function(){
 		
 		/* console.log(data1);
@@ -3634,9 +3661,15 @@
 		console.log(etcArray2);
 		console.log(etcArray3); */
 		
-		if(grow_type == "none"){
+		if($("#grow_type option:selected").val() == "none"){
 			alert("시험구배치 종류를 선택해주세요.");
 			$("#grow_type").focus();
+		}else if($("#storage_input").val() == ""){
+			alert("포장을 선택해 주세요");
+		}else if($("#select_view1 option:selected").val() == "0"){
+			alert("과제를 선택해 주세요");
+		}else if(Object.keys(data1).length == 0 && Object.keys(data2).length == 0 && Object.keys(data3).length == 0){
+			alert("시험구배치 요인을 선택해 주세요");
 		}else {
 			
 			//플랜 수정
@@ -3675,6 +3708,7 @@
 		
 		var data = {
 				"plan_id" : plan.plan_id,
+				"plan_code" : plan.plan_code,
 				"storage_id" : storage_id,
 				"grow_type" : grow_type,
 				"plan_repeat" : plan_repeat,
