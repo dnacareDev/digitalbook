@@ -1,61 +1,10 @@
 console.log('연결 성공');
 
+/*data 넘기는 형식 *//*
 var segmentData = [
-{num: 1, id: 'A-a-X', type: '60x10,70x15,32', repeat: 1},
-{num: 2, id: 'A-a-Y', type: '60x10,70x15,32', repeat: 1},
-{num: 3, id: 'A-a-Z', type: '60x10,70x15,32', repeat: 1},
-{num: 4, id: 'A-b-X', type: '60x10,70x15,32', repeat: 1},
-{num: 5, id: 'A-b-Y', type: '60x10,70x15,32', repeat: 1},
-{num: 6, id: 'A-b-Z', type: '60x10,70x15,32', repeat: 1},
-{num: 7, id: 'B-a-X', type: '60x10,70x15,32', repeat: 1},
-{num: 8, id: 'B-a-Y', type: '60x10,70x15,32', repeat: 1},
-{num: 9, id: 'B-a-Z', type: '60x10,70x15,32', repeat: 1},
-{num: 10, id: 'B-b-X', type: '60x10,70x15,32', repeat: 1},
-{num: 11, id: 'B-b-Y', type: '60x10,70x15,32', repeat: 1},
-{num: 12, id: 'B-b-Z', type: '60x10,70x15,32', repeat: 1},
-{num: 13, id: 'C-a-X', type: '60x10,70x15,32', repeat: 1},
-{num: 14, id: 'C-a-Y', type: '60x10,70x15,32', repeat: 1},
-{num: 15, id: 'C-a-Z', type: '60x10,70x15,32', repeat: 1},
-{num: 16, id: 'C-b-X', type: '60x10,70x15,32', repeat: 1},
-{num: 17, id: 'C-b-Y', type: '60x10,70x15,32', repeat: 1},
-{num: 18, id: 'C-b-Z', type: '60x10,70x15,32', repeat: 1},
-{num: 19, id: 'A-a-X', type: '60x10,70x15,32', repeat: 2},
-{num: 20, id: 'A-a-Y', type: '60x10,70x15,32', repeat: 2},
-{num: 21, id: 'A-a-Z', type: '60x10,70x15,32', repeat: 2},
-{num: 22, id: 'A-b-X', type: '60x10,70x15,32', repeat: 2},
-{num: 23, id: 'A-b-Y', type: '60x10,70x15,32', repeat: 2},
-{num: 24, id: 'A1-b1-Z1', type: '60x10,70x15,32', repeat: 2},
-{num: 25, id: 'B-a-X', type: '60x10,70x15,32', repeat: 2},
-{num: 26, id: 'B-a-Y', type: '60x10,70x15,32', repeat: 2},
-{num: 27, id: 'B-a-Z', type: '60x10,70x15,32', repeat: 2},
-{num: 28, id: 'B-b-X', type: '60x10,70x15,32', repeat: 2},
-{num: 29, id: 'B-b-Y', type: '60x10,70x15,32', repeat: 2},
-{num: 30, id: 'B-b-Z', type: '60x10,70x15,32', repeat: 2},
-{num: 31, id: 'C-a-X', type: '60x10,70x15,32', repeat: 2},
-{num: 32, id: 'C-a-Y', type: '60x10,70x15,32', repeat: 2},
-{num: 33, id: 'C-a-Z', type: '60x10,70x15,32', repeat: 2},
-{num: 34, id: 'C-b-X', type: '60x10,70x15,32', repeat: 2},
-{num: 35, id: 'C-b-Y', type: '60x10,70x15,32', repeat: 2},
-{num: 36, id: 'C-b-Z', type: '60x10,70x15,32', repeat: 2},
-{num: 37, id: 'A-a-X', type: '60x10,70x15,32', repeat: 3},
-{num: 38, id: 'A-a-Y', type: '60x10,70x15,32', repeat: 3},
-{num: 39, id: 'A-a-Z', type: '60x10,70x15,32', repeat: 3},
-{num: 40, id: 'A-b-X', type: '60x10,70x15,32', repeat: 3},
-{num: 41, id: 'A-b-Y', type: '60x10,70x15,32', repeat: 3},
-{num: 42, id: 'A-b-Z', type: '60x10,70x15,32', repeat: 3},
-{num: 43, id: 'B-a-X', type: '60x10,70x15,32', repeat: 3},
-{num: 44, id: 'B-a-Y', type: '60x10,70x15,32', repeat: 3},
-{num: 45, id: 'B-a-Z', type: '60x10,70x15,32', repeat: 3},
-{num: 46, id: 'B-b-X', type: '60x10,70x15,32', repeat: 3},
-{num: 47, id: 'B-b-Y', type: '60x10,70x15,32', repeat: 3},
-{num: 48, id: 'B-b-Z', type: '60x10,70x15,32', repeat: 3},
-{num: 49, id: 'C-a-X', type: '60x10,70x15,32', repeat: 3},
-{num: 50, id: 'C-a-Y', type: '60x10,70x15,32', repeat: 3},
-{num: 51, id: 'C-a-Z', type: '60x10,70x15,32', repeat: 3},
-{num: 52, id: 'C-b-X', type: '60x10,70x15,32', repeat: 3},
-{num: 53, id: 'C-b-Y', type: '60x10,70x15,32', repeat: 3},
-{num: 54, id: 'C-b-Z', type: '60x10,70x15,32', repeat: 3},
+{num: 1, id: 'A1-B1-C1-1', type: '60x20,60x25,70x40', repeat: 1, z-index:, sement_aspect: ,segment_horizon: ,segment_vertical: },,
 ];
+*/
 
 // table query
 var tableWrap = document.querySelector('#copy-step-4');
@@ -72,6 +21,7 @@ var segmentRotate = document.querySelectorAll('#step4-segment li .refresh');
 
 function getDataResult(getDataArr){
 	segmentData = getDataArr;
+	console.log(getDataArr);
 	tableEls = document.querySelectorAll('.step4-container .table_content');
 	renderSegment(segmentData);
 }

@@ -75,8 +75,9 @@ function randomizedBlockComp(){
 	});//end sortable
 }
 
-
+/*
 	document.querySelector('#random01').addEventListener('click', onRandomOne);
 	function onRandomOne(){
 		var testData = [...resultArray];
 	}
+	*/
