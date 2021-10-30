@@ -338,44 +338,63 @@
 			                    <div class="title">
 			                        <h3>Step 6. 담당자 및 일정<span></span></h3>
 			                    </div>
-			                    <div class="content clearfix">
+			                    <div class="content clearfix" id="step6_list">
 			                        <div class="top1">
 			                            <span class="title_sub">[조사항목:쌀단백질]</span>
-			                            <ul>
-			                                <li>
-			                                    <span><span class="red" style="color: #FF4141">*</span>담당자(정)</span>
-			                                    <select>
-			                                        <option>담당자 선택</option>
-			                                        <option>담당자 선택</option>
-			                                        <option>담당자 선택</option>
-			                                        <option>담당자 선택</option>
-			                                    </select>
-			                                </li>
-			                                <li>
-			                                    <span>담당자(부)</span>
-			                                    <select>
-			                                        <option>담당자 선택</option>
-			                                        <option>담당자 선택</option>
-			                                        <option>담당자 선택</option>
-			                                        <option>담당자 선택</option>
-			                                    </select>
-			                                </li>
-			                                <li>
-			                                    <span style="float: left;">일정등록</span>
-			                                    <input type="text" name="">
-			                                    <div class="cal">
-			                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
-			                                          <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-			                                        </svg>
-			                                    </div>
-			                                </li>
-			                            </ul>
+			                            <div class="row">
+			                            	<div class="col-12">
+			                            		<ul>
+					                                <li>
+					                                    <span><span class="red" style="color: #FF4141">*</span>담당자(정)</span>
+					                                    <select class="select_user1">
+					                                        <option th:value=0 disabled="disabled" selected="selected" hidden="hidden">담당자 선택</option>
+							                                <th:block th:each="user : ${user}">
+							                                	<option th:value="${user.user_id}" th:text="${user.user_name_k}"></option>
+							                                </th:block>
+					                                    </select>
+					                                </li>
+					                                <li>
+					                                    <span>담당자(부)</span>
+					                                    <select class="select_user1">
+					                                        <option th:value=0 disabled="disabled" selected="selected" hidden="hidden">담당자 선택</option>
+							                                <th:block th:each="user : ${user}">
+							                                	<option th:value="${user.user_id}" th:text="${user.user_name_k}"></option>
+							                                </th:block>
+					                                    </select>
+					                                </li>
+					                            </ul>
+			                            	</div>
+			                            </div>
+			                            <div class="row">
+			                            	<div class="col-12">
+			                            		<ul>
+					                            	<li>
+					                                    <span style="float: left;">시작일</span>
+					                                    <input type="text" class="start_date" name="">
+					                                    <div class="cal">
+					                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+					                                          <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+					                                        </svg>
+					                                    </div>
+					                                </li>
+					                                <li>
+					                                    <span style="float: left;">종료일</span>
+					                                    <input type="text" class="end_date" name="">
+					                                    <div class="cal">
+					                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+					                                          <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+					                                        </svg>
+					                                    </div>
+					                                </li>
+					                            </ul>
+			                            	</div>
+			                            </div>
 			                            <div class="btn">
 			                                <button>추가</button>
 			                            </div>
 			                            
 			                        </div>
-			                        <div class="top2">
+			                        <div class="top1">
 			                            <table>
 			                                <thead>
 			                                    <tr>
@@ -400,70 +419,6 @@
 			                                        <td>담당자</td>
 			                                        <td>2021.00.00</td>
 			                                        <td><button  type="button" id="chanBtn2">변경</button></td>
-			                                    </tr>
-			                                </tbody>
-			                            </table>
-			                        </div>
-			                        <div class="top3">
-			                            <span class="title_sub">[조사항목:치환성칼륨]</span>
-			                             <ul>
-			                                <li>
-			                                    <span>담당자(정)</span>
-			                                    <select>
-			                                        <option>담당자 선택</option>
-			                                        <option>담당자 선택</option>
-			                                        <option>담당자 선택</option>
-			                                        <option>담당자 선택</option>
-			                                    </select>
-			                                </li>
-			                                <li>
-			                                    <span>담당자(부)</span>
-			                                    <select>
-			                                        <option>담당자 선택</option>
-			                                        <option>담당자 선택</option>
-			                                        <option>담당자 선택</option>
-			                                        <option>담당자 선택</option>
-			                                    </select>
-			                                </li>
-			                                <li>
-			                                    <span style="float: left;">일정등록</span>
-			                                    <input type="text" name="">
-			                                    <div class="cal">
-			                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
-			                                          <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-			                                        </svg>
-			                                    </div>
-			                                </li>
-			                            </ul>
-			                            <div class="btn">
-			                                <button>추가</button>
-			                            </div>
-			                        </div>
-			                        <div class="top4">
-			                            <table>
-			                                <thead>
-			                                    <tr>
-			                                        <th>No.</th>
-			                                        <th>담당자(정)</th>
-			                                        <th>담당자(부)</th>
-			                                        <th>일정</th>
-			                                        <th></th>
-			                                    </tr>
-			                                </thead>
-			                                <tbody>
-			                                    <tr>
-			                                        <td>1</td>
-			                                        <td>담당자</td>
-			                                        <td>담당자</td>
-			                                        <td>2021.00.00</td>
-			                                        <td><button  type="button" id="chanBtn3">변경</button></td>
-			                                    </tr>
-			                                    <tr>
-			                                        <td>1</td>
-			                                        <td>담당자</td>
-			                                        <td>담당자</td>
-			                                        <td>2021.00.00</td>
-			                                        <td><button  type="button" id="chanBtn4">변경</button></td>
 			                                    </tr>
 			                                </tbody>
 			                            </table>

@@ -4391,14 +4391,29 @@
 	
 	//담당자 그려주기
 	function gridStep6(){
+		
+		var add_list = "";
+		
 		$(document).find("#method-container .method-step").each(function(i, item){
 			var length = $(document).find("#method-container .method-step").length;
 			var step6_list = $("#step6_list");
 			
-			var add_list = "";
+			add_list += '<div class="top1">';
+			add_list += '<span class="title_sub">조사항목'+$(this).find(".method_title").text()+'</span>';
+			add_list += '<div class="row">';
+			add_list += '<div class="col-12">';
+			add_list += '<ul>';
+			
+			add_list += '</ul>';
+			add_list += '</div>';
+			add_list += '</div>'; //end row1
+			
+			add_list += '</div>';
 			
 		});
-	}
+	}//end 담당자 그려주기
+	
+	gridStep6();
 	
 	//datapicker 기본 옵션 설정
 	$.datepicker.setDefaults({
