@@ -2349,10 +2349,7 @@
 		var getDataArr = [...resultArray];
 		getDataResult(getDataArr);
 	}//end fridFactors
-	document.querySelector('#random01').addEventListener('click', onRandomOne);
-	function onRandomOne(){
-		var testData = [...resultArray];
-	}
+
 	//jquery sortable 적용	
 	$(document).find("#step-container").sortable({
 		placeholder : "itemBoxHighlight",
@@ -2367,10 +2364,17 @@
 	$(document).find(".step4-container").sortable({
 		placeholder : "itemBoxHighlight",
 		start : function(event, ui){
-			
+			var index = ui.item.index();
+			startIndex = index;
+			console.log(resultArray[startIndex]);
 		},
 		stop : function(event, ui){
+			var index = ui.item.index();
+			endIndex = index;
+			console.log(resultArray[endIndex]);
+			console.log(resultArray);
 			reorder();
+			sortData(event, ui);
 		}
 	});//end sortable
 	
@@ -2384,12 +2388,20 @@
 		}
 	});//end sortable
 	
-	//번호 재입력
+	//번호 재입력 //numbering
 	function reorder(){
 		console.log("reorder");
 		$(document).find(".step4-container .table_content").each(function(i, item){
 			$(this).find(".table_num").text((i+1));
 		});
+	}
+	var startIndex = 0;
+	var endIndex = 0;
+	var startData = {};
+	var endData = {};
+	
+	function sortData(e, ui){
+		
 	}
 	
 	//조사 항목 체크박스 추가 이벤트
