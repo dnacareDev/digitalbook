@@ -229,7 +229,7 @@
 	
 	<!-- 재배계획 detail -->
 	<select id="selectPlanDetail" parameterType="int" resultType="Plan">
-		SELECT p.*, r.*, s.*, m.*
+		SELECT p.*, r.*, s.*, m.*, s.storage_location
 		FROM plan p
 		LEFT JOIN report r ON p.report_code = r.report_code
 		LEFT JOIN storage s ON p.storage_id = s.storage_id
@@ -302,6 +302,19 @@
 		SELECT * FROM record
 		WHERE record_type = #{record_type}
 		ORDER BY record_id DESC
+	</select>
+	
+	<!-- 재배계획 승인 -->
+	<update id="updatePlanStatus" parameterType="int">
+		UPDATE plan
+		SET plan_status = 2
+		WHERE plan_id = #{plan_id}
+	</update>
+	
+	<!-- 사용자 전체 조회 -->
+	<select id="selectUserList" parameterType="int" resultType="User">
+		SELECT * FROM user
+		WHERE user_group = #{user_group}
 	</select>
 	
 </mapper>

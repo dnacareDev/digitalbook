@@ -3162,6 +3162,12 @@
 			add_list += '</li>';
 			add_list += '</div>';
 			
+			//선택 항목 숨기기
+			$(this).parent().parent().css("display", "none");
+			
+			//체크 해제
+			$(this).prop("checked", false);
+			
 		});
 		
 		method_container.append(add_list);
@@ -3169,11 +3175,25 @@
 	
 	//조사항목 체크박스 삭제
 	function MinusMethod(){
+		
+		var showArr = new Array();
+		
 		$(document).find("input:checkbox[name=mis_method]:checked").each(function()
 		{	
 			var del_div = $(this).parent().parent().parent().parent();
 			del_div.remove();
+			showArr.push($(this).parent().parent().parent().parent().attr("th:data-id"));
 		});
+		
+		$(document).find("#method_list .method_tr").each(function(){
+			
+			for(var i = 0; i < showArr.length; i++){
+				if(showArr[i] == $(this).find("input:checkbox[name=chk_method]").val()){
+					$(this).css("display", "");
+				}
+			}
+		});
+		
 	}
 	
 	//등록 버튼 이벤트

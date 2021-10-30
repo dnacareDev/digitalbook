@@ -347,49 +347,69 @@
 			                    </div>
 			                </div>
 			            </div>
-			            <div class="step" id="step6">
+			            <th:block th:if="${plan.plan_status == 2 || plan.plan_status == 1}">
+			            	<div class="step" id="step6">
 			                <div class="step_inner clearfix" id="step6_inner">
 			                    <div class="title">
 			                        <h3>Step 6. 담당자 및 일정<span></span></h3>
 			                    </div>
-			                    <div class="content clearfix">
-			                        <div class="top1">
+			                    <div class="content clearfix" id="step6_list">
+			                        <!-- <div class="top1">
 			                            <span class="title_sub">[조사항목:쌀단백질]</span>
-			                            <ul>
-			                                <li>
-			                                    <span><span class="red" style="color: #FF4141">*</span>담당자(정)</span>
-			                                    <select>
-			                                        <option>담당자 선택</option>
-			                                        <option>담당자 선택</option>
-			                                        <option>담당자 선택</option>
-			                                        <option>담당자 선택</option>
-			                                    </select>
-			                                </li>
-			                                <li>
-			                                    <span>담당자(부)</span>
-			                                    <select>
-			                                        <option>담당자 선택</option>
-			                                        <option>담당자 선택</option>
-			                                        <option>담당자 선택</option>
-			                                        <option>담당자 선택</option>
-			                                    </select>
-			                                </li>
-			                                <li>
-			                                    <span style="float: left;">일정등록</span>
-			                                    <input type="text" name="">
-			                                    <div class="cal">
-			                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
-			                                          <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-			                                        </svg>
-			                                    </div>
-			                                </li>
-			                            </ul>
+			                            <div class="row">
+			                            	<div class="col-12">
+			                            		<ul>
+					                                <li>
+					                                    <span><span class="red" style="color: #FF4141">*</span>담당자(정)</span>
+					                                    <select class="select_user1">
+					                                        <option th:value=0 disabled="disabled" selected="selected" hidden="hidden">담당자 선택</option>
+							                                <th:block th:each="user : ${user}">
+							                                	<option th:value="${user.user_id}" th:text="${user.user_name_k}"></option>
+							                                </th:block>
+					                                    </select>
+					                                </li>
+					                                <li>
+					                                    <span>담당자(부)</span>
+					                                    <select class="select_user1">
+					                                        <option th:value=0 disabled="disabled" selected="selected" hidden="hidden">담당자 선택</option>
+							                                <th:block th:each="user : ${user}">
+							                                	<option th:value="${user.user_id}" th:text="${user.user_name_k}"></option>
+							                                </th:block>
+					                                    </select>
+					                                </li>
+					                            </ul>
+			                            	</div>
+			                            </div>
+			                            <div class="row">
+			                            	<div class="col-12">
+			                            		<ul>
+					                            	<li>
+					                                    <span style="float: left;">시작일</span>
+					                                    <input type="text" class="start_date" name="">
+					                                    <div class="cal">
+					                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+					                                          <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+					                                        </svg>
+					                                    </div>
+					                                </li>
+					                                <li>
+					                                    <span style="float: left;">종료일</span>
+					                                    <input type="text" class="end_date" name="">
+					                                    <div class="cal">
+					                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+					                                          <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+					                                        </svg>
+					                                    </div>
+					                                </li>
+					                            </ul>
+			                            	</div>
+			                            </div>
 			                            <div class="btn">
 			                                <button>추가</button>
 			                            </div>
 			                            
 			                        </div>
-			                        <div class="top2">
+			                        <div class="top1">
 			                            <table>
 			                                <thead>
 			                                    <tr>
@@ -417,78 +437,18 @@
 			                                    </tr>
 			                                </tbody>
 			                            </table>
-			                        </div>
-			                        <div class="top3">
-			                            <span class="title_sub">[조사항목:치환성칼륨]</span>
-			                             <ul>
-			                                <li>
-			                                    <span>담당자(정)</span>
-			                                    <select>
-			                                        <option>담당자 선택</option>
-			                                        <option>담당자 선택</option>
-			                                        <option>담당자 선택</option>
-			                                        <option>담당자 선택</option>
-			                                    </select>
-			                                </li>
-			                                <li>
-			                                    <span>담당자(부)</span>
-			                                    <select>
-			                                        <option>담당자 선택</option>
-			                                        <option>담당자 선택</option>
-			                                        <option>담당자 선택</option>
-			                                        <option>담당자 선택</option>
-			                                    </select>
-			                                </li>
-			                                <li>
-			                                    <span style="float: left;">일정등록</span>
-			                                    <input type="text" name="">
-			                                    <div class="cal">
-			                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
-			                                          <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-			                                        </svg>
-			                                    </div>
-			                                </li>
-			                            </ul>
-			                            <div class="btn">
-			                                <button>추가</button>
-			                            </div>
-			                        </div>
-			                        <div class="top4">
-			                            <table>
-			                                <thead>
-			                                    <tr>
-			                                        <th>No.</th>
-			                                        <th>담당자(정)</th>
-			                                        <th>담당자(부)</th>
-			                                        <th>일정</th>
-			                                        <th></th>
-			                                    </tr>
-			                                </thead>
-			                                <tbody>
-			                                    <tr>
-			                                        <td>1</td>
-			                                        <td>담당자</td>
-			                                        <td>담당자</td>
-			                                        <td>2021.00.00</td>
-			                                        <td><button  type="button" id="chanBtn3">변경</button></td>
-			                                    </tr>
-			                                    <tr>
-			                                        <td>1</td>
-			                                        <td>담당자</td>
-			                                        <td>담당자</td>
-			                                        <td>2021.00.00</td>
-			                                        <td><button  type="button" id="chanBtn4">변경</button></td>
-			                                    </tr>
-			                                </tbody>
-			                            </table>
-			                        </div>
+			                        </div> -->
 			                    </div>
 			                </div>
 			            </div>
+			            </th:block>
 			            <div class="submit_btn">
 			                <div class="submit_btn-inner">
 			                    <button class="list" id="listBtn">목록</button>
 			                    <button class="submit" id="planUpdateBtn">수정</button>
+			                    <th:block th:if="${#authentication.principal.user_type == 0 and plan.plan_status == 0 or plan.plan_status == 1}">
+									<button type="button" class="list" onclick="UpdateStatusBtn();">승인</button>
+								</th:block>
 			                </div>
 			            </div>
 			        </section>
@@ -532,24 +492,44 @@
 		</div>
 		
 		<div class="atbd-notice" id="success_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
-	        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
-	        		<div class="card-body">
-	        			<div class="atbd-notice__content">
-	        				<div class="atbd-notice__top text-center">
-	        					<div class="atbd-notice__icon bg-success">
-	        						<i class="fas fa-check color-white"></i>
-	        					</div>
-	        					<div class="atbd-notice__text">
-	        						<h4>완료되었습니다.</h4>
-	        					</div>
-	        					<div style="display: flex; justify-content: center; margin: 10% auto;">
-	        						<a class="btn btn-default btn-success" href="/plan/list" style="color: #FFFFFF;">확인</a>
-	        					</div>
-	        				</div>
-	        			</div>
-	        		</div>
-	        	</div>
-	        </div>
+        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+        		<div class="card-body">
+        			<div class="atbd-notice__content">
+        				<div class="atbd-notice__top text-center">
+        					<div class="atbd-notice__icon bg-success">
+        						<i class="fas fa-check color-white"></i>
+        					</div>
+        					<div class="atbd-notice__text">
+        						<h4>완료되었습니다.</h4>
+        					</div>
+        					<div style="display: flex; justify-content: center; margin: 10% auto;">
+        						<a class="btn btn-default btn-success" href="/plan/list" style="color: #FFFFFF;">확인</a>
+        					</div>
+        				</div>
+        			</div>
+        		</div>
+        	</div>
+        </div>
+        <div class="atbd-notice" id="updateStatus_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
+        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+        		<div class="card-body">
+        			<div class="atbd-notice__content">
+        				<div class="atbd-notice__top text-center">
+        					<div class="atbd-notice__icon bg-info">
+        						<i class="fas fa-exclamation color-white"></i>
+        					</div>
+        					<div class="atbd-notice__text">
+        						<h4>승인 하시겠습니까?</h4>
+        					</div>
+        					<div style="display: flex; justify-content: center; margin: 10% auto;">
+        						<button class="btn btn-default btn-primary mr-10" onclick="UpdateStatus();" style="color: #FFFFFF;">승인</button>
+        						<button class="btn btn-default btn-danger" onclick="CancelBtn();" style="color: #FFFFFF;">취소</button>
+        					</div>
+        				</div>
+        			</div>
+        		</div>
+        	</div>
+        </div>
 		
 		<div class="modal-basic modal fade show" id="storageModal" tabindex="-1" role="dialog" aria-hidden="true">
 		    <div class="modal-dialog modal-lg" role="document">
@@ -1135,6 +1115,8 @@
 		//포장에 기존 storage_id값 주기
 		$("#storage_input").attr("th:data-storage-id", plan.storage_id);
 		
+		
+		
 		//시험구배치 종류 선택
 		$("#grow_type").val(plan.grow_type).prop("selected", true);
 		
@@ -1575,6 +1557,16 @@
 		}//end for1
 		
 		method_container.append(add_list);
+		
+		//기존 항목 조사항목 리스트에서 숨기기
+		$(document).find("#method_list .method_tr").each(function(){
+			
+			for(var i = 0; i < method_arr.length; i++){
+				if(method_arr[i] == $(this).find("input:checkbox[name=chk_method]").val()){
+					$(this).css("display", "none");
+				}
+			}
+		});
 		
 	}//end function
 	
@@ -3635,6 +3627,12 @@
 			add_list += '</li>';
 			add_list += '</div>';
 			
+			//선택 항목 숨기기
+			$(this).parent().parent().css("display", "none");
+			
+			//체크 해제
+			$(this).prop("checked", false);
+			
 		});
 		
 		method_container.append(add_list);
@@ -3642,11 +3640,25 @@
 	
 	//조사항목 체크박스 삭제
 	function MinusMethod(){
+		
+		var showArr = new Array();
+		
 		$(document).find("input:checkbox[name=mis_method]:checked").each(function()
 		{	
 			var del_div = $(this).parent().parent().parent().parent();
 			del_div.remove();
+			showArr.push($(this).parent().parent().parent().parent().attr("th:data-id"));
 		});
+		
+		$(document).find("#method_list .method_tr").each(function(){
+			
+			for(var i = 0; i < showArr.length; i++){
+				if(showArr[i] == $(this).find("input:checkbox[name=chk_method]").val()){
+					$(this).css("display", "");
+				}
+			}
+		});
+		
 	}
 	
 	//수정 버튼 이벤트
@@ -4232,6 +4244,35 @@
 		
 	}
 	
+	//승인 버튼 안내 팝업
+	function UpdateStatusBtn(){
+		$("#updateStatus_popup").css("display", "flex");
+	}
+	
+	//재배계획 승인 함수
+	function UpdateStatus(){
+		
+		var data = {"plan_id" : plan.plan_id, "plan_code" : plan.plan_code};
+		
+		$.ajax(
+		{
+			url : "/plan/updateStatus",
+			method : "POST",
+			dataType : 'json',
+			data : data,
+			success : function(result){
+				if(resut = 0){
+					
+				}else {
+					$("#updateStatus_popup").css("display", "none");
+					$("#success_popup").css("display", "flex");
+				}
+			}//end success
+			
+		});//end ajax
+		
+	}//end 승인 함수
+	
 	//포장 선택 list
 	$(document).ready(function(){
 		SearchStorage(1);
@@ -4343,10 +4384,42 @@
 			}
 		});
 		
-		
-		
-		
+	}//end 포장선택
+	
+	//담당자 그려주기
+	function gridStep6(){
+		$(document).find("#method-container .method-step").each(function(i, item){
+			var length = $(document).find("#method-container .method-step").length;
+			var step6_list = $("#step6_list");
+			
+			var add_list = "";
+			
+		});
 	}
+	
+	//datapicker 기본 옵션 설정
+	$.datepicker.setDefaults({
+		dateFormat: "yy-mm-dd",
+      	duration: "medium",
+      	changeMonth: true,
+      	changeYear: true,
+      	yearRange: "2010:2030",
+	});
+	
+	//동적 생성된 datepicker 클래스에 datepicker 이벤트 주기
+	$(document).find(".start_date").each(function(index){
+		$(this).datepicker();
+		$(this).addClass("receive-datepicker"+index);
+		$(".ui-datepicker-trigger").remove();
+		$(".receive-datepicker"+index).removeClass("hasDatepicker").removeAttr("id").datepicker();
+	});
+	
+	$(document).find(".end_date").each(function(index){
+		$(this).datepicker();
+		$(this).addClass("receive-datepicker"+index);
+		$(".ui-datepicker-trigger").remove();
+		$(".receive-datepicker"+index).removeClass("hasDatepicker").removeAttr("id").datepicker();
+	});
 
 </script>
 
@@ -4463,6 +4536,8 @@
 	let polygon; 
 	let areaOverlay; 
 	
+	let plan_location = JSON.parse(plan.storage_location);
+	
 	for(let i=0; i<step.length; i++){
 	    let stepInner = step[i].children;
 	    for(let k=0; k<stepInner.length; k++){
@@ -4473,7 +4548,8 @@
 	        		setTimeout(() => {        			
 	        			
 	        			const options = { 
-	        			    center: new kakao.maps.LatLng(33.450701, 126.570667),
+	        			    /* center: new kakao.maps.LatLng(33.450701, 126.570667), */
+	        			    center: new kakao.maps.LatLng(plan_location[0].lat, plan_location[0].lng),
 	        			    level: 5
 	        			};
 	        			map = new kakao.maps.Map(container, options);	        			

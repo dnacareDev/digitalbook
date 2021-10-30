@@ -14,6 +14,7 @@ import com.digitalBook.Entity.Plan;
 import com.digitalBook.Entity.Record;
 import com.digitalBook.Entity.Report;
 import com.digitalBook.Entity.Seed;
+import com.digitalBook.Entity.User;
 import com.digitalBook.Mapper.PlanMapper;
 import com.digitalBook.Service.PlanService;
 
@@ -168,6 +169,20 @@ public class PlanServiceImpl implements PlanService {
 	public List<Record> selectRecordList(int record_type) {
 		
 		return mapper.selectRecordList(record_type);
+	}
+	
+	//재배계획 승인
+	@Override
+	public int updatePlanStatus(int plan_id) {
+		
+		return mapper.updatePlanStatus(plan_id);
+	}
+	
+	//사용자 전체 조회
+	@Override
+	public List<User> selectUserList(int user_group) {
+		
+		return mapper.selectUserList(user_group);
 	}
 
 }

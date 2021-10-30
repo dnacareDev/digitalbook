@@ -32,6 +32,7 @@ public class Plan {
 	
 	//실험장소 사용 컬럼
 	private String storage_name;			//포장명
+	private String storage_location;		//장소 위치
 	
 	//재배 프로토콜 메소드명
 	private String method_title;			//메소드명

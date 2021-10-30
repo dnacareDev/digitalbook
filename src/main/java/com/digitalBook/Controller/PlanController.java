@@ -279,6 +279,7 @@ public class PlanController
 		List<Fertilizer> fert = service.selectFertilizerList(0, 0);
 		List<Method> method = service.selectMethodList(prin.getUser_group());
 		List<Factor> factor = service.selectFactorList(plan_id);
+		List<User> user = service.selectUserList(prin.getUser_group());
 		
 		List<Record> record = service.selectRecordList(plan_id);
 		
@@ -287,6 +288,7 @@ public class PlanController
 		mv.addObject("fert", fert);
 		mv.addObject("method", method);
 		mv.addObject("factor", factor);
+		mv.addObject("user", user);
 		mv.addObject("record", record);
 		
 		mv.setViewName("plan/plan_modify");
@@ -399,6 +401,25 @@ public class PlanController
 			result = 1;
 		}else {
 			result = 0;
+		}
+		
+		return result;
+	}
+	
+	//재배계획 승인
+	@ResponseBody
+	@RequestMapping("/updateStatus")
+	public int UpdateStatus(@RequestParam(name = "plan_id") int plan_id, @RequestParam(name = "plan_code") String plan_code)
+	{
+		
+		int result = service.updatePlanStatus(plan_id);
+		
+		if(result != 0) {
+			Record record = new Record();
+			record.setRecord_status(2);
+			record.setRecord_type(plan_id);
+			record.setRecord_type_code(plan_code);
+			service.insertRecord(record);
 		}
 		
 		return result;

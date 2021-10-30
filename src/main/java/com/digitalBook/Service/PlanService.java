@@ -11,6 +11,7 @@ import com.digitalBook.Entity.Plan;
 import com.digitalBook.Entity.Record;
 import com.digitalBook.Entity.Report;
 import com.digitalBook.Entity.Seed;
+import com.digitalBook.Entity.User;
 
 public interface PlanService {
 	
@@ -76,5 +77,11 @@ public interface PlanService {
 		
 	//재배계획 변경 이력 조회
 	List<Record> selectRecordList(int record_type);
+	
+	//재배계획 승인
+	int updatePlanStatus(int plan_id);
+	
+	//사용자 전체 조회
+	List<User> selectUserList(int user_group);
 	
 }
