@@ -375,6 +375,7 @@ input[type="text"]{
 
 #step4 .background-wrap ul li{
 	position:absolute; left:0; top:0; z-index:0;
+	display:block;
 }
 #step4 .background-wrap ul li .segment::after,
 #step4 .background-wrap ul li .segment::before{
@@ -395,7 +396,7 @@ input[type="text"]{
 #step4 .background-wrap ul li .segment{
     color: #5E7156;
     border-radius:3px;
-    display:inline-block;
+    display:block;
     padding: 5px 20px;
     background-color: #F6FFF2;
     border: 1px solid #DBEFD2;

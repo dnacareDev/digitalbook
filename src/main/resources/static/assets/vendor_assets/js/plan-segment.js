@@ -21,7 +21,6 @@ var segmentRotate = document.querySelectorAll('#step4-segment li .refresh');
 
 function getDataResult(getDataArr){
 	segmentData = getDataArr;
-	console.log(getDataArr);
 	tableEls = document.querySelectorAll('.step4-container .table_content');
 	renderSegment(segmentData);
 }
@@ -240,6 +239,12 @@ function renderSegment(data){
 	for(var i = 0; i < dataGet.length; i++){
 		stepFourWrap.innerHTML += segmentComp(dataGet[i]);
 	}
+	
+	segmentSetting(dataGet);
+}
+
+function segmentSetting(data){
+	var dataGet = data;
 	// 2차 : query , array 반환, addEvent
 	segmentLi = document.querySelectorAll('#step4-segment li');
 	segmentEls = document.querySelectorAll('#step4-segment li .segment');
@@ -256,8 +261,8 @@ function renderSegment(data){
 	elRender = 0;
 	
 	// 제일 큰 width 값 elWidth에 넣기
+	elWidth = 0;
 	for(var i = 0; i < dataGet.length; i++){
-		elWidth = Math.ceil(segmentEls[i].clientWidth);
 		if(elWidth < Math.ceil(segmentEls[i].clientWidth)){
 			elWidth = Math.ceil(segmentEls[i].clientWidth);
 		}
@@ -273,6 +278,18 @@ function renderSegment(data){
 	if(row === 0){
 		row = 1;
 	}
+	// elwidth 0 이하로 불러올때 대비
+	var dataIdLength = 0;
+	if(elWidth <= 0){
+		for(var i = 0; i < dataGet.length; i++){
+			if(dataIdLength < dataGet[i].id.length){
+				dataIdLength = dataGet[i].id.length;
+			}
+		}
+		console.log(dataIdLength);
+		elWidth = (dataIdLength * 10) + 26;
+	}
+	
 	for(var r = 0; r < row; r++){
 		for(var c = 0; c < column; c++){
 			if(segmentLi[elRender] !== undefined && segmentLi[elRender] !== null){
@@ -301,7 +318,6 @@ function renderSegment(data){
 		segmentRotate[t].addEventListener('click', onRotateDown);
 	}
 }
-
 
 function addWindowEvent(){
 	window.addEventListener('mousemove', onElMove);
