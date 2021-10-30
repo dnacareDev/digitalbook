@@ -22,6 +22,7 @@ import com.digitalBook.Entity.Fertilizer;
 import com.digitalBook.Entity.Manure;
 import com.digitalBook.Entity.Method;
 import com.digitalBook.Entity.Plan;
+import com.digitalBook.Entity.Record;
 import com.digitalBook.Entity.Report;
 import com.digitalBook.Entity.Seed;
 import com.digitalBook.Entity.Storage;
@@ -127,6 +128,11 @@ public class PlanController
 		
 		if(result != 0) {
 			result = plan.getLast_plan_id();
+			Record record = new Record();
+			record.setRecord_status(0);
+			record.setRecord_type(plan.getLast_plan_id());
+			record.setRecord_type_code(resultCode);
+			service.insertRecord(record);
 		}
 		
 		return result;
@@ -209,7 +215,7 @@ public class PlanController
 		
 	}
 	
-	// 재배 프로토콜 검색
+	//재배계획 검색
 	@ResponseBody
 	@RequestMapping("/searchPlan")
 	public Map<String, Object> SearchPlan(Authentication auth,
@@ -274,11 +280,14 @@ public class PlanController
 		List<Method> method = service.selectMethodList(prin.getUser_group());
 		List<Factor> factor = service.selectFactorList(plan_id);
 		
+		List<Record> record = service.selectRecordList(plan_id);
+		
 		mv.addObject("plan", plan);
 		mv.addObject("report", report);
 		mv.addObject("fert", fert);
 		mv.addObject("method", method);
 		mv.addObject("factor", factor);
+		mv.addObject("record", record);
 		
 		mv.setViewName("plan/plan_modify");
 		
@@ -292,7 +301,15 @@ public class PlanController
 	{
 		
 		int result = service.updatePlan(plan);
-		System.out.println(plan);
+		
+		if(result != 0) {
+			//수정 성공 후 변경 이력 등록
+			Record record = new Record();
+			record.setRecord_status(1);
+			record.setRecord_type(plan.getPlan_id());
+			record.setRecord_type_code(plan.getPlan_code());
+			service.insertRecord(record);
+		}
 		
 		return result;
 	}
