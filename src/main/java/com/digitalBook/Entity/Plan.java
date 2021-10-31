@@ -24,6 +24,7 @@ public class Plan {
 	private int user_group;					//사용자 그룹번호
 	private String create_date;				//등록일
 	private String modify_date;				//수정일
+	private int plan_step;					//재배계획 스텝 0(수정가능) 1(담당자만 수정 가능)
 	
 	private int last_plan_id;				//insert 시 등록된 pk 값
 	

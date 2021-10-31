@@ -13,6 +13,7 @@ import com.digitalBook.Entity.Method;
 import com.digitalBook.Entity.Plan;
 import com.digitalBook.Entity.Record;
 import com.digitalBook.Entity.Report;
+import com.digitalBook.Entity.Schedule;
 import com.digitalBook.Entity.Seed;
 import com.digitalBook.Entity.User;
 
@@ -88,5 +89,14 @@ public interface PlanMapper {
 	
 	//사용자 조회
 	List<User> selectUserList(int user_group);
+	
+	//담당자 등록
+	int insertSchedule(Schedule schedule);
+	
+	//담당자 리스트 조회
+	List<Schedule> selectScheduleList(int plan_id);
+	
+	//담당자 삭제
+	int deleteSchedule(int sch_id);
 	
 }

@@ -34,10 +34,30 @@
 	    display: block;
 	    width: 50%;
 	}
+	.box_content{
+	    -webkit-box-flex: 0;
+	    -ms-flex: 0 0 66.66667%;
+	    flex: 0 0 5%;
+	    max-width: 5%;
+	    display: flex;
+	    justify-content: center;
+	}
+	.box_center li{
+		margin-bottom: 20px;
+	}
+	.box_center li button{
+		border-radius: 50%;
+    	border: 2px solid #788DEE;
+    	background-color: transparent;
+    	padding: 0;
+    	width: 38px;
+    	height: 38px;
+    	color: #788DEE;
+	}
 </style>
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
-<link rel="stylesheet" th:href="@{/assets/vendor_assets/css/plan-insert.css}">
+<link rel="stylesheet" href="/../assets/vendor_assets/css/plan-insert.css">
 
 </head>
 <body class="layout-light top-menu overlayScroll">
@@ -213,7 +233,7 @@
 			                    </div>
 			                    <div class="content clearfix">
 			                        <div class="btn btn_new" id="copy-step-4">
-		                            	<div>
+		                            	<div id="copy-step-4-none">
 			                            	<table id="table2">
 				                                <thead>
 				                                <tr class="title">
@@ -310,14 +330,12 @@
 												</div>
 											</div>
 										</div>
-										<div class="col-lg-1">
-											<div class="d-flex justify-content-center" style="padding-top: 200px;">
-												<div class="col-sm-12">
-													<button onclick="PlusMethod();"><span data-feather="plus"></span></button>
-												</div>
-												<div class="col-sm12">
-													<button onclick="MinusMethod();"><span data-feather="minus"></span></button>
-												</div>
+										<div class="box_content" style="justify-content: center;align-items: center;">
+											<div class="box_center">
+												<ul>
+													<li><button onclick="PlusMethod();"><span data-feather="plus"></span></button></li>
+													<li><button onclick="MinusMethod();"><span data-feather="minus"></span></button></li>
+												</ul>
 											</div>
 										</div>
 										<div class="col-lg-6">
@@ -595,14 +613,12 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-1">
-								<div class="d-flex justify-content-center" style="padding-top: 200px;">
-									<div class="col-sm-12">
-										<button onclick="PlusSeed();"><span data-feather="plus"></span></button>
-									</div>
-									<div class="col-sm12">
-										<button onclick="MinusSeed();"><span data-feather="minus"></span></button>
-									</div>
+							<div class="box_content" style="justify-content: center;align-items: center;">
+								<div class="box_center">
+									<ul>
+										<li><button onclick="PlusSeed();"><span data-feather="plus"></span></button></li>
+										<li><button onclick="MinusSeed();"><span data-feather="minus"></span></button></li>
+									</ul>
 								</div>
 							</div>
 							<div class="col-lg-6">
@@ -1014,9 +1030,9 @@
     <th:block th:include="/../fragments/footer.html"></th:block>
     <!-- 공통 js -->
     <th:block th:include="/../fragments/commonjs.html"></th:block>
-    <script th:src="@{/assets/vendor_assets/js/plan-insert.js}"></script>
-    <script type="text/javascript" th:src="@{/assets/vendor_assets/js/plan-segment.js}"></script>
-    <script type="text/javascript" th:src="@{/assets/vendor_assets/js/plan-render.js}"></script>
+    <script src="/../assets/vendor_assets/js/plan-insert.js"></script>
+    <script type="text/javascript" src="/../assets/vendor_assets/js/plan-segment.js"></script>
+    <script type="text/javascript" src="/../assets/vendor_assets/js/plan-render.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=	e93e65b3e9a407aa43d05f993408db95&libraries=clusterer,services"></script>
 <script>
 
@@ -1042,9 +1058,8 @@
 		$("#storageModal").modal("show");
 	});
 	
-	$("#chanBtn1").on("click", function(){
-		$("#chanModal").modal("show");
-	});
+	//초기 step4 구획 테이블 숨기기
+	$("#copy-step-4-none").css("display", "none");
 	
 	//시험구배치 요인 설정 버튼 이벤트
 	$(document).on("click", ".setting", function(){
@@ -2551,7 +2566,7 @@
 	
 	//step3 btn 이벤트
 	$("#step-3-btn").on("click", function(){
-		console.log(data1);
+		
 		var grow_type = $("#grow_type option:selected").val();
 		
 		var check1 = Object.keys(data1).length == 0;
@@ -2570,6 +2585,8 @@
 			
 			$("#step4 .content").slideDown();
 			$("#step4 .title").addClass("active");
+			
+			$("#copy-step-4-none").css("display", "");
 			
 			gridFactors();
 		}
@@ -2825,11 +2842,11 @@
 				add_list += '<table>';
 				add_list += '<thead>';
 				add_list += '<tr class="title">';
-				add_list += '<td>구획번호</td>';
-				add_list += '<td>구획 ID</td>';
-				add_list += '<td>처리종류</td>';
-				add_list += '<td>반복</td>';
-				add_list += '<td>처리포장면적(㎡)</td>';
+				add_list += '<th>구획번호</th>';
+				add_list += '<th>구획 ID</th>';
+				add_list += '<th>처리종류</th>';
+				add_list += '<th>반복</th>';
+				add_list += '<th>처리포장면적(㎡)</th>';
 				add_list += '</tr>';
 				add_list += '</thead>';
 				add_list += '<tbody class="step4-container">';
@@ -2967,11 +2984,11 @@
 				add_list += '<table>';
 				add_list += '<thead>';
 				add_list += '<tr class="title">';
-				add_list += '<td>구획번호</td>';
-				add_list += '<td>구획 ID</td>';
-				add_list += '<td>처리종류</td>';
-				add_list += '<td>반복</td>';
-				add_list += '<td>처리포장면적(㎡)</td>';
+				add_list += '<th>구획번호</th>';
+				add_list += '<th>구획 ID</th>';
+				add_list += '<th>처리종류</th>';
+				add_list += '<th>반복</th>';
+				add_list += '<th>처리포장면적(㎡)</th>';
 				add_list += '</tr>';
 				add_list += '</thead>';
 				add_list += '<tbody class="step4-container">';
@@ -3789,10 +3806,34 @@
 			}
 		});
 		
-		
-		
-		
 	}
+	
+	/* $(function(){
+		$("#select_view1").filterByText($("#textbox"));
+	});
+	
+	//과제 선택 필터링 함수
+	jQuery.fn.filterByText = function(textBox){
+		return this.each(function(){
+			var select = this;
+			var options = [];
+			$(select).data('options', options);
+			$(textbox).bind('change keyup', function(){
+				var options = $(select).empty().scrollTop(0).data('options');
+				var search = $.trim($(this).val());
+				var regex = new RegExp(search, 'gi');
+				
+				$.each(options, function(i){
+					var option = options[i];
+					if(option.text.match(regex) !== null){
+						$(select).append(
+								$('<option>').text(option.text).val(option.value)
+						);
+					}
+				});
+			});
+		});
+	}; */
 
 </script>
 

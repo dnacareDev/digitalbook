@@ -24,6 +24,7 @@ import com.digitalBook.Entity.Method;
 import com.digitalBook.Entity.Plan;
 import com.digitalBook.Entity.Record;
 import com.digitalBook.Entity.Report;
+import com.digitalBook.Entity.Schedule;
 import com.digitalBook.Entity.Seed;
 import com.digitalBook.Entity.Storage;
 import com.digitalBook.Entity.User;
@@ -280,6 +281,7 @@ public class PlanController
 		List<Method> method = service.selectMethodList(prin.getUser_group());
 		List<Factor> factor = service.selectFactorList(plan_id);
 		List<User> user = service.selectUserList(prin.getUser_group());
+		List<Schedule> sch = service.selectScheduleList(plan_id);
 		
 		List<Record> record = service.selectRecordList(plan_id);
 		
@@ -290,6 +292,7 @@ public class PlanController
 		mv.addObject("factor", factor);
 		mv.addObject("user", user);
 		mv.addObject("record", record);
+		mv.addObject("sch", sch);
 		
 		mv.setViewName("plan/plan_modify");
 		
@@ -420,6 +423,76 @@ public class PlanController
 			record.setRecord_type(plan_id);
 			record.setRecord_type_code(plan_code);
 			service.insertRecord(record);
+		}
+		
+		return result;
+	}
+	
+	//담당자 등록
+	@ResponseBody
+	@RequestMapping("insertSchedule")
+	public int insertSchedule(@RequestBody List<Schedule> schedule)
+	{
+		int insertResult[] = new int[schedule.size()];
+		int result = 0;
+		
+		for(int i = 0; i < schedule.size(); i++) {
+			insertResult[i] = service.insertSchedule(schedule.get(i));
+		}
+		
+		Boolean isInsert = IntStream.of(insertResult).noneMatch(x -> x == 0);
+		
+		if(isInsert) {
+			result = 1;
+		}else {
+			result = 0;
+		}
+		
+		return result;
+	}
+	
+	//결과입력 목록 페이지
+	@RequestMapping("/result/list")
+	public ModelAndView ResultList(ModelAndView mv)
+	{
+		
+		List<Department> department = storageService.SelectDepartment();
+		
+		mv.addObject("department", department);
+		
+		mv.setViewName("plan/plan_result_list");
+		
+		return mv;
+	}
+	
+	//결과입력 등록 화면
+	@RequestMapping("/insertResult")
+	public ModelAndView insertResult(ModelAndView mv)
+	{
+		
+		mv.setViewName("plan/plan_result");
+		
+		return mv;
+	}
+	
+	//시비량 삭제
+	@ResponseBody
+	@RequestMapping("/deleteSchedule")
+	public int DeleteSchedule(@RequestParam(name = "cancelSch") List<Integer> cancel)
+	{
+		int deleteResult[] = new int[cancel.size()];
+		int result = 0;
+		
+		for(int i = 0; i < cancel.size(); i++) {
+			deleteResult[i] = service.deleteSchedule(cancel.get(i));
+		}
+		
+		Boolean isDelete = IntStream.of(deleteResult).noneMatch(x -> x == 0);
+		
+		if(isDelete) {
+			result = 1;
+		}else {
+			result = 0;
 		}
 		
 		return result;
