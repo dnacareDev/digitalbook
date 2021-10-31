@@ -205,35 +205,35 @@
 	  	var ctx = document.getElementById(selector);
 		if (ctx) {
 		  ctx.getContext("2d");
-		  ctx.height = 100;
+		  ctx.height = 50;
 		  var chart = new Chart(ctx, {
 		    type: "bar",
 		    data: {
 		      labels: [
-		        "Jan",
-		        "Feb",
-		        "Mar",
-		        "Apr",
-		        "May",
-		        "Jun",
-		        "Jul",
-		        "Aug",
-		        "Sep",
-		        "Oct",
-		        "Nov",
-		        "Dec",
+		        "연구자1",
+		        "연구자2",
+		        "연구자3",
+		        "연구자4",
+		        "연구자5",
+		        "연구자6",
+		        "연구자7",
+		        "연구자8",
+		        "연구자9",
+		        "연구자10",
+		        "연구자11",
+		        "연구자12",
 		      ],
 		      datasets: [{
 		          data: [20, 60, 50, 45, 50, 60, 70, 40, 45, 35, 25, 30],
 		          backgroundColor: "#5F63F280",
 		          hoverBackgroundColor: "#5F63F2",
-		          label: "Profit",
+		          label: "진행중",
 		        },
 		        {
 		          data: [10, 40, 30, 40, 60, 55, 45, 35, 30, 20, 15, 20],
 		          backgroundColor: "#FF4D4F80",
 		          hoverBackgroundColor: "#FF4D4F",
-		          label: "Lose",
+		          label: "진행완료",
 		        },
 		      ],
 		    },

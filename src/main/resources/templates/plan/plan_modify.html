@@ -34,10 +34,30 @@
 	    display: block;
 	    width: 50%;
 	}
+	.box_content{
+	    -webkit-box-flex: 0;
+	    -ms-flex: 0 0 66.66667%;
+	    flex: 0 0 5%;
+	    max-width: 5%;
+	    display: flex;
+	    justify-content: center;
+	}
+	.box_center li{
+		margin-bottom: 20px;
+	}
+	.box_center li button{
+		border-radius: 50%;
+    	border: 2px solid #788DEE;
+    	background-color: transparent;
+    	padding: 0;
+    	width: 38px;
+    	height: 38px;
+    	color: #788DEE;
+	}
 </style>
 <!-- 공통 헤더 -->
-<th:block th:include="@{/fragments/header.html}"></th:block>
-<link rel="stylesheet" th:href="@{/assets/vendor_assets/css/plan-insert.css}">
+<th:block th:include="/../fragments/header.html"></th:block>
+<link rel="stylesheet" href="/../assets/vendor_assets/css/plan-insert.css">
 
 </head>
 <body class="layout-light top-menu overlayScroll">
@@ -212,7 +232,7 @@
 			                    </div>
 			                    <div class="content clearfix">
 			                        <div class="btn btn_new" id="copy-step-4">
-		                            	<div>
+		                            	<div id="copy-step-4-none">
 			                            	<table id="table2">
 				                                <thead>
 				                                <tr class="title">
@@ -324,14 +344,12 @@
 												</div>
 											</div>
 										</div>
-										<div class="col-lg-1">
-											<div class="d-flex justify-content-center" style="padding-top: 200px;">
-												<div class="col-sm-12">
-													<button onclick="PlusMethod();"><span data-feather="plus"></span></button>
-												</div>
-												<div class="col-sm12">
-													<button onclick="MinusMethod();"><span data-feather="minus"></span></button>
-												</div>
+										<div class="box_content" style="justify-content: center;align-items: center;">
+											<div class="box_center">
+												<ul>
+													<li><button onclick="PlusMethod();"><span data-feather="plus"></span></button></li>
+													<li><button onclick="MinusMethod();"><span data-feather="minus"></span></button></li>
+												</ul>
 											</div>
 										</div>
 										<div class="col-lg-6">
@@ -347,97 +365,14 @@
 			                    </div>
 			                </div>
 			            </div>
-			            <th:block th:if="${plan.plan_status == 2 || plan.plan_status == 1}">
+			            <th:block th:if="${plan.plan_step == 1}">
 			            	<div class="step" id="step6">
 			                <div class="step_inner clearfix" id="step6_inner">
 			                    <div class="title">
 			                        <h3>Step 6. 담당자 및 일정<span></span></h3>
 			                    </div>
 			                    <div class="content clearfix" id="step6_list">
-			                        <!-- <div class="top1">
-			                            <span class="title_sub">[조사항목:쌀단백질]</span>
-			                            <div class="row">
-			                            	<div class="col-12">
-			                            		<ul>
-					                                <li>
-					                                    <span><span class="red" style="color: #FF4141">*</span>담당자(정)</span>
-					                                    <select class="select_user1">
-					                                        <option th:value=0 disabled="disabled" selected="selected" hidden="hidden">담당자 선택</option>
-							                                <th:block th:each="user : ${user}">
-							                                	<option th:value="${user.user_id}" th:text="${user.user_name_k}"></option>
-							                                </th:block>
-					                                    </select>
-					                                </li>
-					                                <li>
-					                                    <span>담당자(부)</span>
-					                                    <select class="select_user1">
-					                                        <option th:value=0 disabled="disabled" selected="selected" hidden="hidden">담당자 선택</option>
-							                                <th:block th:each="user : ${user}">
-							                                	<option th:value="${user.user_id}" th:text="${user.user_name_k}"></option>
-							                                </th:block>
-					                                    </select>
-					                                </li>
-					                            </ul>
-			                            	</div>
-			                            </div>
-			                            <div class="row">
-			                            	<div class="col-12">
-			                            		<ul>
-					                            	<li>
-					                                    <span style="float: left;">시작일</span>
-					                                    <input type="text" class="start_date" name="">
-					                                    <div class="cal">
-					                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
-					                                          <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-					                                        </svg>
-					                                    </div>
-					                                </li>
-					                                <li>
-					                                    <span style="float: left;">종료일</span>
-					                                    <input type="text" class="end_date" name="">
-					                                    <div class="cal">
-					                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
-					                                          <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-					                                        </svg>
-					                                    </div>
-					                                </li>
-					                            </ul>
-			                            	</div>
-			                            </div>
-			                            <div class="btn">
-			                                <button>추가</button>
-			                            </div>
-			                            
-			                        </div>
-			                        <div class="top1">
-			                            <table>
-			                                <thead>
-			                                    <tr>
-			                                        <th>No.</th>
-			                                        <th>담당자(정)</th>
-			                                        <th>담당자(부)</th>
-			                                        <th>일정</th>
-			                                        <th></th>
-			                                    </tr>
-			                                </thead>
-			                                <tbody>
-			                                    <tr>
-			                                        <td>1</td>
-			                                        <td>담당자</td>
-			                                        <td>담당자</td>
-			                                        <td>2021.00.00</td>
-			                                        <td><button  type="button" id="chanBtn1">변경</button></td>
-			                                    </tr>
-			                                    <tr>
-			                                        <td>1</td>
-			                                        <td>담당자</td>
-			                                        <td>담당자</td>
-			                                        <td>2021.00.00</td>
-			                                        <td><button  type="button" id="chanBtn2">변경</button></td>
-			                                    </tr>
-			                                </tbody>
-			                            </table>
-			                        </div> -->
+			                        
 			                    </div>
 			                </div>
 			            </div>
@@ -445,7 +380,12 @@
 			            <div class="submit_btn">
 			                <div class="submit_btn-inner">
 			                    <button class="list" id="listBtn">목록</button>
-			                    <button class="submit" id="planUpdateBtn">수정</button>
+			                    <th:block th:if="${plan.plan_step == 0}">
+			                    	<button class="submit" id="planUpdateBtn">수정</button>
+			                    </th:block>
+			                    <th:block th:if="${plan.plan_step == 1}">
+			                    	<button class="submit" onclick="insertSch();">담당자 등록</button>
+			                    </th:block>
 			                    <th:block th:if="${#authentication.principal.user_type == 0 and plan.plan_status == 0 or plan.plan_status == 1}">
 									<button type="button" class="list" onclick="UpdateStatusBtn();">승인</button>
 								</th:block>
@@ -590,29 +530,40 @@
 		            	<div class="row mt-3">
 		            		<div class="col-md-12">
 		            			<label for="" class="color-dark fw-500">담당자(정)</label>
-	                            <select>
-				                    <option>담당자 선택</option>
-				                    <option>담당자 선택</option>
-				                    <option>담당자 선택</option>
-				                    <option>담당자 선택</option>
+	                            <select id="select_mng1">
+				                    <option th:value=0 disabled="disabled" selected="selected" hidden="hidden">담당자 선택</option>
+	                                <th:block th:each="u : ${user}">
+	                                	<option th:value="${u.user_id}" th:text="${u.user_name_k}"></option>
+	                                </th:block>
 				                </select>
 		            		</div>
 		            	</div>
 			            <div class="row">
 			            	<div class="col-md-12">
 				                <label for="" class="color-dark fw-500">담당자(부)</label>
-	                            <select>
-				                    <option>담당자 선택</option>
-				                    <option>담당자 선택</option>
-				                    <option>담당자 선택</option>
-				                    <option>담당자 선택</option>
+	                            <select id="select_mng2">
+				                    <option th:value=0 disabled="disabled" selected="selected" hidden="hidden">담당자 선택</option>
+	                                <th:block th:each="u : ${user}">
+	                                	<option th:value="${u.user_id}" th:text="${u.user_name_k}"></option>
+	                                </th:block>
 				                </select>
 				            </div>
 			            </div>
 			            <div class="row">
 			            	<div class="col-md-12">
-			            		<span style="float:left">일정등록</span>
-			                	<input type="text" name="" class="regdate">
+			            		<span style="float:left">시작일</span>
+			                	<input type="text" class="regdate start_date">
+				                <div class="cal">
+				                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+				                      <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+				                    </svg>
+			                	</div>
+			            	</div>
+			            </div>
+			            <div class="row">
+			            	<div class="col-md-12">
+			            		<span style="float:left">종료일</span>
+			                	<input type="text" class="regdate end_date">
 				                <div class="cal">
 				                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
 				                      <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
@@ -668,14 +619,12 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-1">
-								<div class="d-flex justify-content-center" style="padding-top: 200px;">
-									<div class="col-sm-12">
-										<button onclick="PlusSeed();"><span data-feather="plus"></span></button>
-									</div>
-									<div class="col-sm12">
-										<button onclick="MinusSeed();"><span data-feather="minus"></span></button>
-									</div>
+							<div class="box_content" style="justify-content: center;align-items: center;">
+								<div class="box_center">
+									<ul>
+										<li><button onclick="PlusSeed();"><span data-feather="plus"></span></button></li>
+										<li><button onclick="MinusSeed();"><span data-feather="minus"></span></button></li>
+									</ul>
 								</div>
 							</div>
 							<div class="col-lg-6">
@@ -1087,14 +1036,16 @@
     <th:block th:include="@{/fragments/footer.html}"></th:block>
     <!-- 공통 js -->
     <th:block th:include="@{/fragments/commonjs.html}"></th:block>
-    <script th:src="@{/assets/vendor_assets/js/plan-insert.js}"></script>
-    <script type="text/javascript" th:src="@{/assets/vendor_assets/js/plan-segment.js}"></script>
+    <script src="/../assets/vendor_assets/js/plan-insert.js"></script>
+    <script type="text/javascript" src="/../assets/vendor_assets/js/plan-segment.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=	e93e65b3e9a407aa43d05f993408db95&libraries=clusterer,services"></script>
 <script type="text/javascript" th:inline="javascript">
 
 	var plan = /*[[${plan}]]*/ "null";
 	var factor = /*[[${factor}]]*/ "null";
 	var method = /*[[${method}]]*/ "null";
+	var user = /*[[${user}]]*/ "null";
+	var sch = /*[[${sch}]]*/ "null";
 	
 	//시험구 배치 데이터
 	var data1 = new Object();
@@ -1109,6 +1060,9 @@
 	var etcArray1 = new Array();
 	var etcArray2 = new Array();
 	var etcArray3 = new Array();
+	
+	//스케줄 등록할 객체 array
+	let scheduleArray = new Array();
 
 	//기존 데이터 로드 함수
 	async function loadPlan(){
@@ -1580,10 +1534,6 @@
 	
 	$("#storageBtn").on("click", function(){
 		$("#storageModal").modal("show");
-	});
-	
-	$("#chanBtn1").on("click", function(){
-		$("#chanModal").modal("show");
 	});
 	
 	//시험구배치 요인 설정 버튼 이벤트
@@ -3248,7 +3198,7 @@
 			
 			for(var i = 0; i < resultArray.length; i++){
 				add_list += '<tr class="table_content">';
-			    add_list += '<td>'+resultArray[i].num+'</td>';
+			    add_list += '<td class="table_num">'+resultArray[i].num+'</td>';
 			    add_list += '<td>'+resultArray[i].id+'</td>';
 			    add_list += '<td>'+resultArray[i].type+'</td>';
 			    add_list += '<td>'+resultArray[i].repeat+'</td>';
@@ -3373,7 +3323,7 @@
 					
 					if(resultArray[j].repeat == (i+1)){
 						add_list += '<tr class="table_content">';
-					    add_list += '<td>'+resultArray[j].num+'</td>';
+					    add_list += '<td class="table_num">'+resultArray[j].num+'</td>';
 					    add_list += '<td>'+resultArray[j].id+'</td>';
 					    add_list += '<td>'+resultArray[j].type+'</td>';
 					    add_list += '<td>'+resultArray[j].repeat+'</td>';
@@ -3514,7 +3464,7 @@
 					
 					if(resultArray[j].repeat == (i+1)){
 						add_list += '<tr class="table_content">';
-					    add_list += '<td>'+resultArray[j].num+'</td>';
+					    add_list += '<td class="table_num">'+resultArray[j].num+'</td>';
 					    add_list += '<td>'+resultArray[j].id+'</td>';
 					    add_list += '<td>'+resultArray[j].type+'</td>';
 					    add_list += '<td>'+resultArray[j].repeat+'</td>';
@@ -3639,6 +3589,7 @@
 		});
 		
 		method_container.append(add_list);
+		
 	}
 	
 	//조사항목 체크박스 삭제
@@ -4389,32 +4340,6 @@
 		
 	}//end 포장선택
 	
-	//담당자 그려주기
-	function gridStep6(){
-		
-		var add_list = "";
-		
-		$(document).find("#method-container .method-step").each(function(i, item){
-			var length = $(document).find("#method-container .method-step").length;
-			var step6_list = $("#step6_list");
-			
-			add_list += '<div class="top1">';
-			add_list += '<span class="title_sub">조사항목'+$(this).find(".method_title").text()+'</span>';
-			add_list += '<div class="row">';
-			add_list += '<div class="col-12">';
-			add_list += '<ul>';
-			
-			add_list += '</ul>';
-			add_list += '</div>';
-			add_list += '</div>'; //end row1
-			
-			add_list += '</div>';
-			
-		});
-	}//end 담당자 그려주기
-	
-	gridStep6();
-	
 	//datapicker 기본 옵션 설정
 	$.datepicker.setDefaults({
 		dateFormat: "yy-mm-dd",
@@ -4424,20 +4349,253 @@
       	yearRange: "2010:2030",
 	});
 	
-	//동적 생성된 datepicker 클래스에 datepicker 이벤트 주기
-	$(document).find(".start_date").each(function(index){
-		$(this).datepicker();
-		$(this).addClass("receive-datepicker"+index);
-		$(".ui-datepicker-trigger").remove();
-		$(".receive-datepicker"+index).removeClass("hasDatepicker").removeAttr("id").datepicker();
+	//담당자 그려주기
+	function gridStep6(){
+		console.log("기존담당자!!!!!!!");
+		console.log(sch);
+		
+		$("#step6_list").empty();
+		
+		var step6_list = $("#step6_list");
+		var length = $(document).find("#method-container .method-step").length;
+		var add_list = "";
+		
+		$(document).find("#method-container .method-step").each(function(i, item){
+			
+			add_list += '<div class="top1">';
+			add_list += '<span class="title_sub">[조사항목 : '+$(this).find(".method_title").text()+']</span>';
+			
+			add_list += '<div class="row">'; //row1
+			add_list += '<div class="col-12">';
+			add_list += '<ul>';
+			
+			add_list += '<li>';
+			add_list += '<span><span class="red" style="color: #FF4141">*</span>담당자(정)</span>';
+			add_list += '<select class="select_user1">';
+			add_list += '<option value=0 disabled="disabled" selected="selected" hidden="hidden">담당자 선택</option>';
+			for(var j = 0; j < user.length; j++){
+				add_list += '<option value="'+user[j].user_id+'">'+user[j].user_name_k+'</option>';
+			}
+			add_list += '</select>';
+			add_list += '</li>';
+			
+			add_list += '<li>';
+			add_list += '<span>담당자(부)</span>';
+			add_list += '<select class="select_user2">';
+			add_list += '<option value=0 disabled="disabled" selected="selected" hidden="hidden">담당자 선택</option>';
+			for(var j = 0; j < user.length; j++){
+				add_list += '<option value="'+user[j].user_id+'">'+user[j].user_name_k+'</option>';
+			}
+			add_list += '</select>';
+			add_list += '</li>';
+			
+			add_list += '</ul>';
+			add_list += '</div>';
+			add_list += '</div>'; //end row1
+			
+			add_list += '<div class="row">'; //row2
+			add_list += '<div class="col-12">';
+			add_list += '<ul>';
+			add_list += '<li>';
+			add_list += '<span style="float: left;">시작일</span>';
+			add_list += '<input type="text" class="start_date" name="">';
+			add_list += '<div class="cal">';
+			add_list += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">';
+			add_list += '<path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>';
+			add_list += '</svg>';
+			add_list += '</div>';
+			add_list += '</li>';
+			
+			add_list += '<li>';
+			add_list += '<span style="float: left;">종료일</span>';
+			add_list += '<input type="text" class="end_date" name="">';
+			add_list += '<div class="cal">';
+			add_list += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">';
+			add_list += '<path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>';
+			add_list += '</svg>';
+			add_list += '</div>';
+			add_list += '</li>';
+			add_list += '<li>';
+			
+			add_list += '</ul>';
+			add_list += '</div>';
+			add_list += '</div>'; //end row2
+			
+			add_list += '<div class="btn">';
+			add_list += '<button type="button" class="add_manager">추가</button>';
+			add_list += '</div>';
+			add_list += '</div>'; //end top1
+			
+			add_list += '<div class="top1">';
+			add_list += '<table>';
+			add_list += '<thead>';
+			add_list += '<tr class="mng_method" data-method="'+$(this).attr("th:data-id")+'">';
+			add_list += '<th>담당자(정)</th>';
+			add_list += '<th>담당자(부)</th>';
+			add_list += '<th>시작일</th>';
+			add_list += '<th>종료일</th>';
+			add_list += '<th></th>';
+			add_list += '</tr>';
+			add_list += '</thead>';
+			add_list += '<tbody class="input_manager">';
+			if(Object.keys(sch).length != 0){
+				for(var j = 0; j < sch.length; j++){
+					if($(this).attr("th:data-id") == sch[j].method_id){
+						add_list += '<tr class="input_manager_tr">';
+						add_list += '<td class="mng_input1" data-id="'+sch[j].sch_supervisor+'">'+sch[j].u1_supervisor+'</td>';
+						add_list += '<td class="mng_input2" data-id="'+sch[j].sch_manager+'">'+sch[j].u2_manager+'</td>';
+						add_list += '<td class="mng_input3">'+sch[j].start_date+'</td>';
+						add_list += '<td class="mng_input4">'+sch[j].end_date+'</td>';
+						add_list += '<td><button type="button" class="chn_manager" style="float: left;">변경</button><button type="button" class="del_manager">삭제</button></td>';
+						add_list += '</tr>';
+					}
+				}//end for
+			}
+			add_list += '</tbody>';
+			add_list += '</table>';
+			add_list += '</div>';
+			
+		});
+		
+		step6_list.append(add_list);
+		
+		//동적 생성된 datepicker 클래스에 datepicker 이벤트 주기
+		$(document).find(".start_date").each(function(index){
+			$(this).datepicker();
+			$(this).addClass("start-datepicker"+index);
+			$(".ui-datepicker-trigger").remove();
+			$(".receive-datepicker"+index).removeClass("hasDatepicker").removeAttr("id").datepicker();
+		});
+		
+		$(document).find(".end_date").each(function(index){
+			$(this).datepicker();
+			$(this).addClass("end-datepicker"+index);
+			$(".ui-datepicker-trigger").remove();
+			$(".receive-datepicker"+index).removeClass("hasDatepicker").removeAttr("id").datepicker();
+		});
+		
+	}//end 담당자 그려주기
+	
+	gridStep6();
+	
+	//담당자 추가 이벤트
+	$(document).on("click", ".add_manager", function(){
+		
+		var manager1_id = $(this).parent().parent().find(".select_user1 option:selected").val();
+		console.log(manager1_id);
+		var manager1_text = $(this).parent().parent().find(".select_user1 option:selected").text();
+		if(manager1_id == 0){
+			manager1_text = "";
+		}
+		var manager2_id = $(this).parent().parent().find(".select_user2 option:selected").val();
+		var manager2_text = $(this).parent().parent().find(".select_user2 option:selected").text();
+		if(manager2_id == 0){
+			manager2_text = "";
+		}
+		var start_date = $(this).parent().parent().find(".start_date").val();
+		var end_date = $(this).parent().parent().find(".end_date").val();
+		
+		var input_manager = $(this).parent().parent().next().find(".input_manager");
+		
+		var str = "";
+		
+		str += '<tr class="input_manager_tr">';
+		str += '<td class="mng_input1" data-id="'+manager1_id+'">'+manager1_text+'</td>';
+		str += '<td class="mng_input2 data-id="'+manager2_id+'">'+manager2_text+'</td>';
+		str += '<td class="mng_input3">'+start_date+'</td>';
+		str += '<td class="mng_input4">'+end_date+'</td>';
+		str += '<td><button type="button" class="del_manager">삭제</button></td>';
+		str += '</tr>';
+		
+		input_manager.append(str);
+		
+	});//end 담당자 추가 이벤트
+	
+	//담당자 삭제 이벤트
+	$(document).on("click", ".del_manager", function(){
+		$(this).parent().parent().remove();
 	});
 	
-	$(document).find(".end_date").each(function(index){
-		$(this).datepicker();
-		$(this).addClass("receive-datepicker"+index);
-		$(".ui-datepicker-trigger").remove();
-		$(".receive-datepicker"+index).removeClass("hasDatepicker").removeAttr("id").datepicker();
+	//담당자 등록 버튼 이벤트
+	async function insertSch(){
+		
+		$(document).find(".input_manager_tr").each(function(i, index){
+			var method_id = $(this).parent().prev().find(".mng_method").attr("data-method");
+			var sch_supervisor = $(this).find(".mng_input1").attr("data-id");
+			var sch_manager = $(this).find(".mng_input2").attr("data-id");
+			var start_date = $(this).find(".mng_input3").text();
+			var end_date = $(this).find(".mng_input4").text();
+			
+			let mng_data = {
+					"plan_id" : plan.plan_id,
+					"method_id" : method_id,
+					"sch_supervisor" : sch_supervisor,
+					"sch_manager" : sch_manager,
+					"start_date" : start_date,
+					"end_date" : end_date
+			};
+			scheduleArray.push(mng_data);
+		});
+		
+		console.log("등록할 담당자!!!!!");
+		console.log(scheduleArray);
+		
+		await DeleteSchedule();
+		
+		insertSchedule();
+		
+	}
+	
+	$(document).on("click", ".chn_manager", function(){
+		$("#chanModal").modal("show");
 	});
+	
+	//스케줄 등록 실행 함수
+	function insertSchedule(){
+		
+		$.ajax({
+			url : "/plan/insertSchedule",
+			method : "POST",
+			contentType : "application/json; charset=utf-8",
+			data : JSON.stringify(scheduleArray),
+			success : function(result){
+				if(result == 0){
+					
+				}else {
+					$("#success_popup").css("display", "flex");
+				}
+			}
+		});//end ajax
+	}
+	
+	//담당자 삭제 삭제
+	function DeleteSchedule(){
+		return new Promise(function(resolve){
+			
+			var cancelSch = new Array();
+			
+			for(var i = 0; i < sch.length; i++){
+				cancelSch.push(sch[i].sch_id);
+			}
+			console.log(cancelSch);
+			$.ajax(
+			{
+				url : "/plan/deleteSchedule?cancelSch="+cancelSch,
+				method : "POST",
+				success : function(result){
+					if(result == 0){
+						console.log("담당자 삭제 실패");
+					}else{
+						console.log("담당자 삭제 성공");
+					}
+					resolve(result);
+				}//end success
+				
+			});//end ajax
+			
+		});
+	}//end 담당자 삭제
+	
 
 </script>
 

@@ -62,6 +62,18 @@
 		$("#" + pathArray[1]).addClass("active");
 		$("."+pathArray[1]).addClass("active");
 	}
+	else if(pathArray[1] == "plan")
+	{
+		$("#"+pathArray[1]).addClass("active");
+		if(pathArray[2] == "list")
+		{
+			$("."+pathArray[2]).addClass("active");
+		}
+		else
+		{
+			$("."+pathArray[2]).addClass("active");
+		}
+	}
 	else
 	{
 		$("#" + pathArray[1]).addClass("active");

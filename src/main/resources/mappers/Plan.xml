@@ -122,7 +122,8 @@
 			plan_method,
 			user_group,
 			create_date,
-			modify_date
+			modify_date,
+			plan_step
 		)
 		VALUES
 		(
@@ -136,7 +137,8 @@
 			#{plan_method},
 			#{user_group},
 			NOW(),
-			NOW()
+			NOW(),
+			0
 		)
 		
 	</insert>
@@ -307,7 +309,8 @@
 	<!-- 재배계획 승인 -->
 	<update id="updatePlanStatus" parameterType="int">
 		UPDATE plan
-		SET plan_status = 2
+		SET plan_status = 2,
+			plan_step = 1
 		WHERE plan_id = #{plan_id}
 	</update>
 	
@@ -316,5 +319,49 @@
 		SELECT * FROM user
 		WHERE user_group = #{user_group}
 	</select>
+	
+	<!-- 스케쥴 담당자 등록 -->
+	<insert id="insertSchedule" parameterType="Schedule">
+		INSERT INTO schedule
+		(
+			plan_id,
+			method_id,
+			sch_supervisor,
+			sch_manager,
+			start_date,
+			end_date,
+			sch_comment,
+			create_date,
+			modify_date
+		)
+		VALUES
+		(
+			#{plan_id},
+			#{method_id},
+			#{sch_supervisor},
+			#{sch_manager},
+			#{start_date},
+			#{end_date},
+			#{sch_comment},
+			NOW(),
+			NOW()
+		)
+	</insert>
+	
+	<!-- schedule 담당자 list -->
+	<select id="selectScheduleList" parameterType="int" resultType="Schedule">
+		SELECT s.*, u1.user_name_k as u1_supervisor, u2.user_name_k as u2_manager
+		FROM schedule s
+		LEFT JOIN user u1 ON s.sch_supervisor = u1.user_id
+		LEFT JOIN user u2 ON s.sch_manager = u2.user_id
+		WHERE s.plan_id = #{plan_id}
+		ORDER BY sch_id
+	</select>
+	
+	<!-- schedule 담당자 삭제 -->
+	<delete id="deleteSchedule" parameterType="int">
+		DELETE FROM schedule
+		WHERE sch_id = #{sch_id}
+	</delete>
 	
 </mapper>

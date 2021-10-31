@@ -13,6 +13,7 @@ import com.digitalBook.Entity.Method;
 import com.digitalBook.Entity.Plan;
 import com.digitalBook.Entity.Record;
 import com.digitalBook.Entity.Report;
+import com.digitalBook.Entity.Schedule;
 import com.digitalBook.Entity.Seed;
 import com.digitalBook.Entity.User;
 import com.digitalBook.Mapper.PlanMapper;
@@ -183,6 +184,27 @@ public class PlanServiceImpl implements PlanService {
 	public List<User> selectUserList(int user_group) {
 		
 		return mapper.selectUserList(user_group);
+	}
+	
+	//담당자 등록
+	@Override
+	public int insertSchedule(Schedule schedule) {
+		
+		return mapper.insertSchedule(schedule);
+	}
+	
+	//담당자 리스트 조회
+	@Override
+	public List<Schedule> selectScheduleList(int plan_id) {
+		
+		return mapper.selectScheduleList(plan_id);
+	}
+	
+	//담당자 삭제
+	@Override
+	public int deleteSchedule(int sch_id) {
+		
+		return mapper.deleteSchedule(sch_id);
 	}
 
 }
