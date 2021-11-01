@@ -364,4 +364,33 @@
 		WHERE sch_id = #{sch_id}
 	</delete>
 	
+	<!-- 장소 등록 -->
+	<insert id="InsertStorage" parameterType="Storage">
+		INSERT INTO storage
+		(storage_code, storage_name, storage_type, storage_division, storage_size, depart_id, storage_location, create_date, modify_date)
+		VALUES
+		(#{storage_code}, #{storage_name}, #{storage_type}, #{storage_division}, #{storage_size}, #{depart_id}, #{storage_location}, NOW(), NOW())
+	</insert>
+	
+	<!-- 장소  status 변경 -->
+	<update id="updateStorageStatus" parameterType="int">
+		UPDATE storage
+		SET storage_status = 1
+		WHERE storage_id = #{storage_id}
+	</update>
+	
+	<!-- plan method 조회 -->
+	<select id="selectPlanMethodList" parameterType="int" resultType="Method">
+		SELECT m.*, d1.division as d1_name, d2.division as d2_name, d3.division as d3_name
+		FROM method m
+		LEFT JOIN division d3 ON m.division_id = d3.division_id
+		LEFT JOIN division d2 ON d3.division_parents = d2.division_id
+		LEFT JOIN division d1 ON d2.division_parents = d1.division_id
+		WHERE m.method_id IN
+		<foreach collection="array" item="arr" open="(" close=")" separator=",">
+		#{arr}
+		</foreach>
+		ORDER BY method_id
+	</select>
+	
 </mapper>

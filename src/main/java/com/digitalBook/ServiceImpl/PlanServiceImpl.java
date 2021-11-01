@@ -15,6 +15,7 @@ import com.digitalBook.Entity.Record;
 import com.digitalBook.Entity.Report;
 import com.digitalBook.Entity.Schedule;
 import com.digitalBook.Entity.Seed;
+import com.digitalBook.Entity.Storage;
 import com.digitalBook.Entity.User;
 import com.digitalBook.Mapper.PlanMapper;
 import com.digitalBook.Service.PlanService;
@@ -205,6 +206,27 @@ public class PlanServiceImpl implements PlanService {
 	public int deleteSchedule(int sch_id) {
 		
 		return mapper.deleteSchedule(sch_id);
+	}
+	
+	//포장 등록
+	@Override
+	public int InsertStorage(Storage storage) {
+		
+		return mapper.InsertStorage(storage);
+	}
+	
+	//장소 상태 변경
+	@Override
+	public int updateStorageStatus(int storage_id) {
+		
+		return mapper.updateStorageStatus(storage_id);
+	}
+	
+	//plan method 가져오기
+	@Override
+	public List<Method> selectPlanMethodList(int[] arr) {
+		
+		return mapper.selectPlanMethodList(arr);
 	}
 
 }

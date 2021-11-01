@@ -1,5 +1,6 @@
 package com.digitalBook.Controller;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -124,6 +125,7 @@ public class PlanController
 			plan.setPlan_code(resultCode);
 		}
 		
+		service.updateStorageStatus(plan.getStorage_id());
 		plan.setUser_group(prin.getUser_group());
 		int result = service.insertPlan(plan);
 		
@@ -475,21 +477,23 @@ public class PlanController
 		Plan plan = service.selectPlanDetail(plan_id);
 		List<Report> report = service.selectReportList();
 		List<Fertilizer> fert = service.selectFertilizerList(0, 0);
-		List<Method> method = service.selectMethodList(prin.getUser_group());
 		List<Factor> factor = service.selectFactorList(plan_id);
 		List<User> user = service.selectUserList(prin.getUser_group());
 		List<Schedule> sch = service.selectScheduleList(plan_id);
 		
 		List<Record> record = service.selectRecordList(plan_id);
 		
+		int arr[] = Arrays.stream(plan.getPlan_method().split(",")).mapToInt(Integer::parseInt).toArray();
+		List<Method> method = service.selectPlanMethodList(arr);
+		
 		mv.addObject("plan", plan);
 		mv.addObject("report", report);
 		mv.addObject("fert", fert);
-		mv.addObject("method", method);
 		mv.addObject("factor", factor);
 		mv.addObject("user", user);
 		mv.addObject("record", record);
 		mv.addObject("sch", sch);
+		mv.addObject("method", method);
 		
 		mv.setViewName("plan/result_insert");
 		
@@ -518,5 +522,47 @@ public class PlanController
 		
 		return result;
 	}
+	
+	//포장 등록
+	@ResponseBody
+	@RequestMapping("insertStorage")
+	public int InsertStorage(Authentication auth, Storage storage)
+	{
+		
+		User prin = (User)auth.getPrincipal();
+		Calendar cal = Calendar.getInstance();
+		
+		int now = cal.get(Calendar.YEAR);
+		
+		Storage last_storage = storageService.SelectLastStorage();
+		
+		if(last_storage == null)
+		{
+			storage.setStorage_code("fi-" + now + "-00001");
+		}
+		else
+		{
+			String[] strArr = last_storage.getStorage_code().split("-");
+			
+			int year = Integer.parseInt(strArr[1]);
+			
+			if(year == now)
+			{
+				int code = Integer.parseInt(strArr[2]) + 1;
+				
+				storage.setStorage_code("fi-" + now + "-" + String.format("%05d", code));
+			}
+			else
+			{
+				storage.setStorage_code("fi-" + now + "-00001");
+			}
+		}
+		
+		storage.setDepart_id(prin.getUser_group());
+		int result = service.InsertStorage(storage);
+		
+		return result;
+	}
+	
 	
 }
