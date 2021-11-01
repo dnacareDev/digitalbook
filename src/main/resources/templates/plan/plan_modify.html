@@ -552,7 +552,7 @@
 			            <div class="row">
 			            	<div class="col-md-12">
 			            		<span style="float:left">시작일</span>
-			                	<input type="text" class="regdate start_date">
+			                	<input type="text" id="regdate1" class="regdate">
 				                <div class="cal">
 				                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
 				                      <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
@@ -563,7 +563,7 @@
 			            <div class="row">
 			            	<div class="col-md-12">
 			            		<span style="float:left">종료일</span>
-			                	<input type="text" class="regdate end_date">
+			                	<input type="text" id="regdate2" class="regdate">
 				                <div class="cal">
 				                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
 				                      <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
@@ -3075,6 +3075,8 @@
 		var factor2 = "";
 		var factor3 = "";
 		
+		console.log(data1);
+		
 		if(Object.keys(data1).length != 0){
 			
 			if(data1.type == "시비량"){
@@ -4351,8 +4353,6 @@
 	
 	//담당자 그려주기
 	function gridStep6(){
-		console.log("기존담당자!!!!!!!");
-		console.log(sch);
 		
 		$("#step6_list").empty();
 		
@@ -4462,27 +4462,30 @@
 		//동적 생성된 datepicker 클래스에 datepicker 이벤트 주기
 		$(document).find(".start_date").each(function(index){
 			$(this).datepicker();
-			$(this).addClass("start-datepicker"+index);
-			$(".ui-datepicker-trigger").remove();
-			$(".receive-datepicker"+index).removeClass("hasDatepicker").removeAttr("id").datepicker();
+			$(this).addClass(".start-datepicker"+index);
+			$(this).find(".ui-datepicker-trigger").remove();
+			$(".start-datepicker"+index).removeClass("hasDatepicker").datepicker();
 		});
 		
 		$(document).find(".end_date").each(function(index){
 			$(this).datepicker();
-			$(this).addClass("end-datepicker"+index);
-			$(".ui-datepicker-trigger").remove();
-			$(".receive-datepicker"+index).removeClass("hasDatepicker").removeAttr("id").datepicker();
+			$(this).addClass(".end-datepicker"+index);
+			$(this).find(".ui-datepicker-trigger").remove();
+			$(".end-datepicker"+index).removeClass("hasDatepicker").datepicker();
 		});
 		
 	}//end 담당자 그려주기
 	
 	gridStep6();
 	
+	
+	
+	
 	//담당자 추가 이벤트
 	$(document).on("click", ".add_manager", function(){
 		
 		var manager1_id = $(this).parent().parent().find(".select_user1 option:selected").val();
-		console.log(manager1_id);
+		
 		var manager1_text = $(this).parent().parent().find(".select_user1 option:selected").text();
 		if(manager1_id == 0){
 			manager1_text = "";
@@ -4537,9 +4540,6 @@
 			scheduleArray.push(mng_data);
 		});
 		
-		console.log("등록할 담당자!!!!!");
-		console.log(scheduleArray);
-		
 		await DeleteSchedule();
 		
 		insertSchedule();
@@ -4577,7 +4577,7 @@
 			for(var i = 0; i < sch.length; i++){
 				cancelSch.push(sch[i].sch_id);
 			}
-			console.log(cancelSch);
+			
 			$.ajax(
 			{
 				url : "/plan/deleteSchedule?cancelSch="+cancelSch,
