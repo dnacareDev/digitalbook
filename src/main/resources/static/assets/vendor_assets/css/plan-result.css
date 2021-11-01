@@ -141,7 +141,7 @@ body button{
 #section .step .step_inner .content{
     display: none;
     width: 100%;
-    padding: 50px 20px;
+    padding: 0 20px 50px 20px;
 }
 
 
@@ -421,7 +421,7 @@ body button{
 }
 #section .step .step_inner .content .bottom_right-content .left_type{
 	float: left;
-	width: 50%;
+	width: 40%;
 }
 #section .step .step_inner .content .bottom_right-content .right_type{
 	float: right;
@@ -451,17 +451,29 @@ body button{
 #section .step .step_inner .content .bottom_right-content span.red{ /* 추가 2021-11-01 */
 	color: red;
 }
+#section .step .step_inner .content .bottom_right-content span.blue{ /* 추가 2021-11-01 */
+	color: blue;
+}
+#section .step .step_inner .content .bottom_right-content span.yellow{ /* 추가 2021-11-01 */
+	color: yellow;
+}
+#section .step .step_inner .content .bottom_right-content span.black{ /* 추가 2021-11-01 */
+	color: black;
+}
+#section .step .step_inner .content .bottom_right-content span.purple{ /* 추가 2021-11-01 */
+	color: purple;
+}
 #section .step .step_inner .content .bottom_right-content input[type='text']{ /* 추가 2021-11-01 */
 	float:left;
 	border: 1px solid #E4E4E4; 
 	height: 44px;
-	width: 50%;
+	width: 40%;
 	border-radius: 5px 0 0 5px;
 	border-right: none;
 	padding: 5px 5px;
 }
 #section .step .step_inner .content .bottom_right-content button{/* 추가 2021-11-01 */
-	width: 15%;
+	width: 25%;
 	height: 44px;
 	border-radius: 0 5px 5px 0;
 	border-left: none;
@@ -494,8 +506,9 @@ body button{
 }
 #section .step .step_inner .content .bottom_content table thead th{
     color: #222;
-    font-size: 16px;
+    font-size: 14px;
     border-right: 1px solid #E4E4E4;
+    padding: 5px 10px;
 }
 #section .step .step_inner .content .bottom_content table tr{
     background-color: #ffffff;
@@ -503,9 +516,21 @@ body button{
 }
 #section .step .step_inner .content .bottom_content table tr td{
     border-right: 1px solid #E4E4E4;
+    padding: 0;
+}
+#section .step .step_inner .content .bottom_content table tr td input[type="text"]{
+	width: 90%;
+    float: left;
+    border-radius: 5px 0 0 5px;
+    border: 1px solid #E4E4E4;
+    border-right: none;
 }
 #section .step .step_inner .content .bottom_content table tr td .cam{
-    float: right;
+    height: 25px;
+    border: 1px solid #E4E4E4;
+    border-radius: 0 5px 5px 0;
+    border-left: none;
+    float: left;
     cursor: pointer;
 }
 #section .step .step_inner .content .submit_btn{
@@ -597,7 +622,8 @@ i.bi{
 
 #section .step .step_inner .content .content-center .content_box > ul > li{
     float: left;
-    width: calc((100% - 60px)/2);
+/*     width: calc((100% - 60px)/2); */
+	width: calc(100vw * (863 / 1920));
     margin-left: 60px;
     position: relative;
 }
