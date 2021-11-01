@@ -250,14 +250,14 @@ body button{
 .background-content ul li a{
     color: #5E7156;
 }
-#section .row .col-lg-12{
+.row .col-lg-12{
 	padding-left: 70px;
 	padding-right: 70px;
 }
-#section .row .col-lg-12 .breadcrumb-main{
+.row .col-lg-12 .breadcrumb-main{
 	justify-content: start;
 }
-#section .row .col-lg-12 button{
+.row .col-lg-12 button{
 	float: right;
 }
 /*s: step1*/
