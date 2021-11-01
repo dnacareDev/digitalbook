@@ -460,17 +460,38 @@ public class PlanController
 		
 		mv.addObject("department", department);
 		
-		mv.setViewName("plan/plan_result_list");
+		mv.setViewName("plan/result_list");
 		
 		return mv;
 	}
 	
 	//결과입력 등록 화면
 	@RequestMapping("/insertResult")
-	public ModelAndView insertResult(ModelAndView mv)
+	public ModelAndView insertResult(Authentication auth, ModelAndView mv, @RequestParam(name = "plan_id", required = true) int plan_id)
 	{
 		
-		mv.setViewName("plan/plan_result");
+		User prin = (User)auth.getPrincipal();
+		
+		Plan plan = service.selectPlanDetail(plan_id);
+		List<Report> report = service.selectReportList();
+		List<Fertilizer> fert = service.selectFertilizerList(0, 0);
+		List<Method> method = service.selectMethodList(prin.getUser_group());
+		List<Factor> factor = service.selectFactorList(plan_id);
+		List<User> user = service.selectUserList(prin.getUser_group());
+		List<Schedule> sch = service.selectScheduleList(plan_id);
+		
+		List<Record> record = service.selectRecordList(plan_id);
+		
+		mv.addObject("plan", plan);
+		mv.addObject("report", report);
+		mv.addObject("fert", fert);
+		mv.addObject("method", method);
+		mv.addObject("factor", factor);
+		mv.addObject("user", user);
+		mv.addObject("record", record);
+		mv.addObject("sch", sch);
+		
+		mv.setViewName("plan/result_insert");
 		
 		return mv;
 	}

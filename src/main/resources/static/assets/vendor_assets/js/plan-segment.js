@@ -152,7 +152,9 @@ function onElDown(e){
 	
 	
 	var tableElsTop = tableEls[thisIndex].offsetTop - 64;
+	console.log(tableElsTop);
 	$('#copy-step-4').stop().animate( { scrollTop : tableElsTop } );
+	$('#segment_list').stop().animate( { scrollTop : tableElsTop } );
 	
 	
 	thisTransformGet(); // transform 속성 가져오기
@@ -329,7 +331,10 @@ function addWindowEvent(){
 	stepFourWrap.addEventListener('mousedown', onClickStepFourWrap);
 	stepFourWrap.addEventListener('touchstart', onClickStepFourWrap);
 	
-	columnBtn.addEventListener('click', onClickColumnBtn);
+	if(columnBtn !== undefined && columnBtn !== null){
+		
+		columnBtn.addEventListener('click', onClickColumnBtn);
+	}
 }
 
 addWindowEvent();
