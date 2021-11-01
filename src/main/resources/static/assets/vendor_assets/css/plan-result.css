@@ -173,7 +173,7 @@ body button{
    
 }
 #step1 table tbody td {
-    padding: 12px 40px;
+    padding: 2px 40px;
     color: #666d92;
     font-size: 14px;
 }
@@ -250,17 +250,27 @@ body button{
 .background-content ul li a{
     color: #5E7156;
 }
-
+.row .col-lg-12{
+	padding-left: 70px;
+	padding-right: 70px;
+}
+.row .col-lg-12 .breadcrumb-main{
+	justify-content: start;
+}
+.row .col-lg-12 button{
+	float: right;
+}
 /*s: step1*/
 #step1 .content_right{
 	overflow:hidden;
 }
 #step1 .background-wrap{
-    height: 287px;
+    height: 500px;
     background: url('/img/icons/04.png') repeat center center;
     clear: both;
     position:relative;
     overflow-y:auto;
+    background-size: cover;
 }
 #step1 #step4-segment { 
 	position:relative; height:100%; width:100%;
@@ -404,13 +414,35 @@ body button{
 }
 
 #section .step .step_inner .content .bottom_right-content{
-    float: right;
-    width: 300px;
-    padding: 20px 10px;
+    width: 100%;
+    padding: 40px 10px;
     clear: both;
     
 }
-#section .step .step_inner .content .bottom_right-content > span{ /* 추가 2021-11-01 */
+#section .step .step_inner .content .bottom_right-content .left_type{
+	float: left;
+	width: 50%;
+}
+#section .step .step_inner .content .bottom_right-content .right_type{
+	float: right;
+	width: 50%;
+}
+#section .step .step_inner .content .bottom_right-content .right_type .right_type_cover{
+	width: 80%;
+	margin: 0 auto;
+}
+#section .step .step_inner .content .bottom_right-content .right_type .right_type_cover select{
+	width: 80%;
+	float:left;
+	border-right:none;
+	border-radius: 5px 0 0 5px;
+	border: 1px solid #E4E4E4;
+}
+#section .step .step_inner .content .bottom_right-content .right_type .right_type_cover button{
+	width: 20%;
+	float:left;
+}
+#section .step .step_inner .content .bottom_right-content .left_type > span{ /* 추가 2021-11-01 */
 	float:left;
 	margin-right: 10px;
     vertical-align: middle;
@@ -429,7 +461,7 @@ body button{
 	padding: 5px 5px;
 }
 #section .step .step_inner .content .bottom_right-content button{/* 추가 2021-11-01 */
-	width: 25%;
+	width: 15%;
 	height: 44px;
 	border-radius: 0 5px 5px 0;
 	border-left: none;

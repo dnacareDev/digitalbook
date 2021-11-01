@@ -87,6 +87,11 @@
 	.contents .row{
 		align-items:center;
 	}
+	
+	.contents .mt-2, .contents .my-2{
+		margin:0 !important;
+		margin-top: 0 !important;
+	}
 </style>
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
@@ -192,7 +197,7 @@
 											
 										</div>
 										<div class="row" style="overflow:auto; height: 456px; border: 1px solid #D9D9D9; border-top: transparent">
-											<div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;" id="research_list">
+											<div class="list-group mt-2" style="height: 100%; overflow: auto; width: 100%;" id="research_list">
 												
 											</div>
 										</div>
@@ -468,14 +473,14 @@
 				
 				for(var i = 0; i < result.length; i++)
 				{
-					add_list += '<li class="list-group-item step-list" style="width: 355px;">';
+					add_list += '<li class="list-group-item step-list" style="width: 100%;">';
 					add_list += '<input type="checkbox" class="checkbox mr-2" name="chk_research" value="' + result[i].research_id + '">';
 					add_list += '<span>'+ result[i].research_contents + '</span>';
 					add_list += '</li>';
 				}
 				
 				research_list.empty();
-				research_list.append(add_list);
+				research_list.append("<ul>" + add_list + "</ul>");
 				
 				$("#input_title").val(d1.text() + " > " + d2.text() + " > " +  d3.text() + " > " +  method_title);
 				$("#addResearchBtn").prop("disabled", false);
