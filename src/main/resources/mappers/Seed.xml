@@ -5,7 +5,7 @@
 	<select id="SearchSeedCount" resultType="int">
 		SELECT COUNT(*) FROM
 		(SELECT COUNT(*) FROM seed s
-		LEFT JOIN report r ON s.report_id = r.report_id
+		LEFT JOIN report r ON s.report_code = r.report_code
 		LEFT JOIN genetic g ON s.genetic_id = g.genetic_id
 		LEFT JOIN division d ON g.division_id = d.division_id
 		LEFT JOIN warehouse w ON s.ware_id = w.ware_id
@@ -40,7 +40,7 @@
 	<select id="SearchSeed" resultType="Seed">
 		SELECT r.report_id, r.report_code, r.report_title, s.seed_id, s.seed_amount, s.seed_sender, s.send_date, s.receive_date, s.user_group, d.division_id, d.division, g.genetic_id, g.genetic, w.ware_id, w.warehouse, COUNT(*) AS seed_count
 		FROM seed s
-		LEFT JOIN report r ON s.report_id = r.report_id
+		LEFT JOIN report r ON s.report_code = r.report_code
 		LEFT JOIN genetic g ON s.genetic_id = g.genetic_id
 		LEFT JOIN division d ON g.division_id = d.division_id
 		LEFT JOIN warehouse w ON s.ware_id = w.ware_id
@@ -64,7 +64,7 @@
 	<!-- 과제 전체 조회 -->
 	<select id="SelectReportList" parameterType="String" resultType="Report">
 		SELECT * FROM report
-		WHERE user_name = #{user_name}
+		WHERE user_name = #{user_name} and user_name != '0'
 	</select>
 	
 	<!-- 사용자 전체 조회 -->
@@ -108,7 +108,7 @@
 		eaches_id,
 		seed_comment,
 		genetic_id,
-		report_id,
+		report_code,
 		seed_report,
 		ware_id,
 		seed_sender,
@@ -131,7 +131,7 @@
 		#{eaches_id},
 		#{seed_comment},
 		#{genetic_id},
-		#{report_id},
+		#{report_code},
 		#{seed_report},
 		#{ware_id},
 		#{seed_sender},
@@ -156,16 +156,16 @@
 	
 	<!-- 시료 detail list -->
 	<select id="SelectSeedDetailList" resultType="Seed">
-		SELECT s.*, u1.user_name_k AS manager_name, u2.user_name_k AS receive_name, r.user_id as report_user_id, u2.*, e.*, g.*, r.*, w.*, d.* 
+		SELECT s.*, u1.user_name_k AS manager_name, u2.user_name_k AS receive_name, r.user_name as report_user_name, u2.*, e.*, g.*, r.*, w.*, d.* 
 		FROM seed s
 		LEFT JOIN user u1 ON s.seed_manager = u1.user_id
 		LEFT JOIN user u2 ON s.seed_sender = u2.user_id
 		LEFT JOIN eaches e ON s.eaches_id = e.eaches_id
 		LEFT JOIN genetic g ON s.genetic_id = g.genetic_id
 		LEFT JOIN division d ON g.division_id = d.division_id
-		LEFT JOIN report r ON s.report_id = r.report_id
+		LEFT JOIN report r ON s.report_code = r.report_code
 		LEFT JOIN warehouse w ON s.ware_id = w.ware_id
-		WHERE s.report_id = #{report_id}
+		WHERE r.report_id = #{report_id}
 		ORDER BY seed_id
 	</select>
 	
@@ -180,7 +180,6 @@
 			eaches_id = #{eaches_id},
 			seed_comment = #{seed_comment},
 			genetic_id = #{genetic_id},
-			report_id = #{report_id},
 			seed_report = #{seed_report},
 			ware_id = #{ware_id},
 			seed_sender = #{seed_sender},
@@ -189,7 +188,8 @@
 			receive_date = #{receive_date},
 			seed_share = #{seed_share},
 			modify_date = NOW(),
-			seed_status = #{seed_status}
+			seed_status = #{seed_status},
+			report_code = #{report_code}
 		WHERE seed_id = #{seed_id}
 	</update>
 	
@@ -206,11 +206,11 @@
 	</select>
 	
 	<!-- 과제 비연계 등록 -->
-	<insert id="InsertNonReport" parameterType="Report" useGeneratedKeys="true" keyProperty="Last_report_id">
+	<insert id="InsertNonReport" parameterType="Report">
 		INSERT INTO report
-		(user_id, report_code, report_title, create_date, modify_date, user_group)
+		(user_name, report_code, report_title, create_date, modify_date, user_group)
 		VALUES
-		(0, #{report_code}, '과제 비연계', NOW(), NOW(), #{user_group})
+		(#{user_name}, #{report_code}, '과제 비연계', NOW(), NOW(), #{user_group})
 	</insert>
 	
 	<!-- 최근 비연계 과제 ID 조회 -->
@@ -231,10 +231,10 @@
 	</insert>
 	
 	<!-- 시료 변경 이력 조회 -->
-	<select id="selectRecordList" parameterType="int" resultType="Record">
+	<select id="selectRecordList" parameterType="String" resultType="Record">
 		SELECT * FROM record r
 		LEFT JOIN seed s ON r.record_type = s.seed_id
-		WHERE s.report_id = #{report_id}
+		WHERE s.report_code = #{report_code}
 		ORDER BY record_id DESC
 	</select>
 	

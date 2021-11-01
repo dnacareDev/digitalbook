@@ -14,13 +14,13 @@
 	.end{margin-left:10px;}
 </style>
 <!-- 공통 헤더 -->
-<th:block th:include="@{/fragments/header.html}"></th:block>
+<th:block th:include="/../fragments/header.html"></th:block>
 </head>
 <body class="layout-light top-menu overlayScroll">
 	<div class="mobile-search"></div>
 	<div class="mobile-author-actions"></div>
 	<!-- 공통 topbar -->
-	<th:block th:include="@{/fragments/topbar.html}"></th:block>
+	<th:block th:include="/../fragments/topbar.html"></th:block>
 	<main class="main-content" style="background-color: #F9FBFD;">
 		<div class="contents" style="background-color: #F9FBFD;">
 		    <div class="container-fluid">
@@ -49,12 +49,7 @@
 		                                   <label for="report_year" class="col-form-label color-dark align-center">과제명</label>
 	                                </div>
 	                                <div class="col-sm-8">
-	                                   <select class="form-control b-light" id="report_id">
-		                                <option th:value=0>과제 선택</option>
-		                                <th:block th:each="report : ${report}">
-		                                	<option th:value="${report.report_id}" th:text="${report.report_title}"></option>
-		                                </th:block>
-		                               </select>
+	                                	<input type="text" class="form-control b-light seed_code" id="report_code" th:data-report-code="${seeds.get(0).report_code}" th:value="${seeds.get(0).report_title}" readonly="readonly">
 	                                </div>
 		                         </div>
 		                         <div class="row mt-3">
@@ -62,7 +57,7 @@
 		                            	<label for="seed_report" class="color-dark align-center">과제설명</label>
 		                            </div>
 		                            <div class="col-sm-8">
-		                                <textarea class="form-control" id="seed_report" rows="5"></textarea>
+		                                <textarea class="form-control" id="seed_report" rows="5" th:text="${seeds[0].seed_report}"></textarea>
 		                            </div>
 		                    	</div>
 			        		</div>
@@ -512,9 +507,9 @@
      </main>
      
      <!-- 공통 하단 -->
-    <th:block th:include="@{/fragments/footer.html}"></th:block>
+    <th:block th:include="/../fragments/footer.html"></th:block>
     <!-- 공통 js -->
-    <th:block th:include="@{/fragments/commonjs.html}"></th:block>
+    <th:block th:include="/../fragments/commonjs.html"></th:block>
 
 <script type="text/javascript" th:inline="javascript">
 
@@ -617,17 +612,6 @@
 		$("#geneticModal").modal("hide");
 	});
 	
-	//과제 비연계 이벤트
-	$("#not_report").on("change", function(){
-		if($("#not_report").is(':checked')){
-			$("#report_id").val(0).prop("checked", true);
-			$("#report_id").prop("disabled", true);
-		}else{
-			$("#report_id").prop("disabled", false);
-			$("#report_id").val(seeds[0].report_id).prop("checked", true);
-		}
-	});
-	
 	//저장장소 선택에 따른 저장조건 이벤트
 	$(document).on("change", ".ware_id", function(){
 		ware_condition = $(this).find("option:selected").attr("data-condition");
@@ -648,19 +632,14 @@
 		str += seed_form_inner;
 		str += '</div>';
 		
-		// 과제 데이터 기존값 노출
-		if(seeds[0].report_user_id === 0)
+		// 과제 비연계시 체크박스 이벤트
+		if(seeds[0].report_user_name === "0")
 		{
 			$("#not_report").prop("checked", true);
-			$("#report_id").val(0).prop("selected", true);
-			$("#report_id").prop("disabled", true);
+			$("#not_report").prop("disabled", true);
+		}else{
+			$("#not_report").prop("disabled", true);
 		}
-		else
-		{
-			$("#report_id").val(seeds[0].report_id).prop("checked", true);
-		}
-		$("#not_report").prop("disabled", true);
-		$("#seed_report").val(seeds[0].seed_report);
 		
 		// seeds 사이즈 만큼 seed_form 동적 생성
 		var length = seeds.length;
@@ -865,7 +844,7 @@
 		});//end ajax
 		
 	}//end 시료 등록
-	
+
 	//시료 삭제
 	function deleteConfirm(){
 		
@@ -996,7 +975,6 @@
 						"eaches_id" : $(this).find(".eaches_id").val(),
 						"seed_comment" : $.trim($(this).find(".seed_comment").val()),
 						"genetic_id" : $(this).find(".genetic_id").attr("th:data-genetic-id"),
-						"report_id" : seeds[0].report_id,
 						"seed_report" : $.trim($("#seed_report").val()),
 						"ware_id" : $(this).find(".ware_id").val(),
 						"seed_sender" : $.trim($(this).find(".seed_sender").val()),
@@ -1005,7 +983,8 @@
 						"receive_date" : $.trim($(this).find(".receive_date").val()),
 						"seed_share" : $(this).find(".seed_share").val(),
 						"seed_id" : seed_id,
-						"seed_code" : $(this).find(".seed_code").val()
+						"seed_code" : $(this).find(".seed_code").val(),
+						"report_code" : $("#report_code").attr("data-report-code")
 						};
 				
 				dataArr.push(data);

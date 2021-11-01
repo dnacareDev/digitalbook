@@ -745,7 +745,7 @@ input[type=search]:focus{
 }
 </style>
 <!-- 공통 헤더 -->
-<th:block th:include="@{/fragments/header.html}"></th:block>
+<th:block th:include="/../fragments/header.html"></th:block>
 <script>
 window.addEventListener("load", function(){ //javascript
     let section = document.getElementById("section"),
@@ -854,7 +854,7 @@ function registration(e){ //신규등록 버튼 //buttonFunctions
 	<div class="mobile-author-actions"></div>
 	
 	<!-- 공통 topbar -->
-	<th:block th:include="@{/fragments/topbar.html}"></th:block>
+	<th:block th:include="/../fragments/topbar.html"></th:block>
 	
 	<main class="main-content" style="background-color: #F9FBFD;">
 		
@@ -1364,9 +1364,9 @@ function registration(e){ //신규등록 버튼 //buttonFunctions
 	</main>
 	
 	 <!-- 공통 하단 -->
-    <th:block th:include="@{/fragments/footer.html}"></th:block>
+    <th:block th:include="/../fragments/footer.html"></th:block>
     <!-- 공통 js -->
-    <th:block th:include="@{/fragments/commonjs.html}"></th:block>
+    <th:block th:include="/../fragments/commonjs.html"></th:block>
      
 </body>    
 </html>

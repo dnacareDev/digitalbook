@@ -2,21 +2,88 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.digitalBook.Mapper.PlanMapper">
 	
+	<!-- 재배계획 검색 -->
+	<select id="SearchPlan" resultType="Plan">
+		SELECT p.*, r.*, s.*, m.*
+		FROM plan p
+		LEFT JOIN report r ON p.report_code = r.report_code
+		LEFT JOIN storage s ON p.storage_id = s.storage_id
+		LEFT JOIN method m ON p.plan_method = m.method_id
+		WHERE p.user_group = #{user_group}
+		<choose>
+			<when test="search_type == null || search_type.equals('none')">
+				AND (
+					p.plan_code LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					r.report_title LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					s.storage_name LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					m.method_title LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					p.plan_repeat =  #{keyword}
+					OR
+					p.plan_segment = #{keyword}
+				)
+			</when>
+			<when test="search_type.equals('p.plan_repeat') || search_type.equals('p.plan_segment')">
+				AND ${search_type} = #{keyword}
+			</when>
+			<otherwise>
+				AND ${search_type} LIKE CONCAT('%', #{keyword}, '%')
+			</otherwise>
+		</choose>
+		ORDER BY plan_id DESC
+		LIMIT #{offset}, #{limit}
+	</select>
+	
+	<!-- 재배계획 갯수 검색 -->
+	<select id="SearchPlanCount" resultType="int">
+		SELECT COUNT(*) FROM plan p
+		LEFT JOIN report r ON p.report_code = r.report_code
+		LEFT JOIN storage s ON p.storage_id = s.storage_id
+		LEFT JOIN method m ON p.plan_method = m.method_id
+		WHERE p.user_group = #{user_group}
+		<choose>
+			<when test="search_type == null || search_type.equals('none')">
+				AND (
+					p.plan_code LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					r.report_title LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					s.storage_name LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					m.method_title LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					p.plan_repeat =  #{keyword}
+					OR
+					p.plan_segment = #{keyword}
+				)
+			</when>
+			<when test="search_type.equals('p.plan_repeat') || search_type.equals('p.plan_segment')">
+				AND ${search_type} = #{keyword}
+			</when>
+			<otherwise>
+				AND ${search_type} LIKE CONCAT('%', #{keyword}, '%')
+			</otherwise>
+		</choose>
+	</select>
+	
 	<!-- 종자(시료) 등록된 과제 list -->
 	<select id="selectReportList" resultType="Report">
 		SELECT * FROM report r 
-		INNER JOIN seed s ON r.report_id = s.report_id
-		GROUP BY r.report_id
+		INNER JOIN seed s ON r.report_code = s.report_code
+		GROUP BY r.report_code
 		ORDER BY r.report_id
 	</select>
 	
 	<!-- 시험재료(seed) 조회 list -->
-	<select id="selectSeedList" parameterType="int" resultType="Seed">
+	<select id="selectSeedList" resultType="Seed">
 		SELECT s.*, r.*, g.*, d.* FROM seed s
-		LEFT JOIN report r ON s.report_id = r.report_id
+		LEFT JOIN report r ON s.report_code = r.report_code
 		LEFT JOIN genetic g ON s.genetic_id = g.genetic_id
 		LEFT JOIN division d ON g.division_id = d.division_id
-		WHERE s.user_group = #{user_group} and s.report_id = #{report_id}
+		WHERE s.user_group = #{user_group} and s.report_code = #{report_code}
 	</select>
 	
 	<!-- 비료 조회 list -->
@@ -29,5 +96,272 @@
 			</when>
 		</choose>
 	</select>
+	
+	<!-- 조사항목(method 프로토콜) 조회 -->
+	<select id="selectMethodList" parameterType="int" resultType="Method">
+		SELECT m.*, d1.division as d1_name, d2.division as d2_name, d3.division as d3_name
+		FROM method m
+		LEFT JOIN division d3 ON m.division_id = d3.division_id
+		LEFT JOIN division d2 ON d3.division_parents = d2.division_id
+		LEFT JOIN division d1 ON d2.division_parents = d1.division_id
+		WHERE m.user_group = #{user_group}
+		ORDER BY method_id DESC
+	</select>
+	
+	<!-- 재배계획 등록 -->
+	<insert id="insertPlan" parameterType="Plan" useGeneratedKeys="true" keyProperty="last_plan_id">
+		INSERT INTO plan
+		(
+			storage_id,
+			plan_code,
+			report_code,
+			grow_type,
+			plan_status,
+			plan_repeat,
+			plan_segment,
+			plan_method,
+			user_group,
+			create_date,
+			modify_date,
+			plan_step
+		)
+		VALUES
+		(
+			#{storage_id},
+			#{plan_code},
+			#{report_code},
+			#{grow_type},
+			#{plan_status},
+			#{plan_repeat},
+			#{plan_segment},
+			#{plan_method},
+			#{user_group},
+			NOW(),
+			NOW(),
+			0
+		)
+		
+	</insert>
+	
+	<!-- 최근 plan ID 조회 -->
+	<select id="selectLastPlanCode" parameterType="int" resultType="String">
+		SELECT plan_code FROM plan
+		WHERE user_group = #{user_group}
+		ORDER BY plan_id DESC
+		LIMIT 1
+	</select>
+	
+	<!-- 시험구배치요인 등록 -->
+	<insert id="insertFactor" parameterType="Factor">
+		INSERT INTO factor
+		(
+			plan_id,
+			factor_index,
+			factor_type,
+			factor_seed,
+			factor_interval,
+			factor_plants,
+			factor_amount,
+			manure_id,
+			etc_id
+		)
+		VALUES
+		(
+			#{plan_id},
+			#{factor_index},
+			#{factor_type},
+			#{factor_seed},
+			#{factor_interval},
+			#{factor_plants},
+			#{factor_amount},
+			#{manure_id},
+			#{etc_id}
+		)
+	</insert>
+	
+	<!-- etc 기타 등록 -->
+	<insert id="insertEtc" parameterType="Etc" useGeneratedKeys="true" keyProperty="last_etc_id">
+		INSERT INTO etc
+		(
+			etc_type,
+			etc_value,
+			etc_comment,
+			plan_id,
+			factor_index
+		)
+		VALUES
+		(
+			#{etc_type},
+			#{etc_value},
+			#{etc_comment},
+			#{plan_id},
+			#{factor_index}
+		)
+	</insert>
+	
+	<!-- manure 시비량 등록 -->
+	<insert id="insertManure" parameterType="Manure" useGeneratedKeys="true" keyProperty="last_manure_id">
+		INSERT INTO manure
+		(
+			fert_id,
+			manure_area,
+			manure_ingredient,
+			manure_type,
+			manure_amount,
+			manure_percent,
+			manure_result,
+			manure_level,
+			plan_id,
+			factor_index
+		)
+		VALUES
+		(
+			#{fert_id},
+			#{manure_area},
+			#{manure_ingredient},
+			#{manure_type},
+			#{manure_amount},
+			#{manure_percent},
+			#{manure_result},
+			#{manure_level},
+			#{plan_id},
+			#{factor_index}
+		)
+	</insert>
+	
+	<!-- 재배계획 detail -->
+	<select id="selectPlanDetail" parameterType="int" resultType="Plan">
+		SELECT p.*, r.*, s.*, m.*, s.storage_location
+		FROM plan p
+		LEFT JOIN report r ON p.report_code = r.report_code
+		LEFT JOIN storage s ON p.storage_id = s.storage_id
+		LEFT JOIN method m ON p.plan_method = m.method_id
+		WHERE plan_id = #{plan_id}
+	</select>
+	
+	<!-- 시험구배치 요인 list -->
+	<select id="selectFactorList" parameterType="int" resultType="Factor">
+		SELECT * FROM factor
+		WHERE plan_id = #{plan_id}
+		ORDER BY factor_index
+	</select>
+	
+	<!-- 시비량 list -->
+	<select id="selectManureList" parameterType="int" resultType="Manure">
+		SELECT * FROM manure
+		WHERE plan_id = #{plan_id}
+		ORDER BY manure_level, manure_id
+	</select>
+	
+	<!-- 기타 list -->
+	<select id="selectEtcList" parameterType="int" resultType="Etc">
+		SELECT * FROM etc
+		WHERE plan_id = #{plan_id}
+		ORDER BY etc_id
+	</select>
+	
+	<!-- plan 수정 -->
+	<update id="updatePlan" parameterType="Plan">
+		UPDATE plan
+		SET storage_id = #{storage_id},
+			grow_type = #{grow_type},
+			plan_status = 1,
+			plan_repeat = #{plan_repeat},
+			plan_segment = #{plan_segment},
+			plan_method = #{plan_method},
+			modify_date = NOW()
+		WHERE plan_id = #{plan_id}
+	</update>
+	
+	<!-- manure 삭제 -->
+	<delete id="deleteManure" parameterType="int">
+		DELETE FROM manure
+		WHERE manure_id = #{manure_id}
+	</delete>
+	
+	<!-- manure 삭제 -->
+	<delete id="deleteEtc" parameterType="int">
+		DELETE FROM etc
+		WHERE etc_id = #{etc_id}
+	</delete>
+	
+	<!-- 시험구배치 삭제 -->
+	<delete id="deleteFactor" parameterType="int">
+		DELETE FROM factor
+		WHERE factor_id = #{factor_id}
+	</delete>
+	
+	<!-- 변경 이력 등록 -->
+	<insert id="insertRecord" parameterType="Record">
+		INSERT INTO record
+		(record_status, record_type, record_type_code, record_date)
+		VALUES
+		(#{record_status}, #{record_type}, #{record_type_code}, NOW())
+	</insert>
+	
+	<!-- 재배계획 변경 이력 조회 -->
+	<select id="selectRecordList" parameterType="int" resultType="Record">
+		SELECT * FROM record
+		WHERE record_type = #{record_type}
+		ORDER BY record_id DESC
+	</select>
+	
+	<!-- 재배계획 승인 -->
+	<update id="updatePlanStatus" parameterType="int">
+		UPDATE plan
+		SET plan_status = 2,
+			plan_step = 1
+		WHERE plan_id = #{plan_id}
+	</update>
+	
+	<!-- 사용자 전체 조회 -->
+	<select id="selectUserList" parameterType="int" resultType="User">
+		SELECT * FROM user
+		WHERE user_group = #{user_group}
+	</select>
+	
+	<!-- 스케쥴 담당자 등록 -->
+	<insert id="insertSchedule" parameterType="Schedule">
+		INSERT INTO schedule
+		(
+			plan_id,
+			method_id,
+			sch_supervisor,
+			sch_manager,
+			start_date,
+			end_date,
+			sch_comment,
+			create_date,
+			modify_date
+		)
+		VALUES
+		(
+			#{plan_id},
+			#{method_id},
+			#{sch_supervisor},
+			#{sch_manager},
+			#{start_date},
+			#{end_date},
+			#{sch_comment},
+			NOW(),
+			NOW()
+		)
+	</insert>
+	
+	<!-- schedule 담당자 list -->
+	<select id="selectScheduleList" parameterType="int" resultType="Schedule">
+		SELECT s.*, u1.user_name_k as u1_supervisor, u2.user_name_k as u2_manager
+		FROM schedule s
+		LEFT JOIN user u1 ON s.sch_supervisor = u1.user_id
+		LEFT JOIN user u2 ON s.sch_manager = u2.user_id
+		WHERE s.plan_id = #{plan_id}
+		ORDER BY sch_id
+	</select>
+	
+	<!-- schedule 담당자 삭제 -->
+	<delete id="deleteSchedule" parameterType="int">
+		DELETE FROM schedule
+		WHERE sch_id = #{sch_id}
+	</delete>
 	
 </mapper>

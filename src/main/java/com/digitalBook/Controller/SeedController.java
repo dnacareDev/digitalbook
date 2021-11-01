@@ -164,16 +164,14 @@ public class SeedController
 		
 		List<Seed> seeds = service.SelectSeedDetailList(report_id);				// 종자(시료) list
 		
-		List<Report> reports = service.SelectReportList(prin.getUser_name_k());						// 과제 list
 		List<User> user = service.SelectUserList(prin.getUser_group());			// 사용자 list
 		List<Eaches> eaches = service.SelectEachesList();						// 단위 list
 		List<Warehouse> warehouse = service.SelectWarehouseList();				// 저장장소 list
 		List<Division> division = service.SelectDivisionList();					// 품종, 유전자원명 list
 		
-		List<Record> record = service.selectRecordList(report_id);
+		List<Record> record = service.selectRecordList(seeds.get(0).getReport_code());
 		
 		mv.addObject("seeds", seeds);
-		mv.addObject("report", reports);
 		mv.addObject("user", user);
 		mv.addObject("eaches", eaches);
 		mv.addObject("warehouse", warehouse);
@@ -322,12 +320,13 @@ public class SeedController
 	//과제 비연계 등록
 	@ResponseBody
 	@RequestMapping("/seed/insertReport")
-	public int InsertReport(Authentication auth)
+	public String InsertReport(Authentication auth)
 	{
 		
 		Report report = new Report();
 		
 		int result = 0;
+		String returnResult = "";
 		
 		User prin = (User)auth.getPrincipal();
 		
@@ -345,14 +344,15 @@ public class SeedController
 			report.setReport_code(code1+code2+String.format("%02d", code3));
 		}
 		
+		report.setUser_name("0");
 		report.setUser_group(prin.getUser_group());
 		result = service.InsertNonReport(report);
 		
 		if(result != 0) {	//과제 등록 성공 후
-			result = report.getLast_report_id(); //result에 등록된 report_id 값 담기
+			returnResult = report.getReport_code(); //result에 등록된 report_id 값 담기
 		}
 		
-		return result;
+		return returnResult;
 	}
 	
 	//시료 승인

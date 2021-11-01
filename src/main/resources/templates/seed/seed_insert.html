@@ -17,7 +17,7 @@
 	.end{margin-left:10px;}
 </style>
 <!-- 공통 헤더 -->
-<th:block th:include="@{/fragments/header.html}"></th:block>
+<th:block th:include="/../fragments/header.html"></th:block>
 
 </head>
 
@@ -27,7 +27,7 @@
 	<div class="mobile-author-actions"></div>
 	
 	<!-- 공통 topbar -->
-	<th:block th:include="@{/fragments/topbar.html}"></th:block>
+	<th:block th:include="/../fragments/topbar.html"></th:block>
 	
 	<main class="main-content" style="background-color: #F9FBFD;">
 	
@@ -60,10 +60,10 @@
 			                                   <label for="report_year" class="col-form-label color-dark align-center">과제명</label>
 		                                </div>
 		                                <div class="col-sm-8">
-		                                   <select class="form-control b-light" id="report_id">
-			                                <option th:value=0>과제 선택</option>
+		                                   <select class="form-control b-light" id="report_code">
+			                                <option th:value="none">과제 선택</option>
 			                                <th:block th:each="report : ${report}">
-			                                	<option th:value="${report.report_id}" th:text="${report.report_title}"></option>
+			                                	<option th:value="${report.report_code}" th:text="${report.report_title}"></option>
 			                                </th:block>
 			                               </select>
 		                                </div>
@@ -413,9 +413,9 @@
      </main>
      
      <!-- 공통 하단 -->
-    <th:block th:include="@{/fragments/footer.html}"></th:block>
+    <th:block th:include="/../fragments/footer.html"></th:block>
     <!-- 공통 js -->
-    <th:block th:include="@{/fragments/commonjs.html}"></th:block>
+    <th:block th:include="/../fragments/commonjs.html"></th:block>
 
 <script type="text/javascript">
 
@@ -507,10 +507,10 @@
 	//과제 비연계 이벤트
 	$("#not_report").on("change", function(){
 		if($("#not_report").is(':checked')){
-			$("#report_id").val(0).prop("selected", true);
-			$("#report_id").prop("disabled", true);
+			$("#report_code").val("none").prop("selected", true);
+			$("#report_code").prop("disabled", true);
 		}else{
-			$("#report_id").prop("disabled", false);
+			$("#report_code").prop("disabled", false);
 		}
 	});
 	
@@ -605,23 +605,23 @@
 	//시료 등록 버튼 함수
 	function insertBtn(){
 		
-		var report_id = $("#report_id").val();
+		var report_code = $("#report_code").val();
 		
-		if(report_id == 0){
+		if(report_code == "none"){
 			//과제 비연계시
 			insertReport().then(function(result){
 				if(result == 0){
 					
 				}else{
-					report_id = result;
-					insertData(report_id);
+					report_code = result;
+					insertData(report_code);
 					
 				}
 			});//end insertReport().then
 			
 		}else{
 			//과제 비연계 아닐 시
-			insertData(report_id);
+			insertData(report_code);
 			
 		}
 		
@@ -630,7 +630,7 @@
 	}//end 시료 등록 버튼 함수
 	
 	//시료 등록 함수
-	function insertData(report_id){
+	function insertData(report_code){
 		
 		var form_length = $(".card-bordered").length;
 		
@@ -639,9 +639,9 @@
 		//폼별로 값 가져오기 위한 each문
 		$(".card-bordered").each(function(index, item){
 			
-			if($("#report_id").val() == 0 && $("#not_report").is(':checked') == false){
+			if($("#report_code").val() == "none" && $("#not_report").is(':checked') == false){
 				alert("과제 또는 과제비연계를 선택해 주세요.");
-				$("#report_id").focus();
+				$("#report_code").focus();
 				return false;
 			}else if($(this).find(".genetic_id").attr("th:data-genetic-id") == undefined){
 				alert("품종/유전자 정보를 선택해주세요.");
@@ -678,7 +678,7 @@
 						"eaches_id" : $(this).find(".eaches_id").val(),
 						"seed_comment" : $.trim($(this).find(".seed_comment").val()),
 						"genetic_id" : $(this).find(".genetic_id").attr("th:data-genetic-id"),
-						"report_id" : report_id,
+						"report_code" : report_code,
 						"seed_report" : $.trim($("#seed_report").val()),
 						"ware_id" : $(this).find(".ware_id").val(),
 						"seed_sender" : $.trim($(this).find(".seed_sender").val()),

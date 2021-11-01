@@ -69,7 +69,7 @@ public interface SeedMapper
 	int insertRecord(Record record);
 	
 	//시료 변경 이력 조회
-	List<Record> selectRecordList(int report_id);
+	List<Record> selectRecordList(String report_code);
 	
 	//시료 승인
 	int updateSeedStatus(int seed_id);

@@ -73,8 +73,8 @@
 		    	<div class="row">
 			        <div class="col-lg-12">
 			        	<div class="breadcrumb-main">
-			        		<h4 class="text-capitalize breadcrumb-title">계획수립</h4>
-			        		<span class="ml-20 mt-1">재배관리-계획수립</span>
+			        		<h4 class="text-capitalize breadcrumb-title">결과입력</h4>
+			        		<span class="ml-20 mt-1">재배관리-결과입력</span>
 			        	</div>
 			        </div>
 		        </div>
@@ -125,8 +125,6 @@
 		                            				<th>조사항목</th>
 		                            				<th>반복수</th>
 		                            				<th>처리수</th>
-		                            				<th>포장QR</th>
-		                            				<th>과제QR</th>
 		                            				<th>상태</th>
 		                            				<th>등록일</th>
 		                            			</tr>
@@ -146,9 +144,9 @@
 				                        	</div>
 				                        </div>
 				                        <div class="col-4">
-				                        	<div class="action-btn d-flex justify-content-end mt-30">
+				                        	<!-- <div class="action-btn d-flex justify-content-end mt-30">
 			                                    <a href="/plan/insert" class="btn btn-primary end-button end">등록</a>
-			                                </div>
+			                                </div> -->
 				                        </div>
 		                        	</div>
 		                        </div>
@@ -208,14 +206,12 @@ $(document).ready(function()
 							
 							add_list += '<tr>';
 							add_list += '<td><input type="checkbox"></td>';
-							add_list += '<td><a href="/plan/modify?plan_id='+ result.plan[i].plan_id + '">' + result.plan[i].plan_code + '</a></td>';
+							add_list += '<td><a href="/plan/insertResult?plan_id='+ result.plan[i].plan_id + '">' + result.plan[i].plan_code + '</a></td>';
 							add_list += '<td><span>' + result.plan[i].report_title + '</span></td>';
 							add_list += '<td><span>' + result.plan[i].storage_name + '</span></td>';
 							add_list += '<td><span>' + result.plan[i].method_title + '</span></td>';
 							add_list += '<td><span>' + result.plan[i].plan_repeat + '</span></td>';
 							add_list += '<td><span>' + result.plan[i].plan_segment + '</span></td>';
-							add_list += '<td><span>' + result.plan[i].qr1 + '</span></td>';
-							add_list += '<td><span>' + result.plan[i].qr2 + '</span></td>';
 							if(result.plan[i].plan_status == 0){
 								add_list += '<td><span>승인요청</span></td>';
 							}else if(result.plan[i].plan_status == 1){

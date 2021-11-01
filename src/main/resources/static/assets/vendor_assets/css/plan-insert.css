@@ -356,11 +356,63 @@ input[type="text"]{
 #mil2{
     padding: 5px;
 }
-#step4 .background-content{
-    height: 287px;
-    background: url(../img/icons/04.png) repeat center center;
-    clear: both;
+#step4 .content_right{
+	overflow:hidden;
 }
+#step4 .background-wrap{
+    height: 287px;
+    background: url('/img/icons/04.png') repeat center center;
+    clear: both;
+    position:relative;
+    overflow-y:auto;
+}
+#step4 #step4-segment { 
+	position:relative; height:100%; width:100%;
+}
+#step4 .background-wrap:after {
+	content:''; display:block; clear:both;
+}
+
+#step4 .background-wrap ul li{
+	position:absolute; left:0; top:0; z-index:0;
+	display:block;
+}
+#step4 .background-wrap ul li .segment::after,
+#step4 .background-wrap ul li .segment::before{
+    content: "";
+    position: absolute;
+    display: block;
+    left: 5px;
+    top: 50%;
+    transform:translateY(-50%) rotate(0);
+    width: 17px;
+    height: 17px;
+    background:url('../../../../img/svg/segment_icon.svg') no-repeat center / contain;
+}
+#step4 .background-wrap ul li .segment::after{
+    right:5px; left:unset;
+    transform:translateY(-50%) rotate(180deg);
+}
+#step4 .background-wrap ul li .segment{
+    color: #5E7156;
+    border-radius:3px;
+    display:block;
+    padding: 5px 20px;
+    background-color: #F6FFF2;
+    border: 1px solid #DBEFD2;
+    border-radius: 3px;
+    cursor:pointer;
+    position:relatve;
+    text-align:center;
+    white-space:nowrap;
+    font-size:14px;
+}
+
+.step4-container .table_content.active {
+	background:#6cad52 !important;
+	color:#ffffff !important;
+}
+
 .top_btn-left{
     width: 50%;
     float: left;
@@ -463,6 +515,28 @@ input[type="text"]{
     text-align: center;
     cursor: pointer;
 }
+#step4 .background-wrap ul li.active {
+	
+}
+#step4 .background-wrap ul li.active .segment {
+	 border:1px solid #6C8F5C !important;
+}
+#step4 .background-wrap ul li .arrowMove {
+	display:none !important;
+}
+
+#step4 .background-wrap ul li .refresh {
+	display:none !important;
+}
+
+#step4 .background-wrap ul li.active .arrowMove {
+	display:block !important;
+}
+
+#step4 .background-wrap ul li.active .refresh {
+	display:block !important;
+}
+
 #step5 .background-content{
     display: table;
     height: 353px;
