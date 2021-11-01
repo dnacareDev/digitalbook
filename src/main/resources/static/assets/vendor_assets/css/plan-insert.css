@@ -199,6 +199,12 @@ body button{
     border-radius: 5px;
     font-weight: 700;
 }
+#section #step4 .step_inner .submit button{
+	margin-top: 20px;
+}
+#step5 .table-responsive .table{
+	width:max-content;
+}
 span.red{
     color:#FF0101;
 } 
@@ -250,8 +256,14 @@ span.red{
 #table2{
 	float: none;
     clear: both;
-    width: max-content;
+    table-layout: fixed;
+    width:100%;
     text-align: center;
+}
+@media only screen and (max-width: 1500px){
+	#table2{
+	    width:max-content;
+	}
 }
 #step6 table{
     width: 100%;

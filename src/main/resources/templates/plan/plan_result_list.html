@@ -60,6 +60,25 @@
    width: 30px;
    height: 10px;
    }
+   table { /* lsit table start */
+   	table-layout: fixed;
+   }
+   table td{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #333333;
+    padding-top: 10 px;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    transition: white-space 0.3s;
+   }
+   table tr:hover td{
+   	white-space:break-spaces;
+   }
+   table.table th, table.table td{ /* lsit table end */
+   	padding: 5px 12px;
+   }
 </style>
 </head>
 <body class="layout-light top-menu overlayScroll">
