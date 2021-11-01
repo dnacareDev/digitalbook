@@ -49,9 +49,6 @@ select {
     padding: 0 20px;
     border-color: #222222;
 }
-#section .background-content svg{
-	vertical-align: middle;
-}
 #section select:focus{
     border-color: #7888FC;
 }
@@ -180,16 +177,6 @@ body button{
     color: #666d92;
     font-size: 14px;
 }
-<<<<<<< HEAD
-#step1 .left_content table tbody td{
-	padding: 2px 40px;
-}
-#section .step .step_inner .content .left_content .box_content{
-    height: 200px;
-    overflow: auto;
-}
-=======
->>>>>>> cee1384485c62753d8cbedf7d133a723c1d9187f
 
 
 
@@ -210,18 +197,9 @@ body button{
     width: 50%;
     padding: 0 10px;
 }
-<<<<<<< HEAD
-#section .step .step_inner .content .right_content .img_inner{
-	height: 600px;
-    overflow: auto;
-    background: url(/../img/icons/04.png) no-repeat center center;
-=======
 #section .background-content{
     background: url('/../img/icons/04.png') no-repeat center center;
->>>>>>> cee1384485c62753d8cbedf7d133a723c1d9187f
     background-size: cover;
-}
-#section .background-content{
     clear: both;
 }
 .background-content ul li{
@@ -425,7 +403,7 @@ body button{
     font-weight: 700;
 }
 
-#section .step .step_inner .content .bottom_right-content{ /* 수정 2021-11-01 */
+#section .step .step_inner .content .bottom_right-content{
     float: right;
     width: 300px;
     padding: 20px 10px;
@@ -554,36 +532,12 @@ i.bi{
 }
 
 
-#section .step .step_inner .content .bottom_right-content > span{ /* 수정 2021-11-01 */
-	float:left;
-	margin-right: 10px;
-    vertical-align: middle;
-    align-items: center;
-}
-#section .step .step_inner .content .bottom_right-content span.red{ /* 수정 2021-11-01 */
-	color: red;
-}
-#section .step .step_inner .content .bottom_right-content input[type='text']{ /* 수정 2021-11-01 */
-	float:left;
-	border: 1px solid #E4E4E4; 
-	height: 44px;
-	width: 50%;
-	border-radius: 5px 0 0 5px;
-	border-right: none;
-	padding: 5px 5px;
-}
-#section .step .step_inner .content .bottom_right-content button{/* 수정 2021-11-01 */
-	width: 25%;
-	height: 44px;
-	border-radius: 0 5px 5px 0;
-	border-left: none;
-}
+
 #section .step .step_inner .content span.sub_title-content.bold_text{
     font-weight: 700;
     font-size: 18px;
 }
 #section .step .step_inner .content .content-center  {
-	display:block;
     padding-bottom: 20px;
 }
 #section .step .step_inner .content .content-center .content_box table{
@@ -656,9 +610,6 @@ i.bi{
     z-index: 9;
     right: -150px;
     top: -10px;
-}
-#step3_inner .content_box{
-	overflow:auto;
 }
 
 
