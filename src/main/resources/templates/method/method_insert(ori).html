@@ -15,6 +15,87 @@
 	.itemBoxHighlight { 
 	border:solid 1px black; min-height: 80px; background-color:#768BF5; 
 	}
+	@media (min-width: 576px){
+		.col-sm-10 {
+		    -webkit-box-flex: 0;
+		    -ms-flex: 0 0 80%;
+		    flex: 0 0 80%;
+		    max-width: 80%;
+		}
+		.col-sm-2 {
+		    -webkit-box-flex: 0;
+		    -ms-flex: 0 0 20%;
+		    flex: 0 0 20%;
+		    max-width: 20%;
+		}
+	}
+	.top-menu .type_1{
+		background-color: #768BF5;
+		border-left: none;
+		border-radius: 0 5px 5px 0;
+	}
+	#searchResearch{
+		float: left;
+	    width: 60%;
+	   	border-radius: 5px 0 0 0;
+	   	border-right: none;
+	}
+	#addResearchBtn{
+		float:left;
+		border-left:none;
+		border-radius: 0 5px 0 0;
+		height: 42px;
+		margin-top: 0 !important;
+		width: 40%;
+	}
+	.box_content{
+	    -webkit-box-flex: 0;
+	    -ms-flex: 0 0 66.66667%;
+	    flex: 0 0 5%;
+	    max-width: 5%;
+	    display: flex;
+	    justify-content: center;
+	}
+	.box_center li{
+		margin-bottom: 20px;
+	}
+	.box_center li button{
+		border-radius: 50%;
+    	border: 2px solid #788DEE;
+    	background-color: transparent;
+    	height: 38px;
+    	color: #788DEE;
+	}
+	.card-body .mt-4{
+		margin-top: 10px !important;
+	}
+	@media (min-width: 992px){
+		.card .col-lg-8 {
+		    -webkit-box-flex: 0;
+		    -ms-flex: 0 0 66.66667%;
+		    flex: 0 0 70%;
+		    max-width: 70%;
+		}
+		.card .col-lg-3 {
+		    -webkit-box-flex: 0;
+		    -ms-flex: 0 0 25%;
+		    flex: 0 0 25%;
+		    max-width: 25%;
+		}
+	}
+	.contents .row{
+		align-items:center;
+	}
+	
+	.contents .mt-2, .contents .my-2{
+		margin:0 !important;
+		margin-top: 0 !important;
+	}
+	.list-group-item{
+		width: 100%;
+	    padding: 2px1.25rem;
+	    font-size: 14px;
+	}
 </style>
 <!-- 공통 헤더 -->
 <th:block th:include="@{/fragments/header.html}"></th:block>
@@ -289,7 +370,7 @@
     <!-- 공통 js -->
     <th:block th:include="@{/fragments/commonjs.html}"></th:block>
 <script type="text/javascript">
-
+	
 	// step data array
 	var dataArr = new Array();
 	
@@ -381,7 +462,7 @@
 				
 				for(var i = 0; i < result.length; i++)
 				{
-					add_list += '<li class="list-group-item step-list" style="width: 325px;">';
+					add_list += '<li class="list-group-item step-list">';
 					add_list += '<input type="checkbox" class="checkbox mr-2" name="chk_research" value="' + result[i].research_id + '">';
 					add_list += '<span>'+ result[i].research_contents + '</span>';
 					add_list += '</li>';
