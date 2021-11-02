@@ -75,7 +75,7 @@
                         </div>
                         <div class="bottom_content">
                             <div class="title clearfix" style="padding: 20px 0;">
-		                        <h3 style="float: left;">결과입력??</h3>
+		                        <h3 style="float: left;">결과입력 : A1-B1-C1-1</h3>
 		                    </div>
                             <table id="step1_table" style="width: max-content;">
                                 
@@ -226,8 +226,42 @@
                 </div>
             </div>
         </section>
-    </div>
+        <div class="row mt-4">
+			<div class="col-lg-12">
+				<div class="card card-default">
+					<div class="row ml-3 mt-3">
+						<span class="color-dark align-center" style="font-size: 20px;">변경 이력</span>
+					</div>
+					<div class="card-body" style="height: 325px; overflow-y: auto;">
+						<div class="row">
+							<div class="col-lg-12" style="padding-left: 15px;">
+								<ul>
+									<th:block th:each="r : ${record}">
+										<li class="mt-2">
+											<span class="avatar avatar-success avatar-md avatar-circle" style="float: left;">
+                                                   <span class="avatar-icon" data-feather="check"></span>
+                                               </span>
+											<div>
+												<span class="font-weight-bold mb-0">생육조사계획 : </span>
+												<span class="font-weight-bold mb-0" th:text="${r.record_type_code}"></span>
+												<th:block th:switch="${r.record_status}">
+													<span th:case="0" class="font-weight-bold mb-0">승인요청</span>
+													<span th:case="1" class="font-weight-bold mb-0">수정요청</span>
+													<span th:case="2" class="font-weight-bold mb-0">승인</span>
+												</th:block>
+											</div>
+											<small th:text="${r.record_date}"></small>
+										</li>
+									</th:block>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
+		</div>
+    </div>
+</div>
 			
 		</div>
         <div class="modal-basic modal fade show" id="chanModal2" tabindex="-1" role="dialog" aria-hidden="true" style="display: none">
@@ -658,6 +692,37 @@
 	//기존 데이터 만드는 함수 실행
 	loadPlan();
 	
+	//구획정보확인 셀렉트 박스 오픈 함수
+	function loadSelectOption(){
+		const contents = document.getElementsByClassName("sangtaeLi")[0],
+        parentLi = contents.children;
+  
+	  for(let i=0; i<parentLi.length; i++){
+		  let childeLi = parentLi[i].children[1].children;
+		  
+		  for(let k=0; k<childeLi.length; k++){
+		      childeLi[k].idx = k;
+		      
+		      
+		      childeLi[k].addEventListener("click", function(e){
+		          e.preventDefault();
+		          n=e.currentTarget.idx;
+		          let select_line = childeLi[n].children[1];
+		          
+		          for(let f=0; f<childeLi.length; f++){
+		        	  let display = window.getComputedStyle(childeLi[f].children[1]).display;
+		              childeLi[f].addEventListener("focusout", function(e){
+		            	  if(display === "block"){
+		            		  childeLi[n].children[1].style.display="none";
+		            	  }
+		              });
+		          }
+		          select_line.style.display="block";
+		      });
+		  }
+		}
+	}
+	
 	//구획정보 테이블 그리기
 	function gridFactors(){
 		
@@ -1075,9 +1140,9 @@
 			
 			sangtae_list.append(add_list);
 			
-			loadSelectOption();
+			
 		}//end else
-		
+		loadSelectOption();
 	}//구획정보 확인 그리기
 	
 	//구획정보 상태 선택 이벤트
@@ -1256,36 +1321,7 @@
 	//    }
 	});
 	
-	//구획정보확인 셀렉트 박스 오픈 함수
-	function loadSelectOption(){
-		const contents = document.getElementsByClassName("sangtaeLi")[0],
-        parentLi = contents.children;
-  
-	  for(let i=0; i<parentLi.length; i++){
-		  let childeLi = parentLi[i].children[1].children;
-		  
-		  for(let k=0; k<childeLi.length; k++){
-		      childeLi[k].idx = k;
-		      
-		      
-		      childeLi[k].addEventListener("click", function(e){
-		          e.preventDefault();
-		          n=e.currentTarget.idx;
-		          let select_line = childeLi[n].children[1];
-		          
-		          for(let f=0; f<childeLi.length; f++){
-		        	  let display = window.getComputedStyle(childeLi[f].children[1]).display;
-		              childeLi[f].addEventListener("focusout", function(e){
-		            	  if(display === "block"){
-		            		  childeLi[n].children[1].style.display="none";
-		            	  }
-		              });
-		          }
-		          select_line.style.display="block";
-		      });
-		  }
-		}
-	}
+	
 </script>
      
 </body>    
