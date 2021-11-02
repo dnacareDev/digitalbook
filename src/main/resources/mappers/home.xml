@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.digitalBook.Mapper.HomeMapper">
+	
+	<!-- 지난 일정 조회 -->
+	<select id="selectDelayPlanList" parameterType="int" resultType="Plan">
+		SELECT p.*, r.*, s.*, m.*, sc.*, u.*
+		FROM plan p
+		LEFT JOIN report r ON p.report_code = r.report_code
+		LEFT JOIN storage s ON p.storage_id = s.storage_id
+		LEFT JOIN method m ON p.plan_method = m.method_id
+		LEFT JOIN schedule sc ON p.plan_id = sc.plan_id
+		LEFT JOIN user u ON sc.sch_supervisor = u.user_id
+		WHERE sc.end_date  <![CDATA[<]]> date(now()) AND p.user_group = #{user_group}
+		AND sc.sch_supervisor = #{user_id}
+		OR sch_manager = #{user_id}
+		GROUP BY p.plan_id
+		ORDER BY p.plan_id DESC
+	</select>
+	
+	<!-- 진행일정 조회 -->
+	<select id="selectCurrentPlanList" parameterType="int" resultType="Plan">
+		SELECT p.*, r.*, s.*, m.*, sc.*, u.*
+		FROM plan p
+		LEFT JOIN report r ON p.report_code = r.report_code
+		LEFT JOIN storage s ON p.storage_id = s.storage_id
+		LEFT JOIN method m ON p.plan_method = m.method_id
+		LEFT JOIN schedule sc ON p.plan_id = sc.plan_id
+		LEFT JOIN user u ON sc.sch_supervisor = u.user_id
+		WHERE sc.end_date  <![CDATA[>]]> date(now()) AND p.user_group = #{user_group}
+		AND sc.sch_supervisor = #{user_id}
+		OR sch_manager = #{user_id}
+		GROUP BY p.plan_id
+		ORDER BY p.plan_id DESC
+	</select>
+	
+</mapper>

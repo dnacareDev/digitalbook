@@ -35,7 +35,8 @@
 	        		<h4 class="text-capitalize breadcrumb-title">계획수립</h4>
 	        		<span class="ml-20 mt-1">재배관리-계획수립</span>
 	        	</div>
-	        	<button>QR출력</button>
+	        	<div id="qrcode" style="display: none;"></div>
+	        	<button type="button" id="qrBtn">QR출력</button>
 	        </div>
        </div>
         <section id="section">
@@ -74,7 +75,7 @@
                         </div>
                         <div class="bottom_content">
                             <div class="title clearfix" style="padding: 20px 0;">
-		                        <h3 style="float: left;">결과입력</h3>
+		                        <h3 style="float: left;">결과입력??</h3>
 		                    </div>
                             <table id="step1_table" style="width: max-content;">
                                 
@@ -286,6 +287,9 @@
     <th:block th:include="/../fragments/commonjs.html"></th:block>
     <script type="text/javascript" src="/../assets/vendor_assets/js/plan-segment.js"></script>
     <script type="text/javascript" src="/../assets/vendor_assets/js/plan-render.js"></script>
+    <script type="text/javascript" src="/../assets/vendor_assets/js/qrcode.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/eligrey/FileSaver.js/5ed507ef8aa53d8ecfea96d96bc7214cd2476fd2/FileSaver.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.js"></script>
     
 <script type="text/javascript" th:inline="javascript">
 
@@ -865,7 +869,7 @@
 	
 	//구획정보 select 박스 그리기
 	function gridSegmentSelect(){
-		
+		//select important
 		segment_option = $("#segment_option");
 		
 		var add_list = "";
@@ -892,7 +896,7 @@
 		add_list += '<thead>';
 		add_list += '<tr>';
 		add_list += '<th>개체</th>';
-		
+		//method important
 		for(var i = 0; i < method.length; i++){
 			add_list += '<th>'+method[i].method_title+'</th>';
 		}
@@ -1086,6 +1090,37 @@
 		}
 		
 	});
+	
+	//qr important
+	function createQrcode(){
+		/* var url = window.location.href; */
+		var url = "/plan/insertResult?plan_id="+plan.plan_id;
+		
+		var qrcode = new QRCode(document.getElementById("qrcode"), {
+			width : 100,
+			height : 100
+		});
+		
+		qrcode.makeCode(url);
+	}
+	
+	createQrcode();
+	
+	$("#qrBtn").on("click", function(){
+		html2canvas($("#qrcode canvas")).then(function(canvas){
+			var image = canvas.toDataURL("image/png").replace("image/png");
+			downloadURI(image, "qrcode.png");
+		});
+		
+	});
+	
+	function downloadURI(uri, name){
+		var link = document.createElement("a");
+		link.download = name;
+		link.href = uri;
+		document.body.appendChild(link);
+		link.click();
+	}
 
 </script>
      

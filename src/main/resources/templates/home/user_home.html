@@ -291,65 +291,57 @@
 					            	<div class="tab-content">
 			                        	<div class="tab-pane show active" id="content1" role="tabpanel">
 			                        		<div class="atbd-collapse atbd-collapse-custom">
-				                        		<div class="atbd-collapse-item">
-				                                    <p class="item-link" data-toggle="collapse" data-target="#coll-1" style="text-decoration: underline;">
-				                                        1. 쌀 수량 조사 (2021.08.05 - 2021.08.25)
-				                                    </p>
-				                                    <div id="coll-1" class="collapse atbd-collapse-item__body" style="background-color: #F7F7F8;">
-				                                        <div class="collapse-body-text" style="position: static;">
-				                                            <div class="row">
-				                                            	<p>과제번호 :</p><p>PJ13487022020</p>
-				                                            </div>
-				                                            <div class="row">
-				                                            	<p>과제명 :</p><p>옥수수, 메밀의 기능 성분 최대 생선에 적합한 기술 개발</p>
-				                                            </div>
-				                                            <div class="row">
-				                                            	<p>과제 책임자 :</p><p>김길중</p>
-				                                            </div>
-				                                            <div class="row">
-				                                            	<p>과제 진행 완료 단계 :</p><p>3/9</p>
-				                                            </div>
-				                                            <div class="row">
-				                                            	<p>진행 이력</p>
-				                                            </div>
-				                                        </div>
-				                                        <div class="d-flex justify-content-end">
-										                	<button class="btn btn-xs btn-light btn-rounded modalBtn">조사시작</button>
-										                </div>
-				                                    </div>
-				                                </div>
-				                                <div class="atbd-collapse-item">
-				                                    <p class="item-link" data-toggle="collapse" data-target="#coll-2" style="text-decoration: underline;">
-				                                        Card content
-				                                    </p>
-				                                    <div id="coll-2" class="collapse atbd-collapse-item__body" style="background-color: #F7F7F8;">
-				                                        <div class="collapse-body-text">
-				                                            <p>
-				                                                A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a
-				                                                welcome guest in many households across the world.
-				                                            </p>
-				                                        </div>
-				                                    </div>
-				                                </div>
-				                                <div class="atbd-collapse-item">
-				                                    <p class="item-link" data-toggle="collapse" data-target="#coll-3" style="text-decoration: underline;">
-				                                        Card content
-				                                    </p>
-				                                    <div id="coll-3" class="collapse atbd-collapse-item__body" style="background-color: #F7F7F8;">
-				                                        <div class="collapse-body-text">
-				                                            <p>
-				                                                A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a
-				                                                welcome guest in many households across the world.
-				                                            </p>
-				                                        </div>
-				                                    </div>
-				                                </div>
+				                        		<th:block th:each="p : ${current_plan}">
+				                        			<div class="atbd-collapse-item">
+					                                    <p class="item-link data_target" data-toggle="collapse" style="text-decoration: underline;"
+					                                    	th:text="${p.report_title +'(' + p.start_date + ' - ' + p.end_date + ')' }">
+					                                    </p>
+					                                    <div class="collapse atbd-collapse-item__body" style="background-color: #F7F7F8;">
+					                                        <div class="collapse-body-text" style="position: static;">
+					                                            <div class="row">
+					                                            	<p>과제번호 :</p><p th:text="${p.report_code}"></p>
+					                                            </div>
+					                                            <div class="row">
+					                                            	<p>과제명 :</p><p th:text="${p.report_title}"></p>
+					                                            </div>
+					                                            <div class="row">
+					                                            	<p>과제 책임자 :</p><p th:text="${p.user_name_k}"></p>
+					                                            </div>
+					                                        </div>
+					                                        <div class="d-flex justify-content-end">
+											                	<a class="btn btn-xs btn-light btn-rounded" th:href="'/plan/insertResult?plan_id='+${p.plan_id}">조사시작</a>
+											                </div>
+					                                    </div>
+					                                </div>
+				                        		</th:block>
 				                        	</div>
 			                        	</div>
 			                        	<div class="tab-pane" id="content2" role="tabpanel" style="text-decoration: underline;">
-			                        		<p>Card content2</p>
-			                                <p>Card content2</p>
-			                                <p>Card content2</p>
+			                        		<div class="atbd-collapse atbd-collapse-custom">
+				                        		<th:block th:each="p : ${delay_plan}">
+				                        			<div class="atbd-collapse-item">
+					                                    <p class="item-link data_target1" data-toggle="collapse" style="text-decoration: underline;"
+					                                    	th:text="${p.report_title +'(' + p.start_date + ' - ' + p.end_date + ')' }">
+					                                    </p>
+					                                    <div class="collapse atbd-collapse-item__body" style="background-color: #F7F7F8;">
+					                                        <div class="collapse-body-text" style="position: static;">
+					                                            <div class="row">
+					                                            	<p>과제번호 :</p><p th:text="${p.report_code}"></p>
+					                                            </div>
+					                                            <div class="row">
+					                                            	<p>과제명 :</p><p th:text="${p.report_title}"></p>
+					                                            </div>
+					                                            <div class="row">
+					                                            	<p>과제 책임자 :</p><p th:text="${p.user_name_k}"></p>
+					                                            </div>
+					                                        </div>
+					                                        <div class="d-flex justify-content-end">
+											                	<a class="btn btn-xs btn-light btn-rounded" th:href="'/plan/insertResult?plan_id='+${p.plan_id}">조사시작</a>
+											                </div>
+					                                    </div>
+					                                </div>
+				                        		</th:block>
+				                        	</div>
 			                        	</div>
 			                        </div>
 					            </div>
@@ -632,7 +624,21 @@
     <th:block th:include="/../fragments/footer.html"></th:block>
     <!-- 공통 js -->
     <th:block th:include="/../fragments/commonjs.html"></th:block>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
+
+	var current_plan = /*[[${current_plan}]]*/ "null";
+	console.log(current_plan);
+
+	$(document).find(".data_target").each(function(i, item){
+		$(this).attr("data-target", "#current-"+(i+1));
+		$(this).next().attr("id", "current-"+(i+1));
+	});
+	
+	$(document).find(".data_target1").each(function(i, item){
+		$(this).attr("data-target", "#delay-"+(i+1));
+		$(this).next().attr("id", "delay-"+(i+1));
+	});
+
 	//modal show
 	$(".modalBtn").on("click", function(){
 		$("#userModal").modal("show");

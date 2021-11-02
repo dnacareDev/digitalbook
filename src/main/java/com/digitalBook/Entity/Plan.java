@@ -38,4 +38,9 @@ public class Plan {
 	//재배 프로토콜 메소드명
 	private String method_title;			//메소드명
 	
+	//스케줄 사용 컬럼
+	private String start_date;
+	private String end_date;
+	private String user_name_k;				//담당자 명
+	
 }
