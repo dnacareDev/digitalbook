@@ -696,7 +696,8 @@
 	function loadSelectOption(){
 		const contents = document.getElementsByClassName("sangtaeLi")[0],
         parentLi = contents.children;
-  
+		
+		
 	  for(let i=0; i<parentLi.length; i++){
 		  let childeLi = parentLi[i].children[1].children;
 		  
@@ -708,14 +709,12 @@
 		          e.preventDefault();
 		          n=e.currentTarget.idx;
 		          let select_line = childeLi[n].children[1];
-		          
 		          for(let f=0; f<childeLi.length; f++){
-		        	  
 		        	  let display = window.getComputedStyle(childeLi[f].children[1]).display;
 		        	  childeLi[f].children[1].style.display="none";
 		              childeLi[f].children[1].addEventListener("focusout", function(e){
 		            	  if(display === "block"){
-		            		  childeLi[n].children[1].style.display="none";
+		            		  childeLi[f].children[1].style.display="none";
 		            	  }
 		              });
 		          }
@@ -1081,7 +1080,7 @@
 			add_list += '<ul class="clearfix sangtae">';
 			
 			for(var i = 0; i < rowNum; i++){
-				add_list += '<li><a href="#"><img class="sangtae_img" src="../img/icons/green.png" alt="green"></a>';
+				add_list += '<li><a href="javascript:void(0);"><img class="sangtae_img" src="../img/icons/green.png" alt="green"></a>';
 				add_list += '<div class="lines">';
 				add_list += '<select class="select_option">';
 				add_list += '<option value="none">상태선택</option>';
@@ -1107,7 +1106,7 @@
 			for(var i = 0; i < length1; i++){
 				add_list += '<ul class="clearfix sangtae">';
 				for(var j = 0; j < segment_num; j++){
-					add_list += '<li><a href="#"><img class="sangtae_img" src="../img/icons/green.png" alt="green"></a>';
+					add_list += '<li><a href="javascript:void(0);"><img class="sangtae_img" src="../img/icons/green.png" alt="green"></a>';
 					add_list += '<div class="lines">';
 					add_list += '<select class="select_option">';
 					add_list += '<option value="none">상태선택</option>';
@@ -1125,7 +1124,7 @@
 			
 			add_list += '<ul class="clearfix sangtae">';
 			for(var i = 0; i < length2; i++){
-				add_list += '<li><a href="#"><img class="sangtae_img" src="../img/icons/green.png" alt="green"></a>';
+				add_list += '<li><a href="javascript:void(0);"><img class="sangtae_img" src="../img/icons/green.png" alt="green"></a>';
 				add_list += '<div class="lines">';
 				add_list += '<select class="select_option">';
 				add_list += '<option value="none">상태선택</option>';
@@ -1144,7 +1143,19 @@
 			
 			
 		}//end else
-		loadSelectOption();
+		/*loadSelectOption();*/
+		$(".sangtae li").click(function(e){
+			e.preventDefault();
+			$(".sangtae li .lines").css({"display": "none"});
+			$(this).children().eq(1).css({"display": "block"});
+			
+			$(this).children().eq(1).focusout(function(e){
+				$(".sangtae li .lines").css({"display": "none"});
+			});
+		});
+		
+		
+		
 	}//구획정보 확인 그리기
 	
 	//구획정보 상태 선택 이벤트
@@ -1293,7 +1304,7 @@
 	        }
 	    }
 	    //셀렉트박스 오픈 함수 실행
-	    loadSelectOption();
+	    //loadSelectOption();
 	    
 	   /*  for(let i=0; i<parentLi.length; i++){
 	        let childeLi = parentLi[i].children[1].children;
