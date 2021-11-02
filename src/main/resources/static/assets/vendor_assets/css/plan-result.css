@@ -627,6 +627,8 @@ i.bi{
 	width: calc(100vw * (863 / 1920));
     margin-left: 60px;
     position: relative;
+    /* overflow: auto; */
+    
 }
 #section .step .step_inner .content .content-center .content_box > ul > li:nth-child(2n+1){
     margin-left: 0;
@@ -634,10 +636,12 @@ i.bi{
 
 #section .step .step_inner .content .content-center .content_box ul ul{
     display: block;
-    width: 100%;
-    background-color: #F7F7F8;
+    width: 1000px;
+    /* width: max-content; */
+    /* background-color: #F7F7F8; */
+    background-color: white;
     border-radius: 5px;
-    text-align: center;
+    /* text-align: center; */
 }
 #section .step .step_inner .content .content-center .content_box ul ul li{
     display: inline-block;
