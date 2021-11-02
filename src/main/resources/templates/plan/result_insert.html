@@ -1160,8 +1160,8 @@
 	
 	//qr important
 	function createQrcode(){
-		/* var url = window.location.href; */
-		var url = "/plan/insertResult?plan_id="+plan.plan_id;
+		var url = window.location.href;
+		/* var url = "/plan/insertResult?plan_id="+plan.plan_id; */
 		
 		var qrcode = new QRCode(document.getElementById("qrcode"), {
 			width : 100,

@@ -29,8 +29,7 @@ public class HomeController
 		
 		List<Plan> delay_plan = service.selectDelayPlanList(prin.getUser_group(), prin.getUser_id());
 		List<Plan> current_plan = service.selectCurrentPlanList(prin.getUser_group(), prin.getUser_id());
-		System.out.println(delay_plan);
-		System.out.println(current_plan);
+		
 		mv.addObject("delay_plan", delay_plan);
 		mv.addObject("current_plan", current_plan);
 		
