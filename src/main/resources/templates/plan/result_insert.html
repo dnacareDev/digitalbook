@@ -1174,19 +1174,17 @@
 	createQrcode();
 	
 	$("#qrBtn").on("click", function(){
-		html2canvas($("#qrcode canvas")).then(function(canvas){
-			var image = canvas.toDataURL("image/png").replace("image/png");
-			downloadURI(image, "qrcode.png");
-		});
-		
+		downloadURI('qrCode');
 	});
 	
-	function downloadURI(uri, name){
+	function downloadURI(name){
+		var canvas = document.querySelector('#qrcode canvas');
 		var link = document.createElement("a");
 		link.download = name;
-		link.href = uri;
+		link.href = canvas.toDataURL("image/png");
 		document.body.appendChild(link);
 		link.click();
+		link.delete;
 	}
 
 </script>
