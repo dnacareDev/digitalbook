@@ -208,8 +208,8 @@ body button{
 #section #step4 .step_inner .submit button{
 	margin-top: 20px;
 }
-#step5 .table-responsive .table{
-	width:max-content;
+#step5 .table-responsive .table{ /* 10-26수정 */
+	width: 100%;
 }
 span.red{
     color:#FF0101;
@@ -843,4 +843,70 @@ input[type=search]:focus{
 	#chanModal .modal-lg{
 	    max-width: 600px;
 	}
+}
+
+
+.list-group-item{
+	font-size: 12px !important;
+	padding: 2px 10px !important;
+}
+.row{
+	align-items: center;
+}
+.list-group-item input[type="checkbox"]{
+	vertical-align: middle;
+}
+#manureModal .table-responsive{
+	height: auto;
+}
+@media only screen and (max-height: 358px){
+	#manureModal .table-responsive{
+		height: 358px;
+	}
+}
+#manureModal .modal-dialog{
+	height: 90vh;
+}
+#manureModal .modal-content{
+	height: 100%;
+}
+#manureModal .modal-body{
+	height:100%;
+	overflow: auto;
+}
+#manure-form .row:last-child{
+	justify-content: center;
+	padding: 20px 0;
+}
+#manure-form .row:last-child .d-flex{
+	padding-right: 14px;
+}
+#manureModal table thead th, #manureModal table tbody td{
+	vertical-align: middle;
+	padding: 2px 10px;
+}
+#plusManure{
+    border-radius: 50%;
+    border: 2px solid #788DEE;
+    background-color: transparent;
+    padding: 0;
+    width: 38px;
+    height: 38px;
+    color: #788DEE;
+}
+#mnnure_body td .btn-danger{
+	border-radius: 50%;
+    border: 2px solid #ff4d4f;
+    background-color: transparent;
+    padding: 0;
+    width: 28px;
+    height: 28px;
+    color: #ff4d4f;
+}
+#mnnure_body td .btn-danger span.minus{
+	width: 50%;
+    display: block;
+    height: 2px;
+    background-color: #ff4d4f;
+    margin: 0;
 }

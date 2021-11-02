@@ -87,16 +87,15 @@
 		align-items:center;
 	}
 	
-	/*인쇄  css */
-	/* @media print {
-	 .noprint { display : none; }
-	 @page {
-	  size : portrait;
-	  margin: margin: 0;
-	 }
-	 html {
-	  zoom : 35%;
-	 } */
+	.contents .mt-2, .contents .my-2{
+		margin:0 !important;
+		margin-top: 0 !important;
+	}
+	.list-group-item{
+		width: 100%;
+	    padding: 2px1.25rem;
+	    font-size: 14px;
+	}
 </style>
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
@@ -201,7 +200,7 @@
 											<button id="addResearchBtn" class="btn btn-dark mt-2" onclick="InsertPopup();">조사방법 추가</button>
 										</div>
 										<div class="row" style="overflow:auto; height: 456px; border: 1px solid #D9D9D9; border-top: transparent">
-											<div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;" id="research_list">
+											<div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto; width:100%;" id="research_list">
 												
 											</div>
 										</div>
@@ -469,7 +468,24 @@
     <!-- 공통 js -->
     <th:block th:include="/../fragments/commonjs.html"></th:block>
 <script type="text/javascript" th:inline="javascript">
+$(function(){
+	let w =0;
 	
+	$(window).resize(function(e){
+		w = $(window).width();
+		setTimeout(function(){
+			if(w < 1365){
+				$("#addResearchBtn").text("추가");
+				$(".type_1").text("조회");
+			} else {
+				$("#addResearchBtn").text("조사방법 추가");
+				$(".type_1").text("항목조회");
+			}
+		}, 1);
+	});
+	$(window).trigger("resize");
+	
+});
 	var method = /*[[${method}]]*/ "null";
 	
 	var step = /*[[${step}]]*/ "null";
@@ -536,7 +552,7 @@
 				
 				for(var i = 0; i < result.length; i++)
 				{
-					add_list += '<li class="list-group-item step-list" style="width: 325px;">';
+					add_list += '<li class="list-group-item step-list">';
 					add_list += '<input type="checkbox" class="checkbox mr-2" name="chk_research" value="' + result[i].research_id + '">';
 					add_list += '<span>'+ result[i].research_contents + '</span>';
 					add_list += '</li>';
