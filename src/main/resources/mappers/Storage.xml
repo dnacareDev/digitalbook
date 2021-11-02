@@ -16,6 +16,7 @@
 	<select id="SearchStorage" resultType="Storage">
 		SELECT * FROM storage s
 		LEFT JOIN department d ON s.depart_id = d.depart_id
+		ORDER BY storage_id DESC
 		LIMIT #{offset}, #{limit}
 	</select>
 	

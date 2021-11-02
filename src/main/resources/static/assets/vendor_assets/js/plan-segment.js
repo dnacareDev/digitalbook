@@ -6,6 +6,9 @@ var segmentData = [
 ];
 */
 
+// result query
+var selectBoxEl = document.querySelector('#segment_option');
+
 // table query
 var tableWrap = document.querySelector('#copy-step-4');
 var tableEls = document.querySelectorAll('.step4-container .table_content');
@@ -103,6 +106,42 @@ function onClickStepFourWrap(e){
 	}
 }
 
+function activeList(){
+	for(var z = 0; z < segmentEls.length; z++){	
+		if(segmentLi[z].classList.contains('active') && z !== thisIndex){
+			segmentLi[z].classList.remove('active');
+		}
+		if(tableEls[z].classList.contains('active') && z !== thisIndex){
+			tableEls[z].classList.remove('active');
+		}
+		if(z === thisIndex){		
+			segmentLi[thisIndex].style.zIndex = segmentLi.length - 1;
+		}else{
+			segmentLi[z].style.zIndex = z;
+		}
+	}
+	segmentLi[thisIndex].classList.add('active');
+	tableEls[thisIndex].classList.add('active');
+	
+	if(selectBoxEl !== undefined && selectBoxEl !== null){
+		selectBoxEl.selectedIndex = thisIndex;
+	}
+}
+
+function onClickTableEls(e){
+	var target = e.currentTarget;
+	thisIndex = tableEls.indexOf(target);
+	
+	activeList();
+	
+	var segmentLiTop = segmentLi[thisIndex].offsetTop - 64;
+	var segmentLiLeft = segmentLi[thisIndex].offsetLeft - 64;
+	
+	thisTransformGet();
+	$('.background-wrap').stop().animate( { scrollTop : thisY } );
+	$('.background-wrap').stop().animate( { scrollLeft : thisX } );
+}
+
 function thisTransformGet(){
 	/*클릭한 개체의 transform 정보를 받아옵니다.*/
 	var liTransform = segmentLi[thisIndex].style.transform;
@@ -134,25 +173,9 @@ function onElDown(e){
 	var target = e.currentTarget;
 	thisIndex = segmentEls.indexOf(target);
 	
-	for(var z = 0; z < segmentEls.length; z++){	
-		if(segmentLi[z].classList.contains('active') && z !== thisIndex){
-			segmentLi[z].classList.remove('active');
-		}
-		if(tableEls[z].classList.contains('active') && z !== thisIndex){
-			tableEls[z].classList.remove('active');
-		}
-		if(z === thisIndex){		
-			segmentLi[thisIndex].style.zIndex = segmentLi.length - 1;
-		}else{
-			segmentLi[z].style.zIndex = z;
-		}
-	}
-	segmentLi[thisIndex].classList.add('active');
-	tableEls[thisIndex].classList.add('active');
-	
+	activeList();
 	
 	var tableElsTop = tableEls[thisIndex].offsetTop - 64;
-	console.log(tableElsTop);
 	$('#copy-step-4').stop().animate( { scrollTop : tableElsTop } );
 	$('#segment_list').stop().animate( { scrollTop : tableElsTop } );
 	
@@ -248,6 +271,9 @@ function renderSegment(data){
 function segmentSetting(data){
 	var dataGet = data;
 	// 2차 : query , array 반환, addEvent
+	tableEls = document.querySelectorAll('.step4-container .table_content');
+	tableEls = Array.prototype.slice.call(tableEls);
+	
 	segmentLi = document.querySelectorAll('#step4-segment li');
 	segmentEls = document.querySelectorAll('#step4-segment li .segment');
 	segmentMove = document.querySelectorAll('#step4-segment li .arrowMove');
@@ -318,6 +344,10 @@ function segmentSetting(data){
 		segmentMove[t].addEventListener('touchstart', onMoveDown);
 		
 		segmentRotate[t].addEventListener('click', onRotateDown);
+		
+		if(tableEls !== undefined){
+			tableEls[t].addEventListener('click', onClickTableEls);
+		}
 	}
 }
 

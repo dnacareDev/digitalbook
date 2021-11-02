@@ -29,6 +29,16 @@
 			<div class="container-fluid">
                 
     <div class="wrapper clearfix">
+    	<div class="row"> <!-- section 위에 -->
+	        <div class="col-lg-12">
+	        	<div class="breadcrumb-main">
+	        		<h4 class="text-capitalize breadcrumb-title">계획수립</h4>
+	        		<span class="ml-20 mt-1">재배관리-계획수립</span>
+	        	</div>
+	        	<div id="qrcode" style="display: none;"></div>
+	        	<button type="button" id="qrBtn">QR출력</button>
+	        </div>
+       </div>
         <section id="section">
             <div class="step" id="step1">
                 <div class="step_inner clearfix" id="step1_inner">
@@ -36,7 +46,7 @@
                         <h3>구획정보<span></span></h3>
                     </div>
                     <div class="content clearfix">
-                        <div class="left_content step4-container" id="segment_list" style="height:287px !important; overflow-y:auto !important;">
+                        <div class="left_content step4-container" id="segment_list" style="height:500px !important; overflow-y:auto !important;">
                            
                         </div>
                         <div class="right_content">
@@ -48,67 +58,27 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="bottom_right-content">
-                        	<span>개채수<span class="red">*</span></span>
-                            <input type="text" value="0">
-                            <button>확인</button>
+                        <div class="bottom_right-content clearfix"> <!-- 2021-11-01 추가  -->
+                        	<div class="left_type">
+                        		<span>개채수<span class="red">*</span></span>
+	                            <input type="text" value="3" id="rowNum">
+	                            <button type="button" onclick="addRow()">확인</button>
+                        	</div>
+                        	<div class="right_type">
+                        		<div class="right_type_cover">
+                        			<select id="segment_option">
+                        				
+	                        		</select>
+	                        		<button type="button">확인</button>
+                        		</div>
+                        	</div>
                         </div>
                         <div class="bottom_content">
-                            <!-- <span class="bottom-span"><a href="">구획정보확인</a></span> -->
-                            <table id="step1_table">
-                                <thead>
-                                    <tr>
-                                        <th>개체</th>
-                                        <th>초장</th>
-                                        <th>협수</th>
-                                        <th>분지수</th>
-                                        <th>역병</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>58
-                                            <div class="cam">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-fill" viewBox="0 0 16 16">
-                                                <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
-                                                <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/>
-                                            </svg>
-                                            </div>
-                                        </td>
-                                        <td>-
-                                            <div class="cam">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-fill" viewBox="0 0 16 16">
-                                                <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
-                                                <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/>
-                                                </svg>
-                                            </div>
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>58
-                                            <div class="cam">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-fill" viewBox="0 0 16 16">
-                                                <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
-                                                <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/>
-                                            </svg>
-                                            </div>
-                                        </td>
-                                        <td>-
-                                            <div class="cam">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-fill" viewBox="0 0 16 16">
-                                                <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
-                                                <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/>
-                                                </svg>
-                                            </div>
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
+                            <div class="title clearfix" style="padding: 20px 0;">
+		                        <h3 style="float: left;">결과입력 : A1-B1-C1-1</h3>
+		                    </div>
+                            <table id="step1_table" style="width: max-content;">
+                                
                             </table>
                         </div>
                         <div class="submit_btn" style="padding: 10px">
@@ -125,10 +95,17 @@
                     <div class="content clearfix">
                         <div class="content-center">
                             <div class="content_box">
+	                            <div class="bottom_right-content clearfix"> <!-- 2021-11-01 추가  -->
+			                      	<div class="left_type" style="width:60%;">
+			                      		<span>기준개채수<span class="red">*</span></span>
+			                           	<input type="text" id="segment_num" value="10">
+			                           	<button type="button" onclick="checkSegment();">확인</button>
+			                      	</div>
+			                    </div>
                                 <ul class="sangtaeLi clearfix">
-                                    <li>
+                                    <li id="sangtae_list">
                                         <span class="sub_title-content regular_text"><i class="bi bi-arrows-move"></i>A1-B1-C1-1</span>
-                                        <ul class="clearfix sangtae">
+                                        <!-- <ul class="clearfix sangtae">
                                             <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
                                                 <div class="lines">
                                                     <select>
@@ -165,456 +142,7 @@
                                                     </select>
                                                 </div>
                                             </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <span class="sub_title-content regular_text"><i class="bi bi-arrows-move"></i>A1-B1-C2-1</span>
-                                        <ul class="clearfix sangtae">
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li class="red"><a href="#"><img src="../img/icons/red.png" alt="red"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                        </ul>
+                                        </ul> -->
                                     </li>
                                 </ul>
                             </div>
@@ -698,8 +226,42 @@
                 </div>
             </div>
         </section>
-    </div>
+        <div class="row mt-4">
+			<div class="col-lg-12">
+				<div class="card card-default">
+					<div class="row ml-3 mt-3">
+						<span class="color-dark align-center" style="font-size: 20px;">변경 이력</span>
+					</div>
+					<div class="card-body" style="height: 325px; overflow-y: auto;">
+						<div class="row">
+							<div class="col-lg-12" style="padding-left: 15px;">
+								<ul>
+									<th:block th:each="r : ${record}">
+										<li class="mt-2">
+											<span class="avatar avatar-success avatar-md avatar-circle" style="float: left;">
+                                                   <span class="avatar-icon" data-feather="check"></span>
+                                               </span>
+											<div>
+												<span class="font-weight-bold mb-0">생육조사계획 : </span>
+												<span class="font-weight-bold mb-0" th:text="${r.record_type_code}"></span>
+												<th:block th:switch="${r.record_status}">
+													<span th:case="0" class="font-weight-bold mb-0">승인요청</span>
+													<span th:case="1" class="font-weight-bold mb-0">수정요청</span>
+													<span th:case="2" class="font-weight-bold mb-0">승인</span>
+												</th:block>
+											</div>
+											<small th:text="${r.record_date}"></small>
+										</li>
+									</th:block>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
+		</div>
+    </div>
+</div>
 			
 		</div>
         <div class="modal-basic modal fade show" id="chanModal2" tabindex="-1" role="dialog" aria-hidden="true" style="display: none">
@@ -759,6 +321,9 @@
     <th:block th:include="/../fragments/commonjs.html"></th:block>
     <script type="text/javascript" src="/../assets/vendor_assets/js/plan-segment.js"></script>
     <script type="text/javascript" src="/../assets/vendor_assets/js/plan-render.js"></script>
+    <script type="text/javascript" src="/../assets/vendor_assets/js/qrcode.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/eligrey/FileSaver.js/5ed507ef8aa53d8ecfea96d96bc7214cd2476fd2/FileSaver.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.js"></script>
     
 <script type="text/javascript" th:inline="javascript">
 
@@ -784,8 +349,6 @@
 	
 	let factorArray = new Array();
 	let resultArray = new Array();
-	
-	console.log(factor);
 	
 	//구획정보 기존 데이터 만들기 함수
 	async function loadPlan(){
@@ -819,10 +382,6 @@
 				await loadEtcGrid(etc_ids, idx);
 			}
 		}//end for
-		
-		console.log(data1);
-		console.log(data2);
-		console.log(data3);
 		
 		//구획정보 그리기 함수 실행
 		gridFactors();
@@ -1133,6 +692,37 @@
 	//기존 데이터 만드는 함수 실행
 	loadPlan();
 	
+	//구획정보확인 셀렉트 박스 오픈 함수
+	function loadSelectOption(){
+		const contents = document.getElementsByClassName("sangtaeLi")[0],
+        parentLi = contents.children;
+  
+	  for(let i=0; i<parentLi.length; i++){
+		  let childeLi = parentLi[i].children[1].children;
+		  
+		  for(let k=0; k<childeLi.length; k++){
+		      childeLi[k].idx = k;
+		      
+		      
+		      childeLi[k].addEventListener("click", function(e){
+		          e.preventDefault();
+		          n=e.currentTarget.idx;
+		          let select_line = childeLi[n].children[1];
+		          
+		          for(let f=0; f<childeLi.length; f++){
+		        	  let display = window.getComputedStyle(childeLi[f].children[1]).display;
+		              childeLi[f].addEventListener("focusout", function(e){
+		            	  if(display === "block"){
+		            		  childeLi[n].children[1].style.display="none";
+		            	  }
+		              });
+		          }
+		          select_line.style.display="block";
+		      });
+		  }
+		}
+	}
+	
 	//구획정보 테이블 그리기
 	function gridFactors(){
 		
@@ -1336,13 +926,266 @@
 			
 		}
 		
-		
-		
 		//이곳에서 데이터 받아와야함 : important
 		var getDataArr = [...resultArray];
 		getDataResult(getDataArr);
 		
 	}//end gridFactors
+	
+	//구획정보 select 박스 그리기
+	function gridSegmentSelect(){
+		//select important
+		segment_option = $("#segment_option");
+		
+		var add_list = "";
+		
+		for(var i = 0; i < resultArray.length; i++){
+			add_list += '<option value="' + i + '">'+resultArray[i].id+'('+resultArray[i].type+'/'+resultArray[i].repeat+')'+'</option>';
+		}
+		
+		segment_option.append(add_list);
+		
+	}//end 구획정보  select 박스 그리기
+	
+	gridSegmentSelect();
+	selectBoxEl = document.querySelector('#segment_option');
+	console.log(selectBoxEl);
+	
+	//결과입력 테이블 그리기
+	function methodTableGrid(){
+		console.log(method);
+		let step1_table = $("#step1_table");
+		
+		var length = $("#rowNum").val();
+		
+		var add_list = "";
+		
+		add_list += '<thead>';
+		add_list += '<tr>';
+		add_list += '<th>개체</th>';
+		//method important
+		for(var i = 0; i < method.length; i++){
+			add_list += '<th>'+method[i].method_title+'</th>';
+		}
+		
+		add_list += '<tr>';
+		add_list += '</thead>';
+		
+		add_list += '<tbody class="result_list">';
+		
+		for(var i = 0; i < length; i++){
+			add_list += '<tr class="result_tr">';
+			add_list += '<td class="td_num">'+(i+1)+'</td>';
+			for(var j = 0; j < method.length; j++){
+				add_list += '<td><input type="text" style="width: 90%;">';
+				add_list += '<div class="cam">';
+				add_list += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-fill" viewBox="0 0 16 16">';
+				add_list += '<path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>';
+				add_list += '<path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/>';
+				add_list += '</svg>';
+				add_list += '</div>';
+				add_list == '</td>';
+			}
+			add_list += '</tr>';
+		}
+		
+		add_list += '</tbody>';
+		
+		step1_table.append(add_list);
+		
+		checkSegment();
+		
+	}//end 결과입력 테이블 그리기
+	
+	//결과입력 테이블 그리기 실행 함수
+	methodTableGrid();
+	
+	//개체수 그리기 함수
+	function addRow(){
+		
+		let result_list = $(document).find(".result_list");
+		
+		//현재 결과입력 개체 row 길이
+		let result_tr_length = $(document).find(".result_list").children().length;
+		
+		//입력한 개체수
+		var rowNum = $("#rowNum").val();
+		
+		//현재 결과입력 개체의 마지막 번호
+		let td_num = $(document).find(".result_list").children(":last").find(".td_num").text();
+		
+		var add_list = "";
+		
+		if(rowNum > result_tr_length){
+			
+			var length = rowNum - result_tr_length;
+			var length1 = method.length;
+			
+			for(var i = 0; i < length; i++){
+				td_num++;
+				add_list += '<tr class="result_tr">';
+				add_list += '<td class="td_num">'+td_num+'</td>';
+				for(var j = 0; j < length1; j++){
+					add_list += '<td><input type="text" style="width: 90%;">';
+					add_list += '<div class="cam">';
+					add_list += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-fill" viewBox="0 0 16 16">';
+					add_list += '<path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>';
+					add_list += '<path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/>';
+					add_list += '</svg>';
+					add_list += '</div>';
+					add_list += '</td>';
+				}
+				add_list += '</tr>';
+			}
+			
+			result_list.append(add_list);
+			
+			checkSegment();
+			
+		}else if(rowNum < result_tr_length){
+			
+			$(document).find(".result_tr").each(function(i, item){
+				if(i > (rowNum-1)){
+					$(this).remove();
+				}
+			});
+			
+			
+			checkSegment();
+		}//end else if
+		
+		
+		
+	}//end 개체수 그리기 함수
+	
+	//구획정보 확인 그리기
+	function checkSegment(){
+		
+		//붙여줄 부모 태그
+		let sangtae_list = $("#sangtae_list");
+		$(".sangtae").remove();
+		
+		//입력한 개체수
+		var rowNum = parseInt($("#rowNum").val());
+		
+		//기준 개체수
+		var segment_num = parseInt($("#segment_num").val());
+		
+		
+		var add_list = "";
+		
+		if(rowNum <= segment_num){
+			
+			add_list += '<ul class="clearfix sangtae">';
+			
+			for(var i = 0; i < rowNum; i++){
+				add_list += '<li><a href="#"><img class="sangtae_img" src="../img/icons/green.png" alt="green"></a>';
+				add_list += '<div class="lines">';
+				add_list += '<select class="select_option">';
+				add_list += '<option value="none">상태선택</option>';
+				add_list += '<option class="s_red" value="red">상태1</option>';
+				add_list += '<option class="s_blue" value="blue">상태2</option>';
+				add_list += '<option class="s_yellow" value="yellow">상태3</option>';
+				add_list += '<option class="s_black" value="black">상태4</option>';
+				add_list += '<option class="s_purple" value="purple">상태5</option>';
+				add_list += '</select>';
+				add_list += '</div>';
+				add_list += '</li>';
+				
+			}
+			add_list += '</ul>';
+			
+			sangtae_list.append(add_list);
+			
+		}else {
+			
+			var length1 = parseInt(rowNum / segment_num);
+			var length2 = parseInt(rowNum % segment_num);
+			
+			for(var i = 0; i < length1; i++){
+				add_list += '<ul class="clearfix sangtae">';
+				for(var j = 0; j < segment_num; j++){
+					add_list += '<li><a href="#"><img class="sangtae_img" src="../img/icons/green.png" alt="green"></a>';
+					add_list += '<div class="lines">';
+					add_list += '<select class="select_option">';
+					add_list += '<option value="none">상태선택</option>';
+					add_list += '<option class="s_red" value="red">상태1</option>';
+					add_list += '<option class="s_blue" value="blue">상태2</option>';
+					add_list += '<option class="s_yellow" value="yellow">상태3</option>';
+					add_list += '<option class="s_black" value="black">상태4</option>';
+					add_list += '<option class="s_purple" value="purple">상태5</option>';
+					add_list += '</select>';
+					add_list += '</div>';
+					add_list += '</li>';
+				}
+				add_list += '</ul>';
+			}
+			
+			add_list += '<ul class="clearfix sangtae">';
+			for(var i = 0; i < length2; i++){
+				add_list += '<li><a href="#"><img class="sangtae_img" src="../img/icons/green.png" alt="green"></a>';
+				add_list += '<div class="lines">';
+				add_list += '<select class="select_option">';
+				add_list += '<option value="none">상태선택</option>';
+				add_list += '<option class="s_red" value="red">상태1</option>';
+				add_list += '<option class="s_blue" value="blue">상태2</option>';
+				add_list += '<option class="s_yellow" value="yellow">상태3</option>';
+				add_list += '<option class="s_black" value="black">상태4</option>';
+				add_list += '<option class="s_purple" value="purple">상태5</option>';
+				add_list += '</select>';
+				add_list += '</div>';
+				add_list += '</li>';
+			}
+			add_list += '</ul>';
+			
+			sangtae_list.append(add_list);
+			
+			
+		}//end else
+		loadSelectOption();
+	}//구획정보 확인 그리기
+	
+	//구획정보 상태 선택 이벤트
+	$(document).on("change", ".select_option", function(){
+		
+		var color = $(this).find("option:selected").val();
+		
+		var li = $(this).parent().parent();
+		if(color == "red"){
+			li.addClass("red");
+			$(this).parent().parent().find(".sangtae_img").attr("src", "../img/icons/red.png");
+		}
+		
+	});
+	
+	//qr important
+	function createQrcode(){
+		var url = window.location.href;
+		/* var url = "/plan/insertResult?plan_id="+plan.plan_id; */
+		
+		var qrcode = new QRCode(document.getElementById("qrcode"), {
+			width : 100,
+			height : 100
+		});
+		
+		qrcode.makeCode(url);
+	}
+	
+	createQrcode();
+	
+	$("#qrBtn").on("click", function(){
+		downloadURI('qrCode');
+	});
+	
+	function downloadURI(name){
+		var canvas = document.querySelector('#qrcode canvas');
+		var link = document.createElement("a");
+		link.download = name;
+		link.href = canvas.toDataURL("image/png");
+		document.body.appendChild(link);
+		link.click();
+		link.delete;
+	}
 
 </script>
      
@@ -1430,33 +1273,8 @@
 	            });
 	        }
 	    }
-	    const contents = document.getElementsByClassName("sangtaeLi")[0],
-	          parentLi = contents.children;
-	    
-	    for(let i=0; i<parentLi.length; i++){
-	  	  let childeLi = parentLi[i].children[1].children;
-	  	  
-	  	  for(let k=0; k<childeLi.length; k++){
-	  	      childeLi[k].idx = k;
-	  	      
-	  	      
-	  	      childeLi[k].addEventListener("click", function(e){
-	  	          e.preventDefault();
-	  	          n=e.currentTarget.idx;
-	  	          let select_line = childeLi[n].children[1];
-	  	          
-	  	          for(let f=0; f<childeLi.length; f++){
-	  	        	  let display = window.getComputedStyle(childeLi[f].children[1]).display;
-	  	              childeLi[f].addEventListener("focusout", function(e){
-	  	            	  if(display === "block"){
-	  	            		  childeLi[n].children[1].style.display="none";
-	  	            	  }
-	  	              });
-	  	          }
-	  	          select_line.style.display="block";
-	  	      });
-	  	  }
-	  	}
+	    //셀렉트박스 오픈 함수 실행
+	    loadSelectOption();
 	    
 	   /*  for(let i=0; i<parentLi.length; i++){
 	        let childeLi = parentLi[i].children[1].children;
@@ -1500,6 +1318,8 @@
 	//        });
 	//    }
 	});
+	
+	
 </script>
      
 </body>    

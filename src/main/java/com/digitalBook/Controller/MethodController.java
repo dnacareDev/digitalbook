@@ -131,13 +131,14 @@ public class MethodController
 		
 		Calendar cal = Calendar.getInstance();
 		
-		String last_research_code = last_research.getResearch_code();
+		
 		String code1 = "ac-";
 		String code2 = String.valueOf(cal.get(Calendar.YEAR))+"-";
 		
-		if(last_research_code == null || last_research_code.equals("")) {
+		if(last_research == null) {
 			research.setResearch_code(code1+code2+"00001");
 		}else {
+			String last_research_code = last_research.getResearch_code();
 			String[] strArr = last_research_code.split("-");
 			int code3 = Integer.parseInt(strArr[2]) + 1;
 			research.setResearch_code(code1+code2+String.format("%05d", code3));

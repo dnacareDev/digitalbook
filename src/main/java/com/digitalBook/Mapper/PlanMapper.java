@@ -15,6 +15,7 @@ import com.digitalBook.Entity.Record;
 import com.digitalBook.Entity.Report;
 import com.digitalBook.Entity.Schedule;
 import com.digitalBook.Entity.Seed;
+import com.digitalBook.Entity.Storage;
 import com.digitalBook.Entity.User;
 
 @Mapper
@@ -98,5 +99,14 @@ public interface PlanMapper {
 	
 	//담당자 삭제
 	int deleteSchedule(int sch_id);
+	
+	//포장 등록
+	int InsertStorage(Storage storage);
+	
+	//장소 상태 변경
+	int updateStorageStatus(int storage_id);
+	
+	//plan method 가져오기
+	List<Method> selectPlanMethodList(int[] arr);
 	
 }

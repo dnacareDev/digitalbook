@@ -573,6 +573,7 @@ input[type="text"]{
 #step4 .table_content{
     background-color: #F6FFF2;
     border-bottom: 1px solid #E6E9F1;
+    cursor:pointer;
 }
 .pointers{
     cursor: pointer;
