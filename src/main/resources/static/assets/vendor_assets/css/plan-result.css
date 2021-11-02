@@ -170,6 +170,7 @@ body button{
 #step1 table tbody tr{
     background-color: #F6FFF2;
     border-bottom: 1px solid #E6E9F1;
+    cursor:pointer;
    
 }
 #step1 table tbody td {

@@ -875,7 +875,7 @@
 		var add_list = "";
 		
 		for(var i = 0; i < resultArray.length; i++){
-			add_list += '<option>'+resultArray[i].id+'('+resultArray[i].type+'/'+resultArray[i].repeat+')'+'</option>';
+			add_list += '<option value="' + i + '">'+resultArray[i].id+'('+resultArray[i].type+'/'+resultArray[i].repeat+')'+'</option>';
 		}
 		
 		segment_option.append(add_list);
@@ -883,6 +883,8 @@
 	}//end 구획정보  select 박스 그리기
 	
 	gridSegmentSelect();
+	selectBoxEl = document.querySelector('#segment_option');
+	console.log(selectBoxEl);
 	
 	//결과입력 테이블 그리기
 	function methodTableGrid(){
