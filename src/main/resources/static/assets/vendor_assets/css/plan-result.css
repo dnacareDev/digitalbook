@@ -453,7 +453,7 @@ body button{
 	color: red;
 }
 #section .step .step_inner .content .bottom_right-content span.blue{ /* 추가 2021-11-01 */
-	color: blue;
+	color: #A0D3FF;
 }
 #section .step .step_inner .content .bottom_right-content span.yellow{ /* 추가 2021-11-01 */
 	color: yellow;
@@ -462,7 +462,7 @@ body button{
 	color: black;
 }
 #section .step .step_inner .content .bottom_right-content span.purple{ /* 추가 2021-11-01 */
-	color: purple;
+	color: #AAB8F5;
 }
 #section .step .step_inner .content .bottom_right-content input[type='text']{ /* 추가 2021-11-01 */
 	float:left;
@@ -670,7 +670,18 @@ i.bi{
     right: -150px;
     top: -10px;
 }
-
+#section .step .step_inner .content .content-center .content_box ul ul li.blue{ /* 추가 2021-11-01 */
+	border: 2px solid #A0D3FF;
+}
+#section .step .step_inner .content .content-center .content_box ul ul li.yellow{ /* 추가 2021-11-01 */
+	border: 2px solid yellow;
+}
+#section .step .step_inner .content .content-center .content_box ul ul li.black{ /* 추가 2021-11-01 */
+	border: 2px solid black;
+}
+#section .step .step_inner .content .content-center .content_box ul ul li.purple{ /* 추가 2021-11-01 */
+	border: 2px solid #AAB8F5;
+}
 
 
 
