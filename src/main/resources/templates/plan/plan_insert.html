@@ -872,7 +872,7 @@
 		        					<div class="col-sm-2 d-flex aling-items-center">
 		                            	<label class="color-dark align-center">면적(m2)<span style="color: red;">*</span></label>
 		                            </div>
-		                            <div class="col-sm-5">
+		                            <div class="col-sm-10">
 		                                <input type="text" class="form-control b-light" id="manure_area" style="width: 100%;">
 		                            </div>
 		                    	</div>
@@ -880,7 +880,7 @@
 		        					<div class="col-sm-2 d-flex aling-items-center">
 		                            	<label for="method_input" class="color-dark align-center">비료 성분<span style="color: red;">*</span></label>
 		                            </div>
-		                            <div class="col-sm-2">
+		                            <div class="col-sm-5">
 		                                <select class="form-control b-light" id="fert_1">
 			                                <option th:value=0 disabled="disabled" selected="selected" hidden="hidden">비료성분 선택</option>
 			                                <th:block th:each="fert : ${fert}">
@@ -888,7 +888,7 @@
 			                                </th:block>
 		                                </select>
 		                            </div>
-		                            <div class="col-sm-2">
+		                            <div class="col-sm-5">
 		                            	<select class="form-control b-light" id="fert_2">
 			                                <option value="">비료종류 선택</option>
 		                                </select>
@@ -898,7 +898,7 @@
 		        					<div class="col-sm-2 d-flex aling-items-center">
 		                            	<label class="color-dark align-center">시비량(kg/10a)</label>
 		                            </div>
-		                            <div class="col-sm-5">
+		                            <div class="col-sm-10">
 		                                <input type="text" class="form-control b-light" id="manure_amount" placeholder="시비량(kg/10a)" style="width: 100%;">
 		                            </div>
 		                    	</div>
@@ -906,7 +906,7 @@
 		        					<div class="col-sm-2 d-flex aling-items-center">
 		                            	<label class="color-dark align-center">성분량(%)</label>
 		                            </div>
-		                            <div class="col-sm-5">
+		                            <div class="col-sm-10">
 		                                <input type="text" class="form-control b-light" id="manure_percent" placeholder="성분량(%)" style="width: 100%;">
 		                            </div>
 		                    	</div>
@@ -914,13 +914,13 @@
 		        					<div class="col-sm-2 d-flex aling-items-center">
 		                            	<label class="color-dark align-center">값(kg)</label>
 		                            </div>
-		                            <div class="col-sm-5">
+		                            <div class="col-sm-10">
 		                                <input type="text" class="form-control b-light" id="manure_result" placeholder="값(kg)" style="width: 100%;" readonly="readonly">
 		                            </div>
 		                    	</div>
 		            			<div class="row">
 		            				<div class="d-flex justify-content-start">
-						                <button type="button" onclick="PlusManure();" id="plusManure" style="width: 70px; height: 30px; font-size: small;">추가</button>
+						                <button type="button" onclick="PlusManure();" id="plusManure"><span data-feather="plus"></span></button> <!-- style 삭제 span 추가 11-02 수정 -->
 						            </div>
 					            </div>
 		            		</div>
@@ -1662,7 +1662,7 @@
 				text += $(this).find(".plants_name").text()+',';
 			}
 		});
-		console.log(index);
+		
 		if(index == 1){
 			data1.type = type;
 			data1.content = content;
@@ -1839,7 +1839,7 @@
 						str_inner1 += '<td class="manure_amount">'+manureArray1[i].manure_amount+'</td>';
 						str_inner1 += '<td class="manure_percent">'+manureArray1[i].manure_percent+'</td>';
 						str_inner1 += '<td class="manure_result">'+manureArray1[i].manure_result+'</td>';
-						str_inner1 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);">삭제</button></td>';
+						str_inner1 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
 						str_inner1 += '</tr>';
 					}else if(manureArray1[i].manure_level == 2){
 						str_inner2 += '<tr class="manure_tr">';
@@ -1848,7 +1848,7 @@
 						str_inner2 += '<td class="manure_amount">'+manureArray1[i].manure_amount+'</td>';
 						str_inner2 += '<td class="manure_percent">'+manureArray1[i].manure_percent+'</td>';
 						str_inner2 += '<td class="manure_result">'+manureArray1[i].manure_result+'</td>';
-						str_inner2 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);">삭제</button></td>';
+						str_inner2 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
 						str_inner2 += '</tr>';
 					}else if(manureArray1[i].manure_level == 3){
 						str_inner3 += '<tr class="manure_tr">';
@@ -1857,7 +1857,7 @@
 						str_inner3 += '<td class="manure_amount">'+manureArray1[i].manure_amount+'</td>';
 						str_inner3 += '<td class="manure_percent">'+manureArray1[i].manure_percent+'</td>';
 						str_inner3 += '<td class="manure_result">'+manureArray1[i].manure_result+'</td>';
-						str_inner3 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);">삭제</button></td>';
+						str_inner3 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
 						str_inner3 += '</tr>';
 					}
 				}//end for
@@ -1872,7 +1872,7 @@
 				//수준 배열 중복 제거
 				var check_level_array = check_level.slice(0, -1).split(",");
 				var array_set = Array.from(new Set(check_level_array));
-				console.log(array_set);
+				
 				//수준 배열만큼 실제 manure 내용 그려주기
 				for(var i = 0; i < array_set.length; i++){
 					if(array_set[i] == 1){
@@ -1963,7 +1963,7 @@
 						str_inner1 += '<td class="manure_amount">'+manureArray2[i].manure_amount+'</td>';
 						str_inner1 += '<td class="manure_percent">'+manureArray2[i].manure_percent+'</td>';
 						str_inner1 += '<td class="manure_result">'+manureArray2[i].manure_result+'</td>';
-						str_inner1 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);">삭제</button></td>';
+						str_inner1 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
 						str_inner1 += '</tr>';
 					}else if(manureArray2[i].manure_level == 2){
 						str_inner2 += '<tr class="manure_tr">';
@@ -1972,7 +1972,7 @@
 						str_inner2 += '<td class="manure_amount">'+manureArray2[i].manure_amount+'</td>';
 						str_inner2 += '<td class="manure_percent">'+manureArray2[i].manure_percent+'</td>';
 						str_inner2 += '<td class="manure_result">'+manureArray2[i].manure_result+'</td>';
-						str_inner2 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);">삭제</button></td>';
+						str_inner2 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
 						str_inner2 += '</tr>';
 					}else if(manureArray2[i].manure_level == 3){
 						str_inner3 += '<tr class="manure_tr">';
@@ -1981,7 +1981,7 @@
 						str_inner3 += '<td class="manure_amount">'+manureArray2[i].manure_amount+'</td>';
 						str_inner3 += '<td class="manure_percent">'+manureArray2[i].manure_percent+'</td>';
 						str_inner3 += '<td class="manure_result">'+manureArray2[i].manure_result+'</td>';
-						str_inner3 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);">삭제</button></td>';
+						str_inner3 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
 						str_inner3 += '</tr>';
 					}
 				}//end for
@@ -1996,7 +1996,7 @@
 				//수준 배열 중복 제거
 				var check_level_array = check_level.slice(0, -1).split(",");
 				var array_set = Array.from(new Set(check_level_array));
-				console.log(array_set);
+				
 				//수준 배열만큼 실제 manure 내용 그려주기
 				for(var i = 0; i < array_set.length; i++){
 					if(array_set[i] == 1){
@@ -2087,7 +2087,7 @@
 						str_inner1 += '<td class="manure_amount">'+manureArray3[i].manure_amount+'</td>';
 						str_inner1 += '<td class="manure_percent">'+manureArray3[i].manure_percent+'</td>';
 						str_inner1 += '<td class="manure_result">'+manureArray3[i].manure_result+'</td>';
-						str_inner1 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);">삭제</button></td>';
+						str_inner1 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
 						str_inner1 += '</tr>';
 					}else if(manureArray3[i].manure_level == 2){
 						str_inner2 += '<tr class="manure_tr">';
@@ -2096,7 +2096,7 @@
 						str_inner2 += '<td class="manure_amount">'+manureArray3[i].manure_amount+'</td>';
 						str_inner2 += '<td class="manure_percent">'+manureArray3[i].manure_percent+'</td>';
 						str_inner2 += '<td class="manure_result">'+manureArray3[i].manure_result+'</td>';
-						str_inner2 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);">삭제</button></td>';
+						str_inner2 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
 						str_inner2 += '</tr>';
 					}else if(manureArray3[i].manure_level == 3){
 						str_inner3 += '<tr class="manure_tr">';
@@ -2105,7 +2105,7 @@
 						str_inner3 += '<td class="manure_amount">'+manureArray3[i].manure_amount+'</td>';
 						str_inner3 += '<td class="manure_percent">'+manureArray3[i].manure_percent+'</td>';
 						str_inner3 += '<td class="manure_result">'+manureArray3[i].manure_result+'</td>';
-						str_inner3 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);">삭제</button></td>';
+						str_inner3 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
 						str_inner3 += '</tr>';
 					}
 				}//end for
@@ -2301,7 +2301,7 @@
 		add_list += '<td class="manure_amount">'+manure_amount+'</td>';
 		add_list += '<td class="manure_percent">'+manure_percent+'</td>';
 		add_list += '<td class="manure_result">'+manure_result+'</td>';
-		add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);">삭제</button></td>';
+		add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
 		add_list += '</tr>';
 		
 		body.append(add_list);
@@ -2361,7 +2361,7 @@
 		var level = "";
 		
 		var length1 = $(document).find(".copy-form-standard").length;
-		console.log(length);
+		
 		$(document).find(".copy-form-standard").each(function(i, item){
 			
 			content += '수준 ' + (i+1);
@@ -2916,13 +2916,13 @@
 		start : function(event, ui){
 			var index = ui.item.index();
 			startIndex = index;
-			console.log(resultArray[startIndex]);
+			
 		},
 		stop : function(event, ui){
 			var index = ui.item.index();
 			endIndex = index;
-			console.log(resultArray[endIndex]);
-			console.log(resultArray);
+			
+			
 			reorder();
 			sortData(event, ui);
 		}
@@ -2940,7 +2940,7 @@
 	
 	//번호 재입력 //numbering
 	function reorder(){
-		console.log("reorder");
+		
 		$(document).find(".step4-container .table_content").each(function(i, item){
 			$(this).find(".table_num").text((i+1));
 		});
@@ -3322,7 +3322,7 @@
 			dataArray.push(inputdata);
 		}
 		if(Object.keys(data3).length != 0){
-			console.log(data3.type);
+			
 			if(data3.type == "시험재료"){
 				inputdata = {
 						"plan_id" : plan_id,
@@ -3415,7 +3415,7 @@
 			
 			dataArray.push(inputdata);
 		}
-		console.log(dataArray);
+		
 		
 		insertFactors(dataArray);
 	}//end 시험구 요인 등록
@@ -3535,7 +3535,7 @@
 			data : data,
 			success : function(result)
 			{
-				console.log(result);
+				
 				var storage_list = $("#storage_list");
 				var add_list = "";
 				
