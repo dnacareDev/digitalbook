@@ -1488,7 +1488,7 @@
 				text += $(this).find(".interval_name").text();
 			}else{
 				content += $(this).find(".interval_name").text()+',';
-				text += $(this).find(".interval_name").text()+'<br>';
+				text += $(this).find(".interval_name").text()+',';
 			}
 		});
 		
@@ -1496,7 +1496,7 @@
 			data1.type = type;
 			data1.content = content;
 			data1.type1 = "factor_interval";
-			$("#text_inner1").html(text);
+			$("#text_inner1").text(text);
 			$("#text_inner1").parent().css({"height" : "auto"});
 		}else if(index == 2){
 			data2.type = type;
