@@ -1,5 +1,6 @@
 package com.digitalBook.Controller;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.LinkedHashMap;
@@ -7,13 +8,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.digitalBook.Entity.Department;
@@ -25,12 +31,18 @@ import com.digitalBook.Entity.Method;
 import com.digitalBook.Entity.Plan;
 import com.digitalBook.Entity.Record;
 import com.digitalBook.Entity.Report;
+import com.digitalBook.Entity.Result;
 import com.digitalBook.Entity.Schedule;
 import com.digitalBook.Entity.Seed;
 import com.digitalBook.Entity.Storage;
 import com.digitalBook.Entity.User;
 import com.digitalBook.Service.PlanService;
 import com.digitalBook.Service.StorageService;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 
 @Controller
 @RequestMapping("plan")
@@ -562,6 +574,24 @@ public class PlanController
 		int result = service.InsertStorage(storage);
 		
 		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/test")
+	public void testt(@RequestParam Map<String, Object> map, MultipartHttpServletRequest req) throws JsonProcessingException, IOException
+	{
+		
+		System.out.println(map);
+		System.out.println(map.size());
+		System.out.println(map.get("result").getClass());
+		
+		
+//		List<MultipartFile> filse = req.getFiles("file");
+//		
+//		System.out.println(filse.size());
+//		
+//		System.out.println(req.getFiles("file").get(0).getOriginalFilename());
+		
 	}
 	
 	
