@@ -158,7 +158,7 @@ function thisTransformGet(){
 
 function transformRotateCheck(index){
 	var elsTransform = segmentEls[index].style.transform;
-	console.log(elsTransform);
+	
 	if(elsTransform !== undefined && elsTransform !== null && elsTransform !== ''){	
 		var rotateValue = elsTransform.split('rotate')[1];
 		return parseInt(rotateValue.split('(')[1].split(')')[0].split('deg')[0], 10 );
@@ -260,7 +260,7 @@ function renderSegment(data){
 	var dataGet = data;
 	// 초기화
 	stepFourWrap.innerHTML = '';
-	// 1차 : 컴포넌트 삽입
+	// 1차 : 컴포넌트 삽입 // 의심 2
 	for(var i = 0; i < dataGet.length; i++){
 		stepFourWrap.innerHTML += segmentComp(dataGet[i]);
 	}
@@ -318,6 +318,7 @@ function segmentSetting(data){
 		elWidth = (dataIdLength * 10) + 26;
 	}
 	
+	//의심 1
 	for(var r = 0; r < row; r++){
 		for(var c = 0; c < column; c++){
 			if(segmentLi[elRender] !== undefined && segmentLi[elRender] !== null){

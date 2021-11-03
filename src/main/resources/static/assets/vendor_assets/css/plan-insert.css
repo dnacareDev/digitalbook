@@ -850,9 +850,6 @@ input[type=search]:focus{
 	font-size: 12px !important;
 	padding: 2px 10px !important;
 }
-.row{
-	align-items: center;
-}
 .list-group-item input[type="checkbox"]{
 	vertical-align: middle;
 }
