@@ -28,242 +28,283 @@
 			
 			<div class="container-fluid">
                 
-    <div class="wrapper clearfix">
-    	<div class="row"> <!-- section 위에 -->
-	        <div class="col-lg-12">
-	        	<div class="breadcrumb-main">
-	        		<h4 class="text-capitalize breadcrumb-title">결과입력</h4>
-	        		<span class="ml-20 mt-1">재배관리-결과입력</span>
-	        	</div>
-	        	<div id="qrcode" style="display: none;"></div>
-	        	<button type="button" id="qrBtn">QR출력</button>
-	        </div>
-       </div>
-        <section id="section">
-            <div class="step" id="step1">
-                <div class="step_inner clearfix" id="step1_inner">
-                    <div class="title">
-                        <h3>구획정보<span></span></h3>
-                    </div>
-                    <div class="content clearfix">
-                        <div class="left_content step4-container" id="segment_list" style="height:500px !important; overflow-y:auto !important;">
-                           
-                        </div>
-                        <div class="right_content">
-                            <div class="img_inner">
-                                <div class="background-wrap">
-                                    <ul id="step4-segment">
-                                        
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bottom_right-content clearfix"> <!-- 2021-11-01 추가  -->
-                        	<div class="left_type">
-                        		<span>개채수<span class="red">*</span></span>
-	                            <input type="text" value="3" id="rowNum">
-	                            <button type="button" onclick="addRow()">확인</button>
-                        	</div>
-                        	<div class="right_type">
-                        		<div class="right_type_cover">
-                        			<select id="segment_option">
-                        				
-	                        		</select>
-	                        		<button type="button">확인</button>
-                        		</div>
-                        	</div>
-                        </div>
-                        <div class="bottom_content">
-                            <div class="title clearfix" style="padding: 20px 0;">
-		                        <h3 style="float: left;" id="result_title"></h3>
-		                    </div>
-                            <table id="step1_table" style="width: max-content;">
-                                
-                            </table>
-                        </div>
-                        <div class="submit_btn" style="padding: 10px">
-                            <button class="type1" onclick="insertResult();">저장</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="step" id="step2">
-                <div class="step_inner clearfix" id="step2_inner">
-                    <div class="title">
-                        <h3>구획정보확인<span></span></h3>
-                    </div>
-                    <div class="content clearfix">
-                        <div class="content-center">
-                            <div class="content_box">
-	                            <div class="bottom_right-content clearfix"> <!-- 2021-11-01 추가  -->
-			                      	<div class="left_type" style="width:60%;">
-			                      		<span>기준개채수<span class="red">*</span></span>
-			                           	<input type="text" id="segment_num" value="10">
-			                           	<button type="button" onclick="checkSegment();">확인</button>
-			                      	</div>
+			    <div class="wrapper clearfix">
+			    	<div class="row"> <!-- section 위에 -->
+				        <div class="col-lg-12">
+				        	<div class="breadcrumb-main">
+				        		<h4 class="text-capitalize breadcrumb-title">결과입력</h4>
+				        		<span class="ml-20 mt-1">재배관리-결과입력</span>
+				        	</div>
+				        	<div id="qrcode" style="display: none;"></div>
+				        	<button type="button" id="qrBtn">QR출력</button>
+				        </div>
+			       </div>
+			        <section id="section">
+			            <div class="step" id="step1">
+			                <div class="step_inner clearfix" id="step1_inner">
+			                    <div class="title">
+			                        <h3>구획정보<span></span></h3>
 			                    </div>
-                                <ul class="sangtaeLi clearfix">
-                                    <li id="sangtae_list">
-                                        <span class="sub_title-content regular_text"><i class="bi bi-arrows-move"></i>A1-B1-C1-1</span>
-                                        <!-- <ul class="clearfix sangtae">
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li class="red"><a href="#"><img src="../img/icons/red.png" alt="red"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-                                                <div class="lines">
-                                                    <select>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                        <option>상태선택</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                        </ul> -->
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="submit_btn">
-                            <button class="type1">저장</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="step" id="step3">
-                <div class="step_inner clearfix" id="step3_inner">
-                    <div class="title">
-                        <h3>토양/기상 정보<span></span></h3>
-                    </div>
-                    <div class="content clearfix">
-                        <div class="content-center">
-                            <div class="content_box">
-                                <span class="sub_title-content bold_text">토양정보(수동조회)</span>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>산도(ph)</th>
-                                            <th>유효인산(mg/kg)</th>
-                                            <th>유효규산(mg/kg)</th>
-                                            <th>유기물(g/kg)</th>
-                                            <th>마그네슘(cmol+/kg)</th>
-                                            <th>칼륨(cmol+/kg)</th>
-                                            <th>칼슘(cmol+/kg)</th>
-                                            <th>전기전도도(dS/m)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>6.6</td>
-                                            <td>28</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="content_box">
-                                <span class="sub_title-content bold_text">토양정보(수동조회)</span>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>강수량</th>
-                                            <th>증발량</th>
-                                            <th>풍속(150CM)</th>
-                                            <th>풍속(300CM)</th>
-                                            <th>결로시간</th>
-                                            <th>초상온도</th>
-                                            <th>습도(150CM)</th>
-                                            <th>습도(400CM)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>0.0mm</td>
-                                            <td>Xmm</td>
-                                            <td>3.0</td>
-                                            <td>3.0</td>
-                                            <td>0.0hr</td>
-                                            <td>-3.2℃</td>
-                                            <td>26.4%</td>
-                                            <td>26.4%</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="submit_btn">
-                            <button class="type1">저장</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <div class="row mt-4">
-			<div class="col-lg-12">
-				<div class="card card-default">
-					<div class="row ml-3 mt-3">
-						<span class="color-dark align-center" style="font-size: 20px;">변경 이력</span>
-					</div>
-					<div class="card-body" style="height: 325px; overflow-y: auto;">
-						<div class="row">
-							<div class="col-lg-12" style="padding-left: 15px;">
-								<ul>
-									<th:block th:each="r : ${record}">
-										<li class="mt-2">
-											<span class="avatar avatar-success avatar-md avatar-circle" style="float: left;">
-                                                   <span class="avatar-icon" data-feather="check"></span>
-                                               </span>
-											<div>
-												<span class="font-weight-bold mb-0">생육조사계획 : </span>
-												<span class="font-weight-bold mb-0" th:text="${r.record_type_code}"></span>
-												<th:block th:switch="${r.record_status}">
-													<span th:case="0" class="font-weight-bold mb-0">승인요청</span>
-													<span th:case="1" class="font-weight-bold mb-0">수정요청</span>
-													<span th:case="2" class="font-weight-bold mb-0">승인</span>
+			                    <div class="content clearfix">
+			                        <div class="left_content step4-container" id="segment_list" style="height:500px !important; overflow-y:auto !important;">
+			                           
+			                        </div>
+			                        <div class="right_content">
+			                            <div class="img_inner">
+			                                <div class="background-wrap">
+			                                    <ul id="step4-segment">
+			                                        
+			                                    </ul>
+			                                </div>
+			                            </div>
+			                        </div>
+			                        <div class="bottom_right-content clearfix"> <!-- 2021-11-01 추가  -->
+			                        	<div class="left_type">
+			                        		<span>개채수<span class="red">*</span></span>
+				                            <input type="text" value="3" id="rowNum">
+				                            <button type="button" onclick="addRow()">확인</button>
+			                        	</div>
+			                        	<div class="right_type">
+			                        		<div class="right_type_cover">
+			                        			<select id="segment_option">
+			                        				
+				                        		</select>
+				                        		<button type="button">확인</button>
+			                        		</div>
+			                        	</div>
+			                        </div>
+			                        <div class="bottom_content">
+			                            <div class="title clearfix" style="padding: 20px 0;">
+					                        <h3 style="float: left;" id="result_title"></h3>
+					                    </div>
+			                            <table id="step1_table" style="width: max-content;">
+			                                
+			                            </table>
+			                        </div>
+			                        <div class="submit_btn" style="padding: 10px">
+			                            <button class="type1" onclick="confirminsertResult();">저장</button>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+			            <div class="step" id="step2">
+			                <div class="step_inner clearfix" id="step2_inner">
+			                    <div class="title">
+			                        <h3>구획정보확인<span></span></h3>
+			                    </div>
+			                    <div class="content clearfix">
+			                        <div class="content-center">
+			                            <div class="content_box">
+				                            <div class="bottom_right-content clearfix"> <!-- 2021-11-01 추가  -->
+						                      	<div class="left_type" style="width:60%;">
+						                      		<span>기준개채수<span class="red">*</span></span>
+						                           	<input type="text" id="segment_num" value="10">
+						                           	<button type="button" onclick="checkSegment();">확인</button>
+						                      	</div>
+						                    </div>
+			                                <ul class="sangtaeLi clearfix">
+			                                    <li id="sangtae_list">
+			                                        <span class="sub_title-content regular_text"><i class="bi bi-arrows-move"></i>A1-B1-C1-1</span>
+			                                        <!-- <ul class="clearfix sangtae">
+			                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
+			                                                <div class="lines">
+			                                                    <select>
+			                                                        <option>상태선택</option>
+			                                                        <option>상태선택</option>
+			                                                        <option>상태선택</option>
+			                                                        <option>상태선택</option>
+			                                                        <option>상태선택</option>
+			                                                        <option>상태선택</option>
+			                                                    </select>
+			                                                </div>
+			                                            </li>
+			                                            <li class="red"><a href="#"><img src="../img/icons/red.png" alt="red"></a>
+			                                                <div class="lines">
+			                                                    <select>
+			                                                        <option>상태선택</option>
+			                                                        <option>상태선택</option>
+			                                                        <option>상태선택</option>
+			                                                        <option>상태선택</option>
+			                                                        <option>상태선택</option>
+			                                                        <option>상태선택</option>
+			                                                    </select>
+			                                                </div>
+			                                            </li>
+			                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
+			                                                <div class="lines">
+			                                                    <select>
+			                                                        <option>상태선택</option>
+			                                                        <option>상태선택</option>
+			                                                        <option>상태선택</option>
+			                                                        <option>상태선택</option>
+			                                                        <option>상태선택</option>
+			                                                        <option>상태선택</option>
+			                                                    </select>
+			                                                </div>
+			                                            </li>
+			                                        </ul> -->
+			                                    </li>
+			                                </ul>
+			                            </div>
+			                        </div>
+			                        <div class="submit_btn">
+			                            <button class="type1">저장</button>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+			            <div class="step" id="step3">
+			                <div class="step_inner clearfix" id="step3_inner">
+			                    <div class="title">
+			                        <h3>토양/기상 정보<span></span></h3>
+			                    </div>
+			                    <div class="content clearfix">
+			                        <div class="content-center">
+			                            <div class="content_box">
+			                                <span class="sub_title-content bold_text">토양정보(수동조회)</span>
+			                                <table>
+			                                    <thead>
+			                                        <tr>
+			                                            <th>산도(ph)</th>
+			                                            <th>유효인산(mg/kg)</th>
+			                                            <th>유효규산(mg/kg)</th>
+			                                            <th>유기물(g/kg)</th>
+			                                            <th>마그네슘(cmol+/kg)</th>
+			                                            <th>칼륨(cmol+/kg)</th>
+			                                            <th>칼슘(cmol+/kg)</th>
+			                                            <th>전기전도도(dS/m)</th>
+			                                        </tr>
+			                                    </thead>
+			                                    <tbody>
+			                                        <tr>
+			                                            <td>6.6</td>
+			                                            <td>28</td>
+			                                            <td>1</td>
+			                                            <td>1</td>
+			                                            <td>1</td>
+			                                            <td>1</td>
+			                                            <td>1</td>
+			                                            <td>1</td>
+			                                        </tr>
+			                                    </tbody>
+			                                </table>
+			                            </div>
+			                            <div class="content_box">
+			                                <span class="sub_title-content bold_text">토양정보(수동조회)</span>
+			                                <table>
+			                                    <thead>
+			                                        <tr>
+			                                            <th>강수량</th>
+			                                            <th>증발량</th>
+			                                            <th>풍속(150CM)</th>
+			                                            <th>풍속(300CM)</th>
+			                                            <th>결로시간</th>
+			                                            <th>초상온도</th>
+			                                            <th>습도(150CM)</th>
+			                                            <th>습도(400CM)</th>
+			                                        </tr>
+			                                    </thead>
+			                                    <tbody>
+			                                        <tr>
+			                                            <td>0.0mm</td>
+			                                            <td>Xmm</td>
+			                                            <td>3.0</td>
+			                                            <td>3.0</td>
+			                                            <td>0.0hr</td>
+			                                            <td>-3.2℃</td>
+			                                            <td>26.4%</td>
+			                                            <td>26.4%</td>
+			                                        </tr>
+			                                    </tbody>
+			                                </table>
+			                            </div>
+			                        </div>
+			                        <div class="submit_btn">
+			                            <button class="type1">저장</button>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+			        </section>
+			        <div class="row mt-4">
+						<div class="col-lg-12">
+							<div class="card card-default">
+								<div class="row ml-3 mt-3">
+									<span class="color-dark align-center" style="font-size: 20px;">변경 이력</span>
+								</div>
+								<div class="card-body" style="height: 325px; overflow-y: auto;">
+									<div class="row">
+										<div class="col-lg-12" style="padding-left: 15px;">
+											<ul>
+												<th:block th:each="r : ${record}">
+													<li class="mt-2">
+														<span class="avatar avatar-success avatar-md avatar-circle" style="float: left;">
+			                                                   <span class="avatar-icon" data-feather="check"></span>
+			                                               </span>
+														<div>
+															<span class="font-weight-bold mb-0">생육조사계획 : </span>
+															<span class="font-weight-bold mb-0" th:text="${r.record_type_code}"></span>
+															<th:block th:switch="${r.record_status}">
+																<span th:case="0" class="font-weight-bold mb-0">승인요청</span>
+																<span th:case="1" class="font-weight-bold mb-0">수정요청</span>
+																<span th:case="2" class="font-weight-bold mb-0">승인</span>
+															</th:block>
+														</div>
+														<small th:text="${r.record_date}"></small>
+													</li>
 												</th:block>
-											</div>
-											<small th:text="${r.record_date}"></small>
-										</li>
-									</th:block>
-								</ul>
+											</ul>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+			    </div>
 			</div>
 		</div>
-    </div>
-</div>
-			
-		</div>
+		
+		<div class="atbd-notice" id="results_success_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
+        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+        		<div class="card-body">
+        			<div class="atbd-notice__content">
+        				<div class="atbd-notice__top text-center">
+        					<div class="atbd-notice__icon bg-success">
+        						<i class="fas fa-check color-white"></i>
+        					</div>
+        					<div class="atbd-notice__text">
+        						<h4>저장이 완료되었습니다.</h4>
+        					</div>
+        					<div style="display: flex; justify-content: center; margin: 10% auto;">
+        						<button class="btn btn-default btn-success" onclick="confirmResults();" style="color: #FFFFFF;">확인</button>
+        					</div>
+        				</div>
+        			</div>
+        		</div>
+        	</div>
+        </div>
+        
+        <div class="atbd-notice" id="results_confirm_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
+        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+        		<div class="card-body">
+        			<div class="atbd-notice__content">
+        				<div class="atbd-notice__top text-center">
+        					<div class="atbd-notice__icon bg-info">
+        						<i class="fas fa-exclamation color-white"></i>
+        					</div>
+        					<div class="atbd-notice__text">
+        						<h4>저장 하시겠습니까?</h4>
+        					</div>
+        					<div style="display: flex; justify-content: center; margin: 10% auto;">
+        						<button class="btn btn-default btn-primary mr-10" onclick="insertResult();" style="color: #FFFFFF;">저장</button>
+        						<button class="btn btn-default btn-danger" onclick="CancelBtn();" style="color: #FFFFFF;">취소</button>
+        					</div>
+        				</div>
+        			</div>
+        		</div>
+        	</div>
+        </div>
+
         <div class="modal-basic modal fade show" id="chanModal2" tabindex="-1" role="dialog" aria-hidden="true" style="display: none">
 		    <div class="modal-dialog modal-lg" role="document">
 		        <div class="modal-content modal-bg-white">
@@ -332,6 +373,8 @@
 	let method = /*[[${method}]]*/ "null";
 	let user = /*[[${user}]]*/ "null";
 	let sch = /*[[${sch}]]*/ "null";
+	
+	let results = /*[[${results}]]*/ "null";
 
 	//시험구 배치 데이터
 	let data1 = new Object();
@@ -350,6 +393,7 @@
 	let factorArray = new Array();
 	let resultArray = new Array();
 	
+	//결과입력 데이터
 	let tableResultArray = new Array();
 	
 	//구획정보 기존 데이터 만들기 함수
@@ -1015,17 +1059,22 @@
 		var data = new Object();
 		
 		for(var i = 0; i < resultArray.length; i++){
+			
 			dataArray = [];
+			
 			for(var j = 0; j < length; j++){
 				data = {};
 				data['num'] = (1+j);
+				
 				for(var k = 0; k < method.length; k++){
 					data['method_'+k] = "";
 					data['img'+k] = "";
 					data['c_img'+k] = "";
-				}
+				}//end for3
+				
 				dataArray.push(data);
-			}
+				
+			}//end for2
 			
 			var table_data = {
 					"rowNum" : length, //개체수
@@ -1034,9 +1083,19 @@
 			};
 			
 			tableResultArray.push(table_data);
-		}
-		console.log(tableResultArray);
+		}//end for1
 		
+		var isCheck = false;
+		if(Object.keys(results).length != 0){
+			isCheck = true;
+		}
+		
+		if(isCheck){ //기존 데이터 있으면
+			
+		}
+		
+		console.log(results);
+		console.log(tableResultArray);
 		//구획정보 확인 함수 실행
 		checkSegment();
 		
@@ -1059,7 +1118,7 @@
 		
 		//현재 결과입력 테이블의 로우 번호
 		var currentDataNum = $(".result_list").attr("data-num");
-		console.log("currentDataNum : " + currentDataNum);
+		
 		var dataArray = new Array();
 		//현재 결과입력 테이블의 데이터를 만들어 tableResultArray 에 넣어주기
 		for(var i = 0; i < copy_tableResultArray.length; i++){
@@ -1079,13 +1138,58 @@
 						data['c_img'+j] = "";
 						
 						var file = $(this).find("input:file[name=file"+j+"]")[0].files[0];
-						var fileObj = {
-								"segment_id" : currentDataNum,
-								"individual_id" : (index+1),
-								"individual_index" : (j+1),
-								"file" : file
-						};
-						file_array.push(fileObj);
+						if(typeof file === "object"){
+							
+							if(file_array.length != "0"){
+								var isCheck = false;
+								var delNum = 0;
+								for(var k = 0; k < file_array.length; k++){
+									if(file_array[k].segment_id == currentDataNum && file_array[k].individual_id == (index+1) && file_array[k].individual_index == (j+1)){
+										isCheck = true;
+										delNum = k;
+										break;
+									}
+								}
+								if(isCheck){
+									var fileObj = {
+											"segment_id" : currentDataNum,
+											"individual_id" : (index+1),
+											"individual_index" : (j+1),
+											"file" : file
+									};
+									file_array.splice(delNum, 1, fileObj);
+								}else{
+									var fileObj = {
+											"segment_id" : currentDataNum,
+											"individual_id" : (index+1),
+											"individual_index" : (j+1),
+											"file" : file
+									};
+									file_array.push(fileObj);
+								}
+							}else{
+								
+								var fileObj = {
+										"segment_id" : currentDataNum,
+										"individual_id" : (index+1),
+										"individual_index" : (j+1),
+										"file" : file
+								};
+								file_array.push(fileObj);
+							}
+							
+						}
+						
+// 						var file = $(this).find("input:file[name=file"+j+"]")[0].files[0];
+// 						if(typeof file === "object"){
+// 							var fileObj = {
+// 									"segment_id" : currentDataNum,
+// 									"individual_id" : (index+1),
+// 									"individual_index" : (j+1),
+// 									"file" : file
+// 							};
+// 							file_array.push(fileObj);
+// 						}
 					}
 					dataArray.push(data);
 				});//end .result_tr each
@@ -1163,44 +1267,146 @@
 		});
 		file_array.sort(function(a, b){
 			return a.segment_id - b.segment_id;
-		})
+		});
 		/* console.log(tableResultArray); */
 	});//end //구획정보 테이블 로우 선택시 결과입력 테이블 그리기 이벤트
 	
+	//결과입력 등록
 	function insertResult(){
 		
-		var formData = new FormData();
+		//현재 개체수 개수
+		var curentrowNum = $(".result_tr").length;
 		
-// 		for(var i = 0; i < file_array.length; i++){
-// 			if(file_array[i].file != undefined){
-// 				formData.append("file", file_array[i].file);
-// 			}
-// 		}
+		//현재 결과입력 테이블의 로우 번호
+		var currentDataNum = $(".result_list").attr("data-num");
+		
+		for(var i = 0; i < tableResultArray.length; i++){
+			
+			if(currentDataNum == tableResultArray[i].num){ //기존 데이터수정
+				
+				//기존 데이터 삭제
+				tableResultArray.splice(i, 1);
+				dataArray = [];
+				$(document).find(".result_tr").each(function(index, item){
+					
+					var data = new Object();
+					data['num'] = (index+1);
+					for(var j = 0; j < method.length; j++){
+						data['method_'+j] = $(this).find("input:text[name=input"+j+"]").val();
+						data['img'+j] = $(this).find("input:file[name=file"+j+"]")[0].files[0];
+						data['c_img'+j] = "";
+						
+						var file = $(this).find("input:file[name=file"+j+"]")[0].files[0];
+						if(typeof file === "object"){
+							
+							if(file_array.length != "0"){
+								var isCheck = false;
+								var delNum = 0;
+								for(var k = 0; k < file_array.length; k++){
+									if(file_array[k].segment_id == currentDataNum && file_array[k].individual_id == (index+1) && file_array[k].individual_index == (j+1)){
+										isCheck = true;
+										delNum = k;
+										break;
+									}
+								}
+								if(isCheck){
+									var fileObj = {
+											"segment_id" : currentDataNum,
+											"individual_id" : (index+1),
+											"individual_index" : (j+1),
+											"file" : file
+									};
+									file_array.splice(delNum, 1, fileObj);
+								}else{
+									var fileObj = {
+											"segment_id" : currentDataNum,
+											"individual_id" : (index+1),
+											"individual_index" : (j+1),
+											"file" : file
+									};
+									file_array.push(fileObj);
+								}
+							}else{
+								
+								var fileObj = {
+										"segment_id" : currentDataNum,
+										"individual_id" : (index+1),
+										"individual_index" : (j+1),
+										"file" : file
+								};
+								file_array.push(fileObj);
+							}
+							
+						}
+					}
+					dataArray.push(data);
+				});//end .result_tr each
+				
+				var table_data = {
+						"rowNum" : curentrowNum, //개체수
+						"data" : dataArray,//개체
+						"num" : currentDataNum
+				};
+				tableResultArray.push(table_data);
+				dataArray = [];
+				table_data = {};
+			}
+		}//end for1
+		
+		//결과입력 데이터 만들어 주기
+		var formData = new FormData();
 		
 		var resultData = new Array();
 		
+		//정렬시키기
+		tableResultArray.sort(function(a, b){
+			return a.num - b.num;
+		});
+		
 		for(var i = 0; i < tableResultArray.length; i++){
 			var arr = new Array();
-			var data = new Object();
 			arr = tableResultArray[i].data;
 			for(var j = 0; j < arr.length; j ++){
-				data['segment_id'] = tableResultArray[i].num;
-				data['individual_id'] = arr[j].num;
-				data['individual_index'] = (j+1);
-				data['result_content'] = arr[j]['method_'+j];
-				data['result_file'] = arr[j]['img'+j];
-				resultData.push(data);
-				data = {};
-			}
+				var data = new Object();
+				
+				for(var k = 0; k < arr.length; k++){
+					data['plan_id'] = plan.plan_id;
+					data['segment_id'] = tableResultArray[i].num;
+					data['individual_id'] = arr[j].num;
+					data['individual_index'] = (k+1);
+					data['results_content'] = arr[j]['method_'+k];
+					resultData.push(data);
+					data = {};
+					
+				}//end for3
+			}//end for2
 			
+		}//end for1
+		
+		file_array.sort(function(a, b){
+			return a.segment_id - b.segment_id;
+		});
+		
+		var indexArr = new Array();
+		
+		for(var i = 0; i < file_array.length; i++){
+			if(typeof file_array[i].file === "object"){
+				formData.append("file", file_array[i].file);
+				var data = {"index" : file_array[i].segment_id+"-"+file_array[i].individual_id+"-"+file_array[i].individual_index};
+				indexArr.push(data);
+			}
 		}
 		
-		console.log(resultData);
+		formData.append("index", JSON.stringify(indexArr));
 		
-		formData.append("result", resultData);
+		formData.append("result", JSON.stringify(resultData));
+		
+		/* console.log(resultData); */
+		/* console.log(file_array); */
+		/* console.log(indexArr); */
 		
 		$.ajax({
-			url : "/plan/test",
+			url : "/plan/insertResults",
 			type : "POST",
 			processData : false,
 			contentType : false,
@@ -1208,8 +1414,13 @@
 			data : formData,
 			dataType : 'json',
 			cache: false,
-			success : function(r){
-				console.log(r);
+			success : function(result){
+				if(result == 0){
+					
+				}else{
+					$("#results_confirm_popup").css("display", "none");
+					$("#results_success_popup").css("display", "flex");
+				}
 			}
 		});
 		
@@ -1430,6 +1641,21 @@
 		document.body.appendChild(link);
 		link.click();
 		link.delete;
+	}
+	
+	
+	//결과입력 등록 팝업
+	function confirminsertResult(){
+		$("#results_confirm_popup").css("display", "flex");
+	}
+	
+	//결과입력 완료 팝업 닫기
+	function confirmResults(){
+		$("#results_success_popup").css("display", "none");
+	}
+	
+	function CancelBtn(){
+		$("#results_confirm_popup").css("display", "none");
 	}
 
 </script>

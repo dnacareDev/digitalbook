@@ -1,6 +1,12 @@
 package com.digitalBook.Controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.LinkedHashMap;
@@ -8,15 +14,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-import org.json.JSONArray;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -31,18 +36,18 @@ import com.digitalBook.Entity.Method;
 import com.digitalBook.Entity.Plan;
 import com.digitalBook.Entity.Record;
 import com.digitalBook.Entity.Report;
-import com.digitalBook.Entity.Result;
+import com.digitalBook.Entity.Results;
 import com.digitalBook.Entity.Schedule;
 import com.digitalBook.Entity.Seed;
 import com.digitalBook.Entity.Storage;
 import com.digitalBook.Entity.User;
 import com.digitalBook.Service.PlanService;
 import com.digitalBook.Service.StorageService;
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 
 @Controller
 @RequestMapping("plan")
@@ -53,6 +58,9 @@ public class PlanController
 	private PlanService service;
 	
 	@Autowired StorageService storageService;
+	
+	@Autowired
+	private FileController fileController;
 	
 	//재배계획 목록 페이지
 	@RequestMapping("/list")
@@ -495,6 +503,8 @@ public class PlanController
 		
 		List<Record> record = service.selectRecordList(plan_id);
 		
+		List<Results> results = service.selectResultsList(plan_id);
+		
 		int arr[] = Arrays.stream(plan.getPlan_method().split(",")).mapToInt(Integer::parseInt).toArray();
 		List<Method> method = service.selectPlanMethodList(arr);
 		
@@ -506,6 +516,7 @@ public class PlanController
 		mv.addObject("record", record);
 		mv.addObject("sch", sch);
 		mv.addObject("method", method);
+		mv.addObject("results", results);
 		
 		mv.setViewName("plan/result_insert");
 		
@@ -576,23 +587,119 @@ public class PlanController
 		return result;
 	}
 	
+	//결과입력 등록
 	@ResponseBody
-	@RequestMapping(value = "/test")
-	public void testt(@RequestParam Map<String, Object> map, MultipartHttpServletRequest req) throws JsonProcessingException, IOException
+	@RequestMapping(value = "/insertResults")
+	public int InsertResult(MultipartHttpServletRequest req, HttpServletRequest requst) throws IOException
 	{
 		
-		System.out.println(map);
-		System.out.println(map.size());
-		System.out.println(map.get("result").getClass());
+		ObjectMapper mapper = new ObjectMapper();
+		
+		List<MultipartFile> files = req.getFiles("file");
+//		System.out.println(requst.getParameterValues("index")[0]);
+//		System.out.println(files.size());
+//		System.out.println(requst.getParameterValues("result")[0]);
 		
 		
-//		List<MultipartFile> filse = req.getFiles("file");
-//		
-//		System.out.println(filse.size());
-//		
-//		System.out.println(req.getFiles("file").get(0).getOriginalFilename());
+		//result list 만들기
+		JsonNode node = mapper.readTree(requst.getParameterValues("result")[0]);
 		
+		List<Results> results = new ArrayList<>();
+		
+		for(int i = 0; i < node.size(); i++) {
+			String input = mapper.writeValueAsString(node.get(i));
+			Results r = mapper.readValue(input, Results.class);
+			results.add(r);
+		}
+		
+		//index list 만들기
+		String indexString = (String) requst.getParameterValues("index")[0];
+		
+		JsonNode indexNode = mapper.readTree(indexString);
+		List<String> indexList = new ArrayList<>();
+		for(int i = 0; i < indexNode.size(); i++) {
+			indexList.add(indexNode.get(i).get("index").asText());
+		}
+		
+		int insertResult[] = new int[results.size()];
+		int result = 0;
+		
+		if(files.size() != 0) {
+			result = SaveResultImg(files, indexList, results);
+			System.out.println(results.size()+"개 등록 완료");
+		}else {
+			for(int i = 0; i < results.size(); i++) {
+				insertResult[i] = service.insertResults(results.get(i));
+			}
+			
+			Boolean isInsert = IntStream.of(insertResult).noneMatch(x -> x == 0);
+			
+			if(isInsert) {
+				result = 1;
+			}else {
+				result = 0;
+			}
+			System.out.println(results.size()+"개 등록 완료");
+		}
+		
+		return result;
 	}
 	
+	//결과입력 사진 저장
+	public int SaveResultImg(List<MultipartFile> files, List<String> indexList, List<Results> results) throws IOException
+	{
+		
+		int insertResult[] = new int[results.size()];
+		
+		for(int i = 0; i < indexList.size(); i++) {
+			
+			for(int j = 0; j < results.size(); j++) {
+				
+				String check = results.get(j).getSegment_id()+"-"+results.get(j).getIndividual_id()+"-"+results.get(j).getIndividual_index();
+				
+				if(check.equals(indexList.get(i))) {
+					
+					String[] extension = files.get(i).getOriginalFilename().split("\\.");
+					
+					String results_file = fileController.ChangeFileName(extension[1]);
+					String results_origin_file = files.get(i).getOriginalFilename();
+					
+					String path = "upload";
+					
+					File filePath = new File(path);
+					
+					if (!filePath.exists())
+			            filePath.mkdirs();
+					
+					Path fileLocation = Paths.get(path).toAbsolutePath().normalize();
+			       	Path targetLocation = fileLocation.resolve(results_file);
+					
+			       	Files.copy(files.get(i).getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+					
+					results.get(j).setResults_file(results_file);
+					results.get(j).setResults_origin_file(results_origin_file);
+				}
+				
+			}//end for2
+			
+		}//end for
+		
+		for(int i = 0; i < results.size(); i++) {
+			insertResult[i] = service.insertResults(results.get(i));
+		}
+		
+		int result = 0;
+		
+		Boolean isInsert = IntStream.of(insertResult).noneMatch(x -> x == 0);
+		
+		if(isInsert) {
+			result = 1;
+		}else {
+			result = 0;
+		}
+		
+		
+		return result;
+	}
 	
 }

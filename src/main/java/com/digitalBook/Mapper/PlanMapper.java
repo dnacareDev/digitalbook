@@ -13,6 +13,7 @@ import com.digitalBook.Entity.Method;
 import com.digitalBook.Entity.Plan;
 import com.digitalBook.Entity.Record;
 import com.digitalBook.Entity.Report;
+import com.digitalBook.Entity.Results;
 import com.digitalBook.Entity.Schedule;
 import com.digitalBook.Entity.Seed;
 import com.digitalBook.Entity.Storage;
@@ -108,5 +109,11 @@ public interface PlanMapper {
 	
 	//plan method 가져오기
 	List<Method> selectPlanMethodList(int[] arr);
+	
+	//결과입력 등록
+	int insertResults(Results results);
+	
+	//결과입력 데이터 조회
+	List<Results> selectResultsList(int plan_id);
 	
 }

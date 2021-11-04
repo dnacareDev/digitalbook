@@ -13,6 +13,7 @@ import com.digitalBook.Entity.Method;
 import com.digitalBook.Entity.Plan;
 import com.digitalBook.Entity.Record;
 import com.digitalBook.Entity.Report;
+import com.digitalBook.Entity.Results;
 import com.digitalBook.Entity.Schedule;
 import com.digitalBook.Entity.Seed;
 import com.digitalBook.Entity.Storage;
@@ -227,6 +228,20 @@ public class PlanServiceImpl implements PlanService {
 	public List<Method> selectPlanMethodList(int[] arr) {
 		
 		return mapper.selectPlanMethodList(arr);
+	}
+	
+	//결과입력 등록
+	@Override
+	public int insertResults(Results results) {
+		
+		return mapper.insertResults(results);
+	}
+	
+	//결과입력 데이터 조회
+	@Override
+	public List<Results> selectResultsList(int plan_id) {
+		
+		return mapper.selectResultsList(plan_id);
 	}
 
 }

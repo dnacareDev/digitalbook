@@ -393,4 +393,34 @@
 		ORDER BY method_id
 	</select>
 	
+	<!-- 결과입력 등록 -->
+	<insert id="insertResults" parameterType="Results">
+		INSERT INTO results
+		(
+			plan_id,
+			segment_id,
+			individual_id,
+			individual_index,
+			results_content,
+			results_file,
+			results_origin_file
+		)
+		VALUES
+		(
+			#{plan_id},
+			#{segment_id},
+			#{individual_id},
+			#{individual_index},
+			#{results_content},
+			#{results_file},
+			#{results_origin_file}
+		)
+	</insert>
+	
+	<!-- 결과입력 데이터 조회 -->
+	<select id="selectResultsList" parameterType="int" resultType="Results">
+		SELECT * FROM results
+		WHERE plan_id = #{plan_id}
+	</select>
+	
 </mapper>
