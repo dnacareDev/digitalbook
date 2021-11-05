@@ -396,6 +396,9 @@
 	//결과입력 데이터
 	let tableResultArray = new Array();
 	
+	//결과입력 파일 데이터
+	let file_array = new Array();
+	
 	//구획정보 기존 데이터 만들기 함수
 	async function loadPlan(){
 		
@@ -1018,72 +1021,9 @@
 		
 		var length = $("#rowNum").val();
 		
-		var add_list = "";
-		
-		add_list += '<thead>';
-		add_list += '<tr>';
-		add_list += '<th>개체</th>';
-		//method important
-		for(var i = 0; i < method.length; i++){
-			add_list += '<th>'+method[i].method_title+'</th>';
-		}
-		
-		add_list += '<tr>';
-		add_list += '</thead>';
-		
-		add_list += '<tbody class="result_list" data-num="'+resultArray[0].num+'">';
-		
-		for(var i = 0; i < length; i++){
-			add_list += '<tr class="result_tr">';
-			add_list += '<td class="td_num">'+(i+1)+'</td>';
-			for(var j = 0; j < method.length; j++){
-				add_list += '<td><input type="text" name="input'+j+'" style="width: 90%;">';
-				add_list += '<div class="cam" onclick="fileFunction(this)">';
-				add_list += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-fill" viewBox="0 0 16 16">';
-				add_list += '<path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>';
-				add_list += '<path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/>';
-				add_list += '</svg>';
-				add_list += '</div>';
-				add_list += '<input type="file" name="file'+j+'" accept=".jpg, .gif, .png, .jpeg, .bmp" style="display:none">';
-				add_list == '</td>';
-			}
-			add_list += '</tr>';
-		}
-		
-		add_list += '</tbody>';
-		
-		step1_table.append(add_list);
-		
 		//결과입력 데이터 만들어주기
 		var dataArray = new Array();
 		var data = new Object();
-		
-		for(var i = 0; i < resultArray.length; i++){
-			
-			dataArray = [];
-			
-			for(var j = 0; j < length; j++){
-				data = {};
-				data['num'] = (1+j);
-				
-				for(var k = 0; k < method.length; k++){
-					data['method_'+k] = "";
-					data['img'+k] = "";
-					data['c_img'+k] = "";
-				}//end for3
-				
-				dataArray.push(data);
-				
-			}//end for2
-			
-			var table_data = {
-					"rowNum" : length, //개체수
-					"data" : dataArray,//개체
-					"num" : (i+1)
-			};
-			
-			tableResultArray.push(table_data);
-		}//end for1
 		
 		var isCheck = false;
 		if(Object.keys(results).length != 0){
@@ -1092,16 +1032,163 @@
 		
 		if(isCheck){ //기존 데이터 있으면
 			
+			tableResultArray = [];
+			for(var i = 0; i < resultArray.length; i++){
+				
+				dataArray = [];
+				
+				for(var j = 0; j < length; j++){
+					data = {};
+					data['num'] = (1+j);
+					
+					for(var k = 0; k < method.length; k++){
+						
+						for(var m = 0; m < results.length; m++){
+							if(results[m].segment_id == (i+1) && results[m].individual_id == (j+1) && results[m].individual_index == (k+1)){
+								data['method_'+k] = results[m].results_content;
+								data['img'+k] = results[m].results_origin_file;
+								data['c_img'+k] = results[m].results_file;
+							}
+						}
+						
+					}//end for3
+					
+					dataArray.push(data);
+					
+				}//end for2
+				
+				var table_data = {
+						"rowNum" : length, //개체수
+						"data" : dataArray,//개체
+						"num" : (i+1)
+				};
+				
+				tableResultArray.push(table_data);
+				
+			}//end for1
+			
+			var currentDataArr = new Array();
+			
+			var num = 1;
+			
+			//새로 만들어줄 데이터 뽑아오기
+			for(var i = 0; i < tableResultArray.length; i++){
+				if(tableResultArray[i].num == num){
+					currentDataArr = tableResultArray[i].data;
+				}
+			}
+			
+			var add_list = "";
+			
+			add_list += '<thead>';
+			add_list += '<tr>';
+			add_list += '<th>개체</th>';
+			//method important
+			for(var i = 0; i < method.length; i++){
+				add_list += '<th>'+method[i].method_title+'</th>';
+			}
+			
+			add_list += '<tr>';
+			add_list += '</thead>';
+			
+			add_list += '<tbody class="result_list" data-num="'+num+'">';
+			
+			for(var i = 0; i < currentDataArr.length; i++){
+				add_list += '<tr class="result_tr">';
+				add_list += '<td class="td_num">'+(i+1)+'</td>';
+				for(var j = 0; j < method.length; j++){
+					add_list += '<td><input type="text" name="input'+j+'" value="'+(currentDataArr[i]['method_'+j] == undefined ? "" : currentDataArr[i]['method_'+j])+'" style="width: 90%;">';
+					add_list += '<div class="cam" onclick="fileFunction(this)">';
+					add_list += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-fill" viewBox="0 0 16 16">';
+					add_list += '<path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>';
+					add_list += '<path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/>';
+					add_list += '</svg>';
+					add_list += '</div>';
+					add_list += '<input type="file" name="file'+j+'" value="'+currentDataArr[i]['c_img'+j]+'" accept=".jpg, .gif, .png, .jpeg, .bmp" style="display:none">';
+					add_list == '</td>';
+				}
+				add_list += '</tr>';
+			}
+			$("#rowNum").val(currentDataArr.length);
+			
+			add_list += '</tbody>';
+				
+			step1_table.append(add_list);
+			
+		}else{
+			
+			for(var i = 0; i < resultArray.length; i++){
+				
+				dataArray = [];
+				
+				for(var j = 0; j < length; j++){ //length : 개체수
+					data = {};
+					data['num'] = (1+j);
+					
+					for(var k = 0; k < method.length; k++){
+						data['method_'+k] = "";
+						data['img'+k] = "";
+						data['c_img'+k] = "";
+					}//end for3
+					
+					dataArray.push(data);
+					
+				}//end for2
+				
+				var table_data = {
+						"rowNum" : length, //개체수
+						"data" : dataArray,//개체
+						"num" : (i+1)
+				};
+				
+				tableResultArray.push(table_data);
+			}//end for1
+			
+			
+			var add_list = "";
+			
+			add_list += '<thead>';
+			add_list += '<tr>';
+			add_list += '<th>개체</th>';
+			//method important
+			for(var i = 0; i < method.length; i++){
+				add_list += '<th>'+method[i].method_title+'</th>';
+			}
+			
+			add_list += '<tr>';
+			add_list += '</thead>';
+			
+			add_list += '<tbody class="result_list" data-num="'+resultArray[0].num+'">';
+			
+			for(var i = 0; i < length; i++){
+				add_list += '<tr class="result_tr">';
+				add_list += '<td class="td_num">'+(i+1)+'</td>';
+				for(var j = 0; j < method.length; j++){
+					add_list += '<td><input type="text" name="input'+j+'" style="width: 90%;">';
+					add_list += '<div class="cam" onclick="fileFunction(this)">';
+					add_list += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-fill" viewBox="0 0 16 16">';
+					add_list += '<path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>';
+					add_list += '<path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/>';
+					add_list += '</svg>';
+					add_list += '</div>';
+					add_list += '<input type="file" name="file'+j+'" accept=".jpg, .gif, .png, .jpeg, .bmp" style="display:none">';
+					add_list == '</td>';
+				}
+				add_list += '</tr>';
+			}
+			
+			add_list += '</tbody>';
+			
+			step1_table.append(add_list);
+			
 		}
 		
-		console.log(results);
-		console.log(tableResultArray);
+		
+		
 		//구획정보 확인 함수 실행
 		checkSegment();
 		
 	}//end 결과입력 테이블 그리기
-	
-	let file_array = new Array();
 	
 	//구획정보 테이블 로우 선택시 결과입력 테이블 그리기 이벤트
 	$(document).on("click", "#table_body .table_content", function(){
@@ -1134,8 +1221,8 @@
 					data['num'] = (index+1);
 					for(var j = 0; j < method.length; j++){
 						data['method_'+j] = $(this).find("input:text[name=input"+j+"]").val();
-						data['img'+j] = $(this).find("input:file[name=file"+j+"]")[0].files[0];
-						data['c_img'+j] = "";
+						data['img'+j] = "";
+						data['c_img'+j] = $(this).find("input:file[name=file"+j+"]").val();
 						
 						var file = $(this).find("input:file[name=file"+j+"]")[0].files[0];
 						if(typeof file === "object"){
@@ -1180,16 +1267,6 @@
 							
 						}
 						
-// 						var file = $(this).find("input:file[name=file"+j+"]")[0].files[0];
-// 						if(typeof file === "object"){
-// 							var fileObj = {
-// 									"segment_id" : currentDataNum,
-// 									"individual_id" : (index+1),
-// 									"individual_index" : (j+1),
-// 									"file" : file
-// 							};
-// 							file_array.push(fileObj);
-// 						}
 					}
 					dataArray.push(data);
 				});//end .result_tr each
@@ -1268,7 +1345,7 @@
 		file_array.sort(function(a, b){
 			return a.segment_id - b.segment_id;
 		});
-		/* console.log(tableResultArray); */
+		console.log(tableResultArray);
 	});//end //구획정보 테이블 로우 선택시 결과입력 테이블 그리기 이벤트
 	
 	//결과입력 등록

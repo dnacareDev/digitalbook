@@ -269,6 +269,7 @@ span.red{
 @media only screen and (max-width: 1500px){
 	#table2{
 	    width:max-content;
+	    min-width:100%;
 	}
 }
 #step6 table{
@@ -310,7 +311,7 @@ span.red{
     border-bottom: 1px solid #E4E4E4;
 }
 #table1 td, #table2 td, #table3 td, #step6 tbody tr td{
-    padding: 2px 40px;
+    padding: 2px 0;
 }
 #table3 td, #table4 td{
     font-weight: 300;
@@ -370,6 +371,7 @@ input[type="text"]{
 #mil{
     width: 100%;
     padding: 1px;
+    height: 30px;
 }
 #mil2{
     padding: 5px;
