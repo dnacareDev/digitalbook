@@ -54,6 +54,37 @@
     	height: 38px;
     	color: #788DEE;
 	}
+	
+	.id_color1{
+		background-color: #0064FF;
+	}
+	.id_color2{
+		background-color: #B2FA5C;
+	}
+	.id_color3{
+		background-color: #2CE0BC;
+	}
+	.id_color4{
+		background-color: #FF6A89;
+	}
+	.id_color5{
+		background-color: #0064FF;
+	}
+	.id_color6{
+		background-color: #0064FF;
+	}
+	.id_color7{
+		background-color: #0064FF;
+	}
+	.id_color8{
+		background-color: #0064FF;
+	}
+	.id_color9{
+		background-color: #0064FF;
+	}
+	.id_color10{
+		background-color: #0064FF;
+	}
 </style>
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
@@ -2788,8 +2819,8 @@
 	var factorArray = new Array();
 	
 	function gridFactors(){
-		
-		
+		resultArray = [];
+		factorArray = [];
 		var factor1 = "";
 		var factor2 = "";
 		var factor3 = "";
@@ -2900,19 +2931,19 @@
 			}//end for1
 		}
 		
-		//만들어준 factorArray를 가지고 최종 resultArray 만들어 주기
-		for(var i = 0; i < plan_repeat; i++){
-			level++;
-			for(var j = 0; j < factorArray.length; j++){
-				num1++;
-				var number = num1;
-				var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
-				
-				resultArray.push(data);
-			}
-		}//end for
-		
 		if(grow_type == "0"){
+			
+			//만들어준 factorArray를 가지고 최종 resultArray 만들어 주기
+			for(var i = 0; i < plan_repeat; i++){
+				level++;
+				for(var j = 0; j < factorArray.length; j++){
+					num1++;
+					var number = num1;
+					var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+					
+					resultArray.push(data);
+				}
+			}//end for
 			
 			//임의 임의배치 컴포넌트
 			var body = $("#table2");
@@ -2931,6 +2962,19 @@
 			$("#step4-container").empty();
 			body.append(add_list);
 		}else if(grow_type == "1"){
+			
+			//만들어준 factorArray를 가지고 최종 resultArray 만들어 주기
+			for(var i = 0; i < plan_repeat; i++){
+				level++;
+				num1= 0;
+				for(var j = 0; j < factorArray.length; j++){
+					num1++;
+					var number = num1;
+					var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+					
+					resultArray.push(data);
+				}
+			}//end for
 			
 			var copy_step_4 = $("#copy-step-4");
 			
@@ -2990,7 +3034,27 @@
 				}
 			});//end sortable
 			
-		}else if(grow_type == "2"){
+		}else if(grow_type == "2"){ //분할구배치법
+			
+			//만들어준 factorArray를 가지고 최종 resultArray 만들어 주기
+			for(var i = 0; i < plan_repeat; i++){
+				level++;
+				num1 = 0;
+				for(var j = 0; j < factorArray.length; j++){
+					num1++;
+					var number = num1;
+					var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+					
+					resultArray.push(data);
+				}
+			}//end for
+			
+			//분할구배치법에서 그룹 나눠줄 id array
+			var arr = new Array();
+			for(var i = 0; i < resultArray.length; i++){
+				arr[i] = resultArray[i].id.split("-")[0];
+			}
+			var idArray = Array.from(new Set(arr));
 			
 			var copy_step_4 = $("#copy-step-4");
 			
@@ -3013,11 +3077,15 @@
 				add_list += '</thead>';
 				add_list += '<tbody class="step4-container">';
 				
-				
 				for(var j = 0; j < resultArray.length; j++){
 					
 					if(resultArray[j].repeat == (i+1)){
-						add_list += '<tr class="table_content">';
+						var checkId = resultArray[j].id.split("-")[0];
+						for(var k = 0; k < idArray.length; k++){
+							if(checkId == idArray[k]){
+								add_list += '<tr class="table_content id_'+idArray[k]+'">';
+							}
+						}
 					    add_list += '<td class="table_num">'+resultArray[j].num+'</td>';
 					    add_list += '<td>'+resultArray[j].id+'</td>';
 					    add_list += '<td>'+resultArray[j].type+'</td>';
@@ -3047,7 +3115,16 @@
 					reorder();
 				}
 			});//end sortable
+			
+			//그룹별 색깔 적용해주기
+			$(document).find(".table_content").each(function(i, item){
+				
+				
+				
+			});
+			
 		}
+		console.log(resultArray);
 		//이곳에서 데이터 받아와야함 : important
 		var getDataArr = [...resultArray];
 		getDataResult(getDataArr);
