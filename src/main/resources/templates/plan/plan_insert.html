@@ -56,34 +56,34 @@
 	}
 	
 	.id_color1{
-		background-color: #0064FF;
+		background-color: #0064FF !important;
 	}
 	.id_color2{
-		background-color: #B2FA5C;
+		background-color: #B2FA5C !important;
 	}
 	.id_color3{
-		background-color: #2CE0BC;
+		background-color: #2CE0BC !important;
 	}
 	.id_color4{
-		background-color: #FF6A89;
+		background-color: #FF6A89 !important;
 	}
 	.id_color5{
-		background-color: #0064FF;
+		background-color: #FF82FF !important;
 	}
 	.id_color6{
-		background-color: #0064FF;
+		background-color: #BE2457 !important;
 	}
 	.id_color7{
-		background-color: #0064FF;
+		background-color: #FFBE0A !important;
 	}
 	.id_color8{
-		background-color: #0064FF;
+		background-color: #D27328 !important;
 	}
 	.id_color9{
-		background-color: #0064FF;
+		background-color: #8B4F1D !important;
 	}
 	.id_color10{
-		background-color: #0064FF;
+		background-color: #CD0000 !important;
 	}
 </style>
 <!-- 공통 헤더 -->
@@ -266,22 +266,20 @@
 			                    </div>
 			                    <div class="content clearfix">
 			                        <div class="btn btn_new" id="copy-step-4">
-		                            	<div id="copy-step-4-none">
-			                            	<table id="table2">
-				                                <thead>
-				                                <tr class="title">
-				                                    <th>구획번호</th>
-				                                    <th>구획ID</th>
-				                                    <th>처리종류</th>
-				                                    <th>반복</th>
-				                                    <th>처리포장면적(㎡)</th>
-				                                </tr>
-				                                </thead>
-				                                <tbody class="step4-container">
-				                                	
-				                                </tbody>
-				                            </table>	
-		                            	</div>
+		                            	<table id="table2">
+			                                <thead>
+			                                <tr class="title">
+			                                    <th>구획번호</th>
+			                                    <th>구획ID</th>
+			                                    <th>처리종류</th>
+			                                    <th>반복</th>
+			                                    <th>처리포장면적(㎡)</th>
+			                                </tr>
+			                                </thead>
+			                                <tbody class="step4-container container1">
+			                                	
+			                                </tbody>
+			                            </table>
 			                        </div>
 			                        <div class="content_right">
 			                            <div class="img_inner">
@@ -378,105 +376,22 @@
 											</ul>
 										</div>
 					            	</div>
-			                        <!-- <div class="submit clearfix">
-			                            <button type="button">다음</button>
-			                        </div> -->
+			                        <div class="submit clearfix">
+			                            <button type="button" id="step-5-btn" onclick="nextStep(6);">다음</button>
+			                        </div>
 			                    </div>
 			                </div>
 			            </div>
-			            <!-- <div class="step" id="step6">
+		            	<div class="step" id="step6">
 			                <div class="step_inner clearfix" id="step6_inner">
 			                    <div class="title">
 			                        <h3>Step 6. 담당자 및 일정<span></span></h3>
 			                    </div>
 			                    <div class="content clearfix" id="step6_list">
-			                        <div class="top1">
-			                            <span class="title_sub">[조사항목:쌀단백질]</span>
-			                            <div class="row">
-			                            	<div class="col-12">
-			                            		<ul>
-					                                <li>
-					                                    <span><span class="red" style="color: #FF4141">*</span>담당자(정)</span>
-					                                    <select class="select_user1">
-					                                        <option th:value=0 disabled="disabled" selected="selected" hidden="hidden">담당자 선택</option>
-							                                <th:block th:each="user : ${user}">
-							                                	<option th:value="${user.user_id}" th:text="${user.user_name_k}"></option>
-							                                </th:block>
-					                                    </select>
-					                                </li>
-					                                <li>
-					                                    <span>담당자(부)</span>
-					                                    <select class="select_user1">
-					                                        <option th:value=0 disabled="disabled" selected="selected" hidden="hidden">담당자 선택</option>
-							                                <th:block th:each="user : ${user}">
-							                                	<option th:value="${user.user_id}" th:text="${user.user_name_k}"></option>
-							                                </th:block>
-					                                    </select>
-					                                </li>
-					                            </ul>
-			                            	</div>
-			                            </div>
-			                            <div class="row">
-			                            	<div class="col-12">
-			                            		<ul>
-					                            	<li>
-					                                    <span style="float: left;">시작일</span>
-					                                    <input type="text" class="start_date" name="">
-					                                    <div class="cal">
-					                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
-					                                          <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-					                                        </svg>
-					                                    </div>
-					                                </li>
-					                                <li>
-					                                    <span style="float: left;">종료일</span>
-					                                    <input type="text" class="end_date" name="">
-					                                    <div class="cal">
-					                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
-					                                          <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-					                                        </svg>
-					                                    </div>
-					                                </li>
-					                            </ul>
-			                            	</div>
-			                            </div>
-			                            <div class="btn">
-			                                <button>추가</button>
-			                            </div>
-			                            
-			                        </div>
-			                        <div class="top1">
-			                            <table>
-			                                <thead>
-			                                    <tr>
-			                                        <th>No.</th>
-			                                        <th>담당자(정)</th>
-			                                        <th>담당자(부)</th>
-			                                        <th>일정</th>
-			                                        <th></th>
-			                                    </tr>
-			                                </thead>
-			                                <tbody>
-			                                    <tr>
-			                                        <td>1</td>
-			                                        <td>담당자</td>
-			                                        <td>담당자</td>
-			                                        <td>2021.00.00</td>
-			                                        <td><button  type="button" id="chanBtn1">변경</button></td>
-			                                    </tr>
-			                                    <tr>
-			                                        <td>1</td>
-			                                        <td>담당자</td>
-			                                        <td>담당자</td>
-			                                        <td>2021.00.00</td>
-			                                        <td><button  type="button" id="chanBtn2">변경</button></td>
-			                                    </tr>
-			                                </tbody>
-			                            </table>
-			                        </div>
+			                        
 			                    </div>
 			                </div>
-			            </div> -->
+			            </div>
 			            <div class="submit_btn">
 			                <div class="submit_btn-inner">
 			                    <button class="list" id="listBtn">목록</button>
@@ -510,137 +425,82 @@
 	        </div>
 		
 		<div class="modal-basic modal fade show" id="storageModal" tabindex="-1" role="dialog" aria-hidden="true">
-			    <div class="modal-dialog modal-xl" role="document">
-			        <div class="modal-content modal-bg-white">
-			        	<div class="modal-header">
-			        		<h6 class="modal-title">신규등록</h6>
-	                    	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	                        	<span data-feather="x"></span>
-	                        </button>
-			        	</div>
-			            <div class="modal-body">
-			            	<div class="col-12">
-				            	<form action="#" id="insertStorageForm" method="POST" enctype="multipart/form-data">
-				            		<div class="row">
-				            			<div class="col-sm-2 d-flex aling-items-center">
-			                            	<label for="storage_name" class="col-form-label color-dark align-center">위치<span style="color: red;">*</span></label>
-		                                </div>
-		                                <div class="col-sm-10">
-			                                <input type="text" class="form-control b-light" id="storage_name" name="storage_name">
-			                            </div>
-				            		</div>
-				            		<div class="row mt-3">
-				            			<div class="col-sm-2 d-flex aling-items-center">
-			                            	<label for="storage_division" class="col-form-label color-dark align-center">구획구분</label>
-		                                </div>
-		                                <div class="col-sm-10">
-			                                <input type="text" class="form-control b-light" id="storage_division" name="storage_division">
-			                            </div>
-				            		</div>
-				            		<div class="row mt-3">
-				            			<div class="col-sm-2 d-flex aling-items-center">
-			                            	<label for="storage_size" class="col-form-label color-dark align-center">면적</label>
-		                                </div>
-		                                <div class="col-sm-5">
-			                                <input type="text" class="form-control b-light" id="storage_size" name="storage_size">
-			                            </div>
-				            		</div>
-				            		<div class="row mt-3">
-				            			<div class="col-sm-2 d-flex aling-items-center">
-			                            	<label for="storage_type" class="col-form-label color-dark align-center">장소유형<span style="color: red;">*</span></label>
-		                                </div>
-		                                <div class="col-sm-5">
-			                                <select class="form-control b-light" id="storage_type" name="storage_type">
-		                                		<option value="9">유형 선택</option>
-		                                		<option value="0">작물 연구동</option>
-		                                		<option value="1">가공이용 연구동</option>
-		                                		<option value="2">연천 시험지</option>
-		                                		<option value="3">외부 포장지</option>
-			                                </select>
-			                            </div>
-				            		</div>
-				            		<div class="row mt-3">
-				            			<div class="col-sm-2 d-flex aling-items-center">
-			                            	<label for="storage_contents" class="col-form-label color-dark align-center">Comment</label>
-		                                </div>
-		                                <div class="col-sm-10">
-			                                <textarea class="form-control" id="storage_contents" name="storage_contents" rows="10"></textarea>
-			                            </div>
-				            		</div>
-				            		<div class="row mt-3">
-				            			<div class="col-sm-2 d-flex aling-items-center">
-			                            	<label class="col-form-label color-dark align-center">지도</label>
-		                                </div>
-		                                <div class="col-sm-10" id="modal_map" style="height: 300px;">
-			                                
-			                            </div>
-				            		</div>
-				            		<div class="button-group d-flex justify-content-end mt-2">
-				            			<input type="hidden" id="storage_location" name="storage_location">
-				            			<button type="button" class="btn btn-primary btn-default btn-squared" onclick="insertStorage();">저장</button>
-					           		</div>
-				            	</form>
-			            	</div>
-			            </div>
-			        </div>
-			    </div>
-			</div>
-		
-		<div class="modal-basic modal fade show" id="chanModal" tabindex="-1" role="dialog" aria-hidden="true">
-		    <div class="modal-dialog modal-lg" role="document">
+		    <div class="modal-dialog modal-xl" role="document">
 		        <div class="modal-content modal-bg-white">
+		        	<div class="modal-header">
+		        		<h6 class="modal-title">신규등록</h6>
+                    	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        	<span data-feather="x"></span>
+                        </button>
+		        	</div>
 		            <div class="modal-body">
-		            	<div class="row">
-			        		<div class="col-12">
-			        			<h2 style="float: left;">담당자 및 일정 변경</h2>
-					        	<div class="d-flex justify-content-end">
-			                		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span data-feather="x"></span></button>
-			                	</div>
-			        		</div>
-			        	</div>
-		            	<div class="row mt-3">
-		            		<div class="col-md-12">
-		            			<label for="" class="color-dark fw-500">담당자(정)</label>
-	                            <select>
-				                    <option>담당자 선택</option>
-				                    <option>담당자 선택</option>
-				                    <option>담당자 선택</option>
-				                    <option>담당자 선택</option>
-				                </select>
-		            		</div>
+		            	<div class="col-12">
+			            	<form action="#" id="insertStorageForm" method="POST" enctype="multipart/form-data">
+			            		<div class="row">
+			            			<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="storage_name" class="col-form-label color-dark align-center">위치<span style="color: red;">*</span></label>
+	                                </div>
+	                                <div class="col-sm-10">
+		                                <input type="text" class="form-control b-light" id="storage_name" name="storage_name">
+		                            </div>
+			            		</div>
+			            		<div class="row mt-3">
+			            			<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="storage_division" class="col-form-label color-dark align-center">구획구분</label>
+	                                </div>
+	                                <div class="col-sm-10">
+		                                <input type="text" class="form-control b-light" id="storage_division" name="storage_division">
+		                            </div>
+			            		</div>
+			            		<div class="row mt-3">
+			            			<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="storage_size" class="col-form-label color-dark align-center">면적</label>
+	                                </div>
+	                                <div class="col-sm-5">
+		                                <input type="text" class="form-control b-light" id="storage_size" name="storage_size">
+		                            </div>
+			            		</div>
+			            		<div class="row mt-3">
+			            			<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="storage_type" class="col-form-label color-dark align-center">장소유형<span style="color: red;">*</span></label>
+	                                </div>
+	                                <div class="col-sm-5">
+		                                <select class="form-control b-light" id="storage_type" name="storage_type">
+	                                		<option value="9">유형 선택</option>
+	                                		<option value="0">작물 연구동</option>
+	                                		<option value="1">가공이용 연구동</option>
+	                                		<option value="2">연천 시험지</option>
+	                                		<option value="3">외부 포장지</option>
+		                                </select>
+		                            </div>
+			            		</div>
+			            		<div class="row mt-3">
+			            			<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="storage_contents" class="col-form-label color-dark align-center">Comment</label>
+	                                </div>
+	                                <div class="col-sm-10">
+		                                <textarea class="form-control" id="storage_contents" name="storage_contents" rows="10"></textarea>
+		                            </div>
+			            		</div>
+			            		<div class="row mt-3">
+			            			<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label class="col-form-label color-dark align-center">지도</label>
+	                                </div>
+	                                <div class="col-sm-10" id="modal_map" style="height: 300px;">
+		                                
+		                            </div>
+			            		</div>
+			            		<div class="button-group d-flex justify-content-end mt-2">
+			            			<input type="hidden" id="storage_location" name="storage_location">
+			            			<button type="button" class="btn btn-primary btn-default btn-squared" onclick="insertStorage();">저장</button>
+				           		</div>
+			            	</form>
 		            	</div>
-			            <div class="row">
-			            	<div class="col-md-12">
-				                <label for="" class="color-dark fw-500">담당자(부)</label>
-	                            <select>
-				                    <option>담당자 선택</option>
-				                    <option>담당자 선택</option>
-				                    <option>담당자 선택</option>
-				                    <option>담당자 선택</option>
-				                </select>
-				            </div>
-			            </div>
-			            <div class="row">
-			            	<div class="col-md-12">
-			            		<span style="float:left">일정등록</span>
-			                	<input type="text" name="" class="regdate">
-				                <div class="cal">
-				                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
-				                      <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-				                    </svg>
-			                	</div>
-			            	</div>
-			            </div>
-			            <div class="row" style="flex-direction:row-reverse; padding: 20px 17px;">
-			            	<div class="input_submit">
-				                <button type="button" onclick="">저장</button>
-				            </div>
-			            </div>
 		            </div>
 		        </div>
 		    </div>
 		</div>
-	    <!-- ends: .modal-Basic -->
+		
 	    
 	    <div class="modal-basic modal fade show" id="seedModal" tabindex="-1" role="dialog" aria-hidden="true">
 		    <div class="modal-dialog modal-xl" role="document">
@@ -1100,7 +960,9 @@
     <script type="text/javascript" src="/../assets/vendor_assets/js/plan-segment.js"></script>
     <script type="text/javascript" src="/../assets/vendor_assets/js/plan-render.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=	e93e65b3e9a407aa43d05f993408db95&libraries=clusterer,services"></script>
-<script>
+<script type="text/javascript" th:inline="javascript">
+
+	var user = /*[[${user}]]*/ "null";
 
 	//시험구 배치 데이터
 	var data1 = new Object();
@@ -1115,6 +977,9 @@
 	var etcArray1 = new Array();
 	var etcArray2 = new Array();
 	var etcArray3 = new Array();
+	
+	//스케줄 등록할 객체 array
+	let scheduleArray = new Array();
 
 	$("#listBtn").on("click", function(){
 		window.location.href = "/plan/list";
@@ -1277,7 +1142,7 @@
 	});
 	
 	//초기 step4 구획 테이블 숨기기
-	$("#copy-step-4-none").css("display", "none");
+	/* $("#copy-step-4-none").css("display", "none"); */
 	
 	//시험구배치 요인 설정 버튼 이벤트
 	$(document).on("click", ".setting", function(){
@@ -2808,7 +2673,7 @@
 			$("#step4 .content").slideDown();
 			$("#step4 .title").addClass("active");
 			
-			$("#copy-step-4-none").css("display", "");
+			/* $("#copy-step-4-none").css("display", ""); */
 			
 			gridFactors();
 		}
@@ -2946,8 +2811,20 @@
 			}//end for
 			
 			//임의 임의배치 컴포넌트
-			var body = $("#table2");
+			var copy_step_4 = $("#copy-step-4");
 			add_list = "";
+			
+			add_list += '<table id="table2">';
+			add_list += '<thead>';
+			add_list += '<tr class="title">';
+			add_list += '<th>구획번호</th>';
+			add_list += '<th>구획 ID</th>';
+			add_list += '<th>처리종류</th>';
+			add_list += '<th>반복</th>';
+			add_list += '<th>처리포장면적(㎡)</th>';
+			add_list += '</tr>';
+			add_list += '</thead>';
+			add_list += '<tbody class="step4-container container1">';
 			
 			for(var i = 0; i < resultArray.length; i++){
 				add_list += '<tr class="table_content">';
@@ -2955,13 +2832,41 @@
 			    add_list += '<td>'+resultArray[i].id+'</td>';
 			    add_list += '<td>'+resultArray[i].type+'</td>';
 			    add_list += '<td>'+resultArray[i].repeat+'</td>';
-			    add_list += '<td><input type="text" id="mil" value="0"></td>';
+			    add_list += '<td><input type="text" id="mil" class="seg_area" value="0"></td>';
 			    add_list += '</tr>';
 			}
 			
-			$("#step4-container").empty();
-			body.append(add_list);
-		}else if(grow_type == "1"){
+			add_list += '</tbody>';
+			add_list += '</table>';
+			
+			
+			copy_step_4.empty();
+			copy_step_4.append(add_list);
+			
+			//sortable 적용
+			$(document).find(".container1").sortable({
+				placeholder : "itemBoxHighlight",
+				start : function(event, ui){
+					
+				},
+				stop : function(event, ui){//해당 구획 이동 완료 후 정렬
+					
+					var num = 1;
+ 					var targetNum = parseInt(ui.item[0].children[0].innerText)-1;
+ 					reorder(num);
+ 					var moveNum = parseInt(ui.item[0].children[0].innerText)-1;
+
+					let item = resultArray.splice(targetNum, 1);
+					resultArray.splice(moveNum, 0, item[0]);
+					
+					for(var i = 0; i < resultArray.length; i++){
+						resultArray[i].num = (i+1);
+					}
+					console.log(resultArray);
+				}
+			});//end sortable
+			
+		}else if(grow_type == "1"){ //난괴법
 			
 			//만들어준 factorArray를 가지고 최종 resultArray 만들어 주기
 			for(var i = 0; i < plan_repeat; i++){
@@ -2984,7 +2889,7 @@
 			
 			for(var i = 0; i < plan_repeat; i++){
 				
-				add_list += '<div>집구 '+(i+1)+'</div>';
+				add_list += '<div class="copy-title">집구 '+(i+1)+'</div>';
 				add_list += '<table id="table2">';
 				add_list += '<thead>';
 				add_list += '<tr class="title">';
@@ -2995,7 +2900,7 @@
 				add_list += '<th>처리포장면적(㎡)</th>';
 				add_list += '</tr>';
 				add_list += '</thead>';
-				add_list += '<tbody class="step4-container">';
+				add_list += '<tbody class="step4-container container'+(i+1)+'">';
 				
 				
 				for(var j = 0; j < resultArray.length; j++){
@@ -3006,7 +2911,7 @@
 					    add_list += '<td>'+resultArray[j].id+'</td>';
 					    add_list += '<td>'+resultArray[j].type+'</td>';
 					    add_list += '<td>'+resultArray[j].repeat+'</td>';
-					    add_list += '<td><input type="text" id="mil" value="0"></td>';
+					    add_list += '<td><input type="text" id="mil" class="seg_area" value="0"></td>';
 					    add_list += '</tr>';
 					}
 				}//end for2
@@ -3024,15 +2929,37 @@
 			
 			//end 난괴법 컴포넌트
 			
-			$(document).find(".step4-container").sortable({
-				placeholder : "itemBoxHighlight",
-				start : function(event, ui){
-					
-				},
-				stop : function(event, ui){
-					reorder();
-				}
-			});//end sortable
+			//jquery sortable 적용
+			for(var i = 0; i < plan_repeat; i++){
+				$(document).find(".container"+(i+1)).sortable({
+					placeholder : "itemBoxHighlight",
+					start : function(event, ui){
+						
+					},
+					stop : function(event, ui){//해당 구획 이동 완료 후 정렬
+						
+						//해당 로우의 반복수
+						var num = parseInt(ui.item[0].children[3].innerText);
+						
+						//해당 집구의 테이블 로우 개수
+						var standardNum = $(".container1 .table_content").length;
+						var checkNum = (num-1) * standardNum;
+						
+						var targetNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
+	 					reorder(num);
+	 					var moveNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
+
+						let item = resultArray.splice(targetNum, 1);
+						resultArray.splice(moveNum, 0, item[0]);
+						var plusNum = 0;
+						for(var i = checkNum; i < (checkNum+standardNum); i++){
+							plusNum++;
+							resultArray[i].num = plusNum;
+						}
+						console.log(resultArray);
+					}
+				});//end sortable
+			}
 			
 		}else if(grow_type == "2"){ //분할구배치법
 			
@@ -3064,7 +2991,7 @@
 			
 			for(var i = 0; i < plan_repeat; i++){
 				
-				add_list += '<div>집구 '+(i+1)+'</div>';
+				add_list += '<div class="copy-title">집구 '+(i+1)+'</div>';
 				add_list += '<table id="table2">';
 				add_list += '<thead>';
 				add_list += '<tr class="title">';
@@ -3075,7 +3002,7 @@
 				add_list += '<th>처리포장면적(㎡)</th>';
 				add_list += '</tr>';
 				add_list += '</thead>';
-				add_list += '<tbody class="step4-container">';
+				add_list += '<tbody class="step4-container container'+(i+1)+'">';
 				
 				for(var j = 0; j < resultArray.length; j++){
 					
@@ -3083,14 +3010,14 @@
 						var checkId = resultArray[j].id.split("-")[0];
 						for(var k = 0; k < idArray.length; k++){
 							if(checkId == idArray[k]){
-								add_list += '<tr class="table_content id_'+idArray[k]+'">';
+								add_list += '<tr class="table_content '+idArray[k]+'">';
 							}
 						}
 					    add_list += '<td class="table_num">'+resultArray[j].num+'</td>';
 					    add_list += '<td>'+resultArray[j].id+'</td>';
 					    add_list += '<td>'+resultArray[j].type+'</td>';
 					    add_list += '<td>'+resultArray[j].repeat+'</td>';
-					    add_list += '<td><input type="text" id="mil" value="0"></td>';
+					    add_list += '<td><input type="text" id="mil" class="seg_area" value="0"></td>';
 					    add_list += '</tr>';
 					}
 				}//end for2
@@ -3106,20 +3033,163 @@
 			copy_step_4.empty();
 			copy_step_4.append(result_div);
 			
-			$(document).find(".step4-container").sortable({
-				placeholder : "itemBoxHighlight",
-				start : function(event, ui){
-					
-				},
-				stop : function(event, ui){
-					reorder();
-				}
-			});//end sortable
+			//jquery sortable 적용
+			for(var i = 0; i < plan_repeat; i++){
+				$(document).find(".container"+(i+1)).sortable({
+					placeholder : "itemBoxHighlight",
+					start : function(event, ui){
+						
+					},
+					stop : function(event, ui){//해당 구획 이동 완료 후 정렬
+						
+						//해당 로우의 반복수
+						var num = parseInt(ui.item[0].children[3].innerText);
+						
+						//해당 집구의 테이블 로우 개수
+						var standardNum = $(".container1 .table_content").length;
+						var checkNum = (num-1) * standardNum;
+						
+						var targetNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
+	 					reorder(num);
+	 					var moveNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
+
+						let item = resultArray.splice(targetNum, 1);
+						resultArray.splice(moveNum, 0, item[0]);
+						var plusNum = 0;
+						for(var i = checkNum; i < (checkNum+standardNum); i++){
+							plusNum++;
+							resultArray[i].num = plusNum;
+						}
+						console.log(resultArray);
+					}
+				});//end sortable
+			}
 			
 			//그룹별 색깔 적용해주기
 			$(document).find(".table_content").each(function(i, item){
 				
+				/* id_color9 */
+				for(var j = 0; j < idArray.length; j++){
+					if($(this).hasClass(idArray[j])){
+						$(this).addClass("id_color"+(j+1));
+					}
+				}
 				
+			});
+			
+		}else if(grow_type == "3"){ //세세구배치법
+			
+			//만들어준 factorArray를 가지고 최종 resultArray 만들어 주기
+			for(var i = 0; i < plan_repeat; i++){
+				level++;
+				num1 = 0;
+				for(var j = 0; j < factorArray.length; j++){
+					num1++;
+					var number = num1;
+					var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+					
+					resultArray.push(data);
+				}
+			}//end for
+			
+			//분할구배치법에서 그룹 나눠줄 id array
+			var arr = new Array();
+			for(var i = 0; i < resultArray.length; i++){
+				arr[i] = resultArray[i].id.split("-")[0]+"-"+resultArray[i].id.split("-")[1];
+			}
+			var idArray = Array.from(new Set(arr));
+			
+			var copy_step_4 = $("#copy-step-4");
+			
+			add_list = "";
+			var add_div = "";
+			var result_div = "";
+			
+			for(var i = 0; i < plan_repeat; i++){
+				
+				add_list += '<div class="copy-title">집구 '+(i+1)+'</div>';
+				add_list += '<table id="table2">';
+				add_list += '<thead>';
+				add_list += '<tr class="title">';
+				add_list += '<th>구획번호</th>';
+				add_list += '<th>구획 ID</th>';
+				add_list += '<th>처리종류</th>';
+				add_list += '<th>반복</th>';
+				add_list += '<th>처리포장면적(㎡)</th>';
+				add_list += '</tr>';
+				add_list += '</thead>';
+				add_list += '<tbody class="step4-container container'+(i+1)+'">';
+				
+				for(var j = 0; j < resultArray.length; j++){
+					
+					if(resultArray[j].repeat == (i+1)){
+						var checkId = resultArray[j].id.split("-")[0]+"-"+resultArray[j].id.split("-")[1];
+						for(var k = 0; k < idArray.length; k++){
+							if(checkId == idArray[k]){
+								add_list += '<tr class="table_content '+idArray[k]+'">';
+							}
+						}
+					    add_list += '<td class="table_num">'+resultArray[j].num+'</td>';
+					    add_list += '<td>'+resultArray[j].id+'</td>';
+					    add_list += '<td>'+resultArray[j].type+'</td>';
+					    add_list += '<td>'+resultArray[j].repeat+'</td>';
+					    add_list += '<td><input type="text" id="mil" class="seg_area" value="0"></td>';
+					    add_list += '</tr>';
+					}
+				}//end for2
+				
+				add_list += '</tbody>';
+				add_list += '</table>';
+				
+				result_div += add_list;
+				
+				add_list = "";
+			}//end for1
+			
+			copy_step_4.empty();
+			copy_step_4.append(result_div);
+			
+			//jquery sortable 적용
+			for(var i = 0; i < plan_repeat; i++){
+				$(document).find(".container"+(i+1)).sortable({
+					placeholder : "itemBoxHighlight",
+					start : function(event, ui){
+						
+					},
+					stop : function(event, ui){//해당 구획 이동 완료 후 정렬
+						
+						//해당 로우의 반복수
+						var num = parseInt(ui.item[0].children[3].innerText);
+						
+						//해당 집구의 테이블 로우 개수
+						var standardNum = $(".container1 .table_content").length;
+						var checkNum = (num-1) * standardNum;
+						
+						var targetNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
+	 					reorder(num);
+	 					var moveNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
+
+						let item = resultArray.splice(targetNum, 1);
+						resultArray.splice(moveNum, 0, item[0]);
+						var plusNum = 0;
+						for(var i = checkNum; i < (checkNum+standardNum); i++){
+							plusNum++;
+							resultArray[i].num = plusNum;
+						}
+						console.log(resultArray);
+					}
+				});//end sortable
+			}
+			
+			//그룹별 색깔 적용해주기
+			$(document).find(".table_content").each(function(i, item){
+				
+				/* id_color9 */
+				for(var j = 0; j < idArray.length; j++){
+					if($(this).hasClass(idArray[j])){
+						$(this).addClass("id_color"+(j+1));
+					}
+				}
 				
 			});
 			
@@ -3141,23 +3211,6 @@
 		}
 	});//end sortable
 	
-	$(document).find(".step4-container").sortable({
-		placeholder : "itemBoxHighlight",
-		start : function(event, ui){
-			var index = ui.item.index();
-			startIndex = index;
-			
-		},
-		stop : function(event, ui){
-			var index = ui.item.index();
-			endIndex = index;
-			
-			
-			reorder();
-			sortData(event, ui);
-		}
-	});//end sortable
-	
 	$(document).find("#method-container").sortable({
 		placeholder : "itemBoxHighlight",
 		start : function(event, ui){
@@ -3169,20 +3222,19 @@
 	});//end sortable
 	
 	//번호 재입력 //numbering
-	function reorder(){
+	function reorder(num){
 		
-		$(document).find(".step4-container .table_content").each(function(i, item){
+		$(document).find(".container"+num+" .table_content").each(function(i, item){
 			$(this).find(".table_num").text((i+1));
 		});
-	}
-	var startIndex = 0;
-	var endIndex = 0;
-	var startData = {};
-	var endData = {};
-	
-	function sortData(e, ui){
 		
 	}
+	
+	//구획정보 처리포장면적 이벤트
+	$(document).on("keyup", ".container1 .table_content:eq(0) .seg_area", function(){
+		var input_text = $(this).val();
+		$(document).find(".seg_area").val(input_text);
+	});
 	
 	//조사 항목 체크박스 추가 이벤트
 	function PlusMethod(){
@@ -3240,6 +3292,7 @@
 		});
 		
 		method_container.append(add_list);
+		gridStep6();
 	}
 	
 	//조사항목 체크박스 삭제
@@ -3262,7 +3315,7 @@
 				}
 			}
 		});
-		
+		gridStep6();
 	}
 	
 	//등록 버튼 이벤트
@@ -3293,6 +3346,7 @@
 		}else if(Object.keys(data1).length == 0 && Object.keys(data2).length == 0 && Object.keys(data3).length == 0){
 			alert("시험구배치 요인을 선택해 주세요");
 		}else {
+			
 			insertPlan().then(function(result){
 				
 				if(result == 0){
@@ -3300,6 +3354,14 @@
 				}else{
 					var plan_id = result;
 					
+					var checkSch = $(document).find(".input_manager_tr").length;
+					
+					//담당자 등록
+					if(checkSch != 0){
+						insertSchedule(plan_id);
+					}
+					
+					//시험구 요인 등록
 					insertFactor(plan_id);
 				}
 				
@@ -3914,6 +3976,214 @@
 		}
 		
 	}
+	
+	//datapicker 기본 옵션 설정
+	$.datepicker.setDefaults({
+		dateFormat: "yy-mm-dd",
+      	/* duration: "medium",
+      	changeMonth: true,
+      	changeYear: true */
+	});
+	
+	//담당자 그려주기
+	function gridStep6(){
+		
+		$("#step6_list").empty();
+		
+		var step6_list = $("#step6_list");
+		var length = $(document).find("#method-container .method-step").length;
+		var add_list = "";
+		
+		$(document).find("#method-container .method-step").each(function(i, item){
+			
+			add_list += '<div class="top1">';
+			add_list += '<span class="title_sub">[조사항목 : '+$(this).find(".method_title").text()+']</span>';
+			
+			add_list += '<div class="row">'; //row1
+			add_list += '<div class="col-12">';
+			add_list += '<ul>';
+			
+			add_list += '<li>';
+			add_list += '<span><span class="red" style="color: #FF4141">*</span>담당자(정)</span>';
+			add_list += '<select class="select_user1">';
+			add_list += '<option value=0 disabled="disabled" selected="selected" hidden="hidden">담당자 선택</option>';
+			for(var j = 0; j < user.length; j++){
+				add_list += '<option value="'+user[j].user_id+'">'+user[j].user_name_k+'</option>';
+			}
+			add_list += '</select>';
+			add_list += '</li>';
+			
+			add_list += '<li>';
+			add_list += '<span>담당자(부)</span>';
+			add_list += '<select class="select_user2">';
+			add_list += '<option value=0 disabled="disabled" selected="selected" hidden="hidden">담당자 선택</option>';
+			for(var j = 0; j < user.length; j++){
+				add_list += '<option value="'+user[j].user_id+'">'+user[j].user_name_k+'</option>';
+			}
+			add_list += '</select>';
+			add_list += '</li>';
+			
+			add_list += '</ul>';
+			add_list += '</div>';
+			add_list += '</div>'; //end row1
+			
+			add_list += '<div class="row">'; //row2
+			add_list += '<div class="col-12">';
+			add_list += '<ul>';
+			add_list += '<li>';
+			add_list += '<span style="float: left;">시작일</span>';
+			add_list += '<input type="text" class="start_date" name="">';
+			add_list += '<div class="cal">';
+			add_list += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">';
+			add_list += '<path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>';
+			add_list += '</svg>';
+			add_list += '</div>';
+			add_list += '</li>';
+			
+			add_list += '<li>';
+			add_list += '<span style="float: left;">종료일</span>';
+			add_list += '<input type="text" class="end_date" name="">';
+			add_list += '<div class="cal">';
+			add_list += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">';
+			add_list += '<path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>';
+			add_list += '</svg>';
+			add_list += '</div>';
+			add_list += '</li>';
+			add_list += '<li>';
+			
+			add_list += '</ul>';
+			add_list += '</div>';
+			add_list += '</div>'; //end row2
+			
+			add_list += '<div class="btn">';
+			add_list += '<button type="button" class="add_manager">추가</button>';
+			add_list += '</div>';
+			add_list += '</div>'; //end top1
+			
+			add_list += '<div class="top1">';
+			add_list += '<table>';
+			add_list += '<thead>';
+			add_list += '<tr class="mng_method" data-method="'+$(this).attr("th:data-id")+'">';
+			add_list += '<th>담당자(정)</th>';
+			add_list += '<th>담당자(부)</th>';
+			add_list += '<th>시작일</th>';
+			add_list += '<th>종료일</th>';
+			add_list += '<th></th>';
+			add_list += '</tr>';
+			add_list += '</thead>';
+			add_list += '<tbody class="input_manager">';
+			
+			add_list += '</tbody>';
+			add_list += '</table>';
+			add_list += '</div>';
+			
+		});
+		
+		step6_list.append(add_list);
+		
+		//동적 생성된 datepicker 클래스에 datepicker 이벤트 주기
+		$(document).find(".start_date").each(function(index){
+			$(this).datepicker();
+			$(this).addClass(".start-datepicker"+index);
+			$(this).find(".ui-datepicker-trigger").remove();
+			$(".start-datepicker"+index).removeClass("hasDatepicker").datepicker();
+		});
+		
+		$(document).find(".end_date").each(function(index){
+			$(this).datepicker();
+			$(this).addClass(".end-datepicker"+index);
+			$(this).find(".ui-datepicker-trigger").remove();
+			$(".end-datepicker"+index).removeClass("hasDatepicker").datepicker();
+		});
+		
+	}//end 담당자 그려주기
+	
+	//담당자 추가 이벤트
+	$(document).on("click", ".add_manager", function(){
+		
+		var manager1_id = $(this).parent().parent().find(".select_user1 option:selected").val();
+		
+		var manager1_text = $(this).parent().parent().find(".select_user1 option:selected").text();
+		if(manager1_id == 0){
+			manager1_text = "";
+		}
+		var manager2_id = $(this).parent().parent().find(".select_user2 option:selected").val();
+		var manager2_text = $(this).parent().parent().find(".select_user2 option:selected").text();
+		if(manager2_id == 0){
+			manager2_text = "";
+		}
+		var start_date = $(this).parent().parent().find(".start_date").val();
+		var end_date = $(this).parent().parent().find(".end_date").val();
+		
+		var input_manager = $(this).parent().parent().next().find(".input_manager");
+		
+		var checkId = $(this).parent().parent().next().find(".input_manager:eq(0)").find(".mng_input1").attr("data-id");
+		console.log(checkId);
+		
+		if(checkId != undefined && checkId != manager1_id){
+			alert("담당자(정)은 한명만 지정이 가능합니다.");
+		}else{
+			var str = "";
+			
+			str += '<tr class="input_manager_tr">';
+			str += '<td class="mng_input1" data-id="'+manager1_id+'">'+manager1_text+'</td>';
+			str += '<td class="mng_input2" data-id="'+manager2_id+'">'+manager2_text+'</td>';
+			str += '<td class="mng_input3">'+start_date+'</td>';
+			str += '<td class="mng_input4">'+end_date+'</td>';
+			str += '<td><button type="button" class="del_manager">삭제</button></td>';
+			str += '</tr>';
+			
+			input_manager.append(str);
+			
+		}
+		
+		
+		
+	});//end 담당자 추가 이벤트
+	
+	//담당자 삭제 이벤트
+	$(document).on("click", ".del_manager", function(){
+		$(this).parent().parent().remove();
+	});
+	
+	//스케줄 등록 실행 함수
+	function insertSchedule(plan_id){
+		
+		$(document).find(".input_manager_tr").each(function(i, index){
+			var method_id = $(this).parent().prev().find(".mng_method").attr("data-method");
+			var sch_supervisor = $(this).find(".mng_input1").attr("data-id");
+			var sch_manager = $(this).find(".mng_input2").attr("data-id");
+			var start_date = $(this).find(".mng_input3").text();
+			var end_date = $(this).find(".mng_input4").text();
+			
+			let mng_data = {
+					"plan_id" : plan_id,
+					"method_id" : method_id,
+					"sch_supervisor" : sch_supervisor,
+					"sch_manager" : sch_manager,
+					"start_date" : start_date,
+					"end_date" : end_date
+			};
+			scheduleArray.push(mng_data);
+		});
+		
+		
+		$.ajax({
+			url : "/plan/insertSchedule",
+			method : "POST",
+			contentType : "application/json; charset=utf-8",
+			data : JSON.stringify(scheduleArray),
+			success : function(result){
+				if(result == 0){
+					
+				}else {
+					
+				}
+			}
+		});//end ajax
+	}
+	
+	
 
 </script>
 
