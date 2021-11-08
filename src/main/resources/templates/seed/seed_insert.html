@@ -63,7 +63,7 @@
 		                                   <select class="form-control b-light" id="report_code">
 			                                <option th:value="none">과제 선택</option>
 			                                <th:block th:each="report : ${report}">
-			                                	<option th:value="${report.report_code}" th:text="${report.report_title}"></option>
+			                                	<option th:value="${report.report_code}" th:text="${report.report_title +'('+ report.report_code} +')'"></option>
 			                                </th:block>
 			                               </select>
 		                                </div>

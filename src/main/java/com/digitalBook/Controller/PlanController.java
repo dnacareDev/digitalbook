@@ -86,10 +86,12 @@ public class PlanController
 		List<Report> report = service.selectReportList();
 		List<Fertilizer> fert = service.selectFertilizerList(0, 0);
 		List<Method> method = service.selectMethodList(prin.getUser_group());
+		List<User> user = service.selectUserList(prin.getUser_group());
 		
 		mv.addObject("report", report);
 		mv.addObject("fert", fert);
 		mv.addObject("method", method);
+		mv.addObject("user", user);
 		
 		mv.setViewName("plan/plan_insert");
 		
@@ -473,6 +475,36 @@ public class PlanController
 		return result;
 	}
 	
+	//담당자 수정
+	@ResponseBody
+	@RequestMapping("updateSchedule")
+	public int updateSchedule(@RequestBody List<Schedule> schedule, @RequestParam("plan_code") String plan_code)
+	{
+		int insertResult[] = new int[schedule.size()];
+		int result = 0;
+		
+		for(int i = 0; i < schedule.size(); i++) {
+			insertResult[i] = service.insertSchedule(schedule.get(i));
+		}
+		
+		Boolean isInsert = IntStream.of(insertResult).noneMatch(x -> x == 0);
+		
+		if(isInsert) {
+			result = 1;
+			service.updatePlanStatus1(schedule.get(0).getPlan_id());
+			//수정 성공 후 변경 이력 등록
+			Record record = new Record();
+			record.setRecord_status(1);
+			record.setRecord_type(schedule.get(0).getPlan_id());
+			record.setRecord_type_code(plan_code);
+			service.insertRecord(record);
+		}else {
+			result = 0;
+		}
+		
+		return result;
+	}
+	
 	//결과입력 목록 페이지
 	@RequestMapping("/result/list")
 	public ModelAndView ResultList(ModelAndView mv)
@@ -590,12 +622,13 @@ public class PlanController
 	//결과입력 등록
 	@ResponseBody
 	@RequestMapping(value = "/insertResults")
-	public int InsertResult(MultipartHttpServletRequest req, HttpServletRequest requst) throws IOException
+	public int InsertResult(MultipartHttpServletRequest req, HttpServletRequest requst, @RequestParam(name = "cancelArr") int cancel[]) throws IOException
 	{
 		
 		ObjectMapper mapper = new ObjectMapper();
 		
 		List<MultipartFile> files = req.getFiles("file");
+		
 //		System.out.println(requst.getParameterValues("index")[0]);
 //		System.out.println(files.size());
 //		System.out.println(requst.getParameterValues("result")[0]);
@@ -621,23 +654,19 @@ public class PlanController
 			indexList.add(indexNode.get(i).get("index").asText());
 		}
 		
-		int insertResult[] = new int[results.size()];
 		int result = 0;
 		
 		if(files.size() != 0) {
-			result = SaveResultImg(files, indexList, results);
+			result = SaveResultImg(files, indexList, results, cancel);
 			System.out.println(results.size()+"개 등록 완료");
 		}else {
-			for(int i = 0; i < results.size(); i++) {
-				insertResult[i] = service.insertResults(results.get(i));
-			}
 			
-			Boolean isInsert = IntStream.of(insertResult).noneMatch(x -> x == 0);
+			result = service.insertResults(results);
 			
-			if(isInsert) {
-				result = 1;
-			}else {
-				result = 0;
+			if(result != 0) {
+				if(cancel.length != 0) {
+					service.deleteResults(cancel);
+				}
 			}
 			System.out.println(results.size()+"개 등록 완료");
 		}
@@ -646,10 +675,8 @@ public class PlanController
 	}
 	
 	//결과입력 사진 저장
-	public int SaveResultImg(List<MultipartFile> files, List<String> indexList, List<Results> results) throws IOException
+	public int SaveResultImg(List<MultipartFile> files, List<String> indexList, List<Results> results, int cancel[]) throws IOException
 	{
-		
-		int insertResult[] = new int[results.size()];
 		
 		for(int i = 0; i < indexList.size(); i++) {
 			
@@ -684,20 +711,13 @@ public class PlanController
 			
 		}//end for
 		
-		for(int i = 0; i < results.size(); i++) {
-			insertResult[i] = service.insertResults(results.get(i));
+		int result = service.insertResults(results);
+		
+		if(result != 0) {
+			if(cancel.length != 0) {
+				service.deleteResults(cancel);
+			}
 		}
-		
-		int result = 0;
-		
-		Boolean isInsert = IntStream.of(insertResult).noneMatch(x -> x == 0);
-		
-		if(isInsert) {
-			result = 1;
-		}else {
-			result = 0;
-		}
-		
 		
 		return result;
 	}

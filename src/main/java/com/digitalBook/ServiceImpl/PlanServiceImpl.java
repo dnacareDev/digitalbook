@@ -230,9 +230,9 @@ public class PlanServiceImpl implements PlanService {
 		return mapper.selectPlanMethodList(arr);
 	}
 	
-	//결과입력 등록
+	//결과입력 등록 
 	@Override
-	public int insertResults(Results results) {
+	public int insertResults(List<Results> results) {
 		
 		return mapper.insertResults(results);
 	}
@@ -242,6 +242,20 @@ public class PlanServiceImpl implements PlanService {
 	public List<Results> selectResultsList(int plan_id) {
 		
 		return mapper.selectResultsList(plan_id);
+	}
+	
+	//담당자 변경시 plan status 수정
+	@Override
+	public int updatePlanStatus1(int plan_id) {
+		
+		return mapper.updatePlanStatus1(plan_id);
+	}
+	
+	//결과입력 삭제
+	@Override
+	public int deleteResults(int[] arr) {
+		// TODO Auto-generated method stub
+		return mapper.deleteResults(arr);
 	}
 
 }
