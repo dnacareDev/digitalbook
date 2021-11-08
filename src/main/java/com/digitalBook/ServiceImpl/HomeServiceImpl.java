@@ -29,4 +29,10 @@ public class HomeServiceImpl implements HomeService {
 		return mapper.selectCurrentPlanList(user_group, user_id);
 	}
 
+	// 진행 상황
+	@Override
+	public List<Plan> selectProgressPlanList(int user_group, int user_id) {
+		return mapper.selectCurrentPlanList(user_group, user_id);
+	}
+
 }
