@@ -396,16 +396,13 @@
 											</ul>
 										</div>
 					            	</div>
-					            	<th:block th:if="${plan.plan_step == 1}">
-				                        <div class="submit clearfix">
-				                            <button type="button" id="step-5-btn" onclick="nextStep(6);">다음</button>
-				                        </div>
-			                        </th:block>
+					            	<div class="submit clearfix">
+			                            <button type="button" id="step-5-btn" onclick="nextStep(6);">다음</button>
+			                        </div>
 			                    </div>
 			                </div>
 			            </div>
-			            <th:block th:if="${plan.plan_step == 1}">
-			            	<div class="step" id="step6">
+			            <div class="step" id="step6">
 			                <div class="step_inner clearfix" id="step6_inner">
 			                    <div class="title">
 			                        <h3>Step 6. 담당자 및 일정<span></span></h3>
@@ -415,7 +412,6 @@
 			                    </div>
 			                </div>
 			            </div>
-			            </th:block>
 			            <div class="submit_btn">
 			                <div class="submit_btn-inner">
 			                    <button class="list" id="listBtn">목록</button>
@@ -423,7 +419,7 @@
 			                    	<button class="submit" id="planUpdateBtn">수정</button>
 			                    </th:block>
 			                    <th:block th:if="${plan.plan_step == 1}">
-			                    	<button class="submit" onclick="insertSch();">담당자 등록</button>
+			                    	<button class="submit" onclick="updateSch();">담당자 수정</button>
 			                    </th:block>
 			                    <th:block th:if="${#authentication.principal.user_type == 0 and plan.plan_status == 0 or plan.plan_status == 1}">
 									<button type="button" class="list" onclick="UpdateStatusBtn();">승인</button>
@@ -591,7 +587,7 @@
 			            <div class="row">
 			            	<div class="col-md-12">
 			            		<span style="float:left">시작일</span>
-			                	<input type="text" id="regdate1" class="regdate">
+			                	<input type="text" class="regdate">
 				                <div class="cal">
 				                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
 				                      <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
@@ -602,7 +598,7 @@
 			            <div class="row">
 			            	<div class="col-md-12">
 			            		<span style="float:left">종료일</span>
-			                	<input type="text" id="regdate2" class="regdate">
+			                	<input type="text" class="regdate">
 				                <div class="cal">
 				                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
 				                      <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
@@ -3264,7 +3260,7 @@
 			    add_list += '<td>'+resultArray[i].id+'</td>';
 			    add_list += '<td>'+resultArray[i].type+'</td>';
 			    add_list += '<td>'+resultArray[i].repeat+'</td>';
-			    add_list += '<td><input type="text" id="mil" value="0"></td>';
+			    add_list += '<td><input type="text" id="mil" class="seg_area" value="0"></td>';
 			    add_list += '</tr>';
 			}
 			
@@ -3304,7 +3300,7 @@
 				}
 			});//end sortable
 			
-		}else if(grow_type == "1"){
+		}else if(grow_type == "1"){ //난괴법
 			
 			//만들어준 factorArray를 가지고 최종 resultArray 만들어 주기
 			for(var i = 0; i < plan_repeat; i++){
@@ -3349,7 +3345,7 @@
 					    add_list += '<td>'+resultArray[j].id+'</td>';
 					    add_list += '<td>'+resultArray[j].type+'</td>';
 					    add_list += '<td>'+resultArray[j].repeat+'</td>';
-					    add_list += '<td><input type="text" id="mil" value="0"></td>';
+					    add_list += '<td><input type="text" id="mil" class="seg_area" value="0"></td>';
 					    add_list += '</tr>';
 					}
 				}//end for2
@@ -3438,7 +3434,7 @@
 				add_list += '<td>처리포장면적(㎡)</td>';
 				add_list += '</tr>';
 				add_list += '</thead>';
-				add_list += '<tbody class="step4-container">';
+				add_list += '<tbody class="step4-container container'+(i+1)+'">';
 				
 				
 				for(var j = 0; j < resultArray.length; j++){
@@ -3454,7 +3450,7 @@
 					    add_list += '<td>'+resultArray[j].id+'</td>';
 					    add_list += '<td>'+resultArray[j].type+'</td>';
 					    add_list += '<td>'+resultArray[j].repeat+'</td>';
-					    add_list += '<td><input type="text" id="mil" value="0"></td>';
+					    add_list += '<td><input type="text" id="mil" class="seg_area" value="0"></td>';
 					    add_list += '</tr>';
 					}
 				}//end for2
@@ -3470,15 +3466,37 @@
 			copy_step_4.empty();
 			copy_step_4.append(result_div);
 			
-			$(document).find(".step4-container").sortable({
-				placeholder : "itemBoxHighlight",
-				start : function(event, ui){
-					
-				},
-				stop : function(event, ui){
-					
-				}
-			});//end sortable
+			//jquery sortable 적용
+			for(var i = 0; i < plan_repeat; i++){
+				$(document).find(".container"+(i+1)).sortable({
+					placeholder : "itemBoxHighlight",
+					start : function(event, ui){
+						
+					},
+					stop : function(event, ui){//해당 구획 이동 완료 후 정렬
+						
+						//해당 로우의 반복수
+						var num = parseInt(ui.item[0].children[3].innerText);
+						
+						//해당 집구의 테이블 로우 개수
+						var standardNum = $(".container1 .table_content").length;
+						var checkNum = (num-1) * standardNum;
+						
+						var targetNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
+	 					reorder(num);
+	 					var moveNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
+
+						let item = resultArray.splice(targetNum, 1);
+						resultArray.splice(moveNum, 0, item[0]);
+						var plusNum = 0;
+						for(var i = checkNum; i < (checkNum+standardNum); i++){
+							plusNum++;
+							resultArray[i].num = plusNum;
+						}
+						console.log(resultArray);
+					}
+				});//end sortable
+			}
 			
 			//그룹별 색깔 적용해주기
 			$(document).find(".table_content").each(function(i, item){
@@ -3533,7 +3551,7 @@
 				add_list += '<th>처리포장면적(㎡)</th>';
 				add_list += '</tr>';
 				add_list += '</thead>';
-				add_list += '<tbody class="step4-container">';
+				add_list += '<tbody class="step4-container container'+(i+1)+'">';
 				
 				for(var j = 0; j < resultArray.length; j++){
 					
@@ -3548,7 +3566,7 @@
 					    add_list += '<td>'+resultArray[j].id+'</td>';
 					    add_list += '<td>'+resultArray[j].type+'</td>';
 					    add_list += '<td>'+resultArray[j].repeat+'</td>';
-					    add_list += '<td><input type="text" id="mil" value="0"></td>';
+					    add_list += '<td><input type="text" id="mil" class="seg_area" value="0"></td>';
 					    add_list += '</tr>';
 					}
 				}//end for2
@@ -3564,15 +3582,37 @@
 			copy_step_4.empty();
 			copy_step_4.append(result_div);
 			
-			$(document).find(".step4-container").sortable({
-				placeholder : "itemBoxHighlight",
-				start : function(event, ui){
-					
-				},
-				stop : function(event, ui){
-					reorder();
-				}
-			});//end sortable
+			//jquery sortable 적용
+			for(var i = 0; i < plan_repeat; i++){
+				$(document).find(".container"+(i+1)).sortable({
+					placeholder : "itemBoxHighlight",
+					start : function(event, ui){
+						
+					},
+					stop : function(event, ui){//해당 구획 이동 완료 후 정렬
+						
+						//해당 로우의 반복수
+						var num = parseInt(ui.item[0].children[3].innerText);
+						
+						//해당 집구의 테이블 로우 개수
+						var standardNum = $(".container1 .table_content").length;
+						var checkNum = (num-1) * standardNum;
+						
+						var targetNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
+	 					reorder(num);
+	 					var moveNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
+
+						let item = resultArray.splice(targetNum, 1);
+						resultArray.splice(moveNum, 0, item[0]);
+						var plusNum = 0;
+						for(var i = checkNum; i < (checkNum+standardNum); i++){
+							plusNum++;
+							resultArray[i].num = plusNum;
+						}
+						console.log(resultArray);
+					}
+				});//end sortable
+			}
 			
 			//그룹별 색깔 적용해주기
 			$(document).find(".table_content").each(function(i, item){
@@ -3622,6 +3662,12 @@
 		});
 		
 	}
+	
+	//구획정보 처리포장면적 이벤트
+	$(document).on("keyup", ".container1 .table_content:eq(0) .seg_area", function(){
+		var input_text = $(this).val();
+		$(document).find(".seg_area").val(input_text);
+	});
 	
 	//조사 항목 체크박스 추가 이벤트
 	function PlusMethod(){
@@ -3680,6 +3726,7 @@
 		
 		method_container.append(add_list);
 		
+		gridStep6();
 	}
 	
 	//조사항목 체크박스 삭제
@@ -3703,6 +3750,7 @@
 			}
 		});
 		
+		gridStep6();
 	}
 	
 	//수정 버튼 이벤트
@@ -3730,6 +3778,12 @@
 			
 			//플랜 수정
 			UpdatePlan();
+			
+			//담당자 수정
+			var checkSch = $(document).find(".input_manager_tr").length;
+			if(checkSch != 0){
+				updateSch();
+			}
 			
 			var plan_id = plan.plan_id;
 			
@@ -4390,10 +4444,9 @@
 	//datapicker 기본 옵션 설정
 	$.datepicker.setDefaults({
 		dateFormat: "yy-mm-dd",
-      	duration: "medium",
+      	/* duration: "medium",
       	changeMonth: true,
-      	changeYear: true,
-      	yearRange: "2010:2030",
+      	changeYear: true */
 	});
 	
 	//담당자 그려주기
@@ -4491,7 +4544,8 @@
 						add_list += '<td class="mng_input2" data-id="'+sch[j].sch_manager+'">'+sch[j].u2_manager+'</td>';
 						add_list += '<td class="mng_input3">'+sch[j].start_date+'</td>';
 						add_list += '<td class="mng_input4">'+sch[j].end_date+'</td>';
-						add_list += '<td><button type="button" class="chn_manager" style="float: left;">변경</button><button type="button" class="del_manager">삭제</button></td>';
+						/* add_list += '<td><button type="button" class="chn_manager" style="float: left;">변경</button><button type="button" class="del_manager">삭제</button></td>'; */
+						add_list += '<td><button type="button" class="del_manager">삭제</button></td>';
 						add_list += '</tr>';
 					}
 				}//end for
@@ -4523,9 +4577,6 @@
 	
 	gridStep6();
 	
-	
-	
-	
 	//담당자 추가 이벤트
 	$(document).on("click", ".add_manager", function(){
 		
@@ -4545,17 +4596,25 @@
 		
 		var input_manager = $(this).parent().parent().next().find(".input_manager");
 		
-		var str = "";
+		var checkId = $(this).parent().parent().next().find(".input_manager:eq(0)").find(".mng_input1").attr("data-id");
+		console.log(checkId);
 		
-		str += '<tr class="input_manager_tr">';
-		str += '<td class="mng_input1" data-id="'+manager1_id+'">'+manager1_text+'</td>';
-		str += '<td class="mng_input2 data-id="'+manager2_id+'">'+manager2_text+'</td>';
-		str += '<td class="mng_input3">'+start_date+'</td>';
-		str += '<td class="mng_input4">'+end_date+'</td>';
-		str += '<td><button type="button" class="del_manager">삭제</button></td>';
-		str += '</tr>';
-		
-		input_manager.append(str);
+		if(checkId != undefined && checkId != manager1_id){
+			alert("담당자(정)은 한명만 지정이 가능합니다.");
+		}else{
+			var str = "";
+			
+			str += '<tr class="input_manager_tr">';
+			str += '<td class="mng_input1" data-id="'+manager1_id+'">'+manager1_text+'</td>';
+			str += '<td class="mng_input2" data-id="'+manager2_id+'">'+manager2_text+'</td>';
+			str += '<td class="mng_input3">'+start_date+'</td>';
+			str += '<td class="mng_input4">'+end_date+'</td>';
+			str += '<td><button type="button" class="del_manager">삭제</button></td>';
+			str += '</tr>';
+			
+			input_manager.append(str);
+			
+		}
 		
 	});//end 담당자 추가 이벤트
 	
@@ -4564,8 +4623,8 @@
 		$(this).parent().parent().remove();
 	});
 	
-	//담당자 등록 버튼 이벤트
-	async function insertSch(){
+	//담당자 수정 버튼 이벤트
+	async function updateSch(){
 		
 		$(document).find(".input_manager_tr").each(function(i, index){
 			var method_id = $(this).parent().prev().find(".mng_method").attr("data-method");
@@ -4587,7 +4646,7 @@
 		
 		await DeleteSchedule();
 		
-		insertSchedule();
+		updateSchedule();
 		
 	}
 	
@@ -4595,11 +4654,13 @@
 		$("#chanModal").modal("show");
 	});
 	
-	//스케줄 등록 실행 함수
-	function insertSchedule(){
+	//스케줄 수정 실행 함수
+	function updateSchedule(){
+		
+		var plan_code = plan.plan_code;
 		
 		$.ajax({
-			url : "/plan/insertSchedule",
+			url : "/plan/updateSchedule?plan_code="+plan_code,
 			method : "POST",
 			contentType : "application/json; charset=utf-8",
 			data : JSON.stringify(scheduleArray),
@@ -4629,6 +4690,7 @@
 				method : "POST",
 				success : function(result){
 					if(result == 0){
+						console.log("삭제 result : " +result);
 						console.log("담당자 삭제 실패");
 					}else{
 						console.log("담당자 삭제 성공");

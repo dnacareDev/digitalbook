@@ -154,7 +154,7 @@ body button{
 #section .step .step_inner .content{
     display: none;
     width: 100%;
-    padding: 50px 20px;
+    padding: 0px 20px 50px 20px;
 } 
 #section .step .step_inner .content span.title{
     float: left;

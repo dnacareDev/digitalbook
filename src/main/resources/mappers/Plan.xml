@@ -394,8 +394,9 @@
 	</select>
 	
 	<!-- 결과입력 등록 -->
-	<insert id="insertResults" parameterType="Results">
-		INSERT INTO results
+	<insert id="insertResults" parameterType="java.util.ArrayList">
+		<foreach collection="results" item="item" separator=";">
+			INSERT INTO results
 		(
 			plan_id,
 			segment_id,
@@ -407,14 +408,15 @@
 		)
 		VALUES
 		(
-			#{plan_id},
-			#{segment_id},
-			#{individual_id},
-			#{individual_index},
-			#{results_content},
-			#{results_file},
-			#{results_origin_file}
+			#{item.plan_id},
+			#{item.segment_id},
+			#{item.individual_id},
+			#{item.individual_index},
+			#{item.results_content},
+			#{item.results_file},
+			#{item.results_origin_file}
 		)
+		</foreach>
 	</insert>
 	
 	<!-- 결과입력 데이터 조회 -->
@@ -422,5 +424,21 @@
 		SELECT * FROM results
 		WHERE plan_id = #{plan_id}
 	</select>
+	
+	<!-- 담당자 변경시 plan status 수정 -->
+	<update id="updatePlanStatus1" parameterType="int">
+		UPDATE plan
+		SET plan_status = 1
+		WHERE plan_id = #{plan_id}
+	</update>
+	
+	<!-- 결과입력 삭제 -->
+	<delete id="deleteResults" parameterType="int">
+		DELETE FROM results
+		WHERE results_id IN
+		<foreach collection="array" item="arr" open="(" close=")" separator=",">
+		#{arr}
+		</foreach>
+	</delete>
 	
 </mapper>
