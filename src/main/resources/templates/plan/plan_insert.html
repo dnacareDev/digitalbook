@@ -3343,8 +3343,10 @@
 		
 		console.log(segment_array);
 		
+		var cancel = new Array();
+		
 		$.ajax({
-			url : "/plan/insertSegment",
+			url : "/plan/insertSegment?cancel="+cancel,
 			method : "POST",
 			contentType : "application/json; charset=utf-8",
 			data : JSON.stringify(segment_array),

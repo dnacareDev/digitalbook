@@ -776,9 +776,11 @@ public class PlanController
 		try
 		{
 			Path filePath = Paths.get(path);
+			System.out.println(filePath);
 			Resource resource = new InputStreamResource(Files.newInputStream(filePath)); // 파일 resource 얻기
 			
 			File file = new File(path);
+			System.out.println(file);
 			
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentDisposition(ContentDisposition.builder("attachment").filename(file.getName()).build());  // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
