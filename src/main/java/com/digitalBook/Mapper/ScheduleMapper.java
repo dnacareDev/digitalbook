@@ -11,4 +11,6 @@ public interface ScheduleMapper
 {
 	// 전체 일정(사용자)
 	List<Schedule> SelectUserSchedule(int user_id);
+
+	Schedule SelectScheduleDetail(int sch_id);
 }

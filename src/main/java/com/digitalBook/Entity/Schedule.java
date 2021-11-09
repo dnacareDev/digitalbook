@@ -28,5 +28,6 @@ public class Schedule
 	
 	// 재배 프로토콜
 	private int method_id;					// 재배 프로토콜 고유 번호
+	private String method_code;				// 과제 코드
 	private String method_title;			// 메소드명
 }

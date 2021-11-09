@@ -21,4 +21,10 @@ public class ScheduleServiceImpl implements ScheduleService
 	{
 		return mapper.SelectUserSchedule(user_id);
 	}
+
+	@Override
+	public Schedule SelectScheduleDetail(int sch_id)
+	{
+		return mapper.SelectScheduleDetail(sch_id);
+	}
 }
