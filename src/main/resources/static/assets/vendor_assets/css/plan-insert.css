@@ -909,3 +909,11 @@ input[type=search]:focus{
     background-color: #ff4d4f;
     margin: 0;
 }
+button[type="button"]{
+	background: #7888FC !important;
+	color: #fff !important;
+}
+button.submit{
+	background: #7888FC !important;
+	color: #fff !important;
+}

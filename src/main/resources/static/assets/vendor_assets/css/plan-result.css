@@ -686,8 +686,14 @@ i.bi{
 #section .step .step_inner .content .content-center .content_box ul ul li.purple{ /* 추가 2021-11-01 */
 	border: 2px solid #AAB8F5;
 }
-
-
+.step button[type="button"]{
+	background: #7888FC !important;
+	color: #fff !important;
+}
+.step button{
+	background: #7888FC !important;
+	color: #fff !important;
+}
 
 
 
