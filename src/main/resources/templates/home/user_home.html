@@ -359,11 +359,11 @@
 			                        		<div class="atbd-collapse atbd-collapse-custom">
 			                        		<th:block th:each="p : ${progress_plan}">
 				                        		<div class="atbd-collapse-item">
-				                                    <p class="item-link" data-toggle="collapse" data-target="#coll-b-1" style="text-decoration: underline;"
+				                                    <p class="item-link data_target" data-toggle="collapse" style="text-decoration: underline;"
 				                                    th:text="${p.report_title +'(' + p.start_date + ' - ' + p.end_date + ')' }">
 				                                        
 				                                    </p>
-				                                    <div id="coll-b-1" class="collapse atbd-collapse-item__body" style="background-color: #F7F7F8;">
+				                                    <div class="collapse atbd-collapse-item__body" style="background-color: #F7F7F8;">
 				                                        <div class="collapse-body-text">
 				                                            <div class="row">
 					                                            	<p>과제번호 :</p><p th:text="${p.report_code}"></p>
