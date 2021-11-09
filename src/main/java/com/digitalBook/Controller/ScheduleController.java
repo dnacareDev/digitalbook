@@ -22,9 +22,18 @@ public class ScheduleController
 	private ScheduleService service;
 	
 	@RequestMapping("month")
-	public ModelAndView Month(ModelAndView mv)
+	public ModelAndView Month(ModelAndView mv, Authentication auth)
 	{
-		mv.setViewName("schedule/month");
+		User prin = (User)auth.getPrincipal();
+		
+		if(prin.getUser_type() == 0)
+		{
+			mv.setViewName("schedule/admin_month");
+		}
+		else
+		{
+			mv.setViewName("schedule/user_month");
+		}
 		
 		return mv;
 	}
@@ -36,6 +45,17 @@ public class ScheduleController
 		User prin = (User)auth.getPrincipal();
 		
 		List<Schedule> result = service.SelectUserSchedule(prin.getUser_id());
+		
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping("selectAdminSchedule")
+	public List<Schedule> SelectAdminSchedule(Authentication auth)
+	{
+		User prin = (User)auth.getPrincipal();
+		
+		List<Schedule> result = service.SelectAdminSchedule(prin);
 		
 		return result;
 	}

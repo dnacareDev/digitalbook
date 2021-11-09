@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.digitalBook.Entity.Plan;
 import com.digitalBook.Entity.Schedule;
+import com.digitalBook.Entity.User;
 
 @Mapper
 public interface HomeMapper
@@ -19,4 +20,8 @@ public interface HomeMapper
 
 	// 전체 일정(사용자)
 	List<Schedule> SelectUserSchedule(int user_id);
+
+	List<Schedule> SelectAdminSchedule(User user);
+
+	List<User> SelectUser(User user);
 }
