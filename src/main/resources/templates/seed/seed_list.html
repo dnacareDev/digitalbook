@@ -130,7 +130,6 @@
 		                            	<table class="table">
 		                            		<thead>
 		                            			<tr>
-		                            				<th></th>
 		                            				<th>과제번호</th>
 		                            				<th>과제명</th>
 		                            				<th>작목명</th>
@@ -229,7 +228,6 @@
 					{
 						console.log(result.seed[i]);
 						add_list += '<tr>';
-						add_list += '<td><input type="checkbox"></td>';
 						add_list += '<td><a href="/data/seed/modify?report_id=' + result.seed[i].report_id + '">' + result.seed[i].report_code + '</a></td>';
 						add_list += '<td><span>' + result.seed[i].report_title + '</span></td>';
 						add_list += '<td><span>' + result.seed[i].division + ' 외 ' + (result.seed[i].seed_count - 1) + '개</span></td>';

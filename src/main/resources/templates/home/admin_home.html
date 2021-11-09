@@ -103,8 +103,8 @@
 					            <p class="color-primary fa-lg mb-0 mt-3 ml-3">진행 이력</p>
 					            <div class="card-body overflow-auto" style="height: 316px;">
 					            	<div class="card-content">
-			                        	<div class="atbd-collapse atbd-collapse-custom">
-			                        		<th:block th:each="p : ${progress_plan}">
+			                        	<div class="atbd-collapse atbd-collapse-custom" id="progress_list">
+			                        		<!-- <th:block th:each="p : ${progress_plan}">
 				                        		<div class="atbd-collapse-item">
 				                                    <p class="item-link" data-toggle="collapse" data-target="#coll-b-1" style="text-decoration: underline;"
 				                                    th:text="${p.report_title +'(' + p.start_date + ' - ' + p.end_date + ')' }">
@@ -127,7 +127,7 @@
 											                </div>
 				                                    </div>
 				                                </div>
-				                                </th:block>
+				                                </th:block> -->
 			                        	</div>
 			                        </div>
 					            </div>
@@ -207,6 +207,42 @@
     <th:block th:include="/../fragments/footer.html"></th:block>
     <!-- 공통 js -->
     <th:block th:include="/../fragments/commonjs.html"></th:block>
+<script type="text/javascript" th:inline="javascript">
+	let progress_plan = /*[[${progress_plan}]]*/ "null";
+	
+	function gridProgressPlan(){
+		
+		var progress_list = $("#progress_list");
+		var add_list = "";
+		
+		for(var i = 0; i < progress_plan.length; i++){
+			add_list += '<div class="atbd-collapse-item">';
+			
+			add_list += '<p class="item-link" data-toggle="collapse" data-target="#pro-'+(i+1)+'" style="text-decoration: underline;">'+progress_plan[i].report_title+'('+progress_plan[i].start_date+'-'+progress_plan[i].end_date+')</p>';
+			add_list += '<div id="pro-'+(i+1)+'" class="collapse atbd-collapse-item__body" style="background-color: #F7F7F8;">';
+			add_list += '<div class="collapse-body-text">';
+			add_list += '<div class="row">';
+			add_list += '<p>과제번호 :</p><p>'+progress_plan[i].report_code+'</p>';
+			add_list += '</div>';
+			add_list += '<div class="row">';
+			add_list += '<p>과제명 :</p><p>'+progress_plan[i].report_title+'</p>';
+			add_list += '</div>';
+			add_list += '<div class="row">';
+			add_list += '<p>과제 책임자 :</p><p>'+progress_plan[i].user_name_k+'</p>';
+			add_list += '</div>';
+			add_list += '</div>';
+			add_list += '<div class="d-flex justify-content-end">';
+			add_list += '<a class="btn btn-xs btn-light btn-rounded btn-result" style="background-color: #7C8798; color:#fff" href="/plan/insertResult?plan_id='+progress_plan[i].plan_id+'">결과 확인</a>';
+			add_list += '</div>';
+			add_list += '</div>';
+			add_list += '</div>';
+		}
+		progress_list.empty();
+		progress_list.append(add_list);
+		
+	}
+	gridProgressPlan();
+</script>
 <script type="text/javascript">
 	// chart example
 	chartExample("chartExample");

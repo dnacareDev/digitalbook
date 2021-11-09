@@ -115,7 +115,6 @@
 		                            	<table class="table">
 		                            		<thead class="text-center">
 		                            			<tr>
-		                            				<th></th>
 		                            				<th>년도</th>
 		                            				<th>설명</th>
 		                            				<th>등록자</th>
@@ -180,7 +179,6 @@
 				for(var i = 0; i < result.report.length; i++)
 				{
 					add_list += '<tr>';
-					add_list += '<td><input type="checkbox"></td>';
 					add_list += '<td><a href="report/modify?report_file_id='+ result.report[i].report_file_id + '">' + result.report[i].report_year + '</a></td>';
 					add_list += '<td><span>' + result.report[i].report_contents + '</span></td>';
 					add_list += '<td><span>' + result.report[i].user_name_k + '</span></td>';

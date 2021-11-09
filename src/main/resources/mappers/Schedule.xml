@@ -46,13 +46,15 @@
 	
 	<!-- 전달사항 검색 -->
 	<select id="SearchBoard" resultType="board">
-		SELECT * FROM board
-			WHERE user_group = #{user_group} 
-			<choose>
-				<when test="!search_type.equals('none')">
-					AND #{search_type} LIKE CONCAT('%', #{keyword}, '%')
-				</when>
-			</choose>
+		SELECT * FROM board b
+		LEFT JOIN user u ON b.user_id = u.user_id
+		LEFT JOIN department d ON b.user_group = d.depart_id
+		WHERE b.user_group = #{user_group} 
+		<choose>
+			<when test="!search_type.equals('none')">
+				AND #{search_type} LIKE CONCAT('%', #{keyword}, '%')
+			</when>
+		</choose>
 	</select>
 	
 	<!-- 전달사항 공유인원 조회 -->

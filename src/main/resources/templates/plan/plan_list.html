@@ -137,7 +137,6 @@
 		                            	<table class="table">
 		                            		<thead>
 		                            			<tr>
-		                            				<th></th>
 		                            				<th>생육조사 ID</th>
 		                            				<th>과제명</th>
 		                            				<th>포장</th>
@@ -226,7 +225,6 @@ $(document).ready(function()
 						for(var i = 0; i < length; i++){
 							
 							add_list += '<tr>';
-							add_list += '<td><input type="checkbox"></td>';
 							add_list += '<td><a href="/plan/modify?plan_id='+ result.plan[i].plan_id + '">' + result.plan[i].plan_code + '</a></td>';
 							add_list += '<td><span>' + result.plan[i].report_title + '</span></td>';
 							add_list += '<td><span>' + result.plan[i].storage_name + '</span></td>';

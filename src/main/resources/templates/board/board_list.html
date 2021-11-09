@@ -129,9 +129,8 @@
 		                            				<th>전달사항 내용</th>
 		                            				<th>시작일</th>
 		                            				<th>종료일</th>
-		                            				<th>유저 아이디</th>
-		                            				<th>유저 그룹</th>
-		                            				
+		                            				<th>등록자</th>
+		                            				<th>등록과</th>
 		                            			</tr>
 		                            		</thead>
 		                            		<tbody id="reagent_list">
@@ -225,8 +224,8 @@
 						add_list += '<td><span>' + result.board[i].board_content + '</span></td>';
 						add_list += '<td><span>' + result.board[i].board_start + '</span></td>';
 						add_list += '<td><span>' + result.board[i].board_end + '</span></td>';
-						add_list += '<td><span>' + result.board[i].user_id + '</span></td>';
-						add_list += '<td><span>' + result.board[i].user_group + '</span></td>';
+						add_list += '<td><span>' + result.board[i].user_name_k + '</span></td>';
+						add_list += '<td><span>' + result.board[i].department + '</span></td>';
 						add_list += '</tr>';
 					}
 					

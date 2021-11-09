@@ -23,4 +23,8 @@ public class Board
 	
 	private int user_id;
 	private int user_group;
+	private String user_name_k;
+	
+	private int depart_id;
+	private String department;
 }

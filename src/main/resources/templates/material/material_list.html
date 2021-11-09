@@ -126,7 +126,6 @@
 		                            	<table class="table">
 		                            		<thead class="text-center">
 		                            			<tr>
-		                            				<th></th>
 		                            				<th>기타 항목 ID</th>
 		                            				<th>항목명</th>
 		                            				<th>등록자</th>
@@ -216,7 +215,6 @@
 					for(var i = 0; i < length; i++){
 						var status = result.material[i].material_status == 0 ? "N" : "Y";
 						add_list += '<tr>';
-						add_list += '<td><input type="checkbox"></td>';
 						add_list += '<td><a href="/data/material/modify?material_id='+ result.material[i].material_id + '">' + result.material[i].material_code + '</a></td>';
 						add_list += '<td><span>' + result.material[i].material_name + '</span></td>';
 						add_list += '<td><span>' + result.material[i].user_name_k + '</span></td>';

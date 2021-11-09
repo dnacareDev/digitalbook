@@ -1328,6 +1328,11 @@
 					add_list += '</svg>';
 					add_list += '</div>';
 					add_list += '<input type="file" name="file'+j+'" accept=".jpg, .gif, .png, .jpeg, .bmp" style="display:none">';
+					if(currentDataArr[i]['c_img'+j] != "" && currentDataArr[i]['c_img'+j] != "null"){
+						add_list += '<div class="cam" onclick="imgDownload(this)" data-img="'+currentDataArr[i]['c_img'+j]+'">';
+						add_list += '<img src="/../img/svg/download.svg">';
+						add_list += '</div>';
+					}
 					add_list == '</td>';
 				}
 				add_list += '</tr>';

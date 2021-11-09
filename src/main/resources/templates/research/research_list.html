@@ -158,7 +158,6 @@
 		                            	<table class="table">
 		                            		<thead class="text-center">
 		                            			<tr>
-		                            				<th></th>
 		                            				<th>조사방법 ID</th>
 		                            				<th>조사방법</th>
 		                            				<th>작목</th>
@@ -235,7 +234,6 @@
 				for(var i = 0; i < result.research.length; i++)
 				{
 					add_list += '<tr>';
-					add_list += '<td><input type="checkbox"></td>';
 					add_list += '<td><a href="research/modify?research_id='+ result.research[i].research_id + '">' + result.research[i].research_code + '</a></td>';
 					add_list += '<td><span>' + result.research[i].research_contents + '</span></td>';
 					add_list += '<td><span>' + result.research[i].d1 + '</span></td>';

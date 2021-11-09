@@ -118,7 +118,6 @@
 		                            	<table class="table">
 		                            		<thead class="text-center">
 		                            			<tr>
-		                            				<th></th>
 		                            				<th>장비 ID</th>
 		                            				<th>장비명</th>
 		                            				<th>모델명</th>
@@ -199,7 +198,6 @@
 				for(var i = 0; i < result.machine.length; i++)
 				{
 					add_list += '<tr>';
-					add_list += '<td><input type="checkbox"></td>';
 					add_list += '<td><a href="machine/modify?machine_id='+ result.machine[i].machine_id + '">' + result.machine[i].machine_code + '</a></td>';
 					add_list += '<td><span>' + result.machine[i].machine_name + '</span></td>';
 					add_list += '<td><span>' + result.machine[i].machine_model + '</span></td>';
