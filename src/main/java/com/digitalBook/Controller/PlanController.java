@@ -17,6 +17,12 @@ import java.util.stream.IntStream;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -311,6 +317,8 @@ public class PlanController
 		
 		List<Record> record = service.selectRecordList(plan_id);
 		
+		List<Segment> segment = service.selectSegmentList(plan_id);
+		
 		mv.addObject("plan", plan);
 		mv.addObject("report", report);
 		mv.addObject("fert", fert);
@@ -319,6 +327,7 @@ public class PlanController
 		mv.addObject("user", user);
 		mv.addObject("record", record);
 		mv.addObject("sch", sch);
+		mv.addObject("segment", segment);
 		
 		mv.setViewName("plan/plan_modify");
 		
@@ -726,10 +735,16 @@ public class PlanController
 	//구획 등록
 	@ResponseBody
 	@RequestMapping("/insertSegment")
-	public int InsertSegment(@RequestBody List<Segment> segment)
+	public int InsertSegment(@RequestBody List<Segment> segment, @RequestParam(name = "cancel") int cancel[])
 	{
 		
 		int result = service.insertSegment(segment);
+		
+		if(result != 0) {
+			if(cancel.length != 0) {
+				service.deleteSegment(cancel);
+			}
+		}
 		
 		return result;
 	}
@@ -749,6 +764,32 @@ public class PlanController
 		}
 		
 		return result;
+	}
+	
+	//사진 다운로드
+	@ResponseBody
+	@RequestMapping("/downloadImg")
+	public ResponseEntity<Object> DownloadImg(@RequestParam("file_name") String file_name)
+	{
+		String path = "upload/" + file_name;
+		
+		try
+		{
+			Path filePath = Paths.get(path);
+			Resource resource = new InputStreamResource(Files.newInputStream(filePath)); // 파일 resource 얻기
+			
+			File file = new File(path);
+			
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentDisposition(ContentDisposition.builder("attachment").filename(file.getName()).build());  // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
+			
+			return new ResponseEntity<Object>(resource, headers, HttpStatus.OK);
+		}
+		catch(Exception e)
+		{
+			return new ResponseEntity<Object>(null, HttpStatus.CONFLICT);
+		}
+		
 	}
 	
 }

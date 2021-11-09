@@ -474,6 +474,15 @@
 		ORDER BY segment_id
 	</select>
 	
+	<!-- 구획 삭제 -->
+	<delete id="deleteSegment" parameterType="int">
+		DELETE FROM segment
+		WHERE segment_id IN
+		<foreach collection="array" item="arr" open="(" close=")" separator=",">
+		#{arr}
+		</foreach>
+	</delete>
+	
 	<!-- 구획정보등록 -->
 	<insert id="insertSegmentInfo" parameterType="java.util.ArrayList">
 		<foreach collection="segmentInfo" item="item" separator=";">

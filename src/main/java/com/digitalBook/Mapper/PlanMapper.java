@@ -139,4 +139,7 @@ public interface PlanMapper {
 	//구획정보 삭제
 	int deleteSegmentInfo(int[] arr);
 	
+	//구획 삭제
+	int deleteSegment(int[] arr);
+	
 }

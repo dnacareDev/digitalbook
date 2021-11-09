@@ -294,5 +294,12 @@ public class PlanServiceImpl implements PlanService {
 		
 		return mapper.deleteSegmentInfo(arr);
 	}
+	
+	//구획 삭제
+	@Override
+	public int deleteSegment(int[] arr) {
+		
+		return mapper.deleteSegment(arr);
+	}
 
 }

@@ -507,44 +507,77 @@
         </div>
 		
 		<div class="modal-basic modal fade show" id="storageModal" tabindex="-1" role="dialog" aria-hidden="true">
-		    <div class="modal-dialog modal-lg" role="document">
+		    <div class="modal-dialog modal-xl" role="document">
 		        <div class="modal-content modal-bg-white">
+		        	<div class="modal-header">
+		        		<h6 class="modal-title">신규등록</h6>
+                    	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        	<span data-feather="x"></span>
+                        </button>
+		        	</div>
 		            <div class="modal-body">
-		            	<div class="row">
-			        		<div class="col-12">
-			        			<h2 style="float: left;">포장 신규</h2>
-					        	<div class="d-flex justify-content-end">
-			                		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span data-feather="x"></span></button>
-			                	</div>
-			        		</div>
-			        	</div>
-		            	<div class="row mt-3">
-		            		<div class="col-md-12">
-		            			<label for="" class="color-dark fw-500">주소</label>
-	                            <input type="text" class="form-control" name="" style="width: 100%; height: 40px; font-size: 0.875em; padding: 20px 20px;">
-		            		</div>
+		            	<div class="col-12">
+			            	<form action="#" id="insertStorageForm" method="POST" enctype="multipart/form-data">
+			            		<div class="row">
+			            			<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="storage_name" class="col-form-label color-dark align-center">위치<span style="color: red;">*</span></label>
+	                                </div>
+	                                <div class="col-sm-10">
+		                                <input type="text" class="form-control b-light" id="storage_name" name="storage_name">
+		                            </div>
+			            		</div>
+			            		<div class="row mt-3">
+			            			<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="storage_division" class="col-form-label color-dark align-center">구획구분</label>
+	                                </div>
+	                                <div class="col-sm-10">
+		                                <input type="text" class="form-control b-light" id="storage_division" name="storage_division">
+		                            </div>
+			            		</div>
+			            		<div class="row mt-3">
+			            			<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="storage_size" class="col-form-label color-dark align-center">면적</label>
+	                                </div>
+	                                <div class="col-sm-5">
+		                                <input type="text" class="form-control b-light" id="storage_size" name="storage_size">
+		                            </div>
+			            		</div>
+			            		<div class="row mt-3">
+			            			<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="storage_type" class="col-form-label color-dark align-center">장소유형<span style="color: red;">*</span></label>
+	                                </div>
+	                                <div class="col-sm-5">
+		                                <select class="form-control b-light" id="storage_type" name="storage_type">
+	                                		<option value="9">유형 선택</option>
+	                                		<option value="0">작물 연구동</option>
+	                                		<option value="1">가공이용 연구동</option>
+	                                		<option value="2">연천 시험지</option>
+	                                		<option value="3">외부 포장지</option>
+		                                </select>
+		                            </div>
+			            		</div>
+			            		<div class="row mt-3">
+			            			<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="storage_contents" class="col-form-label color-dark align-center">Comment</label>
+	                                </div>
+	                                <div class="col-sm-10">
+		                                <textarea class="form-control" id="storage_contents" name="storage_contents" rows="10"></textarea>
+		                            </div>
+			            		</div>
+			            		<div class="row mt-3">
+			            			<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label class="col-form-label color-dark align-center">지도</label>
+	                                </div>
+	                                <div class="col-sm-10" id="modal_map" style="height: 300px;">
+		                                
+		                            </div>
+			            		</div>
+			            		<div class="button-group d-flex justify-content-end mt-2">
+			            			<input type="hidden" id="storage_location" name="storage_location">
+			            			<button type="button" class="btn btn-primary btn-default btn-squared" onclick="insertStorage();">저장</button>
+				           		</div>
+			            	</form>
 		            	</div>
-			            <div class="row">
-			            	<div class="col-md-6">
-				                <label for="" class="color-dark fw-500">포장 번호</label>
-	                            <input type="text" class="form-control" name="" style="width: 100%; height: 40px; font-size: 0.875em; padding: 20px 20px;">
-				            </div>
-				            <div class="col-md-6">
-				                <label for="" class="color-dark fw-500">면적</label>
-	                            <input type="text" class="form-control" name="" style="width: 100%; height: 40px; font-size: 0.875em; padding: 20px 20px;">
-				            </div>
-			            </div>
-			            <div class="row">
-			            	<div class="col-md-12">
-			            		<span>위치</span>
-			                	<img src="../img/icons/step1.png" alt="map">
-			            	</div>
-			            </div>
-			            <div class="row" style="flex-direction:row-reverse; padding: 20px 17px;">
-			            	<div class="input_submit">
-				                <button type="button" onclick="">저장</button>
-				            </div>
-			            </div>
 		            </div>
 		        </div>
 		    </div>
@@ -1081,6 +1114,7 @@
 	var method = /*[[${method}]]*/ "null";
 	var user = /*[[${user}]]*/ "null";
 	var sch = /*[[${sch}]]*/ "null";
+	let segment = /*[[${segment}]]*/ "null";
 	
 	//시험구 배치 데이터
 	var data1 = new Object();
@@ -1098,6 +1132,9 @@
 	
 	//스케줄 등록할 객체 array
 	let scheduleArray = new Array();
+	
+	//구획 등록할 객체 array
+	let segment_array = new Array();
 
 	//기존 데이터 로드 함수
 	async function loadPlan(){
@@ -1574,6 +1611,158 @@
 	
 	$("#storageBtn").on("click", function(){
 		$("#storageModal").modal("show");
+		
+		setTimeout(() => {
+			const options = { 
+					center: new kakao.maps.LatLng(37.263599, 126.987598),
+    			    level: 3
+    			};
+    		map2 = new kakao.maps.Map(modalContainer, options);	  
+			kakao.maps.event.addListener(map2, 'click', function(mouseEvent) { 
+			    // 마커 생성   
+			    const coord = mouseEvent.latLng;
+			    createMarker(coord.La, coord.Ma, map)    
+			    
+			    var clickPosition = mouseEvent.latLng; 
+			    
+			    // 지도 클릭이벤트가 발생했는데 다각형이 그려지고 있는 상태가 아니면
+			    if (!drawingFlag) {
+			        // 상태를 true로, 다각형을 그리고 있는 상태로 변경합니다
+			        drawingFlag = true;
+			        
+			        // 지도 위에 다각형이 표시되고 있다면 지도에서 제거합니다
+			        if (polygon) {  
+			            polygon.setMap(null);      
+			            polygon = null;  
+			        }
+			        
+			        // 지도 위에 면적정보 커스텀오버레이가 표시되고 있다면 지도에서 제거합니다
+			        if (areaOverlay) {
+			            areaOverlay.setMap(null);
+			            areaOverlay = null;
+			        }
+			    
+			        // 그려지고 있는 다각형을 표시할 다각형을 생성하고 지도에 표시합니다
+			        drawingPolygon = new kakao.maps.Polygon({
+			            map: map2, // 다각형을 표시할 지도입니다
+			            path: [clickPosition], // 다각형을 구성하는 좌표 배열입니다 클릭한 위치를 넣어줍니다
+			            strokeWeight: 3, // 선의 두께입니다 
+			            strokeColor: '#00a0e9', // 선의 색깔입니다
+			            strokeOpacity: 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
+			            strokeStyle: 'solid', // 선의 스타일입니다
+			            fillColor: '#00a0e9', // 채우기 색깔입니다
+			            fillOpacity: 0.2 // 채우기 불투명도입니다
+			        }); 
+			        
+			        // 그리기가 종료됐을때 지도에 표시할 다각형을 생성합니다 
+			        polygon = new kakao.maps.Polygon({ 
+			            path: [clickPosition], // 다각형을 구성하는 좌표 배열입니다 클릭한 위치를 넣어줍니다 
+			            strokeWeight: 3, // 선의 두께입니다 
+			            strokeColor: '#00a0e9', // 선의 색깔입니다   
+			            strokeOpacity: 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
+			            strokeStyle: 'solid', // 선의 스타일입니다
+			            fillColor: '#00a0e9', // 채우기 색깔입니다
+			            fillOpacity: 0.2 // 채우기 불투명도입니다
+			        });
+			
+			        
+			    } else { // 다각형이 그려지고 있는 상태이면 
+			        
+			        // 그려지고 있는 다각형의 좌표에 클릭위치를 추가합니다
+			        // 다각형의 좌표 배열을 얻어옵니다
+			        var drawingPath = drawingPolygon.getPath();
+			    
+			        // 좌표 배열에 클릭한 위치를 추가하고
+			        drawingPath.push(clickPosition);
+			        
+			        // 다시 다각형 좌표 배열을 설정합니다
+			        drawingPolygon.setPath(drawingPath);
+			        
+			    
+			        // 그리기가 종료됐을때 지도에 표시할 다각형의 좌표에 클릭 위치를 추가합니다
+			        // 다각형의 좌표 배열을 얻어옵니다
+			        var path = polygon.getPath();
+			    
+			        // 좌표 배열에 클릭한 위치를 추가하고
+			        path.push(clickPosition);
+			        
+			        // 다시 다각형 좌표 배열을 설정합니다
+			        polygon.setPath(path);
+			    }
+			
+			});
+			
+			// 지도에 마우스무브 이벤트를 등록합니다
+			// 다각형을 그리고있는 상태에서 마우스무브 이벤트가 발생하면 그려질 다각형의 위치를 동적으로 보여주도록 합니다
+			kakao.maps.event.addListener(map2, 'mousemove', function (mouseEvent) {
+			
+			    // 지도 마우스무브 이벤트가 발생했는데 다각형을 그리고있는 상태이면
+			    if (drawingFlag){
+			
+			        // 마우스 커서의 현재 위치를 얻어옵니다 
+			        var mousePosition = mouseEvent.latLng; 
+			        
+			        // 그려지고있는 다각형의 좌표배열을 얻어옵니다
+			        var path = drawingPolygon.getPath();
+			        
+			        // 마우스무브로 추가된 마지막 좌표를 제거합니다
+			        if (path.length > 1) {
+			            path.pop();
+			        } 
+			        
+			        // 마우스의 커서 위치를 좌표 배열에 추가합니다
+			        path.push(mousePosition);
+			
+			        // 그려지고 있는 다각형의 좌표를 다시 설정합니다
+			        drawingPolygon.setPath(path);
+			    }             
+			});     
+			
+			// 지도에 마우스 오른쪽 클릭 이벤트를 등록합니다
+			// 다각형을 그리고있는 상태에서 마우스 오른쪽 클릭 이벤트가 발생하면 그리기를 종료합니다
+			kakao.maps.event.addListener(map2, 'rightclick', function (mouseEvent) {
+			
+			    // 지도 오른쪽 클릭 이벤트가 발생했는데 다각형을 그리고있는 상태이면
+			    if (drawingFlag) {
+			        
+			        // 그려지고있는 다각형을  지도에서 제거합니다
+			        drawingPolygon.setMap(null);
+			        drawingPolygon = null;  
+			        
+			        // 클릭된 죄표로 그릴 다각형의 좌표배열을 얻어옵니다
+			        var path = polygon.getPath();
+			    
+			        // 다각형을 구성하는 좌표의 개수가 3개 이상이면 
+			        if (path.length > 2) {
+			            
+			            // 지도에 다각형을 표시합니다
+			            polygon.setMap(map2); 
+			
+			            var area = Math.round(polygon.getArea()), // 다각형의 총면적을 계산합니다
+			                // content = '<div class="info">총면적 <span class="number"> ' + area + '</span> m<sup>2</sup></div>'; // 커스텀오버레이에 추가될 내용입니다
+			                
+			            // 면적정보를 지도에 표시합니다
+			            areaOverlay = new kakao.maps.CustomOverlay({
+			                map: map2, // 커스텀오버레이를 표시할 지도입니다 
+			                content: "",  // 커스텀오버레이에 표시할 내용입니다
+			                xAnchor: 0,
+			                yAnchor: 0,
+			                position: path[path.length-1]  // 커스텀오버레이를 표시할 위치입니다. 위치는 다각형의 마지막 좌표로 설정합니다
+			            });      
+			            clearMarkers(true)
+			            
+			        } else { 
+			            
+			            // 다각형을 구성하는 좌표가 2개 이하이면 다각형을 지도에 표시하지 않습니다 
+			            polygon = null;  
+			            clearMarkers()
+			        }
+			        
+			        // 상태를 false로, 그리지 않고 있는 상태로 변경합니다
+			        drawingFlag = false;          
+			    }  
+			});
+		}, 150)
 	});
 	
 	//시험구배치 요인 설정 버튼 이벤트
@@ -3107,127 +3296,19 @@
 	    
 	    
 	});//step3 btn 이벤트
-	
+	console.log(segment);
 	function gridFactors(){
 		
-		var factorArray = new Array();
 		var resultArray = new Array();
-		
-		var factor1 = "";
-		var factor2 = "";
-		var factor3 = "";
-		
-		if(Object.keys(data1).length != 0){
-			
-			if(data1.type == "시비량"){
-				factor1 = data1.level.split(",");
-			}else if(data1.type == "시험재료"){
-				factor1 = data1.text.split(",");
-			}else{
-				factor1 = data1.content.split(",");
-			}
-		}
-		if(Object.keys(data2).length != 0){
-			if(data2.type == "시비량"){
-				factor2 = data2.level.split(",");
-			}else if(data2.type == "시험재료"){
-				factor2 = data2.text.split(",");
-			}else{
-				factor2 = data2.content.split(",");
-			}
-		}
-		if(Object.keys(data3).length != 0){
-			if(data3.type == "시비량"){
-				factor3 = data3.level.split(",");
-			}else if(data3.type == "시험재료"){
-				factor3 = data3.text.split(",");
-			}else{
-				factor3 = data3.content.split(",");
-			}
-		}
-		
-		var plan_repeat = $("#plan_repeat").val();
 		
 		var grow_type = $("#grow_type option:selected").val();
 		
-		//구획 id 만들기 위한 변수들
-		var num = 0;
-		var num1 = 0;
-		var level = 0;
-		var id = "";
-		var id1 = "";
-		var id2 = "";
-		var type = "";
-		var type2 = "";
-		var type3 = "";
-		var repeat = "";
-		
-		//factor null 유무에 따라 factorArray 만들어 주기
-		if(factor1 != "" && factor2 == "" && factor3 == ""){
-			for(var i = 0; i < factor1.length; i++){
-				id = "A"+(i+1);
-				type = factor1[i];
-				num++;
-				var number = num;
-				
-				var data = {"num" : number, "id" : id, "type" : type};
-				factorArray.push(data);
-				
-				id = "";
-				type = "";
-			}
-		}else if(factor1 != "" && factor2 != "" && factor3 == ""){
-			for(var i = 0; i < factor1.length; i++){
-				id = "A"+(i+1);
-				type = factor1[i];
-				
-				for(var j = 0; j < factor2.length; j++){
-					id2 = id;
-					id2 = id2 + '-B' + (j+1);
-					type2 = type;
-					type2 = type2 + ',' + factor2[j];
-					num++;
-					var number = num;
-					
-					var data = {"num" : number, "id" : id2, "type" : type2};
-					factorArray.push(data);
-				}
-				id = "";
-				type = "";
-			}
-		}else if(factor1 != "" && factor2 != "" && factor3 != ""){
-			for(var i = 0; i < factor1.length; i++){
-				id = "A"+(i+1);
-				type = factor1[i];
-				
-				for(var j = 0; j < factor2.length; j++){
-					id2 = id;
-					id2 = id2 + '-B' + (j+1);
-					type2 = type;
-					type2 = type2 + ',' + factor2[j];
-					
-					for(var k = 0; k < factor3.length; k++){
-						num++;
-						var number = num;
-						id3 = id2;
-						id3 = id3 + '-C'+(k+1);
-						type3 = type2;
-						type3 = type3 + ',' + factor3[k];
-						
-						var data = {"num" : number, "id" : id3, "type" : type3};
-						factorArray.push(data);
-					}//end for3
-					
-				}//end for2
-				id = "";
-				type = "";
-			}//end for1
-		}
+		var plan_repeat = $("#plan_repeat").val();
 		
 		if(grow_type == "0"){
 			
 			//만들어준 factorArray를 가지고 최종 resultArray 만들어 주기
-			for(var i = 0; i < plan_repeat; i++){
+			/* for(var i = 0; i < plan_repeat; i++){
 				level++;
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
@@ -3236,7 +3317,18 @@
 					
 					resultArray.push(data);
 				}
-			}//end for
+			}//end for */
+			
+			for(var i = 0; i < segment.length; i++){
+				var result_data = {
+					"id" : segment[i].segment_code,
+					"num" : segment[i].segment_index,
+					"repeat" : segment[i].segment_repeat,
+					"type" : segment[i].segment_type,
+					"area" : segment[i].segment_area
+				};
+				resultArray.push(result_data);
+			}
 			
 			//임의 임의배치 컴포넌트
 			var copy_step_4 = $("#copy-step-4");
@@ -3260,7 +3352,7 @@
 			    add_list += '<td>'+resultArray[i].id+'</td>';
 			    add_list += '<td>'+resultArray[i].type+'</td>';
 			    add_list += '<td>'+resultArray[i].repeat+'</td>';
-			    add_list += '<td><input type="text" id="mil" class="seg_area" value="0"></td>';
+			    add_list += '<td><input type="text" id="mil" class="seg_area" value="'+resultArray[i].area+'"></td>';
 			    add_list += '</tr>';
 			}
 			
@@ -3303,17 +3395,28 @@
 		}else if(grow_type == "1"){ //난괴법
 			
 			//만들어준 factorArray를 가지고 최종 resultArray 만들어 주기
-			for(var i = 0; i < plan_repeat; i++){
-				level++;
-				num1 = 0;
-				for(var j = 0; j < factorArray.length; j++){
-					num1++;
-					var number = num1;
-					var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+// 			for(var i = 0; i < plan_repeat; i++){
+// 				level++;
+// 				num1 = 0;
+// 				for(var j = 0; j < factorArray.length; j++){
+// 					num1++;
+// 					var number = num1;
+// 					var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
 					
-					resultArray.push(data);
-				}
-			}//end for
+// 					resultArray.push(data);
+// 				}
+// 			}//end for
+
+			for(var i = 0; i < segment.length; i++){
+				var result_data = {
+					"id" : segment[i].segment_code,
+					"num" : segment[i].segment_index,
+					"repeat" : segment[i].segment_repeat,
+					"type" : segment[i].segment_type,
+					"area" : segment[i].segment_area
+				};
+				resultArray.push(result_data);
+			}
 			
 			var copy_step_4 = $("#copy-step-4");
 			
@@ -3345,7 +3448,7 @@
 					    add_list += '<td>'+resultArray[j].id+'</td>';
 					    add_list += '<td>'+resultArray[j].type+'</td>';
 					    add_list += '<td>'+resultArray[j].repeat+'</td>';
-					    add_list += '<td><input type="text" id="mil" class="seg_area" value="0"></td>';
+					    add_list += '<td><input type="text" id="mil" class="seg_area" value="'+resultArray[j].area+'"></td>';
 					    add_list += '</tr>';
 					}
 				}//end for2
@@ -3396,7 +3499,7 @@
 		}else if(grow_type == "2"){ //분할구배치법
 			
 			//만들어준 factorArray를 가지고 최종 resultArray 만들어 주기
-			for(var i = 0; i < plan_repeat; i++){
+			/* for(var i = 0; i < plan_repeat; i++){
 				level++;
 				num1 = 0;
 				for(var j = 0; j < factorArray.length; j++){
@@ -3406,7 +3509,18 @@
 					
 					resultArray.push(data);
 				}
-			}//end for
+			}//end for */
+			
+			for(var i = 0; i < segment.length; i++){
+				var result_data = {
+					"id" : segment[i].segment_code,
+					"num" : segment[i].segment_index,
+					"repeat" : segment[i].segment_repeat,
+					"type" : segment[i].segment_type,
+					"area" : segment[i].segment_area
+				};
+				resultArray.push(result_data);
+			}
 			
 			//분할구배치법에서 그룹 나눠줄 id array
 			var arr = new Array();
@@ -3443,14 +3557,14 @@
 						var checkId = resultArray[j].id.split("-")[0];
 						for(var k = 0; k < idArray.length; k++){
 							if(checkId == idArray[k]){
-								add_list += '<tr class="table_content id_'+idArray[k]+'">';
+								add_list += '<tr class="table_content '+idArray[k]+'">';
 							}
 						}
 					    add_list += '<td class="table_num">'+resultArray[j].num+'</td>';
 					    add_list += '<td>'+resultArray[j].id+'</td>';
 					    add_list += '<td>'+resultArray[j].type+'</td>';
 					    add_list += '<td>'+resultArray[j].repeat+'</td>';
-					    add_list += '<td><input type="text" id="mil" class="seg_area" value="0"></td>';
+					    add_list += '<td><input type="text" id="mil" class="seg_area" value="'+resultArray[j].area+'"></td>';
 					    add_list += '</tr>';
 					}
 				}//end for2
@@ -3513,7 +3627,7 @@
 		}else if(grow_type == "3"){ //세세구배치법
 			
 			//만들어준 factorArray를 가지고 최종 resultArray 만들어 주기
-			for(var i = 0; i < plan_repeat; i++){
+			/* for(var i = 0; i < plan_repeat; i++){
 				level++;
 				num1 = 0;
 				for(var j = 0; j < factorArray.length; j++){
@@ -3523,7 +3637,18 @@
 					
 					resultArray.push(data);
 				}
-			}//end for
+			}//end for */
+			
+			for(var i = 0; i < segment.length; i++){
+				var result_data = {
+					"id" : segment[i].segment_code,
+					"num" : segment[i].segment_index,
+					"repeat" : segment[i].segment_repeat,
+					"type" : segment[i].segment_type,
+					"area" : segment[i].segment_area
+				};
+				resultArray.push(result_data);
+			}
 			
 			//분할구배치법에서 그룹 나눠줄 id array
 			var arr = new Array();
@@ -3566,7 +3691,7 @@
 					    add_list += '<td>'+resultArray[j].id+'</td>';
 					    add_list += '<td>'+resultArray[j].type+'</td>';
 					    add_list += '<td>'+resultArray[j].repeat+'</td>';
-					    add_list += '<td><input type="text" id="mil" class="seg_area" value="0"></td>';
+					    add_list += '<td><input type="text" id="mil" class="seg_area" value="'+resultArray[j].area+'"></td>';
 					    add_list += '</tr>';
 					}
 				}//end for2
@@ -3753,6 +3878,51 @@
 		gridStep6();
 	}
 	
+	//구획 등록
+	function insertSegment(){
+		segment_array = [];
+		
+		$(document).find(".table_content").each(function(index, item){
+			
+			var seg_data = {
+				"plan_id" : plan.plan_id,
+				"segment_code" : $(this).children().eq(1).text(),
+				"segment_index" : $(this).children().eq(0).text(),
+				"segment_type" : $(this).children().eq(2).text(),
+				"segment_repeat" : $(this).children().eq(3).text(),
+				"segment_area" : $(this).find("input:text").val(),
+				"individual_num" : 3
+			};
+			
+			segment_array.push(seg_data);
+			
+		});
+		
+		console.log(segment_array);
+		
+		var cancel = new Array();
+		
+		for(var i = 0; i < segment.length; i++){
+			cancel.push(segment[i].segment_id);
+		}
+		
+		$.ajax({
+			url : "/plan/insertSegment?cancel="+cancel,
+			method : "POST",
+			contentType : "application/json; charset=utf-8",
+			data : JSON.stringify(segment_array),
+			success : function(result){
+				
+				if(result == 0){
+					
+				}else {
+					
+				}
+			}
+		});//end ajax
+		
+	}
+	
 	//수정 버튼 이벤트
 	$("#planUpdateBtn").on("click", function(){
 		
@@ -3778,6 +3948,9 @@
 			
 			//플랜 수정
 			UpdatePlan();
+			
+			//구획 등록
+			insertSegment();
 			
 			//담당자 수정
 			var checkSch = $(document).find(".input_manager_tr").length;
@@ -4258,7 +4431,8 @@
 			
 		});
 	}//end 기타요인 삭제
-	
+	var map2;
+	const modalContainer = document.querySelector('#modal_map');
 	//다음 버튼 이벤트 함수
 	function nextStep(i){
 		$("#step"+i+" .content").slideDown();
@@ -4345,6 +4519,7 @@
 			data : data,
 			success : function(result)
 			{
+				
 				var storage_list = $("#storage_list");
 				var add_list = "";
 				
@@ -4359,7 +4534,6 @@
 						<td><span>${result.storage[i].storage_code}</span></td>
 						<td><span class='storage_name'>${result.storage[i].storage_name}</span></td>
 						<td><span>${result.storage[i].storage_division}</span></td>
-						<td><span>${result.storage[i].department}</span></td>
 					  </tr>';
 					`
 				}
@@ -4439,7 +4613,59 @@
 			}
 		});
 		
-	}//end 포장선택
+	}//end function SearchStorage
+	
+	//포장 등록 함수
+	function insertStorage(){
+		const coords_data = coords;		
+		const location = $("#storage_location");
+		location.val(JSON.stringify(coords_data));
+		
+		coords = [];
+		
+		var storage_name = $("#storage_name").val();
+		var storage_type = $("#storage_type").val();
+		var storage_location = $("#storage_location").val();
+		
+		if(storage_name == "")
+		{
+			alert("위치를 입력하세요.");
+		}
+		else if(storage_type == 9)
+		{
+			alert("장소유형을 입력하세요.");
+		}
+		else if(storage_location.length == 2)
+		{
+			alert("지도에서 영역을 정하세요.");
+		}else{
+		
+			var insertStorageForm = $("#insertStorageForm").serialize();
+			
+			$.ajax({
+				url : "/plan/insertStorage",
+				method : "POST",
+				dataType : "json",
+				data : insertStorageForm,
+				success : function(result){
+					if(result == 0){
+						
+					}else {
+						
+						markers = [];
+						coords = [];
+						polygon.setMap(null);      
+			            polygon = null;  
+						
+						$("#storageModal").modal("hide");
+						SearchStorage(1);
+					}
+				}
+			});//end ajax
+			
+		}
+		
+	}
 	
 	//datapicker 기본 옵션 설정
 	$.datepicker.setDefaults({
@@ -4783,6 +5009,7 @@
 	let coords = [];
 	let __polygon;
 	
+	
 	function createMarker(lng, lat, map){
 	    const markerPosition  = new kakao.maps.LatLng(lat, lng); 
 	
@@ -4791,7 +5018,7 @@
 	        position: markerPosition
 	    });
 	
-	    marker.setMap(map);
+	    marker.setMap(map2);
 	    markers.push(marker);
 	    coords.push({ lat, lng })
 	}	  
@@ -4817,7 +5044,7 @@
 	let drawingFlag = false; 
 	let drawingPolygon; 
 	let polygon; 
-	let areaOverlay; 
+	let areaOverlay;
 	
 	let plan_location = JSON.parse(plan.storage_location);
 	
@@ -4831,160 +5058,18 @@
 	        		setTimeout(() => {        			
 	        			
 	        			const options = { 
-	        			    /* center: new kakao.maps.LatLng(33.450701, 126.570667), */
-	        			    center: new kakao.maps.LatLng(plan_location[0].lat, plan_location[0].lng),
+	        				//center: new kakao.maps.LatLng(37.263599, 126.987598),
+	        				center: new kakao.maps.LatLng(plan_location[0].lat, plan_location[0].lng),
 	        			    level: 3
 	        			};
 	        			map = new kakao.maps.Map(container, options);	        			
 	        			
-	        			kakao.maps.event.addListener(map, 'click', function(mouseEvent) { 
-	        			    // 마커 생성   
-	        			    const coord = mouseEvent.latLng;
-	        			    createMarker(coord.La, coord.Ma, map)    
-	        			    
-	        			    var clickPosition = mouseEvent.latLng; 
-	        			    
-	        			    // 지도 클릭이벤트가 발생했는데 다각형이 그려지고 있는 상태가 아니면
-	        			    if (!drawingFlag) {
-	        			        // 상태를 true로, 다각형을 그리고 있는 상태로 변경합니다
-	        			        drawingFlag = true;
-	        			        
-	        			        // 지도 위에 다각형이 표시되고 있다면 지도에서 제거합니다
-	        			        if (polygon) {  
-	        			            polygon.setMap(null);      
-	        			            polygon = null;  
-	        			        }
-	        			        
-	        			        // 지도 위에 면적정보 커스텀오버레이가 표시되고 있다면 지도에서 제거합니다
-	        			        if (areaOverlay) {
-	        			            areaOverlay.setMap(null);
-	        			            areaOverlay = null;
-	        			        }
-	        			    
-	        			        // 그려지고 있는 다각형을 표시할 다각형을 생성하고 지도에 표시합니다
-	        			        drawingPolygon = new kakao.maps.Polygon({
-	        			            map: map, // 다각형을 표시할 지도입니다
-	        			            path: [clickPosition], // 다각형을 구성하는 좌표 배열입니다 클릭한 위치를 넣어줍니다
-	        			            strokeWeight: 3, // 선의 두께입니다 
-	        			            strokeColor: '#00a0e9', // 선의 색깔입니다
-	        			            strokeOpacity: 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
-	        			            strokeStyle: 'solid', // 선의 스타일입니다
-	        			            fillColor: '#00a0e9', // 채우기 색깔입니다
-	        			            fillOpacity: 0.2 // 채우기 불투명도입니다
-	        			        }); 
-	        			        
-	        			        // 그리기가 종료됐을때 지도에 표시할 다각형을 생성합니다 
-	        			        polygon = new kakao.maps.Polygon({ 
-	        			            path: [clickPosition], // 다각형을 구성하는 좌표 배열입니다 클릭한 위치를 넣어줍니다 
-	        			            strokeWeight: 3, // 선의 두께입니다 
-	        			            strokeColor: '#00a0e9', // 선의 색깔입니다   
-	        			            strokeOpacity: 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
-	        			            strokeStyle: 'solid', // 선의 스타일입니다
-	        			            fillColor: '#00a0e9', // 채우기 색깔입니다
-	        			            fillOpacity: 0.2 // 채우기 불투명도입니다
-	        			        });
 	        			
-	        			        
-	        			    } else { // 다각형이 그려지고 있는 상태이면 
-	        			        
-	        			        // 그려지고 있는 다각형의 좌표에 클릭위치를 추가합니다
-	        			        // 다각형의 좌표 배열을 얻어옵니다
-	        			        var drawingPath = drawingPolygon.getPath();
-	        			    
-	        			        // 좌표 배열에 클릭한 위치를 추가하고
-	        			        drawingPath.push(clickPosition);
-	        			        
-	        			        // 다시 다각형 좌표 배열을 설정합니다
-	        			        drawingPolygon.setPath(drawingPath);
-	        			        
-	        			    
-	        			        // 그리기가 종료됐을때 지도에 표시할 다각형의 좌표에 클릭 위치를 추가합니다
-	        			        // 다각형의 좌표 배열을 얻어옵니다
-	        			        var path = polygon.getPath();
-	        			    
-	        			        // 좌표 배열에 클릭한 위치를 추가하고
-	        			        path.push(clickPosition);
-	        			        
-	        			        // 다시 다각형 좌표 배열을 설정합니다
-	        			        polygon.setPath(path);
-	        			    }
-	        			
-	        			});
-	        			
-	        			// 지도에 마우스무브 이벤트를 등록합니다
-	        			// 다각형을 그리고있는 상태에서 마우스무브 이벤트가 발생하면 그려질 다각형의 위치를 동적으로 보여주도록 합니다
-	        			kakao.maps.event.addListener(map, 'mousemove', function (mouseEvent) {
-	        			
-	        			    // 지도 마우스무브 이벤트가 발생했는데 다각형을 그리고있는 상태이면
-	        			    if (drawingFlag){
-	        			
-	        			        // 마우스 커서의 현재 위치를 얻어옵니다 
-	        			        var mousePosition = mouseEvent.latLng; 
-	        			        
-	        			        // 그려지고있는 다각형의 좌표배열을 얻어옵니다
-	        			        var path = drawingPolygon.getPath();
-	        			        
-	        			        // 마우스무브로 추가된 마지막 좌표를 제거합니다
-	        			        if (path.length > 1) {
-	        			            path.pop();
-	        			        } 
-	        			        
-	        			        // 마우스의 커서 위치를 좌표 배열에 추가합니다
-	        			        path.push(mousePosition);
-	        			
-	        			        // 그려지고 있는 다각형의 좌표를 다시 설정합니다
-	        			        drawingPolygon.setPath(path);
-	        			    }             
-	        			});     
-	        			
-	        			// 지도에 마우스 오른쪽 클릭 이벤트를 등록합니다
-	        			// 다각형을 그리고있는 상태에서 마우스 오른쪽 클릭 이벤트가 발생하면 그리기를 종료합니다
-	        			kakao.maps.event.addListener(map, 'rightclick', function (mouseEvent) {
-	        			
-	        			    // 지도 오른쪽 클릭 이벤트가 발생했는데 다각형을 그리고있는 상태이면
-	        			    if (drawingFlag) {
-	        			        
-	        			        // 그려지고있는 다각형을  지도에서 제거합니다
-	        			        drawingPolygon.setMap(null);
-	        			        drawingPolygon = null;  
-	        			        
-	        			        // 클릭된 죄표로 그릴 다각형의 좌표배열을 얻어옵니다
-	        			        var path = polygon.getPath();
-	        			    
-	        			        // 다각형을 구성하는 좌표의 개수가 3개 이상이면 
-	        			        if (path.length > 2) {
-	        			            
-	        			            // 지도에 다각형을 표시합니다
-	        			            polygon.setMap(map); 
-	        			
-	        			            var area = Math.round(polygon.getArea()), // 다각형의 총면적을 계산합니다
-	        			                // content = '<div class="info">총면적 <span class="number"> ' + area + '</span> m<sup>2</sup></div>'; // 커스텀오버레이에 추가될 내용입니다
-	        			                
-	        			            // 면적정보를 지도에 표시합니다
-	        			            areaOverlay = new kakao.maps.CustomOverlay({
-	        			                map: map, // 커스텀오버레이를 표시할 지도입니다 
-	        			                content: "",  // 커스텀오버레이에 표시할 내용입니다
-	        			                xAnchor: 0,
-	        			                yAnchor: 0,
-	        			                position: path[path.length-1]  // 커스텀오버레이를 표시할 위치입니다. 위치는 다각형의 마지막 좌표로 설정합니다
-	        			            });      
-	        			            clearMarkers(true)
-	        			            
-	        			        } else { 
-	        			            
-	        			            // 다각형을 구성하는 좌표가 2개 이하이면 다각형을 지도에 표시하지 않습니다 
-	        			            polygon = null;  
-	        			            clearMarkers()
-	        			        }
-	        			        
-	        			        // 상태를 false로, 그리지 않고 있는 상태로 변경합니다
-	        			        drawingFlag = false;          
-	        			    }  
-	        			});
 	        		}, [])
 	        	}
 	            slideToggle(title, content);
 	        });
+	        
 	    }
 	}
 	

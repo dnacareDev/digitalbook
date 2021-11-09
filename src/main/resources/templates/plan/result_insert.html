@@ -607,6 +607,12 @@
 	function fileFunction(e){
 		$(e).next().trigger("click");
 	}
+	
+	//이미지 다운로드 이벤트
+	function imgDounload(e){
+		var file_name = $(e).attr("data-img");
+		$(e).find(".downdImg").get(0).click();
+	}
 	//결과입력 테이블 그리기
 	function methodTableGrid(){
 		
@@ -673,7 +679,7 @@
 					currentDataArr = tableResultArray[i].data;
 				}
 			}
-			
+			console.log(tableResultArray);
 			var add_list = "";
 			
 			add_list += '<thead>';
@@ -701,6 +707,12 @@
 					add_list += '</svg>';
 					add_list += '</div>';
 					add_list += '<input type="file" name="file'+j+'" data-file="'+currentDataArr[i]['c_img'+j]+'" data-origin="'+currentDataArr[i]['img'+j]+'" accept=".jpg, .gif, .png, .jpeg, .bmp" style="display:none">';
+					if(currentDataArr[i]['c_img'+j] != "" && currentDataArr[i]['c_img'+j] != "null"){
+						add_list += '<div class="cam" onclick="imgDounload(this)" data-img="'+currentDataArr[i]['c_img'+j]+'">';
+						add_list += '<a href="/plan/downloadImg?file_name='+currentDataArr[i]['c_img'+j]+'" class="downdImg" style="display:none"></a>';
+						add_list += '<img src="/../img/svg/download.svg">';
+						add_list += '</div>';
+					}
 					add_list == '</td>';
 				}
 				add_list += '</tr>';
@@ -873,11 +885,12 @@
 				add_list += '<div class="lines">';
 				add_list += '<select class="select_option">';
 				add_list += '<option value="none">상태선택</option>';
-				add_list += '<option class="s_red" value="red">상태1</option>';
-				add_list += '<option class="s_blue" value="blue">상태2</option>';
-				add_list += '<option class="s_yellow" value="yellow">상태3</option>';
-				add_list += '<option class="s_black" value="black">상태4</option>';
-				add_list += '<option class="s_purple" value="purple">상태5</option>';
+				add_list += '<option class="s_red" value="red">관심개체</option>';
+				add_list += '<option class="s_blue" value="blue">병</option>';
+				add_list += '<option class="s_yellow" value="yellow">시드름</option>';
+				add_list += '<option class="s_black" value="black">초장큼</option>';
+				add_list += '<option class="s_purple" value="purple">초장작음</option>';
+				add_list += '<option value="etc">기타</option>';
 				add_list += '</select>';
 				add_list += '</div>';
 				add_list += '</li>';
@@ -903,11 +916,12 @@
 					add_list += '<div class="lines">';
 					add_list += '<select class="select_option">';
 					add_list += '<option value="none">상태선택</option>';
-					add_list += '<option class="s_red" value="red">상태1</option>';
-					add_list += '<option class="s_blue" value="blue">상태2</option>';
-					add_list += '<option class="s_yellow" value="yellow">상태3</option>';
-					add_list += '<option class="s_black" value="black">상태4</option>';
-					add_list += '<option class="s_purple" value="purple">상태5</option>';
+					add_list += '<option class="s_red" value="red">관심개체</option>';
+					add_list += '<option class="s_blue" value="blue">병</option>';
+					add_list += '<option class="s_yellow" value="yellow">시드름</option>';
+					add_list += '<option class="s_black" value="black">초장큼</option>';
+					add_list += '<option class="s_purple" value="purple">초장작음</option>';
+					add_list += '<option value="etc">기타</option>';
 					add_list += '</select>';
 					add_list += '</div>';
 					add_list += '</li>';
@@ -921,11 +935,12 @@
 				add_list += '<div class="lines">';
 				add_list += '<select class="select_option">';
 				add_list += '<option value="none">상태선택</option>';
-				add_list += '<option class="s_red" value="red">상태1</option>';
-				add_list += '<option class="s_blue" value="blue">상태2</option>';
-				add_list += '<option class="s_yellow" value="yellow">상태3</option>';
-				add_list += '<option class="s_black" value="black">상태4</option>';
-				add_list += '<option class="s_purple" value="purple">상태5</option>';
+				add_list += '<option class="s_red" value="red">관심개체</option>';
+				add_list += '<option class="s_blue" value="blue">병</option>';
+				add_list += '<option class="s_yellow" value="yellow">시드름</option>';
+				add_list += '<option class="s_black" value="black">초장큼</option>';
+				add_list += '<option class="s_purple" value="purple">초장작음</option>';
+				add_list += '<option value="etc">기타</option>';
 				add_list += '</select>';
 				add_list += '</div>';
 				add_list += '</li>';
@@ -1458,11 +1473,12 @@
 				add_list += '<div class="lines">';
 				add_list += '<select class="select_option">';
 				add_list += '<option value="none">상태선택</option>';
-				add_list += '<option class="s_red" value="red">상태1</option>';
-				add_list += '<option class="s_blue" value="blue">상태2</option>';
-				add_list += '<option class="s_yellow" value="yellow">상태3</option>';
-				add_list += '<option class="s_black" value="black">상태4</option>';
-				add_list += '<option class="s_purple" value="purple">상태5</option>';
+				add_list += '<option class="s_red" value="red">관심개체</option>';
+				add_list += '<option class="s_blue" value="blue">병</option>';
+				add_list += '<option class="s_yellow" value="yellow">시드름</option>';
+				add_list += '<option class="s_black" value="black">초장큼</option>';
+				add_list += '<option class="s_purple" value="purple">초장작음</option>';
+				add_list += '<option value="etc">기타</option>';
 				add_list += '</select>';
 				add_list += '</div>';
 				add_list += '</li>';
@@ -1487,11 +1503,12 @@
 					add_list += '<div class="lines">';
 					add_list += '<select class="select_option">';
 					add_list += '<option value="none">상태선택</option>';
-					add_list += '<option class="s_red" value="red">상태1</option>';
-					add_list += '<option class="s_blue" value="blue">상태2</option>';
-					add_list += '<option class="s_yellow" value="yellow">상태3</option>';
-					add_list += '<option class="s_black" value="black">상태4</option>';
-					add_list += '<option class="s_purple" value="purple">상태5</option>';
+					add_list += '<option class="s_red" value="red">관심개체</option>';
+					add_list += '<option class="s_blue" value="blue">병</option>';
+					add_list += '<option class="s_yellow" value="yellow">시드름</option>';
+					add_list += '<option class="s_black" value="black">초장큼</option>';
+					add_list += '<option class="s_purple" value="purple">초장작음</option>';
+					add_list += '<option value="etc">기타</option>';
 					add_list += '</select>';
 					add_list += '</div>';
 					add_list += '</li>';
@@ -1505,11 +1522,12 @@
 				add_list += '<div class="lines">';
 				add_list += '<select class="select_option">';
 				add_list += '<option value="none">상태선택</option>';
-				add_list += '<option class="s_red" value="red">상태1</option>';
-				add_list += '<option class="s_blue" value="blue">상태2</option>';
-				add_list += '<option class="s_yellow" value="yellow">상태3</option>';
-				add_list += '<option class="s_black" value="black">상태4</option>';
-				add_list += '<option class="s_purple" value="purple">상태5</option>';
+				add_list += '<option class="s_red" value="red">관심개체</option>';
+				add_list += '<option class="s_blue" value="blue">병</option>';
+				add_list += '<option class="s_yellow" value="yellow">시드름</option>';
+				add_list += '<option class="s_black" value="black">초장큼</option>';
+				add_list += '<option class="s_purple" value="purple">초장작음</option>';
+				add_list += '<option value="etc">기타</option>';
 				add_list += '</select>';
 				add_list += '</div>';
 				add_list += '</li>';
@@ -1706,6 +1724,7 @@
 	//결과입력 완료 팝업 닫기
 	function confirmResults(){
 		$("#results_success_popup").css("display", "none");
+		window.location.reload();
 	}
 	
 	function CancelBtn(){
@@ -1721,6 +1740,7 @@
 	//구획정보확인 완료 팝업 닫기
 	function confirmSegmentInfo(){
 		$("#segmentInfo_success_popup").css("display", "none");
+		window.location.reload();
 	}
 	
 	
@@ -1763,23 +1783,6 @@
 		}
 	});
 	
-	//커서 위치 구하는 함수
-// 	$.fn.setCursorPosition = function( pos )
-// 	{
-// 	  this.each( function( index, elem ) {
-// 	    if( elem.setSelectionRange ) {
-// 	      elem.setSelectionRange(pos, pos);
-// 	    } else if( elem.createTextRange ) {
-// 	      var range = elem.createTextRange();
-// 	      range.collapse(true);
-// 	      range.moveEnd('character', pos);
-// 	      range.moveStart('character', pos);
-// 	      range.select();
-// 	    }
-// 	  });
-	  
-// 	  return this;
-// 	};
 </script>
      
 <script>
@@ -1911,6 +1914,14 @@
 	//        });
 	//    }
 	});
+	
+	
+	//등록화면 접속시 step1 열어주기
+	setTimeout(function(){
+		var eventList = document.createEvent("MouseEvent");
+	    eventList.initEvent("click");
+	    document.querySelector("#step1 .title").dispatchEvent(eventList);
+	}, 100);
 	
 	
 </script>
