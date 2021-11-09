@@ -49,6 +49,10 @@ public class User implements UserDetails
 	private int d2_id;						//부 depart_id
 	private int d1_id;						//원 depart_id
 	
+	private int delay_count;
+	private int now_count;
+	private int future_count;
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities()
 	{

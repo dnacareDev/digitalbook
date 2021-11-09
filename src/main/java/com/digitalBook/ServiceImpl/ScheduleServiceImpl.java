@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.digitalBook.Entity.Schedule;
+import com.digitalBook.Entity.User;
 import com.digitalBook.Mapper.ScheduleMapper;
 import com.digitalBook.Service.ScheduleService;
 
@@ -20,6 +21,12 @@ public class ScheduleServiceImpl implements ScheduleService
 	public List<Schedule> SelectUserSchedule(int user_id)
 	{
 		return mapper.SelectUserSchedule(user_id);
+	}
+	
+	@Override
+	public List<Schedule> SelectAdminSchedule(User user)
+	{
+		return mapper.SelectAdminSchedule(user);
 	}
 
 	@Override

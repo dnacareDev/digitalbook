@@ -52,4 +52,27 @@
 		LEFT JOIN user u2 ON s.sch_manager = u2.user_id
 		WHERE s.sch_supervisor = #{user_id} OR s.sch_manager = #{user_id}
 	</select>
+	
+	<!-- 전체 일정(사용자) -->
+	<select id="SelectAdminSchedule" parameterType="User" resultType="Schedule">
+		SELECT s.sch_id, s.start_date, s.end_date, p.plan_id, p.plan_code, m.method_id, m.method_code, m.method_title, u1.user_name_k AS u1_supervisor, u2.user_name_k AS u2_manager
+		FROM schedule s
+		LEFT JOIN plan p ON s.plan_id = p.plan_id
+		LEFT JOIN method m ON s.method_id = m.method_id
+		LEFT JOIN user u1 ON s.sch_supervisor = u1.user_id
+		LEFT JOIN user u2 ON s.sch_manager = u2.user_id
+		WHERE p.user_group = #{user_group}
+	</select>
+	
+	<select id="SelectUser" parameterType="User" resultType="User">
+		SELECT u.user_id, u.user_name_k, u.user_group, u.user_authority,
+		(SELECT COUNT(*) FROM schedule s WHERE (s.end_date <![CDATA[<]]> NOW()) AND (s.sch_supervisor = u.user_id OR s.sch_manager = u.user_id)) AS delay_count,
+		(SELECT COUNT(*) FROM schedule s WHERE (s.start_date <![CDATA[<]]> NOW() AND NOW() <![CDATA[<]]> s.end_date) AND (s.sch_supervisor = u.user_id OR s.sch_manager = u.user_id)) AS now_count,
+		(SELECT COUNT(*) FROM schedule s WHERE (NOW() <![CDATA[<]]> s.start_date) AND (s.sch_supervisor = u.user_id OR s.sch_manager = u.user_id)) AS future_count
+		FROM user u
+		LEFT JOIN schedule s1 ON u.user_id = s1.sch_supervisor
+		LEFT JOIN schedule s2 ON u.user_id = s2.sch_manager
+		WHERE u.user_group = #{user_group}
+		GROUP BY u.user_id
+	</select>
 </mapper>

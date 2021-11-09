@@ -12,6 +12,17 @@
 		WHERE s.sch_supervisor = #{user_id} OR s.sch_manager = #{user_id}
 	</select>
 	
+	<!-- 전체 일정(사용자) -->
+	<select id="SelectAdminSchedule" parameterType="User" resultType="Schedule">
+		SELECT s.sch_id, s.start_date, s.end_date, p.plan_id, p.plan_code, m.method_id, m.method_code, m.method_title, u1.user_name_k AS u1_supervisor, u2.user_name_k AS u2_manager
+		FROM schedule s
+		LEFT JOIN plan p ON s.plan_id = p.plan_id
+		LEFT JOIN method m ON s.method_id = m.method_id
+		LEFT JOIN user u1 ON s.sch_supervisor = u1.user_id
+		LEFT JOIN user u2 ON s.sch_manager = u2.user_id
+		WHERE p.user_group = #{user_group}
+	</select>
+	
 	<select id="SelectScheduleDetail" parameterType="int" resultType="Schedule">
 		SELECT s.sch_id, s.start_date, s.end_date, p.plan_id, p.plan_code, m.method_id, m.method_code, m.method_title, u1.user_name_k AS u1_supervisor, u2.user_name_k AS u2_manager
 		FROM schedule s

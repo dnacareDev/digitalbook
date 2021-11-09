@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.digitalBook.Entity.Plan;
 import com.digitalBook.Entity.Schedule;
+import com.digitalBook.Entity.User;
 import com.digitalBook.Mapper.HomeMapper;
 import com.digitalBook.Service.HomeService;
 
@@ -42,5 +43,17 @@ public class HomeServiceImpl implements HomeService
 	public List<Schedule> SelectUserSchedule(int user_id)
 	{
 		return mapper.SelectUserSchedule(user_id);
+	}
+
+	@Override
+	public List<Schedule> SelectAdminSchedule(User user)
+	{
+		return mapper.SelectAdminSchedule(user);
+	}
+
+	@Override
+	public List<User> SelectUser(User user)
+	{
+		return mapper.SelectUser(user);
 	}
 }

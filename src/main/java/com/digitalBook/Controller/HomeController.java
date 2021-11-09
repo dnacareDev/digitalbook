@@ -1,6 +1,8 @@
 package com.digitalBook.Controller;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -79,6 +81,32 @@ public class HomeController
 		User prin = (User)auth.getPrincipal();
 		
 		List<Schedule> result = service.SelectUserSchedule(prin.getUser_id());
+		
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping("selectAdminSchedule")
+	public List<Schedule> SelectAdminSchedule(Authentication auth)
+	{
+		User prin = (User)auth.getPrincipal();
+		
+		List<Schedule> result = service.SelectAdminSchedule(prin);
+		
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping("selectChart")
+	public Map<String, Object> SelectChart(Authentication auth)
+	{
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+		
+		User prin = (User)auth.getPrincipal();
+		
+		List<User> user = service.SelectUser(prin);
+		
+		result.put("user", user);
 		
 		return result;
 	}
