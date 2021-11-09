@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.digitalBook.Entity.Board;
 import com.digitalBook.Entity.Plan;
 import com.digitalBook.Entity.Schedule;
 import com.digitalBook.Entity.User;
@@ -35,7 +36,7 @@ public class HomeController
 		
 		mv.addObject("delay_plan", delay_plan);
 		mv.addObject("current_plan", current_plan);
-		mv.addObject("progress_plan",progress_plan);
+		mv.addObject("progress_plan", progress_plan);
 		
 		if(prin.getUser_type() == 0)
 		{
@@ -60,7 +61,7 @@ public class HomeController
 		
 		mv.addObject("delay_plan", delay_plan);
 		mv.addObject("current_plan", current_plan);
-		mv.addObject("progress_plan",progress_plan);
+		mv.addObject("progress_plan", progress_plan);
 		
 		if(prin.getUser_type() == 0)  
 		{
@@ -76,22 +77,34 @@ public class HomeController
 	
 	@ResponseBody
 	@RequestMapping("selectUserSchedule")
-	public List<Schedule> SelectUserSchedule(Authentication auth)
+	public Map<String, Object> SelectUserSchedule(Authentication auth)
 	{
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+		
 		User prin = (User)auth.getPrincipal();
 		
-		List<Schedule> result = service.SelectUserSchedule(prin.getUser_id());
+		List<Schedule> schedule = service.SelectUserSchedule(prin.getUser_id());
+		List<Board> board = service.SelectUserBoard(prin.getUser_id());
+		
+		result.put("schedule", schedule);
+		result.put("board", board);
 		
 		return result;
 	}
 	
 	@ResponseBody
 	@RequestMapping("selectAdminSchedule")
-	public List<Schedule> SelectAdminSchedule(Authentication auth)
+	public Map<String, Object> SelectAdminSchedule(Authentication auth)
 	{
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+		
 		User prin = (User)auth.getPrincipal();
 		
-		List<Schedule> result = service.SelectAdminSchedule(prin);
+		List<Schedule> schedule = service.SelectAdminSchedule(prin);
+		List<Board> board = service.SelectUserBoard(prin.getUser_id());
+		
+		result.put("schedule", schedule);
+		result.put("board", board);
 		
 		return result;
 	}

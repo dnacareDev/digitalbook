@@ -12,6 +12,12 @@
 		WHERE s.sch_supervisor = #{user_id} OR s.sch_manager = #{user_id}
 	</select>
 	
+	<select id="SelectUserBoard" parameterType="int" resultType="Board">
+		SELECT * FROM board b
+		LEFT JOIN user u ON u.user_id = #{user_id}
+		WHERE b.user_id = #{user_id} OR b.board_share LIKE CONCAT("%", #{user_id}, "%")
+	</select>
+	
 	<!-- 전체 일정(사용자) -->
 	<select id="SelectAdminSchedule" parameterType="User" resultType="Schedule">
 		SELECT s.sch_id, s.start_date, s.end_date, p.plan_id, p.plan_code, m.method_id, m.method_code, m.method_title, u1.user_name_k AS u1_supervisor, u2.user_name_k AS u2_manager
@@ -71,9 +77,10 @@
 	</select>
 	
 	<!-- 전달사항 상세 조회 -->
-	<select id="SelectBoardId" parameterType="int" resultType="Board">
-		SELECT * FROM board
-		where board_id = #{board_id}
+	<select id="SelectBoardDetail" parameterType="int" resultType="Board">
+		SELECT * FROM board b
+		LEFT JOIN user u ON b.user_id = u.user_id
+		WHERE b.board_id = #{board_id}
 	</select>
 	
 	<!-- 전달사항 등록 -->	

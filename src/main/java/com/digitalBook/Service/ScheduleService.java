@@ -9,6 +9,8 @@ import com.digitalBook.Entity.User;
 public interface ScheduleService
 {
 	List<Schedule> SelectUserSchedule(int user_id);
+	
+	List<Board> SelectUserBoard(int user_id);
 
 	List<Schedule> SelectAdminSchedule(User user);
 	
@@ -26,7 +28,7 @@ public interface ScheduleService
 	// 전달사항 조회
 	List<Board> SelectBoard(int user_id, int user_group);
 	
-	Board SelectBoardId(int board_id);
+	Board SelectBoardDetail(int board_id);
 	
 	// 전달사항 등록
 	int InsertBoard(Board board);

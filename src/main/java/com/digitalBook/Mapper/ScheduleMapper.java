@@ -15,6 +15,8 @@ public interface ScheduleMapper
 	// 전체 일정(사용자)
 	List<Schedule> SelectUserSchedule(int user_id);
 	
+	List<Board> SelectUserBoard(int user_id);
+	
 	List<Schedule> SelectAdminSchedule(User user);
 
 	Schedule SelectScheduleDetail(int sch_id);
@@ -32,7 +34,7 @@ public interface ScheduleMapper
 	List<Board> SelectBoard(@Param("user_id") int user_id, @Param("user_group") int user_group);
 	
 	// 전달사항 상세 조회
-	Board SelectBoardId(int board_id);
+	Board SelectBoardDetail(int board_id);
 	
 	// 전달사항 등록
 	int InsertBoard(Board board);

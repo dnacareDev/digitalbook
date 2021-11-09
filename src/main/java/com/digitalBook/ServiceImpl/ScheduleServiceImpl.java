@@ -25,6 +25,12 @@ public class ScheduleServiceImpl implements ScheduleService
 	}
 	
 	@Override
+	public List<Board> SelectUserBoard(int user_id)
+	{
+		return mapper.SelectUserBoard(user_id);
+	}
+	
+	@Override
 	public List<Schedule> SelectAdminSchedule(User user)
 	{
 		return mapper.SelectAdminSchedule(user);
@@ -65,9 +71,9 @@ public class ScheduleServiceImpl implements ScheduleService
 	}
 
 	@Override
-	public Board SelectBoardId(int board_id)
+	public Board SelectBoardDetail(int board_id)
 	{
-		return mapper.SelectBoardId(board_id);
+		return mapper.SelectBoardDetail(board_id);
 	}
 	
 	// 전달사항 등록

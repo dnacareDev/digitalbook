@@ -63,10 +63,19 @@
 		
 		/* table card section - tbody */
 		#fulled-calendar {max-width: 985px; width: 100%; margin: 0 auto}
-		#fulled-calendar .fc-view-harness {height: 748px !important;}
+		#fulled-calendar .fc-view-harness {height: 764px !important;}
 		#fulled-calendar .fc-scrollgrid > thead {text-align: center}
 		#fulled-calendar .fc-view .fc-col-header tr th .fc-scrollgrid-sync-inner .fc-col-header-cell-cushion {display: block; text-align: center; padding-left: 0}
-		
+		#ModalTable2 table.table, #ModalTable2 table.table th, #ModalTable2 table.table td{border:none;}
+		#ModalTable2 table.table td{text-align:left;}
+		/*#ModalTable2 table.table tr td:first-child{text-align:center}*/
+		#sch_list{border:none}
+		#ModalTable2 .button-group{padding-bottom:10px;}
+		@media (min-width: 1200px){
+			.modal-xl {
+	    		max-width: 700px;
+			}
+		}
 	</style>
 <head>
 <!-- 공통 헤더 -->
@@ -279,13 +288,22 @@
 			data: data,
 			success: function(result)
 			{
-				for(var i = 0; i < result.length; i++)
+				for(var i = 0; i < result.schedule.length; i++)
 				{
-					var title = result[i].u1_supervisor + "(" + result[i].u2_manager + "), " + result[i].method_title;
+					var title = result.schedule[i].u1_supervisor + "(" + result.schedule[i].u2_manager + "), " + result.schedule[i].method_title;
 					
-					var schedule = {"title" : title, "start" : result[i].start_date, "end" : result[i].end_date, "id" : result[i].sch_id};
+					var schedule = {"title" : title, "start" : result.schedule[i].start_date, "end" : result.schedule[i].end_date, "id" : result.schedule[i].sch_id, "classNames" : "schedule"};
 					
 					arr.push(schedule);
+				}
+				
+				for(var i = 0; i < result.board.length; i++)
+				{
+					var title = result.board[i].board_title;
+					
+					var board = {"title" : title, "start" : result.board[i].board_start, "end" : result.board[i].board_end, "id" : result.board[i].board_id, "classNames" : "board"};
+					
+					arr.push(board);
 				}
 				
 				if(fullCalendar)
@@ -307,46 +325,89 @@
 						dayMaxEvents: true,//이벤트가 오버되면 높이 제한(+ 몇 개식으로 표현)
 						eventClick: function(e)
 						{
-							var data = {"sch_id" : e.event.id};
-							
-							$.ajax(
+							if(e.event.classNames[0] == "schdule")
 							{
-								url: '/schedule/selectScheduleDetail',
-								method: 'POST',
-								dataType: 'json',
-								data: data,
-								success: function(result)
+								var data = {"sch_id" : e.event.id};
+								
+								$.ajax(
 								{
-									var sch_list = $("#sch_list");
-									var add_list = "";
-									
-									add_list += '<tr>';
-									add_list += '<td>과제번호</td>';
-									add_list += '<td>' + result.method_code + '</td>';
-									add_list += '</tr>';
-									add_list += '<tr>';
-									add_list += '<td>과제명</td>';
-									add_list += '<td>' + result.method_title + '</td>';
-									add_list += '</tr>';
-									add_list += '<tr>';
-									add_list += '<td>책임자(정)</td>';
-									add_list += '<td>' + result.u1_supervisor + '</td>';
-									add_list += '</tr>';
-									add_list += '<tr>';
-									add_list += '<td>책임자(부)</td>';
-									add_list += '<td>' + result.u2_manager + '</td>';
-									add_list += '</tr>';
-									add_list += '<tr>';
-									add_list += '<td>일정</td>';
-									add_list += '<td>' + result.start_date + ' ~ ' + result.end_date + '</td>';
-									add_list += '</tr>';
-									
-									sch_list.empty();
-									sch_list.append(add_list);
-									
-									$("#sch_btn").attr("href", "/plan/insertResult?plan_id=" + result.plan_id);
-								}
-							});
+									url: 'selectScheduleDetail',
+									method: 'POST',
+									dataType: 'json',
+									data: data,
+									success: function(result)
+									{
+										var sch_list = $("#sch_list");
+										var add_list = "";
+										
+										add_list += '<tr>';
+										add_list += '<td>과제번호</td>';
+										add_list += '<td>' + result.method_code + '</td>';
+										add_list += '</tr>';
+										add_list += '<tr>';
+										add_list += '<td>과제명</td>';
+										add_list += '<td>' + result.method_title + '</td>';
+										add_list += '</tr>';
+										add_list += '<tr>';
+										add_list += '<td>책임자(정)</td>';
+										add_list += '<td>' + result.u1_supervisor + '</td>';
+										add_list += '</tr>';
+										add_list += '<tr>';
+										add_list += '<td>책임자(부)</td>';
+										add_list += '<td>' + result.u2_manager + '</td>';
+										add_list += '</tr>';
+										add_list += '<tr>';
+										add_list += '<td>일정</td>';
+										add_list += '<td>' + result.start_date + ' ~ ' + result.end_date + '</td>';
+										add_list += '</tr>';
+										
+										sch_list.empty();
+										sch_list.append(add_list);
+										
+										$("#sch_btn").attr("href", "plan/insertResult?plan_id=" + result.plan_id);
+									}
+								});
+							}
+							else
+							{
+								var data = {"board_id" : e.event.id};
+								
+								$.ajax(
+								{
+									url: 'selectBoardDetail',
+									method: 'POST',
+									dataType: 'json',
+									data: data,
+									success: function(result)
+									{
+										console.log(result)
+										var sch_list = $("#sch_list");
+										var add_list = "";
+										
+										add_list += '<tr>';
+										add_list += '<td>일정명</td>';
+										add_list += '<td>' + result.board_title + '</td>';
+										add_list += '</tr>';
+										add_list += '<tr>';
+										add_list += '<td>내용</td>';
+										add_list += '<td>' + result.board_content + '</td>';
+										add_list += '</tr>';
+										add_list += '<tr>';
+										add_list += '<td>등록자</td>';
+										add_list += '<td>' + result.user_name_k + '</td>';
+										add_list += '</tr>';
+										add_list += '<tr>';
+										add_list += '<td>일정</td>';
+										add_list += '<td>' + result.board_start + ' ~ ' + result.board_end + '</td>';
+										add_list += '</tr>';
+										
+										$("#sch_btn").css("display", "none");
+										
+										sch_list.empty();
+										sch_list.append(add_list);
+									}
+								});
+							}
 							
 							$("#scheduleModal").modal("show");
 						}

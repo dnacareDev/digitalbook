@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.digitalBook.Entity.Board;
 import com.digitalBook.Entity.Plan;
 import com.digitalBook.Entity.Schedule;
 import com.digitalBook.Entity.User;
@@ -43,6 +44,12 @@ public class HomeServiceImpl implements HomeService
 	public List<Schedule> SelectUserSchedule(int user_id)
 	{
 		return mapper.SelectUserSchedule(user_id);
+	}
+	
+	@Override
+	public List<Board> SelectUserBoard(int user_id)
+	{
+		return mapper.SelectUserBoard(user_id);
 	}
 
 	@Override

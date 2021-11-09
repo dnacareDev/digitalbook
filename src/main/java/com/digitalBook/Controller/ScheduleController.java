@@ -48,11 +48,17 @@ public class ScheduleController
 	// 사용자 일정
 	@ResponseBody
 	@RequestMapping("selectUserSchedule")
-	public List<Schedule> SelectUserSchedule(Authentication auth)
+	public Map<String, Object> SelectUserSchedule(Authentication auth)
 	{
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+		
 		User prin = (User)auth.getPrincipal();
 		
-		List<Schedule> result = service.SelectUserSchedule(prin.getUser_id());
+		List<Schedule> schedule = service.SelectUserSchedule(prin.getUser_id());
+		List<Board> board = service.SelectUserBoard(prin.getUser_id());
+		
+		result.put("schedule", schedule);
+		result.put("board", board);
 		
 		return result;
 	}
@@ -60,11 +66,17 @@ public class ScheduleController
 	// 관리자 일정
 	@ResponseBody
 	@RequestMapping("selectAdminSchedule")
-	public List<Schedule> SelectAdminSchedule(Authentication auth)
+	public Map<String, Object> SelectAdminSchedule(Authentication auth)
 	{
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+		
 		User prin = (User)auth.getPrincipal();
 		
-		List<Schedule> result = service.SelectAdminSchedule(prin);
+		List<Schedule> schedule = service.SelectAdminSchedule(prin);
+		List<Board> board = service.SelectUserBoard(prin.getUser_id());
+		
+		result.put("schedule", schedule);
+		result.put("board", board);
 		
 		return result;
 	}
@@ -133,7 +145,7 @@ public class ScheduleController
 	{
 		User prin = (User) auth.getPrincipal();
 		
-		Board board = service.SelectBoardId(board_id);
+		Board board = service.SelectBoardDetail(board_id);
 		
 		List<User> user = service.SelectShareBoard(prin.getUser_group());
 		
@@ -190,6 +202,16 @@ public class ScheduleController
 	public int DeleteBoard(@RequestParam("board_id") int board_id)
 	{
 		int result = service.DeleteBoard(board_id);
+		
+		return result;
+	}
+	
+	// 전달사항 상세 조회
+	@ResponseBody
+	@RequestMapping("selectBoardDetail")
+	public Board SelectBoardDetail(@RequestParam("board_id") int board_id)
+	{
+		Board result = service.SelectBoardDetail(board_id);
 		
 		return result;
 	}
