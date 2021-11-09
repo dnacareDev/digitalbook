@@ -118,7 +118,6 @@
 		                            	<table class="table">
 		                            		<thead>
 		                            			<tr>
-		                            				<th></th>
 		                            				<th>사용자 ID</th>
 		                            				<th>성명</th>
 		                            				<th>소속실</th>
@@ -213,7 +212,6 @@
 					for(var i = 0; i < length; i++)
 					{
 						add_list += '<tr>';
-						add_list += '<td><input type="checkbox"></td>';
 						add_list += '<td><a href="/data/user/modify?user_id='+ result.user[i].user_id + '">' + result.user[i].user_username+ '</a></td>';
 						add_list += '<td><span>' + result.user[i].user_name_k + '</span></td>';
 						add_list += '<td><span>' + (result.user[i].d4_department_name == null ? "-" : result.user[i].d4_department_name) + '</span></td>';

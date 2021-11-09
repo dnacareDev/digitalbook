@@ -129,7 +129,6 @@
 		                            	<table class="table">
 		                            		<thead>
 		                            			<tr>
-		                            				<th></th>
 		                            				<th>전달사항 ID</th>
 		                            				<th>전달사항 제목</th>
 		                            				<th>전달사항 내용</th>
@@ -222,7 +221,6 @@
 					for(var i = 0; i < length; i++){
 						
 						add_list += '<tr>';
-						add_list += '<td><input type="checkbox"></td>';
 						add_list += '<td><a href="board/modify?board_id='+ result.board[i].board_id + '">' + result.board[i].board_id + '</a></td>';
 						add_list += '<td><span>' + result.board[i].board_title + '</span></td>';
 						add_list += '<td><span>' + result.board[i].board_content + '</span></td>';

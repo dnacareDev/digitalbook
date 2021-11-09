@@ -136,7 +136,6 @@
 		                            	<table class="table">
 		                            		<thead class="text-center">
 		                            			<tr>
-		                            				<th></th>
 		                            				<th>Method ID</th>
 		                            				<th>Method명</th>
 		                            				<th>대상 작목</th>
@@ -222,7 +221,6 @@
 					for(var i = 0; i < length; i++){
 						
 						add_list += '<tr>';
-						add_list += '<td><input type="checkbox"></td>';
 						add_list += '<td><a href="/method/modify?method_id='+ result.method[i].method_id + '">' + result.method[i].method_code + '</a></td>';
 						add_list += '<td><span>' + result.method[i].method_title + '</span></td>';
 						add_list += '<td><span>' + result.method[i].d1_name + '</span></td>';
