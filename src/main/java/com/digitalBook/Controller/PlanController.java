@@ -39,6 +39,8 @@ import com.digitalBook.Entity.Report;
 import com.digitalBook.Entity.Results;
 import com.digitalBook.Entity.Schedule;
 import com.digitalBook.Entity.Seed;
+import com.digitalBook.Entity.Segment;
+import com.digitalBook.Entity.SegmentInfo;
 import com.digitalBook.Entity.Storage;
 import com.digitalBook.Entity.User;
 import com.digitalBook.Service.PlanService;
@@ -527,9 +529,6 @@ public class PlanController
 		User prin = (User)auth.getPrincipal();
 		
 		Plan plan = service.selectPlanDetail(plan_id);
-		List<Report> report = service.selectReportList();
-		List<Fertilizer> fert = service.selectFertilizerList(0, 0);
-		List<Factor> factor = service.selectFactorList(plan_id);
 		List<User> user = service.selectUserList(prin.getUser_group());
 		List<Schedule> sch = service.selectScheduleList(plan_id);
 		
@@ -537,18 +536,20 @@ public class PlanController
 		
 		List<Results> results = service.selectResultsList(plan_id);
 		
+		List<Segment> segment = service.selectSegmentList(plan_id);
+		List<SegmentInfo> segmentInfo = service.selectSegmentInfoList(plan_id);
+		
 		int arr[] = Arrays.stream(plan.getPlan_method().split(",")).mapToInt(Integer::parseInt).toArray();
 		List<Method> method = service.selectPlanMethodList(arr);
 		
 		mv.addObject("plan", plan);
-		mv.addObject("report", report);
-		mv.addObject("fert", fert);
-		mv.addObject("factor", factor);
 		mv.addObject("user", user);
 		mv.addObject("record", record);
 		mv.addObject("sch", sch);
 		mv.addObject("method", method);
 		mv.addObject("results", results);
+		mv.addObject("segment", segment);
+		mv.addObject("segmentInfo", segmentInfo);
 		
 		mv.setViewName("plan/result_insert");
 		
@@ -716,6 +717,34 @@ public class PlanController
 		if(result != 0) {
 			if(cancel.length != 0) {
 				service.deleteResults(cancel);
+			}
+		}
+		
+		return result;
+	}
+	
+	//구획 등록
+	@ResponseBody
+	@RequestMapping("/insertSegment")
+	public int InsertSegment(@RequestBody List<Segment> segment)
+	{
+		
+		int result = service.insertSegment(segment);
+		
+		return result;
+	}
+	
+	//구획정보 등록
+	@ResponseBody
+	@RequestMapping("/insertSegmentInfo")
+	public int InsertSegmentInfo(@RequestBody List<SegmentInfo> segmentInfo, @RequestParam(name = "cancelInfo") int cancel[])
+	{
+		
+		int result =service.insertSegmentInfo(segmentInfo);
+		
+		if(result != 0) {
+			if(cancel.length != 0) {
+				service.deleteSegmentInfo(cancel);
 			}
 		}
 		

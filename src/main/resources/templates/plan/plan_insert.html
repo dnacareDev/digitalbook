@@ -395,7 +395,7 @@
 			            <div class="submit_btn">
 			                <div class="submit_btn-inner">
 			                    <button class="list" id="listBtn">목록</button>
-			                    <button class="submit" id="planInsetBtn">등록</button>
+			                    <button class="submit" id="planInsertBtn">등록</button>
 			                </div>
 			            </div>
 			        </section>
@@ -980,6 +980,9 @@
 	
 	//스케줄 등록할 객체 array
 	let scheduleArray = new Array();
+	
+	//구획 등록할 객체 array
+	let segment_array = new Array();
 
 	$("#listBtn").on("click", function(){
 		window.location.href = "/plan/list";
@@ -3318,8 +3321,47 @@
 		gridStep6();
 	}
 	
+	//구획 등록
+	function insertSegment(plan_id){
+		segment_array = [];
+		
+		$(document).find(".table_content").each(function(index, item){
+			
+			var seg_data = {
+				"plan_id" : plan_id,
+				"segment_code" : $(this).children().eq(1).text(),
+				"segment_index" : $(this).children().eq(0).text(),
+				"segment_type" : $(this).children().eq(2).text(),
+				"segment_repeat" : $(this).children().eq(3).text(),
+				"segment_area" : $(this).find("input:text").val(),
+				"individual_num" : 3
+			};
+			
+			segment_array.push(seg_data);
+			
+		});
+		
+		console.log(segment_array);
+		
+		$.ajax({
+			url : "/plan/insertSegment",
+			method : "POST",
+			contentType : "application/json; charset=utf-8",
+			data : JSON.stringify(segment_array),
+			success : function(result){
+				
+				if(result == 0){
+					
+				}else {
+					
+				}
+			}
+		});//end ajax
+		
+	}
+	
 	//등록 버튼 이벤트
-	$("#planInsetBtn").on("click", function(){
+	$("#planInsertBtn").on("click", function(){
 		
 		/* console.log("data!!!!!");
 		console.log(data1);
@@ -3360,6 +3402,9 @@
 					if(checkSch != 0){
 						insertSchedule(plan_id);
 					}
+					
+					//구획 등록
+					insertSegment(plan_id);
 					
 					//시험구 요인 등록
 					insertFactor(plan_id);

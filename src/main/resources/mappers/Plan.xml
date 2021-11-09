@@ -441,4 +441,75 @@
 		</foreach>
 	</delete>
 	
+	<!-- 구획 등록 -->
+	<insert id="insertSegment" parameterType="java.util.ArrayList">
+		<foreach collection="segment" item="item" separator=";">
+			INSERT INTO segment
+		(
+			plan_id,
+			segment_code,
+			segment_index,
+			segment_type,
+			segment_repeat,
+			segment_area,
+			individual_num
+		)
+		VALUES
+		(
+			#{item.plan_id},
+			#{item.segment_code},
+			#{item.segment_index},
+			#{item.segment_type},
+			#{item.segment_repeat},
+			#{item.segment_area},
+			#{item.individual_num}
+		)
+		</foreach>
+	</insert>
+	
+	<!-- 구획 조회 -->
+	<select id="selectSegmentList" parameterType="int" resultType="Segment">
+		SELECT * FROM segment
+		WHERE plan_id = #{plan_id}
+		ORDER BY segment_id
+	</select>
+	
+	<!-- 구획정보등록 -->
+	<insert id="insertSegmentInfo" parameterType="java.util.ArrayList">
+		<foreach collection="segmentInfo" item="item" separator=";">
+			INSERT INTO segment_info
+		(
+			plan_id,
+			segment_id,
+			segment_index,
+			info_status,
+			info_index
+		)
+		VALUES
+		(
+			#{item.plan_id},
+			#{item.segment_id},
+			#{item.segment_index},
+			#{item.info_status},
+			#{item.info_index}
+		)
+		</foreach>
+	</insert>
+	
+	<!-- 구획정보 조회 -->
+	<select id="selectSegmentInfoList" parameterType="int" resultType="SegmentInfo">
+		SELECT * FROM segment_info
+		WHERE plan_id = #{plan_id}
+		ORDER BY info_id
+	</select>
+	
+	<!-- 구획정보 삭제 -->
+	<delete id="deleteSegmentInfo" parameterType="int">
+		DELETE FROM segment_info
+		WHERE info_id IN
+		<foreach collection="array" item="arr" open="(" close=")" separator=",">
+		#{arr}
+		</foreach>
+	</delete>
+	
 </mapper>

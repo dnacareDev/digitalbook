@@ -16,6 +16,8 @@ import com.digitalBook.Entity.Report;
 import com.digitalBook.Entity.Results;
 import com.digitalBook.Entity.Schedule;
 import com.digitalBook.Entity.Seed;
+import com.digitalBook.Entity.Segment;
+import com.digitalBook.Entity.SegmentInfo;
 import com.digitalBook.Entity.Storage;
 import com.digitalBook.Entity.User;
 import com.digitalBook.Mapper.PlanMapper;
@@ -256,6 +258,41 @@ public class PlanServiceImpl implements PlanService {
 	public int deleteResults(int[] arr) {
 		// TODO Auto-generated method stub
 		return mapper.deleteResults(arr);
+	}
+	
+	//구획 등록
+	@Override
+	public int insertSegment(List<Segment> segment) {
+		
+		return mapper.insertSegment(segment);
+	}
+	
+	//구획 조회
+	@Override
+	public List<Segment> selectSegmentList(int plan_id) {
+		
+		return mapper.selectSegmentList(plan_id);
+	}
+	
+	//구획정보 등록
+	@Override
+	public int insertSegmentInfo(List<SegmentInfo> segmentInfo) {
+		
+		return mapper.insertSegmentInfo(segmentInfo);
+	}
+	
+	//구획정보 조회
+	@Override
+	public List<SegmentInfo> selectSegmentInfoList(int plan_id) {
+		
+		return mapper.selectSegmentInfoList(plan_id);
+	}
+	
+	//구획정보 삭제
+	@Override
+	public int deleteSegmentInfo(int[] arr) {
+		
+		return mapper.deleteSegmentInfo(arr);
 	}
 
 }
