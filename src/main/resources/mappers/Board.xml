@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.digitalBook.Mapper.BoardMapper">
+
+
+	<select id="selectBoard" resultType="board">
+		select * from board where user_group  = #{user_group} 
+	</select>
+
+	<select id="selectShareBoard" resultType="User">
+		SELECT user_id,user_name_k
+		FROM user
+		WHERE user_group = #{user_group} OR user_id = #{user_id};
+	</select>
+	
+	<insert id="insertBoard">
+		INSERT INTO board(board_title, board_start,board_end, board_content, board_share, user_id, user_group)
+		VALUES (#{board_title}, #{board_start}, #{board_end}, #{board_content}, #{board_share}, #{user_id},#{user_group});
+	</insert>
+	
+	<update id="updateBoard">
+		UPDATE
+			board 
+		SET
+			board_title= #{board_title},
+			board_start = #{board_start},
+			board_end = #{board_end},
+			board_content = #{board_content},
+			board_share = #{board_share},
+			user_id = #{user_id},
+			user_group = #{user_group}
+			where board_id = #{board_id}
+	</update>
+	
+	<delete id="deleteBoard">
+		delete from board where board_id =#{board_id};
+	</delete>
+	
+	<select id="searchBoard" resultType="board">
+		SELECT * FROM board
+			WHERE user_group = #{user_group} 
+			<choose>
+				<when test="search_type.equals('none')">
+					 AND 1=1
+				</when>
+				<otherwise>
+					AND #{search_type} LIKE CONCAT('%', #{keyword}, '%')
+				</otherwise>
+			</choose>
+	</select>
+	
+	<select id="searchBoardCount" resultType="int">
+		SELECT count(*) FROM board
+		WHERE user_group = #{user_group}
+		<choose>
+			<when test="search_type.equals('none')">
+				 AND 1=1
+			</when>
+			<otherwise>
+				AND #{search_type} LIKE CONCAT('%', #{keyword}, '%')
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="selectBoardId" resultType="Board">
+		SELECT * FROM board
+		where board_id = #{board_id}
+	</select>
+</mapper>

@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
 	<style>
+		 .btn-result {background-color: #7C8798; color: #fff; border: none}
 		/* contents section 여백 */
 		.top-menu .main-content .contents {padding: 124px 40px 72px; background-color: #F8F9FA;}
 		
@@ -103,45 +104,30 @@
 					            <div class="card-body overflow-auto" style="height: 316px;">
 					            	<div class="card-content">
 			                        	<div class="atbd-collapse atbd-collapse-custom">
-			                        		<div class="atbd-collapse-item">
-			                                    <p class="item-link" data-toggle="collapse" data-target="#coll-1" style="text-decoration: underline;">
-			                                        Card content
-			                                    </p>
-			                                    <div id="coll-1" class="collapse atbd-collapse-item__body" style="background-color: #fafef5;">
-			                                        <div class="collapse-body-text">
-			                                            <p>
-			                                                A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a
-			                                                welcome guest in many households across the world.
-			                                            </p>
-			                                        </div>
-			                                    </div>
-			                                </div>
-			                                <div class="atbd-collapse-item">
-			                                    <p class="item-link" data-toggle="collapse" data-target="#coll-2" style="text-decoration: underline;">
-			                                        Card content
-			                                    </p>
-			                                    <div id="coll-2" class="collapse atbd-collapse-item__body" style="background-color: #fafef5;">
-			                                        <div class="collapse-body-text">
-			                                            <p>
-			                                                A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a
-			                                                welcome guest in many households across the world.
-			                                            </p>
-			                                        </div>
-			                                    </div>
-			                                </div>
-			                                <div class="atbd-collapse-item">
-			                                    <p class="item-link" data-toggle="collapse" data-target="#coll-3" style="text-decoration: underline;">
-			                                        Card content
-			                                    </p>
-			                                    <div id="coll-3" class="collapse atbd-collapse-item__body" style="background-color: #fafef5;">
-			                                        <div class="collapse-body-text">
-			                                            <p>
-			                                                A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a
-			                                                welcome guest in many households across the world.
-			                                            </p>
-			                                        </div>
-			                                    </div>
-			                                </div>
+			                        		<th:block th:each="p : ${progress_plan}">
+				                        		<div class="atbd-collapse-item">
+				                                    <p class="item-link" data-toggle="collapse" data-target="#coll-b-1" style="text-decoration: underline;"
+				                                    th:text="${p.report_title +'(' + p.start_date + ' - ' + p.end_date + ')' }">
+				                                        
+				                                    </p>
+				                                    <div id="coll-b-1" class="collapse atbd-collapse-item__body" style="background-color: #F7F7F8;">
+				                                        <div class="collapse-body-text">
+				                                            <div class="row">
+					                                            	<p>과제번호 :</p><p th:text="${p.report_code}"></p>
+					                                            </div>
+					                                            <div class="row">
+					                                            	<p>과제명 :</p><p th:text="${p.report_title}"></p>
+					                                            </div>
+					                                            <div class="row">
+					                                            	<p>과제 책임자 :</p><p th:text="${p.user_name_k}"></p>
+					                                            </div>
+				                                        </div>
+				                                          <div class="d-flex justify-content-end">
+											                	<a class="btn btn-xs btn-light btn-rounded btn-result" style="background-color: #7C8798; color:#fff" th:href="'/plan/insertResult?plan_id='+${p.plan_id}">결과 확인</a>
+											                </div>
+				                                    </div>
+				                                </div>
+				                                </th:block>
 			                        	</div>
 			                        </div>
 					            </div>

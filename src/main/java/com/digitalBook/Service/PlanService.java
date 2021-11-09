@@ -2,6 +2,8 @@ package com.digitalBook.Service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.digitalBook.Entity.Etc;
 import com.digitalBook.Entity.Factor;
 import com.digitalBook.Entity.Fertilizer;
@@ -13,6 +15,8 @@ import com.digitalBook.Entity.Report;
 import com.digitalBook.Entity.Results;
 import com.digitalBook.Entity.Schedule;
 import com.digitalBook.Entity.Seed;
+import com.digitalBook.Entity.Segment;
+import com.digitalBook.Entity.SegmentInfo;
 import com.digitalBook.Entity.Storage;
 import com.digitalBook.Entity.User;
 
@@ -116,5 +120,23 @@ public interface PlanService {
 	
 	//결과입력 삭제
 	int deleteResults(int[] arr);
+	
+	//구획 등록
+	int insertSegment(List<Segment> segment);
+	
+	//구획 조회
+	List<Segment> selectSegmentList(int plan_id);
+	
+	//구획정보 등록
+	int insertSegmentInfo(List<SegmentInfo> segmentInfo);
+	
+	//구획정보 조회
+	List<SegmentInfo> selectSegmentInfoList(int plan_id);
+	
+	//구획정보 삭제
+	int deleteSegmentInfo(int[] arr);
+	
+	//구획 삭제
+	int deleteSegment(int[] arr);
 	
 }

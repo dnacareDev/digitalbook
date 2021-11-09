@@ -61,7 +61,7 @@
 			                        <div class="bottom_right-content clearfix"> <!-- 2021-11-01 추가  -->
 			                        	<div class="left_type">
 			                        		<span>개채수<span class="red">*</span></span>
-				                            <input type="text" value="3" id="rowNum">
+				                            <input type="text" id="rowNum">
 				                            <button type="button" onclick="addRow()">확인</button>
 			                        	</div>
 			                        	<div class="right_type">
@@ -99,56 +99,18 @@
 						                      	<div class="left_type" style="width:60%;">
 						                      		<span>기준개채수<span class="red">*</span></span>
 						                           	<input type="text" id="segment_num" value="10">
-						                           	<button type="button" onclick="checkSegment();">확인</button>
+						                           	<button type="button" id="segment_check">확인</button>
 						                      	</div>
 						                    </div>
 			                                <ul class="sangtaeLi clearfix">
 			                                    <li id="sangtae_list">
-			                                        <span class="sub_title-content regular_text"><i class="bi bi-arrows-move"></i>A1-B1-C1-1</span>
-			                                        <!-- <ul class="clearfix sangtae">
-			                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-			                                                <div class="lines">
-			                                                    <select>
-			                                                        <option>상태선택</option>
-			                                                        <option>상태선택</option>
-			                                                        <option>상태선택</option>
-			                                                        <option>상태선택</option>
-			                                                        <option>상태선택</option>
-			                                                        <option>상태선택</option>
-			                                                    </select>
-			                                                </div>
-			                                            </li>
-			                                            <li class="red"><a href="#"><img src="../img/icons/red.png" alt="red"></a>
-			                                                <div class="lines">
-			                                                    <select>
-			                                                        <option>상태선택</option>
-			                                                        <option>상태선택</option>
-			                                                        <option>상태선택</option>
-			                                                        <option>상태선택</option>
-			                                                        <option>상태선택</option>
-			                                                        <option>상태선택</option>
-			                                                    </select>
-			                                                </div>
-			                                            </li>
-			                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
-			                                                <div class="lines">
-			                                                    <select>
-			                                                        <option>상태선택</option>
-			                                                        <option>상태선택</option>
-			                                                        <option>상태선택</option>
-			                                                        <option>상태선택</option>
-			                                                        <option>상태선택</option>
-			                                                        <option>상태선택</option>
-			                                                    </select>
-			                                                </div>
-			                                            </li>
-			                                        </ul> -->
+			                                        
 			                                    </li>
 			                                </ul>
 			                            </div>
 			                        </div>
 			                        <div class="submit_btn">
-			                            <button class="type1">저장</button>
+			                            <button class="type1" onclick="confirminsertSegmentInfo();">저장</button>
 			                        </div>
 			                    </div>
 			                </div>
@@ -304,6 +266,47 @@
         		</div>
         	</div>
         </div>
+        
+        <div class="atbd-notice" id="segmentInfo_success_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
+        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+        		<div class="card-body">
+        			<div class="atbd-notice__content">
+        				<div class="atbd-notice__top text-center">
+        					<div class="atbd-notice__icon bg-success">
+        						<i class="fas fa-check color-white"></i>
+        					</div>
+        					<div class="atbd-notice__text">
+        						<h4>저장이 완료되었습니다.</h4>
+        					</div>
+        					<div style="display: flex; justify-content: center; margin: 10% auto;">
+        						<button class="btn btn-default btn-success" onclick="confirmSegmentInfo();" style="color: #FFFFFF;">확인</button>
+        					</div>
+        				</div>
+        			</div>
+        		</div>
+        	</div>
+        </div>
+        
+        <div class="atbd-notice" id="segmentInfo_confirm_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
+        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+        		<div class="card-body">
+        			<div class="atbd-notice__content">
+        				<div class="atbd-notice__top text-center">
+        					<div class="atbd-notice__icon bg-info">
+        						<i class="fas fa-exclamation color-white"></i>
+        					</div>
+        					<div class="atbd-notice__text">
+        						<h4>저장 하시겠습니까?</h4>
+        					</div>
+        					<div style="display: flex; justify-content: center; margin: 10% auto;">
+        						<button class="btn btn-default btn-primary mr-10" onclick="insertSegmentInfo();" style="color: #FFFFFF;">저장</button>
+        						<button class="btn btn-default btn-danger" onclick="CancelBtn();" style="color: #FFFFFF;">취소</button>
+        					</div>
+        				</div>
+        			</div>
+        		</div>
+        	</div>
+        </div>
 
         <div class="modal-basic modal fade show" id="chanModal2" tabindex="-1" role="dialog" aria-hidden="true" style="display: none">
 		    <div class="modal-dialog modal-lg" role="document">
@@ -369,13 +372,15 @@
 <script type="text/javascript" th:inline="javascript">
 
 	let plan = /*[[${plan}]]*/ "null";
-	let factor = /*[[${factor}]]*/ "null";
 	let method = /*[[${method}]]*/ "null";
 	let user = /*[[${user}]]*/ "null";
 	let sch = /*[[${sch}]]*/ "null";
 	
 	let results = /*[[${results}]]*/ "null";
-
+	
+	let segment = /*[[${segment}]]*/ "null";
+	let segmentInfo = /*[[${segmentInfo}]]*/ "null";
+	
 	//시험구 배치 데이터
 	let data1 = new Object();
 	let data2 = new Object();
@@ -390,7 +395,6 @@
 	let etcArray2 = new Array();
 	let etcArray3 = new Array();
 	
-	let factorArray = new Array();
 	let resultArray = new Array();
 	
 	//결과입력 데이터
@@ -402,41 +406,30 @@
 	//결과입력 삭제 데이터
 	let cancelArr = new Array();
 	
+	//구획정보 데이터
+	let segmentInfo_array = new Array();
+	
+	//구획정보 삭제 데이터
+	let cancelInfo = new Array();
+	
 	//구획정보 기존 데이터 만들기 함수
-	async function loadPlan(){
+	function loadSegment(){
 		
-		//기존 데이터 만들기
-		for(var i = 0; i < factor.length; i++){
-			if(factor[i].factor_type == "시험재료"){
-				var seed_ids = factor[i].factor_seed.split(",");
-				var idx = factor[i].factor_index;
-				await loadSeedGrid(seed_ids, idx);
-			}else if(factor[i].factor_type == "재식거리"){
-				var texts = factor[i].factor_interval;
-				var idx = factor[i].factor_index;
-				loadIntervalGrid(texts, idx);
-			}else if(factor[i].factor_type == "재식주수"){
-				var texts = factor[i].factor_plants;
-				var idx = factor[i].factor_index;
-				loadPlantsGrid(texts, idx);
-			}else if(factor[i].factor_type == "파종량"){
-				var texts = factor[i].factor_amount;
-				var idx = factor[i].factor_index;
-				loadAmountGrid(texts, idx);
-			}
-			else if(factor[i].factor_type == "시비량"){
-				var manure_ids = factor[i].manure_id;
-				var idx = factor[i].factor_index;
-				await loadManureGrid(manure_ids, idx);
-			}else if(factor[i].factor_type == "기타"){
-				var etc_ids = factor[i].etc_id;
-				var idx = factor[i].factor_index;
-				await loadEtcGrid(etc_ids, idx);
-			}
-		}//end for
+		for(var i = 0; i < segment.length; i++){
+			var result_data = {
+				"id" : segment[i].segment_code,
+				"num" : segment[i].segment_index,
+				"repeat" : segment[i].segment_repeat,
+				"type" : segment[i].segment_type
+			};
+			resultArray.push(result_data);
+		}
 		
 		//구획정보 그리기 함수 실행
-		gridFactors();
+		gridSegment();
+		
+		var rowNum = segment[0].individual_num;
+		$("#rowNum").val(rowNum);
 		
 		//결과입력 테이블 그리기 실행 함수
 		methodTableGrid();
@@ -447,309 +440,8 @@
 		
 	}
 	
-	//기존 시험재료 선택 데이터 만들기
-	function loadSeedGrid(seed_ids, idx){
-		return new Promise(function(resolve){
-			var report_code = plan.report_code;
-			
-			var data = {"report_code" : report_code};
-			
-			$.ajax({
-				url : "/plan/selectSeed",
-				method : "GET",
-				dataType : 'json',
-				data : data,
-				success : function(result){
-					
-					var add_list = "";
-					
-					var grid_array = new Array();
-					
-					//기존 데이터와 맞는 seed를 grid_array에 담아주기
-					for(var i = 0; i < seed_ids.length; i++){
-						for(var j = 0; j < result.length; j++){
-							if(result[j].seed_id == seed_ids[i]){
-								grid_array.push(result[j]);
-							}
-						}
-					}//end for
-					
-					//선택된 데이터 기준으로 text 및 data 만들어주기
-					var index = idx;
-					var type = "시험재료";
-					var content = "";
-					var text = "";
-					
-					var length = grid_array.length;
-					
-					for(var i = 0; i < grid_array.length; i++){
-						if(i == (length-1)){
-							content += grid_array[i].seed_id;
-							text += grid_array[i].division + " " + "(" + grid_array[i].genetic + ")";
-						}else{
-							content += grid_array[i].seed_id+',';
-							text += grid_array[i].division + " " + "(" + grid_array[i].genetic + ")" +",";
-						}
-					}
-					
-					if(index == 1){
-						data1.type = type;
-						data1.content = content;
-						data1.text = text;
-					}else if(index == 2){
-						data2.type = type;
-						data2.content = content;
-						data2.text = text;
-					}else if(index == 3){
-						data3.type = type;
-						data3.content = content;
-						data3.text = text;
-					}
-					
-					resolve("성공");
-				}//end success
-				
-			});//end ajax
-		});
-	}//end 기존 시험재료 그리기
-	
-	//기존 재식거리 데이터 만들기
-	function loadIntervalGrid(texts, idx){
-		
-		var index = idx;
-		var type = "재식거리";
-		var content = texts;
-		var text = texts;
-		
-		if(index == 1){
-			data1.type = type;
-			data1.content = content;
-		}else if(index == 2){
-			data2.type = type;
-			data2.content = content;
-		}else if(index == 3){
-			data3.type = type;
-			data3.content = content;
-		}
-		
-	}//end 기존 시험재료 그리기
-	
-	//기존 재식주수 데이터 만들기
-	function loadPlantsGrid(texts, idx){
-		
-		//기존 재식주수 텍스트 붙여주기
-		var index = idx;
-		var type = "재식주수";
-		var content = texts;
-		var text = texts;
-		
-		if(index == 1){
-			data1.type = type;
-			data1.content = content;
-		}else if(index == 2){
-			data2.type = type;
-			data2.content = content;
-		}else if(index == 3){
-			data3.type = type;
-			data3.content = content;
-		}
-		
-	}//end 기존 재식주수 데이터 만들기
-	
-	//기존 파종량 데이터 만들기
-	function loadAmountGrid(texts, idx){
-		
-		//기존 파종량 텍스트 붙여주기
-		var index = idx;
-		var type = "파종량";
-		var content = texts;
-		var text = texts;
-		
-		if(index == 1){
-			data1.type = type;
-			data1.content = content;
-		}else if(index == 2){
-			data2.type = type;
-			data2.content = content;
-		}else if(index == 3){
-			data3.type = type;
-			data3.content = content;
-		}
-		
-	}//end 기존 파종량 데이터 만들기
-	
-	//기존 시비량 데이터 만들기
-	function loadManureGrid(manure_ids, idx){
-		return new Promise(function(resolve){
-			
-			var index = idx;
-			var type = "시비량";
-			var text = "";
-			
-			var textArray = manure_ids.split(",");
-			
-			var plan_id = plan.plan_id;
-			
-			var data = {"plan_id" : plan_id};
-			
-			$.ajax({
-				url : "/plan/selectManure",
-				method : "GET",
-				dataType : 'json',
-				data : data,
-				success : function(result){
-					
-					//기존 데이터에 맞게 manureArray 만들어 주기
-					for(var i = 0; i < textArray.length; i++){
-						for(var j = 0; j < result.length; j ++){
-							if(textArray[i] == result[j].manure_id){
-								var data = {
-										"fert_id" : result[j].fert_id,
-										"manure_area" : result[j].manure_area,
-										"manure_ingredient" : result[j].manure_ingredient,
-										"manure_type" : result[j].manure_type,
-										"manure_amount" : result[j].manure_amount,
-										"manure_result" : result[j].manure_result,
-										"manure_level" : result[j].manure_level
-								}
-								manureArray.push(data);
-							}
-						}
-					}//end for1
-					
-					//level 만들기
-					var levels = "";
-					var level = "";
-					for(var i = 0; i < manureArray.length; i++){
-						levels += manureArray[i].manure_level+",";
-					}
-					
-					var levels_array = levels.slice(0, -1).split(",");
-					var array_set = Array.from(new Set(levels_array));
-					levels = "";
-					for(var i = 0; i < array_set.length; i++){
-						levels += "수준"+array_set[i]+"(시),";
-					}
-					
-					level = levels.slice(0,-1);
-					
-					
-					//text 만들기
-					var level_length = array_set.length;
-					for(var i = 0; i < level_length; i++){
-						text += '수준' + (i+1) + " => ";
-						for(var j = 0; j < manureArray.length; j++){
-							if((i+1) == manureArray[j].manure_level){
-								text += manureArray[j].manure_result+'kg/10a('+manureArray[j].manure_type+')'+'값(kg), ';
-							}
-						}
-					}
-					
-					if(index == 1){
-						data1.type = type;
-						data1.content = level;
-						for(var i = 0; i < manureArray.length; i++){
-							manureArray1.push(manureArray[i]);
-						}
-						manureArray = [];
-					}else if(index == 2){
-						data2.type = type;
-						data2.content = level;
-						for(var i = 0; i < manureArray.length; i++){
-							manureArray2.push(manureArray[i]);
-						}
-						manureArray = [];
-					}else if(index == 3){
-						data3.type = type;
-						data3.content = level;
-						for(var i = 0; i < manureArray.length; i++){
-							manureArray3.push(manureArray[i]);
-						}
-						manureArray = [];
-					}
-					
-					resolve("성공");
-				}//end success
-			});//end ajax
-			
-		});
-	}//기존 시비량 데이터 만들기
-	
-	
-	//기존 etc 데이터 만들기
-	function loadEtcGrid(etc_ids, idx){
-		return new Promise(function(resolve){
-			var textArray = etc_ids.split(",");
-			
-			var data = {"plan_id" : plan.plan_id};
-			
-			$.ajax({
-				url : "/plan/selectEtc",
-				method : "GET",
-				dataType : 'json',
-				data : data,
-				success : function(result){
-					
-					var index = idx;
-					var type = "기타";
-					var content = "";
-					var text = "";
-					
-					//기존 데이터에 맞게 etcArray 만들어 주기
-					for(var i = 0; i < textArray.length; i++){
-						for(var j = 0; j < result.length; j ++){
-							if(textArray[i] == result[j].etc_id){
-								
-								if(i == (textArray.length-1)){
-									text += result[j].etc_value + '(' + result[j].etc_type + ')';
-									content += result[j].etc_value + '(' + result[j].etc_type + ')';
-								}else{
-									text += result[j].etc_value + '(' + result[j].etc_type + '),';
-									content += result[j].etc_value + '(' + result[j].etc_type + '),';
-								}
-								
-								var data = {
-										"etc_type" : result[j].etc_type,
-										"etc_value" : result[j].etc_value,
-										"etc_comment" : result[j].etc_comment
-								}
-								etcArray.push(data);
-							}
-						}
-					}//end for1
-					
-					if(index == 1){
-						data1.type = type;
-						data1.content = content;
-						for(var i = 0; i < etcArray.length; i++){
-							etcArray1.push(etcArray[i]);
-						}
-						etcArray = [];
-					}else if(index == 2){
-						data2.type = type;
-						data2.content = content;
-						for(var i = 0; i < etcArray.length; i++){
-							etcArray2.push(etcArray[i]);
-						}
-						etcArray = [];
-					}else if(index == 3){
-						data3.type = type;
-						data3.content = content;
-						for(var i = 0; i < etcArray.length; i++){
-							etcArray3.push(etcArray[i]);
-						}
-						etcArray = [];
-					}
-					
-					resolve("성공");
-				}//end success
-				
-			});//end ajax
-		});
-	}//end function
-	
 	//기존 데이터 만드는 함수 실행
-	loadPlan();
+	loadSegment();
 	
 	//구획정보확인 셀렉트 박스 오픈 함수
 	function loadSelectOption(){
@@ -784,130 +476,13 @@
 	}
 	
 	//구획정보 테이블 그리기
-	function gridFactors(){
+	function gridSegment(){
 		
 		//만들어준 데이터를 그려줄 부모 태그
 		let segment_list = $("#segment_list");
 		
-		let factor1 = "";
-		let factor2 = "";
-		let factor3 = "";
-		
-		//데이터 null 여부에 따라 factor 만들기
-		if(Object.keys(data1).length != 0){
-			if(data1.type == "시험재료"){
-				factor1 = data1.text.split(",");
-			}else{
-				factor1 = data1.content.split(",");
-			}
-		}
-		if(Object.keys(data2).length != 0){
-			if(data2.type == "시험재료"){
-				factor2 = data2.text.split(",");
-			}else{
-				factor2 = data2.content.split(",");
-			}
-		}
-		if(Object.keys(data3).length != 0){
-			if(data3.type == "시험재료"){
-				factor3 = data3.text.split(",");
-			}else{
-				factor3 = data3.content.split(",");
-			}
-		}
-		
-		//기존 재배계획의 반복 횟수
-		let plan_repeat = plan.plan_repeat;
-		
 		//기존 재배계획의 시험구 배치 종류
 		let gorw_type = plan.grow_type;
-		
-		//구획 id 만들기 위한 변수들
-		let num = 0;
-		let num1 = 0;
-		let level = 0;
-		let id = "";
-		let id1 = "";
-		let id2 = "";
-		let type = "";
-		let type2 = "";
-		let type3 = "";
-		let repeat = "";
-		
-		//factor null 유무에 따라 factorArray 만들어 주기
-		if(factor1 != "" && factor2 == "" && factor3 == ""){
-			for(var i = 0; i < factor1.length; i++){
-				id = "A"+(i+1);
-				type = factor1[i];
-				num++;
-				var number = num;
-				
-				var data = {"num" : number, "id" : id, "type" : type};
-				factorArray.push(data);
-				
-				id = "";
-				type = "";
-			}
-		}else if(factor1 != "" && factor2 != "" && factor3 == ""){
-			for(var i = 0; i < factor1.length; i++){
-				id = "A"+(i+1);
-				type = factor1[i];
-				
-				for(var j = 0; j < factor2.length; j++){
-					id2 = id;
-					id2 = id2 + '-B' + (j+1);
-					type2 = type;
-					type2 = type2 + ',' + factor2[j];
-					num++;
-					var number = num;
-					
-					var data = {"num" : number, "id" : id2, "type" : type2};
-					factorArray.push(data);
-				}
-				id = "";
-				type = "";
-			}
-		}else if(factor1 != "" && factor2 != "" && factor3 != ""){
-			for(var i = 0; i < factor1.length; i++){
-				id = "A"+(i+1);
-				type = factor1[i];
-				
-				for(var j = 0; j < factor2.length; j++){
-					id2 = id;
-					id2 = id2 + '-B' + (j+1);
-					type2 = type;
-					type2 = type2 + ',' + factor2[j];
-					
-					for(var k = 0; k < factor3.length; k++){
-						num++;
-						var number = num;
-						id3 = id2;
-						id3 = id3 + '-C'+(k+1);
-						type3 = type2;
-						type3 = type3 + ',' + factor3[k];
-						
-						var data = {"num" : number, "id" : id3, "type" : type3};
-						factorArray.push(data);
-					}//end for3
-					
-				}//end for2
-				id = "";
-				type = "";
-			}//end for1
-		}// end factor null 유무에 따라 factorArray 만들어 주기
-		
-		//만들어준 factorArray를 가지고 최종 resultArray 만들어 주기
-		for(var i = 0; i < plan_repeat; i++){
-			level++;
-			for(var j = 0; j < factorArray.length; j++){
-				num1++;
-				var number = num1;
-				var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
-				
-				resultArray.push(data);
-			}
-		}//end for
-		
 		
 		//시험구 배치 종류에 따라 분기 처리
 		if(gorw_type == "0"){	//완전임의배치
@@ -1032,6 +607,12 @@
 	function fileFunction(e){
 		$(e).next().trigger("click");
 	}
+	
+	//이미지 다운로드 이벤트
+	function imgDounload(e){
+		var file_name = $(e).attr("data-img");
+		$(e).find(".downdImg").get(0).click();
+	}
 	//결과입력 테이블 그리기
 	function methodTableGrid(){
 		
@@ -1087,7 +668,6 @@
 				tableResultArray.push(table_data);
 				
 			}//end for1
-			console.log(tableResultArray);
 			
 			var currentDataArr = new Array();
 			
@@ -1099,7 +679,7 @@
 					currentDataArr = tableResultArray[i].data;
 				}
 			}
-			
+			console.log(tableResultArray);
 			var add_list = "";
 			
 			add_list += '<thead>';
@@ -1127,6 +707,12 @@
 					add_list += '</svg>';
 					add_list += '</div>';
 					add_list += '<input type="file" name="file'+j+'" data-file="'+currentDataArr[i]['c_img'+j]+'" data-origin="'+currentDataArr[i]['img'+j]+'" accept=".jpg, .gif, .png, .jpeg, .bmp" style="display:none">';
+					if(currentDataArr[i]['c_img'+j] != "" && currentDataArr[i]['c_img'+j] != "null"){
+						add_list += '<div class="cam" onclick="imgDounload(this)" data-img="'+currentDataArr[i]['c_img'+j]+'">';
+						add_list += '<a href="/plan/downloadImg?file_name='+currentDataArr[i]['c_img'+j]+'" class="downdImg" style="display:none"></a>';
+						add_list += '<img src="/../img/svg/download.svg">';
+						add_list += '</div>';
+					}
 					add_list == '</td>';
 				}
 				add_list += '</tr>';
@@ -1205,10 +791,202 @@
 			
 		}
 		
+		//this 초기 구획정보 확인 데이터 만들기
+		var isSegmentInfo = false;
+		if(Object.keys(segmentInfo).length != 0){
+			isSegmentInfo = true;
+		}
+		
+		var info_arr = new Array();
+		if(isSegmentInfo){//기존 데이터 있으면
+			
+			for(var i = 0; i < segment.length; i++){
+				info_arr = [];
+				
+				var info_data = new Object();
+				
+				for(var j = 0; j < segmentInfo.length; j++){
+					
+					for(var k = 0; k < length; k++){
+						if(segmentInfo[j].segment_id == segment[i].segment_id && segmentInfo[j].segment_index == segment[i].segment_index && segmentInfo[j].info_index == (k+1)){
+							var status_data = {
+									"info_status" : segmentInfo[j].info_status,
+									"info_index" : (k+1)
+								};
+							info_arr.push(status_data);
+						}
+					}//end for3
+					
+					if(segmentInfo[j].segment_id == segment[i].segment_id && segmentInfo[j].segment_index == segment[i].segment_index){
+						info_data['segment_id'] = segmentInfo[j].segment_id;
+						info_data['segment_index'] = segmentInfo[j].segment_index;
+						info_data['plan_id'] = segmentInfo[j].plan_id;
+						info_data['segment_info'] = info_arr;
+						
+					}
+					
+				}//end for2
+				segmentInfo_array.push(info_data);
+			}//end for1
+			
+		}else{
+			
+			for(var i = 0; i < segment.length; i++){
+				info_arr = [];
+				var info_data = new Object();
+				info_data['segment_id'] = segment[i].segment_id;
+				info_data['segment_index'] = segment[i].segment_index;
+				info_data['plan_id'] = segment[i].plan_id;
+				for(var j = 0; j < length; j++){
+					var status_data = {
+						"info_status" : "",
+						"info_index" : (j+1)
+					};
+					info_arr.push(status_data);
+				}
+				info_data['segment_info'] = info_arr;
+				segmentInfo_array.push(info_data);
+				
+			}//end for1
+		}
+		
+		console.log(segmentInfo_array);
+		
+		//초기 구획정보확인 화면 만들어주기
+		var segment_index = segment[0].segment_index;
+		
+		//해당 구획정보 데이터
+		var segment_data = new Object();
+		for(var i = 0; i < segment.length; i++){
+			if(segment[i].segment_index == segment_index){
+				segment_data = segment[i];
+			}
+		}
+		var title = segment_data.segment_code;
+		
+		//붙여줄 부모 태그
+		let sangtae_list = $("#sangtae_list");
+		
+		//입력한 개체수
+		var rowNum = parseInt($("#rowNum").val());
+		
+		//기준 개체수
+		var segment_num = parseInt($("#segment_num").val());
+		
+		var add_list = "";
+		
+		if(rowNum <= segment_num){//개체수보다 기준개체수가 클때
+			
+			add_list += '<span class="sub_title-content regular_text" data-index="'+segment_data.segment_index+'"><i class="bi bi-arrows-move"></i>'+title+'</span>';
+			add_list += '<ul class="clearfix sangtae">';
+			
+			for(var i = 0; i < rowNum; i++){
+				add_list += '<li><a href="javascript:void(0);"><img class="sangtae_img" src="../img/icons/green.png" alt="green"></a>';
+				add_list += '<div class="lines">';
+				add_list += '<select class="select_option">';
+				add_list += '<option value="none">상태선택</option>';
+				add_list += '<option class="s_red" value="red">관심개체</option>';
+				add_list += '<option class="s_blue" value="blue">병</option>';
+				add_list += '<option class="s_yellow" value="yellow">시드름</option>';
+				add_list += '<option class="s_black" value="black">초장큼</option>';
+				add_list += '<option class="s_purple" value="purple">초장작음</option>';
+				add_list += '<option value="etc">기타</option>';
+				add_list += '</select>';
+				add_list += '</div>';
+				add_list += '</li>';
+				
+			}
+			add_list += '</ul>';
+			
+			sangtae_list.empty();
+			sangtae_list.append(add_list);
+			
+		}else {
+			
+			var length1 = parseInt(rowNum / segment_num);
+			var length2 = parseInt(rowNum % segment_num);
+			sangtae_list.empty();
+			var str = '<span class="sub_title-content regular_text" data-index="'+segment_data.segment_index+'"><i class="bi bi-arrows-move"></i>'+title+'</span>';
+			sangtae_list.append(str);
+			
+			for(var i = 0; i < length1; i++){
+				add_list += '<ul class="clearfix sangtae">';
+				for(var j = 0; j < segment_num; j++){
+					add_list += '<li><a href="javascript:void(0);"><img class="sangtae_img" src="../img/icons/green.png" alt="green"></a>';
+					add_list += '<div class="lines">';
+					add_list += '<select class="select_option">';
+					add_list += '<option value="none">상태선택</option>';
+					add_list += '<option class="s_red" value="red">관심개체</option>';
+					add_list += '<option class="s_blue" value="blue">병</option>';
+					add_list += '<option class="s_yellow" value="yellow">시드름</option>';
+					add_list += '<option class="s_black" value="black">초장큼</option>';
+					add_list += '<option class="s_purple" value="purple">초장작음</option>';
+					add_list += '<option value="etc">기타</option>';
+					add_list += '</select>';
+					add_list += '</div>';
+					add_list += '</li>';
+				}
+				add_list += '</ul>';
+			}
+			
+			add_list += '<ul class="clearfix sangtae">';
+			for(var i = 0; i < length2; i++){
+				add_list += '<li><a href="javascript:void(0);"><img class="sangtae_img" src="../img/icons/green.png" alt="green"></a>';
+				add_list += '<div class="lines">';
+				add_list += '<select class="select_option">';
+				add_list += '<option value="none">상태선택</option>';
+				add_list += '<option class="s_red" value="red">관심개체</option>';
+				add_list += '<option class="s_blue" value="blue">병</option>';
+				add_list += '<option class="s_yellow" value="yellow">시드름</option>';
+				add_list += '<option class="s_black" value="black">초장큼</option>';
+				add_list += '<option class="s_purple" value="purple">초장작음</option>';
+				add_list += '<option value="etc">기타</option>';
+				add_list += '</select>';
+				add_list += '</div>';
+				add_list += '</li>';
+			}
+			add_list += '</ul>';
+			
+			sangtae_list.append(add_list);
+			
+			
+		}//end else
+		
+		$(".sangtae li").click(function(e){
+			e.preventDefault();
+			$(".sangtae li .lines").css({"display": "none"});
+			$(this).children().eq(1).css({"display": "block"});
+			
+			$(this).children().eq(1).focusout(function(e){
+				$(".sangtae li .lines").css({"display": "none"});
+			});
+		});
+		//end 초기 구획정보확인 화면 만들어주기
 		
 		
-		//구획정보 확인 함수 실행
-		checkSegment();
+		var newSegmentIndex = $(".regular_text").attr("data-index");
+		
+		$(document).find(".select_option").each(function(index, item){
+			
+			//segmentInfo_array
+			for(var i = 0; i < segmentInfo_array.length; i++){
+				
+				if(newSegmentIndex == segmentInfo_array[i].segment_index){
+					var data_arr = segmentInfo_array[i].segment_info;
+					
+					for(var j = 0; j < data_arr.length; j++){
+						if(data_arr[j].info_index == (index+1) && data_arr[j].info_status != "" && data_arr[j].info_status != "none"){
+							$(this).val(data_arr[j].info_status).prop("selected", true);//선택해주기
+							$(this).parent().parent().addClass(data_arr[j].info_status);//색깔주기
+							$(this).parent().parent().find(".sangtae_img").attr("src", "../img/icons/"+data_arr[j].info_status+".png");
+						}
+					}
+					
+				}//end if
+				
+			}//end for1
+			
+		});
 		
 	}//end 결과입력 테이블 그리기
 	
@@ -1367,7 +1145,13 @@
 		file_array.sort(function(a, b){
 			return a.segment_id - b.segment_id;
 		});
-		console.log(tableResultArray);
+		
+		//구획정보 확인 실행하기
+		var segment_index = $(document).find("#table_body .active").find(".table_num").text();
+		checkSegment(segment_index);
+		
+		
+		
 	});//end //구획정보 테이블 로우 선택시 결과입력 테이블 그리기 이벤트
 	
 	//결과입력 등록
@@ -1506,8 +1290,6 @@
 			}
 		}
 		
-		console.log(cancelArr);
-		
 		formData.append("index", JSON.stringify(indexArr));
 		
 		formData.append("result", JSON.stringify(resultData));
@@ -1612,125 +1394,66 @@
 			step1_table.empty();
 			step1_table.append(add_list);
 			
-		}/* else{
-			
-			let result_list = $(document).find(".result_list");
-			
-			//현재 결과입력 개체 row 길이
-			let result_tr_length = $(document).find(".result_list").children().length;
-			
-			//입력한 개체수
-			var rowNum = tableResultArray[0].rowNum;
-			
-			//현재 결과입력 개체의 마지막 번호
-			let td_num = $(document).find(".result_list").children(":last").find(".td_num").text();
-			
-			var add_list = "";
-			
-			if(rowNum > result_tr_length){
-				
-				var length = rowNum - result_tr_length;
-				var length1 = method.length;
-				
-				for(var i = 0; i < length; i++){
-					td_num++;
-					add_list += '<tr class="result_tr">';
-					add_list += '<td class="td_num">'+td_num+'</td>';
-					for(var j = 0; j < length1; j++){
-						add_list += '<td><input type="text" style="width: 90%;">';
-						add_list += '<div class="cam" onclick="fileFunction(this)">';
-						add_list += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-fill" viewBox="0 0 16 16">';
-						add_list += '<path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>';
-						add_list += '<path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/>';
-						add_list += '</svg>';
-						add_list += '</div>';
-						add_list += '<input type="file" name="file'+j+'" accept=".jpg, .gif, .png, .jpeg, .bmp" style="display:none">';
-						add_list += '</td>';
-					}
-					add_list += '</tr>';
-				}
-				
-				result_list.append(add_list);
-				
-				checkSegment();
-				
-			}else if(rowNum < result_tr_length){
-				
-				$(document).find(".result_tr").each(function(i, item){
-					if(i > (rowNum-1)){
-						$(this).remove();
-					}
-				});
-				
-				
-				checkSegment();
-			}//end else if
-		} */
-		checkSegment();
-		console.log(tableResultArray);
+		}
 		
-		//기존코드
-		/* let result_list = $(document).find(".result_list");
-		
-		//현재 결과입력 개체 row 길이
-		let result_tr_length = $(document).find(".result_list").children().length;
-		
-		//입력한 개체수
-		var rowNum = $("#rowNum").val();
-		
-		//현재 결과입력 개체의 마지막 번호
-		let td_num = $(document).find(".result_list").children(":last").find(".td_num").text();
-		
-		var add_list = "";
-		
-		if(rowNum > result_tr_length){
-			
-			var length = rowNum - result_tr_length;
-			var length1 = method.length;
-			
-			for(var i = 0; i < length; i++){
-				td_num++;
-				add_list += '<tr class="result_tr">';
-				add_list += '<td class="td_num">'+td_num+'</td>';
-				for(var j = 0; j < length1; j++){
-					add_list += '<td><input type="text" style="width: 90%;">';
-					add_list += '<div class="cam" onclick="fileFunction(this)">';
-					add_list += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-fill" viewBox="0 0 16 16">';
-					add_list += '<path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>';
-					add_list += '<path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/>';
-					add_list += '</svg>';
-					add_list += '</div>';
-					add_list += '<input type="file" name="file'+j+'" accept=".jpg, .gif, .png, .jpeg, .bmp" style="display:none">';
-					add_list += '</td>';
-				}
-				add_list += '</tr>';
-			}
-			
-			result_list.append(add_list);
-			
-			checkSegment();
-			
-		}else if(rowNum < result_tr_length){
-			
-			$(document).find(".result_tr").each(function(i, item){
-				if(i > (rowNum-1)){
-					$(this).remove();
-				}
-			});
-			
-			
-			checkSegment();
-		}//end else if */
+		var segment_index = $(document).find("#table_body .active").find(".table_num").text();
+		checkSegment(segment_index);
 		
 		
 	}//end 개체수 그리기 함수
 	
+	//기준개체수 확인 버튼 이벤트
+	$("#segment_check").on("click", function(){
+		
+		var segment_index = $(document).find("#table_body .active").find(".table_num").text();
+		checkSegment(segment_index);
+		
+	});
+	
 	//구획정보 확인 그리기
-	function checkSegment(){
+	function checkSegment(segment_index){
+		
+		//해당 구획정보 데이터
+		var segment_data = new Object();
+		for(var i = 0; i < segment.length; i++){
+			if(segment[i].segment_index == segment_index){
+				segment_data = segment[i];
+			}
+		}
+		var title = segment_data.segment_code;
+		
+		
+		var currentSegmentIndex = $(".regular_text").attr("data-index");
+		
+		//셀렉트박스 개수만큼 반복하여 
+		$(document).find(".select_option").each(function(index, item){
+			
+			//segmentInfo_array
+			for(var i = 0; i < segmentInfo_array.length; i++){
+				
+				if(currentSegmentIndex == segmentInfo_array[i].segment_index){
+					var data_arr = segmentInfo_array[i].segment_info;
+					
+					for(var j = 0; j < data_arr.length; j++){
+						if(data_arr[j].info_index == (index+1)){
+							if($(this).find("option:selected").val() != "none"){
+								data_arr[j].info_status = $(this).find("option:selected").val();
+							}
+						}
+					}
+					
+					segmentInfo_array[i].segment_info = data_arr;
+					
+				}//end if
+				
+			}//end for1
+			
+		});
+		
+		console.log(segmentInfo_array);
 		
 		//붙여줄 부모 태그
 		let sangtae_list = $("#sangtae_list");
-		$(".sangtae").remove();
 		
 		//입력한 개체수
 		var rowNum = parseInt($("#rowNum").val());
@@ -1738,11 +1461,11 @@
 		//기준 개체수
 		var segment_num = parseInt($("#segment_num").val());
 		
-		
 		var add_list = "";
 		
-		if(rowNum <= segment_num){
+		if(rowNum <= segment_num){//개체수보다 기준개체수가 클때
 			
+			add_list += '<span class="sub_title-content regular_text" data-index="'+segment_data.segment_index+'"><i class="bi bi-arrows-move"></i>'+title+'</span>';
 			add_list += '<ul class="clearfix sangtae">';
 			
 			for(var i = 0; i < rowNum; i++){
@@ -1750,24 +1473,28 @@
 				add_list += '<div class="lines">';
 				add_list += '<select class="select_option">';
 				add_list += '<option value="none">상태선택</option>';
-				add_list += '<option class="s_red" value="red">상태1</option>';
-				add_list += '<option class="s_blue" value="blue">상태2</option>';
-				add_list += '<option class="s_yellow" value="yellow">상태3</option>';
-				add_list += '<option class="s_black" value="black">상태4</option>';
-				add_list += '<option class="s_purple" value="purple">상태5</option>';
+				add_list += '<option class="s_red" value="red">관심개체</option>';
+				add_list += '<option class="s_blue" value="blue">병</option>';
+				add_list += '<option class="s_yellow" value="yellow">시드름</option>';
+				add_list += '<option class="s_black" value="black">초장큼</option>';
+				add_list += '<option class="s_purple" value="purple">초장작음</option>';
+				add_list += '<option value="etc">기타</option>';
 				add_list += '</select>';
 				add_list += '</div>';
 				add_list += '</li>';
-				
 			}
 			add_list += '</ul>';
 			
+			sangtae_list.empty();
 			sangtae_list.append(add_list);
 			
 		}else {
 			
 			var length1 = parseInt(rowNum / segment_num);
 			var length2 = parseInt(rowNum % segment_num);
+			sangtae_list.empty();
+			var str = '<span class="sub_title-content regular_text" data-index="'+segment_data.segment_index+'"><i class="bi bi-arrows-move"></i>'+title+'</span>';
+			sangtae_list.append(str);
 			
 			for(var i = 0; i < length1; i++){
 				add_list += '<ul class="clearfix sangtae">';
@@ -1776,11 +1503,12 @@
 					add_list += '<div class="lines">';
 					add_list += '<select class="select_option">';
 					add_list += '<option value="none">상태선택</option>';
-					add_list += '<option class="s_red" value="red">상태1</option>';
-					add_list += '<option class="s_blue" value="blue">상태2</option>';
-					add_list += '<option class="s_yellow" value="yellow">상태3</option>';
-					add_list += '<option class="s_black" value="black">상태4</option>';
-					add_list += '<option class="s_purple" value="purple">상태5</option>';
+					add_list += '<option class="s_red" value="red">관심개체</option>';
+					add_list += '<option class="s_blue" value="blue">병</option>';
+					add_list += '<option class="s_yellow" value="yellow">시드름</option>';
+					add_list += '<option class="s_black" value="black">초장큼</option>';
+					add_list += '<option class="s_purple" value="purple">초장작음</option>';
+					add_list += '<option value="etc">기타</option>';
 					add_list += '</select>';
 					add_list += '</div>';
 					add_list += '</li>';
@@ -1794,11 +1522,12 @@
 				add_list += '<div class="lines">';
 				add_list += '<select class="select_option">';
 				add_list += '<option value="none">상태선택</option>';
-				add_list += '<option class="s_red" value="red">상태1</option>';
-				add_list += '<option class="s_blue" value="blue">상태2</option>';
-				add_list += '<option class="s_yellow" value="yellow">상태3</option>';
-				add_list += '<option class="s_black" value="black">상태4</option>';
-				add_list += '<option class="s_purple" value="purple">상태5</option>';
+				add_list += '<option class="s_red" value="red">관심개체</option>';
+				add_list += '<option class="s_blue" value="blue">병</option>';
+				add_list += '<option class="s_yellow" value="yellow">시드름</option>';
+				add_list += '<option class="s_black" value="black">초장큼</option>';
+				add_list += '<option class="s_purple" value="purple">초장작음</option>';
+				add_list += '<option value="etc">기타</option>';
 				add_list += '</select>';
 				add_list += '</div>';
 				add_list += '</li>';
@@ -1821,8 +1550,111 @@
 		});
 		
 		
+		//새로 만들어준 구획정보확인 화면에 기존 데이터 selected 해주기
+		var newSegmentIndex = $(".regular_text").attr("data-index");
+		
+		$(document).find(".select_option").each(function(index, item){
+			
+			//segmentInfo_array
+			for(var i = 0; i < segmentInfo_array.length; i++){
+				
+				if(newSegmentIndex == segmentInfo_array[i].segment_index){
+					var data_arr = segmentInfo_array[i].segment_info;
+					
+					for(var j = 0; j < data_arr.length; j++){
+						if(data_arr[j].info_index == (index+1) && data_arr[j].info_status != "" && data_arr[j].info_status != "none"){
+							$(this).val(data_arr[j].info_status).prop("selected", true);//선택해주기
+							$(this).parent().parent().addClass(data_arr[j].info_status);//색깔주기
+							$(this).parent().parent().find(".sangtae_img").attr("src", "../img/icons/"+data_arr[j].info_status+".png");
+						}
+					}
+					
+				}//end if
+				
+			}//end for1
+			
+		});
+		
 		
 	}//구획정보 확인 그리기
+	
+	
+	//구획정보확인 데이터 저장
+	function insertSegmentInfo(){
+		
+		var currentSegmentIndex = $(".regular_text").attr("data-index");
+		
+		//셀렉트박스 개수만큼 반복하여 segmentInfo_array 만들어주기
+		$(document).find(".select_option").each(function(index, item){
+			
+			//segmentInfo_array
+			for(var i = 0; i < segmentInfo_array.length; i++){
+				
+				if(currentSegmentIndex == segmentInfo_array[i].segment_index){
+					var data_arr = segmentInfo_array[i].segment_info;
+					
+					for(var j = 0; j < data_arr.length; j++){
+						if(data_arr[j].info_index == (index+1)){
+							if($(this).find("option:selected").val() != "none"){
+								data_arr[j].info_status = $(this).find("option:selected").val();
+							}
+						}
+					}
+					
+					segmentInfo_array[i].segment_info = data_arr;
+					
+				}//end if
+				
+			}//end for1
+			
+		});
+		
+		console.log(segmentInfo_array);
+		
+		var segmentInfo_arr = new Array();
+		
+		for(var i = 0; i < segmentInfo_array.length; i++){
+			
+			var infoData = segmentInfo_array[i].segment_info;
+			
+			for(var j = 0; j < infoData.length; j++){
+				var data = new Object();
+				data['segment_id'] = segmentInfo_array[i].segment_id;
+				data['plan_id'] = segmentInfo_array[i].plan_id;
+				data['segment_index'] = segmentInfo_array[i].segment_index;
+				data['info_status'] = infoData[j].info_status;
+				data['info_index'] = infoData[j].info_index;
+				segmentInfo_arr.push(data);
+			}//end for2
+			
+		}//end for1
+		
+		//삭제 데이터 만들기
+		if(Object.keys(segmentInfo).length != 0){
+			for(var i = 0; i < segmentInfo.length; i ++){
+				cancelInfo.push(parseInt(segmentInfo[i].info_id));
+			}
+		}
+		
+		console.log(cancelInfo);
+		
+		$.ajax({
+			url : "/plan/insertSegmentInfo?cancelInfo="+cancelInfo,
+			method : "POST",
+			contentType : "application/json; charset=utf-8",
+			data : JSON.stringify(segmentInfo_arr),
+			success : function(result){
+				
+				if(result == 0){
+					
+				}else {
+					$("#segmentInfo_confirm_popup").css("display", "none");
+					$("#segmentInfo_success_popup").css("display", "flex");
+				}
+			}
+		});//end ajax
+		
+	}//end 구획정보확인 데이터 저장
 	
 	//구획정보 상태 선택 이벤트
 	$(document).on("change", ".select_option", function(){
@@ -1892,12 +1724,65 @@
 	//결과입력 완료 팝업 닫기
 	function confirmResults(){
 		$("#results_success_popup").css("display", "none");
+		window.location.reload();
 	}
 	
 	function CancelBtn(){
 		$("#results_confirm_popup").css("display", "none");
+		$("#segmentInfo_confirm_popup").css("display", "none");
 	}
-
+	
+	//구획정보확인 등록 팝업
+	function confirminsertSegmentInfo(){
+		$("#segmentInfo_confirm_popup").css("display", "flex");
+	}
+	
+	//구획정보확인 완료 팝업 닫기
+	function confirmSegmentInfo(){
+		$("#segmentInfo_success_popup").css("display", "none");
+		window.location.reload();
+	}
+	
+	
+	//결과입력 onkeydown 이벤트
+	$(document).on("keydown", ".result_tr input:text", function(e){
+		var resultTr = document.querySelectorAll(".result_tr input[type=text]");
+		var resultTr = Array.prototype.slice.call(resultTr);
+		var resultTrLength = resultTr.length;
+		var methodLength = method.length;
+		var target = e.currentTarget;
+		var index = resultTr.indexOf(target);
+		if(event.keyCode == "37"){
+			//방향키 좌
+			if($(this).parent().prev().find("input:text").length == "0"){
+				$(this).focus();
+			}else{
+				$(this).parent().prev().find("input:text").focus();
+			}
+		}else if(event.keyCode == "38"){
+			//방향키 상
+			if($(this).parent().parent().prev().find("input:text").length == "0"){
+				$(this).focus();
+			}else{
+				$(this).parent().parent().parent().find("input:text").eq(index - methodLength).focus();
+			}
+		}else if(event.keyCode == "39"){
+			//방향키 우
+			if($(this).parent().next().find("input:text").length == "0"){
+				$(this).focus();
+			}else{
+				$(this).parent().next().find("input:text").focus();
+			}
+		}else if(event.keyCode == "40"){
+			//방향키 하
+			if($(this).parent().parent().next().find("input:text").length == "0"){
+				$(this).focus();
+			}else{
+				$(this).parent().parent().parent().find("input:text").eq(index + methodLength).focus();
+			}
+		}
+	});
+	
 </script>
      
 <script>
@@ -2029,6 +1914,14 @@
 	//        });
 	//    }
 	});
+	
+	
+	//등록화면 접속시 step1 열어주기
+	setTimeout(function(){
+		var eventList = document.createEvent("MouseEvent");
+	    eventList.initEvent("click");
+	    document.querySelector("#step1 .title").dispatchEvent(eventList);
+	}, 100);
 	
 	
 </script>

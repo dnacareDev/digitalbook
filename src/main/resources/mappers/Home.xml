@@ -29,6 +29,7 @@
 		ORDER BY p.plan_id DESC
 	</select>
 	
+	<!-- 진행 이력 -->
 	<select id="selectProgressPlanList" resultType="Plan">
 		SELECT p.*, r.*, s.*, m.*, sc.*, u.*
 		FROM plan p
