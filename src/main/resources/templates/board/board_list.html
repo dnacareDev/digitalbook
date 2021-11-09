@@ -1,9 +1,6 @@
 <!doctype html>
-<html lang="en" dir="ltr"
-	xmlns:th="http://www.thymeleaf.org">
-	
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
 <head>
-
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
 
@@ -85,7 +82,7 @@
 			        <div class="col-lg-12">
 			        	<div class="breadcrumb-main">
 			        		<h4 class="text-capitalize breadcrumb-title">전달사항</h4>
-			        		<span class="ml-20 mt-1">일정관리-전달사항</span>
+			        		<span class="ml-20 mt-1">일정관리 - 전달사항</span>
 			        	</div>
 			        </div>
 		        </div>
@@ -119,7 +116,6 @@
 			                                    <input type="text" class="form-control form-control-lg" id="keyword" placeholder="Search" style="width: 238px;height:40px;">
 			                                </div>
 				      					</div>
-				      					<button class="btn btn-primary" style="margin:10px 0 0 0">CSV<span data-feather="download"style="margin:0;"></span></button>
 				      				</div>
 			      				</div>
 		       				</div>
@@ -129,8 +125,6 @@
 		                            	<table class="table">
 		                            		<thead>
 		                            			<tr>
-		                            				<th></th>
-		                            				<th>전달사항 ID</th>
 		                            				<th>전달사항 제목</th>
 		                            				<th>전달사항 내용</th>
 		                            				<th>시작일</th>
@@ -158,7 +152,7 @@
 				                        </div>
 				                        <div class="col-4">
 				                        	<div class="action-btn d-flex justify-content-end mt-30">
-			                                    <a href="/board/insert" class="btn btn-primary end-button end">등록</a>
+			                                    <a href="/schedule/boardInsert" class="btn btn-primary end-button end">등록</a>
 			                                </div>
 				                        </div>
 		                        	</div>
@@ -179,31 +173,34 @@
     <th:block th:include="/../fragments/commonjs.html"></th:block>
 
 <script type="text/javascript">
-	
-	$(document).ready(function(){
-		searchReagent(1);
+	$(document).ready(function()
+	{
+		SearchBoard(1);
 	});
 	
 	//페이지 보기 변경시 시약 검색 실행
-	$("#limit").on("change", function(){
-		searchReagent(1);
+	$("#limit").on("change", function()
+	{
+		SearchBoard(1);
 	});
 
 	//시약 검색
-	function searchReagent(e){
+	function SearchBoard(e)
+	{
 		var limit = $("#limit").val();
 		var search_type = $("#search_type").val();
 		var keyword = $("#keyword").val();
 		
 		var data = {"search_type" : search_type, "keyword" : keyword, "page_num" : e, "limit" : limit};
 		
-		$.ajax({
-			url : '/board/searchBoard',
+		$.ajax(
+		{
+			url : 'searchBoard',
 			method : 'POST',
 			dataType : 'json',
 			data : data,
-			success : function(result){
-				console.log(result);
+			success : function(result)
+			{
 				var reagent_list = $("#reagent_list");
 				var add_list = "";
 				
@@ -212,64 +209,68 @@
 				
 				var length = result.board.length;
 				
-				if(length == 0){
+				if(length == 0)
+				{
 					add_list = '<tr>' + '<td colspan="12">' + '<span>' + '등록된 데이터가 없습니다.' + '</span>' + '</td>' + '</tr>';
 					
 					reagent_list.empty();
 					reagent_list.append(add_list);
-				}else {
-					
-					for(var i = 0; i < length; i++){
-						
+				}
+				else
+				{
+					for(var i = 0; i < length; i++)
+					{
 						add_list += '<tr>';
-						add_list += '<td><input type="checkbox"></td>';
-						add_list += '<td><a href="board/modify?board_id='+ result.board[i].board_id + '">' + result.board[i].board_id + '</a></td>';
-						add_list += '<td><span>' + result.board[i].board_title + '</span></td>';
+						add_list += '<td><a href="boardModify?board_id='+ result.board[i].board_id + '">' + result.board[i].board_title + '</a></td>';
 						add_list += '<td><span>' + result.board[i].board_content + '</span></td>';
 						add_list += '<td><span>' + result.board[i].board_start + '</span></td>';
 						add_list += '<td><span>' + result.board[i].board_end + '</span></td>';
 						add_list += '<td><span>' + result.board[i].user_id + '</span></td>';
 						add_list += '<td><span>' + result.board[i].user_group + '</span></td>';
 						add_list += '</tr>';
-					}//end for
+					}
 					
-					if(result.page_num == 1){
+					if(result.page_num == 1)
+					{
 						page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
-					}else{
+					}
+					else
+					{
 						page_add += '<button class="atbd-pagination__link pagination-control" onclick="searchReagent(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
-					}//end else
+					}
 					
-					for(var i = 0; i < result.end_page; i++){
-						if(result.page_num == (i + 1)){
+					for(var i = 0; i < result.end_page; i++)
+					{
+						if(result.page_num == (i + 1))
+						{
 							page_add += '<button class="atbd-pagination__link active" onclick="searchReagent(' + (i + 1) + ')">' + (i + 1) + '</button>';
-						}else{
+						}
+						else
+						{
 							page_add += '<button class="atbd-pagination__link" onclick="searchReagent(' + (i + 1) + ')">' + (i + 1) + '</button>';
-						}//end else
-					}//end for
+						}
+					}
 					
-					if(result.page_num == result.end_page){
+					if(result.page_num == result.end_page)
+					{
 						page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
-					}else{
+					}
+					else
+					{
 						page_add += '<button class="atbd-pagination__link pagination-control" onclick="searchReagent(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
-					}//end else
+					}
 					
 					reagent_list.empty();
 					reagent_list.append(add_list);
 					
 					pageNum.empty();
 					pageNum.append(page_add);
-						
-					
-				}//end else
-				
-				
+				}
 			}
 		});
+		
 		return true;
-	}//end 시약 검색
-	
+	}
 </script>
-
 </body>
-
 </html>

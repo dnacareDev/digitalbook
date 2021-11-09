@@ -32,4 +32,66 @@
 		LEFT JOIN user u2 ON s.sch_manager = u2.user_id
 		WHERE s.sch_id = #{sch_id}
 	</select>
+	
+	<!-- 전달사항 갯수 조회 -->
+	<select id="SearchBoardCount" resultType="int">
+		SELECT count(*) FROM board
+		WHERE user_group = #{user_group}
+		<choose>
+			<when test="!search_type.equals('none')">
+				AND #{search_type} LIKE CONCAT('%', #{keyword}, '%')
+			</when>
+		</choose>
+	</select>
+	
+	<!-- 전달사항 검색 -->
+	<select id="SearchBoard" resultType="board">
+		SELECT * FROM board
+			WHERE user_group = #{user_group} 
+			<choose>
+				<when test="!search_type.equals('none')">
+					AND #{search_type} LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+			</choose>
+	</select>
+	
+	<!-- 전달사항 공유인원 조회 -->
+	<select id="SelectShareBoard" parameterType="int" resultType="User">
+		SELECT user_id, user_name_k
+		FROM user
+		WHERE user_group = #{user_group} OR user_id = #{user_id}
+	</select>
+	
+	<!-- 전달사항 조회 -->
+	<select id="SelectBoard" resultType="board">
+		SELECT * FROM board
+		WHERE user_group = #{user_group} 
+	</select>
+	
+	<!-- 전달사항 상세 조회 -->
+	<select id="SelectBoardId" parameterType="int" resultType="Board">
+		SELECT * FROM board
+		where board_id = #{board_id}
+	</select>
+	
+	<!-- 전달사항 등록 -->	
+	<insert id="InsertBoard" parameterType="Board">
+		INSERT INTO board
+		(board_title, board_start,board_end, board_content, board_share, user_id, user_group, create_date, modify_date)
+		VALUES
+		(#{board_title}, #{board_start}, #{board_end}, #{board_content}, #{board_share}, #{user_id},#{user_group}, NOW(), NOW())
+	</insert>
+
+	<!-- 전달사항 수정 -->
+	<update id="UpdateBoard" parameterType="Board">
+		UPDATE board 
+		SET board_title= #{board_title}, board_start = #{board_start}, board_end = #{board_end}, board_content = #{board_content}, board_share = #{board_share}, modify_date = NOW()
+		WHERE board_id = #{board_id}
+	</update>
+
+	<!-- 전달사항 삭제 -->
+	<delete id="DeleteBoard" parameterType="int">
+		DELETE FROM board
+		WHERE board_id = #{board_id}
+	</delete>
 </mapper>
