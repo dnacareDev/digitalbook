@@ -543,6 +543,13 @@ body button{
     float: right;
 }
 
+#section .step .step_inner .content .bottom_content table tr td .cam:last-child {
+	width: 16px;
+	padding: 3px 0 0;
+}
+#section .step .step_inner .content .bottom_content table tr td .cam > img {
+	width: 100%;
+}
 
 
 

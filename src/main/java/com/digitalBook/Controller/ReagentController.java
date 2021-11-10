@@ -61,7 +61,8 @@ public class ReagentController {
 		
 		Map<String, Object> result = new LinkedHashMap<>();
 		
-		int count = service.SearchReagentCount(search_type, keyword, prin.getUser_group());
+		//int count = service.SearchReagentCount(search_type, keyword, prin.getUser_group());
+		int count = 90;
 		
 		int offset = (page_num - 1) * limit;
 		int end_page = (count + limit - 1) / limit;
