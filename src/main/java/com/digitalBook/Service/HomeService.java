@@ -2,6 +2,7 @@ package com.digitalBook.Service;
 
 import java.util.List;
 
+import com.digitalBook.Entity.Board;
 import com.digitalBook.Entity.Plan;
 import com.digitalBook.Entity.Schedule;
 import com.digitalBook.Entity.User;
@@ -15,6 +16,8 @@ public interface HomeService
 	List<Plan> selectProgressPlanList(int user_group, int user_id);
 
 	List<Schedule> SelectUserSchedule(int user_id);
+	
+	List<Board> SelectUserBoard(int user_id);
 
 	List<Schedule> SelectAdminSchedule(User user);
 

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.digitalBook.Entity.Board;
 import com.digitalBook.Entity.Plan;
 import com.digitalBook.Entity.Schedule;
 import com.digitalBook.Entity.User;
@@ -20,7 +21,10 @@ public interface HomeMapper
 
 	// 전체 일정(사용자)
 	List<Schedule> SelectUserSchedule(int user_id);
+	
+	List<Board> SelectUserBoard(int user_id);
 
+	// 전체 일정(관리자)
 	List<Schedule> SelectAdminSchedule(User user);
 
 	List<User> SelectUser(User user);
