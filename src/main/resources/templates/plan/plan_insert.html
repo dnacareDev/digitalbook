@@ -88,6 +88,7 @@
 	.breadcrumb-main {margin-top: 40px !important}
 	.breadcrumb-title {font-size: 20px !important; padding: 2px 0 0 !important;}
 	.wrapper {padding: 0px 0 50px !important;}
+	
 </style>
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
@@ -408,24 +409,40 @@
 		</div>
 		
 		<div class="atbd-notice" id="success_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
-	        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
-	        		<div class="card-body">
-	        			<div class="atbd-notice__content">
-	        				<div class="atbd-notice__top text-center">
-	        					<div class="atbd-notice__icon bg-success">
-	        						<i class="fas fa-check color-white"></i>
-	        					</div>
-	        					<div class="atbd-notice__text">
-	        						<h4>등록이 완료되었습니다.</h4>
-	        					</div>
-	        					<div style="display: flex; justify-content: center; margin: 10% auto;">
-	        						<a class="btn btn-default btn-success" href="/plan/list" style="color: #FFFFFF;">확인</a>
-	        					</div>
-	        				</div>
-	        			</div>
-	        		</div>
-	        	</div>
-	        </div>
+        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+        		<div class="card-body">
+        			<div class="atbd-notice__content">
+        				<div class="atbd-notice__top text-center">
+        					<div class="atbd-notice__icon bg-success">
+        						<i class="fas fa-check color-white"></i>
+        					</div>
+        					<div class="atbd-notice__text">
+        						<h4>등록이 완료되었습니다.</h4>
+        					</div>
+        					<div style="display: flex; justify-content: center; margin: 10% auto;">
+        						<a class="btn btn-default btn-success" href="/plan/list" style="color: #FFFFFF;">확인</a>
+        					</div>
+        				</div>
+        			</div>
+        		</div>
+        	</div>
+        </div>
+	    <div class="atbd-notice" id="info_popup" style="z-index:999999999999999; width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
+        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+        		<div class="card-body">
+        			<div class="atbd-notice__content">
+        				<div class="atbd-notice__top text-center">
+        					<div class="atbd-notice__icon bg-success">
+        						<i class="fas fa-check color-white"></i>
+        					</div>
+        					<div class="atbd-notice__text">
+        						<h4>구획 데이터를 작업중입니다.</h4>
+        					</div>
+        				</div>
+        			</div>
+        		</div>
+        	</div>
+        </div>
 		
 		<div class="modal-basic modal fade show" id="storageModal" tabindex="-1" role="dialog" aria-hidden="true">
 		    <div class="modal-dialog modal-xl" role="document">
@@ -959,7 +976,6 @@
     <th:block th:include="/../fragments/footer.html"></th:block>
     <!-- 공통 js -->
     <th:block th:include="/../fragments/commonjs.html"></th:block>
-    <script src="/../assets/vendor_assets/js/plan-insert.js"></script>
     <script type="text/javascript" src="/../assets/vendor_assets/js/plan-segment.js"></script>
     <script type="text/javascript" src="/../assets/vendor_assets/js/plan-render.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=	e93e65b3e9a407aa43d05f993408db95&libraries=clusterer,services"></script>
@@ -2657,9 +2673,6 @@
 		$("#etcModal").modal("hide");
 	});//end 기타 요인 사용 버튼 이벤트
 	
-	//step4에서 사용할 array
-	
-	
 	//step3 btn 이벤트
 	$("#step-3-btn").on("click", function(){
 		
@@ -2847,10 +2860,42 @@
 			
 			
 			copy_step_4.empty();
+			var start = performance.now();
 			copy_step_4.append(add_list);
+			var duration = performance.now() - start;
+			
+			$("#info_popup").css("display", "flex");
+			setTimeout(function(){
+				
+				$(document).find(".container1").sortable({
+					placeholder : "itemBoxHighlight",
+					start : function(event, ui){
+						
+					},
+					stop : function(event, ui){//해당 구획 이동 완료 후 정렬
+						
+						var num = 1;
+	 					var targetNum = parseInt(ui.item[0].children[0].innerText)-1;
+	 					reorder(num);
+	 					var moveNum = parseInt(ui.item[0].children[0].innerText)-1;
+
+						let item = resultArray.splice(targetNum, 1);
+						resultArray.splice(moveNum, 0, item[0]);
+						
+						for(var i = 0; i < resultArray.length; i++){
+							resultArray[i].num = (i+1);
+						}
+						var getDataArr = [...resultArray];
+						getDataResult(getDataArr);
+					}
+				});//end sortable
+				
+				$("#info_popup").css("display", "none");
+			}, (duration*1000));
+			
 			
 			//sortable 적용
-			$(document).find(".container1").sortable({
+			/* $(document).find(".container1").sortable({
 				placeholder : "itemBoxHighlight",
 				start : function(event, ui){
 					
@@ -2868,9 +2913,10 @@
 					for(var i = 0; i < resultArray.length; i++){
 						resultArray[i].num = (i+1);
 					}
-					console.log(resultArray);
+					var getDataArr = [...resultArray];
+					getDataResult(getDataArr);
 				}
-			});//end sortable
+			});//end sortable */
 			
 		}else if(grow_type == "1"){ //난괴법
 			
@@ -2962,7 +3008,8 @@
 							plusNum++;
 							resultArray[i].num = plusNum;
 						}
-						console.log(resultArray);
+						var getDataArr = [...resultArray];
+						getDataResult(getDataArr);
 					}
 				});//end sortable
 			}
@@ -3066,7 +3113,8 @@
 							plusNum++;
 							resultArray[i].num = plusNum;
 						}
-						console.log(resultArray);
+						var getDataArr = [...resultArray];
+						getDataResult(getDataArr);
 					}
 				});//end sortable
 			}
@@ -3182,7 +3230,8 @@
 							plusNum++;
 							resultArray[i].num = plusNum;
 						}
-						console.log(resultArray);
+						var getDataArr = [...resultArray];
+						getDataResult(getDataArr);
 					}
 				});//end sortable
 			}
@@ -3200,7 +3249,7 @@
 			});
 			
 		}
-		console.log(resultArray);
+		
 		//이곳에서 데이터 받아와야함 : important
 		var getDataArr = [...resultArray];
 		getDataResult(getDataArr);

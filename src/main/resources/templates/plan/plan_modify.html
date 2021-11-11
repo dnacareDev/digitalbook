@@ -3390,7 +3390,8 @@
 					for(var i = 0; i < resultArray.length; i++){
 						resultArray[i].num = (i+1);
 					}
-					console.log(resultArray);
+					var getDataArr = [...resultArray];
+					getDataResult(getDataArr);
 				}
 			});//end sortable
 			
@@ -3493,7 +3494,8 @@
 							plusNum++;
 							resultArray[i].num = plusNum;
 						}
-						console.log(resultArray);
+						var getDataArr = [...resultArray];
+						getDataResult(getDataArr);
 					}
 				});//end sortable
 			}
@@ -3609,7 +3611,8 @@
 							plusNum++;
 							resultArray[i].num = plusNum;
 						}
-						console.log(resultArray);
+						var getDataArr = [...resultArray];
+						getDataResult(getDataArr);
 					}
 				});//end sortable
 			}
@@ -3736,7 +3739,8 @@
 							plusNum++;
 							resultArray[i].num = plusNum;
 						}
-						console.log(resultArray);
+						var getDataArr = [...resultArray];
+						getDataResult(getDataArr);
 					}
 				});//end sortable
 			}

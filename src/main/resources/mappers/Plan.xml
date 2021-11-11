@@ -73,6 +73,7 @@
 	<select id="selectReportList" resultType="Report">
 		SELECT * FROM report r 
 		INNER JOIN seed s ON r.report_code = s.report_code
+		INNER JOIN plan p ON p.report_code != r.report_code
 		GROUP BY r.report_code
 		ORDER BY r.report_id
 	</select>

@@ -260,11 +260,12 @@ function renderSegment(data){
 	var dataGet = data;
 	// 초기화
 	stepFourWrap.innerHTML = '';
-	// 1차 : 컴포넌트 삽입 // 의심 2
+	// 1차 : 컴포넌트 삽입 
+	var str = "";
 	for(var i = 0; i < dataGet.length; i++){
-		stepFourWrap.innerHTML += segmentComp(dataGet[i]);
+		str += segmentComp(dataGet[i]);
 	}
-	
+	stepFourWrap.innerHTML = str;
 	segmentSetting(dataGet);
 }
 
@@ -339,10 +340,10 @@ function segmentSetting(data){
 	
 	for(var t = 0; t < segmentEls.length; t++){
 		segmentEls[t].addEventListener('mousedown', onElDown);
-		segmentEls[t].addEventListener('touchstart', onElDown);
+		//segmentEls[t].addEventListener('touchstart', onElDown);
 		
 		segmentMove[t].addEventListener('mousedown', onMoveDown);
-		segmentMove[t].addEventListener('touchstart', onMoveDown);
+		//segmentMove[t].addEventListener('touchstart', onMoveDown);
 		
 		segmentRotate[t].addEventListener('click', onRotateDown);
 		
@@ -369,7 +370,6 @@ function addWindowEvent(){
 }
 
 addWindowEvent();
-
 
 
 
