@@ -840,12 +840,24 @@
 			                                <th:block th:each="fert : ${fert}">
 			                                	<option th:value="${fert.fert_id}" th:text="${fert.fertilizer}"></option>
 			                                </th:block>
+			                                <option th:value="etc">기타(직접입력)</option>
 		                                </select>
 		                            </div>
 		                            <div class="col-sm-5">
 		                            	<select class="form-control b-light" id="fert_2">
 			                                <option value="">비료종류 선택</option>
 		                                </select>
+		                            </div>
+		                    	</div>
+		                    	<div class="row mt-3" style="display: none;" id="etc_row">
+		        					<div class="col-sm-2 d-flex aling-items-center">
+		                            	
+		                            </div>
+		                            <div class="col-sm-5">
+		                                <input type="text" class="form-control b-light" id="manure_etc1" placeholder="비료성분" style="width: 100%;">
+		                            </div>
+		                            <div class="col-sm-5">
+		                                <input type="text" class="form-control b-light" id="manure_etc2" placeholder="비료종류" style="width: 100%;">
 		                            </div>
 		                    	</div>
 		                    	<div class="row mt-3">
@@ -893,7 +905,7 @@
 												<th></th>
 											</tr>
 										</thead>
-										<tbody id="mnnure_body">
+										<tbody id="manure_body">
 											
 										</tbody>
 									</table>
@@ -2371,28 +2383,41 @@
 		
 		var fert_id = $(this).find("option:selected").val();
 		
-		var data = {"fert_id" : fert_id};
-		
-		$.ajax({
-			url : "/plan/selectFertilizer",
-			method : "GET",
-			dataType : 'json',
-			data : data,
-			success : function(result){
-				
-				var fert_2 = $("#fert_2");
-				var add_list = "";
-				
-				add_list = '<option value="0">비료종류 선택</option>';
-				
-				for(var i = 0; i < result.length; i++){
-					add_list += '<option value="' + result[i].fert_id + '" th:data-amount="'+result[i].fert_amount+'">' + result[i].fertilizer + '(' + result[i].fert_amount + '%' + ')' + '</option>';
-				}
-				
-				fert_2.empty();
-				fert_2.append(add_list);
-			}//end success
-		});//end ajax
+		if(fert_id == "etc"){
+			var fert_2 = $("#fert_2");
+			var add_list = "";
+			add_list += '<option value="etc">기타(직접입력)</option>';
+			fert_2.empty();
+			fert_2.append(add_list);
+			
+			$("#etc_row").css("display", "");
+			
+		}else{
+			$("#etc_row").css("display", "none");
+			
+			var data = {"fert_id" : fert_id};
+			
+			$.ajax({
+				url : "/plan/selectFertilizer",
+				method : "GET",
+				dataType : 'json',
+				data : data,
+				success : function(result){
+					
+					var fert_2 = $("#fert_2");
+					var add_list = "";
+					
+					add_list = '<option value="0">비료종류 선택</option>';
+					
+					for(var i = 0; i < result.length; i++){
+						add_list += '<option value="' + result[i].fert_id + '" th:data-amount="'+result[i].fert_amount+'">' + result[i].fertilizer + '(' + result[i].fert_amount + '%' + ')' + '</option>';
+					}
+					
+					fert_2.empty();
+					fert_2.append(add_list);
+				}//end success
+			});//end ajax
+		}
 		
 	});//시비량 모달 내 비료 성분 체인지 이벤트
 	
@@ -2447,28 +2472,40 @@
 	
 	//시비량 추가 버튼 이벤트
 	function PlusManure(){
-		
-		var manure_area = $("#manure_area").val();
-		var manure_type = $("#fert_2").find("option:selected").text();
 		var fert_id = $("#fert_1").find("option:selected").val();
-		var type = $("#fert_1").find("option:selected").text();
-		var manure_amount = $("#manure_amount").val();
-		var manure_percent = $("#manure_percent").val();
-		var manure_result = $("#manure_result").val();
 		
-		var body = $("#mnnure_body");
-		var add_list = "";
+		if(fert_id == "etc" && $("#manure_etc1").val() == "" || $("#manure_etc2").val() == ""){
+			alert("비료성분/종류를 입력해 주세요.");
+		}else{
+			var manure_area = $("#manure_area").val();
+			var manure_type = $("#fert_2").find("option:selected").text();
+			
+			var type = $("#fert_1").find("option:selected").text();
+			if(fert_id == "etc"){
+				fert_id = 0;
+				manure_type = $("#manure_etc2").val();
+				type = $("#manure_etc1").val();
+			}
+			var manure_amount = $("#manure_amount").val();
+			var manure_percent = $("#manure_percent").val();
+			var manure_result = $("#manure_result").val();
+			
+			var body = $("#manure_body");
+			var add_list = "";
+			
+			add_list += '<tr class="manure_tr">';
+			add_list += '<td class="manure_area">'+manure_area+'</td>';
+			add_list += '<td class="manure_type" th:data-type="'+type+'" th:data-fert-id="'+fert_id+'">'+manure_type+'</td>';
+			add_list += '<td class="manure_amount">'+manure_amount+'</td>';
+			add_list += '<td class="manure_percent">'+manure_percent+'</td>';
+			add_list += '<td class="manure_result">'+manure_result+'</td>';
+			add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
+			add_list += '</tr>';
+			
+			body.append(add_list);
+		}
 		
-		add_list += '<tr class="manure_tr">';
-		add_list += '<td class="manure_area">'+manure_area+'</td>';
-		add_list += '<td class="manure_type" th:data-type="'+type+'" th:data-fert-id="'+fert_id+'">'+manure_type+'</td>';
-		add_list += '<td class="manure_amount">'+manure_amount+'</td>';
-		add_list += '<td class="manure_percent">'+manure_percent+'</td>';
-		add_list += '<td class="manure_result">'+manure_result+'</td>';
-		add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
-		add_list += '</tr>';
 		
-		body.append(add_list);
 	}//end 시비량 추가 버튼 이벤트
 	
 	//시비량 삭제 버튼 이벤트
@@ -2575,7 +2612,7 @@
 			});//end ,manure_te each
 			
 		});//end copy-form-standard each
-		
+		console.log(manureArray);
 		if(index == 1){
 			manureArray1 = [];
 			data1.type = type;
