@@ -89,6 +89,31 @@
 	.breadcrumb-title {font-size: 20px !important; padding: 2px 0 0 !important;}
 	.wrapper {padding: 0px 0 50px !important;}
 	
+	.select-hide{
+		display: none;
+	}
+	.select-show{
+		display: block;
+	    position: absolute;
+	    z-index :10;
+	    top: 42px;
+	    width: 97.5%;
+	    background-color: white;
+	    border:1px solid;
+	    border-radius: 5px;
+	    cursor: pointer;
+	    overflow-y: auto;
+	    height: 150px;
+	}
+	
+	.select > input[type="text"] {width: 100%;} 
+	
+	.select .select-show li{
+	    padding:0 0 0 10px;
+	    line-height: 30px;
+	    text-align: left;
+	}
+	
 </style>
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
@@ -171,12 +196,22 @@
 			                    </div>
 			                    <div class="content clearfix">
 			                        <div class="btn btn_select1" style="display:block">
-			                            <select class="form-control b-light department" id="select_view1" name="">
+			                            <!-- <select class="form-control b-light department" id="select_view1" name="">
 			                                <option th:value=0 disabled="disabled" selected="selected" hidden="hidden">과제 선택</option>
 			                                <th:block th:each="report : ${report}">
 			                                	<option th:value="${report.report_code}" th:text="${report.report_title +'('+ report.report_code} +')'"></option>
 			                                </th:block>
-			                            </select>
+			                            </select> -->
+			                            <div class="select" data-role="selectBox" style="height: auto;">
+	                                		<input type="text" data-value="optValue" onkeyup="filter();" data-code="" class="selected-option form-control" id="select_view1" placeholder="과제 선택" autocomplete="off">
+	                                		<ul class="select-hide">
+	                                			<th:block th:each="report : ${report}">
+	                                				<li class="report_list">
+	                                					<span class="report_text" th:data-id="${report.report_code}" th:text="${report.report_title +'('+ report.report_code} +')'"></span>
+	                                				</li>
+	                                			</th:block>
+	                                		</ul>
+	                                	</div>
 			                            <div class="submit clearfix">
 			                                <button type="button" id="step-2-btn" onclick="nextStep(3);">다음</button>
 			                            </div>
@@ -1002,6 +1037,64 @@
 	
 	//구획 등록할 객체 array
 	let segment_array = new Array();
+	
+	let body = document.querySelector('body');
+	let select = document.querySelector('[data-role="selectBox"]');
+	let dataValue = select.querySelector('[data-value="optValue"]');
+	let option = select.querySelector('ul');
+	let opts = option.querySelectorAll('li');
+	
+	function selects(e){
+		e.stopPropagation();
+	    if(option.classList.contains('select-hide')){
+	        option.classList.remove('select-hide');
+	        option.classList.add('select-show');
+	    }else{
+	        option.classList.add('select-hide');
+	        option.classList.remove('select-show');
+	    }
+	    selectOpt();
+		
+	}
+	
+	function hideSelect(){
+	    if(option.classList.contains('select-show')){
+	        option.classList.add('select-hide');
+	        option.classList.remove('select-show');
+	    }
+	}
+	
+	/* 옵션선택 */
+	function selectOpt(){
+	    opts.forEach(opt=>{
+	        const innerValue = opt.children[0].innerHTML;
+	        const dataCode = opt.children[0].getAttribute('data-id');
+	        function changeValue(){
+	        	dataValue.value = innerValue;
+	        	dataValue.setAttribute('data-code', dataCode); 
+	        }
+	        opt.addEventListener('click',changeValue)
+	    });
+	}
+	
+	select.addEventListener('click',selects);
+	body.addEventListener('click',hideSelect);
+	
+	//과제 필터 함수
+	function filter(){
+		var search = $("#select_view1").val().toLowerCase();
+		
+		$(document).find(".report_list").each(function(index, item){
+			var text = $(this).find(".report_text").text();
+			
+			if(text.toLowerCase().includes(search)){
+				$(this).css("display", "flex");
+			}else{
+				$(this).css("display", "none");
+			}
+		});
+		
+	}//end 과제 필터 함수
 
 	$("#listBtn").on("click", function(){
 		window.location.href = "/plan/list";
@@ -1191,11 +1284,11 @@
 	//seedList ajax 함수
 	function getSeedList(index){
 		
-		var report_code = $("#select_view1 option:selected").val();
+		var report_code = $("#select_view1").attr("data-code");
 		
 		var data = {"report_code" : report_code};
 		
-		if(report_code == "0"){
+		if(report_code == ""){
 			alert("과제를 선택해 주세요.");
 		}else{
 			
@@ -3437,7 +3530,7 @@
 			$("#grow_type").focus();
 		}else if($("#storage_input").val() == ""){
 			alert("포장을 선택해 주세요");
-		}else if($("#select_view1 option:selected").val() == "0"){
+		}else if($("#select_view1").attr("data-code") == ""){
 			alert("과제를 선택해 주세요");
 		}else if(Object.keys(data1).length == 0 && Object.keys(data2).length == 0 && Object.keys(data3).length == 0){
 			alert("시험구배치 요인을 선택해 주세요");
@@ -3489,7 +3582,7 @@
 			});
 			
 			
-			var report_code = $("#select_view1 option:selected").val();
+			var report_code = $("#select_view1").attr("data-code");
 			var grow_type = $("#grow_type option:selected").val();
 			var plan_repeat = $("#plan_repeat").val();
 			var plan_segment = $("#mil2").val();
