@@ -139,4 +139,10 @@ public interface PlanService {
 	//구획 삭제
 	int deleteSegment(int[] arr);
 	
+	//재배 계획 검색
+	List<Plan> SearchResultPlan(String search_type, String keyword, int offset, int limit, int user_group, int plan_step);
+	
+	//재배 계획 검색 개수
+	int SearchResultPlanCount(String search_type, String keyword, int user_group, int plan_step);
+	
 }

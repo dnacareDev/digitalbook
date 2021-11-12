@@ -45,6 +45,7 @@ public class User implements UserDetails
 	//소속실(department) 사용 컬럼
 	private String d4_department_name;		//소속실명
 	private int d4_id;						//소속실 depart_id
+	private String d3_department_name;		//과 명
 	private int d3_id;						//과 depart_id
 	private int d2_id;						//부 depart_id
 	private int d1_id;						//원 depart_id

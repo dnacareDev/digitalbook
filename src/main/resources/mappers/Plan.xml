@@ -69,6 +69,73 @@
 		</choose>
 	</select>
 	
+	<!-- 결과입력 검색 -->
+	<select id="SearchResultPlan" resultType="Plan">
+		SELECT p.*, r.*, s.*, m.*
+		FROM plan p
+		LEFT JOIN report r ON p.report_code = r.report_code
+		LEFT JOIN storage s ON p.storage_id = s.storage_id
+		LEFT JOIN method m ON p.plan_method = m.method_id
+		WHERE p.user_group = #{user_group} AND p.plan_step = #{plan_step}
+		<choose>
+			<when test="search_type == null || search_type.equals('none')">
+				AND (
+					p.plan_code LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					r.report_title LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					s.storage_name LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					m.method_title LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					p.plan_repeat =  #{keyword}
+					OR
+					p.plan_segment = #{keyword}
+				)
+			</when>
+			<when test="search_type.equals('p.plan_repeat') || search_type.equals('p.plan_segment')">
+				AND ${search_type} = #{keyword}
+			</when>
+			<otherwise>
+				AND ${search_type} LIKE CONCAT('%', #{keyword}, '%')
+			</otherwise>
+		</choose>
+		ORDER BY plan_id DESC
+		LIMIT #{offset}, #{limit}
+	</select>
+	
+	<!-- 결과입력 갯수 검색 -->
+	<select id="SearchResultPlanCount" resultType="int">
+		SELECT COUNT(*) FROM plan p
+		LEFT JOIN report r ON p.report_code = r.report_code
+		LEFT JOIN storage s ON p.storage_id = s.storage_id
+		LEFT JOIN method m ON p.plan_method = m.method_id
+		WHERE p.user_group = #{user_group} AND p.plan_step = #{plan_step}
+		<choose>
+			<when test="search_type == null || search_type.equals('none')">
+				AND (
+					p.plan_code LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					r.report_title LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					s.storage_name LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					m.method_title LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					p.plan_repeat =  #{keyword}
+					OR
+					p.plan_segment = #{keyword}
+				)
+			</when>
+			<when test="search_type.equals('p.plan_repeat') || search_type.equals('p.plan_segment')">
+				AND ${search_type} = #{keyword}
+			</when>
+			<otherwise>
+				AND ${search_type} LIKE CONCAT('%', #{keyword}, '%')
+			</otherwise>
+		</choose>
+	</select>
+	
 	<!-- 종자(시료) 등록된 과제 list -->
 	<select id="selectReportList" resultType="Report">
 		SELECT * FROM report r 

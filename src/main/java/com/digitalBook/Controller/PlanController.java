@@ -274,6 +274,36 @@ public class PlanController
 		return result;
 	}
 	
+	//결과입력 검색
+	@ResponseBody
+	@RequestMapping("/searchResultPlan")
+	public Map<String, Object> SearchResultPlan(Authentication auth,
+											@RequestParam(name = "search_type", required = false) String search_type,
+											@RequestParam(name = "keyword", required = false) String keyword,
+											@RequestParam("page_num") int page_num,
+											@RequestParam("limit") int limit,
+											@RequestParam("plan_step") int plan_step)
+	{
+		
+		User prin = (User)auth.getPrincipal();
+		
+		Map<String, Object> result = new LinkedHashMap<>();
+		
+		int count = service.SearchResultPlanCount(search_type, keyword, prin.getUser_group(), plan_step);
+		
+		int offset = (page_num - 1) * limit;
+		int end_page = (count + limit - 1) / limit;
+		
+		List<Plan> plan = service.SearchResultPlan(search_type, keyword, offset, limit, prin.getUser_group(), plan_step);
+		
+		result.put("plan", plan);
+		result.put("page_num", page_num);
+		result.put("end_page", end_page);
+		result.put("offset", offset);
+		
+		return result;
+	}
+	
 	//실험장소 검색
 	@ResponseBody
 	@RequestMapping("/searchStorage")

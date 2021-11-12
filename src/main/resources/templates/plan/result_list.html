@@ -195,11 +195,12 @@ $(document).ready(function()
 			var limit = $("#limit").val();
 			var search_type = $("#search_type").val();
 			var keyword = $("#keyword").val();
+			var plan_step = 1;
 			
-			var data = {"search_type" : search_type, "keyword" : keyword, "page_num" : e, "limit" : limit};
+			var data = {"search_type" : search_type, "keyword" : keyword, "page_num" : e, "limit" : limit, "plan_step" : plan_step};
 			
 			$.ajax({
-				url : '/plan/searchPlan',
+				url : '/plan/searchResultPlan',
 				method : 'POST',
 				dataType : 'json',
 				data : data,

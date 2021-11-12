@@ -69,4 +69,7 @@ public interface SeedService
 		
 	//시료 승인
 	int updateSeedStatus(int seed_id);
+	
+	//genetic 기타 등록
+	int insertGeneticEtc(Genetic genetic);
 }

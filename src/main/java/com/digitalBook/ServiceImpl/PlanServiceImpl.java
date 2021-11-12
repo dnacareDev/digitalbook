@@ -301,5 +301,20 @@ public class PlanServiceImpl implements PlanService {
 		
 		return mapper.deleteSegment(arr);
 	}
+ 
+	//결과입력 검색
+	@Override
+	public List<Plan> SearchResultPlan(String search_type, String keyword, int offset, int limit, int user_group,
+			int plan_step) {
+		
+		return mapper.SearchResultPlan(search_type, keyword, offset, limit, user_group, plan_step);
+	}
+	
+	//결과입력 개수 검색
+	@Override
+	public int SearchResultPlanCount(String search_type, String keyword, int user_group, int plan_step) {
+		
+		return mapper.SearchResultPlanCount(search_type, keyword, user_group, plan_step);
+	}
 
 }

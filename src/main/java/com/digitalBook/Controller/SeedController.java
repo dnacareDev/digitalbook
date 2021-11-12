@@ -391,4 +391,19 @@ public class SeedController
 		return result;
 	}
 	
+	//genetic 기타 등록
+	@ResponseBody
+	@RequestMapping("seed/insertGeneticEtc")
+	public int InsertGeneticEtc(Genetic genetic)
+	{
+		
+		int result = service.insertGeneticEtc(genetic);
+		
+		if(result != 0) {
+			result = genetic.getLast_genetic_id();
+		}
+		
+		return result;
+	}
+	
 }

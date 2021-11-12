@@ -15,6 +15,29 @@
 		margin-top:-15px;
 	}
 	.end{margin-left:10px;}
+	
+	.select-hide{
+		display: none;
+	}
+	.select-show{
+		display: block;
+	    position: absolute;
+	    z-index :10;
+	    top: 30px;
+	    width: 97.5%;
+	    background-color: white;
+	    border:1px solid;
+	    border-radius: 5px;
+	    cursor: pointer;
+	    overflow-y: auto;
+	    height: 150px;
+	}
+
+	.select .select-show li{
+	    padding:0 0 0 5px;
+	    line-height: 30px;
+	}
+	
 </style>
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
@@ -57,15 +80,25 @@
 				        			</div>
 			        				<div class="row">
 			        					<div class="col-sm-2 d-flex aling-items-center">
-			                                   <label for="report_year" class="col-form-label color-dark align-center">과제명</label>
+			                                   <label for="report_year" class="col-form-label color-dark align-center" style="align-items: self-start">과제명</label>
 		                                </div>
 		                                <div class="col-sm-8">
-		                                   <select class="form-control b-light" id="report_code">
+		                                	<div class="select" data-role="selectBox" style="height: auto;">
+		                                		<input type="text" data-value="optValue" onkeyup="filter();" data-code="" class="selected-option form-control" id="report_code" placeholder="과제 선택">
+		                                		<ul class="select-hide">
+		                                			<th:block th:each="report : ${report}">
+		                                				<li class="report_list">
+		                                					<span class="report_text" th:data-id="${report.report_code}" th:text="${report.report_title +'('+ report.report_code} +')'"></span>
+		                                				</li>
+		                                			</th:block>
+		                                		</ul>
+		                                	</div>
+		                                   <!-- <select class="form-control b-light" id="report_code">
 			                                <option th:value="none">과제 선택</option>
 			                                <th:block th:each="report : ${report}">
 			                                	<option th:value="${report.report_code}" th:text="${report.report_title +'('+ report.report_code} +')'"></option>
 			                                </th:block>
-			                               </select>
+			                               </select> -->
 		                                </div>
 			                         </div>
 			                         <div class="row mt-3">
@@ -226,7 +259,7 @@
 												        				<div class="col-sm-2 mb-4">
 												        					<input type="checkbox" class="seed_share" th:value="0">
 												        					<label>
-												        						<span class="color-dark" th:text="${#authentication.principal.user_level} + | 공유|"></span>
+												        						<span class="color-dark" th:text="${#authentication.principal.d3_department_name} + | 공유|"></span>
 												        					</label>
 												        				</div>
 												        			</div>
@@ -283,38 +316,6 @@
 		        	</div>
 		        </div>
 		    </div>
-			
-			<div class="modal-basic modal fade show" id="seedModal" tabindex="-1" role="dialog" aria-hidden="true">
-			    <div class="modal-dialog modal-md" role="document">
-			        <div class="modal-content modal-bg-white">
-			        	<div class="modal-header">
-			        		<h6 class="modal-title">엑셀 업로드</h6>
-		                    	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		                        	<span data-feather="x"></span>
-		                        </button>
-			        	</div>
-			            <div class="modal-body">
-			            	<div class="col-12">
-				            	<form action="#">
-				            		<div class="row">
-				            			<div class="col-sm-3 d-flex aling-items-center mt-4">
-		                                    <label class="color-dark align-center">엑셀 파일</label>
-		                                </div>
-		                                <div class="col-sm-5 mb-2">
-		                                	<label for="uploadFile"></label>
-		                                    <input type="file" id="uploadFile">
-		                                </div>
-				            		</div>
-				            		<div class="button-group d-flex justify-content-end">
-					                   <button class="btn btn-primary btn-default btn-squared">업로드</button>
-					           		</div>
-				            	</form>
-			            	</div>
-			            </div>
-			        </div>
-			    </div>
-			</div>
-		    <!-- ends: .modal-Basic -->
 		    
 		    <!-- 품종/유전정보 선택 modal -->
 		    <div class="modal-basic modal fade show" id="geneticModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -357,7 +358,7 @@
 				            	</div>
 				            	<div class="row mt-2" id="division_row">
 				            		<div class="col-md-2 mb-25 d-flex aling-items-center">
-   										<label for="division_slt" class="color-dark fw-500 align-center mt-1">작목</label>
+   										<label for="division_slt" class="color-dark fw-500 align-center mt-1" style="align-items: self-start">작목</label>
    									</div>
      								<div class="col-md-4 mb-25">
      									<select class="form-control b-light" name="division_slt" id="division_slt">
@@ -389,17 +390,18 @@
      								</div>
      								<div class="col-md-6 d-flex" id="etc_col">
 	     								<div class="col-md-4 mb-25 d-flex aling-items-center">
-	   										<label class="color-dark fw-500 align-center mt-1 genetic_title">기타</label>
+	   										<label class="color-dark fw-500 align-center mt-1 genetic_title" style="align-items: self-start">기타</label>
 	   									</div>
-	     								<div class="col-md-8 mb-25">
+	     								<div class="col-md-8 mb-25" id="etc_inner_col">
 	     									<select class="form-control b-light genetic_input">
 				                                <option value="0">기타를 선택하세요</option>
 			                            	</select>
+			                            	<!-- <input type="text" class="form-control" style="margin-top: 10px;"> -->
 	     								</div>
      								</div>
 				            	</div>
 				            	<div class="button-group d-flex justify-content-end">
-				                   <button class="btn btn-primary btn-default btn-squared input_btn">사용</button>
+				                   <button class="btn btn-primary btn-default btn-squared input_btn" onclick="useGenetic();">사용</button>
 				           		</div>
 			            	</div>
 			            </div>
@@ -418,6 +420,64 @@
     <th:block th:include="/../fragments/commonjs.html"></th:block>
 
 <script type="text/javascript">
+	
+	let body = document.querySelector('body');
+	let select = document.querySelector('[data-role="selectBox"]');
+	let dataValue = select.querySelector('[data-value="optValue"]');
+	let option = select.querySelector('ul');
+	let opts = option.querySelectorAll('li');
+	
+	function selects(e){
+		e.stopPropagation();
+	    if(option.classList.contains('select-hide')){
+	        option.classList.remove('select-hide');
+	        option.classList.add('select-show');
+	    }else{
+	        option.classList.add('select-hide');
+	        option.classList.remove('select-show');
+	    }
+	    selectOpt();
+		
+	}
+	
+	function hideSelect(){
+	    if(option.classList.contains('select-show')){
+	        option.classList.add('select-hide');
+	        option.classList.remove('select-show');
+	    }
+	}
+	
+	/* 옵션선택 */
+	function selectOpt(){
+	    opts.forEach(opt=>{
+	        const innerValue = opt.children[0].innerHTML;
+	        const dataCode = opt.children[0].getAttribute('data-id');
+	        function changeValue(){
+	        	dataValue.value = innerValue;
+	        	dataValue.setAttribute('data-code', dataCode); 
+	        }
+	        opt.addEventListener('click',changeValue)
+	    });
+	}
+	
+	select.addEventListener('click',selects);
+	body.addEventListener('click',hideSelect);
+	
+	//과제 필터 함수
+	function filter(){
+		var search = $("#report_code").val().toLowerCase();
+		
+		$(document).find(".report_list").each(function(index, item){
+			var text = $(this).find(".report_text").text();
+			
+			if(text.toLowerCase().includes(search)){
+				$(this).css("display", "flex");
+			}else{
+				$(this).css("display", "none");
+			}
+		});
+		
+	}//end 과제 필터 함수
 
 	var this_1;
 	
@@ -454,6 +514,19 @@
 		}
 	});//end 품종, 유전정보 선택 이벤트
 	
+	//품종/유전정보 모달에서 기타 > 신규입력 선택 이벤트
+	$(document).on("change", ".genetic_input", function(){
+		
+		var check = $(this).find("option:selected").val();
+		if(check == "etc"){
+			var etc_inner_col = $("#etc_inner_col");
+			
+			var str = '<input type="text" class="form-control" id="etc_input" style="margin-top: 10px;">';
+			etc_inner_col.append(str);
+		}
+		
+	});
+	
 	//작목명 선택할때 마다 품종 리스트 변경
 	$("#division_slt").on("change", function(){
 		var division_id = $(this).val();
@@ -483,6 +556,10 @@
 					add_list += '<option value="' + genetic[i].genetic_id + '">' + genetic[i].genetic + '</option>';
 				}//end for
 				
+				if($("input:radio[name=radio]:checked").val() == 2){
+					add_list += '<option value="etc">'+'신규입력'+'</option>';
+				}
+				
 				genetic_input.empty();
 				genetic_input.append(add_list);
 				
@@ -491,26 +568,109 @@
 		
 	});//end 작목명 선택 이벤트
 	
-	//품종, 유전정보 등록 버튼 이벤트
-	$(".input_btn").on("click", function(){
+	//genetic etc 등록
+	function insertGeneticEtc(){
+		return new Promise(function(resolve){
+			
+			var genetic = $("#etc_input").val();
+			var division_id = $("#division_slt option:selected").val();
+			
+			var data = {
+					"genetic" : genetic,
+					"division_id" : division_id
+			};
+			
+			$.ajax({
+				url : "/data/seed/insertGeneticEtc",
+				method : "POST",
+				dataType : 'json',
+				data : data,
+				success : function(result){
+					if(result == 0){
+						
+					}else{
+						resolve(result);
+					}
+				}
+			});//end ajax
+			
+		});//end return
+	}//end insertReport
+	
+	//품종, 유전정보 사용 버튼 이벤트
+	function useGenetic(){
 		var str1 = $("#division_slt option:selected").text();
-		var str2 = $(".genetic_input option:selected").text();
-		var str = str1 + " > " + str2;
+		var str2 = "";
 		
-		this_1.val(str);
-		var genetic_id = $(".genetic_input").val();
-		this_1.attr('th:data-genetic-id', genetic_id);
+		if($(".genetic_input option:selected").val() == "0"){
+			alert("품종/유전정보를 선택해주세요");
+		}else if($(".genetic_input option:selected").val() == "etc" && $("#etc_input").val() == ""){
+			alert("기타를 입력해 주세요");
+		}else{
+			
+			if($(".genetic_input option:selected").val() == "etc"){
+				
+				
+				insertGeneticEtc().then(function(result){
+					
+					if(result == 0){
+						
+					}else{
+						str2 = $("#etc_input").val();
+						var str = str1 + " > " + str2;
+						
+						this_1.val(str);
+						var genetic_id = $(".genetic_input").val();
+						this_1.attr('th:data-genetic-id', result);
+						
+						$("#geneticModal").modal("hide");
+					}
+					
+				});
+				
+			}else{
+				var str2 = $(".genetic_input option:selected").text();
+				var str = str1 + " > " + str2;
+				
+				this_1.val(str);
+				var genetic_id = $(".genetic_input").val();
+				this_1.attr('th:data-genetic-id', genetic_id);
+				
+				$("#geneticModal").modal("hide");
+			}//end else
+				
+		}//end else
 		
-		$("#geneticModal").modal("hide");
+	}
+	
+	//품종, 유전자정보 모달 show
+	$(document).on("click", ".genetic_show", function(){
+		$("#division_radio").prop("checked", true);
+		$("#division_slt").val(0).prop("selected",true);
+		$(".genetic_input").val(0).prop("selected",true);
+		
+		$("#geneticModal").modal("show");
+		$("#etc_input").remove();
+		var str = col_arr[0];
+		division_row.append(str);
+		genetic_col.remove();
+		etc_col.remove();
+		
+		this_1 = $(this).prev();
+		
 	});
 	
 	//과제 비연계 이벤트
 	$("#not_report").on("change", function(){
 		if($("#not_report").is(':checked')){
-			$("#report_code").val("none").prop("selected", true);
+			//$("#report_code").val("none").prop("selected", true);
 			$("#report_code").prop("disabled", true);
+			$("#report_code").attr("data-code", "");
+			$("#report_code").val("");
+			select.removeEventListener('click',selects);
 		}else{
 			$("#report_code").prop("disabled", false);
+			select.addEventListener('click',selects);
 		}
 	});
 	
@@ -573,25 +733,6 @@
 	$(document).on("click", ".seed_form_del", function(){
 		$(this).parent().parent().parent().parent().remove();
 	});
-
-	//modal show
-	$("#excelBtn").on("click", function(){
-		$("#seedModal").modal("show");
-	});
-	
-	//품종, 유전자정보 모달 show
-	$(document).on("click", ".genetic_show", function(){
-		
-		$("#division_slt").val(0).prop("selected",true);
-		$(".genetic_input").val(0).prop("selected",true);
-		
-		$("#geneticModal").modal("show");
-		genetic_col.remove();
-		etc_col.remove();
-		
-		this_1 = $(this).prev();
-		
-	});
 	
 	//수확후 이용과 공유 체크박스 이벤트
 	$(document).on("change", ".seed_share", function(){
@@ -605,9 +746,9 @@
 	//시료 등록 버튼 함수
 	function insertBtn(){
 		
-		var report_code = $("#report_code").val();
+		var report_code = $("#report_code").attr("data-code");
 		
-		if(report_code == "none"){
+		if(report_code == ""){
 			//과제 비연계시
 			insertReport().then(function(result){
 				if(result == 0){
@@ -639,7 +780,7 @@
 		//폼별로 값 가져오기 위한 each문
 		$(".card-bordered").each(function(index, item){
 			
-			if($("#report_code").val() == "none" && $("#not_report").is(':checked') == false){
+			if($("#report_code").val() == "" && $("#not_report").is(':checked') == false){
 				alert("과제 또는 과제비연계를 선택해 주세요.");
 				$("#report_code").focus();
 				return false;

@@ -245,4 +245,12 @@
 		WHERE seed_id = #{seed_id}
 	</update>
 	
+	<!-- genetic 기타 등록 -->
+	<insert id="insertGeneticEtc" parameterType="Genetic" useGeneratedKeys="true" keyProperty="last_genetic_id">
+		INSERT INTO genetic
+		(genetic, genetic_type, division_id)
+		VALUES
+		(#{genetic}, 2, #{division_id})
+	</insert>
+	
 </mapper>

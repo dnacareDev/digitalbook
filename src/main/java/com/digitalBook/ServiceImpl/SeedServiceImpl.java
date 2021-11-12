@@ -154,4 +154,11 @@ public class SeedServiceImpl implements SeedService
 		
 		return mapper.updateSeedStatus(seed_id);
 	}
+	
+	//genetic 기타 등록
+	@Override
+	public int insertGeneticEtc(Genetic genetic) {
+		
+		return mapper.insertGeneticEtc(genetic);
+	}
 }
