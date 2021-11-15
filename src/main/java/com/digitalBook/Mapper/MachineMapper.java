@@ -30,4 +30,8 @@ public interface MachineMapper
 
 	// 장비 삭제
 	int DeleteMachine(int machine_id);
+	
+	//엑셀 다운로드할 장비 list
+	List<Machine> selectMachineExcelList(int user_group);
+	
 }

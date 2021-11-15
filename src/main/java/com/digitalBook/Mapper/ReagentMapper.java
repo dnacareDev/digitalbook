@@ -36,4 +36,7 @@ public interface ReagentMapper {
 	//시약 삭제
 	int deleteReagent(int reagent_id);
 	
+	//엑셀 다운로드할 시약 list
+	List<Reagent> selectReagentExcelList(int user_group);
+	
 }

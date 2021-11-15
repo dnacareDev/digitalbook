@@ -11,6 +11,7 @@ import java.util.stream.IntStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -404,6 +405,17 @@ public class SeedController
 		}
 		
 		return result;
+	}
+	
+	//엑셀 다운로드
+	@RequestMapping(value = "/seed/exceldownload", produces = "application/vnd.ms-excel")
+	public String SeedExceldownload(Authentication auth, Model model)
+	{
+		
+		User prin = (User)auth.getPrincipal();
+		model.addAttribute("user_group", prin.getUser_group());
+		
+		return "seedExcelView";
 	}
 	
 }

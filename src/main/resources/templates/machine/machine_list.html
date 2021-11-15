@@ -108,7 +108,7 @@
 			                                    <input type="text" class="form-control form-control-lg" id="keyword" placeholder="Search" style="width: 238px;height:40px;">
 			                                </div>
 				      					</div>
-			                            <button class="btn btn-primary" style="margin:10px 0 0 0">CSV<span data-feather="download"style="margin:0;"></span></button>
+			                            <button class="btn btn-primary" id="excelBtn" style="margin:10px 0 0 0">CSV<span data-feather="download"style="margin:0;"></span></button>
 				      				</div>
 			      				</div>
 		       				</div>
@@ -248,6 +248,12 @@
 			}
 		});
 	}
+	
+	//엑셀 다운로드 버튼 이벤트
+	$("#excelBtn").on("click", function(){
+		window.location.href = "/data/machine/exceldownload";
+	});
+	
 </script>
 </body>
 </html>

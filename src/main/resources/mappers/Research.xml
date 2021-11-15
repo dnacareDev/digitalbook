@@ -112,4 +112,16 @@
 		DELETE FROM research
 		WHERE research_id = #{research_id}
 	</delete>
+	
+	<!-- 엑셀 다운로드할 조사방법 list -->
+	<select id="selectResearchExcelList" parameterType="int" resultType="Research">
+		SELECT r.research_id, r.research_code, r.research_contents, d1.division AS d1, d2.division AS d2, d3.division AS d3, r.create_date, r.modify_date
+		FROM research r
+		LEFT JOIN division d3 ON r.division_id = d3.division_id
+		LEFT JOIN division d2 ON d3.division_parents = d2.division_id
+		LEFT JOIN division d1 ON d2.division_parents = d1.division_id
+		WHERE r.user_group = #{user_group}
+		ORDER BY research_id DESC
+	</select>
+	
 </mapper>

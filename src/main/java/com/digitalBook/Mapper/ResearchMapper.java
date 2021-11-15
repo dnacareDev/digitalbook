@@ -34,4 +34,7 @@ public interface ResearchMapper
 
 	// 조사방법 삭제
 	int DeleteResearch(int research_id);
+	
+	//엑셀 다운로드할 조사방법 list
+	List<Research> selectResearchExcelList(int user_group);
 }

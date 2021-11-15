@@ -129,4 +129,14 @@
 		WHERE reagent_id = #{reagent_id}
 	</delete>
 	
+	<!-- 엑셀 다운로드할 시약 list -->
+	<select id="selectReagentExcelList" parameterType="int" resultType="Reagent">
+		SELECT r.*, u.*, e.eaches_name 
+		FROM reagent r
+		LEFT JOIN eaches e ON r.reagent_id = e.eaches_id
+		LEFT JOIN user u ON r.user_id = u.user_id
+		WHERE r.user_group = #{user_group}
+		ORDER BY reagent_id DESC
+	</select>
+	
 </mapper>

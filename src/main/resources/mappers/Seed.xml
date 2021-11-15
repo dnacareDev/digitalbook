@@ -253,4 +253,17 @@
 		(#{genetic}, 2, #{division_id})
 	</insert>
 	
+	<!-- 엑셀 다운로드할 seed list -->
+	<select id="selectSeedExcelList" parameterType="int" resultType="Seed">
+		SELECT r.report_id, r.report_code, r.report_title, s.seed_id, s.seed_amount, s.seed_sender, s.send_date, s.receive_date, s.user_group, d.division_id, d.division, g.genetic_id, g.genetic, w.ware_id, w.warehouse, COUNT(*) AS seed_count
+		FROM seed s
+		LEFT JOIN report r ON s.report_code = r.report_code
+		LEFT JOIN genetic g ON s.genetic_id = g.genetic_id
+		LEFT JOIN division d ON g.division_id = d.division_id
+		LEFT JOIN warehouse w ON s.ware_id = w.ware_id
+		WHERE s.user_group = #{user_group}
+		GROUP BY r.report_code
+		ORDER BY s.seed_id DESC
+	</select>
+	
 </mapper>

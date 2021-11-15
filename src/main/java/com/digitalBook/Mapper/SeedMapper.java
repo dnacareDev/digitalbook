@@ -77,4 +77,7 @@ public interface SeedMapper
 	//genetic 기타 등록
 	int insertGeneticEtc(Genetic genetic);
 	
+	//엑셀 다운로드할 seed list
+	List<Seed> selectSeedExcelList(int user_group);
+	
 }

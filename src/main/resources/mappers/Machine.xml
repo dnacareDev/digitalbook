@@ -68,6 +68,7 @@
 					AND u.user_name_k LIKE CONCAT('%', #{keyword}, '%')
 				</when>
 			</choose>
+		ORDER BY m.machine_id DESC
 		LIMIT #{offset}, #{limit}
 	</select>
 
@@ -91,4 +92,13 @@
 		DELETE FROM machine
 		WHERE machine_id = #{machine_id}
 	</delete>
+	
+	<!-- 엑셀 다운로드할 장비 list -->
+	<select id="selectMachineExcelList" parameterType="int" resultType="Machine">
+		SELECT * FROM machine m
+		LEFT JOIN user u ON m.user_id = u.user_id
+		WHERE m.user_group = #{user_group}
+		ORDER BY m.machine_id DESC
+	</select>
+	
 </mapper>

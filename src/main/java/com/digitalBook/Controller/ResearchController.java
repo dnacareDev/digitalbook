@@ -5,9 +5,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -167,4 +170,17 @@ public class ResearchController
 		
 		return result;
 	}
+	
+	//엑셀 다운로드
+	@RequestMapping(value = "/research/exceldownload", produces = "application/vnd.ms-excel")
+	public String ResearchExceldownload(Authentication auth, Model model) 
+	{
+		
+		User prin = (User)auth.getPrincipal();
+		model.addAttribute("user_group", prin.getUser_group());
+		
+		return "researchExcelView";
+	}
+	
+	
 }
