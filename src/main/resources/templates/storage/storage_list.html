@@ -134,14 +134,16 @@
 					                    				</div>
                                                 	</div>
                                                 </div>
-				                        <div class="col-4">
-				                        	<div class="row" style="justify-content: center;">
-					                        	<div id="pageNum" style="text-align:center; margin: 2% 0 0 0;"></div>
-				                        	</div>
-				                        </div>
-					                            <div class="action-btn d-flex justify-content-end mt-30">
-				                                    <button class="btn btn-lg btn-primary" id="outBtn" onclick="InsertBtn();">+신규등록</button>
-				                                </div>
+						                        <div class="col-4">
+						                        	<div class="row" style="justify-content: center;">
+							                        	<div id="pageNum" style="text-align:center; margin: 2% 0 0 0;"></div>
+						                        	</div>
+						                        </div>
+					                            <th:block th:if="${#authentication.principal.user_type == 0}">
+					                            	<div class="action-btn d-flex justify-content-end mt-30">
+					                                    <button class="btn btn-lg btn-primary" id="outBtn" onclick="InsertBtn();">+신규등록</button>
+					                                </div>
+					                            </th:block>
                                             </div>
                                         </div>
 		        					</div>

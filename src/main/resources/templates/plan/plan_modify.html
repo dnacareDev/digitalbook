@@ -4006,8 +4006,13 @@
 				"plan_method" : plan_method
 		};
 		
+		var exist_storage = plan.storage_id;
+		if(exist_storage == storage_id){
+			exist_storage = 0;
+		}
+		
 		$.ajax({
-			url : "/plan/updatePlan",
+			url : "/plan/updatePlan?exist_storage="+exist_storage,
 			method : "POST",
 			dataType : 'json',
 			data : data,

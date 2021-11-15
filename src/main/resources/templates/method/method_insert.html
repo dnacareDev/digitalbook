@@ -98,6 +98,18 @@
 	    font-size: 14px;
 	}
 	
+	/*인쇄 설정 */
+	@media print {
+	 .noprint { display : none; }
+	 @page {
+	  size : portrait; /* 세로 설정 */
+	  margin: 10px 10px 0px 10px;
+	 }
+	 html {
+	  zoom : 40%;
+	 }
+	}
+	
 </style>
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
@@ -181,6 +193,14 @@
 		                                <textarea id="method_comment" class="form-control b-light" rows="5"></textarea>
 		                            </div>
 		                    	</div>
+		                    	<div class="row mt-3">
+			        				<div class="col-sm-2">
+			        					<input type="checkbox" id="method_share" th:value="0">
+			        					<label>
+			        						<span class="color-dark" th:text="${#authentication.principal.d3_department_name} + | 공유|"></span>
+			        					</label>
+			        				</div>
+			        			</div>
 			        		</div>
 			        	</div>
 			        </div>
@@ -230,7 +250,7 @@
 		        <div class="row">
 					<div class="col-4">
 						<div class="action-btn d-flex justify-content-frist mt-30">
-							<button type="button" class="btn btn-primary end-button" onclick="pirnt();">인쇄</button>
+							<button type="button" class="btn btn-primary end-button" id="printBtn">인쇄</button>
 						</div>
 					</div>
 					<div class="col-4">
@@ -657,6 +677,15 @@
 		$("#research_success_popup").css("display", "none");
 	}
 	
+	//메소드 공유 체크박스 이벤트
+	$(document).on("change", "#method_share", function(){
+		if($(this).is(':checked')){
+			$(this).val(1);
+		}else{
+			$(this).val(0);
+		}
+	});
+	
 	//프로토콜 등록 버튼 함수
 	function InsertBtn(){
 		
@@ -714,6 +743,7 @@
 			var method_input = $("#method_input").val();
 			var eaches_id = $("#method_eaches").val();
 			var method_comment = $("#method_comment").val();
+			var method_share = $("#method_share").val();
 			
 			if(method_title == "")
 			{
@@ -728,7 +758,8 @@
 						"method_contents" : method_contents,
 						"method_input" : method_input,
 						"eaches_id" : eaches_id,
-						"method_comment" : method_comment
+						"method_comment" : method_comment,
+						"method_share" : method_share
 				};
 				/* console.log(data); */
 				$.ajax(
@@ -806,6 +837,26 @@
 		});
 		
 	}
+	
+	
+	//인쇄 이벤트
+	$("#printBtn").on("click", function(){
+		var initBody;
+		
+		//인쇄 전 실행 함수
+		window.onbeforeprint = function(){
+			initBody = document.body.innerHtml; //인쇄 전 body 내용을 initbody 변수에 담음
+			document.body.innerHTML = document.getElementById('printDiv').innerHTML;
+		};
+		
+		//인쇄 후 실행 함수
+		window.onafterprint = function(){
+			/* document.body.innerHTML = initBody; */
+			this.window.location.reload();// 인쇄 후 화면 리로드
+		};
+		
+		window.print();//인쇄 실행
+	});
 	
 </script>
 </body>

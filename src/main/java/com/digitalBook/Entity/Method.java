@@ -24,6 +24,8 @@ public class Method {
 	private String create_date;				// 등록일
 	private String modify_date;				// 수정일
 	private int user_group;					// 사용자 그룹번호
+	private int user_id;					// 등록한 사용자 공유번호
+	private int method_share;				// 메소드 공유 여부
 	
 	private int last_method_id;				// insert 수행 후 반환되는 해당 pk 값
 	

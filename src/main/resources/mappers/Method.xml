@@ -93,7 +93,9 @@
 			method_status,
 			create_date,
 			modify_date,
-			user_group
+			user_group,
+			user_id,
+			method_share
 		)
 		VALUES
 		(
@@ -107,7 +109,9 @@
 			0,
 			NOW(),
 			NOW(),
-			#{user_group}
+			#{user_group},
+			#{user_id},
+			#{method_share}
 		)
 	</insert>
 	
@@ -168,7 +172,8 @@
 			eaches_id = #{eaches_id},
 			method_comment = #{method_comment},
 			modify_date = NOW(),
-			method_status = 1
+			method_status = 1,
+			method_share = #{method_share}
 		WHERE method_id = #{method_id}
 	</update>
 	

@@ -22,6 +22,7 @@ public class Storage
 	private String create_date;
 	private String modify_date;
 	private int storage_status;						//장소 상태 0(미사용) 1(사용중)
+	private int user_id;							//등록자 고유번호 (0 : 관리자)
 	
 	private int depart_id;							// 장소 이용과
 	private String department;

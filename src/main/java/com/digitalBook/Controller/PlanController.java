@@ -88,9 +88,9 @@ public class PlanController
 		
 		User prin = (User)auth.getPrincipal();
 		
-		List<Report> report = service.selectReportList();
+		List<Report> report = service.selectReportList(prin.getUser_name_k());
 		List<Fertilizer> fert = service.selectFertilizerList(0, 0);
-		List<Method> method = service.selectMethodList(prin.getUser_group());
+		List<Method> method = service.selectMethodList(prin.getUser_group(), prin.getUser_id());
 		List<User> user = service.selectUserList(prin.getUser_group());
 		
 		mv.addObject("report", report);
@@ -152,7 +152,7 @@ public class PlanController
 			plan.setPlan_code(resultCode);
 		}
 		
-		service.updateStorageStatus(plan.getStorage_id());
+		service.updateStorageStatus(plan.getStorage_id(), 1);
 		plan.setUser_group(prin.getUser_group());
 		int result = service.insertPlan(plan);
 		
@@ -307,17 +307,20 @@ public class PlanController
 	//실험장소 검색
 	@ResponseBody
 	@RequestMapping("/searchStorage")
-	public Map<String, Object> SearchStorage(@RequestParam("page_num") int page_num)
+	public Map<String, Object> SearchStorage(Authentication auth, @RequestParam("page_num") int page_num)
 	{
+		
+		User prin = (User)auth.getPrincipal();
+		
 		Map<String, Object> result = new LinkedHashMap<String, Object>();;
 		
-		int count = storageService.SelectStorageCount();
+		int count = service.SelectStorageCount(prin.getUser_id());
 		
 		int limit = 10;
 		int offset = (page_num - 1) * limit;
 		int end_page = (count + limit - 1) / limit;
 		
-		List<Storage> storage = storageService.SearchStorage(offset, limit);
+		List<Storage> storage = service.SearchStorage(offset, limit, prin.getUser_id());
 		
 		result.put("storage", storage);
 		result.put("page_num", page_num);
@@ -335,9 +338,9 @@ public class PlanController
 		User prin = (User)auth.getPrincipal();
 		
 		Plan plan = service.selectPlanDetail(plan_id);
-		List<Report> report = service.selectReportList();
+		List<Report> report = service.selectReportList(prin.getUser_name_k());
 		List<Fertilizer> fert = service.selectFertilizerList(0, 0);
-		List<Method> method = service.selectMethodList(prin.getUser_group());
+		List<Method> method = service.selectMethodList(prin.getUser_group(), prin.getUser_id());
 		List<Factor> factor = service.selectFactorList(plan_id);
 		List<User> user = service.selectUserList(prin.getUser_group());
 		List<Schedule> sch = service.selectScheduleList(plan_id);
@@ -364,8 +367,13 @@ public class PlanController
 	//재배계획 수정
 	@ResponseBody
 	@RequestMapping("/updatePlan")
-	public int UpdatePlan(Plan plan)
+	public int UpdatePlan(Plan plan, @RequestParam("exist_storage") int exist_storage)
 	{
+		
+		if(exist_storage != 0) {
+			service.updateStorageStatus(plan.getStorage_id(), 1);
+			service.updateStorageStatus(exist_storage, 0);
+		}
 		
 		int result = service.updatePlan(plan);
 		
@@ -650,6 +658,7 @@ public class PlanController
 			}
 		}
 		
+		storage.setUser_id(prin.getUser_id());
 		storage.setDepart_id(prin.getUser_group());
 		int result = service.InsertStorage(storage);
 		

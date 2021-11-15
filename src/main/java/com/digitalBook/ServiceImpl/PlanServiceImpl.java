@@ -31,9 +31,9 @@ public class PlanServiceImpl implements PlanService {
 	
 	//종자(시료) 등록된 과제 list
 	@Override
-	public List<Report> selectReportList() {
+	public List<Report> selectReportList(String user_name) {
 		
-		return mapper.selectReportList();
+		return mapper.selectReportList(user_name);
 	}
 	
 	//시험재료(seed) 조회 list
@@ -52,9 +52,9 @@ public class PlanServiceImpl implements PlanService {
 	
 	//조사항목 method 조회
 	@Override
-	public List<Method> selectMethodList(int user_group) {
+	public List<Method> selectMethodList(int user_group, int user_id) {
 		
-		return mapper.selectMethodList(user_group);
+		return mapper.selectMethodList(user_group, user_id);
 	}
 	
 	//재배계획 등록
@@ -220,9 +220,9 @@ public class PlanServiceImpl implements PlanService {
 	
 	//장소 상태 변경
 	@Override
-	public int updateStorageStatus(int storage_id) {
+	public int updateStorageStatus(int storage_id, int storage_status) {
 		
-		return mapper.updateStorageStatus(storage_id);
+		return mapper.updateStorageStatus(storage_id, storage_status);
 	}
 	
 	//plan method 가져오기
@@ -315,6 +315,20 @@ public class PlanServiceImpl implements PlanService {
 	public int SearchResultPlanCount(String search_type, String keyword, int user_group, int plan_step) {
 		
 		return mapper.SearchResultPlanCount(search_type, keyword, user_group, plan_step);
+	}
+	
+	//장소 갯수 조회
+	@Override
+	public int SelectStorageCount(int user_id) {
+		
+		return mapper.SelectStorageCount(user_id);
+	}
+	
+	//장소 검색
+	@Override
+	public List<Storage> SearchStorage(int offset, int limit, int user_id) {
+		
+		return mapper.SearchStorage(offset, limit, user_id);
 	}
 
 }

@@ -30,8 +30,8 @@
 	<!-- 장소 등록 -->
 	<insert id="InsertStorage" parameterType="Storage">
 		INSERT INTO storage
-		(storage_code, storage_name, storage_type, storage_division, storage_size, depart_id, storage_location, create_date, modify_date)
+		(storage_code, storage_name, storage_type, storage_division, storage_size, depart_id, storage_location, create_date, modify_date, user_id)
 		VALUES
-		(#{storage_code}, #{storage_name}, #{storage_type}, #{storage_division}, #{storage_size}, #{depart_id}, #{storage_location}, NOW(), NOW())
+		(#{storage_code}, #{storage_name}, #{storage_type}, #{storage_division}, #{storage_size}, #{depart_id}, #{storage_location}, NOW(), NOW(), 0)
 	</insert>
 </mapper>

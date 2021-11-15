@@ -96,6 +96,18 @@
 	    padding: 2px1.25rem;
 	    font-size: 14px;
 	}
+	
+	/*인쇄 설정 */
+	@media print {
+	 .noprint { display : none; }
+	 @page {
+	  size : portrait; /* 세로 설정 */
+	  margin: 10px 10px 0px 10px;
+	 }
+	 html {
+	  zoom : 40%;
+	 }
+	}
 </style>
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
@@ -179,6 +191,14 @@
 		                                <textarea id="method_comment" class="form-control b-light" rows="5" th:text="${method.method_comment}"></textarea>
 		                            </div>
 		                    	</div>
+		                    	<div class="row mt-3">
+			        				<div class="col-sm-2">
+			        					<input type="checkbox" id="method_share" th:value="0">
+			        					<label>
+			        						<span class="color-dark" th:text="${#authentication.principal.d3_department_name} + | 공유|"></span>
+			        					</label>
+			        				</div>
+			        			</div>
 			        		</div>
 			        	</div>
 			        </div>
@@ -255,7 +275,7 @@
 									<div class="col-lg-12">
 										<ul>
 											<th:block th:each="r : ${record}">
-												<li class="mt-2">
+												<li style="margin-top: 10px; !important">
 													<span class="avatar avatar-success avatar-md avatar-circle" style="float: left;">
 	                                                    <span class="avatar-icon" data-feather="check"></span>
 	                                                </span>
@@ -601,6 +621,12 @@ $(function(){
 		inputProtocol();
 	})();//end step 초기 그려주기 이벤트
 	
+	//메소드 공유 초기 선택 이벤트
+	if(method.method_share == "1"){
+		$("#method_share").prop("checked", true);
+		$("#method_share").val(1);
+	}
+	
 	// step data array
 	var dataArr = new Array();
 	
@@ -896,6 +922,15 @@ $(function(){
 		});
 	}//end deleteStep
 	
+	//메소드 공유 체크박스 이벤트
+	$(document).on("change", "#method_share", function(){
+		if($(this).is(':checked')){
+			$(this).val(1);
+		}else{
+			$(this).val(0);
+		}
+	});
+	
 	//프로토콜 Update 함수
 	function UpdateMethod(){
 		return new Promise(function(resolve){
@@ -907,6 +942,7 @@ $(function(){
 			var eaches_id = $("#method_eaches").val();
 			var method_comment = $("#method_comment").val();
 			var method_code = method.method_code;
+			var method_share = $("#method_share").val();
 			
 			if(method_title == "")
 			{
@@ -922,7 +958,8 @@ $(function(){
 						"method_input" : method_input,
 						"eaches_id" : eaches_id,
 						"method_comment" : method_comment,
-						"method_code" : method_code
+						"method_code" : method_code,
+						"method_share" : method_share
 				};
 				/* console.log(data); */
 				$.ajax(
@@ -1092,7 +1129,7 @@ $(function(){
 	}//end 승인 함수
 	
 	//인쇄 이벤트
-	/* $("#printBtn").on("click", function(){
+	$("#printBtn").on("click", function(){
 		var initBody;
 		
 		//인쇄 전 실행 함수
@@ -1103,12 +1140,12 @@ $(function(){
 		
 		//인쇄 후 실행 함수
 		window.onafterprint = function(){
-			
+			/* document.body.innerHTML = initBody; */
 			this.window.location.reload();// 인쇄 후 화면 리로드
 		};
 		
 		window.print();//인쇄 실행
-	}); */
+	});
 	
 </script>
 </body>

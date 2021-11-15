@@ -2472,20 +2472,44 @@
 	
 	//시비량 추가 버튼 이벤트
 	function PlusManure(){
+		
 		var fert_id = $("#fert_1").find("option:selected").val();
 		
-		if(fert_id == "etc" && $("#manure_etc1").val() == "" || $("#manure_etc2").val() == ""){
-			alert("비료성분/종류를 입력해 주세요.");
+		if(fert_id == "etc" ){
+			
+			if($("#manure_etc1").val() == "" || $("#manure_etc2").val() == ""){
+				alert("비료성분/종류를 입력해 주세요.");
+			}else{
+				
+				fert_id = 0;
+				var manure_area = $("#manure_area").val();
+				var manure_type = $("#manure_etc2").val();
+				var type = $("#manure_etc1").val();
+				var manure_amount = $("#manure_amount").val();
+				var manure_percent = $("#manure_percent").val();
+				var manure_result = $("#manure_result").val();
+				
+				var body = $("#manure_body");
+				var add_list = "";
+				
+				add_list += '<tr class="manure_tr">';
+				add_list += '<td class="manure_area">'+manure_area+'</td>';
+				add_list += '<td class="manure_type" th:data-type="'+type+'" th:data-fert-id="'+fert_id+'">'+manure_type+'</td>';
+				add_list += '<td class="manure_amount">'+manure_amount+'</td>';
+				add_list += '<td class="manure_percent">'+manure_percent+'</td>';
+				add_list += '<td class="manure_result">'+manure_result+'</td>';
+				add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
+				add_list += '</tr>';
+				
+				body.append(add_list);
+			}
+			
 		}else{
+			
 			var manure_area = $("#manure_area").val();
 			var manure_type = $("#fert_2").find("option:selected").text();
 			
 			var type = $("#fert_1").find("option:selected").text();
-			if(fert_id == "etc"){
-				fert_id = 0;
-				manure_type = $("#manure_etc2").val();
-				type = $("#manure_etc1").val();
-			}
 			var manure_amount = $("#manure_amount").val();
 			var manure_percent = $("#manure_percent").val();
 			var manure_result = $("#manure_result").val();

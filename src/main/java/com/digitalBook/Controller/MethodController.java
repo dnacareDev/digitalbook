@@ -179,6 +179,7 @@ public class MethodController
 		}
 		
 		method.setUser_group(prin.getUser_group());
+		method.setUser_id(prin.getUser_id());
 		int result = service.InsertMethod(method);
 		
 		if(result != 0) {

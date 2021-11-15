@@ -140,7 +140,7 @@
 	<select id="selectReportList" resultType="Report">
 		SELECT * FROM report r 
 		INNER JOIN seed s ON r.report_code = s.report_code
-		INNER JOIN plan p ON p.report_code != r.report_code
+		WHERE r.user_name = #{user_name}
 		GROUP BY r.report_code
 		ORDER BY r.report_id
 	</select>
@@ -172,7 +172,7 @@
 		LEFT JOIN division d3 ON m.division_id = d3.division_id
 		LEFT JOIN division d2 ON d3.division_parents = d2.division_id
 		LEFT JOIN division d1 ON d2.division_parents = d1.division_id
-		WHERE m.user_group = #{user_group}
+		WHERE m.user_group = #{user_group} AND m.user_id = #{user_id} OR m.method_share = 1
 		ORDER BY method_id DESC
 	</select>
 	
@@ -435,15 +435,30 @@
 	<!-- 장소 등록 -->
 	<insert id="InsertStorage" parameterType="Storage">
 		INSERT INTO storage
-		(storage_code, storage_name, storage_type, storage_division, storage_size, depart_id, storage_location, create_date, modify_date)
+		(storage_code, storage_name, storage_type, storage_division, storage_size, depart_id, storage_location, create_date, modify_date, user_id)
 		VALUES
-		(#{storage_code}, #{storage_name}, #{storage_type}, #{storage_division}, #{storage_size}, #{depart_id}, #{storage_location}, NOW(), NOW())
+		(#{storage_code}, #{storage_name}, #{storage_type}, #{storage_division}, #{storage_size}, #{depart_id}, #{storage_location}, NOW(), NOW(), #{user_id})
 	</insert>
+	
+	<!-- 장소 갯수 조회 -->
+	<select id="SelectStorageCount" resultType="int">
+		SELECT COUNT(*) FROM storage
+		WHERE user_id IN (0, #{user_id})
+	</select>
+	
+	<!-- 장소 검색 -->
+	<select id="SearchStorage" resultType="Storage">
+		SELECT * FROM storage s
+		LEFT JOIN department d ON s.depart_id = d.depart_id
+		WHERE s.user_id IN (0, #{user_id})
+		ORDER BY storage_id DESC
+		LIMIT #{offset}, #{limit}
+	</select>
 	
 	<!-- 장소  status 변경 -->
 	<update id="updateStorageStatus" parameterType="int">
 		UPDATE storage
-		SET storage_status = 1
+		SET storage_status = #{storage_status}
 		WHERE storage_id = #{storage_id}
 	</update>
 	

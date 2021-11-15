@@ -23,7 +23,7 @@ import com.digitalBook.Entity.User;
 public interface PlanService {
 	
 	//종자(시료) 등록된 과제 list
-	List<Report> selectReportList();
+	List<Report> selectReportList(String user_name);
 	
 	//시험재료(seed) 조회 list
 	List<Seed> selectSeedList(int user_group, String report_code);
@@ -32,7 +32,7 @@ public interface PlanService {
 	List<Fertilizer> selectFertilizerList(int fert_depth, int fert_id);
 	
 	//조사항목 method 조회
-	List<Method> selectMethodList(int user_group);
+	List<Method> selectMethodList(int user_group, int user_id);
 	
 	//재배계획 등록
 	int insertPlan(Plan plan);
@@ -104,7 +104,7 @@ public interface PlanService {
 	int InsertStorage(Storage storage);
 	
 	//장소 상태 변경
-	int updateStorageStatus(int storage_id);
+	int updateStorageStatus(int storage_id, int storage_status);
 	
 	//plan method 가져오기
 	List<Method> selectPlanMethodList(int[] arr);
@@ -144,5 +144,12 @@ public interface PlanService {
 	
 	//재배 계획 검색 개수
 	int SearchResultPlanCount(String search_type, String keyword, int user_group, int plan_step);
+	
+	// 장소 갯수 조회
+	int SelectStorageCount(int user_id);
+	
+	// 장소 검색
+	List<Storage> SearchStorage(int offset, int limit, int user_id);
+	
 	
 }

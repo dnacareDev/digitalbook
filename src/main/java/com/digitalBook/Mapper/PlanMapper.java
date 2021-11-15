@@ -25,7 +25,7 @@ import com.digitalBook.Entity.User;
 public interface PlanMapper {
 	
 	//종자(시료) 등록된 과제 list
-	List<Report> selectReportList();
+	List<Report> selectReportList(String user_name);
 	
 	//시험재료(seed) 조회 list
 	List<Seed> selectSeedList(@Param("user_group") int user_group, @Param("report_code") String report_code);
@@ -34,7 +34,7 @@ public interface PlanMapper {
 	List<Fertilizer> selectFertilizerList(@Param("fert_depth") int fert_depth, @Param("fert_id") int fert_id);
 	
 	//조사항목 method 조회
-	List<Method> selectMethodList(int user_group);
+	List<Method> selectMethodList(@Param("user_group") int user_group, @Param("user_id") int user_id);
 	
 	//재배 계획 등록
 	int insertPlan(Plan plan);
@@ -107,7 +107,7 @@ public interface PlanMapper {
 	int InsertStorage(Storage storage);
 	
 	//장소 상태 변경
-	int updateStorageStatus(int storage_id);
+	int updateStorageStatus(@Param("storage_id") int storage_id, @Param("storage_status") int storage_status);
 	
 	//plan method 가져오기
 	List<Method> selectPlanMethodList(int[] arr);
@@ -148,5 +148,11 @@ public interface PlanMapper {
 		
 	//재배 결과입력 개수 검색
 	int SearchResultPlanCount(@Param("search_type") String search_type, @Param("keyword") String keyword, @Param("user_group") int user_group, @Param("plan_step") int plan_step);
+	
+	// 장소 갯수 조회
+	int SelectStorageCount(int user_id);
+	
+	// 장소 검색
+	List<Storage> SearchStorage(@Param("offset") int offset, @Param("limit") int limit, @Param("user_id") int user_id);
 	
 }

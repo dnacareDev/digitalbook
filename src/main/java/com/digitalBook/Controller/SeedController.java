@@ -344,7 +344,7 @@ public class SeedController
 			report.setReport_code(code1+code2+String.format("%02d", code3));
 		}
 		
-		report.setUser_name("0");
+		report.setUser_name(prin.getUser_name_k());
 		report.setUser_group(prin.getUser_group());
 		result = service.InsertNonReport(report);
 		
