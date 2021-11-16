@@ -7,26 +7,27 @@
   .breadcrumb-main{
   float: left;
   }
-  table {
+  .contents table {
     border-top: 1px solid grey;
     
     border-collapse: collapse;
   }
-  th, td {
+  .contents th, td {
   	border-bottom: 2px solid #E5E9F2;
     padding: 10px;
     text-align: center;
     font-weight: initial;
   }
-  th {
+  .contents th {
     background-color: white;
   }
-  tbody tr:nth-child(2n) {
+  .contents tbody tr:nth-child(2n) {
     background-color: white;
   }
-  tbody tr:nth-child(2n+1) {
+  .contents tbody tr:nth-child(2n+1) {
     background-color: #F4F8FB;
   }
+  
   button{ 
    width: 101px;
    height: 40px;
@@ -60,10 +61,10 @@
    width: 30px;
    height: 10px;
    }
-   table { /* lsit table start */
+   .contents table { /* lsit table start */
    	table-layout: fixed;
    }
-   table td{
+   .contents table td{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -73,12 +74,41 @@
     -webkit-box-orient: vertical;
     transition: white-space 0.3s;
    }
-   table tr:hover td{
+   .contents table tr:hover td{
    	white-space:break-spaces;
    }
-   table.table th, table.table td{ /* lsit table end */
+   .contents table.table th, table.table td{ /* lsit table end */
    	padding: 5px 12px;
    }
+   #qrcode img{
+   	 margin: 0 auto;
+   }
+   #qr2-body span{
+   	display: inline-block;
+   	width: 100%;
+   	text-align:left;
+   	margin: 10px 0;
+   	font-size:16px !important;
+   	color: #111 !important;
+   }
+   
+   /*인쇄 설정 */
+	@media print {
+	 .noprint { display : none !important;}
+	 .print1 {
+	   	display: inline-block;
+	   	width: 100%;
+	   	text-align:left;
+	   	margin: 10px 10px;
+	   	font-size:16px !important;
+	   	color: #111 !important;
+	   }
+	 @page {
+	  size : portrait; /* 세로 설정 */
+	  margin: 10px 10px 0px 10px;
+	 }
+	}
+   
 </style>
 </head>
 <body class="layout-light top-menu overlayScroll">
@@ -176,17 +206,57 @@
 		        </div>
 		    </div>
     	</div>
+    	
+    	<div class="modal-basic modal fade show" id="qr2Modal" tabindex="-1" role="dialog" aria-hidden="true">
+		    <div class="modal-dialog modal-md" role="document">
+		        <div class="modal-content modal-bg-white">
+		        	<div class="modal-header">
+		        		<h6 class="modal-title">Print QR Code</h6>
+	                    	<button type="button" class="close noprint" data-dismiss="modal" aria-label="Close">
+	                        	<span data-feather="x"></span>
+	                        </button>
+		        	</div>
+		            <div class="modal-body" id="qr2-body">
+		            	<div class="col-12">
+		            		<div class="row" id="printDiv">
+		            			<table style="width:100%;">
+		            				<tbody>
+		            					<tr align="center">
+		            						<td><div id="qrcode"></div></td>
+		            						<td>
+		            							<span id="qr2_report_code" class="print1"></span>
+					            				<span id="qr2_report_title" class="print1"></span>
+					            				<span id="qr2_report_year" class="print1"></span>
+				            					<span id="qr2_report_user_name" class="print1"></span>
+		            						</td>
+		            					</tr>
+		            				</tbody>
+		            			</table>
+		            		</div>
+		            		<div class="button-group d-flex justify-content-end" style="margin: 10px 0;">
+			                   <button class="btn btn-primary btn-default btn-squared noprint" onclick="qrPrint();" style="margin:0;">Print QR Code label</button>
+			           		</div>
+		            	</div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+	    <!-- ends: .modal-Basic -->
+    	
     </main>
     <!-- 공통 하단 -->
     <th:block th:include="/../fragments/footer.html"></th:block>
     <!-- 공통 js -->
     <th:block th:include="/../fragments/commonjs.html"></th:block>
+    <script type="text/javascript" src="/../assets/vendor_assets/js/qrcode.min.js"></script>
 </body>
 <script type="text/javascript">
 $(document).ready(function()
 		{
 			SearchPlan(1);
 		});
+		
+	let plans;
 		
 		//페이지 보기 변경시 시약 검색 실행
 		$("#limit").on("change", function(){
@@ -222,6 +292,8 @@ $(document).ready(function()
 						plan_list.append(add_list);
 					}else {
 						
+						plans = result.plan;
+						
 						for(var i = 0; i < length; i++){
 							
 							add_list += '<tr>';
@@ -231,8 +303,8 @@ $(document).ready(function()
 							add_list += '<td><span>' + result.plan[i].method_title + '</span></td>';
 							add_list += '<td><span>' + result.plan[i].plan_repeat + '</span></td>';
 							add_list += '<td><span>' + result.plan[i].plan_segment + '</span></td>';
-							add_list += '<td><span>' + result.plan[i].qr1 + '</span></td>';
-							add_list += '<td><span>' + result.plan[i].qr2 + '</span></td>';
+							add_list += '<td><span class="qr1" data-id="'+result.plan[i].plan_id+'" style="color:blue; cursor:pointer;">Print QR</span></td>';
+							add_list += '<td><span class="qr2" data-id="'+result.plan[i].plan_id+'" style="color:blue; cursor:pointer;">Print QR</span></td>';
 							if(result.plan[i].plan_status == 0){
 								add_list += '<td><span>승인요청</span></td>';
 							}else if(result.plan[i].plan_status == 1){
@@ -289,6 +361,69 @@ $(document).ready(function()
 		$("#excelBtn").on("click", function(){
 			window.location.href = "/plan/exceldownload";
 		});
+		
+		$(document).on("click", ".qr2", function(){
+			var plan_id = $(this).attr("data-id");
+			
+			$("#qrcode").empty();
+			
+			var plan_data = new Object();
+			
+			for(var i = 0; i < plans.length; i++){
+				if(plans[i].plan_id == plan_id){
+					plan_data = plans[i];
+				}
+			}
+			
+			var report_code = plan_data.report_code;
+			var report_title = plan_data.report_title;
+			var report_year = plan_data.report_year;
+			var report_user_name = plan_data.report_user_name;
+			
+			$("#qr2_report_code").text(report_code);
+			$("#qr2_report_title").text(report_title);
+			$("#qr2_report_year").text(report_year);
+			$("#qr2_report_user_name").text(report_user_name);
+			
+			var protocol = window.location.protocol;
+			var port = ":"+window.location.port;
+			var hostname = "//"+window.location.hostname;
+			
+			var url = protocol+hostname+port+"/plan/sampleReport?report_code="+report_code;
+			console.log(url);
+			var qrcode = new QRCode(document.getElementById("qrcode"),{
+				width : 180,
+				height : 180,
+				colorDark : "#000000",
+		        colorLight : "#ffffff",
+		        correctLevel : QRCode.CorrectLevel.H
+			});
+			
+			qrcode.makeCode(url);
+			
+			$("#qr2Modal").modal("show");
+			
+		});
+		
+		//인쇄 이벤트
+		function qrPrint(){
+			var initBody;
+			
+			//인쇄 전 실행 함수
+			window.onbeforeprint = function(){
+				initBody = document.body.innerHtml; //인쇄 전 body 내용을 initbody 변수에 담음
+				document.body.innerHTML = document.getElementById('printDiv').innerHTML;
+			};
+			
+			//인쇄 후 실행 함수
+			window.onafterprint = function(){
+				/* document.body.innerHTML = initBody; */
+				this.window.location.reload();// 인쇄 후 화면 리로드
+			};
+			
+			window.print();//인쇄 실행
+			
+		}
 		
 </script>
 </html>

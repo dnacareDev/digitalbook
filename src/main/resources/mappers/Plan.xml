@@ -4,9 +4,10 @@
 	
 	<!-- 재배계획 검색 -->
 	<select id="SearchPlan" resultType="Plan">
-		SELECT p.*, r.*, s.*, m.*
+		SELECT p.*, r.*, s.*, m.*, r.user_name AS report_user_name, rf.report_year
 		FROM plan p
 		LEFT JOIN report r ON p.report_code = r.report_code
+		LEFT JOIN report_file rf ON r.report_file_id = rf.report_file_id
 		LEFT JOIN storage s ON p.storage_id = s.storage_id
 		LEFT JOIN method m ON p.plan_method = m.method_id
 		WHERE p.user_group = #{user_group}
@@ -41,6 +42,7 @@
 	<select id="SearchPlanCount" resultType="int">
 		SELECT COUNT(*) FROM plan p
 		LEFT JOIN report r ON p.report_code = r.report_code
+		LEFT JOIN report_file rf ON r.report_file_id = rf.report_file_id
 		LEFT JOIN storage s ON p.storage_id = s.storage_id
 		LEFT JOIN method m ON p.plan_method = m.method_id
 		WHERE p.user_group = #{user_group}
@@ -624,6 +626,14 @@
 		LEFT JOIN method m ON p.plan_method = m.method_id
 		WHERE p.user_group = #{user_group} AND p.plan_step = #{plan_step}
 		ORDER BY plan_id DESC
+	</select>
+	
+	<!-- 샘플 과제 detail -->
+	<select id="selectSampleReportDetail" parameterType="String" resultType="Report">
+		select r.*, rf.* 
+		FROM report r
+		LEFT JOIN report_file rf ON r.report_file_id = rf.report_file_id
+		WHERE r.report_code = #{report_code}
 	</select>
 	
 </mapper>

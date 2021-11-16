@@ -14,10 +14,38 @@
 	.end{margin-left:10px;}
 	
 	
-	#qrModal .col-6:first-child .row {justify-content: right; margin-right: 15px}
-	#qrModal .col-6:first-child .row:last-child {padding: 5px 30px 0 0}
-	#qrModal .col-6 .row > span {font-size:16px !important; color: #111 !important;}
-	#qrModal .col-6:last-child .row > span {margin: 8px 0}
+	#qrModal .col-6:first-child .row {justify-content: right; margin-right: 15px; padding: 5px 30px 0 0}
+	#qrModal .col-6 .row > span {font-size:16px !important; color: #111 !important; margin: 8px 0}
+	
+	#qrcode img{
+   	 margin: 0 auto;
+   }
+   #qrModal span{
+   	display: inline-block;
+   	width: 100%;
+   	text-align:left;
+   	margin: 10px 10px;
+   	font-size:16px !important;
+   	color: #111 !important;
+   }
+	
+	/*인쇄 설정 */
+	@media print {
+	 .noprint { display : none !important;}
+	 span{
+	   	display: inline-block;
+	   	width: 100%;
+	   	text-align:left;
+	   	margin: 10px 10px;
+	   	font-size:16px !important;
+	   	color: #111 !important;
+	   }
+	 @page {
+	  size : portrait; /* 세로 설정 */
+	  margin: 10px 10px 0px 10px;
+	 }
+	}
+	
 </style>
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
@@ -391,35 +419,29 @@
 			        <div class="modal-content modal-bg-white">
 			        	<div class="modal-header">
 			        		<h6 class="modal-title">Print QR Code</h6>
-		                    	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		                    	<button type="button" class="close noprint" data-dismiss="modal" aria-label="Close">
 		                        	<span data-feather="x"></span>
 		                        </button>
 			        	</div>
 			            <div class="modal-body">
 			            	<div class="col-12">
-			            		<div class="row">
-			            			<div class="col-6">
-			            				<div class="row">
-			            					<div id="qrcode"></div>
-			            				</div>
-			            			</div>
-			            			<div class="col-6">
-			            				<div class="row">
-			            					<span id="qr_seed_code"></span>
-			            				</div>
-			            				<div class="row">
-			            					<span id="qr_seed_division"></span>
-			            				</div>
-			            				<div class="row">
-			            					<span id="qr_seed_receive_date"></span>
-			            				</div>
-			            				<div class="row">
-			            					<span id="qr_seed_receive_name"></span>
-			            				</div>
-			            			</div>
+			            		<div class="row" id="printDiv">
+			            			<table style="width:100%;">
+			            				<tbody>
+			            					<tr align="center">
+			            						<td><div id="qrcode"></div></td>
+			            						<td>
+			            							<span id="qr_seed_code" class="print3"></span>
+						            				<span id="qr_seed_division" class="print3"></span>
+					            					<span id="qr_seed_receive_date" class="print3"></span>
+					            					<span id="qr_seed_receive_name" class="print3"></span>
+			            						</td>
+			            					</tr>
+			            				</tbody>
+			            			</table>
 			            		</div>
-			            		<div class="button-group d-flex justify-content-end">
-				                   <button class="btn btn-primary btn-default btn-squared">Print QR Code label</button>
+			            		<div class="button-group d-flex justify-content-end ">
+				                   <button class="btn btn-primary btn-default btn-squared noprint" onclick="qrPrint();">Print QR Code label</button>
 				           		</div>
 			            	</div>
 			            </div>
@@ -1180,6 +1202,26 @@
 		$("#qrModal").modal("show");
 		
 	});
+	
+	//인쇄 이벤트
+	function qrPrint(){
+		var initBody;
+		
+		//인쇄 전 실행 함수
+		window.onbeforeprint = function(){
+			initBody = document.body.innerHtml; //인쇄 전 body 내용을 initbody 변수에 담음
+			document.body.innerHTML = document.getElementById('printDiv').innerHTML;
+		};
+		
+		//인쇄 후 실행 함수
+		window.onafterprint = function(){
+			/* document.body.innerHTML = initBody; */
+			this.window.location.reload();// 인쇄 후 화면 리로드
+		};
+		
+		window.print();//인쇄 실행
+		
+	}
 	
 </script>
 </body>

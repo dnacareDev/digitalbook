@@ -330,5 +330,12 @@ public class PlanServiceImpl implements PlanService {
 		
 		return mapper.SearchStorage(offset, limit, user_id);
 	}
+	
+	//샘플 과제 detail
+	@Override
+	public Report selectSampleReportDetail(String report_code) {
+		
+		return mapper.selectSampleReportDetail(report_code);
+	}
 
 }

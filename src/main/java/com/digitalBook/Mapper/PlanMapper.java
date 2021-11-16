@@ -161,4 +161,7 @@ public interface PlanMapper {
 	//엑셀 다운로드할 결과입력 list
 	List<Plan> selectResultExcelList(@Param("user_group") int user_group, @Param("plan_step") int plan_step);
 	
+	//샘플 과제 detail
+	Report selectSampleReportDetail(String report_code);
+	
 }

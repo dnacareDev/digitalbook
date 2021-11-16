@@ -151,5 +151,7 @@ public interface PlanService {
 	// 장소 검색
 	List<Storage> SearchStorage(int offset, int limit, int user_id);
 	
+	//샘플 과제 detail
+	Report selectSampleReportDetail(String report_code);
 	
 }

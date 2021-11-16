@@ -29,6 +29,8 @@ public class Plan
 	
 	//과제 사용 컬럼
 	private String report_title;			// 과제명
+	private String report_user_name;		// 과제 책임자명
+	private int report_year;				// 과제년도
 	
 	//실험장소 사용 컬럼
 	private String storage_name;			// 포장명

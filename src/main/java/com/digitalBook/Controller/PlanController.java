@@ -858,4 +858,16 @@ public class PlanController
 		return "resultExcelView";
 	}
 	
+	//sample_report 화면
+	@RequestMapping("/sampleReport")
+	public String SampleReport(Model model, @RequestParam("report_code") String report_code)
+	{
+		
+		Report report = service.selectSampleReportDetail(report_code);
+		
+		model.addAttribute("report", report);
+		
+		return "plan/sample_report";
+	}
+	
 }

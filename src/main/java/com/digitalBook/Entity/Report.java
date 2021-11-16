@@ -22,6 +22,6 @@ public class Report {
 	private String create_date;					// 등록일
 	private String modify_date;					// 수정일
 	
-	
+	private int report_year;
 	
 }
