@@ -140,4 +140,13 @@ public class UserController
 		
 		return result;
 	}
+	
+	//엑셀 다운로드
+	@RequestMapping(value = "/user/exceldownload", produces = "application/vnd.ms-excel")
+	public String UserExceldownload() 
+	{
+		
+		return "userExcelView";
+	}
+	
 }

@@ -25,6 +25,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -826,6 +827,29 @@ public class PlanController
 			return new ResponseEntity<Object>(null, HttpStatus.CONFLICT);
 		}
 		
+	}
+	
+	//재배계획 엑셀 다운로드
+	@RequestMapping(value = "/exceldownload", produces = "application/vnd.ms-excel")
+	public String Exceldownload(Authentication auth, Model model) 
+	{
+		
+		User prin = (User)auth.getPrincipal();
+		model.addAttribute("user_group", prin.getUser_group());
+		
+		return "planExcelView";
+	}
+	
+	//결과입력 엑셀 다운로드
+	@RequestMapping(value = "/result/exceldownload", produces = "application/vnd.ms-excel")
+	public String ResultExceldownload(Authentication auth, Model model) 
+	{
+		
+		User prin = (User)auth.getPrincipal();
+		model.addAttribute("user_group", prin.getUser_group());
+		model.addAttribute("plan_step", 1);
+		
+		return "resultExcelView";
 	}
 	
 }

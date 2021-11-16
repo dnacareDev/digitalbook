@@ -155,4 +155,10 @@ public interface PlanMapper {
 	// 장소 검색
 	List<Storage> SearchStorage(@Param("offset") int offset, @Param("limit") int limit, @Param("user_id") int user_id);
 	
+	//엑셀 다운로드할 계획수립 list
+	List<Plan> selectPlanExcelList(int user_group);
+	
+	//엑셀 다운로드할 결과입력 list
+	List<Plan> selectResultExcelList(@Param("user_group") int user_group, @Param("plan_step") int plan_step);
+	
 }

@@ -60,4 +60,7 @@ public interface MethodMapper
 	// 프로토콜 승인
 	int updateMethodStatus(int method_id);
 	
+	//엑셀 다운로드할 프로토콜 list
+	List<Method> selectMethodExcelList(int user_group);
+	
 }

@@ -69,4 +69,12 @@
 		WHERE material_id = #{material_id}
 	</delete>
 	
+	<!-- 엑셀 다운로드할 농자재 list -->
+	<select id="selectMaterialExcelList" parameterType="int" resultType="Material">
+		SELECT m.*, u.* FROM material m
+		LEFT JOIN user u ON m.user_id = u.user_id
+		WHERE m.user_group = #{user_group}
+		ORDER BY material_id DESC
+	</select>
+	
 </mapper>

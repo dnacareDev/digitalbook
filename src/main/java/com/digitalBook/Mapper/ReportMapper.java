@@ -34,4 +34,7 @@ public interface ReportMapper
 
 	// 과제 삭제
 	int DeleteReport(int report_file_id);
+	
+	//엑셀 다운로드할 과제 list
+	List<ReportFile> selectReportExcelList();
 }

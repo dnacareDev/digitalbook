@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -142,6 +143,17 @@ public class MaterialController {
 		int result = service.deleteMaterial(material_id);
 		
 		return result;
+	}
+	
+	//엑셀 다운로드
+	@RequestMapping(value = "/material/exceldownload", produces = "application/vnd.ms-excel")
+	public String ResearchExceldownload(Authentication auth, Model model) 
+	{
+		
+		User prin = (User)auth.getPrincipal();
+		model.addAttribute("user_group", prin.getUser_group());
+		
+		return "materialExcelView";
 	}
 	
 }

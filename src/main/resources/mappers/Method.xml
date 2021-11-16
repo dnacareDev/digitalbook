@@ -211,4 +211,17 @@
 		WHERE method_id = #{method_id}
 	</update>
 	
+	<!-- 엑셀 다운로드할 프로토콜 list -->
+	<select id="selectMethodExcelList" parameterType="int" resultType="Method">
+		SELECT m.*, d3.*, d2.*, d1.*, e.*, d1.division as d1_name, d2.division as d2_name, d3.division as d3_name,
+		(SELECT COUNT(*) FROM step s WHERE s.method_id = m.method_id) as step_no
+		FROM method m
+		LEFT JOIN division d3 ON m.division_id = d3.division_id
+		LEFT JOIN division d2 ON d3.division_parents = d2.division_id
+		LEFT JOIN division d1 ON d2.division_parents = d1.division_id
+		LEFT JOIN eaches e ON m.eaches_id = e.eaches_id
+		WHERE m.user_group = #{user_group}
+		ORDER BY method_id DESC
+	</select>
+	
 </mapper>

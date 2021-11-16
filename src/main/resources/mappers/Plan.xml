@@ -604,4 +604,26 @@
 		</foreach>
 	</delete>
 	
+	<!-- 엑셀 다운로드할 계획수립 list -->
+	<select id="selectPlanExcelList" parameterType="int" resultType="Plan">
+		SELECT p.*, r.*, s.*, m.*
+		FROM plan p
+		LEFT JOIN report r ON p.report_code = r.report_code
+		LEFT JOIN storage s ON p.storage_id = s.storage_id
+		LEFT JOIN method m ON p.plan_method = m.method_id
+		WHERE p.user_group = #{user_group}
+		ORDER BY plan_id DESC
+	</select>
+	
+	<!-- 엑셀 다운로드할 결과입력 list -->
+	<select id="selectResultExcelList" parameterType="int" resultType="Plan">
+		SELECT p.*, r.*, s.*, m.*
+		FROM plan p
+		LEFT JOIN report r ON p.report_code = r.report_code
+		LEFT JOIN storage s ON p.storage_id = s.storage_id
+		LEFT JOIN method m ON p.plan_method = m.method_id
+		WHERE p.user_group = #{user_group} AND p.plan_step = #{plan_step}
+		ORDER BY plan_id DESC
+	</select>
+	
 </mapper>

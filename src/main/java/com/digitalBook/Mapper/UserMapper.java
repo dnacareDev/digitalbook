@@ -32,4 +32,7 @@ public interface UserMapper
 	// 사용자 삭제
 	int DeleteUser(int user_id);
 	
+	//엑셀 다운로드할 사용자 list
+	List<User> selectUserExcelList();
+	
 }

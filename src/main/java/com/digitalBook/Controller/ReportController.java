@@ -241,4 +241,13 @@ public class ReportController
        	
        	return result;
 	}
+	
+	//엑셀 다운로드
+	@RequestMapping(value = "/report/exceldownload", produces = "application/vnd.ms-excel")
+	public String ReportExceldownload() 
+	{
+		
+		return "reportExcelView";
+	}
+	
 }

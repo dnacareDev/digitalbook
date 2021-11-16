@@ -32,4 +32,7 @@ public interface MaterialMapper {
 	//농자재 삭제
 	int deleteMaterial(int material_id);
 	
+	//엑셀 다운로드할 농자재 list
+	List<Material> selectMaterialExcelList(int user_group);
+	
 }

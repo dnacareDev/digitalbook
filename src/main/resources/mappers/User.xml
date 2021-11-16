@@ -120,4 +120,14 @@
 		WHERE user_id = #{user_id}
 	</update>
 	
+	<!-- 엑셀 다운로드할 사용자 list -->
+	<select id="selectUserExcelList" resultType="User">
+		SELECT u.*, d1.*, d2.*, d3.*, d4.*, d4.department as d4_department_name FROM user u
+		LEFT JOIN department d4 ON u.depart_id = d4.depart_id
+		LEFT JOIN department d3 ON u.user_group = d3.depart_id
+		LEFT JOIN department d2 ON d3.depart_parents = d2.depart_id
+		LEFT JOIN department d1 ON d2.depart_parents = d1.depart_id
+		ORDER BY user_id DESC
+	</select>
+	
 </mapper>
