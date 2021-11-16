@@ -60,4 +60,8 @@ public class Seed
 	// 담당자 컬럼
 	private String manager_name;			// 담당자 명
 	private String receive_name;
+	
+	// 단위 컬럼
+	private String eaches_name;				//단위명
+	
 }

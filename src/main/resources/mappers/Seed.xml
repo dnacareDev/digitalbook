@@ -159,7 +159,7 @@
 		SELECT s.*, u1.user_name_k AS manager_name, u2.user_name_k AS receive_name, r.user_name as report_user_name, u2.*, e.*, g.*, r.*, w.*, d.* 
 		FROM seed s
 		LEFT JOIN user u1 ON s.seed_manager = u1.user_id
-		LEFT JOIN user u2 ON s.seed_sender = u2.user_id
+		LEFT JOIN user u2 ON s.seed_receiver = u2.user_id
 		LEFT JOIN eaches e ON s.eaches_id = e.eaches_id
 		LEFT JOIN genetic g ON s.genetic_id = g.genetic_id
 		LEFT JOIN division d ON g.division_id = d.division_id
@@ -264,6 +264,20 @@
 		WHERE s.user_group = #{user_group}
 		GROUP BY r.report_code
 		ORDER BY s.seed_id DESC
+	</select>
+	
+	<!-- 샘플 시료 detail -->
+	<select id="selectSampleSeedDetail" parameterType="int" resultType="Seed">
+		SELECT s.*, u1.user_name_k AS manager_name, u2.user_name_k AS receive_name, r.user_name as report_user_name, u2.*, e.*, g.*, r.*, w.*, d.*
+		FROM seed s
+		LEFT JOIN user u1 ON s.seed_manager = u1.user_id
+		LEFT JOIN user u2 ON s.seed_receiver = u2.user_id
+		LEFT JOIN eaches e ON s.eaches_id = e.eaches_id
+		LEFT JOIN genetic g ON s.genetic_id = g.genetic_id
+		LEFT JOIN division d ON g.division_id = d.division_id
+		LEFT JOIN report r ON s.report_code = r.report_code
+		LEFT JOIN warehouse w ON s.ware_id = w.ware_id
+		WHERE s.seed_id = #{seed_id}
 	</select>
 	
 </mapper>

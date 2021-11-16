@@ -81,12 +81,14 @@ public class SeedController
 		int count = service.SearchSeedCount(search_type, keyword, prin.getUser_group());
 		
 		int offset = (page_num - 1) * limit;
+		int start_page = ((page_num - 1) / 10) * 10 + 1;
 		int end_page = (count + limit - 1) / limit;
 		
 		List<Seed> seed = service.SearchSeed(search_type, keyword, prin.getUser_group(), offset, limit);
 		
 		result.put("seed", seed);
 		result.put("page_num", page_num);
+		result.put("start_page", start_page);
 		result.put("end_page", end_page);
 		result.put("offset", offset);
 		
@@ -416,6 +418,18 @@ public class SeedController
 		model.addAttribute("user_group", prin.getUser_group());
 		
 		return "seedExcelView";
+	}
+	
+	//sample_seed 화면
+	@RequestMapping("/seed/sampleSeed")
+	public String SampleSeed(Model model, @RequestParam("seed_id") int seed_id)
+	{
+		
+		Seed seed = service.selectSampleSeedDetail(seed_id);
+		
+		model.addAttribute("seed", seed);
+		
+		return "seed/sample_seed";
 	}
 	
 }

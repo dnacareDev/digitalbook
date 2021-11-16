@@ -72,4 +72,8 @@ public interface SeedService
 	
 	//genetic 기타 등록
 	int insertGeneticEtc(Genetic genetic);
+	
+	//샘플 시료 detail
+	Seed selectSampleSeedDetail(int seed_id);
+	
 }

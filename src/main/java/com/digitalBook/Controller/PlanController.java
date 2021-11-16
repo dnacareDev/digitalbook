@@ -263,12 +263,14 @@ public class PlanController
 		int count = service.SearchPlanCount(search_type, keyword, prin.getUser_group());
 		
 		int offset = (page_num - 1) * limit;
+		int start_page = ((page_num - 1) / 10) * 10 + 1;
 		int end_page = (count + limit - 1) / limit;
 		
 		List<Plan> plan = service.SearchPlan(search_type, keyword, offset, limit, prin.getUser_group());
 		
 		result.put("plan", plan);
 		result.put("page_num", page_num);
+		result.put("start_page", start_page);
 		result.put("end_page", end_page);
 		result.put("offset", offset);
 		
@@ -293,12 +295,14 @@ public class PlanController
 		int count = service.SearchResultPlanCount(search_type, keyword, prin.getUser_group(), plan_step);
 		
 		int offset = (page_num - 1) * limit;
+		int start_page = ((page_num - 1) / 10) * 10 + 1;
 		int end_page = (count + limit - 1) / limit;
 		
 		List<Plan> plan = service.SearchResultPlan(search_type, keyword, offset, limit, prin.getUser_group(), plan_step);
 		
 		result.put("plan", plan);
 		result.put("page_num", page_num);
+		result.put("start_page", start_page);
 		result.put("end_page", end_page);
 		result.put("offset", offset);
 		
@@ -319,12 +323,14 @@ public class PlanController
 		
 		int limit = 10;
 		int offset = (page_num - 1) * limit;
+		int start_page = ((page_num - 1) / 10) * 10 + 1;
 		int end_page = (count + limit - 1) / limit;
 		
 		List<Storage> storage = service.SearchStorage(offset, limit, prin.getUser_id());
 		
 		result.put("storage", storage);
 		result.put("page_num", page_num);
+		result.put("start_page", start_page);
 		result.put("end_page", end_page);
 		result.put("offset", offset);
 		

@@ -161,4 +161,11 @@ public class SeedServiceImpl implements SeedService
 		
 		return mapper.insertGeneticEtc(genetic);
 	}
+	
+	//샘플 시료 detail
+	@Override
+	public Seed selectSampleSeedDetail(int seed_id) {
+		
+		return mapper.selectSampleSeedDetail(seed_id);
+	}
 }

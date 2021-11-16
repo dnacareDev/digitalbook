@@ -423,8 +423,10 @@
 			                    <th:block th:if="${plan.plan_step == 1}">
 			                    	<button class="submit" onclick="updateSch();">담당자 수정</button>
 			                    </th:block>
-			                    <th:block th:if="${#authentication.principal.user_type == 0 and plan.plan_status == 0 or plan.plan_status == 1}">
-									<button type="button" class="list" onclick="UpdateStatusBtn();">승인</button>
+			                    <th:block th:if="${#authentication.principal.user_type == 0}">
+									<th:block th:if="${plan.plan_status == 0 or plan.plan_status == 1}">
+										<button type="button" class="list" onclick="UpdateStatusBtn();">승인</button>
+									</th:block>
 								</th:block>
 			                </div>
 			            </div>
@@ -4550,34 +4552,30 @@
 					`
 				}
 
-				if(result.page_num == 1)
+				if(result.page_num > 10)
 				{
-					page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
-				}
-				else
-				{
-					page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchStorage(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
+					page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchStorage(' + (result.start_page - 10) + ')"><</button>';
 				}
 				
-				for(var i = 0; i < result.end_page; i++)
+				for(var i = (result.start_page - 1); i < (result.start_page + 9); i++)
 				{
 					if(result.page_num == (i + 1))
 					{
 						page_add += '<button class="atbd-pagination__link active" onclick="SearchStorage(' + (i + 1) + ')">' + (i + 1) + '</button>';
 					}
+					else if(i >= result.end_page)
+					{
+						
+					}
 					else
 					{
-						page_add += '<button class="atbd-pagination__link" onclick="SearchStorage(' + (i + 1) + ')">' + (i + 1) + '</button>';
+						page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchStorage(' + (i + 1) + ')">' + (i + 1) + '</button>';
 					}
 				}
 				
-				if(result.page_num == result.end_page)
+				if(result.page_num < (result.end_page - 10))
 				{
-					page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
-				}
-				else
-				{
-					page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchStorage(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
+					page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchStorage(' + (result.start_page + 10) + ')">></button>';
 				}
 				
 				storage_list.empty();

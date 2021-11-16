@@ -223,25 +223,31 @@
 						add_list += '</tr>';
 					}//end for
 					
-					if(result.page_num == 1){
-						page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
-					}else{
-						page_add += '<button class="atbd-pagination__link pagination-control" onclick="searchMaterial(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
-					}//end else
+					if(result.page_num > 10)
+					{
+						page_add += '<button class="atbd-pagination__link pagination-control" onclick="searchMaterial(' + (result.start_page - 10) + ')"><</button>';
+					}
 					
-					for(var i = 0; i < result.end_page; i++){
-						if(result.page_num == (i + 1)){
+					for(var i = (result.start_page - 1); i < (result.start_page + 9); i++)
+					{
+						if(result.page_num == (i + 1))
+						{
 							page_add += '<button class="atbd-pagination__link active" onclick="searchMaterial(' + (i + 1) + ')">' + (i + 1) + '</button>';
-						}else{
-							page_add += '<button class="atbd-pagination__link" onclick="searchMaterial(' + (i + 1) + ')">' + (i + 1) + '</button>';
-						}//end else
-					}//end for
+						}
+						else if(i >= result.end_page)
+						{
+							
+						}
+						else
+						{
+							page_add += '<button class="atbd-pagination__link pagination-control" onclick="searchMaterial(' + (i + 1) + ')">' + (i + 1) + '</button>';
+						}
+					}
 					
-					if(result.page_num == result.end_page){
-						page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
-					}else{
-						page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchResearch(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
-					}//end else
+					if(result.page_num < (result.end_page - 10))
+					{
+						page_add += '<button class="atbd-pagination__link pagination-control" onclick="searchMaterial(' + (result.start_page + 10) + ')">></button>';
+					}
 					
 					material_list.empty();
 					material_list.append(add_list);

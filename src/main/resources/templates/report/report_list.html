@@ -186,34 +186,30 @@
 					add_list += '</tr>';
 				}
 
-				if(result.page_num == 1)
+				if(result.page_num > 10)
 				{
-					page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
-				}
-				else
-				{
-					page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
+					page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (result.start_page - 10) + ')"><</button>';
 				}
 				
-				for(var i = 0; i < result.end_page; i++)
+				for(var i = (result.start_page - 1); i < (result.start_page + 9); i++)
 				{
 					if(result.page_num == (i + 1))
 					{
 						page_add += '<button class="atbd-pagination__link active" onclick="SearchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
 					}
+					else if(i >= result.end_page)
+					{
+						
+					}
 					else
 					{
-						page_add += '<button class="atbd-pagination__link" onclick="SearchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
+						page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
 					}
 				}
 				
-				if(result.page_num == result.end_page)
+				if(result.page_num < (result.end_page - 10))
 				{
-					page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
-				}
-				else
-				{
-					page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
+					page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (result.start_page + 10) + ')">></button>';
 				}
 				
 				report_list.empty();

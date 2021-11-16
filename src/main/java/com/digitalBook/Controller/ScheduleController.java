@@ -111,12 +111,14 @@ public class ScheduleController
 		
 		int count = service.SearchBoardCount(search_type, keyword, prin.getUser_group());
 		int offset = (page_num - 1) * limit;
+		int start_page = ((page_num - 1) / 10) * 10 + 1;
 		int end_page = (count + limit - 1) / limit;
 		
 		List<Board> board = service.SearchBoard(search_type, keyword, offset, limit, prin.getUser_group());
 		
 		result.put("board", board);
 		result.put("page_num", page_num);
+		result.put("start_page", start_page);
 		result.put("end_page", end_page);
 		result.put("offset", offset);
 		

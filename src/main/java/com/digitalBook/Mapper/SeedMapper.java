@@ -80,4 +80,7 @@ public interface SeedMapper
 	//엑셀 다운로드할 seed list
 	List<Seed> selectSeedExcelList(int user_group);
 	
+	//샘플 시료 detail
+	Seed selectSampleSeedDetail(int seed_id);
+	
 }

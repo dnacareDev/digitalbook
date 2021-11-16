@@ -86,12 +86,14 @@ public class ReportController
 		int count = service.SelectReportFileCount(search_type, keyword);
 		
 		int offset = (page_num - 1) * limit;
+		int start_page = ((page_num - 1) / 10) * 10 + 1;
 		int end_page = (count + limit - 1) / limit;
 		
 		List<ReportFile> report = service.SearchReportFile(search_type, keyword, offset, limit);
 		
 		result.put("report", report);
 		result.put("page_num", page_num);
+		result.put("start_page", start_page);
 		result.put("end_page", end_page);
 		result.put("offset", offset);
 		

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en" dir="ltr"
+	xmlns:th="http://www.thymeleaf.org">
+	
+<head>
+
+<!-- 공통 헤더 -->
+<th:block th:include="/../fragments/header.html"></th:block>
+
+</head>
+
+<body class="layout-light top-menu overlayScroll">
+	<div class="mobile-search"></div>
+	
+	<div class="mobile-author-actions"></div>
+	
+	<main class="main-content" style="background-color: #fafef5;">
+	
+		<div class="contents" style="background-color: #fafef5;">
+    
+		    <div class="container-fluid">
+		    	<div class="row">
+			        <div class="col-lg-12">
+			        	<div class="table-responsive">
+			        		<table class="table">
+			        			<tbody>
+			        				<tr>
+			        					<td>시료ID</td>
+			        					<td th:text="${seed.seed_code}"></td>
+			        				</tr>
+			        				<tr>
+			        					<td>과제번호</td>
+			        					<td th:text="${seed.report_code}"></td>
+			        				</tr>
+			        				<tr>
+			        					<td>과제명</td>
+			        					<td th:text="${seed.report_title}"></td>
+			        				</tr>
+			        				<tr>
+			        					<td>과제책임자</td>
+			        					<td th:text="${seed.report_user_name}"></td>
+			        				</tr>
+			        				<tr>
+			        					<td>발송인정보</td>
+			        					<td th:text="${seed.seed_sender}"></td>
+			        				</tr>
+			        				<tr>
+			        					<td>수취인정보</td>
+			        					<td th:text="${seed.receive_name}"></td>
+			        				</tr>
+			        				<tr>
+			        					<td>발송일자</td>
+			        					<td th:text="${seed.send_date}"></td>
+			        				</tr>
+			        				<tr>
+			        					<td>수취일자</td>
+			        					<td th:text="${seed.receive_date}"></td>
+			        				</tr>
+			        				<tr>
+			        					<td>품종/유전자정보</td>
+			        					<td th:text="${seed.division + ' > ' +seed.genetic}"></td>
+			        				</tr>
+			        				<tr>
+			        					<td>시료량</td>
+			        					<td th:text="${seed.seed_amount+seed.eaches_name}"></td>
+			        				</tr>
+			        				<tr>
+			        					<td>저장 장소</td>
+			        					<td th:text="${seed.warehouse}"></td>
+			        				</tr>
+			        				<tr>
+			        					<td>저장온도/습도</td>
+			        					<td th:text="${seed.ware_condition}"></td>
+			        				</tr>
+			        				<tr>
+			        					<td>담당자</td>
+			        					<td th:text="${seed.manager_name}"></td>
+			        				</tr>
+			        				<tr>
+			        					<td>생성일자</td>
+			        					<td th:text="${seed.create_date}"></td>
+			        				</tr>
+			        				<tr>
+			        					<td>Comment</td>
+			        					<td th:text="${seed.seed_comment}"></td>
+			        				</tr>
+			        			</tbody>
+			        		</table>
+			        	</div>
+			        </div>
+		        </div>
+		    </div>
+    
+    	</div>
+    
+    </main>
+    
+    <!-- 공통 하단 -->
+    <th:block th:include="/../fragments/footer.html"></th:block>
+    <!-- 공통 js -->
+    <th:block th:include="/../fragments/commonjs.html"></th:block>
+    
+<script type="text/javascript">
+		
+</script>
+    
+</body>
+
+</html>

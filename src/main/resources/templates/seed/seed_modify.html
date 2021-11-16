@@ -12,6 +12,12 @@
 		margin-top:-15px;
 	}
 	.end{margin-left:10px;}
+	
+	
+	#qrModal .col-6:first-child .row {justify-content: right; margin-right: 15px}
+	#qrModal .col-6:first-child .row:last-child {padding: 5px 30px 0 0}
+	#qrModal .col-6 .row > span {font-size:16px !important; color: #111 !important;}
+	#qrModal .col-6:last-child .row > span {margin: 8px 0}
 </style>
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
@@ -85,7 +91,7 @@
 						        										<input type="text" class="form-control b-light seed_code" id="seed_code" readonly="readonly" style="width: 200px;">
 						        									</div>
 						        									<div class="col-md-2 mb-25">
-						        										<button type="button" class="btn btn-sm btn-info">QR Code</button>
+						        										<button type="button" class="btn btn-sm btn-info qr-btn">QR Code</button>
 						        									</div>
 														        </div>
 													        </div>
@@ -223,7 +229,7 @@
 											        				<div class="col-sm-2 mb-4">
 											        					<input type="checkbox" class="seed_share" th:value="0">
 											        					<label>
-											        						<span class="color-dark" th:text="${#authentication.principal.user_level} + | 공유|"></span>
+											        						<span class="color-dark" th:text="${#authentication.principal.d3_department_name} + | 공유|"></span>
 											        					</label>
 											        				</div>
 											        			</div>
@@ -246,8 +252,10 @@
 		        <div class="row">
 					<div class="col-4">
 						<div class="action-btn d-flex justify-content-frist mt-30">
-							<th:block th:if="${#authentication.principal.user_type == 0 and seeds.get(0).seed_status == 0 or seeds.get(0).seed_status == 1 or seeds.get(0).seed_status == 3}">
-								<button type="button" class="btn btn-default btn-info end-button end" onclick="UpdateStatusBtn();">승인</button>
+							<th:block th:if="${#authentication.principal.user_type == 0}">
+								<th:block th:if="${seeds.get(0).seed_status == 0 or seeds.get(0).seed_status == 1}">
+									<button type="button" class="btn btn-default btn-info end-button end" onclick="UpdateStatusBtn();">승인</button>
+								</th:block>
 							</th:block>
 						</div>
 					</div>
@@ -378,31 +386,41 @@
 		        </div>
 		    </div>
 			
-			<div class="modal-basic modal fade show" id="seedModal" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-basic modal fade show" id="qrModal" tabindex="-1" role="dialog" aria-hidden="true">
 			    <div class="modal-dialog modal-md" role="document">
 			        <div class="modal-content modal-bg-white">
 			        	<div class="modal-header">
-			        		<h6 class="modal-title">엑셀 업로드</h6>
+			        		<h6 class="modal-title">Print QR Code</h6>
 		                    	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		                        	<span data-feather="x"></span>
 		                        </button>
 			        	</div>
 			            <div class="modal-body">
 			            	<div class="col-12">
-				            	<form action="#">
-				            		<div class="row">
-				            			<div class="col-sm-3 d-flex aling-items-center mt-4">
-		                                    <label class="color-dark align-center">엑셀 파일</label>
-		                                </div>
-		                                <div class="col-sm-5 mb-2">
-		                                	<label for="uploadFile"></label>
-		                                    <input type="file" id="uploadFile">
-		                                </div>
-				            		</div>
-				            		<div class="button-group d-flex justify-content-end">
-					                   <button class="btn btn-primary btn-default btn-squared">업로드</button>
-					           		</div>
-				            	</form>
+			            		<div class="row">
+			            			<div class="col-6">
+			            				<div class="row">
+			            					<div id="qrcode"></div>
+			            				</div>
+			            			</div>
+			            			<div class="col-6">
+			            				<div class="row">
+			            					<span id="qr_seed_code"></span>
+			            				</div>
+			            				<div class="row">
+			            					<span id="qr_seed_division"></span>
+			            				</div>
+			            				<div class="row">
+			            					<span id="qr_seed_receive_date"></span>
+			            				</div>
+			            				<div class="row">
+			            					<span id="qr_seed_receive_name"></span>
+			            				</div>
+			            			</div>
+			            		</div>
+			            		<div class="button-group d-flex justify-content-end">
+				                   <button class="btn btn-primary btn-default btn-squared">Print QR Code label</button>
+				           		</div>
 			            	</div>
 			            </div>
 			        </div>
@@ -510,6 +528,7 @@
     <th:block th:include="/../fragments/footer.html"></th:block>
     <!-- 공통 js -->
     <th:block th:include="/../fragments/commonjs.html"></th:block>
+    <script type="text/javascript" src="/../assets/vendor_assets/js/qrcode.min.js"></script>
 
 <script type="text/javascript" th:inline="javascript">
 
@@ -786,6 +805,7 @@
 			$(this).find(".seed_receiver").val(seeds[index].seed_receiver);
 			$(this).find(".receive_date").val(seeds[index].receive_date);
 			$(this).find(".send_date").val(seeds[index].send_date);
+			$(this).find(".qr-btn").attr("data-id", seeds[index].seed_id);
 			
 			if(seeds[index].seed_share != 0)
 			{
@@ -1114,6 +1134,52 @@
 		});//end ajax
 		
 	}//end 승인 함수
+	
+	
+	//qr 이벤트
+	$(document).on("click", ".qr-btn", function(){
+		
+		$("#qrcode").empty();
+		
+		var seed_id = $(this).attr("data-id");
+		var seed_data = new Object();
+		
+		for(var i = 0; i < seeds.length; i++){
+			if(seeds[i].seed_id == seed_id){
+				seed_data = seeds[i];
+			}
+		}
+		
+		var seed_code = seed_data.seed_code;
+		var seed_division = seed_data.division + " > " + seed_data.genetic;
+		var seed_receive_date = seed_data.receive_date;
+		var seed_receive_name = seed_data.receive_name;
+		
+		$("#qr_seed_code").text(seed_code);
+		$("#qr_seed_division").text(seed_division);
+		$("#qr_seed_receive_date").text(seed_receive_date);
+		$("#qr_seed_receive_name").text(seed_receive_name);
+		
+		var protocol = window.location.protocol;
+		var port = ":"+window.location.port;
+		var hostname = "//"+window.location.hostname;
+		var url = protocol+hostname+port+"/data/seed/sampleSeed?seed_id="+seed_id;
+		
+		console.log(seed_data);
+		
+		var qrcode = new QRCode(document.getElementById("qrcode"),{
+			width : 180,
+			height : 180,
+			colorDark : "#000000",
+	        colorLight : "#ffffff",
+	        correctLevel : QRCode.CorrectLevel.H
+		});
+		
+		qrcode.makeCode(url);
+		
+		$("#qrModal").modal("show");
+		
+	});
 	
 </script>
 </body>
