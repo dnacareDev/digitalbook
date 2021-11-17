@@ -337,5 +337,12 @@ public class PlanServiceImpl implements PlanService {
 		
 		return mapper.selectSampleReportDetail(report_code);
 	}
+	
+	//샘플 구획 detail
+	@Override
+	public Segment selectSampleSegmentDetail(int segment_id) {
+		
+		return mapper.selectSampleSegmentDetail(segment_id);
+	}
 
 }

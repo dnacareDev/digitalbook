@@ -636,4 +636,10 @@
 		WHERE r.report_code = #{report_code}
 	</select>
 	
+	<!-- 샘플 구획 detail -->
+	<select id="selectSampleSegmentDetail" parameterType="int" resultType="Segment">
+		SELECT * FROM segment
+		WHERE segment_id = #{segment_id}
+	</select>
+	
 </mapper>

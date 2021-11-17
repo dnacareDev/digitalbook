@@ -870,4 +870,29 @@ public class PlanController
 		return "plan/sample_report";
 	}
 	
+	//segment 가져오기
+	@RequestMapping("/getSegment")
+	@ResponseBody
+	public List<Segment> getSegment(@RequestParam("plan_id") int plan_id)
+	{
+		List<Segment> segment = service.selectSegmentList(plan_id);
+		
+		return segment;
+	}
+	
+	//sample_segment 화면
+	@RequestMapping("sampleSegment")
+	public String SampleSegment(Model model, @RequestParam("report_code") String report_code, @RequestParam("segment_id") int segment_id)
+	{
+		
+		Report report = service.selectSampleReportDetail(report_code);
+		Segment segment = service.selectSampleSegmentDetail(segment_id);
+		
+		model.addAttribute("report", report);
+		model.addAttribute("segment", segment);
+		
+		return "plan/sample_segment";
+	}
+	
+	
 }

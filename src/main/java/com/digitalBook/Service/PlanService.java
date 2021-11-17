@@ -154,4 +154,7 @@ public interface PlanService {
 	//샘플 과제 detail
 	Report selectSampleReportDetail(String report_code);
 	
+	//샘플 구획 detail
+	Segment selectSampleSegmentDetail(int segment_id);
+	
 }
