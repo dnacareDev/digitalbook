@@ -3302,7 +3302,11 @@
 			//그룹별 색깔 적용해주기
 			$(document).find(".table_content").each(function(i, item){
 				
+				// var segmentLi = $('#step4-segment > li  .segment');
+				// console.log(idArray,'idArray');
+				
 				/* id_color9 */
+				// !important 색상 10개이상 추가시 수정
 				for(var j = 0; j < idArray.length; j++){
 					if($(this).hasClass(idArray[j])){
 						$(this).addClass("id_color"+(j+1));
@@ -3432,14 +3436,12 @@
 			
 			//그룹별 색깔 적용해주기
 			$(document).find(".table_content").each(function(i, item){
-				
 				/* id_color9 */
 				for(var j = 0; j < idArray.length; j++){
 					if($(this).hasClass(idArray[j])){
 						$(this).addClass("id_color"+(j+1));
 					}
 				}
-				
 			});
 			
 		}
