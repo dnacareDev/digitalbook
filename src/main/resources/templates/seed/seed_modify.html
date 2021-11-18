@@ -32,17 +32,9 @@
 	/*인쇄 설정 */
 	@media print {
 	 .noprint { display : none !important;}
-	 span{
-	   	display: inline-block;
-	   	width: 100%;
-	   	text-align:left;
-	   	margin: 10px 10px;
-	   	font-size:16px !important;
-	   	color: #111 !important;
-	   }
 	 @page {
 	  size : portrait; /* 세로 설정 */
-	  margin: 10px 10px 0px 10px;
+	  margin: 10px 10px 10px 10px;
 	 }
 	}
 	
@@ -441,7 +433,7 @@
 			            			</table>
 			            		</div>
 			            		<div class="button-group d-flex justify-content-end">
-				                   <button class="btn btn-primary btn-default btn-squared noprint" onclick="qrPrint();">Print QR Code label</button>
+				                   <button class="btn btn-primary btn-default btn-squared noprint" onclick="qrPrint(this);">Print QR Code label</button>
 				           		</div>
 			            	</div>
 			            </div>
@@ -1204,18 +1196,38 @@
 	});
 	
 	//인쇄 이벤트
-	function qrPrint(){
-		var initBody;
+	function qrPrint(e){
+		
+		var text1 = $(e).parent().prev().children().children().children().children().eq(1).children().eq(0).text();
+		var text2 = $(e).parent().prev().children().children().children().children().eq(1).children().eq(1).text();
+		var text3 = $(e).parent().prev().children().children().children().children().eq(1).children().eq(2).text();
+		var text4 = $(e).parent().prev().children().children().children().children().eq(1).children().eq(3).text();
+		
+		var div1 = $(e).parent().prev().children().children().children().children().eq(0).html();
+		
+		var initBody = "";
+		
+		for(var i = 0; i < 10; i++){
+			initBody += '<div style="display:flex; float:left; margin: 20px 20px 20px 20px;">';
+			initBody += '<div style="float: left;">';
+			initBody += div1;
+			initBody += '</div>';
+			initBody += '<div style="float:left; width: 150px;">';
+			initBody += '<span style="display: block; text-align:left; padding-left:30px; font-size:14px; color: #111; line-height:30px;">'+text1+'</span>';
+			initBody += '<span style="display: block; text-align:left; padding-left:30px; font-size:14px; color: #111; line-height:30px;">'+text2+'</span>';
+			initBody += '<span style="display: block; text-align:left; padding-left:30px; font-size:14px; color: #111; line-height:30px;">'+text3+'</span>';
+			initBody += '<span style="display: block; text-align:left; padding-left:30px; font-size:14px; color: #111; line-height:30px;">'+text4+'</span>';
+			initBody += '</div>';
+			initBody += '</div>';
+		}
 		
 		//인쇄 전 실행 함수
 		window.onbeforeprint = function(){
-			initBody = document.body.innerHtml; //인쇄 전 body 내용을 initbody 변수에 담음
-			document.body.innerHTML = document.getElementById('printDiv').innerHTML;
+			document.body.innerHTML = initBody;
 		};
 		
 		//인쇄 후 실행 함수
 		window.onafterprint = function(){
-			/* document.body.innerHTML = initBody; */
 			this.window.location.reload();// 인쇄 후 화면 리로드
 		};
 		
