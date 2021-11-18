@@ -2969,7 +2969,7 @@
 			}//end for1
 		}
 		
-		if(grow_type == "0"){
+		if(grow_type == "0"){ //완전임의배치법
 			
 			//만들어준 factorArray를 가지고 최종 resultArray 만들어 주기
 			for(var i = 0; i < plan_repeat; i++){
@@ -3028,17 +3028,27 @@
 					},
 					stop : function(event, ui){//해당 구획 이동 완료 후 정렬
 						
+						//아이디 정렬해주기 위한 idarr 만들기
+	 					var idArr = new Array();
+						for(var i = 0; i < resultArray.length; i++){
+							idArr.push(resultArray[i].id);
+						}
+						
 						var num = 1;
 	 					var targetNum = parseInt(ui.item[0].children[0].innerText)-1;
-	 					reorder(num);
+	 					reorder(num, idArr);
 	 					var moveNum = parseInt(ui.item[0].children[0].innerText)-1;
-
+						
+						//순서 바꿔주기
 						let item = resultArray.splice(targetNum, 1);
 						resultArray.splice(moveNum, 0, item[0]);
 						
+						//id와 구획번호 재정렬
 						for(var i = 0; i < resultArray.length; i++){
 							resultArray[i].num = (i+1);
+							resultArray[i].id = idArr[i];
 						}
+						console.log(resultArray);
 						var getDataArr = [...resultArray];
 						getDataResult(getDataArr);
 					}
@@ -3046,31 +3056,6 @@
 				
 				$("#info_popup").css("display", "none");
 			}, (duration*1000));
-			
-			
-			//sortable 적용
-			/* $(document).find(".container1").sortable({
-				placeholder : "itemBoxHighlight",
-				start : function(event, ui){
-					
-				},
-				stop : function(event, ui){//해당 구획 이동 완료 후 정렬
-					
-					var num = 1;
- 					var targetNum = parseInt(ui.item[0].children[0].innerText)-1;
- 					reorder(num);
- 					var moveNum = parseInt(ui.item[0].children[0].innerText)-1;
-
-					let item = resultArray.splice(targetNum, 1);
-					resultArray.splice(moveNum, 0, item[0]);
-					
-					for(var i = 0; i < resultArray.length; i++){
-						resultArray[i].num = (i+1);
-					}
-					var getDataArr = [...resultArray];
-					getDataResult(getDataArr);
-				}
-			});//end sortable */
 			
 		}else if(grow_type == "1"){ //난괴법
 			
@@ -3131,42 +3116,55 @@
 			}//end for1
 			
 			copy_step_4.empty();
+			var start = performance.now();
 			copy_step_4.append(result_div);
+			var duration = performance.now() - start;
 			
 			//end 난괴법 컴포넌트
-			
-			//jquery sortable 적용
-			for(var i = 0; i < plan_repeat; i++){
-				$(document).find(".container"+(i+1)).sortable({
-					placeholder : "itemBoxHighlight",
-					start : function(event, ui){
-						
-					},
-					stop : function(event, ui){//해당 구획 이동 완료 후 정렬
-						
-						//해당 로우의 반복수
-						var num = parseInt(ui.item[0].children[3].innerText);
-						
-						//해당 집구의 테이블 로우 개수
-						var standardNum = $(".container1 .table_content").length;
-						var checkNum = (num-1) * standardNum;
-						
-						var targetNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
-	 					reorder(num);
-	 					var moveNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
+			$("#info_popup").css("display", "flex");
+			setTimeout(function(){
+				//jquery sortable 적용
+				for(var i = 0; i < plan_repeat; i++){
+					$(document).find(".container"+(i+1)).sortable({
+						placeholder : "itemBoxHighlight",
+						start : function(event, ui){
+							
+						},
+						stop : function(event, ui){//해당 구획 이동 완료 후 정렬
+							
+							//아이디 정렬해주기 위한 idarr 만들기
+		 					var idArr = new Array();
+							for(var i = 0; i < resultArray.length; i++){
+								idArr.push(resultArray[i].id);
+							}
+							
+							//해당 로우의 반복수
+							var num = parseInt(ui.item[0].children[3].innerText);
+							
+							//해당 집구의 테이블 로우 개수
+							var standardNum = $(".container1 .table_content").length;
+							var checkNum = (num-1) * standardNum;
+							
+							var targetNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
+		 					reorder(num, idArr);
+		 					var moveNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
 
-						let item = resultArray.splice(targetNum, 1);
-						resultArray.splice(moveNum, 0, item[0]);
-						var plusNum = 0;
-						for(var i = checkNum; i < (checkNum+standardNum); i++){
-							plusNum++;
-							resultArray[i].num = plusNum;
+							let item = resultArray.splice(targetNum, 1);
+							resultArray.splice(moveNum, 0, item[0]);
+							var plusNum = 0;
+							for(var i = checkNum; i < (checkNum+standardNum); i++){
+								plusNum++;
+								resultArray[i].num = plusNum;
+								resultArray[i].id = idArr[i];
+							}
+							console.log(resultArray);
+							var getDataArr = [...resultArray];
+							getDataResult(getDataArr);
 						}
-						var getDataArr = [...resultArray];
-						getDataResult(getDataArr);
-					}
-				});//end sortable
-			}
+					});//end sortable
+				}
+				$("#info_popup").css("display", "none");
+			}, (duration*1000));
 			
 		}else if(grow_type == "2"){ //분할구배치법
 			
@@ -3238,40 +3236,54 @@
 			}//end for1
 			
 			copy_step_4.empty();
+			var start = performance.now();
 			copy_step_4.append(result_div);
+			var duration = performance.now() - start;
 			
-			//jquery sortable 적용
-			for(var i = 0; i < plan_repeat; i++){
-				$(document).find(".container"+(i+1)).sortable({
-					placeholder : "itemBoxHighlight",
-					start : function(event, ui){
-						
-					},
-					stop : function(event, ui){//해당 구획 이동 완료 후 정렬
-						
-						//해당 로우의 반복수
-						var num = parseInt(ui.item[0].children[3].innerText);
-						
-						//해당 집구의 테이블 로우 개수
-						var standardNum = $(".container1 .table_content").length;
-						var checkNum = (num-1) * standardNum;
-						
-						var targetNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
-	 					reorder(num);
-	 					var moveNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
+			$("#info_popup").css("display", "flex");
+			setTimeout(function(){
+				//jquery sortable 적용
+				for(var i = 0; i < plan_repeat; i++){
+					$(document).find(".container"+(i+1)).sortable({
+						placeholder : "itemBoxHighlight",
+						start : function(event, ui){
+							
+						},
+						stop : function(event, ui){//해당 구획 이동 완료 후 정렬
+							
+							//아이디 정렬해주기 위한 idarr 만들기
+		 					var idArr = new Array();
+							for(var i = 0; i < resultArray.length; i++){
+								idArr.push(resultArray[i].id);
+							}
+							
+							//해당 로우의 반복수
+							var num = parseInt(ui.item[0].children[3].innerText);
+							
+							//해당 집구의 테이블 로우 개수
+							var standardNum = $(".container1 .table_content").length;
+							var checkNum = (num-1) * standardNum;
+							
+							var targetNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
+		 					reorder(num, idArr);
+		 					var moveNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
 
-						let item = resultArray.splice(targetNum, 1);
-						resultArray.splice(moveNum, 0, item[0]);
-						var plusNum = 0;
-						for(var i = checkNum; i < (checkNum+standardNum); i++){
-							plusNum++;
-							resultArray[i].num = plusNum;
+							let item = resultArray.splice(targetNum, 1);
+							resultArray.splice(moveNum, 0, item[0]);
+							var plusNum = 0;
+							for(var i = checkNum; i < (checkNum+standardNum); i++){
+								plusNum++;
+								resultArray[i].num = plusNum;
+								resultArray[i].id = idArr[i];
+							}
+							console.log(resultArray);
+							var getDataArr = [...resultArray];
+							getDataResult(getDataArr);
 						}
-						var getDataArr = [...resultArray];
-						getDataResult(getDataArr);
-					}
-				});//end sortable
-			}
+					});//end sortable
+				}
+				$("#info_popup").css("display", "none");
+			}, (duration*1000));
 			
 			//그룹별 색깔 적용해주기
 			$(document).find(".table_content").each(function(i, item){
@@ -3355,40 +3367,54 @@
 			}//end for1
 			
 			copy_step_4.empty();
+			var start = performance.now();
 			copy_step_4.append(result_div);
+			var duration = performance.now() - start;
 			
-			//jquery sortable 적용
-			for(var i = 0; i < plan_repeat; i++){
-				$(document).find(".container"+(i+1)).sortable({
-					placeholder : "itemBoxHighlight",
-					start : function(event, ui){
-						
-					},
-					stop : function(event, ui){//해당 구획 이동 완료 후 정렬
-						
-						//해당 로우의 반복수
-						var num = parseInt(ui.item[0].children[3].innerText);
-						
-						//해당 집구의 테이블 로우 개수
-						var standardNum = $(".container1 .table_content").length;
-						var checkNum = (num-1) * standardNum;
-						
-						var targetNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
-	 					reorder(num);
-	 					var moveNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
+			$("#info_popup").css("display", "flex");
+			setTimeout(function(){
+				//jquery sortable 적용
+				for(var i = 0; i < plan_repeat; i++){
+					$(document).find(".container"+(i+1)).sortable({
+						placeholder : "itemBoxHighlight",
+						start : function(event, ui){
+							
+						},
+						stop : function(event, ui){//해당 구획 이동 완료 후 정렬
+							
+							//아이디 정렬해주기 위한 idarr 만들기
+		 					var idArr = new Array();
+							for(var i = 0; i < resultArray.length; i++){
+								idArr.push(resultArray[i].id);
+							}
+							
+							//해당 로우의 반복수
+							var num = parseInt(ui.item[0].children[3].innerText);
+							
+							//해당 집구의 테이블 로우 개수
+							var standardNum = $(".container1 .table_content").length;
+							var checkNum = (num-1) * standardNum;
+							
+							var targetNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
+		 					reorder(num, idArr);
+		 					var moveNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
 
-						let item = resultArray.splice(targetNum, 1);
-						resultArray.splice(moveNum, 0, item[0]);
-						var plusNum = 0;
-						for(var i = checkNum; i < (checkNum+standardNum); i++){
-							plusNum++;
-							resultArray[i].num = plusNum;
+							let item = resultArray.splice(targetNum, 1);
+							resultArray.splice(moveNum, 0, item[0]);
+							var plusNum = 0;
+							for(var i = checkNum; i < (checkNum+standardNum); i++){
+								plusNum++;
+								resultArray[i].num = plusNum;
+								resultArray[i].id = idArr[i];
+							}
+							console.log(resultArray);
+							var getDataArr = [...resultArray];
+							getDataResult(getDataArr);
 						}
-						var getDataArr = [...resultArray];
-						getDataResult(getDataArr);
-					}
-				});//end sortable
-			}
+					});//end sortable
+				}
+				$("#info_popup").css("display", "none");
+			}, (duration*1000));
 			
 			//그룹별 색깔 적용해주기
 			$(document).find(".table_content").each(function(i, item){
@@ -3432,11 +3458,14 @@
 	});//end sortable
 	
 	//번호 재입력 //numbering
-	function reorder(num){
+	function reorder(num, idArr){
 		
 		$(document).find(".container"+num+" .table_content").each(function(i, item){
 			$(this).find(".table_num").text((i+1));
+			$(this).children().eq(1).text(idArr[i]);
 		});
+		
+		
 		
 	}
 	
