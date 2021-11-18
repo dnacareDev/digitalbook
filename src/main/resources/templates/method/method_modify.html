@@ -99,14 +99,14 @@
 	
 	/*인쇄 설정 */
 	@media print {
-	 .noprint { display : none; }
+	 .noprint { display : none !important; }
 	 @page {
 	  size : portrait; /* 세로 설정 */
 	  margin: 10px 10px 0px 10px;
 	 }
-	 html {
+	 /* html {
 	  zoom : 40%;
-	 }
+	 } */
 	}
 </style>
 <!-- 공통 헤더 -->
@@ -139,7 +139,7 @@
 	                                </div>
 	                                <div class="col-sm-10">
 	                                   <input type="text" class="form-control" style="float: left; width: 90%; border-right:none; border-radius: 5px 0 0 5px" id="input_title" readonly>
-	                                   <button class="btn btn-primary type_1" onclick="DivisionBtn();" style="height:42px;width: 10%;">항목 수정</button>
+	                                   <button class="btn btn-primary type_1 noprint" onclick="DivisionBtn();" style="height:42px;width: 10%;">항목 수정</button>
 	                                </div>
 		                         </div>
 		                         <div class="row mt-3">
@@ -204,7 +204,7 @@
 			        </div>
 		        </div>
 		        
-				<div class="row mt-20">
+				<div class="row mt-20 noprint">
 					<div class="col-lg-12">
 						<div class="card">
 							<div class="card-body"> 
@@ -244,7 +244,7 @@
 			        	</div>
 			        </div>
 		        </div>
-		        <div class="row">
+		        <div class="row noprint">
 					<div class="col-4">
 						<div class="action-btn d-flex justify-content-frist mt-30">
 							<button type="button" class="btn btn-primary end-button" id="printBtn">인쇄</button>
@@ -555,7 +555,8 @@ $(function(){
 		var d3 = $("#division_depth3 option:checked");
 		
 		var method_title = method.method_title;
-		$("#input_title").val(d1.text() + " > " + d2.text() + " > " +  d3.text() + " > " +  method_title);
+		/* $("#input_title").val(d1.text() + " > " + d2.text() + " > " +  d3.text() + " > " +  method_title); */
+		$("#input_title").attr("value", d1.text() + " > " + d2.text() + " > " +  d3.text() + " > " +  method_title);
 		
 		var data = {"division_id" : method.d3_id};
 		
@@ -684,7 +685,8 @@ $(function(){
 				research_list.empty();
 				research_list.append(add_list);
 				
-				$("#input_title").val(d1.text() + " > " + d2.text() + " > " +  d3.text() + " > " +  method_title);
+				/* $("#input_title").val(d1.text() + " > " + d2.text() + " > " +  d3.text() + " > " +  method_title); */
+				$("#input_title").attr("value", d1.text() + " > " + d2.text() + " > " +  d3.text() + " > " +  method_title);
 				
 				$("#divisionModal").modal("hide");
 			}
@@ -1044,8 +1046,11 @@ $(function(){
 			
 		});
 		
-		protocol.val(add_list);
+		/* protocol.val(add_list);
+		$("#protocol").attr('value', add_list); */
+		var protocolEl = document.querySelector('#protocol');
 		
+		protocolEl.innerHTML = add_list;
 	}
 	
 	//jquery sortable 적용	
@@ -1134,7 +1139,6 @@ $(function(){
 		
 		//인쇄 전 실행 함수
 		window.onbeforeprint = function(){
-			initBody = document.body.innerHtml; //인쇄 전 body 내용을 initbody 변수에 담음
 			document.body.innerHTML = document.getElementById('printDiv').innerHTML;
 		};
 		

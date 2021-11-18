@@ -98,18 +98,6 @@
 	    font-size: 14px;
 	}
 	
-	/*인쇄 설정 */
-	@media print {
-	 .noprint { display : none; }
-	 @page {
-	  size : portrait; /* 세로 설정 */
-	  margin: 10px 10px 0px 10px;
-	 }
-	 html {
-	  zoom : 40%;
-	 }
-	}
-	
 </style>
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
@@ -249,9 +237,6 @@
 		        </div>
 		        <div class="row">
 					<div class="col-4">
-						<div class="action-btn d-flex justify-content-frist mt-30">
-							<button type="button" class="btn btn-primary end-button" id="printBtn">인쇄</button>
-						</div>
 					</div>
 					<div class="col-4">
 						<div class="d-flex justify-content-center mt-30"></div>
@@ -508,7 +493,8 @@
 				research_list.empty();
 				research_list.append("<ul>" + add_list + "</ul>");
 				
-				$("#input_title").val(d1.text() + " > " + d2.text() + " > " +  d3.text() + " > " +  method_title);
+				/* $("#input_title").val(d1.text() + " > " + d2.text() + " > " +  d3.text() + " > " +  method_title); */
+				$("#input_title").attr("value", d1.text() + " > " + d2.text() + " > " +  d3.text() + " > " +  method_title);
 				$("#addResearchBtn").prop("disabled", false);
 				$("#divisionModal").modal("hide");
 			}
@@ -798,7 +784,10 @@
 			
 		});
 		
-		protocol.val(add_list);
+		//protocol.val(add_list);
+		var protocolEl = document.querySelector('#protocol');
+		
+		protocolEl.innerHTML = add_list;
 		
 	}
 	
@@ -837,26 +826,6 @@
 		});
 		
 	}
-	
-	
-	//인쇄 이벤트
-	$("#printBtn").on("click", function(){
-		var initBody;
-		
-		//인쇄 전 실행 함수
-		window.onbeforeprint = function(){
-			initBody = document.body.innerHtml; //인쇄 전 body 내용을 initbody 변수에 담음
-			document.body.innerHTML = document.getElementById('printDiv').innerHTML;
-		};
-		
-		//인쇄 후 실행 함수
-		window.onafterprint = function(){
-			/* document.body.innerHTML = initBody; */
-			this.window.location.reload();// 인쇄 후 화면 리로드
-		};
-		
-		window.print();//인쇄 실행
-	});
 	
 </script>
 </body>
