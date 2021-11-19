@@ -3215,7 +3215,7 @@
 						var checkId = resultArray[j].id.split("-")[0];
 						for(var k = 0; k < idArray.length; k++){
 							if(checkId == idArray[k]){
-								add_list += '<tr class="table_content '+idArray[k]+'">';
+								add_list += '<tr data-id="'+idArray[k]+'" class="table_content '+idArray[k]+'">';
 							}
 						}
 					    add_list += '<td class="table_num">'+resultArray[j].num+'</td>';
@@ -3251,34 +3251,48 @@
 						},
 						stop : function(event, ui){//해당 구획 이동 완료 후 정렬
 							
-							//아이디 정렬해주기 위한 idarr 만들기
-		 					var idArr = new Array();
-							for(var i = 0; i < resultArray.length; i++){
-								idArr.push(resultArray[i].id);
-							}
+							var checkId = ui.item[0].getAttribute("data-id");
+							var checkLength = $(this).find("."+checkId).length;
 							
-							//해당 로우의 반복수
-							var num = parseInt(ui.item[0].children[3].innerText);
-							
-							//해당 집구의 테이블 로우 개수
-							var standardNum = $(".container1 .table_content").length;
-							var checkNum = (num-1) * standardNum;
-							
-							var targetNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
-		 					reorder(num, idArr);
-		 					var moveNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
+							var elementEls = $(this).find(".table_content");
+							elementEls = Array.prototype.slice.call(elementEls);
+							var index = elementEls.indexOf(ui.item[0]);
+							var prevItem = elementEls[index-1].getAttribute("data-id");
+							var nextItem = elementEls[index+1].getAttribute("data-id");
+							if(prevItem != checkId && nextItem != checkId){
+								return false;
+							}else{
+								//아이디 정렬해주기 위한 idarr 만들기
+			 					var idArr = new Array();
+								for(var i = 0; i < resultArray.length; i++){
+									idArr.push(resultArray[i].id);
+								}
+								
+								//해당 로우의 반복수
+								var num = parseInt(ui.item[0].children[3].innerText);
+								
+								//해당 집구의 테이블 로우 개수
+								var standardNum = $(".container1 .table_content").length;
+								var checkNum = (num-1) * standardNum;
+								
+								var targetNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
+			 					reorder(num, idArr);
+			 					var moveNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
 
-							let item = resultArray.splice(targetNum, 1);
-							resultArray.splice(moveNum, 0, item[0]);
-							var plusNum = 0;
-							for(var i = checkNum; i < (checkNum+standardNum); i++){
-								plusNum++;
-								resultArray[i].num = plusNum;
-								resultArray[i].id = idArr[i];
+								let item = resultArray.splice(targetNum, 1);
+								resultArray.splice(moveNum, 0, item[0]);
+								var plusNum = 0;
+								for(var i = checkNum; i < (checkNum+standardNum); i++){
+									plusNum++;
+									resultArray[i].num = plusNum;
+									resultArray[i].id = idArr[i];
+								}
+								console.log(resultArray);
+								var getDataArr = [...resultArray];
+								getDataResult(getDataArr);
 							}
-							console.log(resultArray);
-							var getDataArr = [...resultArray];
-							getDataResult(getDataArr);
+							
+							
 						}
 					});//end sortable
 				}
@@ -3350,7 +3364,7 @@
 						var checkId = resultArray[j].id.split("-")[0]+"-"+resultArray[j].id.split("-")[1];
 						for(var k = 0; k < idArray.length; k++){
 							if(checkId == idArray[k]){
-								add_list += '<tr class="table_content '+idArray[k]+'">';
+								add_list += '<tr data-id="'+idArray[k]+'" class="table_content '+idArray[k]+'">';
 							}
 						}
 					    add_list += '<td class="table_num">'+resultArray[j].num+'</td>';
