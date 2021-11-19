@@ -3252,14 +3252,31 @@
 						stop : function(event, ui){//해당 구획 이동 완료 후 정렬
 							
 							var checkId = ui.item[0].getAttribute("data-id");
-							var checkLength = $(this).find("."+checkId).length;
 							
 							var elementEls = $(this).find(".table_content");
 							elementEls = Array.prototype.slice.call(elementEls);
 							var index = elementEls.indexOf(ui.item[0]);
-							var prevItem = elementEls[index-1].getAttribute("data-id");
-							var nextItem = elementEls[index+1].getAttribute("data-id");
-							if(prevItem != checkId && nextItem != checkId){
+							
+							var isPrev = false;
+							var isNext = false;
+							if(typeof elementEls[index-1] != 'undefined'){
+								var prevItem = elementEls[index-1].getAttribute("data-id");
+								if(prevItem != checkId){
+									isPrev = true;
+								}
+							}else{
+								isPrev = true;
+							}
+							if(typeof elementEls[index+1] != 'undefined'){
+								var nextItem = elementEls[index+1].getAttribute("data-id");
+								if(nextItem != checkId){
+									isNext = true;
+								}
+							}else{
+								isNext = true;
+							}
+							
+							if(isPrev && isNext){
 								return false;
 							}else{
 								//아이디 정렬해주기 위한 idarr 만들기
@@ -3400,35 +3417,67 @@
 						},
 						stop : function(event, ui){//해당 구획 이동 완료 후 정렬
 							
-							//아이디 정렬해주기 위한 idarr 만들기
-		 					var idArr = new Array();
-							for(var i = 0; i < resultArray.length; i++){
-								idArr.push(resultArray[i].id);
+							var checkId = ui.item[0].getAttribute("data-id");
+							
+							var elementEls = $(this).find(".table_content");
+							elementEls = Array.prototype.slice.call(elementEls);
+							var index = elementEls.indexOf(ui.item[0]);
+							
+							var isPrev = false;
+							var isNext = false;
+							if(typeof elementEls[index-1] != 'undefined'){
+								var prevItem = elementEls[index-1].getAttribute("data-id");
+								if(prevItem != checkId){
+									isPrev = true;
+								}
+							}else{
+								isPrev = true;
+							}
+							if(typeof elementEls[index+1] != 'undefined'){
+								var nextItem = elementEls[index+1].getAttribute("data-id");
+								if(nextItem != checkId){
+									isNext = true;
+								}
+							}else{
+								isNext = true;
 							}
 							
-							//해당 로우의 반복수
-							var num = parseInt(ui.item[0].children[3].innerText);
-							
-							//해당 집구의 테이블 로우 개수
-							var standardNum = $(".container1 .table_content").length;
-							var checkNum = (num-1) * standardNum;
-							
-							var targetNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
-		 					reorder(num, idArr);
-		 					var moveNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
+							if(isPrev && isNext){
+								return false;
+							}else{
+								
+								//아이디 정렬해주기 위한 idarr 만들기
+			 					var idArr = new Array();
+								for(var i = 0; i < resultArray.length; i++){
+									idArr.push(resultArray[i].id);
+								}
+								
+								//해당 로우의 반복수
+								var num = parseInt(ui.item[0].children[3].innerText);
+								
+								//해당 집구의 테이블 로우 개수
+								var standardNum = $(".container1 .table_content").length;
+								var checkNum = (num-1) * standardNum;
+								
+								var targetNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
+			 					reorder(num, idArr);
+			 					var moveNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
 
-							let item = resultArray.splice(targetNum, 1);
-							resultArray.splice(moveNum, 0, item[0]);
-							var plusNum = 0;
-							for(var i = checkNum; i < (checkNum+standardNum); i++){
-								plusNum++;
-								resultArray[i].num = plusNum;
-								resultArray[i].id = idArr[i];
-							}
-							console.log(resultArray);
-							var getDataArr = [...resultArray];
-							getDataResult(getDataArr);
-						}
+								let item = resultArray.splice(targetNum, 1);
+								resultArray.splice(moveNum, 0, item[0]);
+								var plusNum = 0;
+								for(var i = checkNum; i < (checkNum+standardNum); i++){
+									plusNum++;
+									resultArray[i].num = plusNum;
+									resultArray[i].id = idArr[i];
+								}
+								console.log(resultArray);
+								var getDataArr = [...resultArray];
+								getDataResult(getDataArr);
+								
+							}//end else
+							
+						}//end stop
 					});//end sortable
 				}
 				$("#info_popup").css("display", "none");
@@ -3488,8 +3537,6 @@
 			$(this).find(".table_num").text((i+1));
 			$(this).children().eq(1).text(idArr[i]);
 		});
-		
-		
 		
 	}
 	
