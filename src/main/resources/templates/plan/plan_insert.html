@@ -56,6 +56,7 @@
 	}
 	
 	.id_color1{
+		color: #ffffff !important;
 		background-color: #0064FF !important;
 	}
 	.id_color2{
@@ -3287,7 +3288,7 @@
 									resultArray[i].num = plusNum;
 									resultArray[i].id = idArr[i];
 								}
-								console.log(resultArray);
+								//console.log(resultArray);
 								var getDataArr = [...resultArray];
 								getDataResult(getDataArr);
 							}
@@ -3308,10 +3309,12 @@
 				/* id_color9 */
 				// !important 색상 10개이상 추가시 수정
 				for(var j = 0; j < idArray.length; j++){
+					var colorIndex = j % 10;
 					if($(this).hasClass(idArray[j])){
-						$(this).addClass("id_color"+(j+1));
+						$(this).addClass("id_color" + (colorIndex + 1));
 					}
 				}
+
 				
 			});
 			
@@ -3425,7 +3428,7 @@
 								resultArray[i].num = plusNum;
 								resultArray[i].id = idArr[i];
 							}
-							console.log(resultArray);
+							//console.log(resultArray);
 							var getDataArr = [...resultArray];
 							getDataResult(getDataArr);
 						}
@@ -3444,7 +3447,7 @@
 					}
 				}
 			*/
-			$(document).find(".table_content").each(function(i, item){		
+			$(document).find(".table_content").each(function(i, item){
 				for(var j = 0; j < idArray.length; j++){
 					var colorIndex = j % 10;
 					if($(this).hasClass(idArray[j])){
@@ -3452,12 +3455,14 @@
 					}
 				}
 			});
+			
+			
 		}
 		
 		//이곳에서 데이터 받아와야함 : important
 		var getDataArr = [...resultArray];
-		getDataResult(getDataArr);
-		console.log(resultArray);
+		getDataResult(getDataArr , grow_type);
+		// console.log(resultArray,"all Type Apply");
 	}//end fridFactors
 
 	//jquery sortable 적용	
@@ -3601,7 +3606,7 @@
 			
 		});
 		
-		console.log(segment_array);
+		// console.log(segment_array);
 		
 		var cancel = new Array();
 		
@@ -4421,7 +4426,7 @@
 		var input_manager = $(this).parent().parent().next().find(".input_manager");
 		
 		var checkId = $(this).parent().parent().next().find(".input_manager:eq(0)").find(".mng_input1").attr("data-id");
-		console.log(checkId);
+		// console.log(checkId);
 		
 		if(checkId != undefined && checkId != manager1_id){
 			alert("담당자(정)은 한명만 지정이 가능합니다.");
