@@ -3357,7 +3357,7 @@
 			add_list += '<tbody class="step4-container container1">';
 			
 			for(var i = 0; i < resultArray.length; i++){
-				add_list += '<tr class="table_content">';
+				add_list += '<tr data-id="'+resultArray[i].id.split("-")[0]+"-"+resultArray[i].repeat+'" class="table_content">';
 			    add_list += '<td class="table_num">'+resultArray[i].num+'</td>';
 			    add_list += '<td>'+resultArray[i].id+'</td>';
 			    add_list += '<td>'+resultArray[i].type+'</td>';
@@ -3380,30 +3380,59 @@
 					
 				},
 				stop : function(event, ui){
-					//아이디 정렬해주기 위한 idarr 만들기
- 					var idArr = new Array();
-					for(var i = 0; i < resultArray.length; i++){
-						idArr.push(resultArray[i].id);
+					var checkId = ui.item[0].getAttribute("data-id");
+					
+					var elementEls = $(this).find(".table_content");
+					elementEls = Array.prototype.slice.call(elementEls);
+					var index = elementEls.indexOf(ui.item[0]);
+					
+					var isPrev = false;
+					var isNext = false;
+					if(typeof elementEls[index-1] != 'undefined'){
+						var prevItem = elementEls[index-1].getAttribute("data-id");
+						if(prevItem != checkId){
+							isPrev = true;
+						}
+					}else{
+						isPrev = true;
+					}
+					if(typeof elementEls[index+1] != 'undefined'){
+						var nextItem = elementEls[index+1].getAttribute("data-id");
+						if(nextItem != checkId){
+							isNext = true;
+						}
+					}else{
+						isNext = true;
 					}
 					
-					var num = 1;
- 					var targetNum = parseInt(ui.item[0].children[0].innerText)-1;
- 					reorder(num, idArr);
- 					var moveNum = parseInt(ui.item[0].children[0].innerText)-1;
-					
-					//순서 바꿔주기
-					let item = resultArray.splice(targetNum, 1);
-					resultArray.splice(moveNum, 0, item[0]);
-					
-					//id와 구획번호 재정렬
-					for(var i = 0; i < resultArray.length; i++){
-						resultArray[i].num = (i+1);
-						resultArray[i].id = idArr[i];
+					if(isPrev && isNext){
+						return false;
+					}else{
+						//아이디 정렬해주기 위한 idarr 만들기
+	 					var idArr = new Array();
+						for(var i = 0; i < resultArray.length; i++){
+							idArr.push(resultArray[i].id);
+						}
+						
+						var num = 1;
+	 					var targetNum = parseInt(ui.item[0].children[0].innerText)-1;
+	 					reorder(num, idArr);
+	 					var moveNum = parseInt(ui.item[0].children[0].innerText)-1;
+						
+						//순서 바꿔주기
+						let item = resultArray.splice(targetNum, 1);
+						resultArray.splice(moveNum, 0, item[0]);
+						
+						//id와 구획번호 재정렬
+						for(var i = 0; i < resultArray.length; i++){
+							resultArray[i].num = (i+1);
+							resultArray[i].id = idArr[i];
+						}
+						console.log(resultArray);
+						var getDataArr = [...resultArray];
+						getDataResult(getDataArr);
 					}
-					console.log(resultArray);
-					var getDataArr = [...resultArray];
-					getDataResult(getDataArr);
-				}
+				}//end stop
 			});//end sortable
 			
 		}else if(grow_type == "1"){ //난괴법
@@ -3418,6 +3447,12 @@
 				};
 				resultArray.push(result_data);
 			}
+		
+			var arr = new Array();
+			for(var i = 0; i < resultArray.length; i++){
+				arr[i] = resultArray[i].id.split("-")[0];
+			}
+			var idArray = Array.from(new Set(arr));
 			
 			var copy_step_4 = $("#copy-step-4");
 			
@@ -3444,7 +3479,12 @@
 				for(var j = 0; j < resultArray.length; j++){
 					
 					if(resultArray[j].repeat == (i+1)){
-						add_list += '<tr class="table_content">';
+						var checkId = resultArray[j].id.split("-")[0];
+						for(var k = 0; k < idArray.length; k++){
+							if(checkId == idArray[k]){
+								add_list += '<tr data-id="'+idArray[k]+'" class="table_content '+idArray[k]+'">';
+							}
+						}
 					    add_list += '<td class="table_num">'+resultArray[j].num+'</td>';
 					    add_list += '<td>'+resultArray[j].id+'</td>';
 					    add_list += '<td>'+resultArray[j].type+'</td>';
@@ -3474,34 +3514,63 @@
 					},
 					stop : function(event, ui){
 						
-						//아이디 정렬해주기 위한 idarr 만들기
-	 					var idArr = new Array();
-						for(var i = 0; i < resultArray.length; i++){
-							idArr.push(resultArray[i].id);
+						var checkId = ui.item[0].getAttribute("data-id");
+						
+						var elementEls = $(this).find(".table_content");
+						elementEls = Array.prototype.slice.call(elementEls);
+						var index = elementEls.indexOf(ui.item[0]);
+						
+						var isPrev = false;
+						var isNext = false;
+						if(typeof elementEls[index-1] != 'undefined'){
+							var prevItem = elementEls[index-1].getAttribute("data-id");
+							if(prevItem != checkId){
+								isPrev = true;
+							}
+						}else{
+							isPrev = true;
+						}
+						if(typeof elementEls[index+1] != 'undefined'){
+							var nextItem = elementEls[index+1].getAttribute("data-id");
+							if(nextItem != checkId){
+								isNext = true;
+							}
+						}else{
+							isNext = true;
 						}
 						
-						//해당 로우의 반복수
-						var num = parseInt(ui.item[0].children[3].innerText);
-						
-						//해당 집구의 테이블 로우 개수
-						var standardNum = $(".container1 .table_content").length;
-						var checkNum = (num-1) * standardNum;
-						
-						var targetNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
-	 					reorder(num, idArr);
-	 					var moveNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
+						if(isPrev && isNext){
+							return false;
+						}else{
+							//아이디 정렬해주기 위한 idarr 만들기
+		 					var idArr = new Array();
+							for(var i = 0; i < resultArray.length; i++){
+								idArr.push(resultArray[i].id);
+							}
+							
+							//해당 로우의 반복수
+							var num = parseInt(ui.item[0].children[3].innerText);
+							
+							//해당 집구의 테이블 로우 개수
+							var standardNum = $(".container1 .table_content").length;
+							var checkNum = (num-1) * standardNum;
+							
+							var targetNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
+		 					reorder(num, idArr);
+		 					var moveNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
 
-						let item = resultArray.splice(targetNum, 1);
-						resultArray.splice(moveNum, 0, item[0]);
-						var plusNum = 0;
-						for(var i = checkNum; i < (checkNum+standardNum); i++){
-							plusNum++;
-							resultArray[i].num = plusNum;
-							resultArray[i].id = idArr[i];
+							let item = resultArray.splice(targetNum, 1);
+							resultArray.splice(moveNum, 0, item[0]);
+							var plusNum = 0;
+							for(var i = checkNum; i < (checkNum+standardNum); i++){
+								plusNum++;
+								resultArray[i].num = plusNum;
+								resultArray[i].id = idArr[i];
+							}
+							console.log(resultArray);
+							var getDataArr = [...resultArray];
+							getDataResult(getDataArr);
 						}
-						console.log(resultArray);
-						var getDataArr = [...resultArray];
-						getDataResult(getDataArr);
 					}
 				});//end sortable
 			}
@@ -3968,7 +4037,7 @@
 			add_list += '<tbody class="step4-container container1">';
 			
 			for(var i = 0; i < resultArray.length; i++){
-				add_list += '<tr class="table_content">';
+				add_list += '<tr data-id="'+resultArray[i].id.split("-")[0]+"-"+resultArray[i].repeat+'" class="table_content">';
 			    add_list += '<td class="table_num">'+resultArray[i].num+'</td>';
 			    add_list += '<td>'+resultArray[i].id+'</td>';
 			    add_list += '<td>'+resultArray[i].type+'</td>';
@@ -3996,30 +4065,59 @@
 					},
 					stop : function(event, ui){//해당 구획 이동 완료 후 정렬
 						
-						//아이디 정렬해주기 위한 idarr 만들기
-	 					var idArr = new Array();
-						for(var i = 0; i < resultArray.length; i++){
-							idArr.push(resultArray[i].id);
+						var checkId = ui.item[0].getAttribute("data-id");
+						
+						var elementEls = $(this).find(".table_content");
+						elementEls = Array.prototype.slice.call(elementEls);
+						var index = elementEls.indexOf(ui.item[0]);
+						
+						var isPrev = false;
+						var isNext = false;
+						if(typeof elementEls[index-1] != 'undefined'){
+							var prevItem = elementEls[index-1].getAttribute("data-id");
+							if(prevItem != checkId){
+								isPrev = true;
+							}
+						}else{
+							isPrev = true;
+						}
+						if(typeof elementEls[index+1] != 'undefined'){
+							var nextItem = elementEls[index+1].getAttribute("data-id");
+							if(nextItem != checkId){
+								isNext = true;
+							}
+						}else{
+							isNext = true;
 						}
 						
-						var num = 1;
-	 					var targetNum = parseInt(ui.item[0].children[0].innerText)-1;
-	 					reorder(num, idArr);
-	 					var moveNum = parseInt(ui.item[0].children[0].innerText)-1;
-						
-						//순서 바꿔주기
-						let item = resultArray.splice(targetNum, 1);
-						resultArray.splice(moveNum, 0, item[0]);
-						
-						//id와 구획번호 재정렬
-						for(var i = 0; i < resultArray.length; i++){
-							resultArray[i].num = (i+1);
-							resultArray[i].id = idArr[i];
+						if(isPrev && isNext){
+							return false;
+						}else{
+							//아이디 정렬해주기 위한 idarr 만들기
+		 					var idArr = new Array();
+							for(var i = 0; i < resultArray.length; i++){
+								idArr.push(resultArray[i].id);
+							}
+							
+							var num = 1;
+		 					var targetNum = parseInt(ui.item[0].children[0].innerText)-1;
+		 					reorder(num, idArr);
+		 					var moveNum = parseInt(ui.item[0].children[0].innerText)-1;
+							
+							//순서 바꿔주기
+							let item = resultArray.splice(targetNum, 1);
+							resultArray.splice(moveNum, 0, item[0]);
+							
+							//id와 구획번호 재정렬
+							for(var i = 0; i < resultArray.length; i++){
+								resultArray[i].num = (i+1);
+								resultArray[i].id = idArr[i];
+							}
+							console.log(resultArray);
+							var getDataArr = [...resultArray];
+							getDataResult(getDataArr);
 						}
-						console.log(resultArray);
-						var getDataArr = [...resultArray];
-						getDataResult(getDataArr);
-					}
+					}//end stop
 				});//end sortable
 				
 				$("#info_popup").css("display", "none");
@@ -4039,6 +4137,12 @@
 					resultArray.push(data);
 				}
 			}//end for
+			
+			var arr = new Array();
+			for(var i = 0; i < resultArray.length; i++){
+				arr[i] = resultArray[i].id.split("-")[0];
+			}
+			var idArray = Array.from(new Set(arr));
 			
 			var copy_step_4 = $("#copy-step-4");
 			
@@ -4065,7 +4169,12 @@
 				for(var j = 0; j < resultArray.length; j++){
 					
 					if(resultArray[j].repeat == (i+1)){
-						add_list += '<tr class="table_content">';
+						var checkId = resultArray[j].id.split("-")[0];
+						for(var k = 0; k < idArray.length; k++){
+							if(checkId == idArray[k]){
+								add_list += '<tr data-id="'+idArray[k]+'" class="table_content '+idArray[k]+'">';
+							}
+						}
 					    add_list += '<td class="table_num">'+resultArray[j].num+'</td>';
 					    add_list += '<td>'+resultArray[j].id+'</td>';
 					    add_list += '<td>'+resultArray[j].type+'</td>';
@@ -4100,35 +4209,64 @@
 						},
 						stop : function(event, ui){//해당 구획 이동 완료 후 정렬
 							
-							//아이디 정렬해주기 위한 idarr 만들기
-		 					var idArr = new Array();
-							for(var i = 0; i < resultArray.length; i++){
-								idArr.push(resultArray[i].id);
+							var checkId = ui.item[0].getAttribute("data-id");
+							
+							var elementEls = $(this).find(".table_content");
+							elementEls = Array.prototype.slice.call(elementEls);
+							var index = elementEls.indexOf(ui.item[0]);
+							
+							var isPrev = false;
+							var isNext = false;
+							if(typeof elementEls[index-1] != 'undefined'){
+								var prevItem = elementEls[index-1].getAttribute("data-id");
+								if(prevItem != checkId){
+									isPrev = true;
+								}
+							}else{
+								isPrev = true;
+							}
+							if(typeof elementEls[index+1] != 'undefined'){
+								var nextItem = elementEls[index+1].getAttribute("data-id");
+								if(nextItem != checkId){
+									isNext = true;
+								}
+							}else{
+								isNext = true;
 							}
 							
-							//해당 로우의 반복수
-							var num = parseInt(ui.item[0].children[3].innerText);
-							
-							//해당 집구의 테이블 로우 개수
-							var standardNum = $(".container1 .table_content").length;
-							var checkNum = (num-1) * standardNum;
-							
-							var targetNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
-		 					reorder(num, idArr);
-		 					var moveNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
+							if(isPrev && isNext){
+								return false;
+							}else{
+								//아이디 정렬해주기 위한 idarr 만들기
+			 					var idArr = new Array();
+								for(var i = 0; i < resultArray.length; i++){
+									idArr.push(resultArray[i].id);
+								}
+								
+								//해당 로우의 반복수
+								var num = parseInt(ui.item[0].children[3].innerText);
+								
+								//해당 집구의 테이블 로우 개수
+								var standardNum = $(".container1 .table_content").length;
+								var checkNum = (num-1) * standardNum;
+								
+								var targetNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
+			 					reorder(num, idArr);
+			 					var moveNum = parseInt(ui.item[0].children[0].innerText)-1+checkNum;
 
-							let item = resultArray.splice(targetNum, 1);
-							resultArray.splice(moveNum, 0, item[0]);
-							var plusNum = 0;
-							for(var i = checkNum; i < (checkNum+standardNum); i++){
-								plusNum++;
-								resultArray[i].num = plusNum;
-								resultArray[i].id = idArr[i];
+								let item = resultArray.splice(targetNum, 1);
+								resultArray.splice(moveNum, 0, item[0]);
+								var plusNum = 0;
+								for(var i = checkNum; i < (checkNum+standardNum); i++){
+									plusNum++;
+									resultArray[i].num = plusNum;
+									resultArray[i].id = idArr[i];
+								}
+								console.log(resultArray);
+								var getDataArr = [...resultArray];
+								getDataResult(getDataArr);
 							}
-							console.log(resultArray);
-							var getDataArr = [...resultArray];
-							getDataResult(getDataArr);
-						}
+						}//end stop
 					});//end sortable
 				}
 				$("#info_popup").css("display", "none");
@@ -4381,7 +4519,7 @@
 						},
 						stop : function(event, ui){//해당 구획 이동 완료 후 정렬
 							
-var checkId = ui.item[0].getAttribute("data-id");
+							var checkId = ui.item[0].getAttribute("data-id");
 							
 							var elementEls = $(this).find(".table_content");
 							elementEls = Array.prototype.slice.call(elementEls);
