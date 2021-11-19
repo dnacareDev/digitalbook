@@ -26,6 +26,7 @@ public class Plan
 	private String modify_date;				// 수정일
 	private int plan_step;					// 재배계획 스텝(0: 수정가능, 1: 담당자만 수정 가능)
 	private int last_plan_id;				// insert 시 등록된 pk 값
+	private int plan_read;					// 읽음 여부
 	
 	//과제 사용 컬럼
 	private String report_title;			// 과제명

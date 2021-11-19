@@ -278,6 +278,23 @@
 		    </div>
     	</div>
     	
+    	<div class="atbd-notice" id="info_popup" style="z-index:10; width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
+        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+        		<div class="card-body">
+        			<div class="atbd-notice__content">
+        				<div class="atbd-notice__top text-center">
+        					<div class="atbd-notice__icon bg-success">
+        						<i class="fas fa-check color-white"></i>
+        					</div>
+        					<div class="atbd-notice__text">
+        						<h4>포장QR 데이터를 작업중입니다.</h4>
+        					</div>
+        				</div>
+        			</div>
+        		</div>
+        	</div>
+        </div>
+    	
     	<div class="modal-basic modal fade show" id="qr2Modal" tabindex="-1" role="dialog" aria-hidden="true">
 		    <div class="modal-dialog modal-md" role="document">
 		        <div class="modal-content modal-bg-white">
@@ -575,6 +592,7 @@ $(document).ready(function()
 					}
 					
 					qr1_list.empty();
+					var start = performance.now();
 					qr1_list.append(add_list);
 					
 					$(document).find(".inner_text").each(function(index, item){
@@ -585,27 +603,30 @@ $(document).ready(function()
 						$(this).children().eq(4).text("반복번호 : "+result[index].segment_repeat);
 						$(this).prev().attr("data-id", result[index].segment_id);
 					});
+					var duration = performance.now() - start;
 					
 					var protocol = window.location.protocol;
 					var port = ":"+window.location.port;
 					var hostname = "//"+window.location.hostname;
 					
 					var qrcodeList = document.getElementsByClassName('qr-section');
-					
-					Array.prototype.forEach.call(qrcodeList, (elem, index) => {
-						var segment_id = elem.getAttribute('data-id');
-						var url = protocol+hostname+port+"/plan/sampleSegment?report_code="+report_code+"&segment_id="+segment_id;
-						var qrcode = new QRCode(elem,{
-							width : 160,
-							height : 160,
-							colorDark : "#000000",
-					        colorLight : "#ffffff",
-					        correctLevel : QRCode.CorrectLevel.H
+					$("#info_popup").css("display", "flex");
+					setTimeout(function(){
+						Array.prototype.forEach.call(qrcodeList, (elem, index) => {
+							var segment_id = elem.getAttribute('data-id');
+							var url = protocol+hostname+port+"/plan/sampleSegment?report_code="+report_code+"&segment_id="+segment_id;
+							var qrcode = new QRCode(elem,{
+								width : 160,
+								height : 160,
+								colorDark : "#000000",
+						        colorLight : "#ffffff",
+						        correctLevel : QRCode.CorrectLevel.H
+							});
+							qrcode.makeCode(url);
 						});
-						qrcode.makeCode(url);
-					});
-					
-					$("#qr1Modal").modal("show");
+						$("#info_popup").css("display", "none");
+						$("#qr1Modal").modal("show");
+					}, (duration*1000));
 					
 				}//end success
 			});//end ajax

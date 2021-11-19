@@ -63,4 +63,18 @@ public class HomeServiceImpl implements HomeService
 	{
 		return mapper.SelectUser(user);
 	}
+	
+	//알림에 노출할 plan list
+	@Override
+	public List<Plan> selectNonReadPlanList(int user_id) {
+		
+		return mapper.selectNonReadPlanList(user_id);
+	}
+	
+	//알림 내 plan 클릭시 읽음 처리
+	@Override
+	public int updatePlanRead(int plan_id) {
+		
+		return mapper.updatePlanRead(plan_id);
+	}
 }
