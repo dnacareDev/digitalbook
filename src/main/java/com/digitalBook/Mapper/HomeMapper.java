@@ -28,4 +28,11 @@ public interface HomeMapper
 	List<Schedule> SelectAdminSchedule(User user);
 
 	List<User> SelectUser(User user);
+	
+	//알림에 노출할 plan list
+	List<Plan> selectNonReadPlanList(int user_id);
+	
+	//알림 내 plan 클릭시 읽음 처리
+	int updatePlanRead(int plan_id);
+	
 }

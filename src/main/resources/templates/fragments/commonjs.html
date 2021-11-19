@@ -97,5 +97,60 @@
 			$("."+pathArray[2]).addClass("active");
 		}
 	}
+	
+	
+	//알림에 노출할 plan 데이터 가져오기
+	$.ajax({
+		url : "/selectNonReadPlan",
+		method: "GET",
+		success : function(result){
+			console.log(result);
+			$("#alarm_count").text(result.length);
+			let alarm_list = $("#alarm_list");
+			
+			var add_list = "";
+			
+			for(var i = 0; i < result.length; i++){
+				add_list += '<li class="nav-notification__single nav-notification__single--unread d-flex flex-wrap">';
+				add_list += '<div class="nav-notification__type nav-notification__type--secondary">';
+				add_list += '<span class="data-calendar" data-feather="calendar"></span>';
+				add_list += '</div>';
+				add_list += '<div class="nav-notification__details">';
+				add_list += '<p>';
+				add_list += '<a href="javascript:readPlan('+result[i].plan_id+');" class="subject stretched-link text-truncate" style="max-width: 180px;">'+result[i].plan_code+'</a>';
+				add_list += '</p>';
+				add_list += '<p>';
+				add_list += '<span class="time-posted">담당자: '+result[i].user_name_k+'</span>';
+				add_list += '</p>';
+				add_list += '<p>';
+				add_list += '<span class="time-posted">조사항목: '+result[i].method_title+'</span>';
+				add_list += '</p>';
+				add_list += '</div>';
+				add_list += '</li>';
+			}//end for
+			
+			alarm_list.empty();
+			alarm_list.append(add_list);
+			
+			$(document).find(".data-calendar").each(function(index, item){
+				$(this).attr("data-feather", "calendar");
+			});
+			
+		}//end success
+	});
+	
+	//알람 내 재배계획 클릭시 이벤트
+	function readPlan(plan_id){
+		
+		$.ajax({
+			url : "/updatePlanRead?plan_id="+plan_id,
+			method: "GET",
+			success : function(result){
+				window.location.href = "/plan/insertResult?plan_id="+plan_id;
+			}
+		});
+		
+	}
+	
 </script>
 </html>

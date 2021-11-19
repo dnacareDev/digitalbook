@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -123,4 +124,29 @@ public class HomeController
 		
 		return result;
 	}
+	
+	
+	//알림에 노출할 plan list
+	@ResponseBody
+	@RequestMapping("/selectNonReadPlan")
+	public List<Plan> SelectNonReadPlanList(Authentication auth)
+	{
+		
+		User prin = (User)auth.getPrincipal();
+		
+		List<Plan> plans = service.selectNonReadPlanList(prin.getUser_id());
+		
+		return plans;
+	}
+	
+	//알림 내 plan 클릭시 읽음 처리
+	@ResponseBody
+	@RequestMapping("/updatePlanRead")
+	public int UpdatePlanRead(@RequestParam("plan_id") int plan_id)
+	{
+		int result = service.updatePlanRead(plan_id);
+		
+		return result;
+	}
+	
 }
