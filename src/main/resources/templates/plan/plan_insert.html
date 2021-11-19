@@ -3421,15 +3421,23 @@
 			}, (duration*1000));
 			
 			//그룹별 색깔 적용해주기
-			$(document).find(".table_content").each(function(i, item){
-				/* id_color9 */
+		
+			/* id_color9 */
+			/*  ******원래 코드 *******
 				for(var j = 0; j < idArray.length; j++){
 					if($(this).hasClass(idArray[j])){
-						$(this).addClass("id_color"+(j+1));
+						$(this).addClass("id_color" + (j+1));
+					}
+				}
+			*/
+			$(document).find(".table_content").each(function(i, item){		
+				for(var j = 0; j < idArray.length; j++){
+					var colorIndex = j % 10;
+					if($(this).hasClass(idArray[j])){
+						$(this).addClass("id_color" + (colorIndex + 1));
 					}
 				}
 			});
-			
 		}
 		
 		//이곳에서 데이터 받아와야함 : important
