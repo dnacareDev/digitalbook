@@ -23,10 +23,22 @@ var segmentEls = document.querySelectorAll('#step4-segment li .segment');
 var segmentMove = document.querySelectorAll('#step4-segment li .arrowMove');
 var segmentRotate = document.querySelectorAll('#step4-segment li .refresh');
 
+var resultArray = new Array();
+var factorArray = new Array();
+
+var ArrayNow = [];
+var idArrayAll = [];
+
 function getDataResult(getDataArr, type){
 	segmentData = getDataArr;
+	// segmentInner = inner;
+	segmentType = type;
+	//console.log(segmentData,"segmentData in getDataResult");
+	//console.log(segmentType,"segmenttype in getDataResult");
+	
 	tableEls = document.querySelectorAll('.step4-container .table_content');
 	renderSegment(segmentData);
+	onColorChange();
 }
 
 function onClickColumnBtn(){
@@ -37,13 +49,209 @@ function onClickColumnBtn(){
 	}
 }
 
-function segmentComp(data){
-	var {id, type, repeat} = data;
+function onColorChange(result){
+	//console.log(segmentType,"segmenttype in oncolorchange");
+	resultArray = [];
+	factorArray = [];
 	
-	var html = '';
+	var factor1 = "";
+	var factor2 = "";
+	var factor3 = "";
+	
+	if(Object.keys(data1).length != 0){
+		if(data1.type == "시비량"){
+			factor1 = data1.level.split(",");
+		}else if(data1.type == "시험재료"){
+			factor1 = data1.text.split(",");
+		}else{
+			factor1 = data1.content.split(",");
+		}
+	}
+	if(Object.keys(data2).length != 0){
+		if(data2.type == "시비량"){
+			factor2 = data2.level.split(",");
+		}else if(data2.type == "시험재료"){
+			factor2 = data2.text.split(",");
+		}else{
+			factor2 = data2.content.split(",");
+		}
+	}
+	if(Object.keys(data3).length != 0){
+		if(data3.type == "시비량"){
+			factor3 = data3.level.split(",");
+		}else if(data3.type == "시험재료"){
+			factor3 = data3.text.split(",");
+		}else{
+			factor3 = data3.content.split(",");
+		}
+	}
+	
+	var plan_repeat = $("#plan_repeat").val();
+	
+	var grow_type = $("#grow_type option:selected").val();
+	
+	var num = 0;
+	var num1 = 0;
+	var level = 0;
+	var id = "";
+	var id1 = "";
+	var id2 = "";
+	var type = "";
+	var type2 = "";
+	var type3 = "";
+	var repeat = "";
+	
+	//factor null 유무에 따라 factorArray 만들어 주기
+	if(factor1 != "" && factor2 == "" && factor3 == ""){
+		for(var i = 0; i < factor1.length; i++){
+			id = "A"+(i+1);
+			type = factor1[i];
+			num++;
+			var number = num;
+			
+			var data = {"num" : number, "id" : id, "type" : type};
+			factorArray.push(data);
+			
+			id = "";
+			type = "";
+		}
+	}else if(factor1 != "" && factor2 != "" && factor3 == ""){
+		for(var i = 0; i < factor1.length; i++){
+			id = "A"+(i+1);
+			type = factor1[i];
+			
+			for(var j = 0; j < factor2.length; j++){
+				id2 = id;
+				id2 = id2 + '-B' + (j+1);
+				type2 = type;
+				type2 = type2 + ',' + factor2[j];
+				num++;
+				var number = num;
+				
+				var data = {"num" : number, "id" : id2, "type" : type2};
+				factorArray.push(data);
+			}
+			id = "";
+			type = "";
+		}
+	}else if(factor1 != "" && factor2 != "" && factor3 != ""){
+		for(var i = 0; i < factor1.length; i++){
+			id = "A"+(i+1);
+			type = factor1[i];
+			
+			for(var j = 0; j < factor2.length; j++){
+				id2 = id;
+				id2 = id2 + '-B' + (j+1);
+				type2 = type;
+				type2 = type2 + ',' + factor2[j];
+				
+				for(var k = 0; k < factor3.length; k++){
+					num++;
+					var number = num;
+					id3 = id2;
+					id3 = id3 + '-C'+(k+1);
+					type3 = type2;
+					type3 = type3 + ',' + factor3[k];
+					
+					var data = {"num" : number, "id" : id3, "type" : type3};
+					factorArray.push(data);
+				}//end for3
+				
+			}//end for2
+			id = "";
+			type = "";
+		}//end for1
+	}
+		
+	if(segmentType == 0){ //완전임의배치******************
+		console.log("0입니다");	
+	}else if(segmentType == 1){ //난괴법******************
+		console.log("1입니다.")
+	}else if(segmentType == 2){ //분할구배치법******************
+		console.log("2입니다.")
+		
+		//만들어준 factorArray를 가지고 최종 resultArray 만들어 주기
+		for(var i = 0; i < plan_repeat; i++){
+			level++;
+			num1 = 0;
+			for(var j = 0; j < factorArray.length; j++){
+				num1++;
+				var number = num1;
+				var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+				
+				resultArray.push(data);
+			}
+		}//end for
+		
+		//분할구배치법에서 그룹 나눠줄 id array
+		var arr = new Array();
+		for(var i = 0; i < resultArray.length; i++){
+			arr[i] = resultArray[i].id.split("-")[0];
+		}
+		
+		var idArray = Array.from(new Set(arr));
+		var idArrayNow = "";
+		
+		for(var j = 0; j < resultArray.length; j++){
+			var checkId = resultArray[j].id.split("-")[0];
+			console.log(checkId,"checkId");
+			for(var k = 0; k < idArray.length; k++){
+				if(checkId == idArray[k]){
+					idArrayNow = idArray[k];
+					ArrayNow.push(idArrayNow);
+					console.log(idArrayNow,"idArrayNow");			
+				}
+			}
+		}
+		// color 적용하기	
+		idArrayAll.push(idArray);
+	}else if(segmentType == 3){ //세세구배치법******************
+		console.log("3입니다.");
+		
+		//만들어준 factorArray를 가지고 최종 resultArray 만들어 주기
+		for(var i = 0; i < plan_repeat; i++){
+			level++;
+			num1 = 0;
+			for(var j = 0; j < factorArray.length; j++){
+				num1++;
+				var number = num1;
+				var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+				
+				resultArray.push(data);
+			}
+		}//end for
+		
+		//분할구배치법에서 그룹 나눠줄 id array
+		var arr = new Array();
+		for(var i = 0; i < resultArray.length; i++){
+			arr[i] = resultArray[i].id.split("-")[0]+"-"+resultArray[i].id.split("-")[1];
+		}
+		var idArray = Array.from(new Set(arr));
+		var idArrayNow = "";
+				
+		for(var j = 0; j < resultArray.length; j++){
+			var checkId = resultArray[j].id.split("-")[0]+"-"+resultArray[j].id.split("-")[1];
+			for(var k = 0; k < idArray.length; k++){
+				if(checkId == idArray[k]){
+					idArrayNow = idArray[k];
+					console.log(idArrayNow,"idArrayNow33");		
+					ArrayNow.push(idArrayNow);
+				}
+			}
+		}
+		// color 적용하기	
+		idArrayAll.push(idArray);
+		
+	}
+}
 
+function segmentComp(data, index){
+	var {id, type, repeat} = data;
+	var html = '';
+	
+	
 	html += '<li>';
-	html += 	'<div class="segment">' + id + '</div>';
+	html += 	'<div class="segment ' + ArrayNow[index] + '" id="segment">' + id + '</div>';
 	html +=     '<div class="arrowMove">';
 	html +=         '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-move" viewBox="0 0 16 16">';
 	html +=           '<path fill-rule="evenodd" d="M7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708l2-2zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10zM.146 8.354a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L1.707 7.5H5.5a.5.5 0 0 1 0 1H1.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2zM10 8a.5.5 0 0 1 .5-.5h3.793l-1.147-1.146a.5.5 0 0 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L14.293 8.5H10.5A.5.5 0 0 1 10 8z"/>';
@@ -257,15 +465,21 @@ var WrapDiff = 46; // wrap diff
 
 function renderSegment(data){
 	var dataGet = data;
+	onColorChange(dataGet);
+	console.log("renderSegment");
 	// 초기화
 	stepFourWrap.innerHTML = '';
 	// 1차 : 컴포넌트 삽입 
 	var str = "";
+	
 	for(var i = 0; i < dataGet.length; i++){
-		str += segmentComp(dataGet[i]);
+		str += segmentComp(dataGet[i], i);
 	}
 	stepFourWrap.innerHTML = str;
 	segmentSetting(dataGet);
+	
+	// console.log(dataGet.length, "dataGetLength");
+	// console.log(dataGet,"dataGet");
 }
 
 function segmentSetting(data){
@@ -314,7 +528,6 @@ function segmentSetting(data){
 				dataIdLength = dataGet[i].id.length;
 			}
 		}
-		console.log(dataIdLength);
 		elWidth = (dataIdLength * 10) + 26;
 	}
 	
@@ -327,15 +540,28 @@ function segmentSetting(data){
 				segmentLi[elRender].style.transform = 'translate(' + ( ( elWidth * c ) + WrapDiff ) + 'px, ' + ( (elHeight * r) + WrapDiff ) + 'px)';
 				segmentEls[elRender].style.width = elWidth + 'px';
 				
+				
 				if(transformRotateCheck(elRender) !== undefined && transformRotateCheck(elRender) !== null){			
 					segmentEls[elRender].style.transform = 'rotate(' + transformRotateCheck(elRender) + 'deg)';
 				}else{
 					segmentEls[elRender].style.transform = 'rotate(' + 0 + 'deg)';
 				}
+				
+				// color 설정
+				var idArrayAll2 = idArrayAll[0];
+								
+				for(var j = 0; j < idArrayAll2.length; j++){
+				var colorIndex = j % 10;
+					if(segmentEls[elRender].classList.contains(idArrayAll2[j])){
+						segmentEls[elRender].classList.add("id_color" + (colorIndex + 1));
+					}
+				}
+		
 				elRender++;
 			}
 		}
 	}
+	
 	
 	for(var t = 0; t < segmentEls.length; t++){
 		segmentEls[t].addEventListener('mousedown', onElDown);
