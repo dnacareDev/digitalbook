@@ -456,10 +456,10 @@ var WrapDiff = 46; // wrap diff
 
 function renderSegment(data){
 	var dataGet = data;
-	onColorChange(dataGet);
 	// 초기화
 	stepFourWrap.innerHTML = '';
 	// 1차 : 컴포넌트 삽입 
+		onColorChange(dataGet);
 	var str = "";
 	
 	for(var i = 0; i < dataGet.length; i++){
@@ -647,19 +647,6 @@ function segmentSetting(data){
 							segmentEls[elRender].style.transform = 'rotate(' + 0 + 'deg)';
 						}
 						
-						// color 설정
-						var idArrayAll2 = idArrayAll[0];
-						
-						if(idArrayAll2 !== undefined && segmentLi[elRender] !== null){
-											
-							for(var j = 0; j < idArrayAll2.length; j++){
-							var colorIndex = j % 10;
-								if(segmentEls[elRender].classList.contains(idArrayAll2[j])){
-									segmentEls[elRender].classList.add("id_color" + (colorIndex + 1));
-								}
-							}
-						}
-				
 						elRender++;
 					}
 				}
@@ -681,19 +668,6 @@ function segmentSetting(data){
 						segmentEls[elRender].style.transform = 'rotate(' + 0 + 'deg)';
 					}
 					
-					// color 설정
-					var idArrayAll2 = idArrayAll[0];
-					
-					if(idArrayAll2 !== undefined && segmentLi[elRender] !== null){
-										
-						for(var j = 0; j < idArrayAll2.length; j++){
-						var colorIndex = j % 10;
-							if(segmentEls[elRender].classList.contains(idArrayAll2[j])){
-								segmentEls[elRender].classList.add("id_color" + (colorIndex + 1));
-							}
-						}
-					}
-			
 					elRender++;
 				}
 			}
