@@ -188,6 +188,7 @@ function onColorChange(result){
 		for(var i = 0; i < resultArray.length; i++){
 			arr[i] = resultArray[i].id.split("-")[0];
 		}
+		console.log(resultArray,'resultArray');
 		
 		var idArray = Array.from(new Set(arr));
 		var idArrayNow = "";
@@ -546,9 +547,12 @@ function segmentSetting(data){
 				}else{
 					segmentEls[elRender].style.transform = 'rotate(' + 0 + 'deg)';
 				}
-				
+			
 				// color 설정
 				var idArrayAll2 = idArrayAll[0];
+				
+				console.log(idArrayAll2,'idArrayAll2');
+				console.log(idArrayAll,'idArrayAll')
 								
 				for(var j = 0; j < idArrayAll2.length; j++){
 				var colorIndex = j % 10;
