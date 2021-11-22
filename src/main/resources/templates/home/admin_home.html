@@ -390,7 +390,7 @@
 				{
 					var title = result.schedule[i].u1_supervisor + "(" + result.schedule[i].u2_manager + "), " + result.schedule[i].method_title;
 					
-					var schedule = {"title" : title, "start" : result.schedule[i].start_date, "end" : result.schedule[i].end_date, "id" : result.schedule[i].sch_id, "classNames" : "schedule"};
+					var schedule = {"title" : title, "start" : result.schedule[i].start_date, "end" : result.schedule[i].end_date+" 23:59:59", "id" : result.schedule[i].sch_id, "classNames" : "schedule"};
 					
 					arr.push(schedule);
 				}
