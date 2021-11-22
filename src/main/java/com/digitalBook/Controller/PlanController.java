@@ -580,7 +580,6 @@ public class PlanController
 		User prin = (User)auth.getPrincipal();
 		
 		Plan plan = service.selectPlanDetail(plan_id);
-		List<User> user = service.selectUserList(prin.getUser_group());
 		List<Schedule> sch = service.selectScheduleList(plan_id);
 		
 		List<Record> record = service.selectRecordList(plan_id);
@@ -594,7 +593,6 @@ public class PlanController
 		List<Method> method = service.selectPlanMethodList(arr);
 		
 		mv.addObject("plan", plan);
-		mv.addObject("user", user);
 		mv.addObject("record", record);
 		mv.addObject("sch", sch);
 		mv.addObject("method", method);
