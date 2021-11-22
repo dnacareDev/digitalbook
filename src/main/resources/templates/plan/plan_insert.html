@@ -3617,6 +3617,29 @@
 		
 	}
 	
+	//테스트
+	$("#random01").on("click", function(){
+		var length = $(document).find(".table_content").length;
+		var repeat = $("#plan_repeat");
+		var randomNum = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
+		
+		var arr = new Array();
+		for(var i = 0; i < resultArray.length; i++){
+			arr.push(resultArray[i].id.split("-")[0]+"-"+resultArray[i].repeat);
+		}
+		var test = Array.from(new Set(arr));
+		test.sort(() => Math.random() - 0.5);
+		
+		for(var i = 0; i < test.length; i++){
+			$(document).find(".table_content").each(function(index, item){
+				if($(this).attr("data-id") == test[i]){
+					$(this).insertBefore($(document).find(".table_content[data-id='"+test[i+1]+"']:last"));
+				}
+			});
+		}
+		
+	});
+	
 	//구획정보 처리포장면적 이벤트
 	$(document).on("keyup", ".container1 .table_content:eq(0) .seg_area", function(){
 		var input_text = $(this).val();

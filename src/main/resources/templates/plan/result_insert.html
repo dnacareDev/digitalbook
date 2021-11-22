@@ -437,13 +437,15 @@
 
 	let plan = /*[[${plan}]]*/ "null";
 	let method = /*[[${method}]]*/ "null";
-	let user = /*[[${user}]]*/ "null";
 	let sch = /*[[${sch}]]*/ "null";
 	
 	let results = /*[[${results}]]*/ "null";
 	
 	let segment = /*[[${segment}]]*/ "null";
 	let segmentInfo = /*[[${segmentInfo}]]*/ "null";
+	
+	//로그인한 user 객체
+	let user = /*[[${#authentication.principal}]]*/ "null";
 	
 	//시험구 배치 데이터
 	let data1 = new Object();
@@ -492,6 +494,17 @@
 		//구획정보 첫번째에 active(선택) 이벤트 걸어주기
 		$("#table_body").children(":first").addClass("active");
 		$("#step4-segment").children(":first").addClass("active");
+		
+		//담당자 아닌경우 저장 버튼 숨기기
+		var schId_arr = new Array();
+		for(var i = 0; i < sch.length; i++){
+			schId_arr.push(sch[i].sch_supervisor);
+			schId_arr.push(sch[i].sch_manager);
+		}
+		
+		if(schId_arr.includes(user.user_id) == false){
+			$(".type1").css("display", "none");
+		}
 		
 	}
 	
