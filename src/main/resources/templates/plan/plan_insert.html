@@ -3380,7 +3380,7 @@
 									resultArray[i].num = plusNum;
 									resultArray[i].id = idArr[i];
 								}
-								//console.log(resultArray);
+								console.log('sortable', resultArray);
 								var getDataArr = [...resultArray];
 								getDataResult(getDataArr);
 							}
@@ -3409,6 +3409,9 @@
 
 				
 			});
+			console.log('testinsert', resultArray);
+			var getDataArr = [...resultArray];
+			getDataResult(getDataArr, grow_type);
 			
 		}else if(grow_type == "3"){ //세세구배치법
 			

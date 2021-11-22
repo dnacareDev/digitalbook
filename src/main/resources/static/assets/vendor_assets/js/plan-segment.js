@@ -33,7 +33,6 @@ function getDataResult(getDataArr, type){
 	
 	tableEls = document.querySelectorAll('.step4-container .table_content');
 	renderSegment(segmentData);
-	onColorChange();
 }
 
 function onClickColumnBtn(){
@@ -459,7 +458,7 @@ function renderSegment(data){
 	// 초기화
 	stepFourWrap.innerHTML = '';
 	// 1차 : 컴포넌트 삽입 
-		onColorChange(dataGet);
+	onColorChange(dataGet);
 	var str = "";
 	
 	for(var i = 0; i < dataGet.length; i++){
@@ -467,10 +466,6 @@ function renderSegment(data){
 	}
 	stepFourWrap.innerHTML = str;
 	segmentSetting(dataGet);
-}
-
-function typeSetting(){
-
 }
 
 function segmentSetting(data){
@@ -529,9 +524,8 @@ function segmentSetting(data){
 		
 		var type2Diff = 70;
 		
-	
 		if(segmentType == 2){ // ************************분할구배치법
-			
+			console.log('type2:',planRepeat);
 			var getDataId = segmentEls[elRender].getAttribute('data-segmentid');
 			var getClass = document.getElementsByClassName(getDataId);
 		
@@ -581,7 +575,6 @@ function segmentSetting(data){
 			}
 				
 		}else if(segmentType == 3){ //*******************세세구배치법
-		
 			var getDataId = segmentEls[elRender].getAttribute('data-segmentid');
 			var getClass = document.getElementsByClassName(getDataId);
 		
