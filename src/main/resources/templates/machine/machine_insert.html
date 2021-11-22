@@ -15,6 +15,27 @@
 		margin-top:-15px;
 	}
 	.end{margin-left:10px;}
+	.select-hide{
+		display: none;
+	}
+	.select-show{
+		display: block;
+	    position: absolute;
+	    z-index :10;
+	    top: 30px;
+	    width: 97.5%;
+	    background-color: white;
+	    border:1px solid;
+	    border-radius: 5px;
+	    cursor: pointer;
+	    overflow-y: auto;
+	    height: 150px;
+	}
+
+	.select .select-show li{
+	    padding:0 0 0 5px;
+	    line-height: 30px;
+	}
 </style>
 <body class="layout-light top-menu overlayScroll">
 	<div class="mobile-search"></div>
@@ -73,11 +94,18 @@
 		                            	<label for="machine_range" class="color-dark align-center">활용범위</label>
 		                            </div>
 		                            <div class="col-sm-5">
-		                                <select class="form-control b-light" id="machine_range">
+		                            	<div class="select" data-role="selectBox" style="height: auto;">
+		                            		<input type="text" data-value="optValue" onkeyup="filter(this);" onclick="selectFilter(this);" data-select="" class="selected-option form-control" id="machine_range" placeholder="활용범위 선택" autocomplete="off">
+		                            		<ul class="select-hide">
+		                            			<li class="machine_range_list"><span class="machine_range_text" data-value="0">공동활용허용가능</span></li>
+		                            			<li class="machine_range_list"><span class="machine_range_text" data-value="1">단독활용만 가능</span></li>
+		                            		</ul>
+		                            	</div>
+		                                <!-- <select class="form-control b-light" id="machine_range">
 			                                <option value="9">활용범위 선택</option>
 			                                <option value="0">공동활용허용가능</option>
 			                                <option value="1">단독활용만 가능</option>
-		                                </select>
+		                                </select> -->
 		                            </div>
 		                    	</div>
 		                    	<div class="row mt-3">
@@ -149,37 +177,6 @@
 					</div>
 				</div>
 		    </div>
-		    
-		    <div class="modal-basic modal fade show" id="reagentModal" tabindex="-1" role="dialog" aria-hidden="true">
-			    <div class="modal-dialog modal-md" role="document">
-			        <div class="modal-content modal-bg-white">
-			        	<div class="modal-header">
-			        		<h6 class="modal-title">엑셀 업로드</h6>
-	                    	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	                        	<span data-feather="x"></span>
-	                        </button>
-			        	</div>
-			            <div class="modal-body">
-			            	<div class="col-12">
-				            	<form action="#">
-				            		<div class="row">
-				            			<div class="col-sm-3 d-flex aling-items-center mt-4">
-		                                    <label class="color-dark align-center">엑셀 파일</label>
-		                                </div>
-		                                <div class="col-sm-5 mb-2">
-		                                	<label for="uploadFile"></label>
-		                                    <input type="file" id="uploadFile">
-		                                </div>
-				            		</div>
-				            		<div class="button-group d-flex justify-content-end">
-					                   <button class="btn btn-primary btn-default btn-squared">업로드</button>
-					           		</div>
-				            	</form>
-			            	</div>
-			            </div>
-			        </div>
-			    </div>
-			</div>
 
 	        <div class="atbd-notice" id="success_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
 	        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
@@ -208,11 +205,71 @@
     <!-- 공통 js -->
     <th:block th:include="/../fragments/commonjs.html"></th:block>
 <script type="text/javascript">
-	//modal show
-	$("#excelBtn").on("click", function()
-	{
-		$("#reagentModal").modal("show");
-	});
+
+	function selectFilter(e){
+		
+		let body = document.querySelector('body');
+		//let select = document.querySelector('[data-role="selectBox"]');
+		let select = e.parentNode;
+		let dataValue = e;
+		let option = e.nextElementSibling;
+		let opts = option.querySelectorAll('li');
+		
+		function selects(e){
+			e.stopPropagation();
+		    if(option.classList.contains('select-hide')){
+		        option.classList.remove('select-hide');
+		        option.classList.add('select-show');
+		    }else{
+		        option.classList.add('select-hide');
+		        option.classList.remove('select-show');
+		    }
+		    selectOpt();
+			
+		}
+		
+		function hideSelect(){
+		    if(option.classList.contains('select-show')){
+		        option.classList.add('select-hide');
+		        option.classList.remove('select-show');
+		    }
+		}
+		
+		/* 옵션선택 */
+		function selectOpt(){
+		    opts.forEach(opt=>{
+		        const innerValue = opt.children[0].innerHTML;
+		        const dataSelect = opt.children[0].getAttribute('data-value');
+		        function changeValue(){
+		        	dataValue.value = innerValue;
+		        	dataValue.setAttribute('data-select', dataSelect); 
+		        }
+		        opt.addEventListener('click',changeValue)
+		    });
+		}
+		
+		select.addEventListener('click',selects);
+		body.addEventListener('click',hideSelect);
+		
+	}
+	
+	//필터 함수
+	function filter(e){
+		
+		var search = $(e).val().toLowerCase();
+		var className = $(e).next().children().eq(0).attr('class');
+		
+		$(document).find("."+className).each(function(index, item){
+			var text = $(this).children().text();
+			
+			if(text.toLowerCase().includes(search)){
+				$(this).css("display", "flex");
+			}else{
+				$(this).css("display", "none");
+			}
+		});
+		
+	}//end 과제 필터 함수
 	
 	//발송일자 datepicker
 	$("#machine_date").datepicker(
