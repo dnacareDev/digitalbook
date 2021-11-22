@@ -539,6 +539,9 @@ function segmentSetting(data){
 			var getPlanRepeatLength = Math.ceil(copyResultArray.length / planRepeat) // 한 집구당 갯수
 			
 			var getColumnLength = Math.ceil(getPlanRepeatLength / getDataIdLength ); // 한 집구에 몇개의 data묶음이 있는지,
+			console.log(getDataIdLength,"getDataIdLength,row");
+			console.log(getColumnLength,"getColumnLength,column");
+			
 			
 			for(var t = 0; t < planRepeat; t++){ // 집구별 반복
 				for(var c = 0; c < getColumnLength; c++){ // column
@@ -547,12 +550,7 @@ function segmentSetting(data){
 							
 							zindex.push(elRender);
 							segmentLi[elRender].style.zIndex = elRender;
-							//console.log('heightCheck:',(((elHeight * getPlanRepeatLength) * t)));
-							//console.log('heightCheckdiff:',(((elHeight * getPlanRepeatLength) * t) + type2Diff ));
 							segmentLi[elRender].style.transform = 'translate(' + ( ( elWidth * c ) + WrapDiff ) + 'px, ' + ( (elHeight * r) + WrapDiff + (((elHeight * getDataIdLength + type2Diff ) * t) ) ) + 'px)';
-							console.log(elHeight,"elHeight");
-							console.log((elHeight * getDataIdLength,"(elHeight * getDataIdLength)"));
-							console.log(((elHeight * getDataIdLength) * t),"((elHeight * getDataIdLength) * t)");
 							
 							segmentEls[elRender].style.width = elWidth + 'px';
 							
@@ -584,45 +582,55 @@ function segmentSetting(data){
 				
 		}else if(segmentType == 3){ //*******************세세구배치법
 		
-			var getPlanRepeatLength = Math.ceil(copyResultArray.length / planRepeat) // 한 집구당 갯수
-			var getPlanHeight = Math.ceil(getPlanRepeatLength / row);
+			var getDataId = segmentEls[elRender].getAttribute('data-segmentid');
+			var getClass = document.getElementsByClassName(getDataId);
+		
+			console.log(getClass,getClass.length,"getClassLength");
+
+			var getDataIdLength = Math.ceil(getClass.length / (2 * planRepeat)); // 한 집구의 한 data섹션 갯수
+			var getPlanRepeatLength = Math.ceil(copyResultArray.length / planRepeat) // 한 집구당 전체 갯수
 			
-			console.log(getPlanHeight,"getPlanHeight");
+			var getColumnLength = Math.ceil(getPlanRepeatLength / getDataIdLength ); // 한 집구에 몇개의 data묶음이 있는지, 
 			
+			console.log(getPlanRepeatLength,"getPlanRepeatLength");
+			console.log(getDataIdLength,"getDataIdLength");
+			console.log(getColumnLength,"getColumnLength");
 			
-			
-			for(var r = 0; r < row; r++){
-				for(var c = 0; c < column; c++){
-					if(segmentLi[elRender] !== undefined && segmentLi[elRender] !== null){
-						zindex.push(elRender);
-						segmentLi[elRender].style.zIndex = elRender;
-						segmentLi[elRender].style.transform = 'translate(' + ( ( elWidth * c ) + WrapDiff ) + 'px, ' + ( (elHeight * r) + WrapDiff  + (((elHeight * getPlanRepeatLength ) * t) ) ) + 'px)';
-						segmentEls[elRender].style.width = elWidth + 'px';
-						
-						
-						if(transformRotateCheck(elRender) !== undefined && transformRotateCheck(elRender) !== null){			
-							segmentEls[elRender].style.transform = 'rotate(' + transformRotateCheck(elRender) + 'deg)';
-						}else{
-							segmentEls[elRender].style.transform = 'rotate(' + 0 + 'deg)';
-						}
-						
-						// color 설정
-						var idArrayAll2 = idArrayAll[0];
-						
-						if(idArrayAll2 !== undefined && segmentLi[elRender] !== null){
-											
-							for(var j = 0; j < idArrayAll2.length; j++){
-							var colorIndex = j % 10;
-								if(segmentEls[elRender].classList.contains(idArrayAll2[j])){
-									segmentEls[elRender].classList.add("id_color" + (colorIndex + 1));
+			for(var t = 0; t < planRepeat; t++){
+				for(var r = 0; r < getDataIdLength; r++){ // row
+					for(var c = 0; c < getColumnLength; c++){ // column
+						if(segmentLi[elRender] !== undefined && segmentLi[elRender] !== null){
+							zindex.push(elRender);
+							segmentLi[elRender].style.zIndex = elRender;
+							segmentLi[elRender].style.transform = 'translate(' + ( ( elWidth * c ) + WrapDiff ) + 'px, ' + ( (elHeight * r) + WrapDiff + ( elHeight * getDataIdLength + type2Diff ) * t ) + 'px)';
+							segmentEls[elRender].style.width = elWidth + 'px';
+							
+							
+							if(transformRotateCheck(elRender) !== undefined && transformRotateCheck(elRender) !== null){			
+								segmentEls[elRender].style.transform = 'rotate(' + transformRotateCheck(elRender) + 'deg)';
+							}else{
+								segmentEls[elRender].style.transform = 'rotate(' + 0 + 'deg)';
+							}
+							
+							// color 설정
+							var idArrayAll2 = idArrayAll[0];
+							
+							if(idArrayAll2 !== undefined && segmentLi[elRender] !== null){
+												
+								for(var j = 0; j < idArrayAll2.length; j++){
+								var colorIndex = j % 10;
+									if(segmentEls[elRender].classList.contains(idArrayAll2[j])){
+										segmentEls[elRender].classList.add("id_color" + (colorIndex + 1));
+									}
 								}
 							}
+					
+							elRender++;
 						}
-				
-						elRender++;
 					}
 				}
 			}
+			
 		}else{ //*******************나머지(완전임의배치, 난괴법)
 			for(var r = 0; r < row; r++){
 				for(var c = 0; c < column; c++){
