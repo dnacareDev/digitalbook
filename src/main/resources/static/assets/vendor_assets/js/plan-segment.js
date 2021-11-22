@@ -547,17 +547,20 @@ function segmentSetting(data){
 				}else{
 					segmentEls[elRender].style.transform = 'rotate(' + 0 + 'deg)';
 				}
-			
+				
 				// color 설정
 				var idArrayAll2 = idArrayAll[0];
 				
-				console.log(idArrayAll2,'idArrayAll2');
-				console.log(idArrayAll,'idArrayAll')
+				if(idArrayAll2 !== undefined && segmentLi[elRender] !== null){
 								
-				for(var j = 0; j < idArrayAll2.length; j++){
-				var colorIndex = j % 10;
-					if(segmentEls[elRender].classList.contains(idArrayAll2[j])){
-						segmentEls[elRender].classList.add("id_color" + (colorIndex + 1));
+					console.log(idArrayAll2,'idArrayAll2');
+					console.log(idArrayAll,'idArrayAll')
+									
+					for(var j = 0; j < idArrayAll2.length; j++){
+					var colorIndex = j % 10;
+						if(segmentEls[elRender].classList.contains(idArrayAll2[j])){
+							segmentEls[elRender].classList.add("id_color" + (colorIndex + 1));
+						}
 					}
 				}
 		
