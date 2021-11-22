@@ -23,7 +23,7 @@ var segmentEls = document.querySelectorAll('#step4-segment li .segment');
 var segmentMove = document.querySelectorAll('#step4-segment li .arrowMove');
 var segmentRotate = document.querySelectorAll('#step4-segment li .refresh');
 
-var resultArray = new Array();
+var copyResultArray = new Array();
 var factorArray = new Array();
 
 var ArrayNow = [];
@@ -51,7 +51,7 @@ function onClickColumnBtn(){
 
 function onColorChange(result){
 	//console.log(segmentType,"segmenttype in oncolorchange");
-	resultArray = [];
+	copyResultArray = [];
 	factorArray = [];
 	
 	var factor1 = "";
@@ -170,7 +170,7 @@ function onColorChange(result){
 	}else if(segmentType == 2){ //분할구배치법******************
 		console.log("2입니다.")
 		
-		//만들어준 factorArray를 가지고 최종 resultArray 만들어 주기
+		//만들어준 factorArray를 가지고 최종 copyResultArray 만들어 주기
 		for(var i = 0; i < plan_repeat; i++){
 			level++;
 			num1 = 0;
@@ -179,22 +179,22 @@ function onColorChange(result){
 				var number = num1;
 				var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
 				
-				resultArray.push(data);
+				copyResultArray.push(data);
 			}
 		}//end for
 		
 		//분할구배치법에서 그룹 나눠줄 id array
 		var arr = new Array();
-		for(var i = 0; i < resultArray.length; i++){
-			arr[i] = resultArray[i].id.split("-")[0];
+		for(var i = 0; i < copyResultArray.length; i++){
+			arr[i] = copyResultArray[i].id.split("-")[0];
 		}
-		console.log(resultArray,'resultArray');
+		console.log(copyResultArray,'copyResultArray');
 		
 		var idArray = Array.from(new Set(arr));
 		var idArrayNow = "";
 		
-		for(var j = 0; j < resultArray.length; j++){
-			var checkId = resultArray[j].id.split("-")[0];
+		for(var j = 0; j < copyResultArray.length; j++){
+			var checkId = copyResultArray[j].id.split("-")[0];
 			console.log(checkId,"checkId");
 			for(var k = 0; k < idArray.length; k++){
 				if(checkId == idArray[k]){
@@ -209,7 +209,7 @@ function onColorChange(result){
 	}else if(segmentType == 3){ //세세구배치법******************
 		console.log("3입니다.");
 		
-		//만들어준 factorArray를 가지고 최종 resultArray 만들어 주기
+		//만들어준 factorArray를 가지고 최종 copyResultArray 만들어 주기
 		for(var i = 0; i < plan_repeat; i++){
 			level++;
 			num1 = 0;
@@ -218,20 +218,20 @@ function onColorChange(result){
 				var number = num1;
 				var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
 				
-				resultArray.push(data);
+				copyResultArray.push(data);
 			}
 		}//end for
 		
 		//분할구배치법에서 그룹 나눠줄 id array
 		var arr = new Array();
-		for(var i = 0; i < resultArray.length; i++){
-			arr[i] = resultArray[i].id.split("-")[0]+"-"+resultArray[i].id.split("-")[1];
+		for(var i = 0; i < copyResultArray.length; i++){
+			arr[i] = copyResultArray[i].id.split("-")[0]+"-"+copyResultArray[i].id.split("-")[1];
 		}
 		var idArray = Array.from(new Set(arr));
 		var idArrayNow = "";
 				
-		for(var j = 0; j < resultArray.length; j++){
-			var checkId = resultArray[j].id.split("-")[0]+"-"+resultArray[j].id.split("-")[1];
+		for(var j = 0; j < copyResultArray.length; j++){
+			var checkId = copyResultArray[j].id.split("-")[0]+"-"+copyResultArray[j].id.split("-")[1];
 			for(var k = 0; k < idArray.length; k++){
 				if(checkId == idArray[k]){
 					idArrayNow = idArray[k];
