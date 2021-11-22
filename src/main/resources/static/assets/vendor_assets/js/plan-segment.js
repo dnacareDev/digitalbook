@@ -1,6 +1,3 @@
-console.log('연결 성공');
-console.log('test 성공');
-
 /*data 넘기는 형식 *//*
 var segmentData = [
 {num: 1, id: 'A1-B1-C1-1', type: '60x20,60x25,70x40', repeat: 1, z-index:, sement_aspect: ,segment_horizon: ,segment_vertical: },,
@@ -33,8 +30,6 @@ function getDataResult(getDataArr, type){
 	segmentData = getDataArr;
 	// segmentInner = inner;
 	segmentType = type;
-	//console.log(segmentData,"segmentData in getDataResult");
-	//console.log(segmentType,"segmenttype in getDataResult");
 	
 	tableEls = document.querySelectorAll('.step4-container .table_content');
 	renderSegment(segmentData);
@@ -50,7 +45,6 @@ function onClickColumnBtn(){
 }
 
 function onColorChange(result){
-	//console.log(segmentType,"segmenttype in oncolorchange");
 	copyResultArray = [];
 	factorArray = [];
 	
@@ -188,19 +182,16 @@ function onColorChange(result){
 		for(var i = 0; i < copyResultArray.length; i++){
 			arr[i] = copyResultArray[i].id.split("-")[0];
 		}
-		console.log(copyResultArray,'copyResultArray');
 		
 		var idArray = Array.from(new Set(arr));
 		var idArrayNow = "";
 		
 		for(var j = 0; j < copyResultArray.length; j++){
 			var checkId = copyResultArray[j].id.split("-")[0];
-			console.log(checkId,"checkId");
 			for(var k = 0; k < idArray.length; k++){
 				if(checkId == idArray[k]){
 					idArrayNow = idArray[k];
-					ArrayNow.push(idArrayNow);
-					console.log(idArrayNow,"idArrayNow");			
+					ArrayNow.push(idArrayNow);		
 				}
 			}
 		}
@@ -235,7 +226,6 @@ function onColorChange(result){
 			for(var k = 0; k < idArray.length; k++){
 				if(checkId == idArray[k]){
 					idArrayNow = idArray[k];
-					console.log(idArrayNow,"idArrayNow33");		
 					ArrayNow.push(idArrayNow);
 				}
 			}
@@ -252,7 +242,7 @@ function segmentComp(data, index){
 	
 	
 	html += '<li>';
-	html += 	'<div class="segment ' + ArrayNow[index] + '" id="segment">' + id + '</div>';
+    html += 	'<div class="segment ' + ArrayNow[index] + '" data-segmentid= "'+ ArrayNow[index] + ' ">' + id + '</div>';
 	html +=     '<div class="arrowMove">';
 	html +=         '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-move" viewBox="0 0 16 16">';
 	html +=           '<path fill-rule="evenodd" d="M7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708l2-2zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10zM.146 8.354a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L1.707 7.5H5.5a.5.5 0 0 1 0 1H1.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2zM10 8a.5.5 0 0 1 .5-.5h3.793l-1.147-1.146a.5.5 0 0 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L14.293 8.5H10.5A.5.5 0 0 1 10 8z"/>';
@@ -467,7 +457,6 @@ var WrapDiff = 46; // wrap diff
 function renderSegment(data){
 	var dataGet = data;
 	onColorChange(dataGet);
-	console.log("renderSegment");
 	// 초기화
 	stepFourWrap.innerHTML = '';
 	// 1차 : 컴포넌트 삽입 
@@ -478,9 +467,10 @@ function renderSegment(data){
 	}
 	stepFourWrap.innerHTML = str;
 	segmentSetting(dataGet);
-	
-	// console.log(dataGet.length, "dataGetLength");
-	// console.log(dataGet,"dataGet");
+}
+
+function typeSetting(){
+
 }
 
 function segmentSetting(data){
@@ -532,42 +522,176 @@ function segmentSetting(data){
 		elWidth = (dataIdLength * 10) + 26;
 	}
 	
-
-	for(var r = 0; r < row; r++){
-		for(var c = 0; c < column; c++){
-			if(segmentLi[elRender] !== undefined && segmentLi[elRender] !== null){
-				zindex.push(elRender);
-				segmentLi[elRender].style.zIndex = elRender;
-				segmentLi[elRender].style.transform = 'translate(' + ( ( elWidth * c ) + WrapDiff ) + 'px, ' + ( (elHeight * r) + WrapDiff ) + 'px)';
-				segmentEls[elRender].style.width = elWidth + 'px';
-				
-				
-				if(transformRotateCheck(elRender) !== undefined && transformRotateCheck(elRender) !== null){			
-					segmentEls[elRender].style.transform = 'rotate(' + transformRotateCheck(elRender) + 'deg)';
-				}else{
-					segmentEls[elRender].style.transform = 'rotate(' + 0 + 'deg)';
-				}
-				
-				// color 설정
-				var idArrayAll2 = idArrayAll[0];
-				
-				if(idArrayAll2 !== undefined && segmentLi[elRender] !== null){
-								
-					console.log(idArrayAll2,'idArrayAll2');
-					console.log(idArrayAll,'idArrayAll')
-									
-					for(var j = 0; j < idArrayAll2.length; j++){
-					var colorIndex = j % 10;
-						if(segmentEls[elRender].classList.contains(idArrayAll2[j])){
-							segmentEls[elRender].classList.add("id_color" + (colorIndex + 1));
+	
+	if(segmentType !== undefined){
+	
+		var planRepeat = document.querySelector("#plan_repeat").value;
+		
+		var type2Diff = 70;
+		
+	
+		if(segmentType == 2){ // ************************분할구배치법
+			
+			var getDataId = segmentEls[elRender].getAttribute('data-segmentid');
+			var getClass = document.getElementsByClassName(getDataId);
+		
+			var getDataIdLength = Math.ceil(getClass.length / (2 * planRepeat)); // 한 집구의 한 data섹션 갯수
+			var getPlanRepeatLength = Math.ceil(copyResultArray.length / planRepeat) // 한 집구당 갯수
+			
+			var getColumnLength = Math.ceil(getPlanRepeatLength / getDataIdLength ); // 한 집구에 몇개의 data묶음이 있는지,
+			
+			for(var t = 0; t < planRepeat; t++){ // 집구별 반복
+				for(var c = 0; c < getColumnLength; c++){ // column
+					for(var r = 0; r < getDataIdLength; r++){ // row
+						if(segmentLi[elRender] !== undefined && segmentLi[elRender] !== null){
+							
+							zindex.push(elRender);
+							segmentLi[elRender].style.zIndex = elRender;
+							//console.log('heightCheck:',(((elHeight * getPlanRepeatLength) * t)));
+							//console.log('heightCheckdiff:',(((elHeight * getPlanRepeatLength) * t) + type2Diff ));
+							segmentLi[elRender].style.transform = 'translate(' + ( ( elWidth * c ) + WrapDiff ) + 'px, ' + ( (elHeight * r) + WrapDiff + (((elHeight * getDataIdLength + type2Diff ) * t) ) ) + 'px)';
+							console.log(elHeight,"elHeight");
+							console.log((elHeight * getDataIdLength,"(elHeight * getDataIdLength)"));
+							console.log(((elHeight * getDataIdLength) * t),"((elHeight * getDataIdLength) * t)");
+							
+							segmentEls[elRender].style.width = elWidth + 'px';
+							
+							
+							if(transformRotateCheck(elRender) !== undefined && transformRotateCheck(elRender) !== null){			
+								segmentEls[elRender].style.transform = 'rotate(' + transformRotateCheck(elRender) + 'deg)';
+							}else{
+								segmentEls[elRender].style.transform = 'rotate(' + 0 + 'deg)';
+							}
+							
+							// color 설정
+							var idArrayAll2 = idArrayAll[0];
+							
+							if(idArrayAll2 !== undefined && segmentLi[elRender] !== null){
+												
+								for(var j = 0; j < idArrayAll2.length; j++){
+								var colorIndex = j % 10;
+									if(segmentEls[elRender].classList.contains(idArrayAll2[j])){
+										segmentEls[elRender].classList.add("id_color" + (colorIndex + 1));
+									}
+								}
+							}
+					
+							elRender++;
 						}
 					}
 				}
+			}
+				
+		}else if(segmentType == 3){ //*******************세세구배치법
 		
-				elRender++;
+			var getPlanRepeatLength = Math.ceil(copyResultArray.length / planRepeat) // 한 집구당 갯수
+			var getPlanHeight = Math.ceil(getPlanRepeatLength / row);
+			
+			console.log(getPlanHeight,"getPlanHeight");
+			
+			
+			
+			for(var r = 0; r < row; r++){
+				for(var c = 0; c < column; c++){
+					if(segmentLi[elRender] !== undefined && segmentLi[elRender] !== null){
+						zindex.push(elRender);
+						segmentLi[elRender].style.zIndex = elRender;
+						segmentLi[elRender].style.transform = 'translate(' + ( ( elWidth * c ) + WrapDiff ) + 'px, ' + ( (elHeight * r) + WrapDiff  + (((elHeight * getPlanRepeatLength ) * t) ) ) + 'px)';
+						segmentEls[elRender].style.width = elWidth + 'px';
+						
+						
+						if(transformRotateCheck(elRender) !== undefined && transformRotateCheck(elRender) !== null){			
+							segmentEls[elRender].style.transform = 'rotate(' + transformRotateCheck(elRender) + 'deg)';
+						}else{
+							segmentEls[elRender].style.transform = 'rotate(' + 0 + 'deg)';
+						}
+						
+						// color 설정
+						var idArrayAll2 = idArrayAll[0];
+						
+						if(idArrayAll2 !== undefined && segmentLi[elRender] !== null){
+											
+							for(var j = 0; j < idArrayAll2.length; j++){
+							var colorIndex = j % 10;
+								if(segmentEls[elRender].classList.contains(idArrayAll2[j])){
+									segmentEls[elRender].classList.add("id_color" + (colorIndex + 1));
+								}
+							}
+						}
+				
+						elRender++;
+					}
+				}
+			}
+		}else{ //*******************나머지(완전임의배치, 난괴법)
+			for(var r = 0; r < row; r++){
+				for(var c = 0; c < column; c++){
+					if(segmentLi[elRender] !== undefined && segmentLi[elRender] !== null){
+						zindex.push(elRender);
+						segmentLi[elRender].style.zIndex = elRender;
+						segmentLi[elRender].style.transform = 'translate(' + ( ( elWidth * c ) + WrapDiff ) + 'px, ' + ( (elHeight * r) + WrapDiff ) + 'px)';
+						segmentEls[elRender].style.width = elWidth + 'px';
+						
+						
+						if(transformRotateCheck(elRender) !== undefined && transformRotateCheck(elRender) !== null){			
+							segmentEls[elRender].style.transform = 'rotate(' + transformRotateCheck(elRender) + 'deg)';
+						}else{
+							segmentEls[elRender].style.transform = 'rotate(' + 0 + 'deg)';
+						}
+						
+						// color 설정
+						var idArrayAll2 = idArrayAll[0];
+						
+						if(idArrayAll2 !== undefined && segmentLi[elRender] !== null){
+											
+							for(var j = 0; j < idArrayAll2.length; j++){
+							var colorIndex = j % 10;
+								if(segmentEls[elRender].classList.contains(idArrayAll2[j])){
+									segmentEls[elRender].classList.add("id_color" + (colorIndex + 1));
+								}
+							}
+						}
+				
+						elRender++;
+					}
+				}
+			}
+		}
+	}else{
+		for(var r = 0; r < row; r++){
+			for(var c = 0; c < column; c++){
+				if(segmentLi[elRender] !== undefined && segmentLi[elRender] !== null){
+					zindex.push(elRender);
+					segmentLi[elRender].style.zIndex = elRender;
+					segmentLi[elRender].style.transform = 'translate(' + ( ( elWidth * c ) + WrapDiff ) + 'px, ' + ( (elHeight * r) + WrapDiff ) + 'px)';
+					segmentEls[elRender].style.width = elWidth + 'px';
+					
+					
+					if(transformRotateCheck(elRender) !== undefined && transformRotateCheck(elRender) !== null){			
+						segmentEls[elRender].style.transform = 'rotate(' + transformRotateCheck(elRender) + 'deg)';
+					}else{
+						segmentEls[elRender].style.transform = 'rotate(' + 0 + 'deg)';
+					}
+					
+					// color 설정
+					var idArrayAll2 = idArrayAll[0];
+					
+					if(idArrayAll2 !== undefined && segmentLi[elRender] !== null){
+										
+						for(var j = 0; j < idArrayAll2.length; j++){
+						var colorIndex = j % 10;
+							if(segmentEls[elRender].classList.contains(idArrayAll2[j])){
+								segmentEls[elRender].classList.add("id_color" + (colorIndex + 1));
+							}
+						}
+					}
+			
+					elRender++;
+				}
 			}
 		}
 	}
+	
 	
 	
 	for(var t = 0; t < segmentEls.length; t++){
