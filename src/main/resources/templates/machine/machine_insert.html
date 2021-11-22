@@ -29,7 +29,7 @@
 	    border-radius: 5px;
 	    cursor: pointer;
 	    overflow-y: auto;
-	    height: 150px;
+	    height: auto;
 	}
 
 	.select .select-show li{
@@ -113,11 +113,18 @@
 		                            	<label for="machine_public" class="color-dark align-center">공동활용 허용범위</label>
 		                            </div>
 		                            <div class="col-sm-5">
-		                                <select class="form-control b-light" id="machine_public">
+		                            	<div class="select" data-role="selectBox" style="height: auto;">
+		                            		<input type="text" data-value="optValue" onkeyup="filter(this);" onclick="selectFilter(this);" data-select="" class="selected-option form-control" id="machine_public" placeholder="공동활용 허용범위 선택" autocomplete="off">
+		                            		<ul class="select-hide">
+		                            			<li class="machine_public_list"><span data-value="0">기관내부활용</span></li>
+		                            			<li class="machine_public_list"><span data-value="1">기관외부활용</span></li>
+		                            		</ul>
+		                            	</div>
+		                                <!-- <select class="form-control b-light" id="machine_public">
 			                                <option value="9">공동활용 허용범위 선택</option>
 			                                <option value="0">기관내부활용</option>
 			                                <option value="1">기관외부활용</option>
-		                                </select>
+		                                </select> -->
 		                            </div>
 		                    	</div>
 		                    	<div class="row mt-3">
@@ -125,13 +132,22 @@
 		                            	<label for="machine_purpose" class="color-dark align-center">장비용도</label>
 		                            </div>
 		                            <div class="col-sm-5">
-		                                <select class="form-control b-light" id="machine_purpose">
+		                            	<div class="select" data-role="selectBox" style="height: auto;">
+		                            		<input type="text" data-value="optValue" onkeyup="filter(this);" onclick="selectFilter(this);" data-select="" class="selected-option form-control" id="machine_purpose" placeholder="장비용도 선택" autocomplete="off">
+		                            		<ul class="select-hide">
+		                            			<li class="machine_purpose_list"><span data-value="계측">계측</span></li>
+		                            			<li class="machine_purpose_list"><span data-value="시험">시험</span></li>
+		                            			<li class="machine_purpose_list"><span data-value="분석">분석</span></li>
+		                            			<li class="machine_purpose_list"><span data-value="기타">기타</span></li>
+		                            		</ul>
+		                            	</div>
+		                                <!-- <select class="form-control b-light" id="machine_purpose">
 			                                <option value="">장비용도 선택</option>
 			                                <option value="계측">계측</option>
 			                                <option value="시험">시험</option>
 			                                <option value="분석">분석</option>
 			                                <option value="기타">기타</option>
-		                                </select>
+		                                </select> -->
 		                            </div>
 		                    	</div>
 		                    	<div class="row mt-3">
@@ -287,9 +303,9 @@
 		var machine_model = $("#machine_model").val();
 		var machine_date = $("#machine_date").val();
 		var machine_price = $("#machine_price").val();
-		var machine_range = $("#machine_range").val();
-		var machine_public = $("#machine_public").val();
-		var machine_purpose = $("#machine_purpose").val();
+		var machine_range = $("#machine_range").attr("data-select");
+		var machine_public = $("#machine_public").attr("data-select");
+		var machine_purpose = $("#machine_purpose").attr("data-select");
 		var machine_place = $("#machine_place").val();
 		var machine_regist = $("#machine_regist").val();
 		var machine_manage = $("#machine_manage").val();
