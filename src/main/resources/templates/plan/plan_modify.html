@@ -90,7 +90,9 @@
 		color : #fff!important;
 		background-color: #CD0000 !important;
 	}
-	
+	.font_sub_title{
+		font-size: 15px !important;
+	}
 	.wrapper {padding: 0px 0 50px !important;}
 </style>
 <!-- 공통 헤더 -->
@@ -118,7 +120,7 @@
 				        <div class="col-lg-12">
 				        	<div class="breadcrumb-main" style="justify-content: start;">
 				        		<h4 class="text-capitalize breadcrumb-title">계획수립</h4>
-				        		<span class="ml-20 mt-1">재배관리-계획수립</span>
+				        		<span class="ml-20 mt-1 font_sub_title">재배관리-계획수립</span>
 				        	</div>
 				        </div>
 			        </div>
@@ -3723,14 +3725,16 @@
 			}
 			
 			//그룹별 색깔 적용해주기
-			$(document).find(".table_content").each(function(i, item){
-				for(var j = 0; j < idArray.length; j++){
-					var colorIndex = j % 10;
-					if($(this).hasClass(idArray[j])){
-						$(this).addClass("id_color" + (colorIndex + 1));
+			if(factor2.length !== 0){
+				$(document).find(".table_content").each(function(i, item){
+					for(var j = 0; j < idArray.length; j++){
+						var colorIndex = j % 10;
+						if($(this).hasClass(idArray[j])){
+							$(this).addClass("id_color" + (colorIndex + 1));
+						}
 					}
-				}
-			});
+				});
+			}
 			
 			
 		}else if(grow_type == "3"){ //세세구배치법
@@ -3876,14 +3880,16 @@
 			}
 			
 			//그룹별 색깔 적용해주기
-			$(document).find(".table_content").each(function(i, item){
-				for(var j = 0; j < idArray.length; j++){
-					var colorIndex = j % 10;
-					if($(this).hasClass(idArray[j])){
-						$(this).addClass("id_color" + (colorIndex + 1));
+			if(factor2.length !== 0){
+				$(document).find(".table_content").each(function(i, item){
+					for(var j = 0; j < idArray.length; j++){
+						var colorIndex = j % 10;
+						if($(this).hasClass(idArray[j])){
+							$(this).addClass("id_color" + (colorIndex + 1));
+						}
 					}
-				}
-			});
+				});
+			}
 			
 			
 		}

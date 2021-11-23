@@ -54,6 +54,7 @@ select {
 }
 #section .table th, #section .table td{
 	padding: 2px 12px;
+	text-align:center;
 }
 #section select:focus{
     border-color: #7888FC;
@@ -209,7 +210,8 @@ body button{
 	margin-top: 20px;
 }
 #step5 .table-responsive .table{ /* 10-26수정 */
-	width: 100%;
+	width: max-content;
+    min-width: 100%;
 }
 span.red{
     color:#FF0101;
@@ -223,6 +225,19 @@ span.red{
     height: 600px;
     overflow: auto;
     clear: both;
+}
+#method-container .method-step .row > div{
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#method-container .method-step .row > div:first-child{
+	white-space: break-spaces;
+    text-overflow: clip;
+}
+#method-container .method-step .row:hover > div{
+	white-space: break-spaces;
+    overflow: none;
 }
 #step6 .top2{
     width: 100%;

@@ -413,6 +413,7 @@
 												</ul>
 											</div>
 										</div>
+										
 										<div class="col-lg-6">
 											<ul class="list-group" id="method-container" style="min-height: 400px; max-height: 400px;
 												overflow-y: auto; background-color: rgb(243, 243, 243) ">
@@ -2982,7 +2983,7 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : ((i*j) + j), "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
 					
 					resultArray.push(data);
 				}
@@ -3083,7 +3084,7 @@
 							}
 							console.log(resultArray);
 							var getDataArr = [...resultArray];
-							getDataResult(getDataArr);
+							getDataResult(getDataArr, grow_type);
 						}
 						
 					}//end stop
@@ -3101,7 +3102,7 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : ((i*j) + j), "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
 					
 					resultArray.push(data);
 				}
@@ -3233,7 +3234,7 @@
 								}
 								console.log(resultArray);
 								var getDataArr = [...resultArray];
-								getDataResult(getDataArr);
+								getDataResult(getDataArr, grow_type);
 							}
 							
 						}//end stop
@@ -3251,7 +3252,7 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : ((i*j) + j), "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
 					
 					resultArray.push(data);
 				}
@@ -3382,7 +3383,7 @@
 								}
 								console.log('sortable', resultArray);
 								var getDataArr = [...resultArray];
-								getDataResult(getDataArr);
+								getDataResult(getDataArr, grow_type);
 							}
 							
 							
@@ -3400,11 +3401,13 @@
 				
 				/* id_color9 */
 				// !important 색상 10개이상 추가시 수정
-				for(var j = 0; j < idArray.length; j++){
-					var colorIndex = j % 10;
-					if($(this).hasClass(idArray[j])){
-						$(this).addClass("id_color" + (colorIndex + 1));
-					}
+				if(factor2.length !== 0){
+					for(var j = 0; j < idArray.length; j++){
+						var colorIndex = j % 10;
+						if($(this).hasClass(idArray[j])){
+							$(this).addClass("id_color" + (colorIndex + 1));
+						}
+					}	
 				}
 
 				
@@ -3422,11 +3425,11 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
-					
+					var data = {"num" : number ,"segmentId" : factorArray[j].id, "order" : ((i*j) + j), "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
 					resultArray.push(data);
 				}
 			}//end for
+			
 			
 			//분할구배치법에서 그룹 나눠줄 id array
 			var arr = new Array();
@@ -3550,11 +3553,12 @@
 								for(var i = checkNum; i < (checkNum+standardNum); i++){
 									plusNum++;
 									resultArray[i].num = plusNum;
-									resultArray[i].id = idArr[i];
+									resultArray[i].id = idArr[i];								
 								}
 								console.log(resultArray);
 								var getDataArr = [...resultArray];
-								getDataResult(getDataArr);
+								getDataResult(getDataArr, grow_type);
+
 								
 							}//end else
 							
@@ -3575,14 +3579,16 @@
 					}
 				}
 			*/
-			$(document).find(".table_content").each(function(i, item){
-				for(var j = 0; j < idArray.length; j++){
-					var colorIndex = j % 10;
-					if($(this).hasClass(idArray[j])){
-						$(this).addClass("id_color" + (colorIndex + 1));
+			if(factor2.length !== 0){
+				$(document).find(".table_content").each(function(i, item){
+					for(var j = 0; j < idArray.length; j++){
+						var colorIndex = j % 10;
+						if($(this).hasClass(idArray[j])){
+							$(this).addClass("id_color" + (colorIndex + 1));
+						}
 					}
-				}
-			});
+				});	
+			}
 			
 			
 		}
