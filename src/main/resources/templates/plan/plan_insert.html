@@ -3400,11 +3400,13 @@
 				
 				/* id_color9 */
 				// !important 색상 10개이상 추가시 수정
-				for(var j = 0; j < idArray.length; j++){
-					var colorIndex = j % 10;
-					if($(this).hasClass(idArray[j])){
-						$(this).addClass("id_color" + (colorIndex + 1));
-					}
+				if(factor2.length !== 0){
+					for(var j = 0; j < idArray.length; j++){
+						var colorIndex = j % 10;
+						if($(this).hasClass(idArray[j])){
+							$(this).addClass("id_color" + (colorIndex + 1));
+						}
+					}	
 				}
 
 				
@@ -3575,14 +3577,16 @@
 					}
 				}
 			*/
-			$(document).find(".table_content").each(function(i, item){
-				for(var j = 0; j < idArray.length; j++){
-					var colorIndex = j % 10;
-					if($(this).hasClass(idArray[j])){
-						$(this).addClass("id_color" + (colorIndex + 1));
+			if(factor2.length !== 0){
+				$(document).find(".table_content").each(function(i, item){
+					for(var j = 0; j < idArray.length; j++){
+						var colorIndex = j % 10;
+						if($(this).hasClass(idArray[j])){
+							$(this).addClass("id_color" + (colorIndex + 1));
+						}
 					}
-				}
-			});
+				});	
+			}
 			
 			
 		}

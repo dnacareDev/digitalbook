@@ -26,6 +26,10 @@ var factorArray = new Array();
 var ArrayNow = [];
 var idArrayAll = [];
 
+var factorLength1 = "";
+var factorLength2 = "";
+var factorLength3 = "";
+
 function getDataResult(getDataArr, type){
 	segmentData = getDataArr;
 	// segmentInner = inner;
@@ -155,14 +159,21 @@ function onColorChange(result){
 			type = "";
 		}//end for1
 	}
+	
+	factorLength1 = factor1.length;
+	factorLength2 = factor2.length;
+	factorLength3 = factor3.length;
+	
 		
 	if(segmentType == 0){ //완전임의배치******************
+		document.querySelector(".content_right .top_btn-left").style.display ="block";		
 		console.log("0입니다");	
 	}else if(segmentType == 1){ //난괴법******************
+		document.querySelector(".content_right .top_btn-left").style.display ="block";
 		console.log("1입니다.")
 	}else if(segmentType == 2){ //분할구배치법******************
 		console.log("2입니다.")
-		
+		document.querySelector(".content_right .top_btn-left").style.display ="none";
 		//만들어준 factorArray를 가지고 최종 copyResultArray 만들어 주기
 		for(var i = 0; i < plan_repeat; i++){
 			level++;
@@ -198,6 +209,7 @@ function onColorChange(result){
 		idArrayAll.push(idArray);
 	}else if(segmentType == 3){ //세세구배치법******************
 		console.log("3입니다.");
+		document.querySelector(".content_right .top_btn-left").style.display ="none";
 		
 		//만들어준 factorArray를 가지고 최종 copyResultArray 만들어 주기
 		for(var i = 0; i < plan_repeat; i++){
@@ -231,6 +243,7 @@ function onColorChange(result){
 		}
 		// color 적용하기	
 		idArrayAll.push(idArray);
+		
 		
 	}
 }
@@ -454,12 +467,19 @@ var elHeight = 53; // element 세로폭
 var WrapDiff = 46; // wrap diff
 
 function renderSegment(data){
+	// 초기화
+	copyResultArray = [];
+	factorArray = [];
+	
+	ArrayNow = [];
+	idArrayAll = [];
+	
 	var dataGet = data;
 	// 초기화
 	stepFourWrap.innerHTML = '';
 	// 1차 : 컴포넌트 삽입 
-	onColorChange(dataGet);
 	var str = "";
+	onColorChange(dataGet);
 	
 	for(var i = 0; i < dataGet.length; i++){
 		str += segmentComp(dataGet[i], i);
@@ -525,7 +545,6 @@ function segmentSetting(data){
 		var type2Diff = 70;
 		
 		if(segmentType == 2){ // ************************분할구배치법
-			console.log('type2:',planRepeat);
 			var getDataId = segmentEls[elRender].getAttribute('data-segmentid');
 			var getClass = document.getElementsByClassName(getDataId);
 		
@@ -533,8 +552,6 @@ function segmentSetting(data){
 			var getPlanRepeatLength = Math.ceil(copyResultArray.length / planRepeat) // 한 집구당 갯수
 			
 			var getColumnLength = Math.ceil(getPlanRepeatLength / getDataIdLength ); // 한 집구에 몇개의 data묶음이 있는지,
-			console.log(getDataIdLength,"getDataIdLength,row");
-			console.log(getColumnLength,"getColumnLength,column");
 			
 			
 			for(var t = 0; t < planRepeat; t++){ // 집구별 반복
@@ -558,8 +575,8 @@ function segmentSetting(data){
 							// color 설정
 							var idArrayAll2 = idArrayAll[0];
 							
-							if(idArrayAll2 !== undefined && segmentLi[elRender] !== null){
-												
+							if(idArrayAll2 !== undefined && segmentLi[elRender] !== null && factorLength2 !== 0){
+
 								for(var j = 0; j < idArrayAll2.length; j++){
 								var colorIndex = j % 10;
 									if(segmentEls[elRender].classList.contains(idArrayAll2[j])){
@@ -577,52 +594,92 @@ function segmentSetting(data){
 		}else if(segmentType == 3){ //*******************세세구배치법
 			var getDataId = segmentEls[elRender].getAttribute('data-segmentid');
 			var getClass = document.getElementsByClassName(getDataId);
-		
-			console.log(getClass,getClass.length,"getClassLength");
 
 			var getDataIdLength = Math.ceil(getClass.length / (2 * planRepeat)); // 한 집구의 한 data섹션 갯수
 			var getPlanRepeatLength = Math.ceil(copyResultArray.length / planRepeat) // 한 집구당 전체 갯수
 			
 			var getColumnLength = Math.ceil(getPlanRepeatLength / getDataIdLength ); // 한 집구에 몇개의 data묶음이 있는지, 
 			
-			console.log(getPlanRepeatLength,"getPlanRepeatLength");
-			console.log(getDataIdLength,"getDataIdLength");
-			console.log(getColumnLength,"getColumnLength");
 			
-			for(var t = 0; t < planRepeat; t++){
-				for(var r = 0; r < getDataIdLength; r++){ // row
-					for(var c = 0; c < getColumnLength; c++){ // column
-						if(segmentLi[elRender] !== undefined && segmentLi[elRender] !== null){
-							zindex.push(elRender);
-							segmentLi[elRender].style.zIndex = elRender;
-							segmentLi[elRender].style.transform = 'translate(' + ( ( elWidth * c ) + WrapDiff ) + 'px, ' + ( (elHeight * r) + WrapDiff + ( elHeight * getDataIdLength + type2Diff ) * t ) + 'px)';
-							segmentEls[elRender].style.width = elWidth + 'px';
+			console.log(factorLength1,"factorLength1");
+			console.log(factorLength2,"factorLength2");
+			console.log(factorLength3,"factorLength3");		
+			if(factorLength3 == 0){
+				factorLength3 = 1
+			}
+			console.log(dataGet);
+			if(factorLength2 !== 0){
+				console.log("yes factorLength2");
+				for(var t = 0; t < planRepeat; t++){
+					for(var s = 0; s < factorLength1; s++){
+						for(var r = 0; r < factorLength2; r++){
+							for(var q = 0 ; q < factorLength3; q++){
 							
-							
-							if(transformRotateCheck(elRender) !== undefined && transformRotateCheck(elRender) !== null){			
-								segmentEls[elRender].style.transform = 'rotate(' + transformRotateCheck(elRender) + 'deg)';
-							}else{
-								segmentEls[elRender].style.transform = 'rotate(' + 0 + 'deg)';
-							}
-							
-							// color 설정
-							var idArrayAll2 = idArrayAll[0];
-							
-							if(idArrayAll2 !== undefined && segmentLi[elRender] !== null){
-												
-								for(var j = 0; j < idArrayAll2.length; j++){
-								var colorIndex = j % 10;
-									if(segmentEls[elRender].classList.contains(idArrayAll2[j])){
-										segmentEls[elRender].classList.add("id_color" + (colorIndex + 1));
+								if(segmentLi[elRender] !== undefined && segmentLi[elRender] !== null){
+									zindex.push(elRender);
+									segmentLi[elRender].style.zIndex = elRender;
+									segmentLi[elRender].style.transform = 'translate(' + ((elWidth * q) + ((elWidth * factorLength3) * s) + 'px, ' + ( ((elHeight * r) + WrapDiff) + ((elHeight * factorLength2 + type2Diff) * t )  )) + 'px)';
+									segmentEls[elRender].style.width = elWidth + 'px';
+									
+									
+									if(transformRotateCheck(elRender) !== undefined && transformRotateCheck(elRender) !== null){			
+										segmentEls[elRender].style.transform = 'rotate(' + transformRotateCheck(elRender) + 'deg)';
+									}else{
+										segmentEls[elRender].style.transform = 'rotate(' + 0 + 'deg)';
 									}
+									
+									// color 설정
+									var idArrayAll2 = idArrayAll[0];
+									if(idArrayAll2 !== undefined && segmentLi[elRender] !== null){
+														
+										for(var j = 0; j < idArrayAll2.length; j++){
+										var colorIndex = j % 10;
+											if(segmentEls[elRender].classList.contains(idArrayAll2[j]) && factorLength2 !== 0){
+												console.log("rrr",factorLength2);
+												segmentEls[elRender].classList.add("id_color" + (colorIndex + 1));
+											}
+										}
+									}
+							
+									elRender++;
 								}
 							}
-					
-							elRender++;
+						}
+					}
+				}
+			}else{
+				console.log("no factorLength2");
+				var getDataId = segmentEls[elRender].getAttribute('data-segmentid');
+				var getClass = document.getElementsByClassName(getDataId);
+			
+				var getDataIdLength = Math.ceil(getClass.length / (2 * planRepeat)); // 한 집구의 한 data섹션 갯수
+				var getPlanRepeatLength = Math.ceil(copyResultArray.length / planRepeat) // 한 집구당 갯수
+				
+				var getColumnLength = Math.ceil(getPlanRepeatLength / getDataIdLength ); // 한 집구에 몇개의 data묶음이 있는지,
+				
+				for(var t = 0; t < planRepeat; t++){
+					for(var c = 0; c < getColumnLength; c++){
+						for(var r = 0; r < getDataIdLength; r++){
+							if(segmentLi[elRender] !== undefined && segmentLi[elRender] !== null){
+								zindex.push(elRender);
+								segmentLi[elRender].style.zIndex = elRender;
+								segmentLi[elRender].style.transform = 'translate(' + ( ( elWidth * c ) + WrapDiff ) + 'px, ' + ( (elHeight * r) + WrapDiff + (((elHeight * getDataIdLength + type2Diff ) * t) ) ) + 'px)';
+								segmentEls[elRender].style.width = elWidth + 'px';
+								
+								
+								if(transformRotateCheck(elRender) !== undefined && transformRotateCheck(elRender) !== null){			
+									segmentEls[elRender].style.transform = 'rotate(' + transformRotateCheck(elRender) + 'deg)';
+								}else{
+									segmentEls[elRender].style.transform = 'rotate(' + 0 + 'deg)';
+								}
+								
+								elRender++;
+							}
 						}
 					}
 				}
 			}
+			
 			
 		}else{ //*******************나머지(완전임의배치, 난괴법)
 			for(var r = 0; r < row; r++){
