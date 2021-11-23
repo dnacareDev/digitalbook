@@ -553,7 +553,9 @@ function segmentSetting(data){
 			
 			var getColumnLength = Math.ceil(getPlanRepeatLength / getDataIdLength ); // 한 집구에 몇개의 data묶음이 있는지,
 			
-			
+			if(factorLength3 == 0){
+				factorLength3 = 1
+			}
 			for(var t = 0; t < planRepeat; t++){ // 집구별 반복
 				for(var c = 0; c < getColumnLength; c++){ // column
 					for(var r = 0; r < getDataIdLength; r++){ // row
