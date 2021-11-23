@@ -18080,5 +18080,10 @@ to {
 .breadcrumb-main {margin-top: 40px !important}
 .breadcrumb-title {font-size: 20px !important; padding: 2px 0 0 !important;}
 
-
+.breadcrumb-main span{
+	font-size: 15px !important;
+}
+h3{
+	font-size: 16px !important;
+}
 /*# sourceMappingURL=maps/bootstrap.css.map */
