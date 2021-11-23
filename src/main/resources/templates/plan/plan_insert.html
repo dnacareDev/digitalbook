@@ -2982,7 +2982,7 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : ((i*j) + j), "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
 					
 					resultArray.push(data);
 				}
@@ -3083,7 +3083,7 @@
 							}
 							console.log(resultArray);
 							var getDataArr = [...resultArray];
-							getDataResult(getDataArr);
+							getDataResult(getDataArr, grow_type);
 						}
 						
 					}//end stop
@@ -3101,7 +3101,7 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : ((i*j) + j), "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
 					
 					resultArray.push(data);
 				}
@@ -3233,7 +3233,7 @@
 								}
 								console.log(resultArray);
 								var getDataArr = [...resultArray];
-								getDataResult(getDataArr);
+								getDataResult(getDataArr, grow_type);
 							}
 							
 						}//end stop
@@ -3251,7 +3251,7 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : ((i*j) + j), "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
 					
 					resultArray.push(data);
 				}
@@ -3382,7 +3382,7 @@
 								}
 								console.log('sortable', resultArray);
 								var getDataArr = [...resultArray];
-								getDataResult(getDataArr);
+								getDataResult(getDataArr, grow_type);
 							}
 							
 							
@@ -3424,11 +3424,11 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
-					
+					var data = {"num" : number ,"segmentId" : factorArray[j].id, "order" : ((i*j) + j), "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
 					resultArray.push(data);
 				}
 			}//end for
+			
 			
 			//분할구배치법에서 그룹 나눠줄 id array
 			var arr = new Array();
@@ -3552,11 +3552,12 @@
 								for(var i = checkNum; i < (checkNum+standardNum); i++){
 									plusNum++;
 									resultArray[i].num = plusNum;
-									resultArray[i].id = idArr[i];
+									resultArray[i].id = idArr[i];								
 								}
 								console.log(resultArray);
 								var getDataArr = [...resultArray];
-								getDataResult(getDataArr);
+								getDataResult(getDataArr, grow_type);
+
 								
 							}//end else
 							

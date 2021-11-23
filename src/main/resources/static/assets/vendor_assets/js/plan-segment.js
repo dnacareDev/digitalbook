@@ -20,6 +20,7 @@ var segmentEls = document.querySelectorAll('#step4-segment li .segment');
 var segmentMove = document.querySelectorAll('#step4-segment li .arrowMove');
 var segmentRotate = document.querySelectorAll('#step4-segment li .refresh');
 
+var segmentData = [];
 var copyResultArray = new Array();
 var factorArray = new Array();
 
@@ -30,10 +31,13 @@ var factorLength1 = "";
 var factorLength2 = "";
 var factorLength3 = "";
 
-function getDataResult(getDataArr, type){
+var segmentType = 0;
+var segmentInnerType = '';
+
+function getDataResult(getDataArr, type, innerType){
 	segmentData = getDataArr;
-	// segmentInner = inner;
 	segmentType = type;
+	segmentInnerType = innerType;
 	
 	tableEls = document.querySelectorAll('.step4-container .table_content');
 	renderSegment(segmentData);
@@ -47,7 +51,7 @@ function onClickColumnBtn(){
 	}
 }
 
-function onColorChange(result){
+function onColorChange(){
 	copyResultArray = [];
 	factorArray = [];
 	
@@ -168,9 +172,73 @@ function onColorChange(result){
 	if(segmentType == 0){ //완전임의배치******************
 		document.querySelector(".content_right .top_btn-left").style.display ="block";		
 		console.log("0입니다");	
+		//만들어준 factorArray를 가지고 최종 copyResultArray 만들어 주기
+		for(var i = 0; i < plan_repeat; i++){
+			level++;
+			num1 = 0;
+			for(var j = 0; j < factorArray.length; j++){
+				num1++;
+				var number = num1;
+				var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : segmentData[((i*j) + j)].order, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+				
+				copyResultArray.push(data);
+			}
+			
+		}//end for
+		
+		//분할구배치법에서 그룹 나눠줄 id array
+		var arr = new Array();
+		for(var i = 0; i < copyResultArray.length; i++){
+			arr[i] = copyResultArray[i].id.split("-")[0];
+		}
+		
+		var idArray = Array.from(new Set(arr));
+		var idArrayNow = "";
+		
+		for(var j = 0; j < copyResultArray.length; j++){
+			var checkId = copyResultArray[j].id.split("-")[0];
+			for(var k = 0; k < idArray.length; k++){
+				if(checkId == idArray[k]){
+					idArrayNow = idArray[k];
+					ArrayNow.push(idArrayNow);		
+				}
+			}
+		}
 	}else if(segmentType == 1){ //난괴법******************
 		document.querySelector(".content_right .top_btn-left").style.display ="block";
 		console.log("1입니다.")
+		//만들어준 factorArray를 가지고 최종 copyResultArray 만들어 주기
+		for(var i = 0; i < plan_repeat; i++){
+			level++;
+			num1 = 0;
+			for(var j = 0; j < factorArray.length; j++){
+				num1++;
+				var number = num1;
+				var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : segmentData[((i*j) + j)].order, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+				
+				copyResultArray.push(data);
+			}
+			
+		}//end for
+		
+		//분할구배치법에서 그룹 나눠줄 id array
+		var arr = new Array();
+		for(var i = 0; i < copyResultArray.length; i++){
+			arr[i] = copyResultArray[i].id.split("-")[0];
+		}
+		
+		var idArray = Array.from(new Set(arr));
+		var idArrayNow = "";
+		
+		for(var j = 0; j < copyResultArray.length; j++){
+			var checkId = copyResultArray[j].id.split("-")[0];
+			for(var k = 0; k < idArray.length; k++){
+				if(checkId == idArray[k]){
+					idArrayNow = idArray[k];
+					ArrayNow.push(idArrayNow);		
+				}
+			}
+		}
 	}else if(segmentType == 2){ //분할구배치법******************
 		console.log("2입니다.")
 		document.querySelector(".content_right .top_btn-left").style.display ="none";
@@ -181,10 +249,11 @@ function onColorChange(result){
 			for(var j = 0; j < factorArray.length; j++){
 				num1++;
 				var number = num1;
-				var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+				var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : segmentData[((i*j) + j)].order, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
 				
 				copyResultArray.push(data);
 			}
+			
 		}//end for
 		
 		//분할구배치법에서 그룹 나눠줄 id array
@@ -218,7 +287,7 @@ function onColorChange(result){
 			for(var j = 0; j < factorArray.length; j++){
 				num1++;
 				var number = num1;
-				var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+				var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : segmentData[((i*j) + j)].order, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
 				
 				copyResultArray.push(data);
 			}
@@ -249,12 +318,12 @@ function onColorChange(result){
 }
 
 function segmentComp(data, index){
-	var {id, type, repeat} = data;
+	var {id, type, repeat, segmentId, order} = data;
 	var html = '';
-	
+
 	
 	html += '<li>';
-    html += 	'<div class="segment ' + ArrayNow[index] + '" data-segmentid= "'+ ArrayNow[index] + ' ">' + id + '</div>';
+    html += 	'<div class="segment ' + ArrayNow[index] + '" data-segmentid= "'+ ArrayNow[index] + ' ">' + segmentId + '</div>';
 	html +=     '<div class="arrowMove">';
 	html +=         '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-move" viewBox="0 0 16 16">';
 	html +=           '<path fill-rule="evenodd" d="M7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708l2-2zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10zM.146 8.354a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L1.707 7.5H5.5a.5.5 0 0 1 0 1H1.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2zM10 8a.5.5 0 0 1 .5-.5h3.793l-1.147-1.146a.5.5 0 0 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L14.293 8.5H10.5A.5.5 0 0 1 10 8z"/>';
@@ -316,21 +385,21 @@ function onClickStepFourWrap(e){
 	}
 }
 
-function activeList(){
+function activeList(thisOrder){
 	for(var z = 0; z < segmentEls.length; z++){	
-		if(segmentLi[z].classList.contains('active') && z !== thisIndex){
+		if(segmentLi[z].classList.contains('active') && z !== thisOrder){
 			segmentLi[z].classList.remove('active');
 		}
 		if(tableEls[z].classList.contains('active') && z !== thisIndex){
 			tableEls[z].classList.remove('active');
 		}
-		if(z === thisIndex){		
-			segmentLi[thisIndex].style.zIndex = segmentLi.length - 1;
+		if(z === thisOrder){		
+			segmentLi[thisOrder].style.zIndex = segmentLi.length - 1;
 		}else{
 			segmentLi[z].style.zIndex = z;
 		}
 	}
-	segmentLi[thisIndex].classList.add('active');
+	segmentLi[thisOrder].classList.add('active');
 	tableEls[thisIndex].classList.add('active');
 	
 	if(selectBoxEl !== undefined && selectBoxEl !== null){
@@ -342,19 +411,23 @@ function onClickTableEls(e){
 	var target = e.currentTarget;
 	thisIndex = tableEls.indexOf(target);
 	
-	activeList();
+	var thisOrder = segmentData[thisIndex].order;
+	console.log("----------------------");
+	console.log(thisOrder);
+	
+	activeList(thisOrder);
 	
 	var segmentLiTop = segmentLi[thisIndex].offsetTop - 64;
 	var segmentLiLeft = segmentLi[thisIndex].offsetLeft - 64;
 	
-	thisTransformGet();
+	thisTransformGet(thisOrder);
 	$('.background-wrap').stop().animate( { scrollTop : thisY } );
 	$('.background-wrap').stop().animate( { scrollLeft : thisX } );
 }
 
-function thisTransformGet(){
+function thisTransformGet(thisOrder){
 	/*클릭한 개체의 transform 정보를 받아옵니다.*/
-	var liTransform = segmentLi[thisIndex].style.transform;
+	var liTransform = segmentLi[thisOrder].style.transform;
 	var elsTransform = segmentEls[thisIndex].style.transform;
 	
 	var translateValue = liTransform.split('translate')[1];
@@ -478,14 +551,19 @@ function renderSegment(data){
 	// 초기화
 	stepFourWrap.innerHTML = '';
 	// 1차 : 컴포넌트 삽입 
-	var str = "";
+	var compData = "";
+	var textData = "";
 	onColorChange(dataGet);
 	
 	for(var i = 0; i < dataGet.length; i++){
-		str += segmentComp(dataGet[i], i);
+		compData += segmentComp(dataGet[i], i);
 	}
-	stepFourWrap.innerHTML = str;
-	segmentSetting(dataGet);
+	if(segmentInnerType === 'text'){
+		stepFourWrap.innerText = '';
+	}else{
+		stepFourWrap.innerHTML = compData;
+		segmentSetting(dataGet);
+	}
 }
 
 function segmentSetting(data){
@@ -601,17 +679,14 @@ function segmentSetting(data){
 			var getPlanRepeatLength = Math.ceil(copyResultArray.length / planRepeat) // 한 집구당 전체 갯수
 			
 			var getColumnLength = Math.ceil(getPlanRepeatLength / getDataIdLength ); // 한 집구에 몇개의 data묶음이 있는지, 
-			
-			
-			console.log(factorLength1,"factorLength1");
-			console.log(factorLength2,"factorLength2");
-			console.log(factorLength3,"factorLength3");		
+
 			if(factorLength3 == 0){
 				factorLength3 = 1
 			}
 			console.log(dataGet);
+			copyResultArray.push(dataGet);
+			
 			if(factorLength2 !== 0){
-				console.log("yes factorLength2");
 				for(var t = 0; t < planRepeat; t++){
 					for(var s = 0; s < factorLength1; s++){
 						for(var r = 0; r < factorLength2; r++){
@@ -637,7 +712,6 @@ function segmentSetting(data){
 										for(var j = 0; j < idArrayAll2.length; j++){
 										var colorIndex = j % 10;
 											if(segmentEls[elRender].classList.contains(idArrayAll2[j]) && factorLength2 !== 0){
-												console.log("rrr",factorLength2);
 												segmentEls[elRender].classList.add("id_color" + (colorIndex + 1));
 											}
 										}
@@ -650,7 +724,6 @@ function segmentSetting(data){
 					}
 				}
 			}else{
-				console.log("no factorLength2");
 				var getDataId = segmentEls[elRender].getAttribute('data-segmentid');
 				var getClass = document.getElementsByClassName(getDataId);
 			
