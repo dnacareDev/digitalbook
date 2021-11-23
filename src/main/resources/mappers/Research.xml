@@ -14,7 +14,7 @@
 	
 	<!-- 조사방법 상세 조회 -->
 	<select id="SelectResearchDetail" parameterType="int" resultType="Research">
-		SELECT r.research_id, r.research_code, r.research_contents, d1.division_id AS d1_id, d2.division_id AS d2_id, d3.division_id AS d3_id, r.create_date, r.modify_date
+		SELECT r.research_id, r.research_code, r.research_contents, d1.division_id AS d1_id, d2.division_id AS d2_id, d3.division_id AS d3_id, d1.division AS d1, d2.division AS d2, d3.division AS d3, r.create_date, r.modify_date
 		FROM research r
 		LEFT JOIN division d3 ON r.division_id = d3.division_id
 		LEFT JOIN division d2 ON d3.division_parents = d2.division_id

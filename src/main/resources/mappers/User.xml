@@ -82,7 +82,8 @@
 	<!-- 사용자 상세 조회 -->
 	<select id="SelectUserDetail" parameterType="int" resultType="User">
 		SELECT u.*, d1.*, d2.*, d3.*, d4.*,
-			d4.depart_id as d4_id, d3.depart_id as d3_id, d2.depart_id as d2_id, d1.depart_id as d1_id
+			d4.depart_id as d4_id, d3.depart_id as d3_id, d2.depart_id as d2_id, d1.depart_id as d1_id,
+			d4.department as d4_department_name, d3.department as d3_department_name, d2.department as d2_department_name, d1.department as d1_department_name
 		FROM user u
 		LEFT JOIN department d4 ON u.depart_id = d4.depart_id
 		LEFT JOIN department d3 ON u.user_group = d3.depart_id

@@ -72,18 +72,22 @@
 		background-color: #FF82FF !important;
 	}
 	.id_color6{
+		color : #fff!important;
 		background-color: #BE2457 !important;
 	}
 	.id_color7{
 		background-color: #FFBE0A !important;
 	}
 	.id_color8{
+		color : #fff!important;
 		background-color: #D27328 !important;
 	}
 	.id_color9{
+	 	color : #fff!important;	
 		background-color: #8B4F1D !important;
 	}
 	.id_color10{
+		color : #fff!important;
 		background-color: #CD0000 !important;
 	}
 	.breadcrumb-main {margin-top: 40px !important}
@@ -409,6 +413,7 @@
 												</ul>
 											</div>
 										</div>
+										
 										<div class="col-lg-6">
 											<ul class="list-group" id="method-container" style="min-height: 400px; max-height: 400px;
 												overflow-y: auto; background-color: rgb(243, 243, 243) ">
@@ -2978,7 +2983,7 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : ((i*j) + j), "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
 					
 					resultArray.push(data);
 				}
@@ -3079,7 +3084,7 @@
 							}
 							console.log(resultArray);
 							var getDataArr = [...resultArray];
-							getDataResult(getDataArr);
+							getDataResult(getDataArr, grow_type);
 						}
 						
 					}//end stop
@@ -3097,7 +3102,7 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : ((i*j) + j), "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
 					
 					resultArray.push(data);
 				}
@@ -3229,7 +3234,7 @@
 								}
 								console.log(resultArray);
 								var getDataArr = [...resultArray];
-								getDataResult(getDataArr);
+								getDataResult(getDataArr, grow_type);
 							}
 							
 						}//end stop
@@ -3247,7 +3252,7 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : ((i*j) + j), "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
 					
 					resultArray.push(data);
 				}
@@ -3376,9 +3381,9 @@
 									resultArray[i].num = plusNum;
 									resultArray[i].id = idArr[i];
 								}
-								//console.log(resultArray);
+								console.log('sortable', resultArray);
 								var getDataArr = [...resultArray];
-								getDataResult(getDataArr);
+								getDataResult(getDataArr, grow_type);
 							}
 							
 							
@@ -3396,15 +3401,20 @@
 				
 				/* id_color9 */
 				// !important 색상 10개이상 추가시 수정
-				for(var j = 0; j < idArray.length; j++){
-					var colorIndex = j % 10;
-					if($(this).hasClass(idArray[j])){
-						$(this).addClass("id_color" + (colorIndex + 1));
-					}
+				if(factor2.length !== 0){
+					for(var j = 0; j < idArray.length; j++){
+						var colorIndex = j % 10;
+						if($(this).hasClass(idArray[j])){
+							$(this).addClass("id_color" + (colorIndex + 1));
+						}
+					}	
 				}
 
 				
 			});
+			console.log('testinsert', resultArray);
+			var getDataArr = [...resultArray];
+			getDataResult(getDataArr, grow_type);
 			
 		}else if(grow_type == "3"){ //세세구배치법
 			
@@ -3415,11 +3425,11 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
-					
+					var data = {"num" : number ,"segmentId" : factorArray[j].id, "order" : ((i*j) + j), "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
 					resultArray.push(data);
 				}
 			}//end for
+			
 			
 			//분할구배치법에서 그룹 나눠줄 id array
 			var arr = new Array();
@@ -3543,11 +3553,12 @@
 								for(var i = checkNum; i < (checkNum+standardNum); i++){
 									plusNum++;
 									resultArray[i].num = plusNum;
-									resultArray[i].id = idArr[i];
+									resultArray[i].id = idArr[i];								
 								}
 								console.log(resultArray);
 								var getDataArr = [...resultArray];
-								getDataResult(getDataArr);
+								getDataResult(getDataArr, grow_type);
+
 								
 							}//end else
 							
@@ -3568,14 +3579,16 @@
 					}
 				}
 			*/
-			$(document).find(".table_content").each(function(i, item){
-				for(var j = 0; j < idArray.length; j++){
-					var colorIndex = j % 10;
-					if($(this).hasClass(idArray[j])){
-						$(this).addClass("id_color" + (colorIndex + 1));
+			if(factor2.length !== 0){
+				$(document).find(".table_content").each(function(i, item){
+					for(var j = 0; j < idArray.length; j++){
+						var colorIndex = j % 10;
+						if($(this).hasClass(idArray[j])){
+							$(this).addClass("id_color" + (colorIndex + 1));
+						}
 					}
-				}
-			});
+				});	
+			}
 			
 			
 		}
@@ -3616,6 +3629,26 @@
 		});
 		
 	}
+	
+	//테스트
+	/* $("#random01").on("click", function(){
+		
+		var arr = new Array();
+		for(var i = 0; i < resultArray.length; i++){
+			arr.push(resultArray[i].id.split("-")[0]+"-"+resultArray[i].repeat);
+		}
+		var test = Array.from(new Set(arr));
+		test.sort(() => Math.random() - 0.5);
+		
+		for(var i = 0; i < test.length; i++){
+			$(document).find(".table_content").each(function(index, item){
+				if($(this).attr("data-id") == test[i]){
+					$(this).insertBefore($(document).find(".table_content[data-id='"+test[i+1]+"']:first"));
+				}
+			});
+		}
+		
+	}); */
 	
 	//구획정보 처리포장면적 이벤트
 	$(document).on("keyup", ".container1 .table_content:eq(0) .seg_area", function(){

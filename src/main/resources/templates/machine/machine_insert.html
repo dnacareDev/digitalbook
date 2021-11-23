@@ -15,6 +15,27 @@
 		margin-top:-15px;
 	}
 	.end{margin-left:10px;}
+	.select-hide{
+		display: none;
+	}
+	.select-show{
+		display: block;
+	    position: absolute;
+	    z-index :10;
+	    top: 30px;
+	    width: 97.5%;
+	    background-color: white;
+	    border:1px solid;
+	    border-radius: 5px;
+	    cursor: pointer;
+	    overflow-y: auto;
+	    height: auto;
+	}
+
+	.select .select-show li{
+	    padding:0 0 0 5px;
+	    line-height: 30px;
+	}
 </style>
 <body class="layout-light top-menu overlayScroll">
 	<div class="mobile-search"></div>
@@ -73,11 +94,18 @@
 		                            	<label for="machine_range" class="color-dark align-center">활용범위</label>
 		                            </div>
 		                            <div class="col-sm-5">
-		                                <select class="form-control b-light" id="machine_range">
+		                            	<div class="select" style="height: auto;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="machine_range" placeholder="활용범위 선택" autocomplete="off">
+		                            		<ul class="select-hide">
+		                            			<li class="machine_range_list" onclick="selectOpt(this);"><span data-value="0">공동활용허용가능</span></li>
+		                            			<li class="machine_range_list" onclick="selectOpt(this);"><span data-value="1">단독활용만 가능</span></li>
+		                            		</ul>
+		                            	</div>
+		                                <!-- <select class="form-control b-light" id="machine_range">
 			                                <option value="9">활용범위 선택</option>
 			                                <option value="0">공동활용허용가능</option>
 			                                <option value="1">단독활용만 가능</option>
-		                                </select>
+		                                </select> -->
 		                            </div>
 		                    	</div>
 		                    	<div class="row mt-3">
@@ -85,11 +113,18 @@
 		                            	<label for="machine_public" class="color-dark align-center">공동활용 허용범위</label>
 		                            </div>
 		                            <div class="col-sm-5">
-		                                <select class="form-control b-light" id="machine_public">
+		                            	<div class="select" style="height: auto;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="machine_public" placeholder="공동활용 허용범위 선택" autocomplete="off">
+		                            		<ul class="select-hide">
+		                            			<li class="machine_public_list" onclick="selectOpt(this);"><span data-value="0">기관내부활용</span></li>
+		                            			<li class="machine_public_list" onclick="selectOpt(this);"><span data-value="1">기관외부활용</span></li>
+		                            		</ul>
+		                            	</div>
+		                                <!-- <select class="form-control b-light" id="machine_public">
 			                                <option value="9">공동활용 허용범위 선택</option>
 			                                <option value="0">기관내부활용</option>
 			                                <option value="1">기관외부활용</option>
-		                                </select>
+		                                </select> -->
 		                            </div>
 		                    	</div>
 		                    	<div class="row mt-3">
@@ -97,13 +132,22 @@
 		                            	<label for="machine_purpose" class="color-dark align-center">장비용도</label>
 		                            </div>
 		                            <div class="col-sm-5">
-		                                <select class="form-control b-light" id="machine_purpose">
+		                            	<div class="select" style="height: auto;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="machine_purpose" placeholder="장비용도 선택" autocomplete="off">
+		                            		<ul class="select-hide">
+		                            			<li class="machine_purpose_list" onclick="selectOpt(this);"><span data-value="계측">계측</span></li>
+		                            			<li class="machine_purpose_list" onclick="selectOpt(this);"><span data-value="시험">시험</span></li>
+		                            			<li class="machine_purpose_list" onclick="selectOpt(this);"><span data-value="분석">분석</span></li>
+		                            			<li class="machine_purpose_list" onclick="selectOpt(this);"><span data-value="기타">기타</span></li>
+		                            		</ul>
+		                            	</div>
+		                                <!-- <select class="form-control b-light" id="machine_purpose">
 			                                <option value="">장비용도 선택</option>
 			                                <option value="계측">계측</option>
 			                                <option value="시험">시험</option>
 			                                <option value="분석">분석</option>
 			                                <option value="기타">기타</option>
-		                                </select>
+		                                </select> -->
 		                            </div>
 		                    	</div>
 		                    	<div class="row mt-3">
@@ -149,37 +193,6 @@
 					</div>
 				</div>
 		    </div>
-		    
-		    <div class="modal-basic modal fade show" id="reagentModal" tabindex="-1" role="dialog" aria-hidden="true">
-			    <div class="modal-dialog modal-md" role="document">
-			        <div class="modal-content modal-bg-white">
-			        	<div class="modal-header">
-			        		<h6 class="modal-title">엑셀 업로드</h6>
-	                    	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	                        	<span data-feather="x"></span>
-	                        </button>
-			        	</div>
-			            <div class="modal-body">
-			            	<div class="col-12">
-				            	<form action="#">
-				            		<div class="row">
-				            			<div class="col-sm-3 d-flex aling-items-center mt-4">
-		                                    <label class="color-dark align-center">엑셀 파일</label>
-		                                </div>
-		                                <div class="col-sm-5 mb-2">
-		                                	<label for="uploadFile"></label>
-		                                    <input type="file" id="uploadFile">
-		                                </div>
-				            		</div>
-				            		<div class="button-group d-flex justify-content-end">
-					                   <button class="btn btn-primary btn-default btn-squared">업로드</button>
-					           		</div>
-				            	</form>
-			            	</div>
-			            </div>
-			        </div>
-			    </div>
-			</div>
 
 	        <div class="atbd-notice" id="success_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
 	        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
@@ -208,11 +221,75 @@
     <!-- 공통 js -->
     <th:block th:include="/../fragments/commonjs.html"></th:block>
 <script type="text/javascript">
-	//modal show
-	$("#excelBtn").on("click", function()
-	{
-		$("#reagentModal").modal("show");
-	});
+
+	let selectOptionWrapEls = document.querySelectorAll('.select ul');
+	let selectInputEls = document.querySelectorAll('input[name="select-input"]');
+	
+	function selectFilter(e){
+		
+		var currTarget = e;
+		var delOption = currTarget.nextElementSibling;
+		
+		for(var i = 0 ; i < selectOptionWrapEls.length; i++){
+			
+			if(selectOptionWrapEls[i].classList.contains("select-show")){
+				selectOptionWrapEls[i].classList.add('select-hide');
+				selectOptionWrapEls[i].classList.remove('select-show');
+			}
+		}
+		
+		if(delOption.classList.contains('select-hide')){
+			delOption.classList.remove('select-hide');
+			delOption.classList.add('select-show');
+		}
+		
+	}
+	
+	let body = document.querySelector('body');
+	function hideSelect(e){
+		var target = e.target.id;
+	    var ids = new Array();
+		for(var i = 0 ; i < selectInputEls.length; i++){
+			ids.push(selectInputEls[i].id);
+		}
+		if(!ids.includes(target)){
+			for(var i = 0 ; i < selectOptionWrapEls.length; i++){
+				
+				if(selectOptionWrapEls[i].classList.contains("select-show")){
+					selectOptionWrapEls[i].classList.add('select-hide');
+					selectOptionWrapEls[i].classList.remove('select-show');
+				}
+			}
+		}
+	}
+	body.addEventListener('click',hideSelect);
+	
+	/* 옵션선택 */
+	function selectOpt(e){
+	    var dataSelect = $(e).children().attr("data-value");
+	    var text = $(e).children().text();
+	    $(e).parent().prev().attr("data-select", dataSelect);
+	    $(e).parent().prev().val(text);
+	    $(e).parent().attr("class", "select-hide");
+	}//end 옵션 선택
+	
+	//필터 함수
+	function textfilter(e){
+		
+		var search = $(e).val().toLowerCase();
+		var className = $(e).next().children().eq(0).attr('class');
+		
+		$(document).find("."+className).each(function(index, item){
+			var text = $(this).children().text();
+			
+			if(text.toLowerCase().includes(search)){
+				$(this).css("display", "flex");
+			}else{
+				$(this).css("display", "none");
+			}
+		});
+		
+	}//end 필터 함수
 	
 	//발송일자 datepicker
 	$("#machine_date").datepicker(
@@ -230,9 +307,9 @@
 		var machine_model = $("#machine_model").val();
 		var machine_date = $("#machine_date").val();
 		var machine_price = $("#machine_price").val();
-		var machine_range = $("#machine_range").val();
-		var machine_public = $("#machine_public").val();
-		var machine_purpose = $("#machine_purpose").val();
+		var machine_range = $("#machine_range").attr("data-select");
+		var machine_public = $("#machine_public").attr("data-select");
+		var machine_purpose = $("#machine_purpose").attr("data-select");
 		var machine_place = $("#machine_place").val();
 		var machine_regist = $("#machine_regist").val();
 		var machine_manage = $("#machine_manage").val();

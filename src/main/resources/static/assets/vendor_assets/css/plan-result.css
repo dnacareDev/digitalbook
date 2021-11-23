@@ -38,7 +38,6 @@ table{
     text-align: center;
 }
 .wrapper{
-    padding: 50px 0;
     background-color: #F8F8F8;
 }
 select {
@@ -51,6 +50,10 @@ select {
 }
 #section select:focus{
     border-color: #7888FC;
+}
+svg{
+	margin-top: 5px;
+	
 }
 button{
     display: block;
@@ -326,7 +329,7 @@ body button{
     top: -1px;
     display: block;
     width: 30px;
-    height: 36px;
+    height: 30px;
     border: 1px solid #D8D8D8;
     clear: both;
     text-align: center;
@@ -370,6 +373,7 @@ body button{
 
 #step1 .background-wrap ul li.active .arrowMove {
 	display:block !important;
+	cursor: all-scroll;
 }
 
 #step1 .background-wrap ul li.active .refresh {
@@ -382,7 +386,7 @@ body button{
     top: -1px;
     display: block;
     width: 30px;
-    height: 36px;
+    height: 30px;
     border: 1px solid #D8D8D8;
     clear: both;
     text-align: center;
@@ -474,7 +478,7 @@ body button{
 	padding: 5px 5px;
 }
 #section .step .step_inner .content .bottom_right-content button{/* 추가 2021-11-01 */
-	width: 25%;
+	width: 20%;
 	height: 44px;
 	border-radius: 0 5px 5px 0;
 	border-left: none;

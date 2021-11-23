@@ -14,6 +14,41 @@
 		margin-top:-15px;
 	}
 	.end{margin-left:10px;}
+	.select-hide{
+		display: none;
+	}
+	.select-show{
+		display: block;
+	    position: absolute;
+	    z-index :10;
+	    top: 30px;
+	    width: 97.5%;
+	    background-color: white;
+	    border:1px solid;
+	    border-radius: 5px;
+	    cursor: pointer;
+	    overflow-y: auto;
+	    height: auto;
+	}
+	
+	#eaches_id_select .select-show{
+		display: block;
+	    position: absolute;
+	    z-index :10;
+	    top: 30px;
+	    width: 97.5%;
+	    background-color: white;
+	    border:1px solid;
+	    border-radius: 5px;
+	    cursor: pointer;
+	    overflow-y: auto;
+	    height: 150px;
+	}
+
+	.select .select-show li{
+	    padding:0 0 0 5px;
+	    line-height: 30px;
+	}
 </style>
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
@@ -58,12 +93,20 @@
 		                            	<label for="reagent_type" class="col-form-label color-dark align-center">종류<span style="color: red;">*</span></label>
 	                                </div>
 	                                <div class="col-sm-5">
-	                                   <select class="form-control b-light" id="reagent_type">
+	                                	<div class="select" style="height: auto;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="reagent_type" placeholder="종류 선택" autocomplete="off">
+		                            		<ul class="select-hide">
+		                            			<li class="reagent_type_list" onclick="selectOpt(this);"><span data-value="시약">시약</span></li>
+		                            			<li class="reagent_type_list" onclick="selectOpt(this);"><span data-value="농약">농약</span></li>
+		                            			<li class="reagent_type_list" onclick="selectOpt(this);"><span data-value="비료">비료</span></li>
+		                            		</ul>
+		                            	</div>
+	                                   <!-- <select class="form-control b-light" id="reagent_type">
 		                                <option disabled="disabled" selected="selected" hidden="hidden">종류 선택</option>
 		                                <option th:value="시약">시약</option>
 		                                <option th:value="농약">농약</option>
 		                                <option th:value="비료">비료</option>
-		                               </select>
+		                               </select> -->
 	                                </div>
 		                         </div>
 		                         <div class="row mt-3">
@@ -122,12 +165,20 @@
 		                                <input type="text" class="form-control b-light" id="reagent_quantity" th:value="${reagent.reagent_quantity}">
 		                            </div>
 		                            <div class="col-sm-2">
-		                                <select class="form-control b-light" name="eaches_id" id="eaches_id">
+		                            	<div id="eaches_id_select" class="select" style="height: auto;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="eaches_id" placeholder="단위 선택" autocomplete="off">
+		                            		<ul class="select-hide">
+		                            			<th:block th:each="eaches : ${eaches}">
+		                            				<li class="eaches_id_list" onclick="selectOpt(this);"><span th:data-value="${eaches.eaches_id}" th:text="${eaches.eaches_name}"></span></li>
+		                            			</th:block>
+		                            		</ul>
+		                            	</div>
+		                                <!-- <select class="form-control b-light" name="eaches_id" id="eaches_id">
 			                                <option disabled="disabled" selected="selected" hidden="hidden">단위 선택</option>
 			                                <th:block th:each="eaches : ${eaches}">
 			                                	<option th:value="${eaches.eaches_id}" th:text="${eaches.eaches_name}"></option>
 			                                </th:block>
-			                            </select>
+			                            </select> -->
 		                            </div>
 		                    	</div>
 		                    	<div class="row mt-3">
@@ -218,39 +269,6 @@
 		        	</div>
 		        </div>
 		    </div>
-		    
-		    <div class="modal-basic modal fade show" id="reagentModal" tabindex="-1" role="dialog" aria-hidden="true">
-			    <div class="modal-dialog modal-md" role="document">
-			        <div class="modal-content modal-bg-white">
-			        	<div class="modal-header">
-			        		<h6 class="modal-title">엑셀 업로드</h6>
-		                    	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		                        	<span data-feather="x"></span>
-		                        </button>
-			        	</div>
-			            <div class="modal-body">
-			            	<div class="col-12">
-				            	<form action="#">
-				            		<div class="row">
-				            			<div class="col-sm-3 d-flex aling-items-center mt-4">
-		                                    <label class="color-dark align-center">엑셀 파일</label>
-		                                </div>
-		                                <div class="col-sm-5 mb-2">
-		                                	<label for="uploadFile"></label>
-		                                    <input type="file" id="uploadFile">
-		                                </div>
-				            		</div>
-				            		<div class="button-group d-flex justify-content-end">
-					                   <button class="btn btn-primary btn-default btn-squared">업로드</button>
-					           		</div>
-				            	</form>
-			            	</div>
-			            </div>
-			        </div>
-			    </div>
-			</div>
-		    <!-- ends: .modal-Basic -->
-     
      	</div>
      
      </main>
@@ -264,9 +282,84 @@
 
 	var reagent = /*[[${reagent}]]*/ "null";
 	
-	//수정 페이지 접속 시 종류, 단위 선택해주기
-	$("#reagent_type").val(reagent.reagent_type).prop("selected",true);
-	$("#eaches_id").val(reagent.eaches_id).prop("selected",true);
+	//select 박스 기존 데이터 노출
+	function loadSelectData(){
+		$("#reagent_type").attr("data-select", reagent.reagent_type);
+		$("#reagent_type").val(reagent.reagent_type);
+		
+		$("#eaches_id").attr("data-select", reagent.eaches_id);
+		$("#eaches_id").val(reagent.eaches_name);
+	}
+	loadSelectData();
+	
+	let selectOptionWrapEls = document.querySelectorAll('.select ul');
+	let selectInputEls = document.querySelectorAll('input[name="select-input"]');
+	
+	function selectFilter(e){
+		
+		var currTarget = e;
+		var delOption = currTarget.nextElementSibling;
+		
+		for(var i = 0 ; i < selectOptionWrapEls.length; i++){
+			
+			if(selectOptionWrapEls[i].classList.contains("select-show")){
+				selectOptionWrapEls[i].classList.add('select-hide');
+				selectOptionWrapEls[i].classList.remove('select-show');
+			}
+		}
+		
+		if(delOption.classList.contains('select-hide')){
+			delOption.classList.remove('select-hide');
+			delOption.classList.add('select-show');
+		}
+		
+	}
+	
+	let body = document.querySelector('body');
+	function hideSelect(e){
+		var target = e.target.id;
+	    var ids = new Array();
+		for(var i = 0 ; i < selectInputEls.length; i++){
+			ids.push(selectInputEls[i].id);
+		}
+		if(!ids.includes(target)){
+			for(var i = 0 ; i < selectOptionWrapEls.length; i++){
+				
+				if(selectOptionWrapEls[i].classList.contains("select-show")){
+					selectOptionWrapEls[i].classList.add('select-hide');
+					selectOptionWrapEls[i].classList.remove('select-show');
+				}
+			}
+		}
+	}
+	body.addEventListener('click',hideSelect);
+	
+	/* 옵션선택 */
+	function selectOpt(e){
+	    var dataSelect = $(e).children().attr("data-value");
+	    var text = $(e).children().text();
+	    $(e).parent().prev().attr("data-select", dataSelect);
+	    $(e).parent().prev().val(text);
+	    $(e).parent().attr("class", "select-hide");
+	}//end 옵션 선택
+	
+	//필터 함수
+	function textfilter(e){
+		
+		var search = $(e).val().toLowerCase();
+		var className = $(e).next().children().eq(0).attr('class');
+		
+		$(document).find("."+className).each(function(index, item){
+			var text = $(this).children().text();
+			
+			if(text.toLowerCase().includes(search)){
+				$(this).css("display", "flex");
+			}else{
+				$(this).css("display", "none");
+			}
+		});
+		
+	}//end 필터 함수
 	
 	//수정 버튼 안내 팝업
 	function UpdateBtn() {
@@ -293,9 +386,9 @@
 		var reagent_nick_e = $.trim($("#reagent_nick_e").val());
 		var reagent_manufacturer = $.trim($("#reagent_manufacturer").val());
 		var reagent_quantity = $.trim($("#reagent_quantity").val());
-		var eaches_id = $.trim($("#eaches_id").val());
+		var eaches_id = $.trim($("#eaches_id").attr("data-select"));
 		var reagent_purpose = $.trim($("#reagent_purpose").val());
-		var reagent_type = $.trim($("#reagent_type").val());
+		var reagent_type = $.trim($("#reagent_type").attr("data-select"));
 		
 		if(reagent_type == ""){
 			alert("종류를 선택해주세요.");
@@ -359,11 +452,6 @@
 			}
 		});//end ajax
 	}//end 시약 삭제
-
-	//modal show
-	$("#excelBtn").on("click", function(){
-		$("#reagentModal").modal("show");
-	});
 	
 	
 	
