@@ -94,11 +94,11 @@
 		                            	<label for="machine_range" class="color-dark align-center">활용범위</label>
 		                            </div>
 		                            <div class="col-sm-5">
-		                            	<div class="select" data-role="selectBox" style="height: auto;">
-		                            		<input type="text" data-value="optValue" onkeyup="filter(this);" onclick="selectFilter(this);" data-select="" class="selected-option form-control" id="machine_range" placeholder="활용범위 선택" autocomplete="off">
+		                            	<div class="select" style="height: auto;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="machine_range" placeholder="활용범위 선택" autocomplete="off">
 		                            		<ul class="select-hide">
-		                            			<li class="machine_range_list"><span class="machine_range_text" data-value="0">공동활용허용가능</span></li>
-		                            			<li class="machine_range_list"><span class="machine_range_text" data-value="1">단독활용만 가능</span></li>
+		                            			<li class="machine_range_list" onclick="selectOpt(this);"><span data-value="0">공동활용허용가능</span></li>
+		                            			<li class="machine_range_list" onclick="selectOpt(this);"><span data-value="1">단독활용만 가능</span></li>
 		                            		</ul>
 		                            	</div>
 		                                <!-- <select class="form-control b-light" id="machine_range">
@@ -113,11 +113,11 @@
 		                            	<label for="machine_public" class="color-dark align-center">공동활용 허용범위</label>
 		                            </div>
 		                            <div class="col-sm-5">
-		                            	<div class="select" data-role="selectBox" style="height: auto;">
-		                            		<input type="text" data-value="optValue" onkeyup="filter(this);" onclick="selectFilter(this);" data-select="" class="selected-option form-control" id="machine_public" placeholder="공동활용 허용범위 선택" autocomplete="off">
+		                            	<div class="select" style="height: auto;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="machine_public" placeholder="공동활용 허용범위 선택" autocomplete="off">
 		                            		<ul class="select-hide">
-		                            			<li class="machine_public_list"><span data-value="0">기관내부활용</span></li>
-		                            			<li class="machine_public_list"><span data-value="1">기관외부활용</span></li>
+		                            			<li class="machine_public_list" onclick="selectOpt(this);"><span data-value="0">기관내부활용</span></li>
+		                            			<li class="machine_public_list" onclick="selectOpt(this);"><span data-value="1">기관외부활용</span></li>
 		                            		</ul>
 		                            	</div>
 		                                <!-- <select class="form-control b-light" id="machine_public">
@@ -132,13 +132,13 @@
 		                            	<label for="machine_purpose" class="color-dark align-center">장비용도</label>
 		                            </div>
 		                            <div class="col-sm-5">
-		                            	<div class="select" data-role="selectBox" style="height: auto;">
-		                            		<input type="text" data-value="optValue" onkeyup="filter(this);" onclick="selectFilter(this);" data-select="" class="selected-option form-control" id="machine_purpose" placeholder="장비용도 선택" autocomplete="off">
+		                            	<div class="select" style="height: auto;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="machine_purpose" placeholder="장비용도 선택" autocomplete="off">
 		                            		<ul class="select-hide">
-		                            			<li class="machine_purpose_list"><span data-value="계측">계측</span></li>
-		                            			<li class="machine_purpose_list"><span data-value="시험">시험</span></li>
-		                            			<li class="machine_purpose_list"><span data-value="분석">분석</span></li>
-		                            			<li class="machine_purpose_list"><span data-value="기타">기타</span></li>
+		                            			<li class="machine_purpose_list" onclick="selectOpt(this);"><span data-value="계측">계측</span></li>
+		                            			<li class="machine_purpose_list" onclick="selectOpt(this);"><span data-value="시험">시험</span></li>
+		                            			<li class="machine_purpose_list" onclick="selectOpt(this);"><span data-value="분석">분석</span></li>
+		                            			<li class="machine_purpose_list" onclick="selectOpt(this);"><span data-value="기타">기타</span></li>
 		                            		</ul>
 		                            	</div>
 		                                <!-- <select class="form-control b-light" id="machine_purpose">
@@ -222,55 +222,59 @@
     <th:block th:include="/../fragments/commonjs.html"></th:block>
 <script type="text/javascript">
 
+	let selectOptionWrapEls = document.querySelectorAll('.select ul');
+	let selectInputEls = document.querySelectorAll('input[name="select-input"]');
+	
 	function selectFilter(e){
 		
-		let body = document.querySelector('body');
-		//let select = document.querySelector('[data-role="selectBox"]');
-		let select = e.parentNode;
-		let dataValue = e;
-		let option = e.nextElementSibling;
-		let opts = option.querySelectorAll('li');
+		var currTarget = e;
+		var delOption = currTarget.nextElementSibling;
 		
-		function selects(e){
-			e.stopPropagation();
-		    if(option.classList.contains('select-hide')){
-		        option.classList.remove('select-hide');
-		        option.classList.add('select-show');
-		    }else{
-		        option.classList.add('select-hide');
-		        option.classList.remove('select-show');
-		    }
-		    selectOpt();
+		for(var i = 0 ; i < selectOptionWrapEls.length; i++){
 			
+			if(selectOptionWrapEls[i].classList.contains("select-show")){
+				selectOptionWrapEls[i].classList.add('select-hide');
+				selectOptionWrapEls[i].classList.remove('select-show');
+			}
 		}
 		
-		function hideSelect(){
-		    if(option.classList.contains('select-show')){
-		        option.classList.add('select-hide');
-		        option.classList.remove('select-show');
-		    }
+		if(delOption.classList.contains('select-hide')){
+			delOption.classList.remove('select-hide');
+			delOption.classList.add('select-show');
 		}
-		
-		/* 옵션선택 */
-		function selectOpt(){
-		    opts.forEach(opt=>{
-		        const innerValue = opt.children[0].innerHTML;
-		        const dataSelect = opt.children[0].getAttribute('data-value');
-		        function changeValue(){
-		        	dataValue.value = innerValue;
-		        	dataValue.setAttribute('data-select', dataSelect); 
-		        }
-		        opt.addEventListener('click',changeValue)
-		    });
-		}
-		
-		select.addEventListener('click',selects);
-		body.addEventListener('click',hideSelect);
 		
 	}
 	
+	let body = document.querySelector('body');
+	function hideSelect(e){
+		var target = e.target.id;
+	    var ids = new Array();
+		for(var i = 0 ; i < selectInputEls.length; i++){
+			ids.push(selectInputEls[i].id);
+		}
+		if(!ids.includes(target)){
+			for(var i = 0 ; i < selectOptionWrapEls.length; i++){
+				
+				if(selectOptionWrapEls[i].classList.contains("select-show")){
+					selectOptionWrapEls[i].classList.add('select-hide');
+					selectOptionWrapEls[i].classList.remove('select-show');
+				}
+			}
+		}
+	}
+	body.addEventListener('click',hideSelect);
+	
+	/* 옵션선택 */
+	function selectOpt(e){
+	    var dataSelect = $(e).children().attr("data-value");
+	    var text = $(e).children().text();
+	    $(e).parent().prev().attr("data-select", dataSelect);
+	    $(e).parent().prev().val(text);
+	    $(e).parent().attr("class", "select-hide");
+	}//end 옵션 선택
+	
 	//필터 함수
-	function filter(e){
+	function textfilter(e){
 		
 		var search = $(e).val().toLowerCase();
 		var className = $(e).next().children().eq(0).attr('class');
@@ -285,7 +289,7 @@
 			}
 		});
 		
-	}//end 과제 필터 함수
+	}//end 필터 함수
 	
 	//발송일자 datepicker
 	$("#machine_date").datepicker(

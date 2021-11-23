@@ -47,7 +47,9 @@ public class User implements UserDetails
 	private int d4_id;						//소속실 depart_id
 	private String d3_department_name;		//과 명
 	private int d3_id;						//과 depart_id
+	private String d2_department_name;		//부 명
 	private int d2_id;						//부 depart_id
+	private String d1_department_name;		//원 명
 	private int d1_id;						//원 depart_id
 	
 	private int delay_count;

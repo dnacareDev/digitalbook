@@ -33,4 +33,7 @@ public class Reagent {
 	//user table 사용 컬럼
 	private String user_name_k;				//등록자
 	
+	//단위 사용 컬럼
+	private String eaches_name;				//단위 명
+	
 }
