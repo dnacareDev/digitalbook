@@ -4023,7 +4023,7 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+					var data = {"num" : number, "segmentId" : factorArray[j].id, "order" : ((i*j) + j),  "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
 					
 					resultArray.push(data);
 				}
@@ -4141,7 +4141,7 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+					var data = {"num" : number ,"segmentId" : factorArray[j].id, "order" : ((i*j) + j),  "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
 					
 					resultArray.push(data);
 				}
@@ -4290,7 +4290,7 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : ((i*j) + j),  "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
 					
 					resultArray.push(data);
 				}
@@ -4452,7 +4452,7 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : ((i*j) + j),  "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
 					
 					resultArray.push(data);
 				}
