@@ -491,11 +491,16 @@
 	let selectInputEls = document.querySelectorAll('input[name="select-input"]');
 	
 	let select_this;
+	let select_prev;
 	let select_text;
 	let select_data;
 	
 	function selectFilter(e){
+		
+		//select_prev = select_this;
 		select_this = e;
+		//console.log(select_prev);
+		//console.log(select_this);
 		let selectOptionWrapEls = document.querySelectorAll('.select ul');
 		
 		var currTarget = e;
