@@ -12,6 +12,27 @@
 		margin-top:-15px;
 	}
 	.end{margin-left:10px;}
+	.select-hide{
+		display: none;
+	}
+	.select-show{
+		display: block;
+	    position: absolute;
+	    z-index :10;
+	    top: 60px;
+	    width: 97.5%;
+	    background-color: white;
+	    border:1px solid;
+	    border-radius: 5px;
+	    cursor: pointer;
+	    overflow-y: auto;
+	    height: 150px;
+	}
+
+	.select .select-show li{
+	    padding:0 0 0 5px;
+	    line-height: 30px;
+	}
 </style>
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
@@ -39,32 +60,56 @@
 			        				<div class="row">
 				        				<div class="col-md-6 mb-25">
 		                                    <label for="division_depth1" class="color-dark fw-500">대상작목</label>
-		                                    <select class="form-control b-light" id="division_depth1">
+		                                    <div class="select" style="height: auto;">
+			                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="division_depth1" placeholder="대상 작목 선택" autocomplete="off">
+			                            		<ul class="select-hide">
+			                            			<th:block th:each="d1 : ${d1}">
+			                            				<li class="division_depth1_list" onclick="selectOpt(this);"><span th:data-value="${d1.division_id}" th:text="${d1.division}"></span></li>
+			                            			</th:block>
+			                            		</ul>
+			                            	</div>
+		                                    <!-- <select class="form-control b-light" id="division_depth1">
 				                                <option value="0">대상 작목 선택</option>
 				                                <th:block th:each="d1 : ${d1}">
 					                                <option th:value="${d1.division_id}" th:text="${d1.division}" th:selected="${d1.division_id == research.d1_id}"></option>
 				                                </th:block>
-				                            </select>
+				                            </select> -->
 		                                </div>
 		                                <div class="col-md-6 mb-25">
 		                                    <label for="division_depth2" class="color-dark fw-500">분류</label>
-		                                    <select class="form-control b-light" id="division_depth2">
+		                                    <div class="select" style="height: auto;">
+			                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="division_depth2" placeholder="분류 선택" autocomplete="off">
+			                            		<ul class="select-hide">
+			                            			<th:block th:each="d2 : ${d2}">
+			                            				<li class="division_depth2_list" onclick="selectOpt(this);"><span th:data-value="${d2.division_id}" th:text="${d2.division}"></span></li>
+			                            			</th:block>
+			                            		</ul>
+			                            	</div>
+		                                    <!-- <select class="form-control b-light" id="division_depth2">
 				                                <option value="0">분류 선택</option>
 				                                <th:block th:each="d2 : ${d2}">
 					                                <option th:value="${d2.division_id}" th:text="${d2.division}" th:selected="${d2.division_id == research.d2_id}"></option>
 				                                </th:block>
-				                            </select>
+				                            </select> -->
 		                                </div>
 		                            </div>
 		                            <div class="row">
 				        				<div class="col-md-6 mb-25">
 		                                    <label for="division_depth3" class="color-dark fw-500">항목</label>
-		                                    <select class="form-control b-light" id="division_depth3">
+		                                    <div class="select" style="height: auto;">
+			                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="division_depth3" placeholder="항목 선택" autocomplete="off">
+			                            		<ul class="select-hide">
+			                            			<th:block th:each="d3 : ${d3}">
+			                            				<li class="division_depth3_list" onclick="selectOpt(this);"><span th:data-value="${d3.division_id}" th:text="${d3.division}"></span></li>
+			                            			</th:block>
+			                            		</ul>
+			                            	</div>
+		                                    <!-- <select class="form-control b-light" id="division_depth3">
 				                                <option value="0">항목 선택</option>
 				                                <th:block th:each="d3 : ${d3}">
 					                                <option th:value="${d3.division_id}" th:text="${d3.division}" th:selected="${d3.division_id == research.d3_id}"></option>
 				                                </th:block>
-				                            </select>
+				                            </select> -->
 		                                </div>
 		                                <div class="col-md-6 mb-25">
 		                                    <label for="research_contents" class="color-dark fw-500"><span style="color: red;">*</span>조사방법</label>
@@ -158,8 +203,143 @@
     <th:block th:include="/../fragments/footer.html"></th:block>
     <!-- 공통 js -->
     <th:block th:include="/../fragments/commonjs.html"></th:block>
-<script type="text/javascript">
-	$(".b-light").change(function()
+<script type="text/javascript" th:inline="javascript">
+	
+	var research = /*[[${research}]]*/ "null";
+	console.log(research);
+	
+	//select 박스 기존 데이터 노출
+	function loadSelectData(){
+		$("#division_depth1").attr("data-select", research.d1_id);
+		$("#division_depth1").attr("value", research.d1);
+		
+		$("#division_depth2").attr("data-select", research.d2_id);
+		$("#division_depth2").attr("value", research.d2);
+		
+		$("#division_depth3").attr("data-select", research.d3_id);
+		$("#division_depth3").attr("value", research.d3);
+	}
+	
+	loadSelectData();
+	
+	let selectOptionWrapEls = document.querySelectorAll('.select ul');
+	let selectInputEls = document.querySelectorAll('input[name="select-input"]');
+	
+	function selectFilter(e){
+		
+		var currTarget = e;
+		var delOption = currTarget.nextElementSibling;
+		
+		for(var i = 0 ; i < selectOptionWrapEls.length; i++){
+			
+			if(selectOptionWrapEls[i].classList.contains("select-show")){
+				selectOptionWrapEls[i].classList.add('select-hide');
+				selectOptionWrapEls[i].classList.remove('select-show');
+			}
+		}
+		
+		if(delOption.classList.contains('select-hide')){
+			delOption.classList.remove('select-hide');
+			delOption.classList.add('select-show');
+		}
+		
+	}
+	
+	let body = document.querySelector('body');
+	function hideSelect(e){
+		var target = e.target.id;
+	    var ids = new Array();
+		for(var i = 0 ; i < selectInputEls.length; i++){
+			ids.push(selectInputEls[i].id);
+		}
+		if(!ids.includes(target)){
+			for(var i = 0 ; i < selectOptionWrapEls.length; i++){
+				
+				if(selectOptionWrapEls[i].classList.contains("select-show")){
+					selectOptionWrapEls[i].classList.add('select-hide');
+					selectOptionWrapEls[i].classList.remove('select-show');
+				}
+			}
+		}
+	}
+	body.addEventListener('click',hideSelect);
+	
+	/* 옵션선택 */
+	function selectOpt(e){
+	    var dataSelect = $(e).children().attr("data-value");
+	    var text = $(e).children().text();
+	    $(e).parent().prev().attr("data-select", dataSelect);
+	    $(e).parent().prev().val(text);
+	    $(e).parent().attr("class", "select-hide");
+	    
+	    var divisionEl_id = e.parentNode.previousElementSibling.id.slice(0, 14);
+	   
+	    if(divisionEl_id == "division_depth"){
+	    	 var departEl = e.parentNode.previousElementSibling;
+	    	 var division_id = dataSelect;
+	 		 var division_depth = e.parentNode.previousElementSibling.id.slice(14, 15);
+			
+	 		var data = {"division_id" : division_id, "division_depth" : division_depth};
+        	
+        	$.ajax(
+			{
+				url : 'selectDivision',
+				method : 'POST',
+				dataType : 'json',
+				data : data,
+				success : function(result)
+				{
+					var depth = (division_depth * 1) + 1;
+					var depth_list = $("#division_depth" + depth).next();
+					var add_list = "";
+					
+					if(division_depth == "1"){
+						$("#division_depth2").attr("data-select", "");
+    					$("#division_depth2").val("");
+    					
+    					$("#division_depth3").attr("data-select", "");
+    					$("#division_depth3").val("");
+					}else if(division_depth == "2"){
+						$("#division_depth3").attr("data-select", "");
+    					$("#division_depth3").val("");
+					}
+					
+					for(var i = 0; i < result.length; i++)
+					{
+						add_list += '<li class="division_depth'+depth+'_list" onclick="selectOpt(this);">';
+						add_list += '<span data-value="'+result[i].division_id+'">'+result[i].division+'</span>';
+						add_list += '</li>';
+					}
+					
+					depth_list.empty();
+					depth_list.append(add_list);
+				}
+			});
+	 		 
+	    }//end if
+	}//end 옵션 선택
+	
+	//필터 함수
+	function textfilter(e){
+		
+		var search = $(e).val().toLowerCase();
+		var className = $(e).next().children().eq(0).attr('class');
+		
+		$(document).find("."+className).each(function(index, item){
+			var text = $(this).children().text();
+			
+			if(text.toLowerCase().includes(search)){
+				$(this).css("display", "flex");
+			}else{
+				$(this).css("display", "none");
+			}
+		});
+		
+	}//end 필터 함수
+	
+	
+
+	/* $(".b-light").change(function()
 	{
 		var division_id = $(this).val();
 		var division_depth = this.id.slice(14, 15);
@@ -196,7 +376,7 @@
 				depth_list.append(add_list);
 			}
 		});
-	});
+	}); */
 	
 	function UpdateBtn()
 	{
@@ -216,7 +396,7 @@
 	
 	function UpdateResearch()
 	{
-		var division_id = $("#division_depth3").val();
+		var division_id = $("#division_depth3").attr("data-select");
 		var research_contents = $("#research_contents").val();
 
 		if(division_id == 0)

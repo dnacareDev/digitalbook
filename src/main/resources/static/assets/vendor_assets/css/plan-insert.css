@@ -91,9 +91,13 @@ body button{
     cursor: auto;
     background-color: rgba(233, 233, 253);
 }
-#section .step, .submit_btn{
+#section .step{
     width: 100%;
     padding: 15px 0;
+}
+#section .submit_btn{
+	padding: 15px 50px;
+	
 }
 #section .step .step_inner{
     max-width: 100%;

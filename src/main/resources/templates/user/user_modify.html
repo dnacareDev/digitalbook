@@ -12,6 +12,27 @@
 		margin-top:-15px;
 	}
 	.end{margin-left:10px;}
+	.select-hide{
+		display: none;
+	}
+	.select-show{
+		display: block;
+	    position: absolute;
+	    z-index :10;
+	    top: 30px;
+	    width: 97.5%;
+	    background-color: white;
+	    border:1px solid;
+	    border-radius: 5px;
+	    cursor: pointer;
+	    overflow-y: auto;
+	    height: 125px;
+	}
+
+	.select .select-show li{
+	    padding:0 0 0 5px;
+	    line-height: 30px;
+	}
 </style>
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
@@ -76,34 +97,58 @@
 								<label class="" for="depart_depth1">원 <span style="color: red;">*</span></label>
 							</div>
 							<div class="col-8 col-md-4 col-lg-2">
-								<select class="form-control b-light department" id="depart_depth1">
+								<div class="select" style="height: auto;">
+                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="depart_depth1" placeholder="원 선택" autocomplete="off">
+                            		<ul class="select-hide">
+                            			<th:block th:each="d1 : ${d1}">
+                            				<li class="depart_depth1_list" onclick="selectOpt(this);"><span th:data-value="${d1.depart_id}" th:text="${d1.department}"></span></li>
+                            			</th:block>
+                            		</ul>
+                            	</div>
+								<!-- <select class="form-control b-light department" id="depart_depth1">
 									<option value="0">원 선택</option>
 									<th:block th:each="d1 : ${d1}">
 		                                <option th:value="${d1.depart_id}" th:text="${d1.department}" th:selected="${d1.depart_id == user.d1_id}"></option>
 	                                </th:block>
-								</select>
+								</select> -->
 							</div>
 							<div class="mb-2 col-4 col-md-2 col-lg-2">
 								<label class="" for="depart_depth2">부</label>
 							</div>
 							<div class="col-8 col-md-4 col-lg-2">
-								<select class="form-control b-light department" id="depart_depth2">
+								<div class="select" style="height: auto;">
+                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="depart_depth2" placeholder="부 선택" autocomplete="off">
+                            		<ul class="select-hide">
+                            			<th:block th:each="d2 : ${d2}">
+                            				<li class="depart_depth2_list" onclick="selectOpt(this);"><span th:data-value="${d2.depart_id}" th:text="${d2.department}"></span></li>
+                            			</th:block>
+                            		</ul>
+                            	</div>
+								<!-- <select class="form-control b-light department" id="depart_depth2">
 									<option value="0">부 선택</option>
 									<th:block th:each="d2 : ${d2}">
 		                                <option th:value="${d2.depart_id}" th:text="${d2.department}" th:selected="${d2.depart_id == user.d2_id}"></option>
 	                                </th:block>
-								</select>
+								</select> -->
 							</div>
 							<div class="mb-2 col-4 col-md-2 col-lg-2">
 								<label class="" for="depart_depth3">과<span style="color: red;">*</span></label>
 							</div>
 							<div class="col-8 col-md-4 col-lg-2">
-								<select class="form-control b-light department" id="depart_depth3" name="user_group">
+								<div class="select" style="height: auto;">
+                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="depart_depth3" placeholder="과 선택" autocomplete="off">
+                            		<ul class="select-hide">
+                            			<th:block th:each="d3 : ${d3}">
+                            				<li class="depart_depth3_list" onclick="selectOpt(this);"><span th:data-value="${d3.depart_id}" th:text="${d3.department}"></span></li>
+                            			</th:block>
+                            		</ul>
+                            	</div>
+								<!-- <select class="form-control b-light department" id="depart_depth3" name="user_group">
 									<option value="0">과 선택</option>
 									<th:block th:each="d3 : ${d3}">
 		                                <option th:value="${d3.depart_id}" th:text="${d3.department}" th:selected="${d3.depart_id == user.d3_id}"></option>
 	                                </th:block>
-								</select>
+								</select> -->
 							</div>
 						</div>
 						<div class="row form-group md-0">
@@ -111,30 +156,61 @@
 								<label class="" for="depart_depth4">소속실</label>
 							</div>
 							<div class="col-8 col-md-4 col-lg-2">
-								<select class="form-control b-light department" id="depart_depth4" name="depart_id">
+								<div class="select" style="height: auto;">
+                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="depart_depth4" placeholder="소속실 선택" autocomplete="off">
+                            		<ul class="select-hide">
+                            			<th:block th:each="d4 : ${d4}">
+                            				<li class="depart_depth4_list" onclick="selectOpt(this);"><span th:data-value="${d4.depart_id}" th:text="${d4.department}"></span></li>
+                            			</th:block>
+                            		</ul>
+                            	</div>
+								<!-- <select class="form-control b-light department" id="depart_depth4" name="depart_id">
 									<option value="0">소속실 선택</option>
 									<th:block th:each="d4 : ${d4}">
 		                                <option th:value="${d4.depart_id}" th:text="${d4.department}" th:selected="${d4.depart_id == user.d4_id}"></option>
 	                                </th:block>
-								</select>
+								</select> -->
 							</div>
 							<div class="mb-2 col-4 col-md-2 col-lg-2">
 								<label class="" for="user_position">직종<span style="color: red;">*</span></label>
 							</div>
 							<div class="col-8 col-md-4 col-lg-2">
-								<select class="form-control b-light" id="user_position" name="user_position">
+								<div class="select" style="height: auto;">
+                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="user_position" placeholder="직종 선택" autocomplete="off">
+                            		<ul class="select-hide">
+                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="연구직">연구직</span></li>
+                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="전문연구직">전문연구직</span></li>
+                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="공무직">공무직</span></li>
+                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="실무관">실무관</span></li>
+                            		</ul>
+                            	</div>
+								<!-- <select class="form-control b-light" id="user_position" name="user_position">
 									<option value="">직종 선택</option>
 									<option value="연구직">연구직</option>
 									<option value="전문연구직">전문연구직</option>
 									<option value="공무직">공무직</option>
 									<option value="실무관">실무관</option>
-								</select>
+								</select> -->
 							</div>
 							<div class="mb-2 col-4 col-md-2 col-lg-2">
 								<label class="" for="user_level">직급<span style="color: red;">*</span></label>
 							</div>
 							<div class="col-8 col-md-4 col-lg-2">
-								<select class="form-control b-light" id="user_level" name="user_level">
+								<div class="select" style="height: auto;">
+                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="user_level" placeholder="직급 선택" autocomplete="off">
+                            		<ul class="select-hide">
+                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="수확후이용과">농업연구관</span></li>
+                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="농업연구사">농업연구사</span></li>
+                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="박사후전문연구원">박사후전문연구원</span></li>
+                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="연구원">연구원</span></li>
+                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="공업서기">공업서기</span></li>
+                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="포장온실관리원">포장온실관리원</span></li>
+                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="행정실무원">행정실무원</span></li>
+                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="시설관리원">시설관리원</span></li>
+                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="운전원">운전원</span></li>
+                            		</ul>
+                            	</div>
+								<!-- <select class="form-control b-light" id="user_level" name="user_level">
 									<option value="">직급 선택</option>
 									<option value="수확후이용과">농업연구관</option>
 									<option value="농업연구사">농업연구사</option>
@@ -145,7 +221,7 @@
 									<option value="행정실무원">행정실무원</option>
 									<option value="시설관리원">시설관리원</option>
 									<option value="운전원">운전원</option>
-								</select>
+								</select> -->
 							</div>
 						</div>
 						<div class="row form-group">
@@ -201,13 +277,22 @@
 								<label class="" for="user_type">권한<span style="color: red;">*</span></label>
 							</div>
 							<div class="mb-2 col-8 col-md-4 col-lg-2">
-								<select class="form-control b-light authority" id="user_type" name="user_type">
+								<div class="select" style="height: auto;">
+                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="user_type" placeholder="권한 선택" autocomplete="off">
+                            		<ul class="select-hide">
+                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="0">관리자</span></li>
+                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="1">운영자</span></li>
+                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="2">연구직</span></li>
+                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="3">공무직</span></li>
+                            		</ul>
+                            	</div>
+								<!-- <select class="form-control b-light authority" id="user_type" name="user_type">
 									<option value="">권한 선택</option>
 									<option value="0">관리자</option>
 									<option value="1">운영자</option>
 									<option value="2">연구직</option>
 									<option value="3">공무직</option>
-								</select>
+								</select> -->
 							</div>
 						</div>
 					</div>
@@ -300,11 +385,167 @@
 <script type="text/javascript" th:inline="javascript">
 	
 	var user = /*[[${user}]]*/ "null";
+	console.log(user);
 	
-	//직종, 직급 , 권한 selected 이벤트
-	$("#user_position").val(user.user_position).prop("selected", true);
-	$("#user_level").val(user.user_level).prop("selected", true);
-	$("#user_type").val(user.user_type).prop("selected", true);
+	//select 박스 기존 데이터 노출
+	function loadSelectData(){
+		$("#depart_depth1").attr("data-select", user.d1_id);
+		$("#depart_depth1").val(user.d1_department_name);
+		
+		$("#depart_depth2").attr("data-select", user.d2_id);
+		$("#depart_depth2").val(user.d2_department_name);
+		
+		$("#depart_depth3").attr("data-select", user.d3_id);
+		$("#depart_depth3").val(user.d3_department_name);
+		
+		$("#depart_depth4").attr("data-select", user.d4_id);
+		$("#depart_depth4").val(user.d4_department_name);
+		
+		$("#user_position").attr("data-select", user.user_position);
+		$("#user_position").val(user.user_position);
+		
+		$("#user_level").attr("data-select", user.user_level);
+		$("#user_level").val(user.user_level);
+		
+		var user_type = user.user_type;
+		$("#user_type").attr("data-select", user_type);
+		if(user_type == "0"){
+			$("#user_type").val("관리자");
+		}else if(user_type == "1"){
+			$("#user_type").val("운영자");
+		}else if(user_type == "2"){
+			$("#user_type").val("연구직");
+		}else if(user_type == "3"){
+			$("#user_type").val("공무직");
+		}
+	}
+	loadSelectData();
+	
+	let selectOptionWrapEls = document.querySelectorAll('.select ul');
+	let selectInputEls = document.querySelectorAll('input[name="select-input"]');
+	
+	function selectFilter(e){
+		
+		var currTarget = e;
+		var delOption = currTarget.nextElementSibling;
+		
+		for(var i = 0 ; i < selectOptionWrapEls.length; i++){
+			
+			if(selectOptionWrapEls[i].classList.contains("select-show")){
+				selectOptionWrapEls[i].classList.add('select-hide');
+				selectOptionWrapEls[i].classList.remove('select-show');
+			}
+		}
+		
+		if(delOption.classList.contains('select-hide')){
+			delOption.classList.remove('select-hide');
+			delOption.classList.add('select-show');
+		}
+		
+	}
+	
+	let body = document.querySelector('body');
+	function hideSelect(e){
+		var target = e.target.id;
+	    var ids = new Array();
+		for(var i = 0 ; i < selectInputEls.length; i++){
+			ids.push(selectInputEls[i].id);
+		}
+		if(!ids.includes(target)){
+			for(var i = 0 ; i < selectOptionWrapEls.length; i++){
+				
+				if(selectOptionWrapEls[i].classList.contains("select-show")){
+					selectOptionWrapEls[i].classList.add('select-hide');
+					selectOptionWrapEls[i].classList.remove('select-show');
+				}
+			}
+		}
+	}
+	body.addEventListener('click',hideSelect);
+	
+	/* 옵션선택 */
+	function selectOpt(e){
+	    var dataSelect = $(e).children().attr("data-value");
+	    var text = $(e).children().text();
+	    $(e).parent().prev().attr("data-select", dataSelect);
+	    $(e).parent().prev().val(text);
+	    $(e).parent().attr("class", "select-hide");
+	    
+	    var departEl_id = e.parentNode.previousElementSibling.id.slice(0, 12);
+	   
+	    if(departEl_id == "depart_depth"){
+	    	 var departEl = e.parentNode.previousElementSibling;
+	    	 var depart_id = dataSelect;
+	 		 var depart_depth = e.parentNode.previousElementSibling.id.slice(12, 13);
+	 		 
+	 		var data = {"depart_id" : depart_id, "depart_depth" : depart_depth};
+			
+			$.ajax(
+			{
+				url : 'selectDepartment',
+				method : 'POST',
+				dataType : 'json',
+				data : data,
+				success : function(result)
+				{
+					var depth = (depart_depth * 1) + 1;
+					var depart_list = $("#depart_depth" + depth).next();
+					var add_list = "";
+					
+					if(depart_depth == "1"){
+						$("#depart_depth2").attr("data-select", "");
+						$("#depart_depth2").val("");
+						
+						$("#depart_depth3").attr("data-select", "");
+						$("#depart_depth3").val("");
+						
+						$("#depart_depth4").attr("data-select", "");
+						$("#depart_depth4").val("");
+					}else if(depart_depth == "2"){
+						$("#depart_depth3").attr("data-select", "");
+						$("#depart_depth3").val("");
+						
+						$("#depart_depth4").attr("data-select", "");
+						$("#depart_depth4").val("");
+					}else if(depart_depth == "3"){
+						$("#depart_depth4").attr("data-select", "");
+						$("#depart_depth4").val("");
+					}
+					
+					for(var i = 0; i < result.length; i++)
+					{
+						add_list += '<li class="depart_depth'+depth+'_list" onclick="selectOpt(this);">';
+						add_list += '<span data-value="'+result[i].depart_id+'">'+result[i].department+'</span>';
+						add_list += '</li>';
+					}
+					
+					depart_list.empty();
+					depart_list.append(add_list);
+				}
+			});
+	 		 
+	    }//end if
+	}//end 옵션 선택
+	
+	//필터 함수
+	function textfilter(e){
+		
+		var search = $(e).val().toLowerCase();
+		var className = $(e).next().children().eq(0).attr('class');
+		
+		$(document).find("."+className).each(function(index, item){
+			var text = $(this).children().text();
+			
+			if(text.toLowerCase().includes(search)){
+				$(this).css("display", "flex");
+			}else{
+				$(this).css("display", "none");
+			}
+		});
+		
+	}//end 필터 함수
+	
+	
 	
 	$('.inputText').bind('keydown', function(e)
    	{
@@ -315,7 +556,7 @@
    		}
    	});
 
-	$(".department").change(function()
+	/* $(".department").change(function()
 	{
 		var depart_id = $(this).val();
 		var depart_depth = this.id.slice(12, 13);
@@ -357,7 +598,7 @@
 				depart_list.append(add_list);
 			}
 		});
-	});
+	}); */
 	
 	function UpdateBtn()
 	{
@@ -377,25 +618,28 @@
 	
 	function UpdateUser()
 	{
+		
 		var user_username = $("#user_username").val();
 		var user_password = $("#user_password").val();
 		var chk_password = $("#chk_password").val();
 		var user_name_k = $("#user_name_k").val();
-		var depart_depth1 = $("#depart_depth1").val();
-		var depart_depth2 = $("#depart_depth2").val();
-		var depart_depth3 = $("#depart_depth3").val();
-		var user_position = $("#user_position").val();
+		var user_name_e = $("#user_name_e").val();
+		var depart_depth1 = $("#depart_depth1").attr("data-select");
+		var depart_depth2 = $("#depart_depth2").attr("data-select");
+		var depart_depth3 = $("#depart_depth3").attr("data-select");
+		var depart_id = $("#depart_depth4").attr("data-select");
+		var user_position = $("#user_position").attr("data-select");
 		var user_level = $("#user_level").val();
+		var user_post = $("#user_post").val();
+		var user_address = $("#user_address").val();
+		var user_address_detail = $("#user_address_detail").val();
+		var user_tel = $("#user_tel").val();
+		var user_pax = $("#user_pax").val();
+		var user_phone = $("#user_phone").val();
+		var user_scientist = $("#user_scientist").val();
+		var user_type = $("#user_type").attr("data-select");
+		var origin_pwd = $("#origin_pwd").val();
 		
-		console.log("1 : " + user_username);
-		console.log("2 : " + user_password);
-		console.log("3 : " + chk_password);
-		console.log("4 : " + user_name_k);
-		console.log("5 : " + depart_depth1);
-		console.log("6 : " + depart_depth2);
-		console.log("7 : " + depart_depth3);
-		console.log("8 : " + user_position);
-		console.log("9 : " + user_level);
 		if(user_username == "")
 		{
 			alert("사용자 ID를 입력하세요.");
@@ -446,19 +690,46 @@
 			alert("비밀번호가 일치하지 않습니다.");
 			$("#update_popup").css("display", "none");
 		}
+		else if(user_type == "")
+		{
+			alert("권한을 선택해주세요.");
+			$("#update_popup").css("display", "none");
+		}
 		else
 		{
 			/* $("#updateUser").submit(); */
-			var updateUser_from = $("#updateUser").serialize();
+			//var updateUser_from = $("#updateUser").serialize();
+			
+			var data = {
+				"user_id" : user.user_id,
+				"user_username" : user_username,
+				"user_password" : user_password,
+				"user_name_k" : user_name_k,
+				"user_name_e" : user_name_e,
+				"depart_id" : depart_id,
+				"user_position" : user_position,
+				"user_level" : user_level,
+				"user_post" : user_post,
+				"user_address" : user_address,
+				"user_address_detail" : user_address_detail,
+				"user_tel" : user_tel,
+				"user_pax" : user_pax,
+				"user_phone" : user_phone,
+				"user_scientist" : user_scientist,
+				"user_type" : user_type,
+				"user_group" : depart_depth3,
+				"origin_pwd" : origin_pwd
+			};
 			
 			$.ajax(
 			{
 				url : 'updateUser',
 				method : 'POST',
 				dataType : 'json',
-				data : updateUser_from,
+				data : data,
 				success : function(result)
 				{
+					console.log(result);
 					if(result == 0)
 					{
 						$("#update_popup").css("display", "none");
@@ -476,7 +747,7 @@
 	function DeleteUser()
 	{
 		var data = {"user_id" : user.user_id};
-		
+		console.log(data);
 		$.ajax(
 		{
 			url : 'deleteUser',

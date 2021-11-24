@@ -102,8 +102,9 @@
 	
 	<!-- 시약 상세 조회 -->
 	<select id="selectReagentDetail" parameterType="int" resultType="Reagent">
-		SELECT * FROM reagent
-		WHERE reagent_id = #{reagent_id}
+		SELECT r.*, e.* FROM reagent r
+		LEFT JOIN eaches e ON r.eaches_id = e.eaches_id
+		WHERE r.reagent_id = #{reagent_id}
 	</select>
 	
 	<!-- 시약 수정 -->
