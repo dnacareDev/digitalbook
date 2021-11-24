@@ -1,6 +1,6 @@
 /*data 넘기는 형식 *//*
 var segmentData = [
-{num: 1, id: 'A1-B1-C1-1', type: '60x20,60x25,70x40', repeat: 1, z-index:, sement_aspect: ,segment_horizon: ,segment_vertical: },,
+{num: 1, id: 'A1-B1-C1-1', type: '60x20,60x25,70x40', segment_rotate: ,segment_x: ,segment_y: },,
 ];
 */
 
@@ -399,7 +399,7 @@ function activeList(thisOrder){
 			segmentLi[z].style.zIndex = z;
 		}
 	}
-	segmentLi[thisOrder].classList.add('active');
+	segmentLi[thisIndex].classList.add('active');
 	tableEls[thisIndex].classList.add('active');
 	
 	if(selectBoxEl !== undefined && selectBoxEl !== null){
@@ -427,7 +427,7 @@ function onClickTableEls(e){
 
 function thisTransformGet(thisOrder){
 	/*클릭한 개체의 transform 정보를 받아옵니다.*/
-	var liTransform = segmentLi[thisOrder].style.transform;
+	var liTransform = segmentLi[thisIndex].style.transform;
 	var elsTransform = segmentEls[thisIndex].style.transform;
 	
 	var translateValue = liTransform.split('translate')[1];
