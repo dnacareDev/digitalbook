@@ -357,7 +357,7 @@
 			                        <h3>Step 5. 조사 항목 선택<span></span></h3>
 			                    </div>
 			                    <div class="content clearfix">
-			                        <div class="row">
+			                        <div class="row" style="justify-content: space-between; width:100%; margin: 0 auto;">
 					            		<div class="col-lg-5">
 											<div class="row">
 												<input type="text" onkeyup="filterMethod();" class="form-control b-light" id="searchMethod" placeholder="조사항목, Method명 검색"
@@ -398,7 +398,7 @@
 												</ul>
 											</div>
 										</div>
-										<div class="col-lg-6">
+										<div class="col-lg-6" style="padding:0">
 											<ul class="list-group" id="method-container" style="min-height: 400px; max-height: 400px;
 												overflow-y: auto; background-color: rgb(243, 243, 243) ">
 												
@@ -421,7 +421,7 @@
 			                    </div>
 			                </div>
 			            </div>
-			            <div class="submit_btn">
+			            <div class="submit_btn clearfix">
 			                <div class="submit_btn-inner">
 			                    <button class="list" id="listBtn">목록</button>
 			                    <th:block th:if="${plan.plan_step == 0}">
