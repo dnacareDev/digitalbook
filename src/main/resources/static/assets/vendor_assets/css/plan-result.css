@@ -672,6 +672,7 @@ i.bi{
 }
 #section .step .step_inner .content .content-center .content_box ul ul li img{
     vertical-align: middle;
+    margin-top:5px;
 }
 #step2 #step2_inner .content span.sub_title-content{
     float: none;

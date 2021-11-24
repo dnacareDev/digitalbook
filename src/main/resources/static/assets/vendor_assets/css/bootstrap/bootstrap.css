@@ -18086,4 +18086,19 @@ to {
 h3{
 	font-size: 16px !important;
 }
+.btn_select1{
+	padding: 0 !important;	
+	
+}
+span.color-dark.align-center{
+	font-size: 16px !important;
+}
+.btn.btn-primary{
+	background-color: #768BF5;
+	border:none;
+}
+.end-button{
+	width: 100px !important;
+	height: 37px !important;
+}
 /*# sourceMappingURL=maps/bootstrap.css.map */

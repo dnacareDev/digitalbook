@@ -132,8 +132,8 @@
 			                    </div>
 			                    <div class="content clearfix">
 			                    	<div class="row ml-4" style="float: left; margin-left: 15px;">
-			        					<label class="color-dark align-center">포장</label>
-			                            <input type="text" class="form-control b-light" id="storage_input" th:value="${plan.storage_name}" readonly="readonly" style="width: 300px; margin-left: 10px;">
+			        					<label class="color-dark align-center" style="align-items: center; margin:0">포장</label>
+			                            <input type="text" class="form-control b-light" id="storage_input" th:value="${plan.storage_name}" readonly="readonly" style="width: 300px; margin-left: 10px; height: 29px; padding: 0 20px;">
 			                    	</div>
 			                        <div class="btn_ver">
 			                            <button type="button" id="storageBtn">신규등록</button>
@@ -357,7 +357,7 @@
 			                        <h3>Step 5. 조사 항목 선택<span></span></h3>
 			                    </div>
 			                    <div class="content clearfix">
-			                        <div class="row">
+			                        <div class="row" style="justify-content: space-between; width:100%; margin: 0 auto;">
 					            		<div class="col-lg-5">
 											<div class="row">
 												<input type="text" onkeyup="filterMethod();" class="form-control b-light" id="searchMethod" placeholder="조사항목, Method명 검색"
@@ -398,7 +398,7 @@
 												</ul>
 											</div>
 										</div>
-										<div class="col-lg-6">
+										<div class="col-lg-6" style="padding:0">
 											<ul class="list-group" id="method-container" style="min-height: 400px; max-height: 400px;
 												overflow-y: auto; background-color: rgb(243, 243, 243) ">
 												
@@ -421,7 +421,7 @@
 			                    </div>
 			                </div>
 			            </div>
-			            <div class="submit_btn">
+			            <div class="submit_btn clearfix">
 			                <div class="submit_btn-inner">
 			                    <button class="list" id="listBtn">목록</button>
 			                    <th:block th:if="${plan.plan_step == 0}">
@@ -4023,7 +4023,7 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+					var data = {"num" : number, "segmentId" : factorArray[j].id, "order" : ((i*j) + j),  "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
 					
 					resultArray.push(data);
 				}
@@ -4141,7 +4141,7 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+					var data = {"num" : number ,"segmentId" : factorArray[j].id, "order" : ((i*j) + j),  "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
 					
 					resultArray.push(data);
 				}
@@ -4290,7 +4290,7 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : ((i*j) + j),  "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
 					
 					resultArray.push(data);
 				}
@@ -4452,7 +4452,7 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : ((i*j) + j),  "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
 					
 					resultArray.push(data);
 				}

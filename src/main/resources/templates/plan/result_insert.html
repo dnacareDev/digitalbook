@@ -552,12 +552,12 @@
 		let segment_list = $("#segment_list");
 		
 		//기존 재배계획의 시험구 배치 종류
-		let gorw_type = plan.grow_type;
+		let grow_type = plan.grow_type;
 		
 		var plan_repeat = plan.plan_repeat;
 		
 		//시험구 배치 종류에 따라 분기 처리
-		if(gorw_type == "0"){	//완전임의배치
+		if(grow_type == "0"){	//완전임의배치
 			
 			//resultArray를 가지고 화면 그려주기
 			var add_list = "";
@@ -587,7 +587,7 @@
 			add_list += '</div>';
 			
 			segment_list.append(add_list);
-		}else if(gorw_type == "1"){	//난괴법
+		}else if(grow_type == "1"){	//난괴법
 			
 			//resultArray를 가지고 화면 그려주기
 			var add_list = "";
@@ -631,7 +631,7 @@
 			
 			segment_list.append(result_add_list);
 			
-		}else if(gorw_type == "2"){//분할구배치법
+		}else if(grow_type == "2"){//분할구배치법
 			
 			var arr = new Array();
 			for(var i = 0; i < resultArray.length; i++){
@@ -698,7 +698,7 @@
 				
 			});
 			
-		}else if(gorw_type == "3"){//세세구배치법
+		}else if(grow_type == "3"){//세세구배치법
 			
 			var arr = new Array();
 			for(var i = 0; i < resultArray.length; i++){

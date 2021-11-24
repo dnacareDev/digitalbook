@@ -2976,16 +2976,17 @@
 		}
 		
 		if(grow_type == "0"){ //완전임의배치법
-			
+			var orderCount = 0;
 			//만들어준 factorArray를 가지고 최종 resultArray 만들어 주기
 			for(var i = 0; i < plan_repeat; i++){
 				level++;
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : ((i*j) + j), "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : orderCount, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
 					
 					resultArray.push(data);
+					orderCount++;
 				}
 			}//end for
 			
@@ -3094,7 +3095,7 @@
 			}, (duration*1000));
 			
 		}else if(grow_type == "1"){ //난괴법
-			
+			var orderCount = 0;
 			//만들어준 factorArray를 가지고 최종 resultArray 만들어 주기
 			for(var i = 0; i < plan_repeat; i++){
 				level++;
@@ -3102,9 +3103,10 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : ((i*j) + j), "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : orderCount, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
 					
 					resultArray.push(data);
+					orderCount++;
 				}
 			}//end for
 			
@@ -3244,7 +3246,7 @@
 			}, (duration*1000));
 			
 		}else if(grow_type == "2"){ //분할구배치법
-			
+			var orderCount = 0;
 			//만들어준 factorArray를 가지고 최종 resultArray 만들어 주기
 			for(var i = 0; i < plan_repeat; i++){
 				level++;
@@ -3252,9 +3254,10 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : ((i*j) + j), "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : orderCount, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
 					
 					resultArray.push(data);
+					orderCount++;
 				}
 			}//end for
 			
@@ -3417,7 +3420,7 @@
 			getDataResult(getDataArr, grow_type);
 			
 		}else if(grow_type == "3"){ //세세구배치법
-			
+			var orderCount = 0;
 			//만들어준 factorArray를 가지고 최종 resultArray 만들어 주기
 			for(var i = 0; i < plan_repeat; i++){
 				level++;
@@ -3425,8 +3428,9 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number ,"segmentId" : factorArray[j].id, "order" : ((i*j) + j), "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
+					var data = {"num" : number ,"segmentId" : factorArray[j].id, "order" : orderCount, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
 					resultArray.push(data);
+					orderCount++;
 				}
 			}//end for
 			
@@ -3649,7 +3653,90 @@
 		}
 		
 	}); */
+	/*
+ 	$("#random01").on("click", function(){
+ 		
+		var arr = new Array();
+		for(var i = 0; i < resultArray.length; i++){
+			arr.push(resultArray[i].id.split("-")[0]+"-"+resultArray[i].repeat);
+		}
+		
+		var test = Array.from(new Set(arr));
+		console.log(test,"test");
+		test.sort(() => Math.random() - 0.5)
+		
+		for(var i = 0; i < test.length; i++){
+			$(document).find(".table_content").each(function(index, item){
+				if(($(this).attr("data-id") + "-" + resultArray[i].repeat) == test[i]){
+					console.log($(this).attr("data-id") + "-" + resultArray[i].repeat,"$(this)resultArray[i].repeat", "testI",test[i]);
+					$(this).insertBefore($(document).find(".table_content[data-id='"+test[i+1]+"']"));
+				}
+			});
+		}
+		
+	});
+	*/
+	/*
+	$("#random01").on("click", function(){
+		var copyResultArray = [...resultArray];
+		var calcObject = new Object();
+		
+		var factor1El = document.querySelector('#text_inner1');
+		var factor2El = document.querySelector('#text_inner2');
+		var factor3El = document.querySelector('#text_inner3');
+		var repeatEl = document.querySelector('#plan_repeat');
+		
+		var factor1 = factor1El.innerText.split(',').length;
+		var factor2 = factor2El.innerText.split(',').length;
+		var factor3 = factor3El.innerText.split(',').length;
+		var repeatVal = repeatEl.value;
+		
+		
+		var obA = {};
+		var obB = {};
+		var obC = {};
+		
+		var arrIndex = 0;
+		for(let r = 0; r < repeatVal; r++){
+			calcObject["R"+(r+1)] = {};
+			for(let a = 0; a < factor1; a++){
+				obA = Object.assign(obA, {["A"+(a+1)]: {}});
+				calcObject["R"+(r+1)] = obA;
+				for(let b = 0; b < factor2; b++){ 
+					obB = Object.assign(obB, {["B"+(b+1)]: {}});
+					calcObject["R"+(r+1)]["A"+(a+1)] = obB;
+					
+					for(let c = 0; c < factor3; c++){					
+						obC = Object.assign(obC, {["C"+(c+1)]: copyResultArray[arrIndex]});
+						calcObject["R"+(r+1)]["A"+(a+1)]["B"+(b+1)] = obC;
+						arrIndex++;
+					}
+					obC = {};
+				}
+				obB = {};
+			}
+			obA = {};
+		}
+
+		var obALength = Object.keys(obA).length;
+		var obBLength = Object.keys(obB).length;
+		
+		for(const [key, v] of Object.entries(obA)){
+			for(k = 0; k < obALength; k++){
+				
+				const prop = key[Math.floor(Math.random() * k)];
+				
+				console.log(prop,"prop");
+
+				
+				
+				
+				
+			}
+		}
+	});
 	
+	*/
 	//구획정보 처리포장면적 이벤트
 	$(document).on("keyup", ".container1 .table_content:eq(0) .seg_area", function(){
 		var input_text = $(this).val();
