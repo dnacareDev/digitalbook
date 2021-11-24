@@ -230,10 +230,14 @@
 
 <script type="text/javascript">
 
-	let selectOptionWrapEls = document.querySelectorAll('.select ul');
 	let selectInputEls = document.querySelectorAll('input[name="select-input"]');
+	let select_this;
+	let select_text;
+	let select_data;
 	
 	function selectFilter(e){
+		select_this = e;
+		let selectOptionWrapEls = document.querySelectorAll('.select ul');
 		
 		var currTarget = e;
 		var delOption = currTarget.nextElementSibling;
@@ -255,12 +259,27 @@
 	
 	let body = document.querySelector('body');
 	function hideSelect(e){
-		var target = e.target.id;
-	    var ids = new Array();
-		for(var i = 0 ; i < selectInputEls.length; i++){
-			ids.push(selectInputEls[i].id);
-		}
-		if(!ids.includes(target)){
+		
+		let selectOptionWrapEls = document.querySelectorAll('.select ul');
+		var target = e.target.name;
+		if(target != "select-input"){
+			if(select_this != undefined){
+				if(select_this.value != select_text){
+					if(select_text != undefined && select_data == select_this.getAttribute("data-select")){
+						select_this.value = select_text;
+					}else{
+						select_this.value = "";
+						
+					}
+					var textEl = select_this.parentNode.children[1].children;
+					
+					for(var i = 0; i < textEl.length; i++){
+						textEl[i].style.display = "flex";
+					}
+					
+				}//end if2
+			}//end if 1
+			
 			for(var i = 0 ; i < selectOptionWrapEls.length; i++){
 				
 				if(selectOptionWrapEls[i].classList.contains("select-show")){
@@ -279,6 +298,9 @@
 	    $(e).parent().prev().attr("data-select", dataSelect);
 	    $(e).parent().prev().val(text);
 	    $(e).parent().attr("class", "select-hide");
+	    
+	    select_text = text;
+	    select_data = dataSelect;
 	}//end 옵션 선택
 	
 	//필터 함수
