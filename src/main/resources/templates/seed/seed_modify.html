@@ -659,13 +659,38 @@
 	loadSeedForm(seeds);
 	
 	let selectInputEls = document.querySelectorAll('input[name="select-input"]');
-	
 	let select_this;
-	let select_text;
-	let select_data;
+	let select_prev;
+	let select_id;
+	
+	function selection(){
+		if(document.getSelection){
+			var selection = document.getSelection();
+			
+			if(selection.focusNode != null){
+				if(selection.focusNode.children != undefined){
+					var length = selection.focusNode.children.length;
+					if(length != 0){
+						var check = selection.focusNode.children[0].name;
+						var check2 = selection.focusOffset;
+						if(check == "select-input" && check2 == "1"){
+							selectFilter(selection.focusNode.children[0]);
+						}
+					}
+				}
+			}
+			
+		}
+	}
 	
 	function selectFilter(e){
+		
+		var selection = document.getSelection();
+		
+		select_prev = select_this;
 		select_this = e;
+		select_id = e.id;
+		
 		let selectOptionWrapEls = document.querySelectorAll('.select ul');
 		
 		var currTarget = e;
@@ -692,23 +717,42 @@
 		let selectOptionWrapEls = document.querySelectorAll('.select ul');
 		var target = e.target.name;
 		
-		if(target != "select-input"){
-			if(select_this != undefined){
-				if(select_this.value != select_text){
-					if(select_text != undefined && select_data == select_this.getAttribute("data-select")){
-						select_this.value = select_text;
-					}else{
-						select_this.value = "";
-						
+		if(target == "select-input"){
+			if(select_prev != undefined && select_this != select_prev){
+				var prev_attr = select_prev.getAttribute("value");
+				var prev_text = select_prev.value;
+				if(prev_attr != prev_text){
+					select_prev.value = prev_attr;
+					var prev_textEl = select_prev.parentNode.children[1].children;
+					
+					for(var i = 0; i < prev_textEl.length; i++){
+						prev_textEl[i].style.display = "flex";
 					}
+					
 					var textEl = select_this.parentNode.children[1].children;
 					
 					for(var i = 0; i < textEl.length; i++){
 						textEl[i].style.display = "flex";
 					}
+				}
+			}
+		}
+		
+		if(target != "select-input"){
+			if(select_this != undefined && select_this.value != null){
+				var select_attr = select_this.getAttribute("value");
+				var select_text = select_this.value;
+				
+				if(select_attr != select_text && select_this.id == select_id){
+					select_this.value = select_attr;
 					
-				}//end if2
-			}//end if 1
+					var textEl = select_this.parentNode.children[1].children;
+					
+					for(var i = 0; i < textEl.length; i++){
+						textEl[i].style.display = "flex";
+					}
+				}
+			}
 			
 			for(var i = 0 ; i < selectOptionWrapEls.length; i++){
 				
@@ -720,6 +764,7 @@
 		}
 	}
 	body.addEventListener('click',hideSelect);
+	body.addEventListener('click', selection);
 	
 	/* 옵션선택 */
 	function selectOpt(e){
@@ -728,9 +773,6 @@
 	    $(e).parent().prev().attr("data-select", dataSelect);
 	    $(e).parent().prev().attr("value", text);
 	    $(e).parent().attr("class", "select-hide");
-	    
-	    select_text = text;
-	    select_data = dataSelect;
 	    
 	    //저장장소에 따른 저장 조건 데이터 노출
 	    var condition = $(e).children().attr("data-condition");
