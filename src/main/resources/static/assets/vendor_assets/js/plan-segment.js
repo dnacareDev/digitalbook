@@ -316,7 +316,17 @@ function onColorChange(){
 		
 	}
 }
-
+function segmentText(data){
+	var segmentEls = document.querySelectorAll('.segment');
+	
+	if(segmentEls.length > 0 && segmentEls !== undefined && segmentEls !== null){	
+		for(var i = 0; i < data.length; i++){
+			segmentEls[i].innerText = data[i].segmentId;
+			//console.log(data[i].segmentId);
+		}
+	}
+	
+}
 function segmentComp(data, index){
 	var {id, type, repeat, segmentId, order} = data;
 	var html = '';
@@ -386,17 +396,28 @@ function onClickStepFourWrap(e){
 }
 
 function activeList(thisOrder){
+console.log('zindex 작업 구역');
 	for(var z = 0; z < segmentEls.length; z++){	
+	//console.log(segmentEls.length,'sfff');
 		if(segmentLi[z].classList.contains('active') && z !== thisOrder){
 			segmentLi[z].classList.remove('active');
+			//console.log("1");
 		}
 		if(tableEls[z].classList.contains('active') && z !== thisIndex){
 			tableEls[z].classList.remove('active');
+			//console.log("2");
 		}
-		if(z === thisOrder){		
+		if(z == thisOrder){		
 			segmentLi[thisOrder].style.zIndex = segmentLi.length - 1;
+			//console.log("3");
 		}else{
 			segmentLi[z].style.zIndex = z;
+			//console.log("4");
+		}
+		if(segmentLi[z] == segmentLi[thisOrder]){
+			segmentLi[thisIndex].style.zIndex = thisIndex - 1;
+		}else{
+			segmentLi[thisIndex].style.zIndex = segmentLi.length + 1;
 		}
 	}
 	segmentLi[thisIndex].classList.add('active');
@@ -409,13 +430,18 @@ function activeList(thisOrder){
 
 function onClickTableEls(e){
 	var target = e.currentTarget;
+	tableEls = document.querySelectorAll('.step4-container .table_content');
+	tableEls = Array.prototype.slice.call(tableEls);
+	
 	thisIndex = tableEls.indexOf(target);
 	
 	var thisOrder = segmentData[thisIndex].order;
+	
 	console.log("----------------------");
-	//console.log(thisOrder);
+	console.log(thisOrder,'thisorder');
 	
 	activeList(thisOrder);
+	
 	
 	var segmentLiTop = segmentLi[thisIndex].offsetTop - 64;
 	var segmentLiLeft = segmentLi[thisIndex].offsetLeft - 64;
@@ -478,6 +504,8 @@ function transform(){
 }
 
 function onMoveDown(e){
+	
+	var target = e.currentTarget;
 	
 	isMove = true;
 	
@@ -549,18 +577,20 @@ function renderSegment(data){
 	
 	var dataGet = data;
 	// 초기화
-	stepFourWrap.innerHTML = '';
+	
 	// 1차 : 컴포넌트 삽입 
 	var compData = "";
 	var textData = "";
 	onColorChange(dataGet);
 	
-	for(var i = 0; i < dataGet.length; i++){
-		compData += segmentComp(dataGet[i], i);
-	}
-	if(segmentInnerType === 'text'){
-		stepFourWrap.innerText = '';
+	
+	if(segmentInnerType === 'innerText'){
+		segmentText(dataGet);
 	}else{
+		stepFourWrap.innerHTML = '';
+		for(var i = 0; i < dataGet.length; i++){
+			compData += segmentComp(dataGet[i], i);
+		}
 		stepFourWrap.innerHTML = compData;
 		segmentSetting(dataGet);
 	}

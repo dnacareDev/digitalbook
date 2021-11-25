@@ -3009,8 +3009,8 @@
 			for(var i = 0; i < resultArray.length; i++){
 				add_list += '<tr data-id="'+resultArray[i].id.split("-")[0]+"-"+resultArray[i].repeat+'" class="table_content">';
 			    add_list += '<td class="table_num">'+resultArray[i].num+'</td>';
-			    add_list += '<td>'+resultArray[i].id+'</td>';
-			    add_list += '<td>'+resultArray[i].type+'</td>';
+			    add_list += '<td class="table_id">'+resultArray[i].id+'</td>';
+			    add_list += '<td class="table_type">'+resultArray[i].type+'</td>';
 			    add_list += '<td>'+resultArray[i].repeat+'</td>';
 			    add_list += '<td><input type="text" id="mil" class="seg_area" value="0"></td>';
 			    add_list += '</tr>';
@@ -3085,7 +3085,7 @@
 							}
 							//console.log(resultArray);
 							var getDataArr = [...resultArray];
-							getDataResult(getDataArr, grow_type);
+							getDataResult(getDataArr, grow_type, 'innerText');
 						}
 						
 					}//end stop
@@ -3148,8 +3148,8 @@
 							}
 						}
 					    add_list += '<td class="table_num">'+resultArray[j].num+'</td>';
-					    add_list += '<td>'+resultArray[j].id+'</td>';
-					    add_list += '<td>'+resultArray[j].type+'</td>';
+					    add_list += '<td class="table_id">'+resultArray[j].id+'</td>';
+					    add_list += '<td class="table_type">'+resultArray[j].type+'</td>';
 					    add_list += '<td>'+resultArray[j].repeat+'</td>';
 					    add_list += '<td><input type="text" id="mil" class="seg_area" value="0"></td>';
 					    add_list += '</tr>';
@@ -3236,7 +3236,7 @@
 								}
 								//console.log(resultArray);
 								var getDataArr = [...resultArray];
-								getDataResult(getDataArr, grow_type);
+								getDataResult(getDataArr, grow_type, 'innerText');
 							}
 							
 						}//end stop
@@ -3299,8 +3299,8 @@
 							}
 						}
 					    add_list += '<td class="table_num">'+resultArray[j].num+'</td>';
-					    add_list += '<td>'+resultArray[j].id+'</td>';
-					    add_list += '<td>'+resultArray[j].type+'</td>';
+					    add_list += '<td class="table_id">'+resultArray[j].id+'</td>';
+					    add_list += '<td class="table_type">'+resultArray[j].type+'</td>';
 					    add_list += '<td>'+resultArray[j].repeat+'</td>';
 					    add_list += '<td><input type="text" id="mil" class="seg_area" value="0"></td>';
 					    add_list += '</tr>';
@@ -3385,7 +3385,7 @@
 								}
 								//console.log('sortable', resultArray);
 								var getDataArr = [...resultArray];
-								getDataResult(getDataArr, grow_type);
+								getDataResult(getDataArr, grow_type, 'innerText');
 							}
 							
 							
@@ -3472,8 +3472,8 @@
 							}
 						}
 					    add_list += '<td class="table_num">'+resultArray[j].num+'</td>';
-					    add_list += '<td>'+resultArray[j].id+'</td>';
-					    add_list += '<td>'+resultArray[j].type+'</td>';
+					    add_list += '<td class="table_id">'+resultArray[j].id+'</td>';
+					    add_list += '<td class="table_type">'+resultArray[j].type+'</td>';
 					    add_list += '<td>'+resultArray[j].repeat+'</td>';
 					    add_list += '<td><input type="text" id="mil" class="seg_area" value="0"></td>';
 					    add_list += '</tr>';
@@ -3560,7 +3560,7 @@
 								}
 								//console.log(resultArray);
 								var getDataArr = [...resultArray];
-								getDataResult(getDataArr, grow_type);
+								getDataResult(getDataArr, grow_type, 'innerText');
 
 								
 							}//end else
@@ -3679,8 +3679,10 @@
 		return calcObject;
 	}
 	
+	
+	
 	$("#random01").on("click", function(){
-
+		
 		var growType = document.querySelector('#grow_type').value;
 		
 		var obR = {};
@@ -3694,7 +3696,6 @@
 		
 		var repeatEl = document.querySelector('#plan_repeat');
 		var repeatVal = repeatEl.value;
-	
 		
 		/* s: object to random */
 		for(const [keyR, valR] of Object.entries(arryToObject())){
@@ -3728,11 +3729,11 @@
 		
 		var arrLeng = Math.ceil(arrRanAll.length / repeatVal);
 		
-		for(var i = 0; i < arrRanAll.length ; i++){
+		for(var i = 0; i < arrRanAll.length ; i++){ // order 초기화
 			arrRanAll[i].order = i;
 		}
 		var numRender = 0;
-		for(var i = 0; i < repeatVal; i++){
+		for(var i = 0; i < repeatVal; i++){ // num 초기화
 			for(var t = 0; t < arrLeng; t++){
 				arrRanAll[numRender].num = t + 1;
 				numRender++;
@@ -3740,15 +3741,14 @@
 		}
 
 		resultArray = arrRanAll;
-		reRenderTableComp(growType);
+		reRenderTableComp(growType, 'innerText');
 		
-		getDataResult(arrRanAll, growType);
+		getDataResult(arrRanAll, growType, 'innerText');
 	});
 	/* e: 요인랜덤화 */
 	
 	/* s: 수준랜덤화 */
-	$("#random02").on("click", function(){
-		
+	$("#random02").on("click", function(){		
 		
 		var growType = document.querySelector('#grow_type').value;
 		
@@ -3804,12 +3804,25 @@
 				}
 			}
 		}
+		
+		var arrLeng = Math.ceil(arrRanAll.length / repeatVal);
+		
+		for(var i = 0; i < arrRanAll.length ; i++){ // order 초기화
+			arrRanAll[i].order = i;
+		}
+		var numRender = 0;
+		for(var i = 0; i < repeatVal; i++){ // num 초기화
+			for(var t = 0; t < arrLeng; t++){
+				arrRanAll[numRender].num = t + 1;
+				numRender++;
+			}
+		}
 		//console.log(arrRanAll,"arrRanAll");
 		/* e: randomObject to array */
 		resultArray = arrRanAll;
-		reRenderTableComp(growType);
+		reRenderTableComp(growType, 'innerText');
 		
-		getDataResult(arrRanAll, growType);
+		getDataResult(arrRanAll, growType, 'innerText');
 		
 		
 	});
