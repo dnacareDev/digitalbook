@@ -2946,7 +2946,7 @@
 			});//end ,manure_te each
 			
 		});//end copy-form-standard each
-		console.log(manureArray);
+		//console.log(manureArray);
 		if(index == 1){
 			manureArray1 = [];
 			data1.type = type;
@@ -3388,7 +3388,7 @@
 								resultArray[i].num = (i+1);
 								resultArray[i].id = idArr[i];
 							}
-							console.log(resultArray);
+							//console.log(resultArray);
 							var getDataArr = [...resultArray];
 							getDataResult(getDataArr, grow_type);
 						}
@@ -3539,7 +3539,7 @@
 									resultArray[i].num = plusNum;
 									resultArray[i].id = idArr[i];
 								}
-								console.log(resultArray);
+								//console.log(resultArray);
 								var getDataArr = [...resultArray];
 								getDataResult(getDataArr, grow_type);
 							}
@@ -3616,7 +3616,6 @@
 				add_list += '</table>';
 				
 				result_div += add_list;
-				
 				add_list = "";
 			}//end for1
 			
@@ -3689,7 +3688,7 @@
 									resultArray[i].num = plusNum;
 									resultArray[i].id = idArr[i];
 								}
-								console.log('sortable', resultArray);
+								//console.log('sortable', resultArray);
 								var getDataArr = [...resultArray];
 								getDataResult(getDataArr, grow_type);
 							}
@@ -3720,7 +3719,7 @@
 
 				
 			});
-			console.log('testinsert', resultArray);
+			//console.log('testinsert', resultArray);
 			var getDataArr = [...resultArray];
 			getDataResult(getDataArr, grow_type);
 			
@@ -3864,7 +3863,7 @@
 									resultArray[i].num = plusNum;
 									resultArray[i].id = idArr[i];								
 								}
-								console.log(resultArray);
+								//console.log(resultArray);
 								var getDataArr = [...resultArray];
 								getDataResult(getDataArr, grow_type);
 
@@ -3938,51 +3937,10 @@
 		});
 		
 	}
+
+	/* s: 요인랜덤화 */
 	
-	//테스트
-	/* $("#random01").on("click", function(){
-		
-		var arr = new Array();
-		for(var i = 0; i < resultArray.length; i++){
-			arr.push(resultArray[i].id.split("-")[0]+"-"+resultArray[i].repeat);
-		}
-		var test = Array.from(new Set(arr));
-		test.sort(() => Math.random() - 0.5);
-		
-		for(var i = 0; i < test.length; i++){
-			$(document).find(".table_content").each(function(index, item){
-				if($(this).attr("data-id") == test[i]){
-					$(this).insertBefore($(document).find(".table_content[data-id='"+test[i+1]+"']:first"));
-				}
-			});
-		}
-		
-	}); */
-	/*
- 	$("#random01").on("click", function(){
- 		
-		var arr = new Array();
-		for(var i = 0; i < resultArray.length; i++){
-			arr.push(resultArray[i].id.split("-")[0]+"-"+resultArray[i].repeat);
-		}
-		
-		var test = Array.from(new Set(arr));
-		console.log(test,"test");
-		test.sort(() => Math.random() - 0.5)
-		
-		for(var i = 0; i < test.length; i++){
-			$(document).find(".table_content").each(function(index, item){
-				if(($(this).attr("data-id") + "-" + resultArray[i].repeat) == test[i]){
-					console.log($(this).attr("data-id") + "-" + resultArray[i].repeat,"$(this)resultArray[i].repeat", "testI",test[i]);
-					$(this).insertBefore($(document).find(".table_content[data-id='"+test[i+1]+"']"));
-				}
-			});
-		}
-		
-	});
-	*/
-	/*
-	$("#random01").on("click", function(){
+	function arryToObject(){
 		var copyResultArray = [...resultArray];
 		var calcObject = new Object();
 		
@@ -3996,11 +3954,11 @@
 		var factor3 = factor3El.innerText.split(',').length;
 		var repeatVal = repeatEl.value;
 		
-		
+
 		var obA = {};
 		var obB = {};
 		var obC = {};
-		
+
 		var arrIndex = 0;
 		for(let r = 0; r < repeatVal; r++){
 			calcObject["R"+(r+1)] = {};
@@ -4022,26 +3980,148 @@
 			}
 			obA = {};
 		}
-
-		var obALength = Object.keys(obA).length;
-		var obBLength = Object.keys(obB).length;
 		
-		for(const [key, v] of Object.entries(obA)){
-			for(k = 0; k < obALength; k++){
-				
-				const prop = key[Math.floor(Math.random() * k)];
-				
-				console.log(prop,"prop");
+		return calcObject;
+	}
+	
+	$("#random01").on("click", function(){
 
-				
-				
-				
-				
+		var growType = document.querySelector('#grow_type').value;
+		
+		var obR = {};
+
+		var arrA = [];
+		var inAll = 0;
+		var inR = 0;
+		var inA = 0;
+		
+		var arrRanAll = [];
+		
+		var repeatEl = document.querySelector('#plan_repeat');
+		var repeatVal = repeatEl.value;
+	
+		
+		/* s: object to random */
+		for(const [keyR, valR] of Object.entries(arryToObject())){
+			obR = Object.assign(obR, {["R"+(inR+1)] : []});
+			for(const [keyA, valA] of Object.entries(valR)){
+				arrA.push({[keyA]:valA});
+				inA++; 
+			}
+			arrA.sort(function(){
+				return Math.random() - Math.random();
+			});
+			
+			obR["R"+(inR+1)] = arrA;
+			arrA = [];
+			inR++;
+		}
+		/* e: object to random */
+		
+		/* s: randomObject to array */
+		for(const [keyR, valR] of Object.entries(obR)){
+			for(const [keyA, valA] of Object.entries(valR)){
+				for(const [keyB, valB] of Object.entries(valA)){
+					for(const [keyC, valC] of Object.entries(valB)){
+						for(const [resultKey, resultVal] of Object.entries(valC)){
+							arrRanAll.push(resultVal);
+						}
+					}
+				}
 			}
 		}
+		
+		var arrLeng = Math.ceil(arrRanAll.length / repeatVal);
+		
+		for(var i = 0; i < arrRanAll.length ; i++){
+			arrRanAll[i].order = i;
+		}
+		var numRender = 0;
+		for(var i = 0; i < repeatVal; i++){
+			for(var t = 0; t < arrLeng; t++){
+				arrRanAll[numRender].num = t + 1;
+				numRender++;
+			}
+		}
+
+		resultArray = arrRanAll;
+		reRenderTableComp(growType);
+		
+		getDataResult(arrRanAll, growType);
 	});
+	/* e: 요인랜덤화 */
 	
-	*/
+	/* s: 수준랜덤화 */
+	$("#random02").on("click", function(){
+		
+		
+		var growType = document.querySelector('#grow_type').value;
+		
+		var obR = {};
+		var obA = {};
+		var obB = {};
+
+		var arrB = [];
+		var inAll = 0;
+		var inR = 0;
+		var inA = 0;
+		var inB = 0;
+		
+		var arrRanAll = [];
+		
+		var repeatEl = document.querySelector('#plan_repeat');
+		var repeatVal = repeatEl.value;
+		
+		
+		/* s: object to random */
+		for(const [keyR, valR] of Object.entries(arryToObject())){
+			obR = Object.assign(obR, {["R"+(inR+1)] : {}});
+			for(const [keyA, valA] of Object.entries(valR)){
+				obA = Object.assign(obA, {["A"+(inA+1)] : {}});
+				for(const [keyB, valB] of Object.entries(valA)){
+					for(const [keyC, valC] of Object.entries(valB)){
+						arrB.push({[keyC]:valC});
+					}
+					inB++;
+				}
+				arrB.sort(function(){
+					return Math.random() - Math.random();
+				});	
+				obR["R"+(inR+1)]["A"+(inA+1)] = arrB;
+				arrB = [];
+				inB = 0;
+				inA++;
+			}
+			obA = {};
+			inA = 0;
+			inR++;
+		}
+		
+		
+		
+		/* s: randomObject to array */
+		for(const [keyR, valR] of Object.entries(obR)){
+			for(const [keyA, valA] of Object.entries(valR)){
+				for(const [keyB, valB] of Object.entries(valA)){
+					for(const [keyC, valC] of Object.entries(valB)){
+						arrRanAll.push(valC);
+					}
+				}
+			}
+		}
+		//console.log(arrRanAll,"arrRanAll");
+		/* e: randomObject to array */
+		resultArray = arrRanAll;
+		reRenderTableComp(growType);
+		
+		getDataResult(arrRanAll, growType);
+		
+		
+	});
+	/* e: 수준랜덤화 */
+	
+	
+	
 	//구획정보 처리포장면적 이벤트
 	$(document).on("keyup", ".container1 .table_content:eq(0) .seg_area", function(){
 		var input_text = $(this).val();

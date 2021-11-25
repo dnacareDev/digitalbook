@@ -428,7 +428,7 @@
 			                    	<button class="submit" id="planUpdateBtn">수정</button>
 			                    </th:block>
 			                    <th:block th:if="${plan.plan_step == 1}">
-			                    	<button class="submit" onclick="updateSch();">담당자 수정</button>
+			                    	<button class="submit" onclick="updateSch();" style="padding: 10px 20px !important;">담당자 수정</button>
 			                    </th:block>
 			                    <th:block th:if="${#authentication.principal.user_type == 0}">
 									<th:block th:if="${plan.plan_status == 0 or plan.plan_status == 1}">
