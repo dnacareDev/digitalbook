@@ -45,7 +45,7 @@
 		float:left;
 		border-left:none;
 		border-radius: 0 5px 0 0;
-		height: 42px;
+		height: 34.13px;
 		margin-top: 0 !important;
 		width: 40%;
 	}
@@ -114,6 +114,20 @@
 	    overflow-y: auto;
 	    height: 125px;
 	}
+	
+	#divisionModal .select-show{
+		display: block;
+	    position: absolute;
+	    z-index :10;
+	    top: 60px;
+	    width: 96%;
+	    background-color: white;
+	    border:1px solid;
+	    border-radius: 5px;
+	    cursor: pointer;
+	    overflow-y: auto;
+	    height: 125px;
+	}
 
 	.select .select-show li{
 	    padding:0 0 0 5px;
@@ -151,7 +165,7 @@
 	                                </div>
 	                                <div class="col-sm-10">
 	                                   <input type="text" class="form-control" style="float: left; width: 90%; border-right:none; border-radius: 5px 0 0 5px" id="input_title" readonly>
-	                                   <button class="btn btn-primary type_1" onclick="DivisionBtn();" style="height:42px;width: 10%;">항목 조회</button>
+	                                   <button class="btn btn-primary type_1" onclick="DivisionBtn();" style="height:34.13px;width: 10%;">항목 조회</button>
 	                                </div>
 		                         </div>
 		                         <div class="row mt-3">
@@ -307,26 +321,46 @@
 		        				<div class="row">
 			        				<div class="col-md-6 mb-25">
 	                                    <label for="division_depth1" class="color-dark fw-500">대상작목</label>
-	                                    <select class="form-control b-light select" id="division_depth1">
+	                                    <div class="select" style="height: auto;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="division_depth1" placeholder="대상 작목 선택" autocomplete="off">
+		                            		<ul class="select-hide">
+		                            			<th:block th:each="dvs : ${division}">
+		                            				<li class="division_depth1_list" onclick="selectOpt(this);"><span th:data-value="${dvs.division_id}" th:text="${dvs.division}"></span></li>
+		                            			</th:block>
+		                            		</ul>
+		                            	</div>
+	                                    <!-- <select class="form-control b-light select" id="division_depth1">
 			                                <option value="0">대상 작목 선택</option>
 			                                <th:block th:each="dvs : ${division}">
 				                                <option th:value="${dvs.division_id}" th:text="${dvs.division}"></option>
 			                                </th:block>
-			                            </select>
+			                            </select> -->
 	                                </div>
 	                                <div class="col-md-6 mb-25">
 	                                    <label for="division_depth2" class="color-dark fw-500">분류</label>
-	                                    <select class="form-control b-light select" id="division_depth2">
+	                                    <div class="select" style="height: auto;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="division_depth2" placeholder="분류 선택" autocomplete="off">
+		                            		<ul class="select-hide">
+		                            			
+		                            		</ul>
+		                            	</div>
+	                                    <!-- <select class="form-control b-light select" id="division_depth2">
 			                                <option value="0">분류 선택</option>
-			                            </select>
+			                            </select> -->
 	                                </div>
 	                            </div>
 	                            <div class="row">
 			        				<div class="col-md-6 mb-25">
 	                                    <label for="division_depth3" class="color-dark fw-500">항목</label>
-	                                    <select class="form-control b-light select" id="division_depth3">
+	                                    <div class="select" style="height: auto;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="division_depth3" placeholder="항목 선택" autocomplete="off">
+		                            		<ul class="select-hide">
+		                            			
+		                            		</ul>
+		                            	</div>
+	                                    <!-- <select class="form-control b-light select" id="division_depth3">
 			                                <option value="0">항목 선택</option>
-			                            </select>
+			                            </select> -->
 	                                </div>
 	                                <div class="col-md-6 mb-25">
 	                                    <label for="research_contents" class="color-dark fw-500">Method 명</label>
@@ -436,6 +470,229 @@
 		$(window).trigger("resize");
 		
 	});
+	
+	let selectInputEls = document.querySelectorAll('input[name="select-input"]');
+	let select_this;
+	let select_prev;
+	let select_id;
+	
+	function selection(){
+		if(document.getSelection){
+			var selection = document.getSelection();
+			
+			if(selection.focusNode != null){
+				if(selection.focusNode.children != undefined){
+					var length = selection.focusNode.children.length;
+					if(length != 0){
+						var check = selection.focusNode.children[0].name;
+						var check2 = selection.focusOffset;
+						if(check == "select-input" && check2 == "1"){
+							selectFilter(selection.focusNode.children[0]);
+						}
+					}
+				}
+			}
+			
+		}
+	}
+	
+	function selectFilter(e){
+		
+		var selection = document.getSelection();
+		
+		select_prev = select_this;
+		select_this = e;
+		select_id = e.id;
+		
+		let selectOptionWrapEls = document.querySelectorAll('.select ul');
+		
+		var currTarget = e;
+		var delOption = currTarget.nextElementSibling;
+		
+		for(var i = 0 ; i < selectOptionWrapEls.length; i++){
+			
+			if(selectOptionWrapEls[i].classList.contains("select-show")){
+				selectOptionWrapEls[i].classList.add('select-hide');
+				selectOptionWrapEls[i].classList.remove('select-show');
+			}
+		}
+		
+		if(delOption.classList.contains('select-hide')){
+			delOption.classList.remove('select-hide');
+			delOption.classList.add('select-show');
+		}
+		
+	}
+	
+	let body = document.querySelector('body');
+	function hideSelect(e){
+		
+		let selectOptionWrapEls = document.querySelectorAll('.select ul');
+		var target = e.target.name;
+		
+		if(target == "select-input"){
+			if(select_prev != undefined && select_this != select_prev){
+				var prev_attr = select_prev.getAttribute("value");
+				var prev_text = select_prev.value;
+				if(prev_attr != prev_text){
+					select_prev.value = prev_attr;
+					var prev_textEl = select_prev.parentNode.children[1].children;
+					
+					for(var i = 0; i < prev_textEl.length; i++){
+						prev_textEl[i].style.display = "flex";
+					}
+					
+					var textEl = select_this.parentNode.children[1].children;
+					
+					for(var i = 0; i < textEl.length; i++){
+						textEl[i].style.display = "flex";
+					}
+				}
+			}
+		}
+		
+		if(target != "select-input"){
+			if(select_this != undefined && select_this.value != null){
+				var select_attr = select_this.getAttribute("value");
+				var select_text = select_this.value;
+				
+				if(select_attr != select_text && select_this.id == select_id){
+					select_this.value = select_attr;
+					
+					var textEl = select_this.parentNode.children[1].children;
+					
+					for(var i = 0; i < textEl.length; i++){
+						textEl[i].style.display = "flex";
+					}
+				}
+			}
+			
+			for(var i = 0 ; i < selectOptionWrapEls.length; i++){
+				
+				if(selectOptionWrapEls[i].classList.contains("select-show")){
+					selectOptionWrapEls[i].classList.add('select-hide');
+					selectOptionWrapEls[i].classList.remove('select-show');
+				}
+			}
+		}
+	}
+	body.addEventListener('click',hideSelect);
+	body.addEventListener('click', selection);
+	
+	/* 옵션선택 */
+	function selectOpt(e){
+	    var dataSelect = $(e).children().attr("data-value");
+	    var text = $(e).children().text();
+	    $(e).parent().prev().attr("data-select", dataSelect);
+	    $(e).parent().prev().attr("value", text);
+	    $(e).parent().attr("class", "select-hide");
+	    
+	    var current_this = e.parentNode.previousElementSibling;
+	    var current_this_id = current_this.id;
+	    
+	    //입력 단위 이벤트
+	    if(current_this_id == "method_input"){
+	    	var method_input = dataSelect;
+	    	
+	    	var data = {"eaches_type" : method_input};
+	    	
+	    	$.ajax(
+   			{
+   				url : 'selectEaches',
+   				method : 'POST',
+   				dataType : 'json',
+   				data : data,
+   				success : function(result)
+   				{
+   					
+   					var method_eaches = $("#method_eaches").next();
+   					var add_list = "";
+   					
+   					
+   					$("#method_eaches").attr("data-select", "");
+   					$("#method_eaches").attr("value", "");
+					$("#method_eaches").val("");
+   					
+   					for(var i = 0; i < result.length; i++)
+   					{
+   						add_list += '<li class="method_input_list" onclick="selectOpt(this);">';
+   						add_list += '<span data-value="'+result[i].eaches_id+'">'+result[i].eaches_name+'</span>';
+   						add_list += '</li>';
+   					}
+   					
+   					method_eaches.empty();
+   					method_eaches.append(add_list);
+   				}
+   			});
+	    }
+		
+	    //조사 항목 이벤트
+	    if(current_this_id == "division_depth1" || current_this_id == "division_depth2" || current_this_id == "division_depth3"){
+	    	var division_id = dataSelect;
+	    	var division_depth = current_this_id.slice(14, 15);
+	    	
+	    	var data = {"division_id" : division_id, "division_depth" : division_depth};
+	    	
+	    	$.ajax(
+   			{
+   				url : 'selectDivision',
+   				method : 'POST',
+   				dataType : 'json',
+   				data : data,
+   				success : function(result)
+   				{
+   					var depth = (division_depth * 1) + 1;
+   					var depth_list = $("#division_depth" + depth).next();
+   					var add_list = "";
+   					
+   					if(division_depth == "1"){
+   						$("#division_depth2").attr("data-select", "");
+   						$("#division_depth2").attr("value", "");
+       					$("#division_depth2").val("");
+       					
+       					$("#division_depth3").attr("data-select", "");
+       					$("#division_depth3").attr("value", "");
+       					$("#division_depth3").val("");
+   					}else if(division_depth == "2"){
+   						$("#division_depth3").attr("data-select", "");
+   						$("#division_depth3").attr("value", "");
+       					$("#division_depth3").val("");
+   					}
+   					
+   					for(var i = 0; i < result.length; i++)
+   					{
+   						add_list += '<li class="division_depth'+depth+'_list" onclick="selectOpt(this);">';
+   						add_list += '<span data-value="'+result[i].division_id+'">'+result[i].division+'</span>';
+   						add_list += '</li>';
+   					}
+   					
+   					depth_list.empty();
+   					depth_list.append(add_list);
+   				}
+   			});
+	    }
+		
+	    
+	}//end 옵션 선택
+	
+	//필터 함수
+	function textfilter(e){
+		
+		var search = $(e).val().toLowerCase();
+		var className = $(e).next().children().eq(0).attr('class');
+		
+		$(document).find("."+className).each(function(index, item){
+			var text = $(this).children().text();
+			
+			if(text.toLowerCase().includes(search)){
+				$(this).css("display", "flex");
+			}else{
+				$(this).css("display", "none");
+			}
+		});
+		
+	}//end 필터 함수
+	
 	// step data array
 	var dataArr = new Array();
 	
@@ -451,7 +708,7 @@
 	}
 	
 	// division 선택 이벤트
-	$(".select").change(function()
+	/* $(".select").change(function()
 	{
 		var division_id = $(this).val();
 		var division_depth = this.id.slice(14, 15);
@@ -488,16 +745,14 @@
 				depth_list.append(add_list);
 			}
 		});
-	});
+	}); */
 	
 	// method명 사용 버튼 활성화
 	$("#method_title").keyup(function()
 	{
-		var d1 = $("#division_depth1 option:checked");
-		var d2 = $("#division_depth2 option:checked");
-		var d3 = $("#division_depth3 option:checked");
+		var d3 = $("#division_depth3").attr("data-select");
 		
-		if(d1.val() != 0 || d2.val() != 0 || d3.val() != 0)
+		if(d3 != "")
 		{
 			$("#titleBtn").prop("disabled", false);
 		}
@@ -506,13 +761,16 @@
 	// method명 사용
 	function TitleBtn()
 	{
-		var d1 = $("#division_depth1 option:checked");
-		var d2 = $("#division_depth2 option:checked");
-		var d3 = $("#division_depth3 option:checked");
+		var d1 = $("#division_depth1").attr("data-select");
+		var d2 = $("#division_depth2").attr("data-select");
+		var d3 = $("#division_depth3").attr("data-select");
+		var d1_text = $("#division_depth1").attr("value");
+		var d2_text = $("#division_depth2").attr("value");
+		var d3_text = $("#division_depth3").attr("value");
 		
 		var method_title = $("#method_title").val();
 		
-		var data = {"division_id" : d3.val()};
+		var data = {"division_id" : d3};
 		
 		$.ajax(
 		{
@@ -537,7 +795,7 @@
 				research_list.append("<ul>" + add_list + "</ul>");
 				
 				/* $("#input_title").val(d1.text() + " > " + d2.text() + " > " +  d3.text() + " > " +  method_title); */
-				$("#input_title").attr("value", d1.text() + " > " + d2.text() + " > " +  d3.text() + " > " +  method_title);
+				$("#input_title").attr("value", d1_text + " > " + d2_text + " > " +  d3_text + " > " +  method_title);
 				$("#addResearchBtn").prop("disabled", false);
 				$("#divisionModal").modal("hide");
 			}
@@ -545,7 +803,7 @@
 	}
 	
 	// 입력단위 선택
-	$("#method_input").change(function()
+	/* $("#method_input").change(function()
 	{
 		var method_input = $("#method_input").val();
 		
@@ -573,7 +831,7 @@
 				method_eaches.append(add_list);
 			}
 		});
-	});
+	}); */
 	
 	function InsertPopup()
 	{
@@ -660,10 +918,10 @@
 	// 조사방법 등록
 	function InsertResearch()
 	{
-		var division_id = $("#division_depth3 option:checked").val();
+		var division_id = $("#division_depth3").attr("data-select");
 		var research_contents = $("#research_contents").val();
 		
-		if(division_id == 0)
+		if(division_id == "")
 		{
 			alert("조사 항목을 선택하세요.");
 		}
@@ -766,11 +1024,11 @@
 	function insertMethod(){
 		return new Promise(function(resolve){
 			
-			var division_id = $("#division_depth3 option:checked").val();
+			var division_id = $("#division_depth3").attr("data-select");
 			var method_title = $("#method_title").val();
 			var method_contents = $("#method_contents").val();
-			var method_input = $("#method_input").val();
-			var eaches_id = $("#method_eaches").val();
+			var method_input = $("#method_input").attr("data-select");
+			var eaches_id = $("#method_eaches").attr("data-select");
 			var method_comment = $("#method_comment").val();
 			var method_share = $("#method_share").val();
 			
@@ -778,6 +1036,16 @@
 			{
 				alert("method 명을 선택해주세요.");
 				$("#input_title").focus();
+			}
+			else if(method_input == "")
+			{
+				alert("입력단위를 선택해주세요");
+				$("#method_input").focus();
+			}
+			else if(eaches_id == "")
+			{
+				alert("단위 종류를 선택해주세요");
+				$("#method_eaches").focus();
 			}
 			else
 			{

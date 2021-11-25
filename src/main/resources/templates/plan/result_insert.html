@@ -42,6 +42,32 @@
 		font-size: 15px !important;
 	}
 	
+	.select-hide{
+		display: none;
+	}
+	.select-show{
+		display: block;
+	    position: absolute;
+	    z-index :10;
+	    top: 45px;
+	    width: 85%;
+	    background-color: white;
+	    border:1px solid;
+	    border-radius: 5px;
+	    cursor: pointer;
+	    overflow-y: auto;
+	    height: 125px;
+	}
+	
+	.select {
+		width: 700px;
+	} 
+	
+	.select .select-show li{
+	    padding:0 0 0 5px;
+	    line-height: 30px;
+	}
+	
 </style>
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
@@ -101,9 +127,15 @@
 			                        	</div>
 			                        	<div class="right_type">
 			                        		<div class="right_type_cover">
-			                        			<select id="segment_option">
+			                        			<div class="select" style="height: auto;">
+				                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="segment_option" placeholder="구획 선택" autocomplete="off">
+				                            		<ul class="select-hide">
+				                            			
+				                            		</ul>
+				                            	</div>
+			                        			<!-- <select id="segment_option">
 			                        				
-				                        		</select>
+				                        		</select> -->
 				                        		<button type="button" onclick="checkSelectbox();">확인</button>
 			                        		</div>
 			                        	</div>
@@ -223,8 +255,8 @@
 			                </div>
 			            </div>
 			        </section>
-			        <div class="row mt-4">
-						<div class="col-lg-12">
+			        <div class="row mt-3">
+						<div class="col-lg-12" style="padding-left: 65px; padding-right: 65px;">
 							<div class="card card-default">
 								<div class="row ml-3 mt-3">
 									<span class="color-dark align-center" style="font-size: 20px;">변경 이력</span>
@@ -470,6 +502,142 @@
 	
 	//구획정보 삭제 데이터
 	let cancelInfo = new Array();
+	
+	let selectInputEls = document.querySelectorAll('input[name="select-input"]');
+	let select_this;
+	let select_prev;
+	let select_id;
+	
+	function selection(){
+		if(document.getSelection){
+			var selection = document.getSelection();
+			
+			if(selection.focusNode != null){
+				if(selection.focusNode.children != undefined){
+					var length = selection.focusNode.children.length;
+					if(length != 0){
+						var check = selection.focusNode.children[0].name;
+						var check2 = selection.focusOffset;
+						if(check == "select-input" && check2 == "1"){
+							selectFilter(selection.focusNode.children[0]);
+						}
+					}
+				}
+			}
+			
+		}
+	}
+	
+	function selectFilter(e){
+		
+		var selection = document.getSelection();
+		
+		select_prev = select_this;
+		select_this = e;
+		select_id = e.id;
+		
+		let selectOptionWrapEls = document.querySelectorAll('.select ul');
+		
+		var currTarget = e;
+		var delOption = currTarget.nextElementSibling;
+		
+		for(var i = 0 ; i < selectOptionWrapEls.length; i++){
+			
+			if(selectOptionWrapEls[i].classList.contains("select-show")){
+				selectOptionWrapEls[i].classList.add('select-hide');
+				selectOptionWrapEls[i].classList.remove('select-show');
+			}
+		}
+		
+		if(delOption.classList.contains('select-hide')){
+			delOption.classList.remove('select-hide');
+			delOption.classList.add('select-show');
+		}
+		
+	}
+	
+	let body = document.querySelector('body');
+	function hideSelect(e){
+		
+		let selectOptionWrapEls = document.querySelectorAll('.select ul');
+		var target = e.target.name;
+		
+		if(target == "select-input"){
+			if(select_prev != undefined && select_this != select_prev){
+				var prev_attr = select_prev.getAttribute("value");
+				var prev_text = select_prev.value;
+				if(prev_attr != prev_text){
+					select_prev.value = prev_attr;
+					var prev_textEl = select_prev.parentNode.children[1].children;
+					
+					for(var i = 0; i < prev_textEl.length; i++){
+						prev_textEl[i].style.display = "flex";
+					}
+					
+					var textEl = select_this.parentNode.children[1].children;
+					
+					for(var i = 0; i < textEl.length; i++){
+						textEl[i].style.display = "flex";
+					}
+				}
+			}
+		}
+		
+		if(target != "select-input"){
+			if(select_this != undefined && select_this.value != null){
+				var select_attr = select_this.getAttribute("value");
+				var select_text = select_this.value;
+				
+				if(select_attr != select_text && select_this.id == select_id){
+					select_this.value = select_attr;
+					
+					var textEl = select_this.parentNode.children[1].children;
+					
+					for(var i = 0; i < textEl.length; i++){
+						textEl[i].style.display = "flex";
+					}
+				}
+			}
+			
+			for(var i = 0 ; i < selectOptionWrapEls.length; i++){
+				
+				if(selectOptionWrapEls[i].classList.contains("select-show")){
+					selectOptionWrapEls[i].classList.add('select-hide');
+					selectOptionWrapEls[i].classList.remove('select-show');
+				}
+			}
+		}
+	}
+	body.addEventListener('click',hideSelect);
+	body.addEventListener('click', selection);
+	
+	/* 옵션선택 */
+	function selectOpt(e){
+	    var dataSelect = $(e).children().attr("data-value");
+	    var text = $(e).children().text();
+	    $(e).parent().prev().attr("data-select", dataSelect);
+	    $(e).parent().prev().attr("value", text);
+	    $(e).parent().attr("class", "select-hide");
+	    
+	}//end 옵션 선택
+	
+	//필터 함수
+	function textfilter(e){
+		
+		var search = $(e).val().toLowerCase();
+		var className = $(e).next().children().eq(0).attr('class');
+		
+		$(document).find("."+className).each(function(index, item){
+			var text = $(this).children().text();
+			
+			if(text.toLowerCase().includes(search)){
+				$(this).css("display", "flex");
+			}else{
+				$(this).css("display", "none");
+			}
+		});
+		
+	}//end 필터 함수
 	
 	//구획정보 기존 데이터 만들기 함수
 	function loadSegment(){
@@ -776,12 +944,14 @@
 	//구획정보 select 박스 그리기
 	function gridSegmentSelect(){
 		//select important
-		segment_option = $("#segment_option");
+		segment_option = $("#segment_option").next();
 		
 		var add_list = "";
 		
 		for(var i = 0; i < resultArray.length; i++){
-			add_list += '<option value="' + i + '">'+resultArray[i].id+'('+resultArray[i].type+'/'+resultArray[i].repeat+')'+'</option>';
+			add_list += '<li class="segment_option_list" onclick="selectOpt(this);">';
+			add_list += '<span data-value="'+i+'">'+resultArray[i].id+'('+resultArray[i].type+'/'+resultArray[i].repeat+')'+'</span>';
+			add_list += '</li>';
 		}
 		
 		segment_option.append(add_list);
@@ -789,25 +959,6 @@
 	}//end 구획정보  select 박스 그리기
 	
 	gridSegmentSelect();
-	
-	//구획정보 셀렉트 박스 확인 이벤트
-	function checkSelectbox(){
-		
-		var value = $("#segment_option option:selected").val();
-		
-		var del_el = $(document).find("#table_body .active");
-		del_el.removeClass("active");
-		
-		var del_grid = $(document).find("#step4-segment .active");
-		del_grid.removeClass("active");
-		
-		//구획정보 첫번째에 active(선택) 이벤트 걸어주기
-		$("#table_body").children(":eq("+value+")").addClass("active");
-		$("#step4-segment").children(":eq("+value+")").addClass("active");
-		
-	}
-	
-	selectBoxEl = document.querySelector('#segment_option');
 	
 	//사진선택 이벤트
 	function fileFunction(e){

@@ -147,7 +147,8 @@
 	
 	<!-- 재배 프로토콜 detial -->
 	<select id="selectMethodDetail" resultType="Method">
-		SELECT m.*, d1.*, d2.*, d3.*, e.*, d1.division_id as d1_id, d2.division_id as d2_id, d3.division_id as d3_id
+		SELECT m.*, d1.*, d2.*, d3.*, e.*, d1.division_id as d1_id, d2.division_id as d2_id, d3.division_id as d3_id,
+		d1.division as d1_name, d2.division as d2_name, d3.division as d3_name, e.eaches_name
 		FROM method m
 		LEFT JOIN division d3 ON m.division_id = d3.division_id
 		LEFT JOIN division d2 ON d3.division_parents = d2.division_id

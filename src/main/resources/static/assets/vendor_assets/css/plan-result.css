@@ -82,7 +82,7 @@ body button{
 }
 #section .step{
     width: 100%;
-    padding: 15px 50px;
+    padding: 5px 50px;
 }
 #section .step .step_inner{
     max-width: 100%;
@@ -435,6 +435,7 @@ body button{
 #section .step .step_inner .content .bottom_right-content .right_type .right_type_cover{
 	width: 80%;
 	margin: 0 auto;
+	position: relative;
 }
 #section .step .step_inner .content .bottom_right-content .right_type .right_type_cover select{
 	width: 80%;

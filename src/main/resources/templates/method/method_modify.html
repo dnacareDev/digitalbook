@@ -108,6 +108,44 @@
 	  zoom : 40%;
 	 } */
 	}
+	
+	.select-hide{
+		display: none;
+	}
+	.select-show{
+		display: block;
+	    position: absolute;
+	    z-index :10;
+	    top: 30px;
+	    width: 97.5%;
+	    background-color: white;
+	    border:1px solid;
+	    border-radius: 5px;
+	    cursor: pointer;
+	    overflow-y: auto;
+	    height: 125px;
+	}
+	
+	#divisionModal .select-show{
+		display: block;
+	    position: absolute;
+	    z-index :10;
+	    top: 60px;
+	    width: 96%;
+	    background-color: white;
+	    border:1px solid;
+	    border-radius: 5px;
+	    cursor: pointer;
+	    overflow-y: auto;
+	    height: 125px;
+	}
+
+	.select .select-show li{
+	    padding:0 0 0 5px;
+	    line-height: 30px;
+	}
+	
+	
 </style>
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
@@ -155,7 +193,22 @@
 		                            	<label for="method_input" class="color-dark align-center">입력 단위</label>
 		                            </div>
 		                            <div class="col-sm-5">
-		                                <select class="form-control b-light" id="method_input">
+		                            	<div class="select" style="height: auto;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="method_input" placeholder="입력단위 선택" autocomplete="off">
+		                            		<ul class="select-hide">
+		                            			<li class="seed_method_list" onclick="selectOpt(this);"><span data-value="길이">길이</span></li>
+		                            			<li class="seed_method_list" onclick="selectOpt(this);"><span data-value="넓이">넓이</span></li>
+		                            			<li class="seed_method_list" onclick="selectOpt(this);"><span data-value="무게">무게</span></li>
+		                            			<li class="seed_method_list" onclick="selectOpt(this);"><span data-value="부피">부피</span></li>
+		                            			<li class="seed_method_list" onclick="selectOpt(this);"><span data-value="온도">온도</span></li>
+		                            			<li class="seed_method_list" onclick="selectOpt(this);"><span data-value="압력">압력</span></li>
+		                            			<li class="seed_method_list" onclick="selectOpt(this);"><span data-value="속도">속도</span></li>
+		                            			<li class="seed_method_list" onclick="selectOpt(this);"><span data-value="회전수">회전수</span></li>
+		                            			<li class="seed_method_list" onclick="selectOpt(this);"><span data-value="시간">시간</span></li>
+		                            			<li class="seed_method_list" onclick="selectOpt(this);"><span data-value="기타">기타</span></li>
+		                            		</ul>
+		                            	</div>
+		                                <!-- <select class="form-control b-light" id="method_input">
 			                                <option value="">입력단위 선택</option>
 			                                <option value="길이">길이</option>
 			                                <option value="넓이">넓이</option>
@@ -167,12 +220,18 @@
 			                                <option value="회전수">회전수</option>
 			                                <option value="시간">시간</option>
 			                                <option value="기타">기타</option>
-		                                </select>
+		                                </select> -->
 		                            </div>
 		                            <div class="col-sm-5">
-		                            	<select class="form-control b-light" id="method_eaches">
+		                            	<div class="select" style="height: auto;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="method_eaches" placeholder="단위 종류 선택" autocomplete="off">
+		                            		<ul class="select-hide">
+		                            			
+		                            		</ul>
+		                            	</div>
+		                            	<!-- <select class="form-control b-light" id="method_eaches">
 			                                <option value="">단위 종류 선택</option>
-		                                </select>
+		                                </select> -->
 		                            </div>
 		                    	</div>
 		                    	<div class="row mt-3">
@@ -220,8 +279,8 @@
 											<input type="text" onkeyup="filter();" class="form-control b-light" id="searchResearch" placeholder="조사방법 검색">
 											<button id="addResearchBtn" class="btn btn-dark mt-2" onclick="InsertPopup();" style="height: 34.4px">조사방법 추가</button>
 										</div>
-										<div class="row" style="overflow:auto; height: 456px; border: 1px solid #D9D9D9; border-top: transparent">
-											<div class="list-group mt-2" style="height: 100%; orverfolw-y: auto; width:100%;" id="research_list">
+										<div class="row" style="overflow:auto; height: 465.61px; border: 1px solid #D9D9D9; border-top: transparent">
+											<div class="list-group mt-2" style="height: 100%; overflow-y: auto; width:100%;" id="research_list">
 												
 											</div>
 										</div>
@@ -315,29 +374,53 @@
 		        				<div class="row">
 			        				<div class="col-md-6 mb-25">
 	                                    <label for="division_depth1" class="color-dark fw-500">대상작목</label>
-	                                    <select class="form-control b-light select" id="division_depth1" disabled="disabled">
+	                                    <div class="select" style="height: auto;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="division_depth1" placeholder="대상 작목 선택" autocomplete="off">
+		                            		<ul class="select-hide">
+		                            			<th:block th:each="d1 : ${d1}">
+		                            				<li class="division_depth1_list" onclick="selectOpt(this);"><span th:data-value="${d1.division_id}" th:text="${d1.division}"></span></li>
+		                            			</th:block>
+		                            		</ul>
+		                            	</div>
+	                                    <!-- <select class="form-control b-light select" id="division_depth1" disabled="disabled">
 			                                <th:block th:each="d1 : ${d1}">
 				                                <option th:value="${d1.division_id}" th:text="${d1.division}" th:selected="${d1.division_id == method.d1_id}"></option>
 			                                </th:block>
-			                            </select>
+			                            </select> -->
 	                                </div>
 	                                <div class="col-md-6 mb-25">
 	                                    <label for="division_depth2" class="color-dark fw-500">분류</label>
-	                                    <select class="form-control b-light select" id="division_depth2" disabled="disabled">
+	                                    <div class="select" style="height: auto;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="division_depth2" placeholder="분류 선택" autocomplete="off">
+		                            		<ul class="select-hide">
+		                            			<th:block th:each="d2 : ${d2}">
+		                            				<li class="division_depth2_list" onclick="selectOpt(this);"><span th:data-value="${d2.division_id}" th:text="${d2.division}"></span></li>
+		                            			</th:block>
+		                            		</ul>
+		                            	</div>
+	                                    <!-- <select class="form-control b-light select" id="division_depth2" disabled="disabled">
 			                                <th:block th:each="d2 : ${d2}">
 				                                <option th:value="${d2.division_id}" th:text="${d2.division}" th:selected="${d2.division_id == method.d2_id}"></option>
 			                                </th:block>
-			                            </select>
+			                            </select> -->
 	                                </div>
 	                            </div>
 	                            <div class="row">
 			        				<div class="col-md-6 mb-25">
 	                                    <label for="division_depth3" class="color-dark fw-500">항목</label>
-	                                    <select class="form-control b-light select" id="division_depth3" disabled="disabled">
+	                                    <div class="select" style="height: auto;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="division_depth3" placeholder="항목 선택" autocomplete="off">
+		                            		<ul class="select-hide">
+		                            			<th:block th:each="d3 : ${d3}">
+		                            				<li class="division_depth3_list" onclick="selectOpt(this);"><span th:data-value="${d3.division_id}" th:text="${d3.division}"></span></li>
+		                            			</th:block>
+		                            		</ul>
+		                            	</div>
+	                                    <!-- <select class="form-control b-light select" id="division_depth3" disabled="disabled">
 			                                <th:block th:each="d3 : ${d3}">
 				                                <option th:value="${d3.division_id}" th:text="${d3.division}" th:selected="${d3.division_id == method.d3_id}"></option>
 			                                </th:block>
-			                            </select>
+			                            </select> -->
 	                                </div>
 	                                <div class="col-md-6 mb-25">
 	                                    <label for="research_contents" class="color-dark fw-500">Method 명</label>
@@ -489,75 +572,312 @@
     <!-- 공통 js -->
     <th:block th:include="/../fragments/commonjs.html"></th:block>
 <script type="text/javascript" th:inline="javascript">
-$(function(){
-	let w =0;
-	
-	$(window).resize(function(e){
-		w = $(window).width();
-		setTimeout(function(){
-			if(w < 1365){
-				$("#addResearchBtn").text("추가");
-				$(".type_1").text("조회");
-			} else {
-				$("#addResearchBtn").text("조사방법 추가");
-				$(".type_1").text("항목조회");
-			}
-		}, 1);
-	});
-	$(window).trigger("resize");
-	
-});
+
 	var method = /*[[${method}]]*/ "null";
 	
 	var step = /*[[${step}]]*/ "null";
 	
-	//입력 단위 selected 이벤트
-	$("#method_input").val(method.method_input).prop("selected", true);
-	(function(){
+	$(function(){
+		let w =0;
 		
-		var method_input = method.method_input;
-		
-		var data = {"eaches_type" : method_input};
-		
-		$.ajax(
-		{
-			url : 'selectEaches',
-			method : 'POST',
-			dataType : 'json',
-			data : data,
-			success : function(result)
-			{
-				var method_eaches = $("#method_eaches");
-				var add_list = "";
-				
-				add_list += '<option value="">단위 종류 선택</option>';
-				
-				for(var i = 0; i < result.length; i++)
-				{
-					add_list += '<option value="'+ result[i].eaches_id + '"';
-					if(result[i].eaches_id == method.eaches_id){
-						add_list += 'selected="selected"';
-					}
-					add_list += '>';
-					add_list += result[i].eaches_name
-					add_list += '</option>';
+		$(window).resize(function(e){
+			w = $(window).width();
+			setTimeout(function(){
+				if(w < 1365){
+					$("#addResearchBtn").text("추가");
+					$(".type_1").text("조회");
+				} else {
+					$("#addResearchBtn").text("조사방법 추가");
+					$(".type_1").text("항목조회");
 				}
+			}, 1);
+		});
+		$(window).trigger("resize");
+		
+	});
+	
+	let selectInputEls = document.querySelectorAll('input[name="select-input"]');
+	let select_this;
+	let select_prev;
+	let select_id;
+	
+	function selection(){
+		if(document.getSelection){
+			var selection = document.getSelection();
+			
+			if(selection.focusNode != null){
+				if(selection.focusNode.children != undefined){
+					var length = selection.focusNode.children.length;
+					if(length != 0){
+						var check = selection.focusNode.children[0].name;
+						var check2 = selection.focusOffset;
+						if(check == "select-input" && check2 == "1"){
+							selectFilter(selection.focusNode.children[0]);
+						}
+					}
+				}
+			}
+			
+		}
+	}
+	
+	function selectFilter(e){
+		
+		var selection = document.getSelection();
+		
+		select_prev = select_this;
+		select_this = e;
+		select_id = e.id;
+		
+		let selectOptionWrapEls = document.querySelectorAll('.select ul');
+		
+		var currTarget = e;
+		var delOption = currTarget.nextElementSibling;
+		
+		for(var i = 0 ; i < selectOptionWrapEls.length; i++){
+			
+			if(selectOptionWrapEls[i].classList.contains("select-show")){
+				selectOptionWrapEls[i].classList.add('select-hide');
+				selectOptionWrapEls[i].classList.remove('select-show');
+			}
+		}
+		
+		if(delOption.classList.contains('select-hide')){
+			delOption.classList.remove('select-hide');
+			delOption.classList.add('select-show');
+		}
+		
+	}
+	
+	let body = document.querySelector('body');
+	function hideSelect(e){
+		
+		let selectOptionWrapEls = document.querySelectorAll('.select ul');
+		var target = e.target.name;
+		
+		if(target == "select-input"){
+			if(select_prev != undefined && select_this != select_prev){
+				var prev_attr = select_prev.getAttribute("value");
+				var prev_text = select_prev.value;
+				if(prev_attr != prev_text){
+					select_prev.value = prev_attr;
+					var prev_textEl = select_prev.parentNode.children[1].children;
+					
+					for(var i = 0; i < prev_textEl.length; i++){
+						prev_textEl[i].style.display = "flex";
+					}
+					
+					var textEl = select_this.parentNode.children[1].children;
+					
+					for(var i = 0; i < textEl.length; i++){
+						textEl[i].style.display = "flex";
+					}
+				}
+			}
+		}
+		
+		if(target != "select-input"){
+			if(select_this != undefined && select_this.value != null){
+				var select_attr = select_this.getAttribute("value");
+				var select_text = select_this.value;
 				
-				method_eaches.empty();
-				method_eaches.append(add_list);
+				if(select_attr != select_text && select_this.id == select_id){
+					select_this.value = select_attr;
+					
+					var textEl = select_this.parentNode.children[1].children;
+					
+					for(var i = 0; i < textEl.length; i++){
+						textEl[i].style.display = "flex";
+					}
+				}
+			}
+			
+			for(var i = 0 ; i < selectOptionWrapEls.length; i++){
+				
+				if(selectOptionWrapEls[i].classList.contains("select-show")){
+					selectOptionWrapEls[i].classList.add('select-hide');
+					selectOptionWrapEls[i].classList.remove('select-show');
+				}
+			}
+		}
+	}
+	body.addEventListener('click',hideSelect);
+	body.addEventListener('click', selection);
+	
+	/* 옵션선택 */
+	function selectOpt(e){
+	    var dataSelect = $(e).children().attr("data-value");
+	    var text = $(e).children().text();
+	    $(e).parent().prev().attr("data-select", dataSelect);
+	    $(e).parent().prev().attr("value", text);
+	    $(e).parent().attr("class", "select-hide");
+	    
+	    var current_this = e.parentNode.previousElementSibling;
+	    var current_this_id = current_this.id;
+	    
+	    //입력 단위 이벤트
+	    if(current_this_id == "method_input"){
+	    	var method_input = dataSelect;
+	    	
+	    	var data = {"eaches_type" : method_input};
+	    	
+	    	$.ajax(
+   			{
+   				url : 'selectEaches',
+   				method : 'POST',
+   				dataType : 'json',
+   				data : data,
+   				success : function(result)
+   				{
+   					
+   					var method_eaches = $("#method_eaches").next();
+   					var add_list = "";
+   					
+   					
+   					$("#method_eaches").attr("data-select", "");
+   					$("#method_eaches").attr("value", "");
+					$("#method_eaches").val("");
+   					
+   					for(var i = 0; i < result.length; i++)
+   					{
+   						add_list += '<li class="method_input_list" onclick="selectOpt(this);">';
+   						add_list += '<span data-value="'+result[i].eaches_id+'">'+result[i].eaches_name+'</span>';
+   						add_list += '</li>';
+   					}
+   					
+   					method_eaches.empty();
+   					method_eaches.append(add_list);
+   				}
+   			});
+	    }
+		
+	    //조사 항목 이벤트
+	    if(current_this_id == "division_depth1" || current_this_id == "division_depth2" || current_this_id == "division_depth3"){
+	    	var division_id = dataSelect;
+	    	var division_depth = current_this_id.slice(14, 15);
+	    	
+	    	var data = {"division_id" : division_id, "division_depth" : division_depth};
+	    	
+	    	$.ajax(
+   			{
+   				url : 'selectDivision',
+   				method : 'POST',
+   				dataType : 'json',
+   				data : data,
+   				success : function(result)
+   				{
+   					var depth = (division_depth * 1) + 1;
+   					var depth_list = $("#division_depth" + depth).next();
+   					var add_list = "";
+   					
+   					if(division_depth == "1"){
+   						$("#division_depth2").attr("data-select", "");
+   						$("#division_depth2").attr("value", "");
+       					$("#division_depth2").val("");
+       					
+       					$("#division_depth3").attr("data-select", "");
+       					$("#division_depth3").attr("value", "");
+       					$("#division_depth3").val("");
+   					}else if(division_depth == "2"){
+   						$("#division_depth3").attr("data-select", "");
+   						$("#division_depth3").attr("value", "");
+       					$("#division_depth3").val("");
+   					}
+   					
+   					for(var i = 0; i < result.length; i++)
+   					{
+   						add_list += '<li class="division_depth'+depth+'_list" onclick="selectOpt(this);">';
+   						add_list += '<span data-value="'+result[i].division_id+'">'+result[i].division+'</span>';
+   						add_list += '</li>';
+   					}
+   					
+   					depth_list.empty();
+   					depth_list.append(add_list);
+   				}
+   			});
+	    }
+		
+	    
+	}//end 옵션 선택
+	
+	//필터 함수
+	function textfilter(e){
+		
+		var search = $(e).val().toLowerCase();
+		var className = $(e).next().children().eq(0).attr('class');
+		
+		$(document).find("."+className).each(function(index, item){
+			var text = $(this).children().text();
+			
+			if(text.toLowerCase().includes(search)){
+				$(this).css("display", "flex");
+			}else{
+				$(this).css("display", "none");
 			}
 		});
-	})();//end 입력단위 seleted 이벤트
+		
+	}//end 필터 함수
+	
+	function loadSelectData(){
+		//입력 단위 selected 이벤트
+		$("#method_input").attr("data-select", method.method_input);
+		$("#method_input").attr("value", method.method_input);
+		
+		var data = {"eaches_type" : method.method_input};
+    	
+    	$.ajax(
+			{
+				url : 'selectEaches',
+				method : 'POST',
+				dataType : 'json',
+				data : data,
+				success : function(result)
+				{
+					
+					var method_eaches = $("#method_eaches").next();
+					var add_list = "";
+					
+					for(var i = 0; i < result.length; i++)
+					{
+						add_list += '<li class="method_input_list" onclick="selectOpt(this);">';
+						add_list += '<span data-value="'+result[i].eaches_id+'">'+result[i].eaches_name+'</span>';
+						add_list += '</li>';
+					}
+					
+					method_eaches.empty();
+					method_eaches.append(add_list);
+					
+					$("#method_eaches").attr("data-select", method.eaches_id);
+					$("#method_eaches").attr("value", method.eaches_name);
+				}
+			});
+    	
+    	//조사항목 기존 데이터
+    	$("#division_depth1").attr("data-select", method.d1_id);
+		$("#division_depth1").attr("value", method.d1_name);
+		
+		$("#division_depth2").attr("data-select", method.d2_id);
+		$("#division_depth2").attr("value", method.d2_name);
+		
+		$("#division_depth3").attr("data-select", method.d3_id);
+		$("#division_depth3").attr("value", method.d3_name);
+		
+		
+	}
+	loadSelectData();
 	
 	//method 명 초기 입력 이벤트
 	(function(){
-		var d1 = $("#division_depth1 option:checked");
-		var d2 = $("#division_depth2 option:checked");
-		var d3 = $("#division_depth3 option:checked");
+		
+		var d1 = $("#division_depth1").attr("data-select");
+		var d2 = $("#division_depth2").attr("data-select");
+		var d3 = $("#division_depth3").attr("data-select");
+		var d1_text = $("#division_depth1").attr("value");
+		var d2_text = $("#division_depth2").attr("value");
+		var d3_text = $("#division_depth3").attr("value");
 		
 		var method_title = method.method_title;
-		/* $("#input_title").val(d1.text() + " > " + d2.text() + " > " +  d3.text() + " > " +  method_title); */
-		$("#input_title").attr("value", d1.text() + " > " + d2.text() + " > " +  d3.text() + " > " +  method_title);
+		$("#input_title").attr("value", d1_text + " > " + d2_text + " > " +  d3_text + " > " +  method_title);
 		
 		var data = {"division_id" : method.d3_id};
 		
@@ -643,11 +963,9 @@ $(function(){
 	// method명 사용 버튼 활성화
 	$("#method_title").keyup(function()
 	{
-		var d1 = $("#division_depth1 option:checked");
-		var d2 = $("#division_depth2 option:checked");
-		var d3 = $("#division_depth3 option:checked");
+		var d3 = $("#division_depth3").attr("data-select");
 		
-		if(d1.val() != 0 || d2.val() != 0 || d3.val() != 0)
+		if(d3 != "")
 		{
 			$("#titleBtn").prop("disabled", false);
 		}
@@ -656,13 +974,16 @@ $(function(){
 	// method명 사용
 	function TitleBtn()
 	{
-		var d1 = $("#division_depth1 option:checked");
-		var d2 = $("#division_depth2 option:checked");
-		var d3 = $("#division_depth3 option:checked");
+		var d1 = $("#division_depth1").attr("data-select");
+		var d2 = $("#division_depth2").attr("data-select");
+		var d3 = $("#division_depth3").attr("data-select");
+		var d1_text = $("#division_depth1").attr("value");
+		var d2_text = $("#division_depth2").attr("value");
+		var d3_text = $("#division_depth3").attr("value");
 		
 		var method_title = $("#method_title").val();
 		
-		var data = {"division_id" : d3.val()};
+		var data = {"division_id" : d3};
 		
 		$.ajax(
 		{
@@ -686,44 +1007,12 @@ $(function(){
 				research_list.empty();
 				research_list.append(add_list);
 				
-				/* $("#input_title").val(d1.text() + " > " + d2.text() + " > " +  d3.text() + " > " +  method_title); */
-				$("#input_title").attr("value", d1.text() + " > " + d2.text() + " > " +  d3.text() + " > " +  method_title);
+				$("#input_title").attr("value", d1_text + " > " + d2_text + " > " +  d3_text + " > " +  method_title);
 				
 				$("#divisionModal").modal("hide");
 			}
 		});
 	}
-	
-	// 입력단위 선택
-	$("#method_input").change(function()
-	{
-		var method_input = $("#method_input").val();
-		
-		var data = {"eaches_type" : method_input};
-		
-		$.ajax(
-		{
-			url : 'selectEaches',
-			method : 'POST',
-			dataType : 'json',
-			data : data,
-			success : function(result)
-			{
-				var method_eaches = $("#method_eaches");
-				var add_list = "";
-				
-				add_list += '<option value="">단위 종류 선택</option>';
-				
-				for(var i = 0; i < result.length; i++)
-				{
-					add_list += '<option value="'+ result[i].eaches_id + '">' + result[i].eaches_name + '</option>';
-				}
-				
-				method_eaches.empty();
-				method_eaches.append(add_list);
-			}
-		});
-	});
 	
 	function InsertPopup()
 	{
@@ -807,10 +1096,10 @@ $(function(){
 	// 조사방법 등록
 	function InsertResearch()
 	{
-		var division_id = $("#division_depth3 option:checked").val();
+		var division_id = $("#division_depth3").attr("data-select");
 		var research_contents = $("#research_contents").val();
 		
-		if(division_id == 0)
+		if(division_id == "")
 		{
 			alert("조사 항목을 선택하세요.");
 		}
@@ -941,8 +1230,8 @@ $(function(){
 			var method_id = method.method_id;
 			var method_title = $("#method_title").val();
 			var method_contents = $("#method_contents").val();
-			var method_input = $("#method_input").val();
-			var eaches_id = $("#method_eaches").val();
+			var method_input = $("#method_input").attr("data-select");
+			var eaches_id = $("#method_eaches").attr("data-select");
 			var method_comment = $("#method_comment").val();
 			var method_code = method.method_code;
 			var method_share = $("#method_share").val();
@@ -951,6 +1240,16 @@ $(function(){
 			{
 				alert("method 명을 선택해주세요.");
 				$("#input_title").focus();
+			}
+			else if(method_input == "")
+			{
+				alert("입력단위를 선택해주세요");
+				$("#method_input").focus();
+			}
+			else if(eaches_id == "")
+			{
+				alert("단위 종류를 선택해주세요");
+				$("#method_eaches").focus();
 			}
 			else
 			{

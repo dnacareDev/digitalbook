@@ -60,7 +60,7 @@ select {
     border-color: #7888FC;
 }
 #section .step .step_inner .content .btn.sub_btn select{
-    width: 65%;
+    width: 80%;
     float: left;
 }
 .table-responsive{
@@ -93,14 +93,14 @@ body button{
 }
 #section .step{
     width: 100%;
-    padding: 15px 0;
+    padding: 5px 0;
 }
 #section .submit_btn{
 	padding: 15px 50px;
 	
 }
 #section .step .step_inner .submit button, #section button.setting, #plan_repeat, .submit_btn .submit_btn-inner .submit, .submit_btn .submit_btn-inner .list{
-	padding: 10px 37px !important;
+	padding: 10px 35px !important;
 }
 #section .step .step_inner .content .btn.sub_btn select, #grow_type{
 	height: 37px;
@@ -536,7 +536,7 @@ input[type="text"]{
     top: -1px;
     display: block;
     width: 30px;
-    height: 36px;
+    height: 30px;
     border: 1px solid #D8D8D8;
     clear: both;
     text-align: center;
@@ -546,6 +546,10 @@ input[type="text"]{
     border-radius: 3px;
     cursor: pointer;
 }
+.arrowMove svg, .refresh svg{
+	margin-top: 5px;
+}
+
 .refresh img {
     width: 80%;
     vertical-align: middle;
@@ -618,7 +622,7 @@ input[type="text"]{
     top: -1px;
     display: block;
     width: 30px;
-    height: 36px;
+    height: 30px;
     border: 1px solid #D8D8D8;
     clear: both;
     text-align: center;
@@ -702,7 +706,7 @@ input[type=search]:focus{
 }
 #step6 #step6_inner .content .btn button{
     display: inline-block;
-    padding: 15px 50px;
+    padding: 10px 37px;
     background-color: #E9E9FD;
     color: #5F63F2;
     font-weight: 700;

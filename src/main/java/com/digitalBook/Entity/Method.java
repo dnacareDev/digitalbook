@@ -29,6 +29,9 @@ public class Method {
 	
 	private int last_method_id;				// insert 수행 후 반환되는 해당 pk 값
 	
+	//단위 사용 컬럼
+	private String eaches_name;
+	
 	// 재배 프로토콜의 step 개수
 	private int step_no;
 	
