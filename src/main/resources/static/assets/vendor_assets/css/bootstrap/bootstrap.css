@@ -18101,4 +18101,15 @@ span.color-dark.align-center{
 	width: 100px !important;
 	height: 37px !important;
 }
+.avatar.avatar-md{
+	width: 30px !important;
+	height: 30px !important;
+	
+}
+#excelBtn{
+	margin: 0 !important;
+}
+.atbd-button-list{
+	align-items: center !important;
+}
 /*# sourceMappingURL=maps/bootstrap.css.map */

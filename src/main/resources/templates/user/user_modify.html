@@ -33,6 +33,16 @@
 	    padding:0 0 0 5px;
 	    line-height: 30px;
 	}
+	.row.form-group{
+		align-items: center;
+	}
+	.next_text{
+		float:left;
+	}
+	.content_cover{
+		width: 20%;
+    	margin-left: 10%;
+	}
 </style>
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
@@ -85,11 +95,13 @@
 							</div><div class="col-8 col-md-4 col-lg-2">
 								<input type="text" class="form-control inputText" id="user_name_k" name="user_name_k" th:value="${user.user_name_k}">
 							</div>
-							<div class="pr-0 col-4 col-md-2 col-lg-2">
-								<label class="" for="user_name_e">영문</label>
-							</div>
-							<div class="col-8 col-md-4 col-lg-2">
-								<input type="text" class="form-control inputText" id="user_name_e" name="user_name_e" th:value="${user.user_name_e}">
+							<div class="content_cover">
+								<div class="next_text">
+									<label class="" for="user_name_e">영문</label>
+								</div>
+								<div class="col-8 col-md-4 col-lg-9" style="float:right">
+									<input type="text" class="form-control inputText" id="user_name_e" name="user_name_e" th:value="${user.user_name_e}">
+								</div>
 							</div>
 						</div>
 						<div class="row form-group md-0">
@@ -112,43 +124,47 @@
 	                                </th:block>
 								</select> -->
 							</div>
-							<div class="mb-2 col-4 col-md-2 col-lg-2">
-								<label class="" for="depart_depth2">부</label>
+							<div class="content_cover">
+								<div class="next_text">
+									<label class="" for="depart_depth2">부</label>
+								</div>
+								<div class="col-8 col-md-4 col-lg-9" style="float:right">
+									<div class="select" style="height: auto;">
+	                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="depart_depth2" placeholder="부 선택" autocomplete="off">
+	                            		<ul class="select-hide">
+	                            			<th:block th:each="d2 : ${d2}">
+	                            				<li class="depart_depth2_list" onclick="selectOpt(this);"><span th:data-value="${d2.depart_id}" th:text="${d2.department}"></span></li>
+	                            			</th:block>
+	                            		</ul>
+	                            	</div>
+									<!-- <select class="form-control b-light department" id="depart_depth2">
+										<option value="0">부 선택</option>
+										<th:block th:each="d2 : ${d2}">
+			                                <option th:value="${d2.depart_id}" th:text="${d2.department}" th:selected="${d2.depart_id == user.d2_id}"></option>
+		                                </th:block>
+									</select> -->
+								</div>
 							</div>
-							<div class="col-8 col-md-4 col-lg-2">
-								<div class="select" style="height: auto;">
-                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="depart_depth2" placeholder="부 선택" autocomplete="off">
-                            		<ul class="select-hide">
-                            			<th:block th:each="d2 : ${d2}">
-                            				<li class="depart_depth2_list" onclick="selectOpt(this);"><span th:data-value="${d2.depart_id}" th:text="${d2.department}"></span></li>
-                            			</th:block>
-                            		</ul>
-                            	</div>
-								<!-- <select class="form-control b-light department" id="depart_depth2">
-									<option value="0">부 선택</option>
-									<th:block th:each="d2 : ${d2}">
-		                                <option th:value="${d2.depart_id}" th:text="${d2.department}" th:selected="${d2.depart_id == user.d2_id}"></option>
-	                                </th:block>
-								</select> -->
-							</div>
-							<div class="mb-2 col-4 col-md-2 col-lg-2">
-								<label class="" for="depart_depth3">과<span style="color: red;">*</span></label>
-							</div>
-							<div class="col-8 col-md-4 col-lg-2">
-								<div class="select" style="height: auto;">
-                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="depart_depth3" placeholder="과 선택" autocomplete="off">
-                            		<ul class="select-hide">
-                            			<th:block th:each="d3 : ${d3}">
-                            				<li class="depart_depth3_list" onclick="selectOpt(this);"><span th:data-value="${d3.depart_id}" th:text="${d3.department}"></span></li>
-                            			</th:block>
-                            		</ul>
-                            	</div>
-								<!-- <select class="form-control b-light department" id="depart_depth3" name="user_group">
-									<option value="0">과 선택</option>
-									<th:block th:each="d3 : ${d3}">
-		                                <option th:value="${d3.depart_id}" th:text="${d3.department}" th:selected="${d3.depart_id == user.d3_id}"></option>
-	                                </th:block>
-								</select> -->
+							<div class="content_cover">
+								<div class="next_text">
+									<label class="" for="depart_depth3">과<span style="color: red;">*</span></label>
+								</div>
+								<div class="col-8 col-md-4 col-lg-9" style="float:right">
+									<div class="select" style="height: auto;">
+	                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="depart_depth3" placeholder="과 선택" autocomplete="off">
+	                            		<ul class="select-hide">
+	                            			<th:block th:each="d3 : ${d3}">
+	                            				<li class="depart_depth3_list" onclick="selectOpt(this);"><span th:data-value="${d3.depart_id}" th:text="${d3.department}"></span></li>
+	                            			</th:block>
+	                            		</ul>
+	                            	</div>
+									<!-- <select class="form-control b-light department" id="depart_depth3" name="user_group">
+										<option value="0">과 선택</option>
+										<th:block th:each="d3 : ${d3}">
+			                                <option th:value="${d3.depart_id}" th:text="${d3.department}" th:selected="${d3.depart_id == user.d3_id}"></option>
+		                                </th:block>
+									</select> -->
+								</div>
 							</div>
 						</div>
 						<div class="row form-group md-0">
@@ -171,58 +187,62 @@
 	                                </th:block>
 								</select> -->
 							</div>
-							<div class="mb-2 col-4 col-md-2 col-lg-2">
-								<label class="" for="user_position">직종<span style="color: red;">*</span></label>
+							<div class="content_cover">
+								<div class="next_text">
+									<label class="" for="user_position">직종<span style="color: red;">*</span></label>
+								</div>
+								<div class="col-8 col-md-4 col-lg-9" style="float:right">
+									<div class="select" style="height: auto;">
+	                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="user_position" placeholder="직종 선택" autocomplete="off">
+	                            		<ul class="select-hide">
+	                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="연구직">연구직</span></li>
+	                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="전문연구직">전문연구직</span></li>
+	                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="공무직">공무직</span></li>
+	                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="실무관">실무관</span></li>
+	                            		</ul>
+	                            	</div>
+									<!-- <select class="form-control b-light" id="user_position" name="user_position">
+										<option value="">직종 선택</option>
+										<option value="연구직">연구직</option>
+										<option value="전문연구직">전문연구직</option>
+										<option value="공무직">공무직</option>
+										<option value="실무관">실무관</option>
+									</select> -->
+								</div>
 							</div>
-							<div class="col-8 col-md-4 col-lg-2">
-								<div class="select" style="height: auto;">
-                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="user_position" placeholder="직종 선택" autocomplete="off">
-                            		<ul class="select-hide">
-                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="연구직">연구직</span></li>
-                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="전문연구직">전문연구직</span></li>
-                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="공무직">공무직</span></li>
-                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="실무관">실무관</span></li>
-                            		</ul>
-                            	</div>
-								<!-- <select class="form-control b-light" id="user_position" name="user_position">
-									<option value="">직종 선택</option>
-									<option value="연구직">연구직</option>
-									<option value="전문연구직">전문연구직</option>
-									<option value="공무직">공무직</option>
-									<option value="실무관">실무관</option>
-								</select> -->
-							</div>
-							<div class="mb-2 col-4 col-md-2 col-lg-2">
-								<label class="" for="user_level">직급<span style="color: red;">*</span></label>
-							</div>
-							<div class="col-8 col-md-4 col-lg-2">
-								<div class="select" style="height: auto;">
-                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="user_level" placeholder="직급 선택" autocomplete="off">
-                            		<ul class="select-hide">
-                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="수확후이용과">농업연구관</span></li>
-                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="농업연구사">농업연구사</span></li>
-                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="박사후전문연구원">박사후전문연구원</span></li>
-                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="연구원">연구원</span></li>
-                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="공업서기">공업서기</span></li>
-                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="포장온실관리원">포장온실관리원</span></li>
-                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="행정실무원">행정실무원</span></li>
-                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="시설관리원">시설관리원</span></li>
-                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="운전원">운전원</span></li>
-                            		</ul>
-                            	</div>
-								<!-- <select class="form-control b-light" id="user_level" name="user_level">
-									<option value="">직급 선택</option>
-									<option value="수확후이용과">농업연구관</option>
-									<option value="농업연구사">농업연구사</option>
-									<option value="박사후전문연구원">박사후전문연구원</option>
-									<option value="연구원">연구원</option>
-									<option value="공업서기">공업서기</option>
-									<option value="포장온실관리원">포장온실관리원</option>
-									<option value="행정실무원">행정실무원</option>
-									<option value="시설관리원">시설관리원</option>
-									<option value="운전원">운전원</option>
-								</select> -->
-							</div>
+							<div class="content_cover">
+								<div class="next_text">
+									<label class="" for="user_level">직급<span style="color: red;">*</span></label>
+								</div>
+								<div class="col-8 col-md-4 col-lg-9" style="float:right">
+									<div class="select" style="height: auto;">
+	                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="user_level" placeholder="직급 선택" autocomplete="off">
+	                            		<ul class="select-hide">
+	                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="수확후이용과">농업연구관</span></li>
+	                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="농업연구사">농업연구사</span></li>
+	                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="박사후전문연구원">박사후전문연구원</span></li>
+	                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="연구원">연구원</span></li>
+	                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="공업서기">공업서기</span></li>
+	                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="포장온실관리원">포장온실관리원</span></li>
+	                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="행정실무원">행정실무원</span></li>
+	                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="시설관리원">시설관리원</span></li>
+	                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="운전원">운전원</span></li>
+	                            		</ul>
+	                            	</div>
+									<!-- <select class="form-control b-light" id="user_level" name="user_level">
+										<option value="">직급 선택</option>
+										<option value="수확후이용과">농업연구관</option>
+										<option value="농업연구사">농업연구사</option>
+										<option value="박사후전문연구원">박사후전문연구원</option>
+										<option value="연구원">연구원</option>
+										<option value="공업서기">공업서기</option>
+										<option value="포장온실관리원">포장온실관리원</option>
+										<option value="행정실무원">행정실무원</option>
+										<option value="시설관리원">시설관리원</option>
+										<option value="운전원">운전원</option>
+									</select> -->
+								</div>
+								</div>
 						</div>
 						<div class="row form-group">
 							<div class="col-4 col-md-2 col-lg-2">
@@ -253,17 +273,21 @@
 							<div class="mb-2 col-8 col-md-4 col-lg-2">
 								<input type="text" class="form-control inputText" id="user_tel" name="user_tel" th:value="${user.user_tel}">
 							</div>
-							<div class="mb-2 col-4 col-md-2 col-lg-2">
-								<label class="" for="user_pax">팩스번호</label>
+							<div class="content_cover">
+								<div class="next_text">
+									<label class="" for="user_pax">팩스번호</label>
+								</div>
+								<div class="col-8 col-md-4 col-lg-9" style="float:right">
+									<input type="text" class="form-control inputText" id="user_pax" name="user_pax" th:value="${user.user_pax}">
+								</div>
 							</div>
-							<div class="mb-2 col-8 col-md-4 col-lg-2">
-								<input type="text" class="form-control inputText" id="user_pax" name="user_pax" th:value="${user.user_pax}">
-							</div>
-							<div class="mb-2 col-4 col-md-2 col-lg-2">
-								<label class="" for="user_phone">휴대전화번호</label>
-							</div>
-							<div class="mb-2 col-8 col-md-4 col-lg-2">
-								<input type="text" class="form-control inputText" id="user_phone" name="user_phone" th:value="${user.user_phone}">
+							<div class="content_cover">
+								<div class="next_text">
+									<label class="" for="user_phone">휴대번호</label>
+								</div>
+								<div class="col-8 col-md-4 col-lg-9" style="float:right">
+									<input type="text" class="form-control inputText" id="user_phone" name="user_phone" th:value="${user.user_phone}">
+								</div>
 							</div>
 						</div>
 						<div class="mb-0 row form-group">
@@ -273,26 +297,28 @@
 							<div class="mb-2 col-8 col-md-4 col-lg-2">
 								<input type="text" class="form-control inputText" id="user_scientist" name="user_scientist" th:value="${user.user_scientist}">
 							</div>
-							<div class="mb-2 col-4 col-md-2 col-lg-2">
-								<label class="" for="user_type">권한<span style="color: red;">*</span></label>
-							</div>
-							<div class="mb-2 col-8 col-md-4 col-lg-2">
-								<div class="select" style="height: auto;">
-                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="user_type" placeholder="권한 선택" autocomplete="off">
-                            		<ul class="select-hide">
-                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="0">관리자</span></li>
-                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="1">운영자</span></li>
-                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="2">연구직</span></li>
-                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="3">공무직</span></li>
-                            		</ul>
-                            	</div>
-								<!-- <select class="form-control b-light authority" id="user_type" name="user_type">
-									<option value="">권한 선택</option>
-									<option value="0">관리자</option>
-									<option value="1">운영자</option>
-									<option value="2">연구직</option>
-									<option value="3">공무직</option>
-								</select> -->
+							<div class="content_cover">
+								<div class="next_text">
+									<label class="" for="user_type">권한<span style="color: red;">*</span></label>
+								</div>
+								<div class="col-8 col-md-4 col-lg-9" style="float:right">
+									<div class="select" style="height: auto;">
+	                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="user_type" placeholder="권한 선택" autocomplete="off">
+	                            		<ul class="select-hide">
+	                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="0">관리자</span></li>
+	                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="1">운영자</span></li>
+	                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="2">연구직</span></li>
+	                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="3">공무직</span></li>
+	                            		</ul>
+	                            	</div>
+									<!-- <select class="form-control b-light authority" id="user_type" name="user_type">
+										<option value="">권한 선택</option>
+										<option value="0">관리자</option>
+										<option value="1">운영자</option>
+										<option value="2">연구직</option>
+										<option value="3">공무직</option>
+									</select> -->
+								</div>
 							</div>
 						</div>
 					</div>

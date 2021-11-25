@@ -37,7 +37,36 @@
 	    padding:0 0 0 5px;
 	    line-height: 30px;
 	}
-	
+	.row.mt-1{
+		align-items: center;
+	}
+	input[type="checkbox"], span.color-dark{
+		vertical-align: middle;
+		margin-right: 5px;
+	}
+	.row .aling-items-center:first-child{
+		justify-content: start;
+	}
+	.row .aling-items-center{
+		justify-content: end;
+	}
+	.row.mt-1 .form-control,b-light.genetic_id.input1{
+		float: left;
+	    width: 80%;
+	    vertical-align: middle;
+	    border-radius: 5px 0 0 5px !important;
+	    border-right: 0;
+	}
+	.row.mt-1 .btn.btn-light.genetic_show.label1{
+		float: left;
+	    margin: 0 !important;
+	    border-radius: 0 5px 5px 0;
+	    height: 34.12px;
+	    border: 1px solid #e3e6ef;
+	    border-left: 0;
+	    width: 20%;
+	    padding: 0;
+	}
 </style>
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
@@ -122,7 +151,7 @@
 					        								<div class="col-11 col-md-11 col-lg-11">
 						        								<div class="col-12 ml-1">
 															        <div class="row">
-															        	<div style="font-size: 17px; color: initial;">종자 및 시료관리</div>
+															        	<div style="font-size: 16px !important; color: initial; padding-bottom:10px; font-weight:700;">종자 및 시료관리</div>
 															        </div>
 														        </div>
 							        							<div class="col-12">
@@ -131,8 +160,8 @@
 							        										<label class="color-dark fw-500 align-center mt-1">품종/유전자원정보<span style="color: red;">*</span></label>
 							        									</div>
 							        									<div class="col-md-4 mb-25">
-							        										<input type="text" class="form-control b-light genetic_id" style="float: left; width: 315px;" readonly="readonly">
-							        										<label class="btn btn-light genetic_show">조회</label>
+							        										<input type="text" class="form-control b-light genetic_id input1" readonly="readonly">
+							        										<label class="btn btn-light genetic_show label1">조회</label>
 							        									</div>
 							        									<div class="col-md-2 mb-25 d-flex aling-items-center">
 										                                    <label for="seed_manager" class="color-dark fw-500 align-center">담당자<span style="color: red;">*</span></label>
@@ -251,7 +280,7 @@
 							        							</div>
 							        							<div class="col-12 ml-1">
 															        <div class="row">
-															        	<div style="font-size: 17px; color: initial;">기타정보</div>
+															        	<div style="font-size: 16px !important; color: initial; padding-bottom:10px; font-weight:700;">기타정보</div>
 															        </div>
 														        </div>
 														        <div class="col-12">
