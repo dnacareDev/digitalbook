@@ -413,7 +413,7 @@ function onClickTableEls(e){
 	
 	var thisOrder = segmentData[thisIndex].order;
 	console.log("----------------------");
-	console.log(thisOrder);
+	//console.log(thisOrder);
 	
 	activeList(thisOrder);
 	
@@ -618,7 +618,7 @@ function segmentSetting(data){
 	
 	if(segmentType !== undefined){
 	
-		var planRepeat = document.querySelector("#plan_repeat").value;
+		var planRepeat = parseInt(document.querySelector("#plan_repeat").value, 10);
 		
 		var type2Diff = 70;
 		
@@ -683,7 +683,7 @@ function segmentSetting(data){
 			if(factorLength3 == 0){
 				factorLength3 = 1
 			}
-			console.log(dataGet);
+			//console.log(dataGet);
 			copyResultArray.push(dataGet);
 			
 			if(factorLength2 !== 0){
@@ -810,7 +810,7 @@ function segmentSetting(data){
 		
 		segmentRotate[t].addEventListener('click', onRotateDown);
 		
-		if(tableEls !== undefined){
+		if(tableEls[t] !== undefined){
 			tableEls[t].addEventListener('click', onClickTableEls);
 		}
 	}
