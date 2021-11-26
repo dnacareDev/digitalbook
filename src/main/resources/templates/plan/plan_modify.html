@@ -1134,7 +1134,7 @@
     <script src="/../assets/vendor_assets/js/plan-insert.js"></script>
     <script type="text/javascript" src="/../assets/vendor_assets/js/plan-segment.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=	e93e65b3e9a407aa43d05f993408db95&libraries=clusterer,services"></script>
-<script type="text/javascript" th:inline="javascript">
+	<script type="text/javascript" th:inline="javascript">
 
 	var plan = /*[[${plan}]]*/ "null";
 	var factor = /*[[${factor}]]*/ "null";
@@ -1142,6 +1142,7 @@
 	var user = /*[[${user}]]*/ "null";
 	var sch = /*[[${sch}]]*/ "null";
 	let segment = /*[[${segment}]]*/ "null";
+	console.log(segment);
 	
 	//시험구 배치 데이터
 	var data1 = new Object();
