@@ -170,7 +170,10 @@ function onColorChange(){
 	
 		
 	if(segmentType == 0){ //완전임의배치******************
-		document.querySelector(".content_right .top_btn-left").style.display ="block";		
+		var rightBtn = document.querySelector(".content_right .top_btn-left");
+		if(rightBtn){
+			rightBtn.style.display ="block";	
+		}	
 		console.log("0입니다");	
 		//만들어준 factorArray를 가지고 최종 copyResultArray 만들어 주기
 		for(var i = 0; i < plan_repeat; i++){
@@ -205,7 +208,10 @@ function onColorChange(){
 			}
 		}
 	}else if(segmentType == 1){ //난괴법******************
-		document.querySelector(".content_right .top_btn-left").style.display ="block";
+		var rightBtn = document.querySelector(".content_right .top_btn-left");
+		if(rightBtn){
+			rightBtn.style.display ="block";	
+		}	
 		console.log("1입니다.")
 		//만들어준 factorArray를 가지고 최종 copyResultArray 만들어 주기
 		for(var i = 0; i < plan_repeat; i++){
@@ -241,7 +247,10 @@ function onColorChange(){
 		}
 	}else if(segmentType == 2){ //분할구배치법******************
 		console.log("2입니다.")
-		document.querySelector(".content_right .top_btn-left").style.display ="none";
+		var rightBtn = document.querySelector(".content_right .top_btn-left");
+		if(rightBtn){
+			rightBtn.style.display ="none";	
+		}	
 		//만들어준 factorArray를 가지고 최종 copyResultArray 만들어 주기
 		for(var i = 0; i < plan_repeat; i++){
 			level++;
@@ -278,7 +287,10 @@ function onColorChange(){
 		idArrayAll.push(idArray);
 	}else if(segmentType == 3){ //세세구배치법******************
 		console.log("3입니다.");
-		document.querySelector(".content_right .top_btn-left").style.display ="none";
+		var rightBtn = document.querySelector(".content_right .top_btn-left");
+		if(rightBtn){
+			rightBtn.style.display ="none";	
+		}	
 		
 		//만들어준 factorArray를 가지고 최종 copyResultArray 만들어 주기
 		for(var i = 0; i < plan_repeat; i++){
@@ -649,8 +661,14 @@ function segmentSetting(data){
 	
 	
 	if(segmentType !== undefined){
-	
-		var planRepeat = parseInt(document.querySelector("#plan_repeat").value, 10);
+		var planRepeat = document.querySelector("#plan_repeat");
+		
+		if(planRepeat == undefined){
+			planRepeat = parseInt(document.querySelectorAll(".box_content").length, 10);
+			console.log("result?");
+		}else{
+			planRepeat = parseInt(document.querySelector("#plan_repeat").value, 10);
+		}
 		
 		var type2Diff = 70;
 		
