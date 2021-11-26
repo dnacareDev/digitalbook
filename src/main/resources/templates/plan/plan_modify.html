@@ -387,8 +387,8 @@
 			                                </div>
 			                                <div class="top_btn-right clearfix">
 			                                    <ul>
-			                                        <li><button>요인 랜덤화</button></li>
-			                                        <li><button>수준 랜덤화</button></li>
+			                                        <li><button id="random01">요인 랜덤화</button></li>
+			                                        <li><button id="random02">수준 랜덤화</button></li>
 			                                    </ul>
 			                                </div>
 			                                <div class="background-wrap">
@@ -1282,6 +1282,7 @@
     <!-- 공통 js -->
     <th:block th:include="/../fragments/commonjs.html"></th:block>
     <script src="/../assets/vendor_assets/js/plan-insert.js"></script>
+    <script src="/../assets/vendor_assets/js/plan-render.js"></script>
     <script type="text/javascript" src="/../assets/vendor_assets/js/plan-segment.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=	e93e65b3e9a407aa43d05f993408db95&libraries=clusterer,services"></script>
 	<script type="text/javascript" th:inline="javascript">
@@ -1292,8 +1293,7 @@
 	var user = /*[[${user}]]*/ "null";
 	var sch = /*[[${sch}]]*/ "null";
 	let segment = /*[[${segment}]]*/ "null";
-	console.log(segment);
-	console.log(plan);
+
 	//시험구 배치 데이터
 	var data1 = new Object();
 	var data2 = new Object();
@@ -3749,6 +3749,7 @@
 				resultArray.push(result_data);
 			}
 			
+			
 			//임의 임의배치 컴포넌트
 			var copy_step_4 = $("#copy-step-4");
 			add_list = "";
@@ -3842,9 +3843,6 @@
 					}
 				}//end stop
 			});//end sortable
-			
-			var getDataArr = [...resultArray];
-			getDataResult(getDataArr, grow_type, "", "modify");
 			
 		}else if(grow_type == "1"){ //난괴법
 
@@ -3989,10 +3987,6 @@
 					}
 				});//end sortable
 			}
-			
-			var getDataArr = [...resultArray];
-			getDataResult(getDataArr, grow_type, '', 'modify');
-			
 		}else if(grow_type == "2"){ //분할구배치법
 			
 			for(var i = 0; i < segment.length; i++){
@@ -5104,10 +5098,8 @@
 		return calcObject;
 	}
 	
-	
-	
 	$("#random01").on("click", function(){
-		
+
 		var growType = document.querySelector('#grow_type').getAttribute("data-select");
 		
 		var obR = {};
