@@ -33,12 +33,13 @@ var factorLength3 = "";
 
 var segmentType = 0;
 var segmentInnerType = '';
+var segmentModify = "";
 
-function getDataResult(getDataArr, type, innerType){
+function getDataResult(getDataArr, type, innerType, modify){
 	segmentData = getDataArr;
 	segmentType = type;
 	segmentInnerType = innerType;
-	
+	segmentModify = modify;
 	tableEls = document.querySelectorAll('.step4-container .table_content');
 	renderSegment(segmentData);
 }
@@ -659,26 +660,36 @@ function segmentSetting(data){
 		elWidth = (dataIdLength * 10) + 26;
 	}
 	
-	
 	if(segmentType !== undefined){
 		var planRepeat = document.querySelector("#plan_repeat");
 		
 		if(planRepeat == undefined){
-			planRepeat = parseInt(document.querySelectorAll(".box_content").length, 10);
-			console.log("result?");
+			planRepeat = dataGet[dataGet.length - 1].repeat;
 		}else{
 			planRepeat = parseInt(document.querySelector("#plan_repeat").value, 10);
 		}
 		
 		var type2Diff = 70;
-		
 		if(segmentType == 2){ // ************************분할구배치법
+			
 			var getDataId = segmentEls[elRender].getAttribute('data-segmentid');
 			var getClass = document.getElementsByClassName(getDataId);
 		
-			var getDataIdLength = Math.ceil(getClass.length / (2 * planRepeat)); // 한 집구의 한 data섹션 갯수
-			var getPlanRepeatLength = Math.ceil(copyResultArray.length / planRepeat) // 한 집구당 갯수
 			
+			
+			
+			var getDataIdLength = 0; // 한 집구의 한 data섹션 갯수
+			for(var i = 0 ; i < dataGet.length; i++){
+				var idTemp = dataGet[i].segmentId;
+				var splitA = idTemp.split("-")[0].split("A")[1];
+				
+				if(splitA <= 1){
+					getDataIdLength++;
+				}else{
+					break;
+				}
+			}
+			var getPlanRepeatLength = Math.ceil(dataGet.length / planRepeat) // 한 집구당 갯수
 			var getColumnLength = Math.ceil(getPlanRepeatLength / getDataIdLength ); // 한 집구에 몇개의 data묶음이 있는지,
 			
 			if(factorLength3 == 0){
@@ -688,23 +699,34 @@ function segmentSetting(data){
 				for(var c = 0; c < getColumnLength; c++){ // column
 					for(var r = 0; r < getDataIdLength; r++){ // row
 						if(segmentLi[elRender] !== undefined && segmentLi[elRender] !== null){
-							
-							zindex.push(elRender);
-							segmentLi[elRender].style.zIndex = elRender;
-							segmentLi[elRender].style.transform = 'translate(' + ( ( elWidth * c ) + WrapDiff ) + 'px, ' + ( (elHeight * r) + WrapDiff + (((elHeight * getDataIdLength + type2Diff ) * t) ) ) + 'px)';
-							
+						
 							segmentEls[elRender].style.width = elWidth + 'px';
-							
-							
-							if(transformRotateCheck(elRender) !== undefined && transformRotateCheck(elRender) !== null){			
-								segmentEls[elRender].style.transform = 'rotate(' + transformRotateCheck(elRender) + 'deg)';
+							console.log(segmentModify , 'gagsdfasdfafsdfasfasdf');
+							if(segmentModify !== "modify"){							
+								zindex.push(elRender);
+								segmentLi[elRender].style.zIndex = elRender;
+								segmentLi[elRender].style.transform = 'translate(' + ( ( elWidth * c ) + WrapDiff ) + 'px, ' + ( (elHeight * r) + WrapDiff + (((elHeight * getDataIdLength + type2Diff ) * t) ) ) + 'px)';
+								
+								
+								
+								
+								if(transformRotateCheck(elRender) !== undefined && transformRotateCheck(elRender) !== null){			
+									segmentEls[elRender].style.transform = 'rotate(' + transformRotateCheck(elRender) + 'deg)';
+								}else{
+									segmentEls[elRender].style.transform = 'rotate(' + 0 + 'deg)';
+								}
+								
+								dataGet[elRender].segment_horizon = ( ( elWidth * c ) + WrapDiff );
+								dataGet[elRender].segment_vertical = ( (elHeight * r) + WrapDiff + (((elHeight * getDataIdLength + type2Diff ) * t) ) );
+								dataGet[elRender].segment_zindex = elRender;
 							}else{
-								segmentEls[elRender].style.transform = 'rotate(' + 0 + 'deg)';
+								console.log(dataGet[elRender].segment_horizon);
+								segmentLi[elRender].style.transform = 'translate(' + dataGet[elRender].segment_horizon + 'px, ' + dataGet[elRender].segment_vertical + 'px)';
+								segmentLi[elRender].style.zIndex = dataGet[elRender].segment_zindex;
+								
+								segmentEls[elRender].style.zIndex = dataGet[elRender].segment_zindex;
+								segmentEls[elRender].style.transform = 'rotate(' + dataGet[elRender].segment_aspect + 'deg)';
 							}
-							
-							dataGet[elRender].segment_horizon = ( ( elWidth * c ) + WrapDiff );
-							dataGet[elRender].segment_vertical = ( (elHeight * r) + WrapDiff + (((elHeight * getDataIdLength + type2Diff ) * t) ) );
-							dataGet[elRender].segment_zindex = elRender;
 							
 							// color 설정
 							var idArrayAll2 = idArrayAll[0];
