@@ -577,13 +577,6 @@ function segmentSetting(data){
 	row = Math.ceil(segmentEls.length / column);
 	elRender = 0;
 	
-	// 제일 큰 width 값 elWidth에 넣기
-	elWidth = 0;
-	for(var i = 0; i < dataGet.length; i++){
-		if(elWidth < Math.ceil(segmentEls[i].clientWidth)){
-			elWidth = Math.ceil(segmentEls[i].clientWidth);
-		}
-	}
 	
 	// step4 wrap width height 세팅
 	var wrapWidth = ( column * elWidth ) + ( 46 * 2 );
@@ -597,14 +590,13 @@ function segmentSetting(data){
 	}
 	// elwidth 0 이하로 불러올때 대비
 	var dataIdLength = 0;
-	if(elWidth <= 0){
-		for(var i = 0; i < dataGet.length; i++){
-			if(dataIdLength < dataGet[i].id.length){
-				dataIdLength = dataGet[i].id.length;
-			}
+	elWidth = 0;
+	for(var i = 0; i < dataGet.length; i++){
+		if(dataIdLength < dataGet[i].id.length){
+			dataIdLength = dataGet[i].id.length;
 		}
-		elWidth = (dataIdLength * 10) + 26;
 	}
+	elWidth = (dataIdLength * 10) + 26;
 	
 	if(segmentType !== undefined){
 		var planRepeat = document.querySelector("#plan_repeat");
