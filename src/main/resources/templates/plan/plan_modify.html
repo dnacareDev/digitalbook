@@ -127,8 +127,6 @@
 	    height: 150px;
 	}
 	
-	.select > #select_view1 {width: 100%;} 
-	
 	.select .select-show li{
 	    padding:0 0 0 10px;
 	    line-height: 30px;
@@ -222,13 +220,12 @@
 			                    </div>
 			                    <div class="content clearfix">
 			                        <div class="btn btn_select1" style="display:block">
-			                            <!-- <select class="form-control b-light department" id="select_view1" name="" disabled="disabled">
-			                                <option th:value=0 disabled="disabled" selected="selected" hidden="hidden">과제 선택</option>
+			                            <select class="form-control b-light department" id="select_view1" name="" disabled="disabled">
 			                                <th:block th:each="report : ${report}">
 			                                	<option th:value="${report.report_code}" th:text="${report.report_title +'('+ report.report_code} +')'" th:selected="${report.report_code == plan.report_code}"></option>
 			                                </th:block>
-			                            </select> -->
-			                            <div class="select">
+			                            </select>
+			                            <!-- <div class="select">
 	                                		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="select_view1" placeholder="과제 선택" autocomplete="off">
 	                                		<ul class="select-hide">
 	                                			<th:block th:each="report : ${report}">
@@ -237,7 +234,7 @@
 	                                				</li>
 	                                			</th:block>
 	                                		</ul>
-	                                	</div>
+	                                	</div> -->
 			                            <div class="submit clearfix">
 			                                <button type="button" id="step-2-btn" onclick="nextStep(3);">다음</button>
 			                            </div>
@@ -351,7 +348,7 @@
 			                        </ul>
 			                        <div class="repeat">
 			                            <h6><span class="red" style="color: #FF4141">*</span>반복</h6>
-			                            <input type="text" id="plan_repeat" th:value="${plan.plan_repeat}" style="width: 65px; padding:10px 20px !important; text-align:center;">
+			                            <input type="text" id="plan_repeat" th:value="${plan.plan_repeat}" style=" padding:10px 20px !important;">
 			                        </div>
 			                        <div class="submit clearfix">
 			                            <button type="button" id="step-3-btn">다음</button>
@@ -1317,7 +1314,6 @@
 	//구획 등록할 객체 array
 	let segment_array = new Array();
 	
-	
 	//select 필터링 관련 코드
 	let selectInputEls = document.querySelectorAll('input[name="select-input"]');
 	let select_this;
@@ -1574,10 +1570,6 @@
 		
 		//포장에 기존 storage_id값 주기
 		$("#storage_input").attr("th:data-storage-id", plan.storage_id);
-		
-		//과제 선택
-		$("#select_view1").attr("data-select", plan.report_code);
-		$("#select_view1").attr("value", plan.report_title+"("+plan.report_code+")");
 		
 		//시험구배치 종류 선택
 		$("#grow_type").attr("data-select", plan.grow_type);
@@ -2045,6 +2037,9 @@
 			}
 		});
 		
+		//담당자 그려주기 실행
+		gridStep6();
+		
 	}//end function
 	
 	//기존데이터 로드
@@ -2235,7 +2230,7 @@
 	//seedList ajax 함수
 	function getSeedList(index){
 		
-		var report_code = $("#select_view1 option:selected").val();
+		var report_code = plan.report_code;
 		
 		var data = {"report_code" : report_code};
 		
@@ -5405,8 +5400,6 @@
 			$("#grow_type").focus();
 		}else if($("#storage_input").val() == ""){
 			alert("포장을 선택해 주세요");
-		}else if($("#select_view1").attr("data-select") == ""){
-			alert("과제를 선택해 주세요");
 		}else if(Object.keys(data1).length == 0 && Object.keys(data2).length == 0 && Object.keys(data3).length == 0){
 			alert("시험구배치 요인을 선택해 주세요");
 		}else {
@@ -6170,12 +6163,11 @@
 	
 	//담당자 그려주기
 	function gridStep6(){
-		
 		$("#step6_list").empty();
 		
 		var step6_list = $("#step6_list");
 		var length = $(document).find("#method-container .method-step").length;
-		console.log(length);
+		
 		var add_list = "";
 		
 		$(document).find("#method-container .method-step").each(function(i, item){
@@ -6295,7 +6287,6 @@
 		
 	}//end 담당자 그려주기
 	
-	gridStep6();
 	
 	//담당자 추가 이벤트
 	$(document).on("click", ".add_manager", function(){

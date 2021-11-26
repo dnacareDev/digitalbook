@@ -18077,7 +18077,7 @@ to {
 
 }
 
-.breadcrumb-main {margin-top: 40px !important}
+.breadcrumb-main {margin-top: 40px !important; padding: 0 50px;}
 .breadcrumb-title {font-size: 20px !important; padding: 2px 0 0 !important;}
 
 .breadcrumb-main span{
@@ -18113,4 +18113,5 @@ span.color-dark.align-center{
 	align-items: center !important;
 }
 span.red{margin-right:3px; vertical-align: middle;color: red}
+.contents{padding: 74px 0;}
 /*# sourceMappingURL=maps/bootstrap.css.map */

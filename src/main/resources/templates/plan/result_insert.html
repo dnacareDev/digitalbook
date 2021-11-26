@@ -67,7 +67,7 @@
 	    padding:0 0 0 5px;
 	    line-height: 30px;
 	}
-	
+	.content-center{justify-content: start !important}
 </style>
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
@@ -85,14 +85,14 @@
 	
 	<main class="main-content" style="background-color: #F9FBFD;">
 		
-		<div class="contents" style="background-color: #F9FBFD;">
+		<div class="contents" style="background-color: #F9FBFD; padding: 74px 0">
 			
 			<div class="container-fluid">
                 
 			    <div class="wrapper clearfix">
 			    	<div class="row"> <!-- section 위에 -->
 				        <div class="col-lg-12">
-				        	<div class="breadcrumb-main">
+				        	<div class="breadcrumb-main" style="padding:0;">
 				        		<h4 class="text-capitalize breadcrumb-title">결과입력</h4>
 				        		<span class="ml-20 mt-1 font_sub_title">재배관리-결과입력</span>
 				        	</div>
@@ -164,7 +164,7 @@
 			                            <div class="content_box">
 				                            <div class="bottom_right-content clearfix"> <!-- 2021-11-01 추가  -->
 						                      	<div class="left_type" style="width:60%;">
-						                      		<span>기준개채수<span class="red">*</span></span>
+						                      		<span><span class="red">*</span>기준개채수</span>
 						                           	<input type="text" id="segment_num" value="10">
 						                           	<button type="button" id="segment_check" style="width:90.88px">확인</button>
 						                      	</div>
