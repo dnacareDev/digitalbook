@@ -510,10 +510,10 @@
 			            <div class="submit_btn clearfix">
 			                <div class="submit_btn-inner">
 			                    <button class="list" id="listBtn">목록</button>
-			                    <th:block th:if="${plan.plan_step == 0}">
+			                    <th:block th:if="${plan.plan_step == 0 and #authentication.principal.user_name_k == plan.report_user_name}">
 			                    	<button class="submit" id="planUpdateBtn">수정</button>
 			                    </th:block>
-			                    <th:block th:if="${plan.plan_step == 1}">
+			                    <th:block th:if="${plan.plan_step == 1 and (#authentication.principal.user_name_k == plan.report_user_name or #authentication.principal.user_type == 0)}">
 			                    	<button class="submit" onclick="updateSch();" style="padding: 10px 20px !important;">담당자 수정</button>
 			                    </th:block>
 			                    <th:block th:if="${#authentication.principal.user_type == 0}">
@@ -1295,7 +1295,8 @@
 	var user = /*[[${user}]]*/ "null";
 	var sch = /*[[${sch}]]*/ "null";
 	let segment = /*[[${segment}]]*/ "null";
-	
+	console.log(segment);
+	console.log(plan);
 	//시험구 배치 데이터
 	var data1 = new Object();
 	var data2 = new Object();
