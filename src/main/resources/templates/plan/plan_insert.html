@@ -50,8 +50,8 @@
     	border: 2px solid #788DEE;
     	background-color: transparent;
     	padding: 0;
-    	width: 38px;
-    	height: 38px;
+    	width: 28px;
+    	height: 28px;
     	color: #788DEE;
 	}
 	
@@ -173,10 +173,10 @@
 			                    <div class="content clearfix">
 			                    	<div class="row ml-4" style="float: left; margin-left: 15px;">
 			        					<label class="color-dark align-center">포장</label>
-			                            <input type="text" class="form-control b-light" id="storage_input" readonly="readonly" style="width: 300px; margin-left: 10px;">
+			                            <input type="text" class="form-control b-light" id="storage_input" readonly="readonly" style="width: 300px; margin-left: 10px; padding: 0;">
 			                    	</div>
 			                        <div class="btn_ver">
-			                            <button type="button" id="storageBtn">신규등록</button>
+			                            <button type="button" id="storageBtn" style="height:34.11px">신규등록</button>
 			                        </div>
 			                        <div class="btn btn_new">
 			                            
@@ -244,8 +244,9 @@
 			                        <h3>Step 3. 시험구배치<span></span></h3>
 			                    </div>
 			                    <div class="content clearfix">
-			                        <span class="title">시험구배치 종류</span>
+			                        
 			                        <div class="btn btn2">
+			                        	<span class="title">시험구배치 종류</span>
 			                        	<div class="select" style="height: auto;">
 		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="grow_type" placeholder="시험구배치 선택" autocomplete="off" style="width: 300px;">
 		                            		<ul class="select-hide">
@@ -266,7 +267,7 @@
 			                        <ul class="select_list clearfix"> <!-- select list -->
 			                            <li class="btn sub_btn">
 			                                <span class="sub_title">요인1</span>
-				                            <div class="select" style="height: 37px;width: calc((100% - 139px)/1);" data-index="1">
+				                            <div class="select" data-index="1">
 			                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="factor_type_1" placeholder="시험구배치 선택" autocomplete="off" style="width: 100%; height:37px; float: left; padding: 0 20px;">
 			                            		<ul class="select-hide" style="width: 65%">
 			                            			<li class="factor_type_1_list" onclick="selectOpt(this);"><span data-value="시험재료">시험재료</span></li>
@@ -351,7 +352,7 @@
 			                        </ul>
 			                        <div class="repeat">
 			                            <h6><span class="red" style="color: #FF4141">*</span>반복</h6>
-			                            <input type="text" id="plan_repeat" value="1">
+			                            <input type="text" id="plan_repeat" value="1" style="width: 65px; padding:10px 20px !important; text-align:center;">
 			                        </div>
 			                        <div class="submit clearfix">
 			                            <button type="button" id="step-3-btn">다음</button>
@@ -386,7 +387,7 @@
 			                                <div class="top_btn-left">
 			                                    <h6><span class="red" style="color: #FF4141">*</span>열의 갯수</h6>
 			                                    <input type="text" value="10" id="mil2" style="border-radius: 5px 0 0 5px; width: 40%; margin-left: 10px;">
-			                                    <button id="step4-columnBtn" style="height: 33px; border-radius: 0 5px 5px 0; ">적용</button>
+			                                    <button id="step4-columnBtn" style="height: 31.7px; border-radius: 0 5px 5px 0; ">적용</button>
 			                                </div>
 			                                <div class="top_btn-right clearfix">
 			                                    <ul>
@@ -4229,23 +4230,6 @@
 	
 	//구획 등록
 	function insertSegment(plan_id){
-		segment_array = [];
-		
-		$(document).find(".table_content").each(function(index, item){
-			
-			var seg_data = {
-				"plan_id" : plan_id,
-				"segment_code" : $(this).children().eq(1).text(),
-				"segment_index" : $(this).children().eq(0).text(),
-				"segment_type" : $(this).children().eq(2).text(),
-				"segment_repeat" : $(this).children().eq(3).text(),
-				"segment_area" : $(this).find("input:text").val(),
-				"individual_num" : 3
-			};
-			
-			segment_array.push(seg_data);
-			
-		});
 		
 		segment_array = [];
 		
@@ -4270,7 +4254,7 @@
 			}
 			segment_array.push(data);
 		}
-		console.log(segment_array);
+
 		var cancel = new Array();
 		
 		$.ajax({
