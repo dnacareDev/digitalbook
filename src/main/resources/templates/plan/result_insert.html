@@ -862,6 +862,15 @@
 			
 			segment_list.append(result_div);
 			
+			var factor2 = 0;
+			for(var i = 0; i < resultArray.length; i++){
+				var idTemp = resultArray[i].segmentId;
+				var splitA = idTemp.split("-")[1].split("B")[1];
+				
+				console.log(splitA,"splitA");
+			}
+			console.log(factor2,"factor2");	
+			
 			//그룹별 색깔 적용해주기
 			$(document).find(".table_content").each(function(i, item){
 				
@@ -928,6 +937,7 @@
 			}//end for1
 			
 			segment_list.append(result_div);
+			
 			
 			//그룹별 색깔 적용해주기
 			$(document).find(".table_content").each(function(i, item){

@@ -127,8 +127,6 @@
 	    height: 150px;
 	}
 	
-	.select > #select_view1 {width: 100%;} 
-	
 	.select .select-show li{
 	    padding:0 0 0 10px;
 	    line-height: 30px;
@@ -222,13 +220,12 @@
 			                    </div>
 			                    <div class="content clearfix">
 			                        <div class="btn btn_select1" style="display:block">
-			                            <!-- <select class="form-control b-light department" id="select_view1" name="" disabled="disabled">
-			                                <option th:value=0 disabled="disabled" selected="selected" hidden="hidden">과제 선택</option>
+			                            <select class="form-control b-light department" id="select_view1" name="" disabled="disabled">
 			                                <th:block th:each="report : ${report}">
 			                                	<option th:value="${report.report_code}" th:text="${report.report_title +'('+ report.report_code} +')'" th:selected="${report.report_code == plan.report_code}"></option>
 			                                </th:block>
-			                            </select> -->
-			                            <div class="select">
+			                            </select>
+			                            <!-- <div class="select">
 	                                		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="select_view1" placeholder="과제 선택" autocomplete="off">
 	                                		<ul class="select-hide">
 	                                			<th:block th:each="report : ${report}">
@@ -237,7 +234,7 @@
 	                                				</li>
 	                                			</th:block>
 	                                		</ul>
-	                                	</div>
+	                                	</div> -->
 			                            <div class="submit clearfix">
 			                                <button type="button" id="step-2-btn" onclick="nextStep(3);">다음</button>
 			                            </div>
@@ -510,10 +507,10 @@
 			            <div class="submit_btn clearfix">
 			                <div class="submit_btn-inner">
 			                    <button class="list" id="listBtn">목록</button>
-			                    <th:block th:if="${plan.plan_step == 0}">
+			                    <th:block th:if="${plan.plan_step == 0 and #authentication.principal.user_name_k == plan.report_user_name}">
 			                    	<button class="submit" id="planUpdateBtn">수정</button>
 			                    </th:block>
-			                    <th:block th:if="${plan.plan_step == 1}">
+			                    <th:block th:if="${plan.plan_step == 1 and (#authentication.principal.user_name_k == plan.report_user_name or #authentication.principal.user_type == 0)}">
 			                    	<button class="submit" onclick="updateSch();" style="padding: 10px 20px !important;">담당자 수정</button>
 			                    </th:block>
 			                    <th:block th:if="${#authentication.principal.user_type == 0}">
@@ -1296,7 +1293,7 @@
 	var sch = /*[[${sch}]]*/ "null";
 	let segment = /*[[${segment}]]*/ "null";
 	console.log(segment);
-	
+	console.log(plan);
 	//시험구 배치 데이터
 	var data1 = new Object();
 	var data2 = new Object();
@@ -1316,7 +1313,6 @@
 	
 	//구획 등록할 객체 array
 	let segment_array = new Array();
-	
 	
 	//select 필터링 관련 코드
 	let selectInputEls = document.querySelectorAll('input[name="select-input"]');
@@ -1574,10 +1570,6 @@
 		
 		//포장에 기존 storage_id값 주기
 		$("#storage_input").attr("th:data-storage-id", plan.storage_id);
-		
-		//과제 선택
-		$("#select_view1").attr("data-select", plan.report_code);
-		$("#select_view1").attr("value", plan.report_title+"("+plan.report_code+")");
 		
 		//시험구배치 종류 선택
 		$("#grow_type").attr("data-select", plan.grow_type);
@@ -2045,6 +2037,9 @@
 			}
 		});
 		
+		//담당자 그려주기 실행
+		gridStep6();
+		
 	}//end function
 	
 	//기존데이터 로드
@@ -2235,7 +2230,7 @@
 	//seedList ajax 함수
 	function getSeedList(index){
 		
-		var report_code = $("#select_view1 option:selected").val();
+		var report_code = plan.report_code;
 		
 		var data = {"report_code" : report_code};
 		
@@ -3727,6 +3722,8 @@
 	//기존 데이터로 구획 설정 그려주기
 	function loadFactors(){
 		
+		var factor2 = document.querySelector('#text_inner2').innerText.split(',').length;
+		
 		var resultArray = new Array();
 		
 		var grow_type = $("#grow_type").attr("data-select");
@@ -3741,7 +3738,13 @@
 					"num" : segment[i].segment_index,
 					"repeat" : segment[i].segment_repeat,
 					"type" : segment[i].segment_type,
-					"area" : segment[i].segment_area
+					"order": segment[i].segment_order,
+					"area": segment[i].segment_area,
+					"segmentId": segment[i].segment_grid_code,
+					"segment_horizon": segment[i].segment_horizon,
+					"segment_vertical": segment[i].segment_vertical,
+					"segment_zindex": segment[i].segment_zindex,
+					"segment_aspect": segment[i].segment_aspect,
 				};
 				resultArray.push(result_data);
 			}
@@ -3841,7 +3844,7 @@
 			});//end sortable
 			
 			var getDataArr = [...resultArray];
-			getDataResult(getDataArr, grow_type);
+			getDataResult(getDataArr, grow_type, "", "modify");
 			
 		}else if(grow_type == "1"){ //난괴법
 
@@ -3851,8 +3854,12 @@
 					"num" : segment[i].segment_index,
 					"repeat" : segment[i].segment_repeat,
 					"type" : segment[i].segment_type,
-					"area" : segment[i].segment_area,
-					"segmentId" : segment[i].segment_grid_code,
+					"order": segment[i].segment_order,
+					"segmentId": segment[i].segment_grid_code,
+					"segment_horizon": segment[i].segment_horizon,
+					"segment_vertical": segment[i].segment_vertical,
+					"segment_zindex": segment[i].segment_zindex,
+					"segment_aspect": segment[i].segment_aspect,
 				};
 				resultArray.push(result_data);
 			}
@@ -3984,7 +3991,7 @@
 			}
 			
 			var getDataArr = [...resultArray];
-			getDataResult(getDataArr, grow_type);
+			getDataResult(getDataArr, grow_type, '', 'modify');
 			
 		}else if(grow_type == "2"){ //분할구배치법
 			
@@ -3994,7 +4001,13 @@
 					"num" : segment[i].segment_index,
 					"repeat" : segment[i].segment_repeat,
 					"type" : segment[i].segment_type,
-					"area" : segment[i].segment_area
+					"order": segment[i].segment_order,
+					"area": segment[i].segment_area,
+					"segmentId": segment[i].segment_grid_code,
+					"segment_horizon": segment[i].segment_horizon,
+					"segment_vertical": segment[i].segment_vertical,
+					"segment_zindex": segment[i].segment_zindex,
+					"segment_aspect": segment[i].segment_aspect,
 				};
 				resultArray.push(result_data);
 			}
@@ -4119,7 +4132,7 @@
 								resultArray[i].num = plusNum;
 								resultArray[i].id = idArr[i];
 							}
-							console.log(resultArray);
+
 							var getDataArr = [...resultArray];
 							getDataResult(getDataArr, grow_type, 'innerText');
 						}//end else
@@ -4138,8 +4151,7 @@
 						}
 					}
 				});
-			}
-			
+			}	
 			
 		}else if(grow_type == "3"){ //세세구배치법
 			
@@ -4274,7 +4286,7 @@
 								resultArray[i].num = plusNum;
 								resultArray[i].id = idArr[i];
 							}
-							console.log(resultArray);
+
 							var getDataArr = [...resultArray];
 							getDataResult(getDataArr, grow_type, 'innerText');
 							
@@ -4295,11 +4307,10 @@
 				});
 			}
 			
-			
 		}
 		//이곳에서 데이터 받아와야함 : important
 		var getDataArr = [...resultArray];
-		getDataResult(getDataArr, grow_type);
+		getDataResult(getDataArr, grow_type, '', 'modify');
 	}//end loadFactors
 	
 	function gridFactors(){
@@ -4834,7 +4845,6 @@
 				}
 				$("#info_popup").css("display", "none");
 			}, (duration*1000));
-			
 			//그룹별 색깔 적용해주기
 			if(factor2.length !== 0){
 				$(document).find(".table_content").each(function(i, item){
@@ -5399,8 +5409,6 @@
 			$("#grow_type").focus();
 		}else if($("#storage_input").val() == ""){
 			alert("포장을 선택해 주세요");
-		}else if($("#select_view1").attr("data-select") == ""){
-			alert("과제를 선택해 주세요");
 		}else if(Object.keys(data1).length == 0 && Object.keys(data2).length == 0 && Object.keys(data3).length == 0){
 			alert("시험구배치 요인을 선택해 주세요");
 		}else {
@@ -6164,12 +6172,11 @@
 	
 	//담당자 그려주기
 	function gridStep6(){
-		
 		$("#step6_list").empty();
 		
 		var step6_list = $("#step6_list");
 		var length = $(document).find("#method-container .method-step").length;
-		console.log(length);
+		
 		var add_list = "";
 		
 		$(document).find("#method-container .method-step").each(function(i, item){
@@ -6289,7 +6296,6 @@
 		
 	}//end 담당자 그려주기
 	
-	gridStep6();
 	
 	//담당자 추가 이벤트
 	$(document).on("click", ".add_manager", function(){

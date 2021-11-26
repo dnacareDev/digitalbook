@@ -64,7 +64,7 @@
 	<!-- 과제 전체 조회 -->
 	<select id="SelectReportList" parameterType="String" resultType="Report">
 		SELECT * FROM report
-		WHERE user_name = #{user_name} and report_code NOT LIKE 'N%'
+		WHERE user_name = #{user_name} and report_code NOT LIKE 'N%' and report_status = 1
 	</select>
 	
 	<!-- 사용자 전체 조회 -->
@@ -208,9 +208,9 @@
 	<!-- 과제 비연계 등록 -->
 	<insert id="InsertNonReport" parameterType="Report">
 		INSERT INTO report
-		(user_name, report_code, report_title, create_date, modify_date, user_group)
+		(user_name, report_code, report_title, create_date, modify_date, user_group, report_status)
 		VALUES
-		(#{user_name}, #{report_code}, '과제 비연계', NOW(), NOW(), #{user_group})
+		(#{user_name}, #{report_code}, '과제 비연계', NOW(), NOW(), #{user_group}, #{report_status})
 	</insert>
 	
 	<!-- 최근 비연계 과제 ID 조회 -->
