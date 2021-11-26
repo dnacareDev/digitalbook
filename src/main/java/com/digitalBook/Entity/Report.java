@@ -21,6 +21,7 @@ public class Report {
 	private int user_group;						// 사용자 그룹
 	private String create_date;					// 등록일
 	private String modify_date;					// 수정일
+	private int report_status;					// 과제 사용가능 여부
 	
 	private int report_year;
 	

@@ -238,6 +238,7 @@ public class ReportController
        			reports.add(item);
        		}
        		
+       		service.UpdateReportStatus(reports);
        		result = service.InsertReport(reports);
        	}
        	
