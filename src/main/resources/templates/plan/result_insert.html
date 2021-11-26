@@ -642,7 +642,6 @@
 	
 	//구획정보 기존 데이터 만들기 함수
 	function loadSegment(){
-
 		for(var i = 0; i < segment.length; i++){
 			var result_data = {
 				"id" : segment[i].segment_code,
@@ -659,6 +658,7 @@
 			};
 			resultArray.push(result_data);
 		}
+		console.log(resultArray, segment);
 		//구획정보 그리기 함수 실행
 		gridSegment();
 		
@@ -1227,11 +1227,7 @@
 		
 		//해당 구획정보 데이터
 		var segment_data = new Object();
-		for(var i = 0; i < segment.length; i++){
-			if(segment[i].segment_index == segment_index){
-				segment_data = segment[i];
-			}
-		}
+		segment_data = segment[0];
 		var title = segment_data.segment_code;
 		
 		//붙여줄 부모 태그
@@ -1359,6 +1355,345 @@
 		});
 		
 	}//end 결과입력 테이블 그리기
+	function checkSelectbox(){
+		var segmentOption = document.querySelector('#segment_option');
+		let result_title =  segmentOption.getAttribute('value').split("(")[0];
+		$("#result_title").text("결과입력 : " + result_title);
+		var index = parseInt(segmentOption.getAttribute('data-select'), 10);
+		
+		var copy_tableResultArray = [...tableResultArray];
+		
+		//선택한 로우의 번호
+		var num = (index + 1);
+		
+		//현재 개체수 개수
+		var curentrowNum = $(".result_tr").length;
+		
+		//현재 결과입력 테이블의 로우 번호
+		var currentDataNum = parseInt($(".result_list").attr("data-num"), 10);
+		
+		console.log(curentrowNum, currentDataNum);
+		
+		var dataArray = new Array();
+		//현재 결과입력 테이블의 데이터를 만들어 tableResultArray 에 넣어주기
+		for(var i = 0; i < copy_tableResultArray.length; i++){
+			
+			if(currentDataNum == copy_tableResultArray[i].num){ //기존 데이터수정
+				
+				//기존 데이터 삭제
+				tableResultArray.splice(i, 1);
+				dataArray = [];
+				$(document).find(".result_tr").each(function(index, item){
+					
+					var data = new Object();
+					data['num'] = (index+1);
+					for(var j = 0; j < method.length; j++){
+						data['method_'+j] = $(this).find("input:text[name=input"+j+"]").val();
+						data['img'+j] = $(this).find("input:file[name=file"+j+"]").attr("data-origin");
+						data['c_img'+j] = $(this).find("input:file[name=file"+j+"]").attr("data-file");
+						
+						var file = $(this).find("input:file[name=file"+j+"]")[0].files[0];
+						if(typeof file === "object"){
+							
+							if(file_array.length != "0"){
+								var isCheck = false;
+								var delNum = 0;
+								for(var k = 0; k < file_array.length; k++){
+									if(file_array[k].segment_id == currentDataNum && file_array[k].individual_id == (index+1) && file_array[k].individual_index == (j+1)){
+										isCheck = true;
+										delNum = k;
+										break;
+									}
+								}
+								if(isCheck){
+									var fileObj = {
+											"segment_id" : currentDataNum,
+											"individual_id" : (index+1),
+											"individual_index" : (j+1),
+											"file" : file
+									};
+									file_array.splice(delNum, 1, fileObj);
+								}else{
+									var fileObj = {
+											"segment_id" : currentDataNum,
+											"individual_id" : (index+1),
+											"individual_index" : (j+1),
+											"file" : file
+									};
+									file_array.push(fileObj);
+								}
+							}else{
+								
+								var fileObj = {
+										"segment_id" : currentDataNum,
+										"individual_id" : (index+1),
+										"individual_index" : (j+1),
+										"file" : file
+								};
+								file_array.push(fileObj);
+							}
+							
+						}
+						
+					}
+					dataArray.push(data);
+				});//end .result_tr each
+				
+				var table_data = {
+						"rowNum" : curentrowNum, //개체수
+						"data" : dataArray,//개체
+						"num" : currentDataNum
+				};
+				tableResultArray.push(table_data);
+				dataArray = [];
+				table_data = {};
+			}
+		}//end for1
+		
+		//새로운 번호를 선택했을 경우 결과입력테이블 새로 그려주기
+		if(num != currentDataNum){
+			
+			var dataLength = "";
+			
+			var currentDataArr = new Array();
+			
+			//새로 만들어줄 데이터 뽑아오기
+			for(var i = 0; i < tableResultArray.length; i++){
+				if(tableResultArray[i].num == num){
+					currentDataArr = tableResultArray[i].data;
+				}
+			}
+			
+			//결과입력 창 비우기
+			let step1_table = $("#step1_table");
+			step1_table.empty();
+			
+			var add_list = "";
+			
+			add_list += '<thead>';
+			add_list += '<tr>';
+			add_list += '<th>개체</th>';
+			//method important
+			for(var i = 0; i < method.length; i++){
+				add_list += '<th>'+method[i].method_title+'</th>';
+			}
+			
+			add_list += '<tr>';
+			add_list += '</thead>';
+			
+			add_list += '<tbody class="result_list" data-num="'+num+'">';
+			
+			for(var i = 0; i < currentDataArr.length; i++){
+				add_list += '<tr class="result_tr">';
+				add_list += '<td class="td_num">'+(i+1)+'</td>';
+				for(var j = 0; j < method.length; j++){
+					add_list += '<td><input type="text" name="input'+j+'" value="'+(currentDataArr[i]['method_'+j] == undefined ? "" : currentDataArr[i]['method_'+j])+'" style="width: 90%;">';
+					add_list += '<div class="cam" onclick="fileFunction(this)">';
+					add_list += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-fill" viewBox="0 0 16 16">';
+					add_list += '<path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>';
+					add_list += '<path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/>';
+					add_list += '</svg>';
+					add_list += '</div>';
+					add_list += '<input type="file" name="file'+j+'" accept=".jpg, .gif, .png, .jpeg, .bmp" style="display:none">';
+					if(currentDataArr[i]['c_img'+j] != "" && currentDataArr[i]['c_img'+j] != "null" && currentDataArr[i]['c_img'+j] !=null){
+						add_list += '<div class="cam" onclick="imgDownload(this)" data-img="'+currentDataArr[i]['c_img'+j]+'">';
+						add_list += '<img src="/../img/svg/download.svg">';
+						add_list += '</div>';
+					}
+					add_list == '</td>';
+				}
+				add_list += '</tr>';
+			}
+			$("#rowNum").val(currentDataArr.length);
+			
+			add_list += '</tbody>';
+				
+			step1_table.append(add_list);
+			
+		}//end 새로운 번호를 선택했을 경우 결과입력창 새로 그려주기
+		//정렬시키기
+		tableResultArray.sort(function(a, b){
+			return a.num - b.num;
+		});
+		file_array.sort(function(a, b){
+			return a.segment_id - b.segment_id;
+		});
+		
+		//구획정보 확인 실행하기
+		checkSegment(index + 1);
+	}
+	//
+	var segmentCont = document.querySelectorAll('#step4-segment li');
+	segmentCont = Array.prototype.slice.call(segmentCont);
+	$(document).on("click", "#step4-segment li", function(e){
+		var target = e.currentTarget;
+		var index = segmentCont.indexOf(target);
+		let result_title =  $(this).find(".segment").text();
+		$("#result_title").text("결과입력 : " + result_title);
+		var segmentOption = document.querySelector('#segment_option');
+		var segmentList = segmentOption.parentNode.children[1].children;
+		
+		segmentOption.setAttribute('value', segmentList[index].innerText);
+		
+		var copy_tableResultArray = [...tableResultArray];
+		
+		//선택한 로우의 번호
+		var num = (index + 1);
+		
+		//현재 개체수 개수
+		var curentrowNum = $(".result_tr").length;
+		
+		//현재 결과입력 테이블의 로우 번호
+		var currentDataNum = $(".result_list").attr("data-num");
+		
+		var dataArray = new Array();
+		//현재 결과입력 테이블의 데이터를 만들어 tableResultArray 에 넣어주기
+		for(var i = 0; i < copy_tableResultArray.length; i++){
+			
+			if(currentDataNum == copy_tableResultArray[i].num){ //기존 데이터수정
+				
+				//기존 데이터 삭제
+				tableResultArray.splice(i, 1);
+				dataArray = [];
+				$(document).find(".result_tr").each(function(index, item){
+					
+					var data = new Object();
+					data['num'] = (index+1);
+					for(var j = 0; j < method.length; j++){
+						data['method_'+j] = $(this).find("input:text[name=input"+j+"]").val();
+						data['img'+j] = $(this).find("input:file[name=file"+j+"]").attr("data-origin");
+						data['c_img'+j] = $(this).find("input:file[name=file"+j+"]").attr("data-file");
+						
+						var file = $(this).find("input:file[name=file"+j+"]")[0].files[0];
+						if(typeof file === "object"){
+							
+							if(file_array.length != "0"){
+								var isCheck = false;
+								var delNum = 0;
+								for(var k = 0; k < file_array.length; k++){
+									if(file_array[k].segment_id == currentDataNum && file_array[k].individual_id == (index+1) && file_array[k].individual_index == (j+1)){
+										isCheck = true;
+										delNum = k;
+										break;
+									}
+								}
+								if(isCheck){
+									var fileObj = {
+											"segment_id" : currentDataNum,
+											"individual_id" : (index+1),
+											"individual_index" : (j+1),
+											"file" : file
+									};
+									file_array.splice(delNum, 1, fileObj);
+								}else{
+									var fileObj = {
+											"segment_id" : currentDataNum,
+											"individual_id" : (index+1),
+											"individual_index" : (j+1),
+											"file" : file
+									};
+									file_array.push(fileObj);
+								}
+							}else{
+								
+								var fileObj = {
+										"segment_id" : currentDataNum,
+										"individual_id" : (index+1),
+										"individual_index" : (j+1),
+										"file" : file
+								};
+								file_array.push(fileObj);
+							}
+							
+						}
+						
+					}
+					dataArray.push(data);
+				});//end .result_tr each
+				
+				var table_data = {
+						"rowNum" : curentrowNum, //개체수
+						"data" : dataArray,//개체
+						"num" : currentDataNum
+				};
+				tableResultArray.push(table_data);
+				dataArray = [];
+				table_data = {};
+			}
+		}//end for1
+		
+		//새로운 번호를 선택했을 경우 결과입력테이블 새로 그려주기
+		if(num != currentDataNum){
+			
+			var dataLength = "";
+			
+			var currentDataArr = new Array();
+			
+			//새로 만들어줄 데이터 뽑아오기
+			for(var i = 0; i < tableResultArray.length; i++){
+				if(tableResultArray[i].num == num){
+					currentDataArr = tableResultArray[i].data;
+				}
+			}
+			
+			//결과입력 창 비우기
+			let step1_table = $("#step1_table");
+			step1_table.empty();
+			
+			var add_list = "";
+			
+			add_list += '<thead>';
+			add_list += '<tr>';
+			add_list += '<th>개체</th>';
+			//method important
+			for(var i = 0; i < method.length; i++){
+				add_list += '<th>'+method[i].method_title+'</th>';
+			}
+			
+			add_list += '<tr>';
+			add_list += '</thead>';
+			
+			add_list += '<tbody class="result_list" data-num="'+num+'">';
+			
+			for(var i = 0; i < currentDataArr.length; i++){
+				add_list += '<tr class="result_tr">';
+				add_list += '<td class="td_num">'+(i+1)+'</td>';
+				for(var j = 0; j < method.length; j++){
+					add_list += '<td><input type="text" name="input'+j+'" value="'+(currentDataArr[i]['method_'+j] == undefined ? "" : currentDataArr[i]['method_'+j])+'" style="width: 90%;">';
+					add_list += '<div class="cam" onclick="fileFunction(this)">';
+					add_list += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-fill" viewBox="0 0 16 16">';
+					add_list += '<path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>';
+					add_list += '<path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/>';
+					add_list += '</svg>';
+					add_list += '</div>';
+					add_list += '<input type="file" name="file'+j+'" accept=".jpg, .gif, .png, .jpeg, .bmp" style="display:none">';
+					if(currentDataArr[i]['c_img'+j] != "" && currentDataArr[i]['c_img'+j] != "null" && currentDataArr[i]['c_img'+j] !=null){
+						add_list += '<div class="cam" onclick="imgDownload(this)" data-img="'+currentDataArr[i]['c_img'+j]+'">';
+						add_list += '<img src="/../img/svg/download.svg">';
+						add_list += '</div>';
+					}
+					add_list == '</td>';
+				}
+				add_list += '</tr>';
+			}
+			$("#rowNum").val(currentDataArr.length);
+			
+			add_list += '</tbody>';
+				
+			step1_table.append(add_list);
+			
+		}//end 새로운 번호를 선택했을 경우 결과입력창 새로 그려주기
+		//정렬시키기
+		tableResultArray.sort(function(a, b){
+			return a.num - b.num;
+		});
+		file_array.sort(function(a, b){
+			return a.segment_id - b.segment_id;
+		});
+		
+		//구획정보 확인 실행하기
+		checkSegment(index + 1);
+	})
 	
 	//구획정보 테이블 로우 선택시 결과입력 테이블 그리기 이벤트
 	var tableCont = document.querySelectorAll("#table_body .table_content");
@@ -1530,8 +1865,7 @@
 		});
 		
 		//구획정보 확인 실행하기
-		var segment_index = $(document).find("#table_body .active").find(".table_num").text();
-		checkSegment(segment_index);
+		checkSegment(index + 1);
 		
 	});//end //구획정보 테이블 로우 선택시 결과입력 테이블 그리기 이벤트
 	
@@ -1793,14 +2127,16 @@
 	
 	//구획정보 확인 그리기
 	function checkSegment(segment_index){
-		
 		//해당 구획정보 데이터
 		var segment_data = new Object();
+		/*
 		for(var i = 0; i < segment.length; i++){
 			if(segment[i].segment_index == segment_index){
 				segment_data = segment[i];
 			}
 		}
+		*/
+		segment_data = segment[segment_index - 1];
 		var title = segment_data.segment_code;
 		
 		
@@ -1931,7 +2267,6 @@
 		
 		//새로 만들어준 구획정보확인 화면에 기존 데이터 selected 해주기
 		var newSegmentIndex = $(".regular_text").attr("data-index");
-		
 		$(document).find(".select_option").each(function(index, item){
 			
 			//segmentInfo_array
