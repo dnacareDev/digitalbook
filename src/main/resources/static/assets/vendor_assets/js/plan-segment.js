@@ -40,6 +40,7 @@ function getDataResult(getDataArr, type, innerType){
 	segmentInnerType = innerType;
 	
 	tableEls = document.querySelectorAll('.step4-container .table_content');
+	console.log(segmentData);
 	renderSegment(segmentData);
 }
 

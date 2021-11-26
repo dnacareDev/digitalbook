@@ -3435,12 +3435,14 @@
 							resultArray[i].num = (i+1);
 							resultArray[i].id = idArr[i];
 						}
-						console.log(resultArray);
 						var getDataArr = [...resultArray];
 						getDataResult(getDataArr, grow_type, 'innerText');
 					}
 				}//end stop
 			});//end sortable
+			
+			var getDataArr = [...resultArray];
+			getDataResult(getDataArr, grow_type);
 			
 		}else if(grow_type == "1"){ //난괴법
 
@@ -3450,7 +3452,8 @@
 					"num" : segment[i].segment_index,
 					"repeat" : segment[i].segment_repeat,
 					"type" : segment[i].segment_type,
-					"area" : segment[i].segment_area
+					"area" : segment[i].segment_area,
+					"segmentId" : segment[i].segment_grid_code,
 				};
 				resultArray.push(result_data);
 			}
@@ -3574,13 +3577,15 @@
 								resultArray[i].num = plusNum;
 								resultArray[i].id = idArr[i];
 							}
-							console.log(resultArray);
 							var getDataArr = [...resultArray];
 							getDataResult(getDataArr, grow_type, 'innerText');
 						}
 					}
 				});//end sortable
 			}
+			
+			var getDataArr = [...resultArray];
+			getDataResult(getDataArr, grow_type);
 			
 		}else if(grow_type == "2"){ //분할구배치법
 			
