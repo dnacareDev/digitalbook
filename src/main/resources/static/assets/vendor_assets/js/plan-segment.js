@@ -508,8 +508,8 @@ function transform(){
 	if(isClick){	
 		if(isMove){
 			segmentLi[thisIndex].style.transform = 'translate(' + posX + 'px, ' + posY + 'px)';
-			resultArray[thisIndex].segment_horizon = posX;
-			resultArray[thisIndex].segment_vertical = posY;
+			resultArray[thisIndex].segment_horizon = parseInt(posX, 10);
+			resultArray[thisIndex].segment_vertical = parseInt(posY, 10);
 		}else{
 			segmentEls[thisIndex].style.transform = 'rotate(' + rotate + 'deg)';
 			resultArray[thisIndex].segment_aspect = rotate;
