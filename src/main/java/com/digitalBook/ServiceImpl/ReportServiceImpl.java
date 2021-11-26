@@ -71,4 +71,11 @@ public class ReportServiceImpl implements ReportService
 	{
 		return mapper.DeleteReport(report_file_id);
 	}
+	
+	//과제 상태 변경
+	@Override
+	public int UpdateReportStatus(List<Report> reports) {
+		
+		return mapper.UpdateReportStatus(reports);
+	}
 }

@@ -89,7 +89,7 @@ function onColorChange(){
 	
 	var plan_repeat = $("#plan_repeat").val();
 	
-	var grow_type = $("#grow_type option:selected").val();
+	// var grow_type = $("#grow_type option:selected").getAttribute("data-select");
 	
 	var num = 0;
 	var num1 = 0;
@@ -322,7 +322,6 @@ function segmentText(data){
 	if(segmentEls.length > 0 && segmentEls !== undefined && segmentEls !== null){	
 		for(var i = 0; i < data.length; i++){
 			segmentEls[i].innerText = data[i].segmentId;
-			//console.log(data[i].segmentId);
 		}
 	}
 	
@@ -396,30 +395,32 @@ function onClickStepFourWrap(e){
 }
 
 function activeList(thisOrder){
-console.log('zindex 작업 구역');
+	
+	var thisZindex = parseInt(segmentLi[thisIndex].style.zIndex, 10);
+	var zArr = [];
 	for(var z = 0; z < segmentEls.length; z++){	
-	//console.log(segmentEls.length,'sfff');
 		if(segmentLi[z].classList.contains('active') && z !== thisOrder){
 			segmentLi[z].classList.remove('active');
-			//console.log("1");
 		}
 		if(tableEls[z].classList.contains('active') && z !== thisIndex){
 			tableEls[z].classList.remove('active');
-			//console.log("2");
 		}
-		if(z == thisOrder){		
-			segmentLi[thisOrder].style.zIndex = segmentLi.length - 1;
-			//console.log("3");
-		}else{
-			segmentLi[z].style.zIndex = z;
-			//console.log("4");
+		var allZIndex = parseInt(segmentLi[z].style.zIndex, 10);
+		var temp = "";
+		if(allZIndex < thisZindex){
+			temp = allZIndex;
+		}else if(allZIndex > thisZindex){
+			temp = (allZIndex - 1);
+		}else if(allZIndex === thisZindex){
+			temp = (segmentEls.length - 1);
 		}
-		if(segmentLi[z] == segmentLi[thisOrder]){
-			segmentLi[thisIndex].style.zIndex = thisIndex - 1;
-		}else{
-			segmentLi[thisIndex].style.zIndex = segmentLi.length + 1;
-		}
+		zArr.push(temp);	
 	}
+	for(var z = 0; z < segmentEls.length; z++){
+		segmentLi[z].style.zIndex = zArr[z];
+		resultArray[z].segment_zindex = zArr[z];
+	}
+	console.log(resultArray);
 	segmentLi[thisIndex].classList.add('active');
 	tableEls[thisIndex].classList.add('active');
 	
@@ -437,18 +438,17 @@ function onClickTableEls(e){
 	
 	var thisOrder = segmentData[thisIndex].order;
 	
-	console.log("----------------------");
-	console.log(thisOrder,'thisorder');
-	
 	activeList(thisOrder);
 	
+	var liTransform = segmentLi[thisOrder].style.transform;
+	var translateValue = liTransform.split('translate')[1];
 	
-	var segmentLiTop = segmentLi[thisIndex].offsetTop - 64;
-	var segmentLiLeft = segmentLi[thisIndex].offsetLeft - 64;
+	var toScrollX = parseInt(translateValue.split(',')[0].split('(')[1].split('px')[0], 10);
+	var toScrollY = parseInt(translateValue.split(',')[1].split(')')[0].split('px')[0], 10);
 	
-	thisTransformGet(thisOrder);
-	$('.background-wrap').stop().animate( { scrollTop : thisY } );
-	$('.background-wrap').stop().animate( { scrollLeft : thisX } );
+	console.log(toScrollX, toScrollY);
+	$('.background-wrap').stop().animate( { scrollLeft : toScrollX } );
+	$('.background-wrap').stop().animate( { scrollTop : toScrollY } );
 }
 
 function thisTransformGet(thisOrder){
@@ -496,11 +496,13 @@ function transform(){
 	if(isClick){	
 		if(isMove){
 			segmentLi[thisIndex].style.transform = 'translate(' + posX + 'px, ' + posY + 'px)';
+			resultArray[thisIndex].segment_horizon = parseInt(posX, 10);
+			resultArray[thisIndex].segment_vertical = parseInt(posY, 10);
 		}else{
 			segmentEls[thisIndex].style.transform = 'rotate(' + rotate + 'deg)';
+			resultArray[thisIndex].segment_aspect = rotate;
 		}
 	}
-	
 }
 
 function onMoveDown(e){
@@ -682,6 +684,10 @@ function segmentSetting(data){
 								segmentEls[elRender].style.transform = 'rotate(' + 0 + 'deg)';
 							}
 							
+							dataGet[elRender].segment_horizon = ( ( elWidth * c ) + WrapDiff );
+							dataGet[elRender].segment_vertical = ( (elHeight * r) + WrapDiff + (((elHeight * getDataIdLength + type2Diff ) * t) ) );
+							dataGet[elRender].segment_zindex = elRender;
+							
 							// color 설정
 							var idArrayAll2 = idArrayAll[0];
 							
@@ -713,7 +719,6 @@ function segmentSetting(data){
 			if(factorLength3 == 0){
 				factorLength3 = 1
 			}
-			//console.log(dataGet);
 			copyResultArray.push(dataGet);
 			
 			if(factorLength2 !== 0){
@@ -725,7 +730,7 @@ function segmentSetting(data){
 								if(segmentLi[elRender] !== undefined && segmentLi[elRender] !== null){
 									zindex.push(elRender);
 									segmentLi[elRender].style.zIndex = elRender;
-									segmentLi[elRender].style.transform = 'translate(' + ((elWidth * q) + ((elWidth * factorLength3) * s) + 'px, ' + ( ((elHeight * r) + WrapDiff) + ((elHeight * factorLength2 + type2Diff) * t )  )) + 'px)';
+									segmentLi[elRender].style.transform = 'translate(' + ((elWidth * q) + ((elWidth * factorLength3) * s) + WrapDiff + 'px, ' + ( ((elHeight * r) + WrapDiff) + ((elHeight * factorLength2 + type2Diff) * t ) )) + 'px)';
 									segmentEls[elRender].style.width = elWidth + 'px';
 									
 									
@@ -734,6 +739,10 @@ function segmentSetting(data){
 									}else{
 										segmentEls[elRender].style.transform = 'rotate(' + 0 + 'deg)';
 									}
+									
+									dataGet[elRender].segment_horizon = ((elWidth * q) + ((elWidth * factorLength3) * s) + WrapDiff);
+									dataGet[elRender].segment_vertical = ( ((elHeight * r) + WrapDiff) + ((elHeight * factorLength2 + type2Diff) * t ) );
+									dataGet[elRender].segment_zindex = elRender;
 									
 									// color 설정
 									var idArrayAll2 = idArrayAll[0];
@@ -771,6 +780,10 @@ function segmentSetting(data){
 								segmentLi[elRender].style.transform = 'translate(' + ( ( elWidth * c ) + WrapDiff ) + 'px, ' + ( (elHeight * r) + WrapDiff + (((elHeight * getDataIdLength + type2Diff ) * t) ) ) + 'px)';
 								segmentEls[elRender].style.width = elWidth + 'px';
 								
+								dataGet[elRender].segment_horizon = ( ( elWidth * c ) + WrapDiff );
+								dataGet[elRender].segment_vertical = ( (elHeight * r) + WrapDiff + (((elHeight * getDataIdLength + type2Diff ) * t) ) );
+								dataGet[elRender].segment_zindex = elRender;
+								
 								
 								if(transformRotateCheck(elRender) !== undefined && transformRotateCheck(elRender) !== null){			
 									segmentEls[elRender].style.transform = 'rotate(' + transformRotateCheck(elRender) + 'deg)';
@@ -795,6 +808,9 @@ function segmentSetting(data){
 						segmentLi[elRender].style.transform = 'translate(' + ( ( elWidth * c ) + WrapDiff ) + 'px, ' + ( (elHeight * r) + WrapDiff ) + 'px)';
 						segmentEls[elRender].style.width = elWidth + 'px';
 						
+						dataGet[elRender].segment_horizon = ( ( elWidth * c ) + WrapDiff );
+						dataGet[elRender].segment_vertical = ( (elHeight * r) + WrapDiff );
+						dataGet[elRender].segment_zindex = elRender;
 						
 						if(transformRotateCheck(elRender) !== undefined && transformRotateCheck(elRender) !== null){			
 							segmentEls[elRender].style.transform = 'rotate(' + transformRotateCheck(elRender) + 'deg)';
@@ -816,6 +832,10 @@ function segmentSetting(data){
 					segmentLi[elRender].style.transform = 'translate(' + ( ( elWidth * c ) + WrapDiff ) + 'px, ' + ( (elHeight * r) + WrapDiff ) + 'px)';
 					segmentEls[elRender].style.width = elWidth + 'px';
 					
+					dataGet[elRender].segment_horizon = ( ( elWidth * c ) + WrapDiff );
+					dataGet[elRender].segment_vertical = ( (elHeight * r) + WrapDiff );
+					dataGet[elRender].segment_zindex = elRender;
+					
 					
 					if(transformRotateCheck(elRender) !== undefined && transformRotateCheck(elRender) !== null){			
 						segmentEls[elRender].style.transform = 'rotate(' + transformRotateCheck(elRender) + 'deg)';
@@ -828,8 +848,6 @@ function segmentSetting(data){
 			}
 		}
 	}
-	
-	
 	
 	for(var t = 0; t < segmentEls.length; t++){
 		segmentEls[t].addEventListener('mousedown', onElDown);
@@ -844,6 +862,8 @@ function segmentSetting(data){
 			tableEls[t].addEventListener('click', onClickTableEls);
 		}
 	}
+	
+	resultArray = dataGet;
 	
 }
 
