@@ -94,6 +94,46 @@
 		font-size: 15px !important;
 	}
 	.wrapper {padding: 0px 0 50px !important;}
+	
+	
+	.select-hide{
+		display: none;
+	}
+	#step2 .select-show{
+		display: block;
+	    position: absolute;
+	    z-index :10;
+	    top: 42px;
+	    width: 100%;
+	    background-color: white;
+	    border:1px solid;
+	    border-radius: 5px;
+	    cursor: pointer;
+	    overflow-y: auto;
+	    height: 150px;
+	}
+	
+	.select-show{
+		display: block;
+	    position: absolute;
+	    z-index :10;
+	    top: 70px;
+	    width: 85%;
+	    background-color: white;
+	    border:1px solid;
+	    border-radius: 5px;
+	    cursor: pointer;
+	    overflow-y: auto;
+	    height: 150px;
+	}
+	
+	.select > #select_view1 {width: 100%;} 
+	
+	.select .select-show li{
+	    padding:0 0 0 10px;
+	    line-height: 30px;
+	    text-align: left;
+	}
 </style>
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
@@ -182,12 +222,22 @@
 			                    </div>
 			                    <div class="content clearfix">
 			                        <div class="btn btn_select1" style="display:block">
-			                            <select class="form-control b-light department" id="select_view1" name="" disabled="disabled">
+			                            <!-- <select class="form-control b-light department" id="select_view1" name="" disabled="disabled">
 			                                <option th:value=0 disabled="disabled" selected="selected" hidden="hidden">과제 선택</option>
 			                                <th:block th:each="report : ${report}">
 			                                	<option th:value="${report.report_code}" th:text="${report.report_title +'('+ report.report_code} +')'" th:selected="${report.report_code == plan.report_code}"></option>
 			                                </th:block>
-			                            </select>
+			                            </select> -->
+			                            <div class="select">
+	                                		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="select_view1" placeholder="과제 선택" autocomplete="off">
+	                                		<ul class="select-hide">
+	                                			<th:block th:each="report : ${report}">
+	                                				<li class="select_view1_list" onclick="selectOpt(this);">
+	                                					<span th:data-value="${report.report_code}" th:text="${report.report_title +'('+ report.report_code} +')'"></span>
+	                                				</li>
+	                                			</th:block>
+	                                		</ul>
+	                                	</div>
 			                            <div class="submit clearfix">
 			                                <button type="button" id="step-2-btn" onclick="nextStep(3);">다음</button>
 			                            </div>
@@ -203,25 +253,39 @@
 			                    <div class="content clearfix">
 			                        <span class="title">시험구배치 종류</span>
 			                        <div class="btn btn2">
-			                            <select id="grow_type" class="select_view" name="">
-			                                <option value="0">완전임의배치</option>
-			                                <option value="1">난괴법</option>
-			                                <option value="2">분할구배치법</option>
-			                                <option value="3">세세구배치법</option>
-			                            </select>
+			                            <div class="select" style="height: auto;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="grow_type" placeholder="시험구배치 선택" autocomplete="off" style="width: 300px;">
+		                            		<ul class="select-hide">
+		                            			<li class="grow_type_list" onclick="selectOpt(this);"><span data-value="0">완전임의배치</span></li>
+		                            			<li class="grow_type_list" onclick="selectOpt(this);"><span data-value="1">난괴법</span></li>
+		                            			<li class="grow_type_list" onclick="selectOpt(this);"><span data-value="2">분할구배치법</span></li>
+		                            			<li class="grow_type_list" onclick="selectOpt(this);"><span data-value="3">세세구배치법</span></li>
+		                            		</ul>
+		                            	</div>
 			                        </div>
 			                        <ul class="select_list clearfix"> <!-- select list -->
 			                            <li class="btn sub_btn">
 			                                <span class="sub_title">요인1</span>
-			                                <select id="factor1_select" class="select_view" data-index="1">
+			                                <div class="select" style="height: 37px;width: calc((100% - 139px)/1);" data-index="1">
+			                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="factor_type_1" placeholder="시험구배치 선택" autocomplete="off" style="width: 100%; height:37px; float: left; padding: 0 20px;">
+			                            		<ul class="select-hide" style="width: 65%">
+			                            			<li class="factor_type_1_list" onclick="selectOpt(this);"><span data-value="시험재료">시험재료</span></li>
+			                            			<li class="factor_type_1_list" onclick="selectOpt(this);"><span data-value="재식거리">재식거리</span></li>
+			                            			<li class="factor_type_1_list" onclick="selectOpt(this);"><span data-value="재식주수">재식주수</span></li>
+			                            			<li class="factor_type_1_list" onclick="selectOpt(this);"><span data-value="파종량">파종량</span></li>
+			                            			<li class="factor_type_1_list" onclick="selectOpt(this);"><span data-value="시비량">시비량</span></li>
+			                            			<li class="factor_type_1_list" onclick="selectOpt(this);"><span data-value="기타">기타</span></li>
+			                            		</ul>
+			                            	</div>
+			                                <!-- <select id="factor1_select" class="select_view" data-index="1">
 			                                    <option value="시험재료">시험재료</option>
 				                                <option value="재식거리">재식거리</option>
 				                                <option value="재식주수">재식주수</option>
 				                                <option value="파종량">파종량</option>
 				                                <option value="시비량">시비량</option>
 				                                <option value="기타">기타</option>
-			                                </select>
-			                                <div class="btn_button">
+			                                </select> -->
+			                                <div class="btn_button" style="float: right;">
 			                                    <button class="setting">설정</button>
 			                                </div>
 			                                <div class="choi_select">
@@ -230,16 +294,27 @@
 			                            </li>
 			                            <li class="btn sub_btn">
 			                                <span class="sub_title">요인2</span>
-			                                <select id="factor2_select" class="select_view" data-index="2">
+			                                <div class="select" style="height: 37px;width: calc((100% - 139px)/1);" data-index="2">
+			                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="factor_type_2" placeholder="시험구배치 선택" autocomplete="off" style="width: 100%; height:37px; float: left; padding: 0 20px;">
+			                            		<ul class="select-hide" style="width: 65%">
+			                            			<li class="factor_type_2_list" onclick="selectOpt(this);"><span data-value="시험재료">시험재료</span></li>
+			                            			<li class="factor_type_2_list" onclick="selectOpt(this);"><span data-value="재식거리">재식거리</span></li>
+			                            			<li class="factor_type_2_list" onclick="selectOpt(this);"><span data-value="재식주수">재식주수</span></li>
+			                            			<li class="factor_type_2_list" onclick="selectOpt(this);"><span data-value="파종량">파종량</span></li>
+			                            			<li class="factor_type_2_list" onclick="selectOpt(this);"><span data-value="시비량">시비량</span></li>
+			                            			<li class="factor_type_2_list" onclick="selectOpt(this);"><span data-value="기타">기타</span></li>
+			                            		</ul>
+			                            	</div>
+			                                <!-- <select id="factor2_select" class="select_view" data-index="2">
 			                                    <option value="시험재료">시험재료</option>
 				                                <option value="재식거리">재식거리</option>
 				                                <option value="재식주수">재식주수</option>
 				                                <option value="파종량">파종량</option>
 				                                <option value="시비량">시비량</option>
 				                                <option value="기타">기타</option>
-			                                </select>
+			                                </select> -->
 			                                <div class="btn_button">
-			                                    <button class="setting">설정</button>
+			                                    <button class="setting" style="float: right;">설정</button>
 			                                </div>
 			                                <div class="choi_select">
 			                                    <div class="text_inner" id="text_inner2"></div>
@@ -247,15 +322,26 @@
 			                            </li>
 			                            <li class="btn sub_btn">
 			                                <span class="sub_title">요인3</span>
-			                                <select id="factor3_select" class="select_view" data-index="3">
+			                                <div class="select" style="height: 37px;width: calc((100% - 139px)/1);" data-index="3">
+			                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="factor_type_3" placeholder="시험구배치 선택" autocomplete="off" style="width: 100%; height:37px; float: left; padding: 0 20px;">
+			                            		<ul class="select-hide" style="width: 65%">
+			                            			<li class="factor_type_3_list" onclick="selectOpt(this);"><span data-value="시험재료">시험재료</span></li>
+			                            			<li class="factor_type_3_list" onclick="selectOpt(this);"><span data-value="재식거리">재식거리</span></li>
+			                            			<li class="factor_type_3_list" onclick="selectOpt(this);"><span data-value="재식주수">재식주수</span></li>
+			                            			<li class="factor_type_3_list" onclick="selectOpt(this);"><span data-value="파종량">파종량</span></li>
+			                            			<li class="factor_type_3_list" onclick="selectOpt(this);"><span data-value="시비량">시비량</span></li>
+			                            			<li class="factor_type_3_list" onclick="selectOpt(this);"><span data-value="기타">기타</span></li>
+			                            		</ul>
+			                            	</div>
+			                                <!-- <select id="factor3_select" class="select_view" data-index="3">
 			                                    <option value="시험재료">시험재료</option>
 				                                <option value="재식거리">재식거리</option>
 				                                <option value="재식주수">재식주수</option>
 				                                <option value="파종량">파종량</option>
 				                                <option value="시비량">시비량</option>
 				                                <option value="기타">기타</option>
-			                                </select>
-			                                <div class="btn_button">
+			                                </select> -->
+			                                <div class="btn_button" style="float: right;">
 			                                    <button class="setting">설정</button>
 			                                </div>
 			                                <div class="choi_select">
@@ -759,7 +845,30 @@
 	                            		<label class="color-dark align-center">재식거리<span style="color: red;">*</span></label>
 		                            </div>
 		                            <div class="col-sm-8">
-	                                	<select id="intervalSelect" class="select_view">
+		                            	<div class="select" style="height: auto;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="intervalSelect" placeholder="재식거리 선택" autocomplete="off" style="width: 340px;">
+		                            		<ul class="select-hide" style="top: 40px; width: 90%;">
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="60x10">60x10</span></li>
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="60x15">60x15</span></li>
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="60x20">60x20</span></li>
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="60x25">60x25</span></li>
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="60x30">60x30</span></li>
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="70x10">70x10</span></li>
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="70x15">70x15</span></li>
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="70x20">70x20</span></li>
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="70x25">70x25</span></li>
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="70x30">70x30</span></li>
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="70x40">70x40</span></li>
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="70x70">70x70</span></li>
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="75x20">75x20</span></li>
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="80x25">80x25</span></li>
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="100x100">100x100</span></li>
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="110(80+30)x15">110(80+30)x15</span></li>
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="120(90+30)x30">120(90+30)x30</span></li>
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="기타">기타</span></li>
+		                            		</ul>
+		                            	</div>
+	                                	<!-- <select id="intervalSelect" class="select_view">
 		                                	<option value="none" disabled="disabled" selected="selected" hidden="hidden">재식거리 선택</option>
 		                                    <option value="60x10">60x10</option>
 			                                <option value="60x15">60x15</option>
@@ -779,7 +888,7 @@
 			                                <option value="110(80+30)x15">110(80+30)x15</option>
 			                                <option value="120(90+30)x30">120(90+30)x30</option>
 			                                <option value="기타">기타</option>
-		                                </select>
+		                                </select> -->
 		                            </div>
 		            			</div>
 		            			<div class="row" id="intervaletcForm">
@@ -954,18 +1063,44 @@
 		        					<div class="col-sm-2 d-flex aling-items-center">
 		                            	<label for="method_input" class="color-dark align-center">비료 성분<span style="color: red;">*</span></label>
 		                            </div>
-		                            <div class="col-sm-2">
-		                                <select class="form-control b-light" id="fert_1">
+		                            <div class="col-sm-5">
+		                            	<div class="select" style="height: auto;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="fert_1" placeholder="비료성분 선택" autocomplete="off" style="width: 100%;">
+		                            		<ul class="select-hide" style="top: 40px; width: 95%;">
+		                            			<th:block th:each="fert : ${fert}">
+		                            				<li class="fert_1_list" onclick="selectOpt(this);"><span th:data-value="${fert.fert_id}" th:text="${fert.fertilizer}"></span></li>
+		                            			</th:block>
+		                            			<li class="fert_1_list" onclick="selectOpt(this);"><span data-value="etc">기타(직접입력)</span></li>
+		                            		</ul>
+		                            	</div>
+		                                <!-- <select class="form-control b-light" id="fert_1">
 			                                <option th:value=0 disabled="disabled" selected="selected" hidden="hidden">비료성분 선택</option>
 			                                <th:block th:each="fert : ${fert}">
 			                                	<option th:value="${fert.fert_id}" th:text="${fert.fertilizer}"></option>
 			                                </th:block>
-		                                </select>
+		                                </select> -->
 		                            </div>
-		                            <div class="col-sm-2">
-		                            	<select class="form-control b-light" id="fert_2">
+		                            <div class="col-sm-5">
+		                            	<div class="select" style="height: auto;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="fert_2" placeholder="비료종류 선택" autocomplete="off" style="width: 100%;">
+		                            		<ul class="select-hide" style="top: 40px; width: 95%;">
+		                            			
+		                            		</ul>
+		                            	</div>
+		                            	<!-- <select class="form-control b-light" id="fert_2">
 			                                <option value="">비료종류 선택</option>
-		                                </select>
+		                                </select> -->
+		                            </div>
+		                    	</div>
+		                    	<div class="row mt-3" style="display: none;" id="etc_row">
+		        					<div class="col-sm-2 d-flex aling-items-center">
+		                            	
+		                            </div>
+		                            <div class="col-sm-5">
+		                                <input type="text" class="form-control b-light" id="manure_etc1" placeholder="비료성분" style="width: 100%;">
+		                            </div>
+		                            <div class="col-sm-5">
+		                                <input type="text" class="form-control b-light" id="manure_etc2" placeholder="비료종류" style="width: 100%;">
 		                            </div>
 		                    	</div>
 		                    	<div class="row mt-3">
@@ -1013,7 +1148,7 @@
 												<th></th>
 											</tr>
 										</thead>
-										<tbody id="mnnure_body">
+										<tbody id="manure_body">
 											
 										</tbody>
 									</table>
@@ -1055,7 +1190,25 @@
 	                            		<label class="color-dark align-center">기타요인<span style="color: red;">*</span></label>
 		                            </div>
 		                            <div class="col-sm-8">
-	                                	<select id="etc_type" class="select_view">
+		                            	<div class="select" style="height: auto;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="etc_type" placeholder="기타요인 선택" autocomplete="off" style="width: 340px;">
+		                            		<ul class="select-hide" style="top: 40px; width: 90%;">
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="온도">온도</span></li>
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="관수">관수</span></li>
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="상토">상토</span></li>
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="육묘">육묘</span></li>
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="피복">피복</span></li>
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="차광">차광</span></li>
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="재배지">재배지</span></li>
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="병접종 시기">병접종 시기</span></li>
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="병접종 방법">병접종 방법</span></li>
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="사료">사료</span></li>
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="비가림">비가림</span></li>
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="휴립">휴립</span></li>
+		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="기타">기타</span></li>
+		                            		</ul>
+		                            	</div>
+	                                	<!-- <select id="etc_type" class="select_view">
 		                                	<option value="none" disabled="disabled" selected="selected" hidden="hidden">기타요인 선택</option>
 		                                    <option value="온도">온도</option>
 			                                <option value="관수">관수</option>
@@ -1070,7 +1223,7 @@
 			                                <option value="비가림">비가림</option>
 			                                <option value="휴립">휴립</option>
 			                                <option value="기타">기타</option>
-		                                </select>
+		                                </select> -->
 		                            </div>
 		            			</div>
 		            			<div class="row mt-3">
@@ -1134,7 +1287,7 @@
     <script src="/../assets/vendor_assets/js/plan-insert.js"></script>
     <script type="text/javascript" src="/../assets/vendor_assets/js/plan-segment.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=	e93e65b3e9a407aa43d05f993408db95&libraries=clusterer,services"></script>
-<script type="text/javascript" th:inline="javascript">
+	<script type="text/javascript" th:inline="javascript">
 
 	var plan = /*[[${plan}]]*/ "null";
 	var factor = /*[[${factor}]]*/ "null";
@@ -1142,6 +1295,7 @@
 	var user = /*[[${user}]]*/ "null";
 	var sch = /*[[${sch}]]*/ "null";
 	let segment = /*[[${segment}]]*/ "null";
+	console.log(segment);
 	
 	//시험구 배치 데이터
 	var data1 = new Object();
@@ -1162,6 +1316,258 @@
 	
 	//구획 등록할 객체 array
 	let segment_array = new Array();
+	
+	
+	//select 필터링 관련 코드
+	let selectInputEls = document.querySelectorAll('input[name="select-input"]');
+	let select_this;
+	let select_prev;
+	let select_id;
+	
+	function selection(e){
+		if(document.getSelection){
+			var selection = document.getSelection();
+			
+			if(selection.focusNode != null){
+				if(selection.focusNode.children != undefined){
+					var length = selection.focusNode.children.length;
+					if(length != 0){
+						var check = selection.focusNode.children[0].name;
+						var check2 = selection.focusOffset;
+						if(check == "select-input" && check2 == "1" && e.target.name == "select-input"){
+							selectFilter(selection.focusNode.children[0]);
+						}
+					}
+				}
+			}
+			
+		}
+	}
+	
+	function selectFilter(e){
+		
+		var selection = document.getSelection();
+		
+		select_prev = select_this;
+		select_this = e;
+		select_id = e.id;
+		
+		let selectOptionWrapEls = document.querySelectorAll('.select ul');
+		
+		var currTarget = e;
+		var delOption = currTarget.nextElementSibling;
+		
+		for(var i = 0 ; i < selectOptionWrapEls.length; i++){
+			
+			if(selectOptionWrapEls[i].classList.contains("select-show")){
+				selectOptionWrapEls[i].classList.add('select-hide');
+				selectOptionWrapEls[i].classList.remove('select-show');
+			}
+		}
+		
+		if(delOption.classList.contains('select-hide')){
+			delOption.classList.remove('select-hide');
+			delOption.classList.add('select-show');
+		}
+		
+	}
+	
+	let body = document.querySelector('body');
+	function hideSelect(e){
+		
+		let selectOptionWrapEls = document.querySelectorAll('.select ul');
+		var target = e.target.name;
+		
+		if(target == "select-input"){
+			if(select_prev != undefined && select_this != select_prev){
+				var prev_attr = select_prev.getAttribute("value");
+				var prev_text = select_prev.value;
+				if(prev_attr != prev_text){
+					select_prev.value = prev_attr;
+					var prev_textEl = select_prev.parentNode.children[1].children;
+					
+					for(var i = 0; i < prev_textEl.length; i++){
+						prev_textEl[i].style.display = "flex";
+					}
+					
+					var textEl = select_this.parentNode.children[1].children;
+					
+					for(var i = 0; i < textEl.length; i++){
+						textEl[i].style.display = "flex";
+					}
+				}
+			}
+		}
+		
+		if(target != "select-input"){
+			if(select_this != undefined && select_this.value != null){
+				var select_attr = select_this.getAttribute("value");
+				var select_text = select_this.value;
+				
+				if(select_attr != select_text && select_this.id == select_id){
+					select_this.value = select_attr;
+					
+					var textEl = select_this.parentNode.children[1].children;
+					
+					for(var i = 0; i < textEl.length; i++){
+						textEl[i].style.display = "flex";
+					}
+				}
+			}
+			
+			for(var i = 0 ; i < selectOptionWrapEls.length; i++){
+				
+				if(selectOptionWrapEls[i].classList.contains("select-show")){
+					selectOptionWrapEls[i].classList.add('select-hide');
+					selectOptionWrapEls[i].classList.remove('select-show');
+				}
+			}
+		}
+	}
+	body.addEventListener('click',hideSelect);
+	body.addEventListener('click', selection);
+	
+	/* 옵션선택 */
+	function selectOpt(e){
+		
+	    var dataSelect = $(e).children().attr("data-value");
+	    var text = $(e).children().text();
+	    $(e).parent().prev().attr("data-select", dataSelect);
+	    $(e).parent().prev().attr("value", text);
+	    $(e).parent().attr("class", "select-hide");
+	    
+	    var current_this = e.parentNode.previousElementSibling;
+	    var current_this_id = current_this.id;
+	    
+	    //재식거리 모달 이벤트
+	    if(current_this_id == "intervalSelect"){
+	    	var intervaletcForm = $("#intervaletcForm");
+	    	var check = dataSelect;
+	    	
+	    	if(check == "기타"){
+				var add_list = "";
+				add_list += '<div class="col-md-9" id="etc_form">';
+				add_list += '<div class="form-group ml-2" style="position: relative; display: flex; flex-wrap: wrap;">';
+				
+				add_list += '<div class="pl-2" style="font-size: 0.75em; display: flex;">조간거리<br>(이량사이)</div>';
+				add_list += '<input id="etc_text1" type="text" style="width: 80px; height: 20px;">';
+				add_list += '<div class="pl-2" style="font-size: 0.75em; display: flex;"">주간거리<br>(포기사이)</div>';
+				add_list += '<input id="etc_text2" type="text" style="width: 80px; height: 20px;">';
+				
+				add_list += '</div>';
+				add_list += '</div>';
+				
+				intervaletcForm.append(add_list);
+				
+			}else{
+				$(document).find("#etc_form").remove();
+			}
+	    }
+	    
+	    //시비량 비료 성분 이벤트
+	    if(current_this_id == "fert_1"){
+	    	var fert_id = dataSelect;
+	    	
+	    	if(fert_id == "etc"){
+	    		
+	    		$("#fert_2").attr("data-selct", "etc");
+	    		$("#fert_2").attr("value", "기타(직접입력)");
+	    		$("#fert_2").val("기타(직접입력)");
+	    		$("#fert_2").attr("data-amount", "");
+	    		
+				var fert_2 = $("#fert_2").next();
+				var add_list = "";
+				add_list += '<li class="method_input_list" onclick="selectOpt(this);">';
+				add_list += '<span data-value="etc">기타(직접입력)</span>';
+				add_list += '</li>';
+				fert_2.empty();
+				fert_2.append(add_list);
+				
+				$("#etc_row").css("display", "");
+				
+			}else{
+				$("#etc_row").css("display", "none");
+				
+				var data = {"fert_id" : fert_id};
+				
+				$.ajax({
+					url : "/plan/selectFertilizer",
+					method : "GET",
+					dataType : 'json',
+					data : data,
+					success : function(result){
+						
+						var fert_2 = $("#fert_2").next();
+						var add_list = "";
+						
+						$("#fert_2").attr("data-select", "");
+	   					$("#fert_2").attr("value", "");
+						$("#fert_2").val("");
+						
+						for(var i = 0; i < result.length; i++){
+							add_list += '<li class="method_input_list" onclick="selectOpt(this);">';
+	   						add_list += '<span data-value="'+result[i].fert_id+'" data-amount="'+result[i].fert_amount+'">'+result[i].fertilizer + '(' + result[i].fert_amount + '%' + ')'+'</span>';
+	   						add_list += '</li>';
+						}
+						
+						fert_2.empty();
+						fert_2.append(add_list);
+					}//end success
+				});//end ajax
+			}
+	    }
+	    
+	    //비료종류 이벤트 추가
+	    if(current_this_id == "fert_2"){
+	    	var amount = $(e).children().attr("data-amount");
+	    	$(e).parent().prev().attr("data-amount", amount);
+	    	
+	    	
+	    	var fert_id = dataSelect;
+			if(fert_id != "" || fert_id != null){
+				
+				$("#manure_percent").val(amount);
+				
+				var manure_area = $("#manure_area").val();
+				var manure_amount = $("#manure_amount").val();
+				var manure_percent = amount;
+				
+				//시비량 값 계산
+				if(manure_area != "" && manure_amount != "" && manure_percent != ""){
+					var num = manure_area / 1000 * manure_amount * 100 / manure_percent;
+					
+					var result = num.toFixed(2);
+					
+					$("#manure_result").val(result);
+					$("#plusManure").attr("disabled", false);
+				}else{
+					$("#manure_result").val("");
+					$("#plusManure").attr("disabled", true);
+				}
+			}
+	    }
+	    
+	}//end 옵션 선택
+	
+	//필터 함수
+	function textfilter(e){
+		
+		var search = $(e).val().toLowerCase();
+		var className = $(e).next().children().eq(0).attr('class');
+		
+		$(document).find("."+className).each(function(index, item){
+			var text = $(this).children().text();
+			
+			if(text.toLowerCase().includes(search)){
+				$(this).css("display", "flex");
+			}else{
+				$(this).css("display", "none");
+			}
+		});
+		
+	}//end 필터 함수
+	
+	//end select 필터링 관련 코드
 
 	//기존 데이터 로드 함수
 	async function loadPlan(){
@@ -1169,15 +1575,26 @@
 		//포장에 기존 storage_id값 주기
 		$("#storage_input").attr("th:data-storage-id", plan.storage_id);
 		
-		
+		//과제 선택
+		$("#select_view1").attr("data-select", plan.report_code);
+		$("#select_view1").attr("value", plan.report_title+"("+plan.report_code+")");
 		
 		//시험구배치 종류 선택
-		$("#grow_type").val(plan.grow_type).prop("selected", true);
-		
+		$("#grow_type").attr("data-select", plan.grow_type);
+		if(plan.grow_type == 0){
+			$("#grow_type").attr("value", "완전임의배치");
+		}else if(plan.grow_type == 1){
+			$("#grow_type").attr("value", "난괴법");
+		}else if(plan.grow_type == 2){
+			$("#grow_type").attr("value", "분할구배치법");
+		}else if(plan.grow_type == 3){
+			$("#grow_type").attr("value", "세세구배치법");
+		}
 		
 		//요인1, 요인2, 요인3 셀렉트 박스 선택
 		for(var i = 0; i < factor.length; i++){
-			$("#factor"+(i+1)+"_select").val(factor[i].factor_type).prop("selected", true);
+			$("#factor_type_"+(i+1)).attr("data-select", factor[i].factor_type);
+			$("#factor_type_"+(i+1)).attr("value", factor[i].factor_type);
 		}//end for
 		
 		//step3 기존 데이터 그려주기
@@ -1397,7 +1814,7 @@
 				dataType : 'json',
 				data : data,
 				success : function(result){
-					
+					console.log(result);
 					//기존 데이터에 맞게 manureArray 만들어 주기
 					for(var i = 0; i < textArray.length; i++){
 						for(var j = 0; j < result.length; j ++){
@@ -1568,7 +1985,7 @@
 		});
 	}//end function
 	
-	//기존 step4 method 그리기
+	//기존 step5 method 그리기
 	function loadMethodGrid(method_ids){
 		
 		var method_arr = method_ids.split(",");
@@ -1796,8 +2213,8 @@
 	//시험구배치 요인 설정 버튼 이벤트
 	$(document).on("click", ".setting", function(){
 		
-		var name = $(this).parent().prev().find("option:selected").val();
 		var index = $(this).parent().prev().attr("data-index");
+		var name = $(this).parent().prev().find('input[name="select-input"]').attr("data-select");
 		
 		if(name == "시험재료"){
 			getSeedList(index);
@@ -2105,8 +2522,11 @@
 		$("#intervalModal").modal("show");
 		
 		//재식거리 셀렉트 박스 초기화
-		$("#intervalSelect").val("none").attr("selected", true);
+		$("#intervalSelect").attr("data-select", "");
+		$("#intervalSelect").attr("value", "");
 		$("#interval_body").empty();
+		
+		$(document).find("#etc_form").remove();
 		
 		//기존 데이터 있을시 그려주기
 		if(index == 1){
@@ -2207,7 +2627,7 @@
 	});
 	
 	//재식거리 기타 선택시 input 태그 추가 이벤트
-	$("#intervalSelect").on("change", function(){
+	/* $("#intervalSelect").on("change", function(){
 		var check = $(this).find("option:selected").val();
 		var intervaletcForm = $("#intervaletcForm");
 		
@@ -2229,12 +2649,12 @@
 		}else{
 			$(document).find("#etc_form").remove();
 		}
-	});
+	}); */
 	
 	//재식거리 수준 추가 버튼 이벤트
 	function PlusInterval(){
 		
-		var interval = $("#intervalSelect option:selected").val();
+		var interval = $("#intervalSelect").attr("data-select");
 		
 		if(interval == "기타"){
 			interval = $("#etc_text1").val() + "x" + $("#etc_text2").val();
@@ -2509,8 +2929,10 @@
 		
 		//시비량 모달 비워주기
 		$("#manure_area").val("");
-		$("#fert_1").val(0).attr("selected", true);
-		$("#fert_2").val(0).attr("selected", true);
+		$("#fert_1").attr("data-select", "");
+		$("#fert_1").attr("value", "");
+		$("#fert_2").attr("data-select", "");
+		$("#fert_2").attr("value", "");
 		$("#manure_amount").val("");
 		$("#manure_percent").val("");
 		$("#manure_result").val("");
@@ -2898,64 +3320,6 @@
 		manureModalUseBtn.attr('th:data-index', index);
 	}//end 시비량 함수
 	
-	//시비량 모달 내 비료 성분 체인지 이벤트
-	$("#fert_1").on("change", function(){
-		
-		var fert_id = $(this).find("option:selected").val();
-		
-		var data = {"fert_id" : fert_id};
-		
-		$.ajax({
-			url : "/plan/selectFertilizer",
-			method : "GET",
-			dataType : 'json',
-			data : data,
-			success : function(result){
-				
-				var fert_2 = $("#fert_2");
-				var add_list = "";
-				
-				add_list = '<option value="0">비료종류 선택</option>';
-				
-				for(var i = 0; i < result.length; i++){
-					add_list += '<option value="' + result[i].fert_id + '" th:data-amount="'+result[i].fert_amount+'">' + result[i].fertilizer + '(' + result[i].fert_amount + '%' + ')' + '</option>';
-				}
-				
-				fert_2.empty();
-				fert_2.append(add_list);
-			}//end success
-		});//end ajax
-		
-	});//시비량 모달 내 비료 성분 체인지 이벤트
-	
-	//시비량 모달 내 비료 종류 선택 이벤트
-	$(document).on("change", "#fert_2", function(){
-		
-		var fert_id = $(this).find("option:selected").val();
-		if(fert_id != "0"){
-			var amount = $(this).find("option:selected").attr("th:data-amount");
-			$("#manure_percent").val(amount);
-			
-			var manure_area = $("#manure_area").val();
-			var manure_amount = $("#manure_amount").val();
-			var manure_percent = amount;
-			
-			//시비량 값 계산
-			if(manure_area != "" && manure_amount != "" && manure_percent != ""){
-				var num = manure_area / 1000 * manure_amount * 100 / manure_percent;
-				
-				var result = num.toFixed(2);
-				
-				$("#manure_result").val(result);
-				$("#plusManure").attr("disabled", false);
-			}else{
-				$("#manure_result").val("");
-				$("#plusManure").attr("disabled", true);
-			}
-		}
-		
-	});
-	
 	//시비량 값 계산 함수
 	$("#manure-form input").on("change", function(){
 		var manure_area = $("#manure_area").val();
@@ -2979,28 +3343,62 @@
 	
 	//시비량 추가 버튼 이벤트
 	function PlusManure(){
-		
-		var manure_area = $("#manure_area").val();
-		var manure_type = $("#fert_2").find("option:selected").text();
-		var fert_id = $("#fert_1").find("option:selected").val();
-		var type = $("#fert_1").find("option:selected").text();
-		var manure_amount = $("#manure_amount").val();
-		var manure_percent = $("#manure_percent").val();
-		var manure_result = $("#manure_result").val();
-		
-		var body = $("#mnnure_body");
-		var add_list = "";
-		
-		add_list += '<tr class="manure_tr">';
-		add_list += '<td class="manure_area">'+manure_area+'</td>';
-		add_list += '<td class="manure_type" th:data-type="'+type+'" th:data-fert-id="'+fert_id+'">'+manure_type+'</td>';
-		add_list += '<td class="manure_amount">'+manure_amount+'</td>';
-		add_list += '<td class="manure_percent">'+manure_percent+'</td>';
-		add_list += '<td class="manure_result">'+manure_result+'</td>';
-		add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
-		add_list += '</tr>';
-		
-		body.append(add_list);
+		console.log("aa");
+		var fert_id = $("#fert_1").attr("data-select");
+		console.log(fert_id);
+		if(fert_id == "etc" ){
+			
+			if($("#manure_etc1").val() == "" || $("#manure_etc2").val() == ""){
+				alert("비료성분/종류를 입력해 주세요.");
+			}else{
+				
+				fert_id = 0;
+				var manure_area = $("#manure_area").val();
+				var manure_type = $("#manure_etc2").val();
+				var type = $("#manure_etc1").val();
+				var manure_amount = $("#manure_amount").val();
+				var manure_percent = $("#manure_percent").val();
+				var manure_result = $("#manure_result").val();
+				
+				var body = $("#manure_body");
+				var add_list = "";
+				
+				add_list += '<tr class="manure_tr">';
+				add_list += '<td class="manure_area">'+manure_area+'</td>';
+				add_list += '<td class="manure_type" th:data-type="'+type+'" th:data-fert-id="'+fert_id+'">'+manure_type+'</td>';
+				add_list += '<td class="manure_amount">'+manure_amount+'</td>';
+				add_list += '<td class="manure_percent">'+manure_percent+'</td>';
+				add_list += '<td class="manure_result">'+manure_result+'</td>';
+				add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
+				add_list += '</tr>';
+				
+				body.append(add_list);
+			}
+			
+		}else{
+			
+			var manure_area = $("#manure_area").val();
+			var manure_type = $("#fert_2").attr("value");
+			
+			var type = $("#fert_1").attr("value");
+			var manure_amount = $("#manure_amount").val();
+			var manure_percent = $("#manure_percent").val();
+			var manure_result = $("#manure_result").val();
+			
+			var body = $("#manure_body");
+			var add_list = "";
+			
+			add_list += '<tr class="manure_tr">';
+			add_list += '<td class="manure_area">'+manure_area+'</td>';
+			add_list += '<td class="manure_type" th:data-type="'+type+'" th:data-fert-id="'+fert_id+'">'+manure_type+'</td>';
+			add_list += '<td class="manure_amount">'+manure_amount+'</td>';
+			add_list += '<td class="manure_percent">'+manure_percent+'</td>';
+			add_list += '<td class="manure_result">'+manure_result+'</td>';
+			add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
+			add_list += '</tr>';
+			
+			body.append(add_list);
+		}
 	}//end 시비량 추가 버튼 이벤트
 	
 	//시비량 삭제 버튼 이벤트
@@ -3152,7 +3550,8 @@
 		$("#etcModal").modal("show");
 		
 		//기타 양식 초기화
-		$("#etc_type").val("none").attr("selected", true);
+		$("#etc_type").attr("data-select", "");
+		$("#etc_type").attr("value", "");
 		$("#etc_value").val("");
 		$("#etc_comment").val("");
 		$("#etc_body").empty();
@@ -3205,7 +3604,7 @@
 	
 	//기타 수준 추가 버튼 이벤트
 	function PlusEtc(){
-		var etc_type = $("#etc_type option:selected").val();
+		var etc_type = $("#etc_type").attr("data-select");
 		var etc_value = $("#etc_value").val();
 		var etc_comment = $("#etc_comment").val();
 		
@@ -3303,13 +3702,13 @@
 	//step3 btn 이벤트
 	$("#step-3-btn").on("click", function(){
 		
-		var grow_type = $("#grow_type option:selected").attr("data-select");
+		var grow_type = $("#grow_type").attr("data-select");
 		
 		var check1 = Object.keys(data1).length == 0;
 		var check2 = Object.keys(data2).length == 0;
 		var check3 = Object.keys(data3).length == 0;
 		
-		if(grow_type == "none"){
+		if(grow_type == "" || grow_type == null){
 			alert("시험구배치 종류를 선택해주세요");
 			$("#grow_type").focus();
 		}else if(check1 && check2 && check3){
@@ -3330,7 +3729,7 @@
 		
 		var resultArray = new Array();
 		
-		var grow_type = $("#grow_type option:selected").attr("data-select");
+		var grow_type = $("#grow_type").attr("data-select");
 		
 		var plan_repeat = $("#plan_repeat").val();
 		
@@ -4014,7 +4413,7 @@
 			}//end for1
 		}
 		
-		var grow_type = $("#grow_type option:selected").attr("data-select");
+		var grow_type = $("#grow_type").attr("data-select");
 		
 		var plan_repeat = $("#plan_repeat").val();
 		
@@ -4938,23 +5337,27 @@
 	function insertSegment(){
 		segment_array = [];
 		
-		$(document).find(".table_content").each(function(index, item){
-			
-			var seg_data = {
-				"plan_id" : plan.plan_id,
-				"segment_code" : $(this).children().eq(1).text(),
-				"segment_index" : $(this).children().eq(0).text(),
-				"segment_type" : $(this).children().eq(2).text(),
-				"segment_repeat" : $(this).children().eq(3).text(),
-				"segment_area" : $(this).find("input:text").val(),
-				"individual_num" : 3
-			};
-			
-			segment_array.push(seg_data);
-			
-		});
+		var segInput = document.querySelectorAll('#copy-step-4 .seg_area');
 		
-		console.log(segment_array);
+		for(var i = 0; i < resultArray.length; i++){
+			var arr = resultArray[i];
+			var data = {
+				"plan_id" : plan.plan_id,
+				"segment_index" : arr.num, 
+				"segment_code" : arr.id, 
+				"segment_type" : arr.type, 
+				"segment_repeat" : arr.repeat, 
+				"segment_grid_code": arr.segmentId, 
+				"segment_order": arr.order, 
+				"segment_horizon": arr.segment_horizon, 
+				"segment_vertical" : arr.segment_vertical, 
+				"segment_zindex": arr.segment_zindex,
+				"segment_aspect" : arr.segment_aspect,
+				"individual_num" : 3,
+				"segment_area" : segInput[i].value
+			}
+			segment_array.push(data);
+		}
 		
 		var cancel = new Array();
 		
@@ -4991,12 +5394,12 @@
 		console.log(etcArray2);
 		console.log(etcArray3); */
 		
-		if($("#grow_type").attr("data-select") == "none"){
+		if($("#grow_type").attr("data-select") == "" || $("#grow_type").attr("data-select") == null){
 			alert("시험구배치 종류를 선택해주세요.");
 			$("#grow_type").focus();
 		}else if($("#storage_input").val() == ""){
 			alert("포장을 선택해 주세요");
-		}else if($("#select_view1 option:selected").val() == "0"){
+		}else if($("#select_view1").attr("data-select") == ""){
 			alert("과제를 선택해 주세요");
 		}else if(Object.keys(data1).length == 0 && Object.keys(data2).length == 0 && Object.keys(data3).length == 0){
 			alert("시험구배치 요인을 선택해 주세요");
@@ -5148,6 +5551,11 @@
 			}else if(data1.type == "시비량"){
 				var manure_id = "";
 				
+				for(var i = 0; i < manureArray1.length; i++){
+					manureArray1[i].plan_id = plan_id;
+					manureArray1[i].factor_index = 1;
+				}
+				
 				await insertManure(manureArray1).then(function(result){
 					
 					
@@ -5171,10 +5579,12 @@
 			}else if(data1.type == "기타"){
 				var etc_id = "";
 				
-				var blank = "";
+				for(var i = 0; i < etcArray1.length; i++){
+					etcArray1[i].plan_id = plan_id;
+					etcArray1[i].factor_index = 1;
+				}
 				
 				await insertEtc(etcArray1).then(function(result){
-					
 					
 					var length = result.length;
 					for(var i = 0; i < length; i++){
@@ -5231,6 +5641,11 @@
 				
 				var manure_id = "";
 				
+				for(var i = 0; i < manureArray2.length; i++){
+					manureArray2[i].plan_id = plan_id;
+					manureArray2[i].factor_index = 2;
+				}
+				
 				await insertManure(manureArray2).then(function(result){
 					
 					
@@ -5255,6 +5670,11 @@
 			}else if(data2.type == "기타"){
 				
 				var etc_id = "";
+				
+				for(var i = 0; i < etcArray2.length; i++){
+					etcArray2[i].plan_id = plan_id;
+					etcArray2[i].factor_index = 2;
+				}
 				
 				await insertEtc(etcArray2).then(function(result){
 					
@@ -5315,6 +5735,11 @@
 				
 				var manure_id = "";
 				
+				for(var i = 0; i < manureArray3.length; i++){
+					manureArray3[i].plan_id = plan_id;
+					manureArray3[i].factor_index = 3;
+				}
+				
 				await insertManure(manureArray3).then(function(result){
 					
 					
@@ -5339,6 +5764,11 @@
 			}else if(data3.type == "기타"){
 				
 				var etc_id = "";
+				
+				for(var i = 0; i < etcArray3.length; i++){
+					etcArray3[i].plan_id = plan_id;
+					etcArray3[i].factor_index = 3;
+				}
 				
 				await insertEtc(etcArray3).then(function(result){
 					

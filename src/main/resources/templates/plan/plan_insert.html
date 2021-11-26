@@ -1896,6 +1896,8 @@
 		$("#intervalSelect").attr("value", "");
 		$("#interval_body").empty();
 		
+		$(document).find("#etc_form").remove();
+		
 		//기존 데이터 있을시 그려주기
 		if(index == 1){
 			if(Object.keys(data1).length != 0 && data1.type == "재식거리"){
@@ -3289,7 +3291,7 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : orderCount, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1, "sergment_horizon": "", "segment_vertical" : "", "segment_zindex": ""};
+					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : orderCount, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1, "segment_horizon": "", "segment_vertical" : "", "segment_zindex": ""};
 					
 					resultArray.push(data);
 					orderCount++;
@@ -3409,7 +3411,7 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : orderCount, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1, "sergment_horizon": "", "segment_vertical" : "", "segment_zindex": ""};
+					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : orderCount, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1, "segment_horizon": "", "segment_vertical" : "", "segment_zindex": ""};
 					
 					resultArray.push(data);
 					orderCount++;
@@ -3560,7 +3562,7 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : orderCount, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1, "sergment_horizon": "", "segment_vertical" : "", "segment_zindex": ""};
+					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : orderCount, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1, "segment_horizon": "", "segment_vertical" : "", "segment_zindex": ""};
 					
 					resultArray.push(data);
 					orderCount++;
@@ -3733,7 +3735,7 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : orderCount, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1, "sergment_horizon": "", "segment_vertical" : "", "segment_zindex": ""};
+					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : orderCount, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1, "segment_horizon": "", "segment_vertical" : "", "segment_zindex": ""};
 					resultArray.push(data);
 					orderCount++;
 				}
@@ -4260,7 +4262,7 @@
 				"segment_repeat" : arr.repeat, 
 				"segment_grid_code": arr.segmentId, 
 				"segment_order": arr.order, 
-				"sergment_horizon": arr.segment_horizon, 
+				"segment_horizon": arr.segment_horizon, 
 				"segment_vertical" : arr.segment_vertical, 
 				"segment_zindex": arr.segment_zindex,
 				"segment_aspect" : arr.segment_aspect,
@@ -4269,7 +4271,7 @@
 			}
 			segment_array.push(data);
 		}
-		
+		console.log(segment_array);
 		var cancel = new Array();
 		
 		$.ajax({
