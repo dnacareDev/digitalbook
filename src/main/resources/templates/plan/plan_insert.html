@@ -4951,8 +4951,8 @@
 			add_list += '<li>';
 			add_list += '<span><span class="red" style="color: #FF4141">*</span>담당자(정)</span>';
 	    	add_list += '<div class="select" style="height: auto;">';
-	    	add_list += '<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control select_user1" id="select_user1" placeholder="담당자 선택" autocomplete="off">';
-	    	add_list += '<ul class="select-hide" style="width: 400px !important; top: 85px !important;">';
+	    	add_list += '<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control select_user1" id="select_user1" placeholder="담당자 선택" autocomplete="off" style="border-right:1px solid #E4E4E4;">';
+	    	add_list += '<ul class="select-hide" style="width: 400px !important; top: 85px !important; padding-top: 0 !important;">';
 	    	for(var j = 0; j < user.length; j++){
 	    		add_list += '<li class="select_user1_list" onclick="selectOpt(this);" style="line-height: 30px; padding:0 0 0 5px; float: none !important; margin-left: 0;"><span data-value="'+user[j].user_id+'">'+user[j].user_name_k+'</span></li>';
 			}
@@ -4969,8 +4969,8 @@
 			add_list += '<li>';
 			add_list += '<span>담당자(부)</span>';
 			add_list += '<div class="select" style="height: auto;">';
-	    	add_list += '<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control select_user2" id="select_user2" placeholder="담당자 선택" autocomplete="off">';
-	    	add_list += '<ul class="select-hide" style="width: 400px !important; top: 85px !important;">';
+	    	add_list += '<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control select_user2" id="select_user2" placeholder="담당자 선택" autocomplete="off" style="border-right:1px solid #E4E4E4;">';
+	    	add_list += '<ul class="select-hide" style="width: 400px !important; top: 85px !important; padding-top: 0 !important;">';
 	    	for(var j = 0; j < user.length; j++){
 	    		add_list += '<li class="select_user1_list" onclick="selectOpt(this);" style="line-height: 30px; padding:0 0 0 5px; float: none !important; margin-left: 0;"><span data-value="'+user[j].user_id+'">'+user[j].user_name_k+'</span></li>';
 			}

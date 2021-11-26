@@ -307,6 +307,9 @@
 		LEFT JOIN storage s ON p.storage_id = s.storage_id
 		LEFT JOIN method m ON p.plan_method = m.method_id
 		WHERE plan_id = #{plan_id}
+		<!-- 아래 내용 과제 담당자 변경되면 삭제하기 -->
+		ORDER BY r.report_id
+		LIMIT 1
 	</select>
 	
 	<!-- 시험구배치 요인 list -->
