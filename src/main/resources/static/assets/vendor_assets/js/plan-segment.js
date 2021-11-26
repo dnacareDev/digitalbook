@@ -380,7 +380,6 @@ function activeList(thisOrder){
 		segmentLi[z].style.zIndex = zArr[z];
 		resultArray[z].segment_zindex = zArr[z];
 	}
-	console.log(resultArray);
 	segmentLi[thisIndex].classList.add('active');
 	tableEls[thisIndex].classList.add('active');
 	
@@ -637,7 +636,9 @@ function segmentSetting(data){
 						if(segmentLi[elRender] !== undefined && segmentLi[elRender] !== null){
 						
 							segmentEls[elRender].style.width = elWidth + 'px';
-							if(segmentModify !== "modify"){							
+							
+							
+							if(segmentModify !== "modify" && segmentModify !== "result"){							
 								zindex.push(elRender);
 								segmentLi[elRender].style.zIndex = elRender;
 								segmentLi[elRender].style.transform = 'translate(' + ( ( elWidth * c ) + WrapDiff ) + 'px, ' + ( (elHeight * r) + WrapDiff + (((elHeight * getDataIdLength + type2Diff ) * t) ) ) + 'px)';
@@ -699,23 +700,32 @@ function segmentSetting(data){
 					for(var s = 0; s < factorLength1; s++){
 						for(var r = 0; r < factorLength2; r++){
 							for(var q = 0 ; q < factorLength3; q++){
-							
 								if(segmentLi[elRender] !== undefined && segmentLi[elRender] !== null){
-									zindex.push(elRender);
-									segmentLi[elRender].style.zIndex = elRender;
-									segmentLi[elRender].style.transform = 'translate(' + ((elWidth * q) + ((elWidth * factorLength3) * s) + WrapDiff + 'px, ' + ( ((elHeight * r) + WrapDiff) + ((elHeight * factorLength2 + type2Diff) * t ) )) + 'px)';
+								
 									segmentEls[elRender].style.width = elWidth + 'px';
 									
-									
-									if(transformRotateCheck(elRender) !== undefined && transformRotateCheck(elRender) !== null){			
-										segmentEls[elRender].style.transform = 'rotate(' + transformRotateCheck(elRender) + 'deg)';
+									if(segmentModify !== "modify" && segmentModify !== "result"){
+										zindex.push(elRender);
+										segmentLi[elRender].style.zIndex = elRender;
+										segmentLi[elRender].style.transform = 'translate(' + ((elWidth * q) + ((elWidth * factorLength3) * s) + WrapDiff + 'px, ' + ( ((elHeight * r) + WrapDiff) + ((elHeight * factorLength2 + type2Diff) * t ) )) + 'px)';
+										
+										
+										if(transformRotateCheck(elRender) !== undefined && transformRotateCheck(elRender) !== null){			
+											segmentEls[elRender].style.transform = 'rotate(' + transformRotateCheck(elRender) + 'deg)';
+										}else{
+											segmentEls[elRender].style.transform = 'rotate(' + 0 + 'deg)';
+										}
+										
+										dataGet[elRender].segment_horizon = ((elWidth * q) + ((elWidth * factorLength3) * s) + WrapDiff);
+										dataGet[elRender].segment_vertical = ( ((elHeight * r) + WrapDiff) + ((elHeight * factorLength2 + type2Diff) * t ) );
+										dataGet[elRender].segment_zindex = elRender;
 									}else{
-										segmentEls[elRender].style.transform = 'rotate(' + 0 + 'deg)';
+										segmentLi[elRender].style.transform = 'translate(' + dataGet[elRender].segment_horizon + 'px, ' + dataGet[elRender].segment_vertical + 'px)';
+										segmentLi[elRender].style.zIndex = dataGet[elRender].segment_zindex;
+										
+										segmentEls[elRender].style.zIndex = dataGet[elRender].segment_zindex;
+										segmentEls[elRender].style.transform = 'rotate(' + dataGet[elRender].segment_aspect + 'deg)';
 									}
-									
-									dataGet[elRender].segment_horizon = ((elWidth * q) + ((elWidth * factorLength3) * s) + WrapDiff);
-									dataGet[elRender].segment_vertical = ( ((elHeight * r) + WrapDiff) + ((elHeight * factorLength2 + type2Diff) * t ) );
-									dataGet[elRender].segment_zindex = elRender;
 									
 									// color 설정
 									var idArrayAll2 = idArrayAll[0];
@@ -748,21 +758,31 @@ function segmentSetting(data){
 					for(var c = 0; c < getColumnLength; c++){
 						for(var r = 0; r < getDataIdLength; r++){
 							if(segmentLi[elRender] !== undefined && segmentLi[elRender] !== null){
-								zindex.push(elRender);
-								segmentLi[elRender].style.zIndex = elRender;
-								segmentLi[elRender].style.transform = 'translate(' + ( ( elWidth * c ) + WrapDiff ) + 'px, ' + ( (elHeight * r) + WrapDiff + (((elHeight * getDataIdLength + type2Diff ) * t) ) ) + 'px)';
+							
 								segmentEls[elRender].style.width = elWidth + 'px';
-								
-								dataGet[elRender].segment_horizon = ( ( elWidth * c ) + WrapDiff );
-								dataGet[elRender].segment_vertical = ( (elHeight * r) + WrapDiff + (((elHeight * getDataIdLength + type2Diff ) * t) ) );
-								dataGet[elRender].segment_zindex = elRender;
-								
-								
-								if(transformRotateCheck(elRender) !== undefined && transformRotateCheck(elRender) !== null){			
-									segmentEls[elRender].style.transform = 'rotate(' + transformRotateCheck(elRender) + 'deg)';
+								if(segmentModify !== "modify" && segmentModify !== "result"){
+									zindex.push(elRender);
+									segmentLi[elRender].style.zIndex = elRender;
+									segmentLi[elRender].style.transform = 'translate(' + ( ( elWidth * c ) + WrapDiff ) + 'px, ' + ( (elHeight * r) + WrapDiff + (((elHeight * getDataIdLength + type2Diff ) * t) ) ) + 'px)';
+									
+									dataGet[elRender].segment_horizon = ( ( elWidth * c ) + WrapDiff );
+									dataGet[elRender].segment_vertical = ( (elHeight * r) + WrapDiff + (((elHeight * getDataIdLength + type2Diff ) * t) ) );
+									dataGet[elRender].segment_zindex = elRender;
+									
+									if(transformRotateCheck(elRender) !== undefined && transformRotateCheck(elRender) !== null){			
+										segmentEls[elRender].style.transform = 'rotate(' + transformRotateCheck(elRender) + 'deg)';
+									}else{
+										segmentEls[elRender].style.transform = 'rotate(' + 0 + 'deg)';
+									}
 								}else{
-									segmentEls[elRender].style.transform = 'rotate(' + 0 + 'deg)';
+									segmentLi[elRender].style.transform = 'translate(' + dataGet[elRender].segment_horizon + 'px, ' + dataGet[elRender].segment_vertical + 'px)';
+									segmentLi[elRender].style.zIndex = dataGet[elRender].segment_zindex;
+									
+									segmentEls[elRender].style.zIndex = dataGet[elRender].segment_zindex;
+									segmentEls[elRender].style.transform = 'rotate(' + dataGet[elRender].segment_aspect + 'deg)';
 								}
+								
+								
 								
 								elRender++;
 							}
@@ -776,19 +796,30 @@ function segmentSetting(data){
 			for(var r = 0; r < row; r++){
 				for(var c = 0; c < column; c++){
 					if(segmentLi[elRender] !== undefined && segmentLi[elRender] !== null){
-						zindex.push(elRender);
-						segmentLi[elRender].style.zIndex = elRender;
-						segmentLi[elRender].style.transform = 'translate(' + ( ( elWidth * c ) + WrapDiff ) + 'px, ' + ( (elHeight * r) + WrapDiff ) + 'px)';
+					
 						segmentEls[elRender].style.width = elWidth + 'px';
 						
-						dataGet[elRender].segment_horizon = ( ( elWidth * c ) + WrapDiff );
-						dataGet[elRender].segment_vertical = ( (elHeight * r) + WrapDiff );
-						dataGet[elRender].segment_zindex = elRender;
+						if(segmentModify !== "modify" && segmentModify !== "result"){
 						
-						if(transformRotateCheck(elRender) !== undefined && transformRotateCheck(elRender) !== null){			
-							segmentEls[elRender].style.transform = 'rotate(' + transformRotateCheck(elRender) + 'deg)';
+							zindex.push(elRender);
+							segmentLi[elRender].style.zIndex = elRender;
+							segmentLi[elRender].style.transform = 'translate(' + ( ( elWidth * c ) + WrapDiff ) + 'px, ' + ( (elHeight * r) + WrapDiff ) + 'px)';
+							
+							dataGet[elRender].segment_horizon = ( ( elWidth * c ) + WrapDiff );
+							dataGet[elRender].segment_vertical = ( (elHeight * r) + WrapDiff );
+							dataGet[elRender].segment_zindex = elRender;
+							
+							if(transformRotateCheck(elRender) !== undefined && transformRotateCheck(elRender) !== null){			
+								segmentEls[elRender].style.transform = 'rotate(' + transformRotateCheck(elRender) + 'deg)';
+							}else{
+								segmentEls[elRender].style.transform = 'rotate(' + 0 + 'deg)';
+							}
 						}else{
-							segmentEls[elRender].style.transform = 'rotate(' + 0 + 'deg)';
+							segmentLi[elRender].style.transform = 'translate(' + dataGet[elRender].segment_horizon + 'px, ' + dataGet[elRender].segment_vertical + 'px)';
+							segmentLi[elRender].style.zIndex = dataGet[elRender].segment_zindex;
+							
+							segmentEls[elRender].style.zIndex = dataGet[elRender].segment_zindex;
+							segmentEls[elRender].style.transform = 'rotate(' + dataGet[elRender].segment_aspect + 'deg)';
 						}
 						
 						elRender++;
@@ -800,20 +831,29 @@ function segmentSetting(data){
 		for(var r = 0; r < row; r++){
 			for(var c = 0; c < column; c++){
 				if(segmentLi[elRender] !== undefined && segmentLi[elRender] !== null){
-					zindex.push(elRender);
-					segmentLi[elRender].style.zIndex = elRender;
-					segmentLi[elRender].style.transform = 'translate(' + ( ( elWidth * c ) + WrapDiff ) + 'px, ' + ( (elHeight * r) + WrapDiff ) + 'px)';
+				
 					segmentEls[elRender].style.width = elWidth + 'px';
 					
-					dataGet[elRender].segment_horizon = ( ( elWidth * c ) + WrapDiff );
-					dataGet[elRender].segment_vertical = ( (elHeight * r) + WrapDiff );
-					dataGet[elRender].segment_zindex = elRender;
-					
-					
-					if(transformRotateCheck(elRender) !== undefined && transformRotateCheck(elRender) !== null){			
-						segmentEls[elRender].style.transform = 'rotate(' + transformRotateCheck(elRender) + 'deg)';
+					if(segmentModify !== "modify" && segmentModify !== "result"){					
+						zindex.push(elRender);
+						segmentLi[elRender].style.zIndex = elRender;
+						segmentLi[elRender].style.transform = 'translate(' + ( ( elWidth * c ) + WrapDiff ) + 'px, ' + ( (elHeight * r) + WrapDiff ) + 'px)';
+						
+						dataGet[elRender].segment_horizon = ( ( elWidth * c ) + WrapDiff );
+						dataGet[elRender].segment_vertical = ( (elHeight * r) + WrapDiff );
+						dataGet[elRender].segment_zindex = elRender;
+						
+						if(transformRotateCheck(elRender) !== undefined && transformRotateCheck(elRender) !== null){			
+							segmentEls[elRender].style.transform = 'rotate(' + transformRotateCheck(elRender) + 'deg)';
+						}else{
+							segmentEls[elRender].style.transform = 'rotate(' + 0 + 'deg)';
+						}
 					}else{
-						segmentEls[elRender].style.transform = 'rotate(' + 0 + 'deg)';
+						segmentLi[elRender].style.transform = 'translate(' + dataGet[elRender].segment_horizon + 'px, ' + dataGet[elRender].segment_vertical + 'px)';
+						segmentLi[elRender].style.zIndex = dataGet[elRender].segment_zindex;
+						
+						segmentEls[elRender].style.zIndex = dataGet[elRender].segment_zindex;
+						segmentEls[elRender].style.transform = 'rotate(' + dataGet[elRender].segment_aspect + 'deg)';
 					}
 					
 					elRender++;
@@ -826,10 +866,16 @@ function segmentSetting(data){
 		segmentEls[t].addEventListener('mousedown', onElDown);
 		//segmentEls[t].addEventListener('touchstart', onElDown);
 		
-		segmentMove[t].addEventListener('mousedown', onMoveDown);
-		//segmentMove[t].addEventListener('touchstart', onMoveDown);
-		
-		segmentRotate[t].addEventListener('click', onRotateDown);
+		if(segmentModify !== "result"){
+			segmentMove[t].addEventListener('mousedown', onMoveDown);
+			//segmentMove[t].addEventListener('touchstart', onMoveDown);
+			
+			segmentRotate[t].addEventListener('click', onRotateDown);		
+		}else{
+			segmentMove[t].style.display = "none !important";
+			
+			segmentRotate[t].style.display = "none !important";
+		}
 		
 		if(tableEls[t] !== undefined){
 			tableEls[t].addEventListener('click', onClickTableEls);
