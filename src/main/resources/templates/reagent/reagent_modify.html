@@ -71,8 +71,8 @@
 		    	<div class="row">
 			        <div class="col-lg-12">
 			        	<div class="breadcrumb-main" style="float: left;">
-			        		<h4 class="text-capitalize breadcrumb-title">시약•농약•비료</h4>
-			        		<span class="ml-20 mt-1">기초정보-시약•농약•비료</span>
+			        		<h4 class="text-capitalize breadcrumb-title">시약 · 농약 · 비료</h4>
+			        		<span class="ml-20 mt-1">기초정보 - 시약 · 농약 · 비료</span>
 			        	</div>
 			        </div>
 		        </div>
@@ -82,7 +82,7 @@
 			        		<div class="card-body">
 			        			<div class="row">
 		        					<div class="col-sm-1 d-flex aling-items-center">
-		                            	<label for="reagent_code" class="color-dark align-center">시약 ID<span style="color: red;">*</span></label>
+		                            	<label for="reagent_code" class="color-dark align-center"><span class="red">*</span>시약 ID</label>
 		                            </div>
 		                            <div class="col-sm-5">
 		                                <input type="text" class="form-control b-light" id="reagent_code" th:value="${reagent.reagent_code}" readonly="readonly">
@@ -90,7 +90,7 @@
 		                    	</div>
 		        				<div class="row mt-3">
 		        					<div class="col-sm-1 d-flex aling-items-center">
-		                            	<label for="reagent_type" class="col-form-label color-dark align-center">종류<span style="color: red;">*</span></label>
+		                            	<label for="reagent_type" class="col-form-label color-dark align-center"><span class="red">*</span>종류</label>
 	                                </div>
 	                                <div class="col-sm-5">
 	                                	<div class="select" style="height: auto;">
@@ -111,7 +111,7 @@
 		                         </div>
 		                         <div class="row mt-3">
 		        					<div class="col-sm-1 d-flex aling-items-center">
-		                            	<label for="reagent_name" class="color-dark align-center">품명<span style="color: red;">*</span></label>
+		                            	<label for="reagent_name" class="color-dark align-center"><span class="red">*</span>품명</label>
 		                            </div>
 		                            <div class="col-sm-5">
 		                                <input type="text" class="form-control b-light" id="reagent_name" th:value="${reagent.reagent_name}">
@@ -161,10 +161,10 @@
 		        					<div class="col-sm-1 d-flex aling-items-center">
 		                            	<label for="reagent_quantity" class="color-dark align-center">수량</label>
 		                            </div>
-		                            <div class="col-sm-5">
+		                            <div class="col-sm-2">
 		                                <input type="text" class="form-control b-light" id="reagent_quantity" th:value="${reagent.reagent_quantity}">
 		                            </div>
-		                            <div class="col-sm-2">
+		                            <div class="col-sm-3">
 		                            	<div id="eaches_id_select" class="select" style="height: auto;">
 		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="eaches_id" placeholder="단위 선택" autocomplete="off">
 		                            		<ul class="select-hide">
