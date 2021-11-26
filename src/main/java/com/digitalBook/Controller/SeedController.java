@@ -349,6 +349,7 @@ public class SeedController
 		
 		report.setUser_name(prin.getUser_name_k());
 		report.setUser_group(prin.getUser_group());
+		report.setReport_status(1);
 		result = service.InsertNonReport(report);
 		
 		if(result != 0) {	//과제 등록 성공 후

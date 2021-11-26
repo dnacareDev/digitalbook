@@ -142,7 +142,7 @@
 	<select id="selectReportList" resultType="Report">
 		SELECT * FROM report r 
 		INNER JOIN seed s ON r.report_code = s.report_code
-		WHERE r.user_name = #{user_name}
+		WHERE r.user_name = #{user_name} and r.report_status = 1
 		GROUP BY r.report_code
 		ORDER BY r.report_id
 	</select>
@@ -301,7 +301,7 @@
 	
 	<!-- 재배계획 detail -->
 	<select id="selectPlanDetail" parameterType="int" resultType="Plan">
-		SELECT p.*, r.*, s.*, m.*, s.storage_location
+		SELECT p.*, r.*, s.*, m.*, s.storage_location, r.user_name as report_user_name
 		FROM plan p
 		LEFT JOIN report r ON p.report_code = r.report_code
 		LEFT JOIN storage s ON p.storage_id = s.storage_id
