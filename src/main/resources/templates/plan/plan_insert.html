@@ -1895,6 +1895,8 @@
 		$("#intervalSelect").attr("value", "");
 		$("#interval_body").empty();
 		
+		$(document).find("#etc_form").remove();
+		
 		//기존 데이터 있을시 그려주기
 		if(index == 1){
 			if(Object.keys(data1).length != 0 && data1.type == "재식거리"){
