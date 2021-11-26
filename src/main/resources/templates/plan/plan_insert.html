@@ -4230,23 +4230,6 @@
 	
 	//구획 등록
 	function insertSegment(plan_id){
-		segment_array = [];
-		
-		$(document).find(".table_content").each(function(index, item){
-			
-			var seg_data = {
-				"plan_id" : plan_id,
-				"segment_code" : $(this).children().eq(1).text(),
-				"segment_index" : $(this).children().eq(0).text(),
-				"segment_type" : $(this).children().eq(2).text(),
-				"segment_repeat" : $(this).children().eq(3).text(),
-				"segment_area" : $(this).find("input:text").val(),
-				"individual_num" : 3
-			};
-			
-			segment_array.push(seg_data);
-			
-		});
 		
 		segment_array = [];
 		
@@ -4271,7 +4254,7 @@
 			}
 			segment_array.push(data);
 		}
-		console.log(segment_array);
+
 		var cancel = new Array();
 		
 		$.ajax({

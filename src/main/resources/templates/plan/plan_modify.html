@@ -1295,7 +1295,6 @@
 	var user = /*[[${user}]]*/ "null";
 	var sch = /*[[${sch}]]*/ "null";
 	let segment = /*[[${segment}]]*/ "null";
-	console.log(segment);
 	
 	//시험구 배치 데이터
 	var data1 = new Object();
@@ -3727,6 +3726,8 @@
 	//기존 데이터로 구획 설정 그려주기
 	function loadFactors(){
 		
+		var factor2 = document.querySelector('#text_inner2').innerText.split(',').length;
+		
 		var resultArray = new Array();
 		
 		var grow_type = $("#grow_type").attr("data-select");
@@ -3741,7 +3742,13 @@
 					"num" : segment[i].segment_index,
 					"repeat" : segment[i].segment_repeat,
 					"type" : segment[i].segment_type,
-					"area" : segment[i].segment_area
+					"order": segment[i].segment_order,
+					"area": segment[i].segment_area,
+					"segmentId": segment[i].segment_grid_code,
+					"segment_horizon": segment[i].segment_horizon,
+					"segment_vertical": segment[i].segment_vertical,
+					"segment_zindex": segment[i].segment_zindex,
+					"segment_aspect": segment[i].segment_aspect,
 				};
 				resultArray.push(result_data);
 			}
@@ -3841,7 +3848,7 @@
 			});//end sortable
 			
 			var getDataArr = [...resultArray];
-			getDataResult(getDataArr, grow_type);
+			getDataResult(getDataArr, grow_type, "", "modify");
 			
 		}else if(grow_type == "1"){ //난괴법
 
@@ -3851,8 +3858,12 @@
 					"num" : segment[i].segment_index,
 					"repeat" : segment[i].segment_repeat,
 					"type" : segment[i].segment_type,
-					"area" : segment[i].segment_area,
-					"segmentId" : segment[i].segment_grid_code,
+					"order": segment[i].segment_order,
+					"segmentId": segment[i].segment_grid_code,
+					"segment_horizon": segment[i].segment_horizon,
+					"segment_vertical": segment[i].segment_vertical,
+					"segment_zindex": segment[i].segment_zindex,
+					"segment_aspect": segment[i].segment_aspect,
 				};
 				resultArray.push(result_data);
 			}
@@ -3984,7 +3995,7 @@
 			}
 			
 			var getDataArr = [...resultArray];
-			getDataResult(getDataArr, grow_type);
+			getDataResult(getDataArr, grow_type, '', 'modify');
 			
 		}else if(grow_type == "2"){ //분할구배치법
 			
@@ -3994,7 +4005,13 @@
 					"num" : segment[i].segment_index,
 					"repeat" : segment[i].segment_repeat,
 					"type" : segment[i].segment_type,
-					"area" : segment[i].segment_area
+					"order": segment[i].segment_order,
+					"area": segment[i].segment_area,
+					"segmentId": segment[i].segment_grid_code,
+					"segment_horizon": segment[i].segment_horizon,
+					"segment_vertical": segment[i].segment_vertical,
+					"segment_zindex": segment[i].segment_zindex,
+					"segment_aspect": segment[i].segment_aspect,
 				};
 				resultArray.push(result_data);
 			}
@@ -4119,7 +4136,7 @@
 								resultArray[i].num = plusNum;
 								resultArray[i].id = idArr[i];
 							}
-							console.log(resultArray);
+
 							var getDataArr = [...resultArray];
 							getDataResult(getDataArr, grow_type, 'innerText');
 						}//end else
@@ -4138,8 +4155,7 @@
 						}
 					}
 				});
-			}
-			
+			}	
 			
 		}else if(grow_type == "3"){ //세세구배치법
 			
@@ -4274,7 +4290,7 @@
 								resultArray[i].num = plusNum;
 								resultArray[i].id = idArr[i];
 							}
-							console.log(resultArray);
+
 							var getDataArr = [...resultArray];
 							getDataResult(getDataArr, grow_type, 'innerText');
 							
@@ -4295,11 +4311,10 @@
 				});
 			}
 			
-			
 		}
 		//이곳에서 데이터 받아와야함 : important
 		var getDataArr = [...resultArray];
-		getDataResult(getDataArr, grow_type);
+		getDataResult(getDataArr, grow_type, '', 'modify');
 	}//end loadFactors
 	
 	function gridFactors(){
@@ -4834,7 +4849,6 @@
 				}
 				$("#info_popup").css("display", "none");
 			}, (duration*1000));
-			
 			//그룹별 색깔 적용해주기
 			if(factor2.length !== 0){
 				$(document).find(".table_content").each(function(i, item){
