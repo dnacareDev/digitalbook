@@ -44,9 +44,9 @@
 	<insert id="InsertReport" parameterType="java.util.ArrayList">
 		<foreach collection="list" item="item" separator=";">
 			INSERT INTO report
-			(user_name, report_code, report_number, report_title, report_file_id, create_date, modify_date)
+			(user_name, report_code, report_number, report_title, report_file_id, create_date, modify_date, report_status)
 			VALUES
-			(#{item.user_name}, #{item.report_code}, #{item.report_number}, #{item.report_title}, #{item.report_file_id}, NOW(), NOW())
+			(#{item.user_name}, #{item.report_code}, #{item.report_number}, #{item.report_title}, #{item.report_file_id}, NOW(), NOW(), 1)
 		</foreach>
 	</insert>
 	
@@ -74,5 +74,15 @@
 		SELECT * FROM report_file r
 		LEFT JOIN user u ON r.user_id = u.user_id
 	</select>
+	
+	<!-- 기존 과제 상태 변경 -->
+	<update id="UpdateReportStatus" parameterType="java.util.ArrayList">
+		<foreach collection="reports" item="item" separator=";">
+			UPDATE report
+			SET
+			report_status = 0
+			WHERE report_code = #{item.report_code}
+		</foreach>
+	</update>
 	
 </mapper>

@@ -30,4 +30,7 @@ public interface ReportService
 
 	// 과제 삭제
 	int DeleteReport(int report_file_id);
+	
+	//과제 상태 변경
+	int UpdateReportStatus(List<Report> reports);
 }

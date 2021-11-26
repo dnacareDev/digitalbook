@@ -540,7 +540,13 @@
 			segment_type,
 			segment_repeat,
 			segment_area,
-			individual_num
+			individual_num,
+			segment_aspect,
+			segment_horizon,
+			segment_vertical,
+			segment_grid_code,
+			segment_order,
+			segment_zindex
 		)
 		VALUES
 		(
@@ -550,7 +556,13 @@
 			#{item.segment_type},
 			#{item.segment_repeat},
 			#{item.segment_area},
-			#{item.individual_num}
+			#{item.individual_num},
+			#{item.segment_aspect},
+			#{item.segment_horizon},
+			#{item.segment_vertical},
+			#{item.segment_grid_code},
+			#{item.segment_order},
+			#{item.segment_zindex}
 		)
 		</foreach>
 	</insert>

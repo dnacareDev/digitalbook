@@ -37,4 +37,7 @@ public interface ReportMapper
 	
 	//엑셀 다운로드할 과제 list
 	List<ReportFile> selectReportExcelList();
+	
+	//과제 상태 변경
+	int UpdateReportStatus(@Param("reports") List<Report> reports);
 }

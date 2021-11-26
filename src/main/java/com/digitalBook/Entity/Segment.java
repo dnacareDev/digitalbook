@@ -23,5 +23,8 @@ public class Segment {
 	private int segment_horizon;			//구획 가로
 	private int segment_vertical;			//구획 세로
 	private int individual_num;				//개체수
+	private String segment_grid_code;		//그리드 구획 ID
+	private int segment_order;				//그리드 구획 번호
+	private int segment_zindex;				//그리드 레이어 순번
 	
 }
