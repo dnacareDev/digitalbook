@@ -3366,8 +3366,8 @@
 			for(var i = 0; i < resultArray.length; i++){
 				add_list += '<tr data-id="'+resultArray[i].id.split("-")[0]+"-"+resultArray[i].repeat+'" class="table_content">';
 			    add_list += '<td class="table_num">'+resultArray[i].num+'</td>';
-			    add_list += '<td>'+resultArray[i].id+'</td>';
-			    add_list += '<td>'+resultArray[i].type+'</td>';
+			    add_list += '<td class="table_id">'+resultArray[i].id+'</td>';
+			    add_list += '<td class="table_type">'+resultArray[i].type+'</td>';
 			    add_list += '<td>'+resultArray[i].repeat+'</td>';
 			    add_list += '<td><input type="text" id="mil" class="seg_area" value="'+resultArray[i].area+'"></td>';
 			    add_list += '</tr>';
@@ -3437,7 +3437,7 @@
 						}
 						console.log(resultArray);
 						var getDataArr = [...resultArray];
-						getDataResult(getDataArr);
+						getDataResult(getDataArr, grow_type, 'innerText');
 					}
 				}//end stop
 			});//end sortable
@@ -3493,8 +3493,8 @@
 							}
 						}
 					    add_list += '<td class="table_num">'+resultArray[j].num+'</td>';
-					    add_list += '<td>'+resultArray[j].id+'</td>';
-					    add_list += '<td>'+resultArray[j].type+'</td>';
+					    add_list += '<td class="table_id">'+resultArray[j].id+'</td>';
+					    add_list += '<td class="table_type">'+resultArray[j].type+'</td>';
 					    add_list += '<td>'+resultArray[j].repeat+'</td>';
 					    add_list += '<td><input type="text" id="mil" class="seg_area" value="'+resultArray[j].area+'"></td>';
 					    add_list += '</tr>';
@@ -3576,7 +3576,7 @@
 							}
 							console.log(resultArray);
 							var getDataArr = [...resultArray];
-							getDataResult(getDataArr);
+							getDataResult(getDataArr, grow_type, 'innerText');
 						}
 					}
 				});//end sortable
@@ -3634,8 +3634,8 @@
 							}
 						}
 					    add_list += '<td class="table_num">'+resultArray[j].num+'</td>';
-					    add_list += '<td>'+resultArray[j].id+'</td>';
-					    add_list += '<td>'+resultArray[j].type+'</td>';
+					    add_list += '<td class="table_id">'+resultArray[j].id+'</td>';
+					    add_list += '<td class="table_type">'+resultArray[j].type+'</td>';
 					    add_list += '<td>'+resultArray[j].repeat+'</td>';
 					    add_list += '<td><input type="text" id="mil" class="seg_area" value="'+resultArray[j].area+'"></td>';
 					    add_list += '</tr>';
@@ -3717,7 +3717,7 @@
 							}
 							console.log(resultArray);
 							var getDataArr = [...resultArray];
-							getDataResult(getDataArr);
+							getDataResult(getDataArr, grow_type, 'innerText');
 						}//end else
 						
 					}//end stop
@@ -3788,8 +3788,8 @@
 							}
 						}
 					    add_list += '<td class="table_num">'+resultArray[j].num+'</td>';
-					    add_list += '<td>'+resultArray[j].id+'</td>';
-					    add_list += '<td>'+resultArray[j].type+'</td>';
+					    add_list += '<td class="table_id">'+resultArray[j].id+'</td>';
+					    add_list += '<td class="table_type">'+resultArray[j].type+'</td>';
 					    add_list += '<td>'+resultArray[j].repeat+'</td>';
 					    add_list += '<td><input type="text" id="mil" class="seg_area" value="'+resultArray[j].area+'"></td>';
 					    add_list += '</tr>';
@@ -3872,7 +3872,7 @@
 							}
 							console.log(resultArray);
 							var getDataArr = [...resultArray];
-							getDataResult(getDataArr);
+							getDataResult(getDataArr, grow_type, 'innerText');
 							
 						}//end else
 					}
@@ -3895,7 +3895,7 @@
 		}
 		//이곳에서 데이터 받아와야함 : important
 		var getDataArr = [...resultArray];
-		getDataResult(getDataArr);
+		getDataResult(getDataArr, grow_type);
 	}//end loadFactors
 	
 	function gridFactors(){
@@ -4048,8 +4048,8 @@
 			for(var i = 0; i < resultArray.length; i++){
 				add_list += '<tr data-id="'+resultArray[i].id.split("-")[0]+"-"+resultArray[i].repeat+'" class="table_content">';
 			    add_list += '<td class="table_num">'+resultArray[i].num+'</td>';
-			    add_list += '<td>'+resultArray[i].id+'</td>';
-			    add_list += '<td>'+resultArray[i].type+'</td>';
+			    add_list += '<td class="table_id">'+resultArray[i].id+'</td>';
+			    add_list += '<td class="table_type">'+resultArray[i].type+'</td>';
 			    add_list += '<td>'+resultArray[i].repeat+'</td>';
 			    add_list += '<td><input type="text" id="mil" class="seg_area" value="0"></td>';
 			    add_list += '</tr>';
@@ -4124,7 +4124,7 @@
 							}
 							console.log(resultArray);
 							var getDataArr = [...resultArray];
-							getDataResult(getDataArr);
+							getDataResult(getDataArr, grow_type, 'innerText');
 						}
 					}//end stop
 				});//end sortable
@@ -4185,8 +4185,8 @@
 							}
 						}
 					    add_list += '<td class="table_num">'+resultArray[j].num+'</td>';
-					    add_list += '<td>'+resultArray[j].id+'</td>';
-					    add_list += '<td>'+resultArray[j].type+'</td>';
+					    add_list += '<td class="table_id">'+resultArray[j].id+'</td>';
+					    add_list += '<td class="table_type">'+resultArray[j].type+'</td>';
 					    add_list += '<td>'+resultArray[j].repeat+'</td>';
 					    add_list += '<td><input type="text" id="mil" class="seg_area" value="0"></td>';
 					    add_list += '</tr>';
@@ -4273,7 +4273,7 @@
 								}
 								console.log(resultArray);
 								var getDataArr = [...resultArray];
-								getDataResult(getDataArr);
+								getDataResult(getDataArr, grow_type, 'innerText');
 							}
 						}//end stop
 					});//end sortable
@@ -4335,8 +4335,8 @@
 							}
 						}
 					    add_list += '<td class="table_num">'+resultArray[j].num+'</td>';
-					    add_list += '<td>'+resultArray[j].id+'</td>';
-					    add_list += '<td>'+resultArray[j].type+'</td>';
+					    add_list += '<td class="table_id">'+resultArray[j].id+'</td>';
+					    add_list += '<td class="table_type">'+resultArray[j].type+'</td>';
 					    add_list += '<td>'+resultArray[j].repeat+'</td>';
 					    add_list += '<td><input type="text" id="mil" class="seg_area" value="0"></td>';
 					    add_list += '</tr>';
@@ -4422,7 +4422,7 @@
 								}
 								console.log(resultArray);
 								var getDataArr = [...resultArray];
-								getDataResult(getDataArr);
+								getDataResult(getDataArr, grow_type, 'innerText');
 							}//end else
 								
 						}//end stop
@@ -4496,8 +4496,8 @@
 							}
 						}
 					    add_list += '<td class="table_num">'+resultArray[j].num+'</td>';
-					    add_list += '<td>'+resultArray[j].id+'</td>';
-					    add_list += '<td>'+resultArray[j].type+'</td>';
+					    add_list += '<td class="table_id">'+resultArray[j].id+'</td>';
+					    add_list += '<td class="table_type">'+resultArray[j].type+'</td>';
 					    add_list += '<td>'+resultArray[j].repeat+'</td>';
 					    add_list += '<td><input type="text" id="mil" class="seg_area" value="0"></td>';
 					    add_list += '</tr>';
@@ -4584,7 +4584,7 @@
 								}
 								console.log(resultArray);
 								var getDataArr = [...resultArray];
-								getDataResult(getDataArr);
+								getDataResult(getDataArr, grow_type, 'innerText');
 								
 							}//end else
 								
@@ -4643,6 +4643,201 @@
 		});
 		
 	}
+	
+	/* s: 요인랜덤화 */
+	
+	function arryToObject(){
+		var copyResultArray = [...resultArray];
+		var calcObject = new Object();
+		
+		var factor1El = document.querySelector('#text_inner1');
+		var factor2El = document.querySelector('#text_inner2');
+		var factor3El = document.querySelector('#text_inner3');
+		var repeatEl = document.querySelector('#plan_repeat');
+		
+		var factor1 = factor1El.innerText.split(',').length;
+		var factor2 = factor2El.innerText.split(',').length;
+		var factor3 = factor3El.innerText.split(',').length;
+		var repeatVal = repeatEl.value;
+		
+
+		var obA = {};
+		var obB = {};
+		var obC = {};
+
+		var arrIndex = 0;
+		for(let r = 0; r < repeatVal; r++){
+			calcObject["R"+(r+1)] = {};
+			for(let a = 0; a < factor1; a++){
+				obA = Object.assign(obA, {["A"+(a+1)]: {}});
+				calcObject["R"+(r+1)] = obA;
+				for(let b = 0; b < factor2; b++){ 
+					obB = Object.assign(obB, {["B"+(b+1)]: {}});
+					calcObject["R"+(r+1)]["A"+(a+1)] = obB;
+					
+					for(let c = 0; c < factor3; c++){					
+						obC = Object.assign(obC, {["C"+(c+1)]: copyResultArray[arrIndex]});
+						calcObject["R"+(r+1)]["A"+(a+1)]["B"+(b+1)] = obC;
+						arrIndex++;
+					}
+					obC = {};
+				}
+				obB = {};
+			}
+			obA = {};
+		}
+		
+		return calcObject;
+	}
+	
+	
+	
+	$("#random01").on("click", function(){
+		
+		var growType = document.querySelector('#grow_type').value;
+		
+		var obR = {};
+
+		var arrA = [];
+		var inAll = 0;
+		var inR = 0;
+		var inA = 0;
+		
+		var arrRanAll = [];
+		
+		var repeatEl = document.querySelector('#plan_repeat');
+		var repeatVal = repeatEl.value;
+		
+		/* s: object to random */
+		for(const [keyR, valR] of Object.entries(arryToObject())){
+			obR = Object.assign(obR, {["R"+(inR+1)] : []});
+			for(const [keyA, valA] of Object.entries(valR)){
+				arrA.push({[keyA]:valA});
+				inA++; 
+			}
+			arrA.sort(function(){
+				return Math.random() - Math.random();
+			});
+			
+			obR["R"+(inR+1)] = arrA;
+			arrA = [];
+			inR++;
+		}
+		/* e: object to random */
+		
+		/* s: randomObject to array */
+		for(const [keyR, valR] of Object.entries(obR)){
+			for(const [keyA, valA] of Object.entries(valR)){
+				for(const [keyB, valB] of Object.entries(valA)){
+					for(const [keyC, valC] of Object.entries(valB)){
+						for(const [resultKey, resultVal] of Object.entries(valC)){
+							arrRanAll.push(resultVal);
+						}
+					}
+				}
+			}
+		}
+		
+		var arrLeng = Math.ceil(arrRanAll.length / repeatVal);
+		
+		for(var i = 0; i < arrRanAll.length ; i++){ // order 초기화
+			arrRanAll[i].order = i;
+		}
+		var numRender = 0;
+		for(var i = 0; i < repeatVal; i++){ // num 초기화
+			for(var t = 0; t < arrLeng; t++){
+				arrRanAll[numRender].num = t + 1;
+				numRender++;
+			}
+		}
+
+		resultArray = arrRanAll;
+		reRenderTableComp(growType, 'innerText');
+		
+		getDataResult(arrRanAll, growType, 'innerText');
+	});
+	/* e: 요인랜덤화 */
+	
+	/* s: 수준랜덤화 */
+	$("#random02").on("click", function(){		
+		
+		var growType = document.querySelector('#grow_type').value;
+		
+		var obR = {};
+		var obA = {};
+		var obB = {};
+
+		var arrB = [];
+		var inAll = 0;
+		var inR = 0;
+		var inA = 0;
+		var inB = 0;
+		
+		var arrRanAll = [];
+		
+		var repeatEl = document.querySelector('#plan_repeat');
+		var repeatVal = repeatEl.value;
+		
+		/* s: object to random */
+		for(const [keyR, valR] of Object.entries(arryToObject())){
+			obR = Object.assign(obR, {["R"+(inR+1)] : {}});
+			for(const [keyA, valA] of Object.entries(valR)){
+				obA = Object.assign(obA, {["A"+(inA+1)] : {}});
+				for(const [keyB, valB] of Object.entries(valA)){
+					for(const [keyC, valC] of Object.entries(valB)){
+						arrB.push({[keyC]:valC});
+					}
+					inB++;
+				}
+				arrB.sort(function(){
+					return Math.random() - Math.random();
+				});	
+				obR["R"+(inR+1)]["A"+(inA+1)] = arrB;
+				arrB = [];
+				inB = 0;
+				inA++;
+			}
+			obA = {};
+			inA = 0;
+			inR++;
+		}
+		
+		
+		
+		/* s: randomObject to array */
+		for(const [keyR, valR] of Object.entries(obR)){
+			for(const [keyA, valA] of Object.entries(valR)){
+				for(const [keyB, valB] of Object.entries(valA)){
+					for(const [keyC, valC] of Object.entries(valB)){
+						arrRanAll.push(valC);
+					}
+				}
+			}
+		}
+		
+		var arrLeng = Math.ceil(arrRanAll.length / repeatVal);
+		
+		for(var i = 0; i < arrRanAll.length ; i++){ // order 초기화
+			arrRanAll[i].order = i;
+		}
+		var numRender = 0;
+		for(var i = 0; i < repeatVal; i++){ // num 초기화
+			for(var t = 0; t < arrLeng; t++){
+				arrRanAll[numRender].num = t + 1;
+				numRender++;
+			}
+		}
+		//console.log(arrRanAll,"arrRanAll");
+		/* e: randomObject to array */
+		resultArray = arrRanAll;
+		reRenderTableComp(growType, 'innerText');
+		
+		getDataResult(arrRanAll, growType, 'innerText');
+		
+		
+	});
+	/* e: 수준랜덤화 */
+	
 	
 	//구획정보 처리포장면적 이벤트
 	$(document).on("keyup", ".container1 .table_content:eq(0) .seg_area", function(){
