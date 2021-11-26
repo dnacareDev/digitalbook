@@ -40,6 +40,7 @@ function getDataResult(getDataArr, type, innerType){
 	segmentInnerType = innerType;
 	
 	tableEls = document.querySelectorAll('.step4-container .table_content');
+	console.log(segmentData);
 	renderSegment(segmentData);
 }
 
@@ -89,7 +90,7 @@ function onColorChange(){
 	
 	var plan_repeat = $("#plan_repeat").val();
 	
-	var grow_type = $("#grow_type option:selected").val();
+	// var grow_type = $("#grow_type option:selected").getAttribute("data-select");
 	
 	var num = 0;
 	var num1 = 0;
@@ -397,6 +398,8 @@ function onClickStepFourWrap(e){
 
 function activeList(thisOrder){
 console.log('zindex 작업 구역');
+	var thisZindex = parseInt(segmentLi[thisIndex].style.zIndex, 10);
+	var zArr = [];
 	for(var z = 0; z < segmentEls.length; z++){	
 	//console.log(segmentEls.length,'sfff');
 		if(segmentLi[z].classList.contains('active') && z !== thisOrder){
@@ -407,19 +410,22 @@ console.log('zindex 작업 구역');
 			tableEls[z].classList.remove('active');
 			//console.log("2");
 		}
-		if(z == thisOrder){		
-			segmentLi[thisOrder].style.zIndex = segmentLi.length - 1;
-			//console.log("3");
-		}else{
-			segmentLi[z].style.zIndex = z;
-			//console.log("4");
+		var allZIndex = parseInt(segmentLi[z].style.zIndex, 10);
+		var temp = "";
+		if(allZIndex < thisZindex){
+			temp = allZIndex;
+		}else if(allZIndex > thisZindex){
+			temp = (allZIndex - 1);
+		}else if(allZIndex === thisZindex){
+			temp = (segmentEls.length - 1);
 		}
-		if(segmentLi[z] == segmentLi[thisOrder]){
-			segmentLi[thisIndex].style.zIndex = thisIndex - 1;
-		}else{
-			segmentLi[thisIndex].style.zIndex = segmentLi.length + 1;
-		}
+		zArr.push(temp);	
 	}
+	for(var z = 0; z < segmentEls.length; z++){
+		segmentLi[z].style.zIndex = zArr[z];
+	}
+	
+	console.log('zindex:',zArr);
 	segmentLi[thisIndex].classList.add('active');
 	tableEls[thisIndex].classList.add('active');
 	
