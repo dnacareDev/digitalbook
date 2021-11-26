@@ -3988,7 +3988,7 @@
 	
 	$("#random01").on("click", function(){
 		
-		var growType = document.querySelector('#grow_type').value;
+		var growType = document.querySelector('#grow_type').getAttribute("data-select");
 		
 		var obR = {};
 
@@ -4055,7 +4055,9 @@
 	/* s: 수준랜덤화 */
 	$("#random02").on("click", function(){		
 		
-		var growType = document.querySelector('#grow_type').value;
+		var growType = document.querySelector('#grow_type').getAttribute("data-select");
+		
+		console.log(growType,"growType");
 		
 		var obR = {};
 		var obA = {};

@@ -89,7 +89,7 @@ function onColorChange(){
 	
 	var plan_repeat = $("#plan_repeat").val();
 	
-	var grow_type = $("#grow_type option:selected").val();
+	// var grow_type = $("#grow_type option:selected").getAttribute("data-select");
 	
 	var num = 0;
 	var num1 = 0;
