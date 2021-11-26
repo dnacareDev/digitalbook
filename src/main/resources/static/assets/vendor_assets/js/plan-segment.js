@@ -176,31 +176,17 @@ function onColorChange(){
 			rightBtn.style.display ="block";	
 		}	
 		console.log("0입니다");	
-		//만들어준 factorArray를 가지고 최종 copyResultArray 만들어 주기
-		for(var i = 0; i < plan_repeat; i++){
-			level++;
-			num1 = 0;
-			for(var j = 0; j < factorArray.length; j++){
-				num1++;
-				var number = num1;
-				var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : segmentData[((i*j) + j)].order, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
-				
-				copyResultArray.push(data);
-			}
-			
-		}//end for
-		
 		//분할구배치법에서 그룹 나눠줄 id array
 		var arr = new Array();
-		for(var i = 0; i < copyResultArray.length; i++){
-			arr[i] = copyResultArray[i].id.split("-")[0];
+		for(var i = 0; i < segmentData.length; i++){
+			arr[i] = segmentData[i].id.split("-")[0];
 		}
 		
 		var idArray = Array.from(new Set(arr));
 		var idArrayNow = "";
 		
-		for(var j = 0; j < copyResultArray.length; j++){
-			var checkId = copyResultArray[j].id.split("-")[0];
+		for(var j = 0; j < segmentData.length; j++){
+			var checkId = segmentData[j].id.split("-")[0];
 			for(var k = 0; k < idArray.length; k++){
 				if(checkId == idArray[k]){
 					idArrayNow = idArray[k];
@@ -214,31 +200,18 @@ function onColorChange(){
 			rightBtn.style.display ="block";	
 		}	
 		console.log("1입니다.")
-		//만들어준 factorArray를 가지고 최종 copyResultArray 만들어 주기
-		for(var i = 0; i < plan_repeat; i++){
-			level++;
-			num1 = 0;
-			for(var j = 0; j < factorArray.length; j++){
-				num1++;
-				var number = num1;
-				var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : segmentData[((i*j) + j)].order, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
-				
-				copyResultArray.push(data);
-			}
-			
-		}//end for
 		
 		//분할구배치법에서 그룹 나눠줄 id array
 		var arr = new Array();
-		for(var i = 0; i < copyResultArray.length; i++){
-			arr[i] = copyResultArray[i].id.split("-")[0];
+		for(var i = 0; i < segmentData.length; i++){
+			arr[i] = segmentData[i].id.split("-")[0];
 		}
 		
 		var idArray = Array.from(new Set(arr));
 		var idArrayNow = "";
 		
-		for(var j = 0; j < copyResultArray.length; j++){
-			var checkId = copyResultArray[j].id.split("-")[0];
+		for(var j = 0; j < segmentData.length; j++){
+			var checkId = segmentData[j].id.split("-")[0];
 			for(var k = 0; k < idArray.length; k++){
 				if(checkId == idArray[k]){
 					idArrayNow = idArray[k];
@@ -252,31 +225,18 @@ function onColorChange(){
 		if(rightBtn){
 			rightBtn.style.display ="none";	
 		}	
-		//만들어준 factorArray를 가지고 최종 copyResultArray 만들어 주기
-		for(var i = 0; i < plan_repeat; i++){
-			level++;
-			num1 = 0;
-			for(var j = 0; j < factorArray.length; j++){
-				num1++;
-				var number = num1;
-				var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : segmentData[((i*j) + j)].order, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
-				
-				copyResultArray.push(data);
-			}
-			
-		}//end for
 		
 		//분할구배치법에서 그룹 나눠줄 id array
 		var arr = new Array();
-		for(var i = 0; i < copyResultArray.length; i++){
-			arr[i] = copyResultArray[i].id.split("-")[0];
+		for(var i = 0; i < segmentData.length; i++){
+			arr[i] = segmentData[i].id.split("-")[0];
 		}
 		
 		var idArray = Array.from(new Set(arr));
 		var idArrayNow = "";
 		
-		for(var j = 0; j < copyResultArray.length; j++){
-			var checkId = copyResultArray[j].id.split("-")[0];
+		for(var j = 0; j < segmentData.length; j++){
+			var checkId = segmentData[j].id.split("-")[0];
 			for(var k = 0; k < idArray.length; k++){
 				if(checkId == idArray[k]){
 					idArrayNow = idArray[k];
@@ -293,29 +253,16 @@ function onColorChange(){
 			rightBtn.style.display ="none";	
 		}	
 		
-		//만들어준 factorArray를 가지고 최종 copyResultArray 만들어 주기
-		for(var i = 0; i < plan_repeat; i++){
-			level++;
-			num1 = 0;
-			for(var j = 0; j < factorArray.length; j++){
-				num1++;
-				var number = num1;
-				var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : segmentData[((i*j) + j)].order, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1};
-				
-				copyResultArray.push(data);
-			}
-		}//end for
-		
 		//분할구배치법에서 그룹 나눠줄 id array
 		var arr = new Array();
-		for(var i = 0; i < copyResultArray.length; i++){
-			arr[i] = copyResultArray[i].id.split("-")[0]+"-"+copyResultArray[i].id.split("-")[1];
+		for(var i = 0; i < segmentData.length; i++){
+			arr[i] = segmentData[i].id.split("-")[0]+"-"+segmentData[i].id.split("-")[1];
 		}
 		var idArray = Array.from(new Set(arr));
 		var idArrayNow = "";
 				
-		for(var j = 0; j < copyResultArray.length; j++){
-			var checkId = copyResultArray[j].id.split("-")[0]+"-"+copyResultArray[j].id.split("-")[1];
+		for(var j = 0; j < segmentData.length; j++){
+			var checkId = segmentData[j].id.split("-")[0]+"-"+segmentData[j].id.split("-")[1];
 			for(var k = 0; k < idArray.length; k++){
 				if(checkId == idArray[k]){
 					idArrayNow = idArray[k];
@@ -458,8 +405,7 @@ function onClickTableEls(e){
 	
 	var toScrollX = parseInt(translateValue.split(',')[0].split('(')[1].split('px')[0], 10);
 	var toScrollY = parseInt(translateValue.split(',')[1].split(')')[0].split('px')[0], 10);
-	
-	console.log(toScrollX, toScrollY);
+
 	$('.background-wrap').stop().animate( { scrollLeft : toScrollX } );
 	$('.background-wrap').stop().animate( { scrollTop : toScrollY } );
 }
@@ -631,13 +577,6 @@ function segmentSetting(data){
 	row = Math.ceil(segmentEls.length / column);
 	elRender = 0;
 	
-	// 제일 큰 width 값 elWidth에 넣기
-	elWidth = 0;
-	for(var i = 0; i < dataGet.length; i++){
-		if(elWidth < Math.ceil(segmentEls[i].clientWidth)){
-			elWidth = Math.ceil(segmentEls[i].clientWidth);
-		}
-	}
 	
 	// step4 wrap width height 세팅
 	var wrapWidth = ( column * elWidth ) + ( 46 * 2 );
@@ -651,14 +590,13 @@ function segmentSetting(data){
 	}
 	// elwidth 0 이하로 불러올때 대비
 	var dataIdLength = 0;
-	if(elWidth <= 0){
-		for(var i = 0; i < dataGet.length; i++){
-			if(dataIdLength < dataGet[i].id.length){
-				dataIdLength = dataGet[i].id.length;
-			}
+	elWidth = 0;
+	for(var i = 0; i < dataGet.length; i++){
+		if(dataIdLength < dataGet[i].id.length){
+			dataIdLength = dataGet[i].id.length;
 		}
-		elWidth = (dataIdLength * 10) + 26;
 	}
+	elWidth = (dataIdLength * 10) + 26;
 	
 	if(segmentType !== undefined){
 		var planRepeat = document.querySelector("#plan_repeat");
@@ -673,10 +611,7 @@ function segmentSetting(data){
 		if(segmentType == 2){ // ************************분할구배치법
 			
 			var getDataId = segmentEls[elRender].getAttribute('data-segmentid');
-			var getClass = document.getElementsByClassName(getDataId);
-		
-			
-			
+			var getClass = document.getElementsByClassName(getDataId);			
 			
 			var getDataIdLength = 0; // 한 집구의 한 data섹션 갯수
 			for(var i = 0 ; i < dataGet.length; i++){
@@ -695,13 +630,13 @@ function segmentSetting(data){
 			if(factorLength3 == 0){
 				factorLength3 = 1
 			}
+			
 			for(var t = 0; t < planRepeat; t++){ // 집구별 반복
 				for(var c = 0; c < getColumnLength; c++){ // column
 					for(var r = 0; r < getDataIdLength; r++){ // row
 						if(segmentLi[elRender] !== undefined && segmentLi[elRender] !== null){
 						
 							segmentEls[elRender].style.width = elWidth + 'px';
-							console.log(segmentModify , 'gagsdfasdfafsdfasfasdf');
 							if(segmentModify !== "modify"){							
 								zindex.push(elRender);
 								segmentLi[elRender].style.zIndex = elRender;
@@ -720,7 +655,6 @@ function segmentSetting(data){
 								dataGet[elRender].segment_vertical = ( (elHeight * r) + WrapDiff + (((elHeight * getDataIdLength + type2Diff ) * t) ) );
 								dataGet[elRender].segment_zindex = elRender;
 							}else{
-								console.log(dataGet[elRender].segment_horizon);
 								segmentLi[elRender].style.transform = 'translate(' + dataGet[elRender].segment_horizon + 'px, ' + dataGet[elRender].segment_vertical + 'px)';
 								segmentLi[elRender].style.zIndex = dataGet[elRender].segment_zindex;
 								
@@ -731,16 +665,15 @@ function segmentSetting(data){
 							// color 설정
 							var idArrayAll2 = idArrayAll[0];
 							
-							if(idArrayAll2 !== undefined && segmentLi[elRender] !== null && factorLength2 !== 0){
-
+							if(idArrayAll2 !== undefined && segmentLi[elRender] !== null){
 								for(var j = 0; j < idArrayAll2.length; j++){
+			
 								var colorIndex = j % 10;
 									if(segmentEls[elRender].classList.contains(idArrayAll2[j])){
 										segmentEls[elRender].classList.add("id_color" + (colorIndex + 1));
 									}
 								}
 							}
-					
 							elRender++;
 						}
 					}
