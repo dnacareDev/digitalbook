@@ -4,7 +4,30 @@
  * Copyright 2011-2020 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
+html { scrollbar-arrow-color: #eeeeee73;
+    scrollbar-Track-Color: #eeeeee73; 
+    scrollbar-base-color: #eeeeee73;
+    scrollbar-Face-Color: #eeeeee73;
+    scrollbar-3dLight-Color: #eeeeee73;         
+    scrollbar-DarkShadow-Color: #eeeeee73;
+    scrollbar-Highlight-Color: #eeeeee73;
+    scrollbar-Shadow-Color: #eeeeee73}
 
+/* Chrome, Safari용 스크롤 바 */
+::-webkit-scrollbar {width: 5px; height: 12px; }
+::-webkit-scrollbar-button:start:decrement, 
+::-webkit-scrollbar-button:end:increment {display: block; width: 0px; height: 0px; background: url() rgba(0,0,0,.05);}
+::-webkit-scrollbar-track {  background: #eeeeee73;}
+::-webkit-scrollbar-thumb {  background: #7c87988e;  border-radius: 6px;}
+body{
+	min-width: 1300px !important;
+	overflow: auto;
+}
+@media only screen and (max-width: 1300px){
+	body{
+		overflow: auto !important;
+	}
+}
 :root {
 	--blue: #007bff;
 	--indigo: #6610f2;
@@ -18114,4 +18137,7 @@ span.color-dark.align-center{
 }
 span.red{margin-right:3px; vertical-align: middle;color: red}
 .contents{padding: 74px 0;}
+.main-content, .contents{
+	background-color: #F8F8F8
+}
 /*# sourceMappingURL=maps/bootstrap.css.map */

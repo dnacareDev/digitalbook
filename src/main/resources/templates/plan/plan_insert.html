@@ -132,7 +132,12 @@
 	    line-height: 30px;
 	    text-align: left;
 	}
-	
+	[id *="_popup"]{
+		width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center; z-index: 999999;
+	}
+	[id *="_popup"] > .card.card-default.card-md.mb-4{
+		border:1px solid #eee;width:400px;max-width: 400px
+	}
 </style>
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
@@ -171,12 +176,12 @@
 			                        <h3>Step 1. 포장선택<span></span></h3>
 			                    </div>
 			                    <div class="content clearfix">
-			                    	<div class="row ml-4" style="float: left; margin-left: 15px;">
-			        					<label class="color-dark align-center">포장</label>
+			                    	<div class="row ml-4 first_child_start" style="float: left; margin-left: 15px;">
+			        					<label class="color-dark align-center" style="margin-bottom:0;">포장</label>
 			                            <input type="text" class="form-control b-light" id="storage_input" readonly="readonly" style="width: 300px; margin-left: 10px; padding: 0;">
 			                    	</div>
 			                        <div class="btn_ver">
-			                            <button type="button" id="storageBtn" style="height:34.11px">신규등록</button>
+			                            <button type="button" id="storageBtn">신규등록</button>
 			                        </div>
 			                        <div class="btn btn_new">
 			                            
@@ -199,8 +204,8 @@
 											
  			                            </div>
 			                        </div>
-			                        <div class="row pageBtn" style="justify-content: center;">
-			                        	<div id="pageNum" style="text-align:center; margin: 2% 0 0 0;"></div>
+			                        <div class="row pageBtn" style="justify-content: center; padding-top: 15px;">
+			                        	<div id="pageNum" style="text-align:center;"></div>
 		                        	</div>
 		                        	<div class="submit clearfix">
 		                                <button type="button" id="step-1-btn" onclick="nextStep(2);">다음</button>
@@ -385,9 +390,9 @@
 			                        <div class="content_right">
 			                            <div class="img_inner">
 			                                <div class="top_btn-left">
-			                                    <h6><span class="red" style="color: #FF4141">*</span>열의 갯수</h6>
-			                                    <input type="text" value="10" id="mil2" style="border-radius: 5px 0 0 5px; width: 40%; margin-left: 10px;">
-			                                    <button id="step4-columnBtn" style="height: 31.7px; border-radius: 0 5px 5px 0; ">적용</button>
+			                                    <h6 style="margin-top: 10px;"><span class="red" style="color: #FF4141">*</span>열의 갯수</h6>
+			                                    <input type="text" value="10" id="mil2" style="height: 37.77px;border-radius: 5px 0 0 5px; width: 40%; margin-left: 10px;">
+			                                    <button id="step4-columnBtn" style="height: 37.77px; border-radius: 0 5px 5px 0; ">적용</button>
 			                                </div>
 			                                <div class="top_btn-right clearfix">
 			                                    <ul>
@@ -417,7 +422,7 @@
 			                                </div>
 			                            </div>
 			                        </div>
-			                        <div class="submit clearfix" style="margin-top: 20px;">
+			                        <div class="submit clearfix">
 			                            <button type="button" id="step-4-btn" onclick="nextStep(5);">다음</button>
 			                        </div>
 			                    </div>
@@ -506,8 +511,8 @@
 			
 		</div>
 		
-		<div class="atbd-notice" id="success_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
-        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+		<div class="atbd-notice" id="success_popup">
+        	<div class="card card-default card-md mb-4">
         		<div class="card-body">
         			<div class="atbd-notice__content">
         				<div class="atbd-notice__top text-center">
@@ -525,8 +530,8 @@
         		</div>
         	</div>
         </div>
-	    <div class="atbd-notice" id="info_popup" style="z-index:999999999999999; width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
-        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+	    <div class="atbd-notice" id="info_popup">
+        	<div class="card card-default card-md mb-4">
         		<div class="card-body">
         			<div class="atbd-notice__content">
         				<div class="atbd-notice__top text-center">
@@ -5039,7 +5044,7 @@
 			add_list += '<th>담당자(부)</th>';
 			add_list += '<th>시작일</th>';
 			add_list += '<th>종료일</th>';
-			add_list += '<th></th>';
+			add_list += '<th>삭제</th>';
 			add_list += '</tr>';
 			add_list += '</thead>';
 			add_list += '<tbody class="input_manager">';
@@ -5101,7 +5106,7 @@
 			str += '<td class="mng_input2" data-id="'+manager2_id+'">'+manager2_text+'</td>';
 			str += '<td class="mng_input3">'+start_date+'</td>';
 			str += '<td class="mng_input4">'+end_date+'</td>';
-			str += '<td><button type="button" class="del_manager">삭제</button></td>';
+			str += '<td><a href="" class="del_manager">삭제</a></td>';
 			str += '</tr>';
 			
 			input_manager.append(str);
@@ -5113,7 +5118,8 @@
 	});//end 담당자 추가 이벤트
 	
 	//담당자 삭제 이벤트
-	$(document).on("click", ".del_manager", function(){
+	$(document).on("click", ".del_manager", function(e){
+		e.preventDefault();
 		$(this).parent().parent().remove();
 	});
 	

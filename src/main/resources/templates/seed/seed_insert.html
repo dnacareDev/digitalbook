@@ -50,7 +50,7 @@
 	.row .aling-items-center{
 		justify-content: end;
 	}
-	.row.mt-1 .form-control,b-light.genetic_id.input1{
+	#actor{
 		float: left;
 	    width: 80%;
 	    vertical-align: middle;
@@ -66,6 +66,32 @@
 	    border-left: 0;
 	    width: 20%;
 	    padding: 0;
+	}
+	.content_cover{
+    	margin-left: 9.6%;
+	}
+	.titles{
+		float:left;
+	}
+	.title_inner{
+		float:right;
+		flex: 0 0 90%;
+    	max-width: 85%;
+	}
+	
+	.title_inner1 {
+		float:right;
+		flex: 0 0 50%;
+    	max-width: 50%;
+	}
+	[id *="_popup"]{
+		width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center; z-index: 999999;
+	}
+	[id *="_popup"] > .card.card-default.card-md.mb-4{
+		border:1px solid #eee;width:400px;max-width: 400px
+	}
+	.row{
+		flex-wrap: nowrap !important
 	}
 </style>
 <!-- 공통 헤더 -->
@@ -100,7 +126,7 @@
 				        	<div class="card">
 				        		<div class="card-body">
 				        			<div class="row">
-				        				<div class="col-sm-2 checkbox-theme-default custom-checkbox">
+				        				<div class="col-sm-2 checkbox-theme-default custom-checkbox" style="margin-bottom: 20px;">
 				        					<input type="checkbox" id="not_report" class="checkbox">
 				        					<label for="not_report">
 				        						<span class="checkbox-text color-dark">과제 비연계</span>
@@ -160,41 +186,45 @@
 							        										<label class="color-dark fw-500 align-center mt-1">품종/유전자원정보<span style="color: red;">*</span></label>
 							        									</div>
 							        									<div class="col-md-4 mb-25">
-							        										<input type="text" class="form-control b-light genetic_id input1" readonly="readonly">
+							        										<input type="text" class="form-control b-light genetic_id input1" id="actor" readonly="readonly">
 							        										<label class="btn btn-light genetic_show label1">조회</label>
 							        									</div>
-							        									<div class="col-md-2 mb-25 d-flex aling-items-center">
-										                                    <label for="seed_manager" class="color-dark fw-500 align-center">담당자<span style="color: red;">*</span></label>
-										                                </div>
-										                                <div class="col-md-4 mb-25">
-										                                	<div class="select" style="height: auto;">
-											                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control seed_manager" id="seed_manager" placeholder="담당자 선택" autocomplete="off">
-											                            		<ul class="select-hide">
-											                            			<th:block th:each="user : ${user}">
-											                            				<li class="seed_manager_list" onclick="selectOpt(this);"><span th:data-value="${user.user_id}" th:text="${user.user_name_k}"></span></li>
-											                            			</th:block>
-											                            		</ul>
-											                            	</div>
-							        										<!-- <select class="form-control b-light seed_manager" id="seed_manager">
-												                                <option disabled="disabled" selected="selected" hidden="hidden">담당자 선택</option>
-												                                <th:block th:each="user : ${user}">
-												                                	<option th:value="${user.user_id}" th:text="${user.user_name_k}"></option>
-												                                </th:block>
-												                            </select> -->
+							        									<div class="col-md-5 content_cover">
+								        									<div class="titles">
+											                                    <label for="seed_manager" class="title_asd"><span class="red">*</span>담당자</label>
+											                                </div>
+											                                <div class="col-md-10 mb-25 title_inner">
+											                                	<div class="select" style="height: auto; width:100%">
+												                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control seed_manager" id="seed_manager" placeholder="담당자 선택" autocomplete="off">
+												                            		<ul class="select-hide">
+												                            			<th:block th:each="user : ${user}">
+												                            				<li class="seed_manager_list" onclick="selectOpt(this);"><span th:data-value="${user.user_id}" th:text="${user.user_name_k}"></span></li>
+												                            			</th:block>
+												                            		</ul>
+												                            	</div>
+								        										<!-- <select class="form-control b-light seed_manager" id="seed_manager">
+													                                <option disabled="disabled" selected="selected" hidden="hidden">담당자 선택</option>
+													                                <th:block th:each="user : ${user}">
+													                                	<option th:value="${user.user_id}" th:text="${user.user_name_k}"></option>
+													                                </th:block>
+													                            </select> -->
+								        									</div>
 							        									</div>
 							        								</div>
 							        								<div class="row">
 							        									<div class="col-md-2 mb-25 d-flex aling-items-center">
-							        										<label for="seed_area" class="color-dark fw-500 align-center mt-1">생산지역<span style="color: red;">*</span></label>
+							        										<label for="seed_area" class="color-dark fw-500 align-center mt-1"><span class="red">*</span>생산지역</label>
 							        									</div>
 							        									<div class="col-md-4 mb-25">
 							        										<input type="text" class="form-control b-light seed_area" id="seed_area">
 							        									</div>
-							        									<div class="col-md-2 mb-25 d-flex aling-items-center">
-										                                    <label for="seed_year" class="color-dark fw-500 align-center">생산연도<span style="color: red;">*</span></label>
-										                                </div>
-										                                <div class="col-md-4 mb-25">
-							        										<input type="number" class="form-control b-light seed_year" id="seed_year">
+							        									<div class="col-md-5 content_cover">
+								        									<div class="titles">
+											                                    <label for="seed_year" class="color-dark fw-500 align-center"><span class="red">*</span>생산연도</label>
+											                                </div>
+											                                <div class="col-md-10 mb-25 title_inner">
+								        										<input type="number" class="form-control b-light seed_year" id="seed_year">
+								        									</div>
 							        									</div>
 							        								</div>
 							        								<div class="row">
@@ -219,32 +249,37 @@
 												                                <option value="외부농가">외부농가</option>
 												                            </select> -->
 							        									</div>
-							        									<div class="col-md-2 mb-25 d-flex aling-items-center">
-										                                    <label for="seed_amount" class="color-dark fw-500 align-center">수량(개수)<span style="color: red;">*</span></label>
-										                                </div>
-										                                <div class="col-md-2 mb-25">
-							        										<input type="number" class="form-control b-light seed_amount" id="seed_amount">
-							        									</div>
-							        									<div class="col-md-2 mb-25">
-							        										<div class="select" style="height: auto;">
-											                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control eaches_id" id="eaches_id" placeholder="단위 선택" autocomplete="off">
-											                            		<ul class="select-hide" style="width: 89%;">
-											                            			<th:block th:each="eaches : ${eaches}">
-											                            				<li class="eaches_id_list" onclick="selectOpt(this);"><span th:data-value="${eaches.eaches_id}" th:text="${eaches.eaches_name}"></span></li>
-											                            			</th:block>
-											                            		</ul>
-											                            	</div>
-							        										<!-- <select class="form-control b-light eaches_id" name="each" id="eaches_id">
-												                                <option disabled="disabled" selected="selected" hidden="hidden">단위 선택</option>
-												                                <th:block th:each="eaches : ${eaches}">
-												                                	<option th:value="${eaches.eaches_id}" th:text="${eaches.eaches_name}"></option>
-												                                </th:block>
-												                            </select> -->
+						        										<div class="col-md-5 content_cover">
+								        									<div class="titles">
+											                                    <label for="seed_amount" class="title_asd"><span class="red">*</span>수량(개수)</label>
+											                                </div>
+											                                <div class="title_cover_type">
+												                                <div class="col-md-5 mb-25 title_inner1">
+									        										<input type="number" class="form-control b-light seed_amount" id="seed_amount">
+									        									</div>
+								        									
+									        									<div class="col-md-5 mb-25 title_inner1">
+									        										<div class="select" style="height: auto;">
+													                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control eaches_id" id="eaches_id" placeholder="단위 선택" autocomplete="off">
+													                            		<ul class="select-hide" style="width: 89%;">
+													                            			<th:block th:each="eaches : ${eaches}">
+													                            				<li class="eaches_id_list" onclick="selectOpt(this);"><span th:data-value="${eaches.eaches_id}" th:text="${eaches.eaches_name}"></span></li>
+													                            			</th:block>
+													                            		</ul>
+													                            	</div>
+									        										<!-- <select class="form-control b-light eaches_id" name="each" id="eaches_id">
+														                                <option disabled="disabled" selected="selected" hidden="hidden">단위 선택</option>
+														                                <th:block th:each="eaches : ${eaches}">
+														                                	<option th:value="${eaches.eaches_id}" th:text="${eaches.eaches_name}"></option>
+														                                </th:block>
+														                            </select> -->
+									        									</div>
+								        									</div>
 							        									</div>
 							        								</div>
 							        								<div class="row">
 							        									<div class="col-md-2 mb-25 d-flex aling-items-center">
-							        										<label for="ware_id" class="color-dark fw-500 align-center mt-1">저장장소<span style="color: red;">*</span></label>
+							        										<label for="ware_id" class="color-dark fw-500 align-center mt-1"><span class="red">*</span>저장장소</label>
 							        									</div>
 							        									<div class="col-md-4 mb-25">
 							        										<div class="select" style="height: auto;">
@@ -262,13 +297,15 @@
 												                                </th:block>
 												                            </select> -->
 							        									</div>
-							        									<div class="col-md-2 mb-25 d-flex aling-items-center">
-										                                    <label for="ware_condition" class="color-dark fw-500 align-center">저장조건</label>
-										                                </div>
-										                                <div class="col-md-4 mb-25">
-							        										<input type="text" class="form-control b-light ware_condition" id="ware_condition" readonly="readonly">
+							        									<div class="col-md-5 content_cover">
+								        									<div class="titles">
+											                                    <label for="ware_condition" class="title_asd">저장조건</label>
+											                                </div>
+											                                <div class="col-md-10 mb-25 title_inner">
+								        										<input type="text" class="form-control b-light ware_condition" id="ware_condition" readonly="readonly">
+								        									</div>
 							        									</div>
-							        								</div>
+							        									</div>
 							        								<div class="row">
 							        									<div class="col-md-2 mb-25 d-flex aling-items-center">
 							        										<label for="seed_comment" class="color-dark fw-500 align-center">Comment</label>
@@ -291,24 +328,26 @@
 										                                <div class="col-md-4 mb-25">
 							        										<input type="text" class="form-control b-light seed_sender" id="seed_sender">
 							        									</div>
-							        									<div class="col-md-2 mb-25 d-flex aling-items-center">
-							        										<label for="seed_sender" class="color-dark fw-500 align-center mt-1">수취인 정보</label>
-							        									</div>
-							        									<div class="col-md-4 mb-25">
-							        										<div class="select" style="height: auto;">
-											                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control seed_receiver" id="seed_receiver" placeholder="수취인 선택" autocomplete="off">
-											                            		<ul class="select-hide">
-											                            			<th:block th:each="user : ${user}">
-											                            				<li class="seed_manager_list" onclick="selectOpt(this);"><span th:data-value="${user.user_id}" th:text="${user.user_name_k}"></span></li>
-											                            			</th:block>
-											                            		</ul>
-											                            	</div>
-							        										<!-- <select class="form-control b-light seed_receiver" name="seed_receiver" id="seed_receiver">
-												                                <option th:value=0>수취인 선택</option>
-												                                <th:block th:each="user : ${user}">
-												                                	<option th:value="${user.user_id}" th:text="${user.user_name_k}"></option>
-												                                </th:block>
-												                            </select> -->
+							        									<div class="col-md-4 content_cover">
+								        									<div class="titles">
+								        										<label for="seed_sender title_inner" class="color-dark fw-500 align-center mt-1">수취인 정보</label>
+								        									</div>
+								        									<div class="col-md-10 mb-25 title_inner">
+								        										<div class="select" style="height: auto; width:100%;">
+												                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control seed_receiver" id="seed_receiver" placeholder="수취인 선택" autocomplete="off">
+												                            		<ul class="select-hide">
+												                            			<th:block th:each="user : ${user}">
+												                            				<li class="seed_manager_list" onclick="selectOpt(this);"><span th:data-value="${user.user_id}" th:text="${user.user_name_k}"></span></li>
+												                            			</th:block>
+												                            		</ul>
+												                            	</div>
+								        										<!-- <select class="form-control b-light seed_receiver" name="seed_receiver" id="seed_receiver">
+													                                <option th:value=0>수취인 선택</option>
+													                                <th:block th:each="user : ${user}">
+													                                	<option th:value="${user.user_id}" th:text="${user.user_name_k}"></option>
+													                                </th:block>
+													                            </select> -->
+								        									</div>
 							        									</div>
 							        								</div>
 							        								<div class="row">
@@ -318,11 +357,13 @@
 										                                <div class="col-md-4 mb-25">
 							        										<input type="text" class="form-control b-light send_date send-datepicker0">
 							        									</div>
-							        									<div class="col-md-2 mb-25 d-flex aling-items-center">
-							        										<label class="color-dark fw-500 align-center mt-1">수취일자</label>
-							        									</div>
-							        									<div class="col-md-4 mb-25">
-							        										<input type="text" class="form-control b-light receive_date receive-datepicker0">
+							        									<div class="col-md-4 content_cover">
+								        									<div class="titles">
+								        										<label class="color-dark fw-500 align-center mt-1">수취일자</label>
+								        									</div>
+								        									<div class="col-md-10 mb-25 title_inner">
+								        										<input type="text" class="form-control b-light receive_date receive-datepicker0">
+								        									</div>
 							        									</div>
 							        								</div>
 							        								<div class="row">
