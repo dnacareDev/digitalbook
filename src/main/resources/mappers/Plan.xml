@@ -383,7 +383,8 @@
 	<update id="updatePlanStatus" parameterType="int">
 		UPDATE plan
 		SET plan_status = 2,
-			plan_step = 1
+			plan_step = 1,
+			plan_read = 0
 		WHERE plan_id = #{plan_id}
 	</update>
 	
