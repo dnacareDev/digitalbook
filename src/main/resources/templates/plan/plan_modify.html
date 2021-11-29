@@ -184,7 +184,6 @@
 			                                    <th>위치ID</th>
 	                            				<th>위치</th>
 	                            				<th>구획구분</th>
-	                            				<th>이용과</th>
 			                                </tr>
 			                                </thead>
 			                                <tbody id="storage_list">
@@ -221,9 +220,7 @@
 			                    <div class="content clearfix">
 			                        <div class="btn btn_select1" style="display:block">
 			                            <select class="form-control b-light department" id="select_view1" name="" disabled="disabled">
-			                                <th:block th:each="report : ${report}">
-			                                	<option th:value="${report.report_code}" th:text="${report.report_title +'('+ report.report_code} +')'" th:selected="${report.report_code == plan.report_code}"></option>
-			                                </th:block>
+			                                <option th:value="${plan.report_code}" th:text="${plan.report_title +'('+ plan.report_code} +')'" th:selected="${plan.report_code}"></option>
 			                            </select>
 			                            <!-- <div class="select">
 	                                		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="select_view1" placeholder="과제 선택" autocomplete="off">
@@ -1618,6 +1615,8 @@
 			}
 		}//end for
 		
+		$("#mil2").attr("value", plan.plan_segment);
+		
 		//step4 기존 데이터 그려주기
 		loadFactors();
 		
@@ -1979,7 +1978,7 @@
 	
 	//기존 step5 method 그리기
 	function loadMethodGrid(method_ids){
-		console.log("aa");
+		
 		var method_arr = method_ids.split(",");
 		
 		var method_container = $("#method-container");
@@ -4307,7 +4306,9 @@
 		}
 		//이곳에서 데이터 받아와야함 : important
 		var getDataArr = [...resultArray];
+		console.log("aa");
 		getDataResult(getDataArr, grow_type, '', 'modify');
+		console.log("bb");
 	}//end loadFactors
 	
 	function gridFactors(){
