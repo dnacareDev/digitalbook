@@ -5,7 +5,7 @@ function segmentTextLeft(data){
 	var segmentElsType = document.querySelectorAll('.table_type');
 	
 	if(segmentEls.length > 0 && segmentEls !== undefined && segmentEls !== null){
-		console.log(segmentEls.length,"length");
+
 		for(var i = 0; i < data.length; i++){
 			segmentEls[i].innerText = data[i].segmentId;
 			segmentElsType[i].innerText = data[i].type;
@@ -19,6 +19,6 @@ function reRenderTableComp(type, segmentInnerType){
 	
 	if(segmentInnerType == 'innerText'){
 		segmentTextLeft(dataGet);
-		console.log("type is innerText");
+
 	}
 }
