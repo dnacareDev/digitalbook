@@ -147,9 +147,9 @@
 	<!-- 공통 topbar -->
 	<th:block th:include="/../fragments/topbar.html"></th:block>
 	
-	<main class="main-content" style="background-color: #F9FBFD;">
+	<main class="main-content" style="background-color: #F8F8F8">
 		
-		<div class="contents" style="background-color: #F9FBFD;">
+		<div class="contents" style="background-color: #F8F8F8">
 			
 			<div class="container-fluid">
 				 
@@ -169,14 +169,14 @@
 			                        <h3>Step 1. 포장선택<span></span></h3>
 			                    </div>
 			                    <div class="content clearfix">
-			                    	<div class="row ml-4" style="float: left; margin-left: 15px;">
+			                    	<div class="row ml-4 first_child_start" style="float: left; margin-left: 15px;">
 			        					<label class="color-dark align-center" style="align-items: center; margin:0">포장</label>
 			                            <input type="text" class="form-control b-light" id="storage_input" th:value="${plan.storage_name}" readonly="readonly" style="width: 300px; margin-left: 10px; height: 29px; padding: 0 20px;">
 			                    	</div>
 			                        <div class="btn_ver">
 			                            <button type="button" id="storageBtn">신규등록</button>
 			                        </div>
-			                        <div class="btn btn_new">
+			                        <div class="btn btn_new" style="height: 450px;">
 			                            
 			                            <table id="table1" style="width:max-content">
 			                                <thead>
@@ -199,12 +199,12 @@
 			                            
 			                        </div>
 			                        <div class="content_right">
- 			                            <div class="img_inner" id="map_regist" style="width:100%; height: 600px;">
+ 			                            <div class="img_inner" id="map_regist" style="width:100%; height: 450px;">
 											
  			                            </div>
 			                        </div>
-			                        <div class="row pageBtn" style="justify-content: center;">
-			                        	<div id="pageNum" style="text-align:center; margin: 2% 0 0 0;"></div>
+			                        <div class="row pageBtn" style="justify-content: center; padding-top: 15px;">
+			                        	<div id="pageNum" style="text-align:center;"></div>
 		                        	</div>
 		                        	<div class="submit clearfix">
 		                                <button type="button" id="step-1-btn" onclick="nextStep(2);">다음</button>
@@ -378,9 +378,9 @@
 			                        <div class="content_right">
 			                            <div class="img_inner">
 			                                <div class="top_btn-left">
-			                                    <h6><span class="red" style="color: #FF4141">*</span>열의 갯수</h6>
-			                                    <input type="text" value="10" id="mil2" style="border-radius: 5px 0 0 5px; width: 40%; margin-left: 10px;">
-			                                    <button id="step4-columnBtn" style="height: 33px; border-radius: 0 5px 5px 0; ">적용</button>
+			                                    <h6 style="margin-top: 10px;"><span class="red" style="color: #FF4141">*</span>열의 갯수</h6>
+			                                    <input type="text" value="10" id="mil2" style="height: 37.77px;border-radius: 5px 0 0 5px; width: 40%; margin-left: 10px;">
+			                                    <button id="step4-columnBtn" style="height: 37.77px; border-radius: 0 5px 5px 0; ">적용</button>
 			                                </div>
 			                                <div class="top_btn-right clearfix">
 			                                    <ul>
@@ -425,7 +425,7 @@
 			                                </div>
 			                            </div>
 			                        </div>
-			                        <div class="submit clearfix" style="margin-top: 20px;">
+			                        <div class="submit clearfix">
 			                            <button type="button" id="step-4-btn" onclick="nextStep(5);">다음</button>
 			                        </div>
 			                    </div>
@@ -520,12 +520,12 @@
 			        </section>
 			    </div>
 			    <div class="row mt-4">
-					<div class="col-lg-12">
-						<div class="card card-default">
-							<div class="row ml-3 mt-3">
-								<span class="color-dark align-center" style="font-size: 20px;">변경 이력</span>
+					<div class="col-lg-12" style="padding-left: 65px; padding-right: 65px;">
+						<div class="card card-default" style="padding: 0 30px;">
+							<div class="row ml-3 mt-3" style="margin:0 !important; padding: 35px 20px 22px 20px">
+								<span class="color-dark align-center" style="font-weight: 700; color: #2c2c2c">변경 이력</span>
 							</div>
-							<div class="card-body" style="height: 325px; overflow-y: auto;">
+							<div class="card-body" style="height: 325px; overflow-y: auto; padding:0 10px">
 								<div class="row">
 									<div class="col-lg-12">
 										<ul>
@@ -557,8 +557,8 @@
 			
 		</div>
 		
-		<div class="atbd-notice" id="success_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
-        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+		<div class="atbd-notice" id="success_popup" style="width:100vw; height:100vh; position:fixed; left:0px; top:0px; display:flex; justify-content: center; align-items:center; z-index: 9999">
+        	<div class="card card-default card-md mb-4" style="border:1px solid #eee;">
         		<div class="card-body">
         			<div class="atbd-notice__content">
         				<div class="atbd-notice__top text-center">
@@ -6223,13 +6223,13 @@
 			add_list += '</select>';
 			add_list += '</li>';
 			
-			add_list += '</ul>';
-			add_list += '</div>';
-			add_list += '</div>'; //end row1
+// 			add_list += '</ul>';
+// 			add_list += '</div>';
+// 			add_list += '</div>'; //end row1
 			
-			add_list += '<div class="row">'; //row2
-			add_list += '<div class="col-12">';
-			add_list += '<ul>';
+// 			add_list += '<div class="row">'; //row2
+// 			add_list += '<div class="col-12">';
+// 			add_list += '<ul>';
 			add_list += '<li>';
 			add_list += '<span style="float: left;">시작일</span>';
 			add_list += '<input type="text" class="start_date" name="">';
@@ -6268,7 +6268,7 @@
 			add_list += '<th>담당자(부)</th>';
 			add_list += '<th>시작일</th>';
 			add_list += '<th>종료일</th>';
-			add_list += '<th></th>';
+			add_list += '<th>삭제</th>';
 			add_list += '</tr>';
 			add_list += '</thead>';
 			add_list += '<tbody class="input_manager">';
@@ -6281,7 +6281,7 @@
 						add_list += '<td class="mng_input3">'+sch[j].start_date+'</td>';
 						add_list += '<td class="mng_input4">'+sch[j].end_date+'</td>';
 						/* add_list += '<td><button type="button" class="chn_manager" style="float: left;">변경</button><button type="button" class="del_manager">삭제</button></td>'; */
-						add_list += '<td><button type="button" class="del_manager">삭제</button></td>';
+						add_list += '<td><a href="" class="del_manager">삭제</a></td>';
 						add_list += '</tr>';
 					}
 				}//end for
@@ -6344,7 +6344,7 @@
 			str += '<td class="mng_input2" data-id="'+manager2_id+'">'+manager2_text+'</td>';
 			str += '<td class="mng_input3">'+start_date+'</td>';
 			str += '<td class="mng_input4">'+end_date+'</td>';
-			str += '<td><button type="button" class="del_manager">삭제</button></td>';
+			str += '<td><a href="" class="del_manager">삭제</a></td>';
 			str += '</tr>';
 			
 			input_manager.append(str);
@@ -6354,7 +6354,8 @@
 	});//end 담당자 추가 이벤트
 	
 	//담당자 삭제 이벤트
-	$(document).on("click", ".del_manager", function(){
+	$(document).on("click", ".del_manager", function(e){
+		e.preventDefault();
 		$(this).parent().parent().remove();
 	});
 	
@@ -6588,6 +6589,15 @@
 	    eventList.initEvent("click");
 	    document.querySelector("#step1 .title").dispatchEvent(eventList);
 	}, 1);
+	$(".choi_select").mouseover(function(){
+		let afterHeight = $(this).children().eq(0).height();
+		$(this).css({"height": afterHeight + "px"});
+	});
+	
+	$(".choi_select").mouseout(function(){
+		
+		$(this).css({"height": "34.77428px"});	
+	});
 	
 </script>
 
