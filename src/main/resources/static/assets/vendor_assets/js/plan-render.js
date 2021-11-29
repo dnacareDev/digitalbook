@@ -7,7 +7,7 @@ function segmentTextLeft(data){
 	if(segmentEls.length > 0 && segmentEls !== undefined && segmentEls !== null){
 
 		for(var i = 0; i < data.length; i++){
-			segmentEls[i].innerText = data[i].segmentId;
+			segmentEls[i].innerText = data[i].id;
 			segmentElsType[i].innerText = data[i].type;
 		}
 	}

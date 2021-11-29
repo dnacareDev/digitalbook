@@ -557,7 +557,9 @@ function renderSegment(data){
 }
 
 function segmentSetting(data){
+	console.log("test1");
 	var dataGet = data;
+	console.log(dataGet,"data");
 	// 2차 : query , array 반환, addEvent
 	tableEls = document.querySelectorAll('.step4-container .table_content');
 	tableEls = Array.prototype.slice.call(tableEls);
@@ -598,6 +600,7 @@ function segmentSetting(data){
 	elWidth = (dataIdLength * 10) + 26;
 	
 	if(segmentType !== undefined){
+	console.log("test2");
 		var planRepeat = document.querySelector("#plan_repeat");
 		
 		if(planRepeat == undefined){
@@ -608,24 +611,27 @@ function segmentSetting(data){
 		
 		var type2Diff = 70;
 		if(segmentType == 2){ // ************************분할구배치법
+		console.log("test3");
 			
 			var getDataId = segmentEls[elRender].getAttribute('data-segmentid');
 			var getClass = document.getElementsByClassName(getDataId);			
 			
 			var getDataIdLength = 0; // 한 집구의 한 data섹션 갯수
+			console.log("dataGetLength:",dataGet.length);
 			for(var i = 0 ; i < dataGet.length; i++){
-				var idTemp = dataGet[i].segmentId;
+				console.log("dataId:",dataGet[i].id);
+				var idTemp = dataGet[i].id;
 				var splitA = idTemp.split("-")[0].split("A")[1];
-				
-				if(splitA <= 1){
+				var splitOne = dataGet[0].id.split("-")[0].split("A");
+
+				if(splitOne != splitA){ 
 					getDataIdLength++;
 				}else{
 					break;
 				}
 			}
 			var getPlanRepeatLength = Math.ceil(dataGet.length / planRepeat) // 한 집구당 갯수
-			var getColumnLength = Math.ceil(getPlanRepeatLength / getDataIdLength ); // 한 집구에 몇개의 data묶음이 있는지,
-			
+			var getColumnLength = getPlanRepeatLength / getDataIdLength ; // 한 집구에 몇개의 data묶음이 있는지,
 			if(factorLength3 == 0){
 				factorLength3 = 1
 			}
@@ -634,11 +640,9 @@ function segmentSetting(data){
 				for(var c = 0; c < getColumnLength; c++){ // column
 					for(var r = 0; r < getDataIdLength; r++){ // row
 						if(segmentLi[elRender] !== undefined && segmentLi[elRender] !== null){
-						
 							segmentEls[elRender].style.width = elWidth + 'px';
 							
-							
-							if(segmentModify !== "modify" && segmentModify !== "result"){							
+							if(segmentModify !== "modify" && segmentModify !== "result"){						
 								zindex.push(elRender);
 								segmentLi[elRender].style.zIndex = elRender;
 								segmentLi[elRender].style.transform = 'translate(' + ( ( elWidth * c ) + WrapDiff ) + 'px, ' + ( (elHeight * r) + WrapDiff + (((elHeight * getDataIdLength + type2Diff ) * t) ) ) + 'px)';

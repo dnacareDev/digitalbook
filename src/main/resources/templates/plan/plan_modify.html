@@ -3722,7 +3722,7 @@
 	//기존 데이터로 구획 설정 그려주기
 	function loadFactors(){
 		
-		// var factor2 = document.querySelector('#text_inner2').innerText.split(',').length;
+		var factor2 = document.querySelector('#text_inner2').innerText.split(',').length;
 		
 		var resultArray = new Array();
 		
@@ -3747,8 +3747,8 @@
 					"segment_aspect": segment[i].segment_aspect,
 				};
 				resultArray.push(result_data);
-				var factor2 = resultArray[i].id.split("-")[1].split("B")[1];
 			}
+			
 			
 			//임의 임의배치 컴포넌트
 			var copy_step_4 = $("#copy-step-4");
@@ -3860,7 +3860,6 @@
 					"segment_aspect": segment[i].segment_aspect,
 				};
 				resultArray.push(result_data);
-				var factor2 = resultArray[i].id.split("-")[1].split("B")[1];
 			}
 		
 			var arr = new Array();
@@ -4005,7 +4004,6 @@
 					"segment_aspect": segment[i].segment_aspect,
 				};
 				resultArray.push(result_data);
-				var factor2 = resultArray[i].id.split("-")[1].split("B")[1];
 			}
 			
 			//분할구배치법에서 그룹 나눠줄 id array
@@ -4160,7 +4158,6 @@
 					"area" : segment[i].segment_area
 				};
 				resultArray.push(result_data);
-				var factor2 = resultArray[i].id.split("-")[1].split("B")[1];
 			}
 			
 			//분할구배치법에서 그룹 나눠줄 id array
@@ -5064,27 +5061,11 @@
 		var factor1El = document.querySelector('#text_inner1');
 		var factor2El = document.querySelector('#text_inner2');
 		var factor3El = document.querySelector('#text_inner3');
-		
 		var repeatEl = document.querySelector('#plan_repeat');
 		
 		var factor1 = factor1El.innerText.split(',').length;
 		var factor2 = factor2El.innerText.split(',').length;
-		
 		var factor3 = factor3El.innerText.split(',').length;
-		
-		if(factor_type_1.getAttribute("data-select") == "시비량"){
-			var factor1 = factor1El.children.length + 1;
-			console.log("factor1oo");
-		}
-		if(factor_type_2.getAttribute("data-select") == "시비량"){
-			var factor2 = factor2El.children.length + 1;
-			console.log("factor2oo");
-		}
-		if(factor_type_3.getAttribute("data-select") == "시비량"){
-			var factor3 = factor3El.children.length + 1;
-			console.log("factor3oo");
-		}
-		
 		var repeatVal = repeatEl.value;
 		
 
@@ -5167,7 +5148,6 @@
 		
 		for(var i = 0; i < arrRanAll.length ; i++){ // order 초기화
 			arrRanAll[i].order = i;
-			// console.log(arrRanAll,"this");
 		}
 		var numRender = 0;
 		for(var i = 0; i < repeatVal; i++){ // num 초기화
@@ -5177,7 +5157,6 @@
 			}
 		}
 
-		// console.log(resultArray,"resultArray"); -- error(두번클릭시)
 		resultArray = arrRanAll;
 		reRenderTableComp(growType, 'innerText');
 		
@@ -5254,6 +5233,7 @@
 				numRender++;
 			}
 		}
+		//console.log(arrRanAll,"arrRanAll");
 		/* e: randomObject to array */
 		resultArray = arrRanAll;
 		reRenderTableComp(growType, 'innerText');

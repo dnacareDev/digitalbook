@@ -3950,28 +3950,13 @@
 		var factor1El = document.querySelector('#text_inner1');
 		var factor2El = document.querySelector('#text_inner2');
 		var factor3El = document.querySelector('#text_inner3');
-		
 		var repeatEl = document.querySelector('#plan_repeat');
 		
 		var factor1 = factor1El.innerText.split(',').length;
 		var factor2 = factor2El.innerText.split(',').length;
-		
 		var factor3 = factor3El.innerText.split(',').length;
-		
-		if(factor_type_1.getAttribute("data-select") == "시비량"){
-			var factor1 = factor1El.children.length + 1;
-			console.log("factor1oo");
-		}
-		if(factor_type_2.getAttribute("data-select") == "시비량"){
-			var factor2 = factor2El.children.length + 1;
-			console.log("factor2oo");
-		}
-		if(factor_type_3.getAttribute("data-select") == "시비량"){
-			var factor3 = factor3El.children.length + 1;
-			console.log("factor3oo");
-		}
-		
 		var repeatVal = repeatEl.value;
+		
 
 		var obA = {};
 		var obB = {};
