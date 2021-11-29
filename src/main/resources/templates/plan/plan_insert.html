@@ -3957,6 +3957,23 @@
 		var factor3 = factor3El.innerText.split(',').length;
 		var repeatVal = repeatEl.value;
 		
+		var factor_type_1 = document.querySelector('#factor_type_1');
+		var factor_type_2 = document.querySelector('#factor_type_2');
+		var factor_type_3 = document.querySelector('#factor_type_3');
+		
+		if(factor_type_1.getAttribute("data-select") == "시비량"){
+			var factor1 = factor1El.children.length + 1;
+			console.log("foot1");
+		}
+		if(factor_type_2.getAttribute("data-select") == "시비량"){
+			var factor2 = factor2El.children.length + 1;
+			console.log("foot2");
+		}
+		if(factor_type_3.getAttribute("data-select") == "시비량"){
+			var factor3 = factor3El.children.length + 1;
+			console.log("foot3");
+		}
+		
 
 		var obA = {};
 		var obB = {};
@@ -4051,7 +4068,7 @@
 		resultArray = arrRanAll;
 		reRenderTableComp(growType, 'innerText');
 		
-		getDataResult(arrRanAll, growType, 'innerText');
+		getDataResult(resultArray, growType, 'innerText');
 	});
 	/* e: 요인랜덤화 */
 	
@@ -4132,7 +4149,7 @@
 		resultArray = arrRanAll;
 		reRenderTableComp(growType, 'innerText');
 		
-		getDataResult(arrRanAll, growType, 'innerText');
+		getDataResult(resultArray, growType, 'innerText');
 		
 		
 	});
@@ -4254,7 +4271,6 @@
 			}
 			segment_array.push(data);
 		}
-
 		var cancel = new Array();
 		
 		$.ajax({
@@ -4272,11 +4288,11 @@
 			}
 		});//end ajax
 		
+		
 	}
 	
 	//등록 버튼 이벤트
 	$("#planInsertBtn").on("click", function(){
-		
 		/* console.log("data!!!!!");
 		console.log(data1);
 		console.log(data2);
@@ -4319,6 +4335,8 @@
 					
 					//구획 등록
 					insertSegment(plan_id);
+					
+					console.log(segment_array,"segment_array");
 					
 					//시험구 요인 등록
 					insertFactor(plan_id);

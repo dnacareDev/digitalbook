@@ -282,9 +282,16 @@ function segmentText(data){
 	if(segmentEls.length > 0 && segmentEls !== undefined && segmentEls !== null){	
 		for(var i = 0; i < data.length; i++){
 			segmentEls[i].innerText = data[i].segmentId;
+			var segmentLis = segmentEls[i].parentNode.getAttribute("style","transform");
+			var segmnetLisTrans = segmentLis.substring(segmentLis.indexOf("(")+1,segmentLis.indexOf(")"));
+		
+			var segX = segmnetLisTrans.split(",")[0].split("px")[0];
+			var segY = segmnetLisTrans.split(",")[1].split("px")[0];
+			
+			resultArray[i].segment_horizon = segX;
+			resultArray[i].segment_vertical = segY;
 		}
 	}
-	
 }
 function segmentComp(data, index){
 	var {id, type, repeat, segmentId, order} = data;
@@ -619,17 +626,16 @@ function segmentSetting(data){
 			var getDataIdLength = 0; // 한 집구의 한 data섹션 갯수
 			console.log("dataGetLength:",dataGet.length);
 			for(var i = 0 ; i < dataGet.length; i++){
-				console.log("dataId:",dataGet[i].id);
 				var idTemp = dataGet[i].id;
-				var splitA = idTemp.split("-")[0].split("A")[1];
-				var splitOne = dataGet[0].id.split("-")[0].split("A");
+				var splitOne = parseInt(dataGet[0].id.split("-")[0].split("A")[1], 10);
+				var splitA = parseInt(idTemp.split("-")[0].split("A")[1], 10);
 
-				if(splitOne != splitA){ 
+				if(splitOne === splitA){
 					getDataIdLength++;
 				}else{
 					break;
 				}
-			}
+			}	
 			var getPlanRepeatLength = Math.ceil(dataGet.length / planRepeat) // 한 집구당 갯수
 			var getColumnLength = getPlanRepeatLength / getDataIdLength ; // 한 집구에 몇개의 data묶음이 있는지,
 			if(factorLength3 == 0){
@@ -642,7 +648,8 @@ function segmentSetting(data){
 						if(segmentLi[elRender] !== undefined && segmentLi[elRender] !== null){
 							segmentEls[elRender].style.width = elWidth + 'px';
 							
-							if(segmentModify !== "modify" && segmentModify !== "result"){						
+							if(segmentModify !== "modify" && segmentModify !== "result"){	
+							console.log("resrthis");					
 								zindex.push(elRender);
 								segmentLi[elRender].style.zIndex = elRender;
 								segmentLi[elRender].style.transform = 'translate(' + ( ( elWidth * c ) + WrapDiff ) + 'px, ' + ( (elHeight * r) + WrapDiff + (((elHeight * getDataIdLength + type2Diff ) * t) ) ) + 'px)';
@@ -660,6 +667,7 @@ function segmentSetting(data){
 								dataGet[elRender].segment_vertical = ( (elHeight * r) + WrapDiff + (((elHeight * getDataIdLength + type2Diff ) * t) ) );
 								dataGet[elRender].segment_zindex = elRender;
 							}else{
+							console.log("test10");
 								segmentLi[elRender].style.transform = 'translate(' + dataGet[elRender].segment_horizon + 'px, ' + dataGet[elRender].segment_vertical + 'px)';
 								segmentLi[elRender].style.zIndex = dataGet[elRender].segment_zindex;
 								
