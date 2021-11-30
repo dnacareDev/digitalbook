@@ -91,7 +91,7 @@
 	    padding: 0;
 	}
 	.content_cover{
-    	margin-left: 9%;
+    	margin-left: 5%;
 	}
 	.titles{
 		float:left;
@@ -111,6 +111,9 @@
 	}
 	[id *="_popup"] > .card.card-default.card-md.mb-4{
 		border:1px solid #eee;width:400px;max-width: 400px
+	}
+	.row{
+		flex-wrap: nowrap !important;
 	}
 </style>
 <!-- 공통 헤더 -->
@@ -148,7 +151,7 @@
 		        					<div class="col-sm-2 d-flex aling-items-center">
 		                                   <label for="report_year" class="col-form-label color-dark align-center">과제명</label>
 	                                </div>
-	                                <div class="col-sm-8">
+	                                <div class="col-sm-8"  style="-webkit-box-flex: 0;-ms-flex: 0 0 75%;flex: 0 0 70% !important;max-width: 70% !important;">
 	                                	<input type="text" class="form-control b-light seed_code" id="report_code" th:data-report-code="${seeds.get(0).report_code}" th:value="${seeds.get(0).report_title}" readonly="readonly">
 	                                </div>
 		                         </div>
@@ -156,7 +159,7 @@
 		        					<div class="col-sm-2 d-flex aling-items-center">
 		                            	<label for="seed_report" class="color-dark align-center">과제설명</label>
 		                            </div>
-		                            <div class="col-sm-8">
+		                            <div class="col-sm-8" style="-webkit-box-flex: 0;-ms-flex: 0 0 75%;flex: 0 0 70% !important;max-width: 70% !important;">
 		                                <textarea class="form-control" id="seed_report" rows="5" th:text="${seeds[0].seed_report}"></textarea>
 		                            </div>
 		                    	</div>
@@ -185,7 +188,7 @@
 						        										<input type="text" class="form-control b-light seed_code" id="seed_code" readonly="readonly" style="width:100%">
 						        									</div>
 						        									<div class="col-md-1 mb-25" style="float:right">
-						        										<button type="button" class="btn btn-sm btn-info qr-btn" style="float:left">QR Code</button>
+						        										<button type="button" class="btn btn-sm btn-info qr-btn" style="float:left; padding:0;">QR Code</button>
 						        									</div>
 														        </div>
 													        </div>
@@ -198,7 +201,7 @@
 						        										<input type="text" class="form-control b-light genetic_id input1" style="float: left;width: 80%;vertical-align: middle;border-radius: 5px 0 0 5px !important;border-right: 0;" readonly="readonly">
 						        										<label class="btn btn-light genetic_show label1" style="float: left;margin: 0 !important;border-radius: 0 5px 5px 0;height: 34.12px;border: 1px solid #e3e6ef;border-left: 0;width: 20%; padding:0;">조회</label>
 						        									</div>
-						        									<div class="col-md-4 content_cover">
+						        									<div class="col-md-5 content_cover">
 							        									<div class="titles">
 										                                    <label for="seed_manager" class="title_asd"><span class="red">*</span>담당자</label>
 										                                </div>
@@ -227,7 +230,7 @@
 						        									<div class="col-md-4 mb-25">
 						        										<input type="text" class="form-control b-light seed_area" id="seed_area">
 						        									</div>
-						        									<div class="col-md-4 content_cover">
+						        									<div class="col-md-5 content_cover">
 							        									<div class="titles">
 										                                    <label for="seed_year" class="title_asd">생산연도</label>
 										                                </div>
@@ -258,7 +261,7 @@
 											                                <option value="외부농가">외부농가</option>
 											                            </select> -->
 						        									</div>
-						        									<div class="col-md-4 content_cover">
+						        									<div class="col-md-5 content_cover">
 							        									<div class="titles">
 										                                    <label for="seed_amount" class="title_asd"><span class="red">*</span>수량(개수)</label>
 										                                </div>
@@ -304,7 +307,7 @@
 											                                </th:block>
 											                            </select> -->
 						        									</div>
-						        									<div class="col-md-4 content_cover">
+						        									<div class="col-md-5 content_cover">
 							        									<div class="titles">
 										                                    <label for="ware_condition" class="title_asd">저장조건</label>
 										                                </div>
@@ -317,7 +320,7 @@
 						        									<div class="col-md-2 mb-25 d-flex aling-items-center">
 						        										<label for="seed_comment" class="color-dark fw-500 align-center">Comment</label>
 						        									</div>
-						        									<div class="col-md-9 mb-25">
+						        									<div class="col-md-9 mb-25" style="-webkit-box-flex: 0;-ms-flex: 0 0 75%;flex: 0 0 100% !important;max-width: 79% !important;">
 						        										<textarea class="form-control seed_comment" id="seed_comment" rows="5"></textarea>
 						        									</div>
 						        								</div>
@@ -335,7 +338,7 @@
 									                                <div class="col-md-4 mb-25">
 						        										<input type="text" class="form-control b-light seed_sender" id="seed_sender">
 						        									</div>
-						        									<div class="col-md-4 content_cover">
+						        									<div class="col-md-5 content_cover">
 							        									<div class="titles">
 							        										<label for="seed_sender title_inner" class="color-dark fw-500 align-center mt-1">수취인 정보</label>
 							        									</div>
@@ -364,7 +367,7 @@
 									                                <div class="col-md-4 mb-25">
 						        										<input type="text" class="form-control b-light send_date send-datepicker0">
 						        									</div>
-						        									<div class="col-md-4 content_cover">
+						        									<div class="col-md-5 content_cover">
 							        									<div class="titles">
 							        										<label class="color-dark fw-500 align-center mt-1">수취일자</label>
 							        									</div>
@@ -396,7 +399,7 @@
 			                </div>
 			        	</div>
 			        </div>
-		        </div>
+			    </div>
 		        <div class="row">
 					<div class="col-4">
 						<div class="action-btn d-flex justify-content-frist mt-30">

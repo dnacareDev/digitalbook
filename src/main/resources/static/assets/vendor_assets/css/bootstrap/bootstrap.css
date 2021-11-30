@@ -20,10 +20,10 @@ html { scrollbar-arrow-color: #eeeeee73;
 ::-webkit-scrollbar-track {  background: #eeeeee73;}
 ::-webkit-scrollbar-thumb {  background: #7c87988e;  border-radius: 6px;}
 body{
-	min-width: 1300px !important;
+	min-width: 1500px !important;
 	overflow: auto;
 }
-@media only screen and (max-width: 1300px){
+@media only screen and (max-width: 1500px){
 	body{
 		overflow: auto !important;
 	}
@@ -18140,4 +18140,21 @@ span.red{margin-right:3px; vertical-align: middle;color: red}
 .main-content, .contents{
 	background-color: #F8F8F8
 }
+
+/* [id *="_popup"]{
+	width:100vw !important; 
+	height:90vh !important;  
+	position:fixed !important;  
+	left:0px !important;  
+	top:0px !important;  
+	display:none !important;  
+	justify-content: center !important; 
+	align-items:center !important;  
+	z-index: 999999 !important; 
+}
+[id *="_popup"] > .card.card-default.card-md.mb-4{
+	border:1px solid #eee !important; 
+	width:400px !important; 
+	max-width: 400px !important; 
+} */
 /*# sourceMappingURL=maps/bootstrap.css.map */
