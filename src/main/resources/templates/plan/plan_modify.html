@@ -5134,6 +5134,7 @@
 		var obR = {};
 
 		var arrA = [];
+		var arrR = [];
 		var inAll = 0;
 		var inR = 0;
 		var inA = 0;
@@ -5186,6 +5187,20 @@
 			}
 		}
 
+		if(growType == 0){
+			for(const [keyR, valR] of Object.entries(arryToObject())){
+				obR = Object.assign(obR, {["R"+(inR+1)] : []});
+				for(const [keyA, valA] of Object.entries(valR)){
+					arrA.push({[keyA]:valA});
+					inA++; 
+				}
+				
+				obR["R"+(inR+1)] = arrA;
+				console.log(obR,"obR",arrA,"arrA");
+				arrA = [];
+				inR++;
+			}
+		}
 		resultArray = arrRanAll;
 		reRenderTableComp(growType, 'innerText');
 		

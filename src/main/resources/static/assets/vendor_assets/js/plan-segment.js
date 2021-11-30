@@ -283,13 +283,18 @@ function segmentText(data){
 		for(var i = 0; i < data.length; i++){
 			segmentEls[i].innerText = data[i].segmentId;
 			var segmentLis = segmentEls[i].parentNode.getAttribute("style","transform");
+			var segmentLisP = segmentEls[i].getAttribute("style","transform");
 			var segmnetLisTrans = segmentLis.substring(segmentLis.indexOf("(")+1,segmentLis.indexOf(")"));
+			var segmentLisPRotate = segmentLisP.substring(segmentLisP.indexOf("(")+1,segmentLisP.indexOf(")"));
 		
 			var segX = segmnetLisTrans.split(",")[0].split("px")[0];
 			var segY = segmnetLisTrans.split(",")[1].split("px")[0];
+			var segR = segmentLisPRotate.split("deg")[0];
+			// console.log(segR,"segR");
 			
 			resultArray[i].segment_horizon = segX;
 			resultArray[i].segment_vertical = segY;
+			resultArray[i].segment_aspect = segR;
 		}
 	}
 }
