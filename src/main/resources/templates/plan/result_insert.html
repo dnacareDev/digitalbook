@@ -8,8 +8,11 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <style type="text/css">
+	.id_color1 td {
+		color : #fff !important;
+	}
 	.id_color1{
-		color : #fff!important;
+		color : #fff !important;
 		background-color: #0064FF !important;
 	}
 	.id_color2{
@@ -751,6 +754,8 @@
 		let grow_type = plan.grow_type;
 		
 		var plan_repeat = plan.plan_repeat;
+		
+		setFactorData(resultArray);
 		
 		//시험구 배치 종류에 따라 분기 처리
 		if(grow_type == "0"){	//완전임의배치
@@ -2437,6 +2442,93 @@
 	$("#qrBtn").on("click", function(){
 		downloadURI('qrCode');
 	});
+
+	
+	function setFactorData(data){
+		var arr = data;
+		var aGet = 1;
+		var bGet = 1;
+		var cGet = 1;
+		
+		for(var i = 0; i < arr.length; i++){
+			var aSplit = arr[i].id.split("-B")[0].split("A")[1];
+			var bSplit = arr[i].id.split("-C")[0].split("B")[1];
+			var cSplit = arr[i].id.split("-C")[1].split("-")[0];
+			
+			if(aSplit > aGet){
+				aGet = aSplit;
+			}
+			if(bSplit > bGet){
+				bGet = bSplit;
+			}
+			if(cSplit > cGet){
+				cGet = cSplit;
+			}
+		}
+		factorLength1 = aGet;
+		factorLength2 = bGet;
+		factorLength3 = cGet;
+		//setColorTable(data);
+	}
+
+	function setColorTable(data){
+		
+		var arr = data;
+	   //id_color1 ~ 10
+		var percentage = 0;
+		var orderRen = 0;
+		var allRen = 0;
+		var repeat = 0;
+		
+		var re = 1;
+		var tableEls = document.querySelectorAll(".table_content");
+		
+		for(var y = 0; y < data.length; y++){
+			var ySplit = data[y].repeat;
+			
+			if(ySplit > re){
+				re = ySplit;
+			}
+		}
+		repeat = re;
+		
+		
+		if(segmentType == "2"){
+		
+			percentage = factorLength1; 
+			for(var f = 0; f < repeat; f++){
+				for(var i = 0; i < percentage; i++){
+					for(var t =  0; t < (factorLength2 * factorLength3); t++){
+						var colorIndex = orderRen % 10;
+						tableEls[allRen].classList.add("id_color"+ (colorIndex + 1));
+						allRen++;
+					}	
+					orderRen++;				
+				}
+				orderRen = 0;
+				console.log(orderRen,"orderRen");
+			}
+			
+		}else if(segmentType == "3"){
+		
+			percentage = factorLength1 * factorLength2; 
+			for(var f = 0; f < repeat; f++){
+				for(var i = 0; i < percentage; i++){
+					for(var t =  0; t < factorLength3; t++){
+						var colorIndex = orderRen % 10;
+						tableEls[allRen].classList.add("id_color"+ (colorIndex + 1));
+						allRen++;
+					}
+					orderRen++;
+				}
+				orderRen = 0;
+				console.log(orderRen,"orderRen");
+			}
+			
+		}
+
+	}
+	
 	
 	function downloadURI(name){
 		var canvas = document.querySelector('#qrcode canvas');

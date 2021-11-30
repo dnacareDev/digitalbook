@@ -4144,7 +4144,7 @@
 			}
 			
 			//그룹별 색깔 적용해주기
-			if(factor2.length !== 0){
+			/*if(factor2.length !== 0){
 				$(document).find(".table_content").each(function(i, item){
 					for(var j = 0; j < idArray.length; j++){
 						var colorIndex = j % 10;
@@ -4153,7 +4153,7 @@
 						}
 					}
 				});
-			}	
+			}	*/
 			
 		}else if(grow_type == "3"){ //세세구배치법
 			
@@ -4163,11 +4163,28 @@
 					"num" : segment[i].segment_index,
 					"repeat" : segment[i].segment_repeat,
 					"type" : segment[i].segment_type,
-					"area" : segment[i].segment_area
+					"order": segment[i].segment_order,
+					"area": segment[i].segment_area,
+					"segmentId": segment[i].segment_grid_code,
+					"segment_horizon": segment[i].segment_horizon,
+					"segment_vertical": segment[i].segment_vertical,
+					"segment_zindex": segment[i].segment_zindex,
+					"segment_aspect": segment[i].segment_aspect,
 				};
 				resultArray.push(result_data);
 				var factor2 = resultArray[i].id.split("-")[1].split("B")[1];
 			}
+		
+			/*var factor3 = 0;
+			var cGet = 1;
+			for(var i = 0; i < resultArray.length; i++){
+				var cSplit = resultArray[i].id.split("-C")[1].split("-")[0];
+				if(cSplit > cGet){
+					cGet = cSplit;
+				}
+				factor3 = cGet;
+			}
+			console.log(factor3,"fac3");*/
 			
 			//분할구배치법에서 그룹 나눠줄 id array
 			var arr = new Array();
@@ -4175,6 +4192,7 @@
 				arr[i] = resultArray[i].id.split("-")[0]+"-"+resultArray[i].id.split("-")[1];
 			}
 			var idArray = Array.from(new Set(arr));
+			//console.log(idArray,"idArray");
 			
 			var copy_step_4 = $("#copy-step-4");
 			
@@ -4203,7 +4221,7 @@
 						var checkId = resultArray[j].id.split("-")[0]+"-"+resultArray[j].id.split("-")[1];
 						for(var k = 0; k < idArray.length; k++){
 							if(checkId == idArray[k]){
-								add_list += '<tr data-id="'+idArray[k]+'" class="table_content '+idArray[k]+'">';
+								add_list += '<tr data-id="'+checkId[k]+'" class="table_content '+idArray[k]+'">';
 							}
 						}
 					    add_list += '<td class="table_num">'+resultArray[j].num+'</td>';
@@ -4299,7 +4317,7 @@
 			}
 			
 			//그룹별 색깔 적용해주기
-			if(factor2.length !== 0){
+			/*if(factor2.length !== 0){
 				$(document).find(".table_content").each(function(i, item){
 					for(var j = 0; j < idArray.length; j++){
 						var colorIndex = j % 10;
@@ -4308,7 +4326,8 @@
 						}
 					}
 				});
-			}
+			}*/
+			
 			
 		}
 		//이곳에서 데이터 받아와야함 : important
@@ -4326,6 +4345,8 @@
 		var factor1 = "";
 		var factor2 = "";
 		var factor3 = "";
+		
+		setFactorData(resultArray);
 		
 		if(Object.keys(data1).length != 0){
 			if(data1.type == "시비량"){
@@ -4542,9 +4563,10 @@
 								resultArray[i].num = (i+1);
 								resultArray[i].id = idArr[i];
 							}
-							console.log(resultArray);
+							console.log(resultArray,"thtithithi");
 							var getDataArr = [...resultArray];
 							getDataResult(getDataArr, grow_type, 'innerText');
+							
 						}
 					}//end stop
 				});//end sortable
@@ -4851,7 +4873,7 @@
 				$("#info_popup").css("display", "none");
 			}, (duration*1000));
 			//그룹별 색깔 적용해주기
-			if(factor2.length !== 0){
+			/*if(factor2.length !== 0){
 				$(document).find(".table_content").each(function(i, item){
 					for(var j = 0; j < idArray.length; j++){
 						var colorIndex = j % 10;
@@ -4860,7 +4882,7 @@
 						}
 					}
 				});	
-			}
+			}*/
 			
 		}else if(grow_type == "3"){ //세세구배치법
 			
@@ -5001,7 +5023,7 @@
 									resultArray[i].num = plusNum;
 									resultArray[i].id = idArr[i];
 								}
-								console.log(resultArray);
+								console.log(resultArray,"thtithithi");
 								var getDataArr = [...resultArray];
 								getDataResult(getDataArr, grow_type, 'innerText');
 								
@@ -5014,16 +5036,16 @@
 			}, (duration*1000));
 			
 			//그룹별 색깔 적용해주기
-			if(factor2.length !== 0){
-				$(document).find(".table_content").each(function(i, item){
+			/*$(document).find(".table_content").each(function(i, item){
+				if(factor2.length !== 0){
 					for(var j = 0; j < idArray.length; j++){
 						var colorIndex = j % 10;
 						if($(this).hasClass(idArray[j])){
 							$(this).addClass("id_color" + (colorIndex + 1));
 						}
-					}
-				});	
-			}
+					}	
+				}
+			});*/
 			
 		}
 		//이곳에서 데이터 받아와야함 : important
@@ -5061,6 +5083,82 @@
 			$(this).children().eq(1).text(idArr[i]);
 		});
 		
+	}
+	
+	var factorLength1 = 0;
+	var factorLength2 = 0;
+	var factorLength3 = 0;
+	
+	
+	function setFactorData(data){
+		var arr = data;
+		var aGet = 1;
+		var bGet = 1;
+		var cGet = 1;
+		
+		for(var i = 0; i < arr.length; i++){
+			var aSplit = arr[i].id.split("-B")[0].split("A")[1];
+			var bSplit = arr[i].id.split("-C")[0].split("B")[1];
+			var cSplit = arr[i].id.split("-C")[1].split("-")[0];
+			
+			if(aSplit > aGet){
+				aGet = aSplit;
+			}
+			if(bSplit > bGet){
+				bGet = bSplit;
+			}
+			if(cSplit > cGet){
+				cGet = cSplit;
+			}
+		}
+		factorLength1 = aGet;
+		factorLength2 = bGet;
+		factorLength3 = cGet;
+		
+		setColorTable(arr);
+	}
+
+	function setColorTable(data){
+		var arr = data;
+	   //id_color1 ~ 10
+		var percentage = 0;
+		var orderRen = 0;
+		var allRen = 0;
+		var repeat = document.querySelector("#plan_repeat").value;
+		var tableEls = document.querySelectorAll(".table_content");
+		console.log('where:',tableEls);
+		if(segmentType == "2"){
+		
+			percentage = factorLength1; 
+			for(var f = 0; f < repeat; f++){
+				for(var i = 0; i < percentage; i++){
+					for(var t =  0; t < (factorLength2 * factorLength3); t++){
+						var colorIndex = orderRen % 10;
+						tableEls[allRen].classList.add("id_color"+ (colorIndex + 1));
+						allRen++;
+					}	
+					orderRen++;				
+				}
+				orderRen = 0;
+			}
+			
+		}else if(segmentType == "3"){
+	
+			percentage = factorLength1 * factorLength2; 
+			for(var f = 0; f < repeat; f++){
+				for(var i = 0; i < percentage; i++){
+					for(var t =  0; t < factorLength3; t++){
+						var colorIndex = orderRen % 10;
+						tableEls[allRen].classList.add("id_color"+ (colorIndex + 1));
+						allRen++;
+					}
+					orderRen++;
+				}
+				orderRen = 0;
+			}
+		
+		}
+
 	}
 	
 	/* s: 요인랜덤화 */
