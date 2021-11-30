@@ -5130,7 +5130,7 @@
 		var allRen = 0;
 		var repeat = document.querySelector("#plan_repeat").value;
 		var tableEls = document.querySelectorAll(".table_content");
-		console.log('where:',tableEls);
+		//console.log('where:',tableEls);
 		if(segmentType == "2"){
 		
 			percentage = factorLength1; 
@@ -5186,15 +5186,15 @@
 		
 		if(factor_type_1.getAttribute("data-select") == "시비량"){
 			var factor1 = factor1El.children.length + 1;
-			console.log("foot1");
+			//console.log("foot1");
 		}
 		if(factor_type_2.getAttribute("data-select") == "시비량"){
 			var factor2 = factor2El.children.length + 1;
-			console.log("foot2");
+			//console.log("foot2");
 		}
 		if(factor_type_3.getAttribute("data-select") == "시비량"){
 			var factor3 = factor3El.children.length + 1;
-			console.log("foot3");
+			//console.log("foot3");
 		}
 		
 		var repeatVal = repeatEl.value;
@@ -5262,10 +5262,10 @@
 
 			}
 			obR = arrA;
-			console.log(obR,"obR",arrA,"arrA");
+			//console.log(obR,"obR",arrA,"arrA");
 			
 			for(const [keyR, valR] of Object.entries(obR)){
-				console.log(keyR,"keyR");
+				//console.log(keyR,"keyR");
 				for(const [keyA, valA] of Object.entries(valR)){
 					for(const [keyB, valB] of Object.entries(valA)){
 						for(const [keyC, valC] of Object.entries(valB)){
