@@ -68,7 +68,7 @@ select {
 }
 .table-responsive{
 	height: 343px;
-	margin-top: 15px;
+	/* margin-top: 15px; */
 }
 #step5 .table-responsive, #copy-step-4, .btn.btn_new{
 	border: 1px solid #D9D9D9;
@@ -964,7 +964,7 @@ input[type=search]:focus{
     clear: both;
 }
 .modal-basic .input_submit button{
-    padding: 15px 50px;
+    padding: 10px 35px !important;
     background-color: #E9E9FD;
     color: #5F63F2;
     font-weight: 700;
@@ -1059,4 +1059,17 @@ button.submit{
 
 #storageModal input[type="text"], #storageModal select{
 	width: 100%;
+}
+
+button[type="button"].close{
+	background-color: transparent !important;
+}
+button[type="button"].close svg{
+	color: #000;
+}
+.modal-header{
+	padding: 15px 35px;
+}
+#etc_form{
+	margin-top: 50px;
 }

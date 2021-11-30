@@ -18140,7 +18140,9 @@ span.red{margin-right:3px; vertical-align: middle;color: red}
 .main-content, .contents{
 	background-color: #F8F8F8
 }
-
+.card.card-default li {
+    margin-top: 15px !important;
+}
 /* [id *="_popup"]{
 	width:100vw !important; 
 	height:90vh !important;  

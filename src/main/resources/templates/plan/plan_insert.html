@@ -138,6 +138,9 @@
 	[id *="_popup"] > .card.card-default.card-md.mb-4{
 		border:1px solid #eee;width:400px;max-width: 400px
 	}
+	button[type="button"].del{
+		background-color: rgb(255, 77, 79) !important;
+	}
 </style>
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
@@ -561,7 +564,7 @@
 			            	<form action="#" id="insertStorageForm" method="POST" enctype="multipart/form-data">
 			            		<div class="row">
 			            			<div class="col-sm-2 d-flex aling-items-center">
-		                            	<label for="storage_name" class="col-form-label color-dark align-center">위치<span style="color: red;">*</span></label>
+		                            	<label for="storage_name" class="col-form-label color-dark align-center"><span class="red">*</span>위치</label>
 	                                </div>
 	                                <div class="col-sm-10">
 		                                <input type="text" class="form-control b-light" id="storage_name" name="storage_name">
@@ -585,7 +588,7 @@
 			            		</div>
 			            		<div class="row mt-3">
 			            			<div class="col-sm-2 d-flex aling-items-center">
-		                            	<label for="storage_type" class="col-form-label color-dark align-center">장소유형<span style="color: red;">*</span></label>
+		                            	<label for="storage_type" class="col-form-label color-dark align-center"><span class="red">*</span>장소유형</label>
 	                                </div>
 	                                <div class="col-sm-10">
 		                                <select class="form-control b-light" id="storage_type" name="storage_type">
@@ -703,13 +706,13 @@
 		            	<div class="row mt-3">
 		            		<div class="col-md-6">
 		            			<div class="row">
-		            				<div class="col-sm-4 d-flex aling-items-center">
-	                            		<label class="color-dark align-center">재식거리<span style="color: red;">*</span></label>
+		            				<div class="col-sm-2 d-flex aling-items-center">
+	                            		<label class="color-dark align-center"><span class="red">*</span>재식거리</label>
 		                            </div>
-		                            <div class="col-sm-8">
+		                            <div class="col-sm-8" style="padding:0;">
 		                            	<div class="select" style="height: auto;">
-		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="intervalSelect" placeholder="재식거리 선택" autocomplete="off" style="width: 340px;">
-		                            		<ul class="select-hide" style="top: 40px; width: 90%;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="intervalSelect" placeholder="재식거리 선택" autocomplete="off" style="width: 100%;padding: 10px 35px !important;height:37.78px; border-radius:5px 0 0 5px; border-right:0;">
+		                            		<ul class="select-hide" style="top: 40px; width: 100%;">
 		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="60x10">60x10</span></li>
 		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="60x15">60x15</span></li>
 		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="60x20">60x20</span></li>
@@ -752,15 +755,13 @@
 			                                <option value="기타">기타</option>
 		                                </select> -->
 		                            </div>
+		                            <div class="col-sm-2 input_submit" style="padding:0;">
+						                <button type="button" onclick="PlusInterval();" style="padding: 10px 4px!important; border-radius: 0 5px 5px 0; border-left: 0;">수준 추가</button>
+						            </div>
 		            			</div>
 		            			<div class="row" id="intervaletcForm">
 		            				<div class="col-md-3"></div>
 		            			</div>
-		            			<div class="row" style="flex-direction:row-reverse; padding: 20px 17px;">
-					            	<div class="input_submit">
-						                <button type="button" onclick="PlusInterval();">수준 추가</button>
-						            </div>
-					            </div>
 		            		</div>
 		            		<div class="col-md-6">
 		            			<div class="row">
@@ -805,17 +806,15 @@
 		            		<div class="col-md-6">
 		            			<div class="row">
 		            				<div class="col-sm-4 d-flex aling-items-center">
-	                            		<label class="color-dark align-center">재식주수<br>(포기당 식물체수)<span class="mt-4" style="color: red;">*</span></label>
+	                            		<label class="color-dark align-center"><span class="red">*</span>재식주수<br>(포기당 식물체수)</label>
 		                            </div>
-		                            <div class="col-sm-8">
-	                                	<input type="text" class="form-control b-light" id="plants_text" style="width: 100%;">
+		                            <div class="col-sm-6" style="padding:0;">
+	                                	<input type="text" class="form-control b-light" id="plants_text" style="width: 100%;padding: 10px 35px !important;height:37.78px; border-radius:5px 0 0 5px; border-right:0;">
 		                            </div>
-		            			</div>
-		            			<div class="row" style="flex-direction:row-reverse; padding: 20px 17px;">
-					            	<div class="input_submit">
-						                <button type="button" onclick="PlusPlants();">수준 추가</button>
+		                            <div class="col-sm-2 input_submit" style="padding:0;">
+						                <button type="button" onclick="PlusPlants();" style="padding: 10px 4px!important; border-radius: 0 5px 5px 0; border-left: 0;">수준 추가</button>
 						            </div>
-					            </div>
+		            			</div>
 		            		</div>
 		            		<div class="col-md-6">
 		            			<div class="row">
@@ -859,18 +858,16 @@
 		            	<div class="row mt-3">
 		            		<div class="col-md-6">
 		            			<div class="row">
-		            				<div class="col-sm-4 d-flex aling-items-center">
-	                            		<label class="color-dark align-center">파종량<span style="color: red;">*</span></label>
+		            				<div class="col-sm-2 d-flex aling-items-center">
+	                            		<label class="color-dark align-center"><span class="red">*</span>파종량</label>
 		                            </div>
-		                            <div class="col-sm-8">
-	                                	<input type="text" class="form-control b-light" id="amount_text" style="width: 100%;">
+		                            <div class="col-sm-8" style="padding:0;">
+	                                	<input type="text" class="form-control b-light" id="amount_text" style="width: 100%;padding: 10px 35px !important;height:37.78px; border-radius:5px 0 0 5px; border-right:0;">
 		                            </div>
-		            			</div>
-		            			<div class="row" style="flex-direction:row-reverse; padding: 20px 17px;">
-					            	<div class="input_submit">
-						                <button type="button" onclick="PlusAmount();">수준 추가</button>
+		                            <div class="col-sm-2 input_submit" style="padding: 0;">
+						                <button type="button" onclick="PlusAmount();" style="padding: 10px 4px!important; border-radius: 0 5px 5px 0; border-left: 0;">수준 추가</button>
 						            </div>
-					            </div>
+		            			</div>
 		            		</div>
 		            		<div class="col-md-6">
 		            			<div class="row">
@@ -915,7 +912,7 @@
 		            		<div class="col-md-12" id="manure-form">
 		            			<div class="row">
 		        					<div class="col-sm-2 d-flex aling-items-center">
-		                            	<label class="color-dark align-center">면적(m2)<span style="color: red;">*</span></label>
+		                            	<label class="color-dark align-center"><span class="red">*</span>면적(m2)</label>
 		                            </div>
 		                            <div class="col-sm-10">
 		                                <input type="text" class="form-control b-light" id="manure_area" style="width: 100%;">
@@ -923,7 +920,7 @@
 		                    	</div>
 		                    	<div class="row mt-3">
 		        					<div class="col-sm-2 d-flex aling-items-center">
-		                            	<label for="method_input" class="color-dark align-center">비료 성분<span style="color: red;">*</span></label>
+		                            	<label for="method_input" class="color-dark align-center"><span class="red">*</span>비료 성분</label>
 		                            </div>
 		                            <div class="col-sm-5">
 		                            	<div class="select" style="height: auto;">
@@ -1050,7 +1047,7 @@
 		            		<div class="col-md-6">
 		            			<div class="row">
 		            				<div class="col-sm-4 d-flex aling-items-center">
-	                            		<label class="color-dark align-center">기타요인<span style="color: red;">*</span></label>
+	                            		<label class="color-dark align-center"><span class="red">*</span>기타요인</label>
 		                            </div>
 		                            <div class="col-sm-8">
 		                            	<div class="select" style="height: auto;">
@@ -1091,7 +1088,7 @@
 		            			</div>
 		            			<div class="row mt-3">
 		            				<div class="col-sm-4 d-flex aling-items-center">
-	                            		<label class="color-dark align-center">값<span style="color: red;">*</span></label>
+	                            		<label class="color-dark align-center"><span class="red">*</span>값</label>
 		                            </div>
 		                            <div class="col-sm-8">
 	                                	<input type="text" class="form-control b-light" id="etc_value" style="width: 100%;">
@@ -1301,13 +1298,13 @@
 	    	
 	    	if(check == "기타"){
 				var add_list = "";
-				add_list += '<div class="col-md-9" id="etc_form">';
-				add_list += '<div class="form-group ml-2" style="position: relative; display: flex; flex-wrap: wrap;">';
+				add_list += '<div class="col-md-12" id="etc_form" style="padding:0">';
+				add_list += '<div class="form-group" style="position: relative; display: flex; flex-wrap: wrap; justify-content: center;">';
 				
-				add_list += '<div class="pl-2" style="font-size: 0.75em; display: flex;">조간거리<br>(이량사이)</div>';
-				add_list += '<input id="etc_text1" type="text" style="width: 80px; height: 20px;">';
-				add_list += '<div class="pl-2" style="font-size: 0.75em; display: flex;"">주간거리<br>(포기사이)</div>';
-				add_list += '<input id="etc_text2" type="text" style="width: 80px; height: 20px;">';
+				add_list += '<div class="col-sm-2" style="font-size: 0.75em; display: flex;">조간거리<br>(이량사이)</div>';
+				add_list += '<input class="col-sm-3" id="etc_text1" type="text" style="width: 80px; height: 20px;">';
+				add_list += '<div class="col-sm-2" style="font-size: 0.75em; display: flex;"">주간거리<br>(포기사이)</div>';
+				add_list += '<input class="col-sm-3" id="etc_text2" type="text" style="width: 80px; height: 20px;">';
 				
 				add_list += '</div>';
 				add_list += '</div>';
@@ -1914,7 +1911,7 @@
 				for(var i = 0; i < intervals.length; i++){
 					add_list += '<tr class="interval_tr">';
 					add_list += '<td class="interval_name">'+intervals[i]+'</td>';
-					add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusInterval(this);">삭제</button></td>';
+					add_list += '<td><button type="button" class="btn btn-sm btn-danger del" onclick="MinusInterval(this);">삭제</button></td>';
 					add_list += '</tr>';
 				}
 				
@@ -1930,7 +1927,7 @@
 				for(var i = 0; i < intervals.length; i++){
 					add_list += '<tr class="interval_tr">';
 					add_list += '<td class="interval_name">'+intervals[i]+'</td>';
-					add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusInterval(this);">삭제</button></td>';
+					add_list += '<td><button type="button" class="btn btn-sm btn-danger del" onclick="MinusInterval(this);">삭제</button></td>';
 					add_list += '</tr>';
 				}
 				
@@ -1946,7 +1943,7 @@
 				for(var i = 0; i < intervals.length; i++){
 					add_list += '<tr class="interval_tr">';
 					add_list += '<td class="interval_name">'+intervals[i]+'</td>';
-					add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusInterval(this);">삭제</button></td>';
+					add_list += '<td><button type="button" class="btn btn-sm btn-danger del" onclick="MinusInterval(this);">삭제</button></td>';
 					add_list += '</tr>';
 				}
 				
@@ -2040,7 +2037,7 @@
 		
 		add_list += '<tr class="interval_tr">';
 		add_list += '<td class="interval_name">'+interval+'</td>';
-		add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusInterval(this);">삭제</button></td>';
+		add_list += '<td><button type="button" class="btn btn-sm btn-danger del" onclick="MinusInterval(this);">삭제</button></td>';
 		add_list += '</tr>';
 		
 		body.append(add_list);
@@ -2071,7 +2068,7 @@
 				for(var i = 0; i < plants.length; i++){
 					add_list += '<tr class="plants_tr">';
 					add_list += '<td class="plants_name">'+plants[i]+'</td>';
-					add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusPlants(this);">삭제</button></td>';
+					add_list += '<td><button type="button" class="btn btn-sm btn-danger del" onclick="MinusPlants(this);">삭제</button></td>';
 					add_list += '</tr>';
 				}
 				
@@ -2086,7 +2083,7 @@
 				for(var i = 0; i < plants.length; i++){
 					add_list += '<tr class="plants_tr">';
 					add_list += '<td class="plants_name">'+plants[i]+'</td>';
-					add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusPlants(this);">삭제</button></td>';
+					add_list += '<td><button type="button" class="btn btn-sm btn-danger del" onclick="MinusPlants(this);">삭제</button></td>';
 					add_list += '</tr>';
 				}
 				
@@ -2101,7 +2098,7 @@
 				for(var i = 0; i < plants.length; i++){
 					add_list += '<tr class="plants_tr">';
 					add_list += '<td class="plants_name">'+plants[i]+'</td>';
-					add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusPlants(this);">삭제</button></td>';
+					add_list += '<td><button type="button" class="btn btn-sm btn-danger del" onclick="MinusPlants(this);">삭제</button></td>';
 					add_list += '</tr>';
 				}
 				
@@ -2122,7 +2119,7 @@
 		
 		add_list += '<tr class="plants_tr">';
 		add_list += '<td class="plants_name">'+plants+'</td>';
-		add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusPlants(this);">삭제</button></td>';
+		add_list += '<td><button type="button" class="btn btn-sm btn-danger del" onclick="MinusPlants(this);">삭제</button></td>';
 		add_list += '</tr>';
 		
 		body.append(add_list);
@@ -2195,7 +2192,7 @@
 				for(var i = 0; i < amounts.length; i++){
 					add_list += '<tr class="amount_tr">';
 					add_list += '<td class="amount_name">'+amounts[i]+'</td>';
-					add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusAmount(this);">삭제</button></td>';
+					add_list += '<td><button type="button" class="btn btn-sm btn-danger del" onclick="MinusAmount(this);">삭제</button></td>';
 					add_list += '</tr>';
 				}
 				
@@ -2210,7 +2207,7 @@
 				for(var i = 0; i < amounts.length; i++){
 					add_list += '<tr class="amount_tr">';
 					add_list += '<td class="amount_name">'+amounts[i]+'</td>';
-					add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusAmount(this);">삭제</button></td>';
+					add_list += '<td><button type="button" class="btn btn-sm btn-danger del" onclick="MinusAmount(this);">삭제</button></td>';
 					add_list += '</tr>';
 				}
 				
@@ -2225,7 +2222,7 @@
 				for(var i = 0; i < amounts.length; i++){
 					add_list += '<tr class="amount_tr">';
 					add_list += '<td class="amount_name">'+amounts[i]+'</td>';
-					add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusAmount(this);">삭제</button></td>';
+					add_list += '<td><button type="button" class="btn btn-sm btn-danger del" onclick="MinusAmount(this);">삭제</button></td>';
 					add_list += '</tr>';
 				}
 				
@@ -2246,7 +2243,7 @@
 		
 		add_list += '<tr class="amount_tr">';
 		add_list += '<td class="amount_name">'+plants+'</td>';
-		add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusAmount(this);">삭제</button></td>';
+		add_list += '<td><button type="button" class="btn btn-sm btn-danger del" onclick="MinusAmount(this);">삭제</button></td>';
 		add_list += '</tr>';
 		
 		body.append(add_list);
@@ -2333,7 +2330,7 @@
 						str_inner1 += '<td class="manure_amount">'+manureArray1[i].manure_amount+'</td>';
 						str_inner1 += '<td class="manure_percent">'+manureArray1[i].manure_percent+'</td>';
 						str_inner1 += '<td class="manure_result">'+manureArray1[i].manure_result+'</td>';
-						str_inner1 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
+						str_inner1 += '<td><button type="button" class="btn btn-sm btn-danger del" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
 						str_inner1 += '</tr>';
 					}else if(manureArray1[i].manure_level == 2){
 						str_inner2 += '<tr class="manure_tr">';
@@ -2342,7 +2339,7 @@
 						str_inner2 += '<td class="manure_amount">'+manureArray1[i].manure_amount+'</td>';
 						str_inner2 += '<td class="manure_percent">'+manureArray1[i].manure_percent+'</td>';
 						str_inner2 += '<td class="manure_result">'+manureArray1[i].manure_result+'</td>';
-						str_inner2 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
+						str_inner2 += '<td><button type="button" class="btn btn-sm btn-danger del" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
 						str_inner2 += '</tr>';
 					}else if(manureArray1[i].manure_level == 3){
 						str_inner3 += '<tr class="manure_tr">';
@@ -2351,7 +2348,7 @@
 						str_inner3 += '<td class="manure_amount">'+manureArray1[i].manure_amount+'</td>';
 						str_inner3 += '<td class="manure_percent">'+manureArray1[i].manure_percent+'</td>';
 						str_inner3 += '<td class="manure_result">'+manureArray1[i].manure_result+'</td>';
-						str_inner3 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
+						str_inner3 += '<td><button type="button" class="btn btn-sm btn-danger del" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
 						str_inner3 += '</tr>';
 					}
 				}//end for
@@ -2457,7 +2454,7 @@
 						str_inner1 += '<td class="manure_amount">'+manureArray2[i].manure_amount+'</td>';
 						str_inner1 += '<td class="manure_percent">'+manureArray2[i].manure_percent+'</td>';
 						str_inner1 += '<td class="manure_result">'+manureArray2[i].manure_result+'</td>';
-						str_inner1 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
+						str_inner1 += '<td><button type="button" class="btn btn-sm btn-danger del" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
 						str_inner1 += '</tr>';
 					}else if(manureArray2[i].manure_level == 2){
 						str_inner2 += '<tr class="manure_tr">';
@@ -2466,7 +2463,7 @@
 						str_inner2 += '<td class="manure_amount">'+manureArray2[i].manure_amount+'</td>';
 						str_inner2 += '<td class="manure_percent">'+manureArray2[i].manure_percent+'</td>';
 						str_inner2 += '<td class="manure_result">'+manureArray2[i].manure_result+'</td>';
-						str_inner2 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
+						str_inner2 += '<td><button type="button" class="btn btn-sm btn-danger del" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
 						str_inner2 += '</tr>';
 					}else if(manureArray2[i].manure_level == 3){
 						str_inner3 += '<tr class="manure_tr">';
@@ -2475,7 +2472,7 @@
 						str_inner3 += '<td class="manure_amount">'+manureArray2[i].manure_amount+'</td>';
 						str_inner3 += '<td class="manure_percent">'+manureArray2[i].manure_percent+'</td>';
 						str_inner3 += '<td class="manure_result">'+manureArray2[i].manure_result+'</td>';
-						str_inner3 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
+						str_inner3 += '<td><button type="button" class="btn btn-sm btn-danger del" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
 						str_inner3 += '</tr>';
 					}
 				}//end for
@@ -2581,7 +2578,7 @@
 						str_inner1 += '<td class="manure_amount">'+manureArray3[i].manure_amount+'</td>';
 						str_inner1 += '<td class="manure_percent">'+manureArray3[i].manure_percent+'</td>';
 						str_inner1 += '<td class="manure_result">'+manureArray3[i].manure_result+'</td>';
-						str_inner1 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
+						str_inner1 += '<td><button type="button" class="btn btn-sm btn-danger del" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
 						str_inner1 += '</tr>';
 					}else if(manureArray3[i].manure_level == 2){
 						str_inner2 += '<tr class="manure_tr">';
@@ -2590,7 +2587,7 @@
 						str_inner2 += '<td class="manure_amount">'+manureArray3[i].manure_amount+'</td>';
 						str_inner2 += '<td class="manure_percent">'+manureArray3[i].manure_percent+'</td>';
 						str_inner2 += '<td class="manure_result">'+manureArray3[i].manure_result+'</td>';
-						str_inner2 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
+						str_inner2 += '<td><button type="button" class="btn btn-sm btn-danger del" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
 						str_inner2 += '</tr>';
 					}else if(manureArray3[i].manure_level == 3){
 						str_inner3 += '<tr class="manure_tr">';
@@ -2599,7 +2596,7 @@
 						str_inner3 += '<td class="manure_amount">'+manureArray3[i].manure_amount+'</td>';
 						str_inner3 += '<td class="manure_percent">'+manureArray3[i].manure_percent+'</td>';
 						str_inner3 += '<td class="manure_result">'+manureArray3[i].manure_result+'</td>';
-						str_inner3 += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
+						str_inner3 += '<td><button type="button" class="btn btn-sm btn-danger del" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
 						str_inner3 += '</tr>';
 					}
 				}//end for
@@ -2816,7 +2813,7 @@
 				add_list += '<td class="manure_amount">'+manure_amount+'</td>';
 				add_list += '<td class="manure_percent">'+manure_percent+'</td>';
 				add_list += '<td class="manure_result">'+manure_result+'</td>';
-				add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
+				add_list += '<td><button type="button" class="btn btn-sm btn-danger del" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
 				add_list += '</tr>';
 				
 				body.append(add_list);
@@ -2841,7 +2838,7 @@
 			add_list += '<td class="manure_amount">'+manure_amount+'</td>';
 			add_list += '<td class="manure_percent">'+manure_percent+'</td>';
 			add_list += '<td class="manure_result">'+manure_result+'</td>';
-			add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
+			add_list += '<td><button type="button" class="btn btn-sm btn-danger del" onclick="MinusManure(this);"><span class="minus"></span></button></td>';
 			add_list += '</tr>';
 			
 			body.append(add_list);
@@ -3016,7 +3013,7 @@
 					add_list += '<td class="etc_type">'+etcArray1[i].etc_type+'</td>';
 					add_list += '<td class="etc_value">'+etcArray1[i].etc_value+'</td>';
 					add_list += '<td class="etc_comment">'+etcArray1[i].etc_comment+'</td>';
-					add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusEtc(this);">삭제</button></td>';
+					add_list += '<td><button type="button" class="btn btn-sm btn-danger del" onclick="MinusEtc(this);">삭제</button></td>';
 					add_list += '</tr>';
 				}
 				body.append(add_list);
@@ -3028,7 +3025,7 @@
 					add_list += '<td class="etc_type">'+etcArray2[i].etc_type+'</td>';
 					add_list += '<td class="etc_value">'+etcArray2[i].etc_value+'</td>';
 					add_list += '<td class="etc_comment">'+etcArray2[i].etc_comment+'</td>';
-					add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusEtc(this);">삭제</button></td>';
+					add_list += '<td><button type="button" class="btn btn-sm btn-danger del" onclick="MinusEtc(this);">삭제</button></td>';
 					add_list += '</tr>';
 				}
 				body.append(add_list);
@@ -3040,7 +3037,7 @@
 					add_list += '<td class="etc_type">'+etcArray3[i].etc_type+'</td>';
 					add_list += '<td class="etc_value">'+etcArray3[i].etc_value+'</td>';
 					add_list += '<td class="etc_comment">'+etcArray3[i].etc_comment+'</td>';
-					add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusEtc(this);">삭제</button></td>';
+					add_list += '<td><button type="button" class="btn btn-sm btn-danger del" onclick="MinusEtc(this);">삭제</button></td>';
 					add_list += '</tr>';
 				}
 				body.append(add_list);
@@ -3065,7 +3062,7 @@
 		add_list += '<td class="etc_type">'+etc_type+'</td>';
 		add_list += '<td class="etc_value">'+etc_value+'</td>';
 		add_list += '<td class="etc_comment">'+etc_comment+'</td>';
-		add_list += '<td><button type="button" class="btn btn-sm btn-danger" onclick="MinusEtc(this);">삭제</button></td>';
+		add_list += '<td><button type="button" class="btn btn-sm btn-danger del" onclick="MinusEtc(this);">삭제</button></td>';
 		add_list += '</tr>';
 		
 		body.append(add_list);
