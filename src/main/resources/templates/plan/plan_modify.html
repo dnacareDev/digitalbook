@@ -3777,7 +3777,7 @@
 			    add_list += '<td class="table_num">'+resultArray[i].num+'</td>';
 			    add_list += '<td class="table_id">'+resultArray[i].id+'</td>';
 			    add_list += '<td class="table_type">'+resultArray[i].type+'</td>';
-			    add_list += '<td>'+resultArray[i].repeat+'</td>';
+			    add_list += '<td class="table_repeat">'+resultArray[i].repeat+'</td>';
 			    add_list += '<td><input type="text" id="mil" class="seg_area" value="'+resultArray[i].area+'"></td>';
 			    add_list += '</tr>';
 			}
@@ -4470,7 +4470,7 @@
 			    add_list += '<td class="table_num">'+resultArray[i].num+'</td>';
 			    add_list += '<td class="table_id">'+resultArray[i].id+'</td>';
 			    add_list += '<td class="table_type">'+resultArray[i].type+'</td>';
-			    add_list += '<td>'+resultArray[i].repeat+'</td>';
+			    add_list += '<td class="table_repeat">'+resultArray[i].repeat+'</td>';
 			    add_list += '<td><input type="text" id="mil" class="seg_area" value="0"></td>';
 			    add_list += '</tr>';
 			}
@@ -5123,7 +5123,6 @@
 			}
 			obA = {};
 		}
-		
 		return calcObject;
 	}
 	
@@ -5144,37 +5143,68 @@
 		var repeatEl = document.querySelector('#plan_repeat');
 		var repeatVal = repeatEl.value;
 		
-		/* s: object to random */
-		for(const [keyR, valR] of Object.entries(arryToObject())){
-			obR = Object.assign(obR, {["R"+(inR+1)] : []});
-			for(const [keyA, valA] of Object.entries(valR)){
-				arrA.push({[keyA]:valA});
-				inA++; 
-			}
-			arrA.sort(function(){
-				return Math.random() - Math.random();
-			});
-			
-			obR["R"+(inR+1)] = arrA;
-			arrA = [];
-			inR++;
-		}
-		/* e: object to random */
+	
 		
-		/* s: randomObject to array */
-		for(const [keyR, valR] of Object.entries(obR)){
-			for(const [keyA, valA] of Object.entries(valR)){
-				for(const [keyB, valB] of Object.entries(valA)){
-					for(const [keyC, valC] of Object.entries(valB)){
-						for(const [resultKey, resultVal] of Object.entries(valC)){
-							arrRanAll.push(resultVal);
+		var arrLeng = Math.ceil(arrRanAll.length / repeatVal);
+		
+		if(growType == 0){
+			for(const [keyR, valR] of Object.entries(arryToObject())){
+				obR = Object.assign(obR, {[keyR] : []});
+				for(const [keyA, valA] of Object.entries(valR)){
+					arrA.push({[keyA]:valA});
+					inA++; 
+				}
+				arrA.sort(function(){
+					return Math.random() - Math.random();
+				});
+
+			}
+			obR = arrA;
+			console.log(obR,"obR",arrA,"arrA");
+			
+			for(const [keyR, valR] of Object.entries(obR)){
+				console.log(keyR,"keyR");
+				for(const [keyA, valA] of Object.entries(valR)){
+					for(const [keyB, valB] of Object.entries(valA)){
+						for(const [keyC, valC] of Object.entries(valB)){
+								arrRanAll.push(valC);
+						}
+					}
+				}
+			}
+
+		}else{
+			/* s: object to random */
+			for(const [keyR, valR] of Object.entries(arryToObject())){
+				obR = Object.assign(obR, {["R"+(inR+1)] : []});
+				for(const [keyA, valA] of Object.entries(valR)){
+					arrA.push({[keyA]:valA});
+					inA++; 
+				}
+				arrA.sort(function(){
+					return Math.random() - Math.random();
+				});
+				
+				obR["R"+(inR+1)] = arrA;
+				arrA = [];
+				inR++;
+			}
+			// console.log(arrA,"arrA",obR,"obR");
+			/* e: object to random */
+			
+			/* s: randomObject to array */
+			for(const [keyR, valR] of Object.entries(obR)){
+				for(const [keyA, valA] of Object.entries(valR)){
+					for(const [keyB, valB] of Object.entries(valA)){
+						for(const [keyC, valC] of Object.entries(valB)){
+							for(const [resultKey, resultVal] of Object.entries(valC)){
+								arrRanAll.push(resultVal);
+							}
 						}
 					}
 				}
 			}
 		}
-		
-		var arrLeng = Math.ceil(arrRanAll.length / repeatVal);
 		
 		for(var i = 0; i < arrRanAll.length ; i++){ // order 초기화
 			arrRanAll[i].order = i;
@@ -5187,20 +5217,7 @@
 			}
 		}
 
-		if(growType == 0){
-			for(const [keyR, valR] of Object.entries(arryToObject())){
-				obR = Object.assign(obR, {["R"+(inR+1)] : []});
-				for(const [keyA, valA] of Object.entries(valR)){
-					arrA.push({[keyA]:valA});
-					inA++; 
-				}
-				
-				obR["R"+(inR+1)] = arrA;
-				console.log(obR,"obR",arrA,"arrA");
-				arrA = [];
-				inR++;
-			}
-		}
+		//console.log(obR,"obR",arrA,"arrA");
 		resultArray = arrRanAll;
 		reRenderTableComp(growType, 'innerText');
 		
