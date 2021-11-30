@@ -47,6 +47,9 @@
 		height: 42px;
 		margin-top: 0 !important;
 		width: 40%;
+		background-color:#768BF5;
+		border-color: #768BF5;
+		opacity:0.65;
 	}
 	.box_content{
 	    -webkit-box-flex: 0;
@@ -185,7 +188,7 @@
 		    	<div class="row">
 			        <div class="col-lg-12">
 			        	<div class="card">
-			        		<div class="card-body">
+			        		<div class="card-body" style="padding:35px 50px 30px">
 		        				<div class="row">
 		        					<div class="col-sm-2 d-flex aling-items-center">
 		                            	<label for="input_title" class="col-form-label color-dark align-center">Method 명<span style="color: red;">*</span></label>
@@ -282,9 +285,9 @@
 				<div class="row mt-20 noprint">
 					<div class="col-lg-12">
 						<div class="card">
-							<div class="card-body"> 
+							<div class="card-body" style="padding: 35px 50px 30px;"> 
 								<div class="row">
-									<div class="col-lg-12">
+									<div class="col-lg-12" style="padding: 0 0 21px 0">
 										<span class="color-dark align-center" style="font-size: 18px !important;">Step 설정</span>
 									</div>
 								</div>
@@ -333,7 +336,7 @@
 					</div>
 					<div class="col-4">
 						<div class="action-btn d-flex justify-content-end mt-30">
-							<a href="/method/list" class="btn btn-primary end-button end">목록</a>
+							<a href="/method/list" class="btn btn-primary end-button end" style="background-color:#E2E3E5;">목록</a>
 							<button type="button" class="btn btn-default btn-danger end-button end" onclick="DeleteBtn();">삭제</button>
 		                	<button type="button" class="btn btn-default btn-primary end-button end" onclick="UpdateBtn();">수정</button>
 						</div>
@@ -341,16 +344,16 @@
 				</div>
 				<div class="row mt-4">
 					<div class="col-lg-12">
-						<div class="card card-default">
-							<div class="row ml-3 mt-3">
-								<span class="color-dark align-center" style="font-size: 20px;">변경 이력</span>
+						<div class="card card-default" style="padding: 0 30px;">
+							<div class="row ml-3 mt-3" style="margin:0 !important; padding: 35px 20px 22px 20px">
+								<span class="color-dark align-center" style="font-weight: 700; color: #2c2c2c">변경 이력</span>
 							</div>
-							<div class="card-body" style="height: 325px; overflow-y: auto;">
+							<div class="card-body" style="height: 325px; overflow-y: auto; padding-left: 10px; padding-top:0;">
 								<div class="row">
 									<div class="col-lg-12">
 										<ul>
 											<th:block th:each="r : ${record}">
-												<li style="margin-top: 10px; !important">
+												<li style="margin-top: 10px !important">
 													<span class="avatar avatar-success avatar-md avatar-circle" style="float: left;">
 	                                                    <span class="avatar-icon" data-feather="check"></span>
 	                                                </span>
