@@ -1056,3 +1056,7 @@ button.submit{
 	background: #7888FC !important;
 	color: #fff !important;
 }
+
+#storageModal input[type="text"], #storageModal select{
+	width: 100%;
+}

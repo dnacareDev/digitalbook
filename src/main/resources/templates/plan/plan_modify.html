@@ -132,6 +132,12 @@
 	    line-height: 30px;
 	    text-align: left;
 	}
+	[id *="_popup"]{
+		width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center; z-index: 999999;
+	}
+	[id *="_popup"] > .card.card-default.card-md.mb-4{
+		border:1px solid #eee;width:400px;max-width: 400px
+	}
 </style>
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
@@ -557,8 +563,8 @@
 			
 		</div>
 		
-		<div class="atbd-notice" id="success_popup" style="width:100vw; height:100vh; position:fixed; left:0px; top:0px; display:flex; justify-content: center; align-items:center; z-index: 9999">
-        	<div class="card card-default card-md mb-4" style="border:1px solid #eee;">
+		<div class="atbd-notice" id="success_popup" style="">
+        	<div class="card card-default card-md mb-4">
         		<div class="card-body">
         			<div class="atbd-notice__content">
         				<div class="atbd-notice__top text-center">
@@ -576,8 +582,8 @@
         		</div>
         	</div>
         </div>
-        <div class="atbd-notice" id="info_popup" style="z-index:999999999999999; width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
-        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+        <div class="atbd-notice" id="info_popup">
+        	<div class="card card-default card-md mb-4">
         		<div class="card-body">
         			<div class="atbd-notice__content">
         				<div class="atbd-notice__top text-center">
@@ -592,8 +598,8 @@
         		</div>
         	</div>
         </div>
-        <div class="atbd-notice" id="updateStatus_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
-        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+        <div class="atbd-notice" id="updateStatus_popup">
+        	<div class="card card-default card-md mb-4">
         		<div class="card-body">
         			<div class="atbd-notice__content">
         				<div class="atbd-notice__top text-center">
@@ -645,7 +651,7 @@
 			            			<div class="col-sm-2 d-flex aling-items-center">
 		                            	<label for="storage_size" class="col-form-label color-dark align-center">면적</label>
 	                                </div>
-	                                <div class="col-sm-5">
+	                                <div class="col-sm-10">
 		                                <input type="text" class="form-control b-light" id="storage_size" name="storage_size">
 		                            </div>
 			            		</div>
@@ -653,7 +659,7 @@
 			            			<div class="col-sm-2 d-flex aling-items-center">
 		                            	<label for="storage_type" class="col-form-label color-dark align-center">장소유형<span style="color: red;">*</span></label>
 	                                </div>
-	                                <div class="col-sm-5">
+	                                <div class="col-sm-10">
 		                                <select class="form-control b-light" id="storage_type" name="storage_type">
 	                                		<option value="9">유형 선택</option>
 	                                		<option value="0">작물 연구동</option>
