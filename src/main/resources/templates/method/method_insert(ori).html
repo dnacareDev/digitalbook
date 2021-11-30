@@ -96,6 +96,22 @@
 	    padding: 2px1.25rem;
 	    font-size: 14px;
 	}
+	[id *="_popup"]{
+		width:100vw; 
+		height:90vh; 
+		position:fixed; 
+		left:0px; 
+		top:0px; 
+		display:none; 
+		justify-content: center; 
+		align-items:center; 
+		z-index: 999999;
+	}
+	[id *="_popup"] > .card.card-default.card-md.mb-4{
+		border:1px solid #eee;
+		width:400px;
+		max-width: 400px;
+	}
 </style>
 <!-- 공통 헤더 -->
 <th:block th:include="@{/fragments/header.html}"></th:block>
@@ -294,8 +310,8 @@
 			    </div>
 			</div>
 
-	        <div class="atbd-notice" id="success_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
-	        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+	        <div class="atbd-notice" id="success_popup">
+	        	<div class="card card-default card-md mb-4">
 	        		<div class="card-body">
 	        			<div class="atbd-notice__content">
 	        				<div class="atbd-notice__top text-center">
@@ -313,8 +329,8 @@
 	        		</div>
 	        	</div>
 	        </div>
-	        <div class="atbd-notice" id="research_success_popup" style="width:100vw; height:90vh; position:fixed; left:0px; top:0px; display:none; justify-content: center; align-items:center;">
-	        	<div class="card card-default card-md mb-4" style="border:1px solid #eee; width: 20%; height: 25%;">
+	        <div class="atbd-notice" id="research_success_popup">
+	        	<div class="card card-default card-md mb-4">
 	        		<div class="card-body">
 	        			<div class="atbd-notice__content">
 	        				<div class="atbd-notice__top text-center">
