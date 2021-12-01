@@ -463,6 +463,10 @@ body button{
 	width: 10%;
 	float:left;
 }
+
+.section_result #step1 .step_inner .content .bottom_right-content button{
+	padding: 5px 0 !important;
+}
 #section .step .step_inner .content .bottom_right-content .left_type > span{ /* 추가 2021-11-01 */
 	/* float:left; */
 	display:block;

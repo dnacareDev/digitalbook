@@ -63,6 +63,13 @@
    h3{
    	  padding: 12.5px 0 20px 0;
    }
+   .contents .table thead th{
+		border-bottom: 2px solid #E5E9F2;
+   }
+   .contents .table tbody td{
+   		border-bottom: 2px solid rgb(241, 242, 246);
+   }
+   
 </style>
 
 </head>
@@ -145,7 +152,7 @@
 						                        </div>
 					                            <th:block th:if="${#authentication.principal.user_type == 0}">
 					                            	<div class="action-btn d-flex justify-content-end mt-30">
-					                                    <button class="btn btn-lg btn-primary" id="outBtn" onclick="InsertBtn();">+신규등록</button>
+					                                    <button class="btn btn-lg btn-primary" id="outBtn" onclick="InsertBtn();">신규등록</button>
 					                                </div>
 					                            </th:block>
                                             </div>

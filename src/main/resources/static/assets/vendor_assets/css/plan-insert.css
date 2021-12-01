@@ -70,12 +70,21 @@ select {
 	height: 343px;
 	/* margin-top: 15px; */
 }
+#step5 .table-responsive{
+	margin-top: 15px;
+}
 #step5 .table-responsive, #copy-step-4, .btn.btn_new{
 	border: 1px solid #D9D9D9;
     border-radius: 5px;
 }
 th, thead tr{
 	border-top: none !important;
+}
+.submit_btn .list{
+	margin-left: 10px;
+}
+#listBtn{
+	margin-left: 0;
 }
 button{
     display: block;
@@ -229,6 +238,7 @@ body button{
     width: 80% !important;
     float: left;
     padding-bottom: 15px;
+    position:relative;
 }
 #section .step .step_inner .submit{
     width: 100%;
@@ -345,13 +355,13 @@ span.red{
     background-color: #F7F7F8;
     border-bottom: 2px solid #E4E4E4;
 }
-#step6 thead tr{
+#step6 thead tr, #manureModal thead tr{
 	border-top: 2px solid #E4E4E4 !important;
 }
-#step6 tr{
+#step6 tr, #manureModal tr{
 	border-bottom: 1px solid #E4E4E4;
 }
-#step6 thead tr th, #step6 tbody tr td{
+#step6 thead tr th, #step6 tbody tr td, #manureModal tbody tr td{
 	border:none;
 }
 #step6 a.del_manager{
@@ -362,7 +372,7 @@ span.red{
     border-top:1px solid #E6E9F1;
     border-bottom: 2px solid #E4E4E4;
 }
-#table1 th, #table2 th, #step6 thead tr th{
+#table1 th, #table2 th, #step6 thead tr th, #manureModal thead tr th{
     padding: 10px 0;
     font-size: 14px;
     color: #222222;
@@ -434,7 +444,8 @@ ul.select_list{
     transition: height 0.3s;
 }
 .select-show{
-	width: 75% !important;
+	width: 100% !important;
+	top:37px !important;
 }
 .repeat{
     padding: 30px 0 0 0;
@@ -682,7 +693,7 @@ input[type="text"]{
 	height: 37.77px;
 	border-radius: 4px;
 }
-#step6 th{
+#step6 th, #manureModal th{
 	background-color: #F7F7F8;
 }
 #step6 td{
@@ -1021,7 +1032,7 @@ input[type=search]:focus{
 }
 #manureModal table thead th, #manureModal table tbody td{
 	vertical-align: middle;
-	padding: 2px 10px;
+	/*padding: 2px 10px;*/
 }
 #plusManure{
     border-radius: 50%;
@@ -1072,4 +1083,14 @@ button[type="button"].close svg{
 }
 #etc_form{
 	margin-top: 50px;
+}
+.modal-basic .col-md-6:first-child{
+	padding-top: 30px;
+}
+.modal-basic .col-md-6:last-child .row{
+	width: 100%;
+	margin:0;
+}
+.modal-basic .modal-body > .row:last-child{
+	padding: 20px 15px !important;
 }
