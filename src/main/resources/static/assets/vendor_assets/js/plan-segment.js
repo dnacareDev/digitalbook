@@ -47,13 +47,15 @@ function getDataResult(getDataArr, type, innerType, modify){
 	
 	
 	console.log(segmentType,"segmentType");
-	
-	if(segmentType == 2 || segmentType == 3){
-		btnLeft.style.display = "none";
-		console.log("test");
-	}else{
-		btnLeft.style.display = "block";
+	if(btnLeft){
+		if(segmentType == 2 || segmentType == 3){
+			btnLeft.style.display = "none";
+			console.log("test");
+		}else{
+				btnLeft.style.display = "block";
+		}
 	}
+	
 }
 
 function onClickColumnBtn(){
