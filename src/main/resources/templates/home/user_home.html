@@ -296,7 +296,8 @@
 			                        		<div class="atbd-collapse atbd-collapse-custom">
 				                        		<th:block th:each="p : ${current_plan}">
 				                        			<div class="atbd-collapse-item">
-					                                    <p class="item-link data_target" data-toggle="collapse" style="text-decoration: underline;" th:text="${p.report_title +'(' + p.start_date + ' - ' + p.end_date + ')' }"></p>
+					                                    <p class="item-link data_target" data-toggle="collapse" style="text-decoration: underline;" th:text="${p.report_title + '(' + p.start_date + ' - ' + p.end_date + ')' }"></p>
+					                                    <span th:text="${p}"></span>
 					                                    <div class="collapse atbd-collapse-item__body" style="background-color: #F7F7F8;">
 					                                        <div class="collapse-body-text" style="position: static;">
 					                                            <div class="row">
@@ -321,9 +322,7 @@
 			                        		<div class="atbd-collapse atbd-collapse-custom">
 				                        		<th:block th:each="p : ${delay_plan}">
 				                        			<div class="atbd-collapse-item">
-					                                    <p class="item-link data_target1" data-toggle="collapse" style="text-decoration: underline;"
-					                                    	th:text="${p.report_title +'(' + p.start_date + ' - ' + p.end_date + ')' }">
-					                                    </p>
+					                                    <p class="item-link data_target1" data-toggle="collapse" style="text-decoration: underline;">[[${p.report_title}]] <br> [[${p.method_title + '(' + p.start_date + ' - ' + p.end_date + ')'}]]</p>
 					                                    <div class="collapse atbd-collapse-item__body" style="background-color: #F7F7F8;">
 					                                        <div class="collapse-body-text" style="position: static;">
 					                                            <div class="row">

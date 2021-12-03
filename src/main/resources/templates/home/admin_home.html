@@ -222,10 +222,10 @@
 		var progress_list = $("#progress_list");
 		var add_list = "";
 		
-		for(var i = 0; i < progress_plan.length; i++){
+		for(var i = 0; i < progress_plan.length; i++)
+		{
 			add_list += '<div class="atbd-collapse-item">';
-			
-			add_list += '<p class="item-link" data-toggle="collapse" data-target="#pro-'+(i+1)+'" style="text-decoration: underline;">'+progress_plan[i].report_title+'('+progress_plan[i].start_date+'-'+progress_plan[i].end_date+')</p>';
+			add_list += '<p class="item-link" data-toggle="collapse" data-target="#pro-' + ( i + 1 ) + '" style="text-decoration: underline;">' + progress_plan[i].report_title + '<br>' + progress_plan[i].method_title + '(' + progress_plan[i].start_date + '-' + progress_plan[i].end_date + ')</p>';
 			add_list += '<div id="pro-'+(i+1)+'" class="collapse atbd-collapse-item__body" style="background-color: #F7F7F8;">';
 			add_list += '<div class="collapse-body-text">';
 			add_list += '<div class="row">';

@@ -1060,8 +1060,8 @@ input[type=search]:focus{
     margin: 0;
 }
 button[type="button"]{
-	background: #7888FC !important;
-	color: #fff !important;
+	background: #7888FC;
+	color: #fff ;
 }
 button.submit{
 	background: #7888FC !important;
