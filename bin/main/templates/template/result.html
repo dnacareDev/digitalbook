@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title></title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+<link rel="stylesheet" href="css/style.css">
+<!-- 공통 헤더 -->
+<th:block th:include="/../fragments/header.html"></th:block>
+<script>
+window.addEventListener("load", function(){ //javascript
+    let section = document.getElementById("section"),
+    step = section.children,  
+    n = 0;
+    
+    
+    let slideUp = (title, target, duration=500) => {
+        title.classList.remove("active");
+        target.style.transitionProperty = 'height, margin, padding';
+        target.style.transitionDuration = duration + 'ms';
+        target.style.boxSizing = 'border-box';
+        target.style.height = target.offsetHeight + 'px';
+        target.offsetHeight;
+        target.style.overflow = 'hidden';
+        target.style.height = 0;
+        target.style.paddingTop = 0;
+        target.style.paddingBottom = 0;
+        target.style.marginTop = 0;
+        target.style.marginBottom = 0;
+        window.setTimeout( () => {
+            target.style.display = 'none';
+            target.style.removeProperty('height');
+            target.style.removeProperty('padding-top');
+            target.style.removeProperty('padding-bottom');
+            target.style.removeProperty('margin-top');
+            target.style.removeProperty('margin-bottom');
+            target.style.removeProperty('overflow');
+            target.style.removeProperty('transition-duration');
+            target.style.removeProperty('transition-property');
+        }, duration);
+    }
+    let slideDown = (title, target, duration=500) => {
+        target.style.removeProperty('display');
+        let display = window.getComputedStyle(target).display;
+        if (display === 'none')
+        display = 'block';
+        title.classList.add("active");
+        target.style.display = display;
+        let height = target.offsetHeight;
+        target.style.overflow = 'hidden';
+        target.style.height = 0;
+        target.style.paddingTop = 0;
+        target.style.paddingBottom = 0;
+        target.style.marginTop = 0;
+        target.style.marginBottom = 0;
+        target.offsetHeight;
+        target.style.boxSizing = 'border-box';
+        target.style.transitionProperty = "height, margin, padding";
+        target.style.transitionDuration = duration + 'ms';
+        target.style.height = height + 'px';
+        target.style.removeProperty('padding-top');
+        target.style.removeProperty('padding-bottom');
+        target.style.removeProperty('margin-top');
+        target.style.removeProperty('margin-bottom');
+        window.setTimeout( () => {
+            target.style.removeProperty('height');
+            target.style.removeProperty('overflow');
+            target.style.removeProperty('transition-duration');
+            target.style.removeProperty('transition-property');
+        }, duration);
+    }
+    let slideToggle = (title, target, duration = 500) => {
+        if (window.getComputedStyle(target).display === 'none') {
+            return slideDown(title, target, duration);
+        } else {
+            return slideUp(title, target, duration);
+        }
+    }
+    
+    for(let i=0; i<step.length; i++){
+        let stepInner = step[i].children;
+        for(let k=0; k<stepInner.length; k++){
+            let [title, content] = stepInner[k].children;
+            
+            title.addEventListener("click", function(e){
+                slideToggle(title, content);
+                const left_content = document.getElementsByClassName("left_content")[0],
+                      back = document.getElementsByClassName("background-content")[0];
+                let height = left_content.offsetHeight;
+                back.style.height= height + "px";
+                
+                const lineBox = document.getElementsByClassName("relative_box")[0],
+       		  	line = document.getElementsByClassName("lines_height")[0];
+		      	let Heights = lineBox.offsetHeight;
+		      	line.style.height= Heights + "px";
+            });
+        }
+    }
+    const contents = document.getElementsByClassName("sangtaeLi")[0],
+    parentLi = contents.children;
+
+	for(let i=0; i<parentLi.length; i++){
+	  let childeLi = parentLi[i].children[1].children;
+	  
+	  for(let k=0; k<childeLi.length; k++){
+	      childeLi[k].idx = k;
+	      
+	      
+	      childeLi[k].addEventListener("click", function(e){
+	          e.preventDefault();
+	          n=e.currentTarget.idx;
+	          let select_line = childeLi[n].children[1];
+	          for(let f=0; f<childeLi.length; f++){
+	              childeLi[f].children[1].style.display="none";
+	              childeLi[f].children[1].addEventListener("focusout", function(e){
+	                  childeLi[f].children[1].style.display="none";
+	              });
+	          }
+	          select_line.style.display="block";
+	      });
+	  }
+	}
+   	
+});
+</script>
+<style>
+* {
+	box-sizing: border-box;
+}
+:root {
+    --swiper-theme-color: #000;
+}
+body, h1, h2, h3, h4, h5, h6, p, ul, ol, dd, dl {
+	margin: 0;
+	padding: 0;
+}
+ul, ol {
+	list-style: none;
+}
+a {
+	text-decoration:none;
+    color: #000;
+}
+img {
+	vertical-align: top;
+	border: 0;
+}
+.clearfix::before{
+	content: "";
+	display: block;
+}
+.clearfix::after{
+	content: "";
+	display: block;
+	clear: both;
+}
+td.blue a{
+	color:#768BF5;
+}
+table{
+    border-spacing: 0;
+    border-collapse:collapse;
+    border: none;
+    float: none;
+    clear: both;
+    min-width: 100%;
+    text-align: center;
+}
+.wrapper{
+    padding: 100px 0;
+    background-color: #F8F8F8;
+}
+select {
+    display: block;
+    width: 100%;
+    height: 44px;
+    border-radius: 5px;
+    padding: 0 20px;
+    border-color: #222222;
+}
+#section select:focus{
+    border-color: #7888FC;
+}
+button{
+    display: block;
+	padding: 5px 20px;
+	font-size: 0.875em; /* 14 */
+	color: #fff;
+	background-color: #7888FC;
+	border: none;
+	outline: 0;
+	box-sizing: border-box;
+	border: none;
+	cursor: pointer;
+	border-radius: 4px;
+	font-weight:500;
+	
+}
+body button{
+	line-height:normal;
+}
+.submit button{
+    padding: 12px 28px;
+}
+.submit.off button{
+    cursor: auto;
+    background-color: rgba(233, 233, 253);
+}
+#section .step{
+    width: 100%;
+    padding: 15px 50px;
+}
+#section .step .step_inner{
+    max-width: 100%;
+    margin: 0 auto;
+    background-color: #fff;
+    border: none;
+    border-radius: .5rem;
+    box-shadow: 0 4px 25px 0 rgb(0 0 0 / 10%);
+    padding-left: 30px;
+    padding-right: 30px; 
+}
+.submit_btn .submit_btn-inner{
+    max-width: 100%;
+    margin: 0 auto;
+}
+#section .step .step_inner > .title{
+    padding: 20px;
+    cursor: pointer;
+}
+#section .step .step_inner > .title.active{
+    cursor: auto;
+}
+#section .step .step_inner > .title.active h3 span{
+    position: absolute;
+    right: 0;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+#section .step .step_inner > .title h3 span::before,
+#section .step .step_inner > .title h3 span::after{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    content: "";
+    display: block;
+    width: 10px;
+    height: 1px;
+    transform: rotate(-45deg);
+    background-color: #666666;
+    transition: transform 0.3s;
+}
+#section .step .step_inner > .title h3 span::after{
+    right: 7px;
+    transform: rotate(45deg);
+}
+#section .step .step_inner > .title.active h3 span::before{
+    transform: rotate(45deg);
+}
+#section .step .step_inner > .title.active h3 span::after{
+    transform: rotate(-45deg);
+}
+#section .step .step_inner .title h3{
+    font-weight: 700;
+    font-size: 18px;
+    color: #2c2c2c;
+    position: relative;
+}
+#section .step .step_inner .content{
+    display: none;
+    width: 100%;
+    padding: 50px 20px;
+}
+
+
+#section .step .step_inner .content .left_content{
+    float: left;
+    width: 50%;
+}
+#section .step .step_inner .content span.sub_title-content{
+    float: left;
+    width: 100%;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 200;
+    color: #222222;
+    padding: 20px 0;
+}
+#step1 table thead tr{
+    border-top: 1px solid #E6E9F1;
+    border-bottom: 2px solid #E4E4E4;
+}
+#step1 table thead th {
+    padding: 10px 0;
+    font-size: 14px;
+    color: #222222;
+}
+#step1 table tbody tr{
+    background-color: #F6FFF2;
+    border-bottom: 1px solid #E6E9F1;
+   
+}
+#step1 table tbody td {
+    padding: 12px 40px;
+    color: #666d92;
+    font-size: 14px;
+}
+#section .step .step_inner .content .left_content .box_content{
+    height: 200px;
+    overflow: auto;
+}
+
+
+
+
+
+
+
+
+
+#section .step .step_inner .content .right_content{
+    float:left;
+    width: 50%;
+    padding: 0 10px;
+}
+#section .background-content{
+    background: url(../img/icons/04.png) no-repeat center center;
+    background-size: cover;
+    clear: both;
+}
+.background-content ul li{
+    padding: 5px 20px;
+    position: relative;
+    background-color: #F6FFF2;
+    border: 1px solid #DBEFD2;
+    border-radius: 3px;
+    float: left;
+    margin-top: 10px;
+}
+.background-content ul li:nth-child(2n + 1){
+    margin-left: 50px;
+    clear: both;
+}
+.background-content ul li::after,
+.background-content ul li::before{
+    content: "";
+    position: absolute;
+    display: block;
+    left: 5px;
+    top: 13px;
+    width: 7px;
+    height: 2px;
+    transform: rotate(-45deg);
+    background-color: #95AA8D;
+}
+.background-content ul li::before{
+    top: 17px;
+    transform: rotate(45deg);
+}
+.background-content ul li a::after,
+.background-content ul li a::before{
+    content: "";
+    position: absolute;
+    display: block;
+    right: 5px;
+    top: 13px;
+    width: 7px;
+    height: 2px;
+    transform: rotate(45deg);
+    background-color: #95AA8D;
+}
+.background-content ul li a::before{
+    top: 17px;
+    transform: rotate(-45deg);
+}
+.background-content ul li a{
+    color: #5E7156;
+}
+.refresh{
+    position: absolute;
+    right: -40px;
+    top: -1px;
+    display: block;
+    width: 30px;
+    height: 33px;
+    border: 1px solid #D8D8D8;
+    clear: both;
+    text-align: center;
+    font-size: 20px;
+    color: #A7A7A7;
+    background-color: #F8F7F7;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.refresh img {
+    width: 80%;
+    vertical-align: middle;
+    margin-top: 2.5px;
+}
+.arrowMove{
+    position: absolute;
+    left: -40px;
+    top: -1px;
+    display: block;
+    width: 30px;
+    height: 33px;
+    border: 1px solid #D8D8D8;
+    clear: both;
+    text-align: center;
+    font-size: 20px;
+    color: #A7A7A7;
+    background-color: #F8F7F7;
+    border-radius: 3px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+/* btnType */
+#section .submit_btn button.type1{
+    background-color: #E9E9FD;
+    color: #5F63F2;
+    padding: 15px 50px;
+    border-radius: 5px;
+    font-weight: 700;
+    
+}
+.submit_btn button.type2{
+    background-color: #7888FC;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: 700;
+}
+.submit_btns .submit_btn-inner .list{
+    float: left;
+    background-color: #E2E3E5;
+    color: #666666;
+    border-radius: 5px;
+    padding: 15px 50px;
+    font-weight: 700;
+}
+.submit_btns .submit_btn-inner{
+    max-width: 100%;
+    margin: 0 auto;
+}
+.submit_btns{
+	width:100%;
+	padding: 15px 50px;
+}
+
+
+#section .step .step_inner .content .bottom_right-content{
+    float: right;
+    width: 200px;
+    padding: 20px 10px;
+    clear: both;
+    
+}
+#section .step .step_inner .content .bottom_right-content #select1{
+    border: 1px solid #E4E4E4;
+}
+#section .step .step_inner .content .bottom_content{
+    clear: both;
+    text-align: right;
+    padding: 20px 10px;
+    height: 250px;
+    overflow: auto;
+}
+#section .step .step_inner .content .bottom_content span.bottom-span{
+    padding: 10px 0;
+    display: block;
+}
+#section .step .step_inner .content .bottom_content span.bottom-span a{
+    text-decoration: underline;
+    text-decoration-color: #222;
+    color: #222;
+    font-weight: 700;
+}
+#section .step .step_inner .content .bottom_content table{
+    border: 1px solid #E4E4E4;
+}
+#section .step .step_inner .content .bottom_content table thead tr{
+    background-color: #F7F7F8;
+}
+#section .step .step_inner .content .bottom_content table thead th{
+    color: #222;
+    font-size: 16px;
+    border-right: 1px solid #E4E4E4;
+}
+#section .step .step_inner .content .bottom_content table tr{
+    background-color: #ffffff;
+    border-bottom: 1px solid #E4E4E4;
+}
+#section .step .step_inner .content .bottom_content table tr td{
+    border-right: 1px solid #E4E4E4;
+}
+#section .step .step_inner .content .bottom_content table tr td .cam{
+    float: right;
+    cursor: pointer;
+}
+#section .step .step_inner .content .submit_btn{
+    width: 100%;
+    text-align: right;
+    clear: both;
+}
+#section .step .step_inner .content .submit_btn button{
+    float: right;
+}
+
+
+
+
+.modal-basic table{
+	min-width: 100%;
+	border-top: 1px solid #E4E4E4;
+	border-bottom: 1px solid #E4E4E4;
+}
+.modal-basic table thead tr{
+	border-bottom: 2px solid #E4E4E4;
+	background-color:#F7F7F8;
+}
+.modal-basic table thead tr th{
+	font-size: 14px;
+	color: #222222;
+	padding: 10px 0;
+	text-align:center;
+}
+.modal-basic table tbody tr{
+	border-bottom: 1px solid #E4E4E4;
+}
+.modal-basic table tbody tr td {
+	font-size: 14px;
+	color:#666666;
+	padding: 10px 0;
+	text-align:center;
+}
+.modal-basic .modal-body .submit_btn{
+	float:right;
+}
+.modal-basic .modal-body .submit_btn ul {
+	display: inline-block;
+    float: right;
+}
+.modal-basic .modal-body .submit_btn li{
+	float:left;
+	margin-left:10px;
+}
+
+i.bi{
+    vertical-align: top;
+    margin-right: 5px;
+    margin-top: -1px;
+    cursor: pointer;
+}
+
+
+
+#section .step .step_inner .content span.sub_title-content.bold_text{
+    font-weight: 700;
+    font-size: 18px;
+}
+#section .step .step_inner .content .content-center  {
+    padding-bottom: 20px;
+    display:block;
+}
+#section .step .step_inner .content .content-center .content_box table{
+    border-bottom: 1px solid #E8EEF2;
+    border-top: 1px solid #E8EEF2;
+}
+#section .step .step_inner .content .content-center .content_box table thead tr{
+    background-color: #E3F0FF;
+    border-bottom: 2px solid #E8EEF2;
+}
+#section .step .step_inner .content .content-center .content_box table thead tr th{
+    padding: 10px;
+    color: #222222;
+    font-size: 16px;
+}
+#section .step .step_inner .content .content-center .content_box table tbody tr{
+    background-color: #fff;
+    border-bottom: 1px solid #E8EEF2;
+}
+#section .step .step_inner .content .content-center .content_box table tbody tr td{
+    padding: 10px;
+    font-size: 16px;
+    color: #666666;
+}
+
+#section .step .step_inner .content .content-center .content_box > ul > li{
+    float: left;
+    width: calc((100% - 60px)/2);
+    margin-left: 60px;
+    position: relative;
+}
+#section .step .step_inner .content .content-center .content_box > ul > li:nth-child(2n+1){
+    margin-left: 0;
+}
+
+#section .step .step_inner .content .content-center .content_box ul ul{
+    display: block;
+    width: 100%;
+    background-color: #F7F7F8;
+    border-radius: 5px;
+    text-align: center;
+}
+#section .step .step_inner .content .content-center .content_box ul ul li{
+    display: inline-block;
+    border: 2px solid #7EB47B;
+    border-radius: 50%;
+    margin: 10px;
+    width: 32px;
+    height: 32px;
+    text-align: center;
+    position: relative;
+}
+#section .step .step_inner .content .content-center .content_box ul ul li.red{
+    border: 2px solid #FF4141;
+}
+#section .step .step_inner .content .content-center .content_box ul ul li a{
+    display: block;
+}
+#section .step .step_inner .content .content-center .content_box ul ul li img{
+    vertical-align: middle;
+}
+#step2 #step2_inner .content span.sub_title-content{
+    float: none;
+    display: block;
+}
+#step2 #step2_inner .content .lines{
+    display: none;
+    position: absolute;
+    width: 150px;
+    z-index: 9;
+    right: -150px;
+    top: -10px;
+}
+#step4 .box_table-check{
+	float: left;
+	width: 37px;
+	height: 37px;
+	border-radius: 50%;
+	background-color:#7367F0;
+	position:relative;
+	z-index: 2;
+}
+#step4 .relative_box{
+	position:relative;
+}
+#step4 .box_table-check span::after{
+	content:"";
+	display:block;
+	position: absolute;
+    left: 10px;
+    bottom: 13px;
+    width: 8px;
+    height: 2px;
+    background-color: #fff;
+    transform: rotate(45deg);
+}
+#step4 .box_table-check span::before{
+	content:"";
+	display:block;
+	position: absolute;
+    right: 7px;
+    bottom: 16px;
+    width: 16px;
+    height: 2px;
+    background-color: #fff;
+    transform: rotate(-45deg);
+}
+#step4 .lines_height{
+	display:block;
+	position: absolute;
+	bottom:0;
+	left: 17px;
+	width:3px;
+	height:0;
+	background-color:#dae1e7;
+	z-index: 1;
+}
+#step4 li{
+	margin: 10px 0;
+}
+#step4 .timeline-info{
+	padding-left: 57px; 
+}
+#step4 .text-muted{
+	padding-left: 20px;
+}
+.submit_btns .submit_btn-inner .submit {
+    float: right;
+    background-color: #E9E9FD;
+    color: #5F63F2;
+    border-radius: 5px;
+    padding: 15px 50px;
+    font-weight: 700;
+}
+</style>
+</head>
+<body class="layout-light top-menu overlayScroll">
+     
+	<div class="mobile-search"></div>
+	
+	<div class="mobile-author-actions"></div>
+	
+	<!-- 공통 topbar -->
+	<th:block th:include="/../fragments/topbar.html"></th:block>
+	
+	<main class="main-content" style="background-color: #F9FBFD;">
+		
+		<div class="contents" style="background-color: #F9FBFD;">
+			
+			<div class="container-fluid">
+                
+    <div class="wrapper clearfix">
+        <section id="section">
+            <div class="step" id="step1">
+                <div class="step_inner clearfix" id="step1_inner">
+                    <div class="title">
+                        <h3>구획정보<span></span></h3>
+                    </div>
+                    <div class="content clearfix">
+                        <div class="left_content">
+                            <div class="box_content">
+                                <span class="sub_title-content">집구1</span>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>구획번호</th>
+                                            <th>구획ID</th>
+                                            <th>처리종류</th>
+                                            <th>반복</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>A1-B1-1</td>
+                                            <td>콩(방사), 50x20</td>
+                                            <td>1</td>
+                                        </tr>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>A1-B1-1</td>
+                                            <td>콩(방사), 50x20</td>
+                                            <td>1</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="box_content">
+                                <span class="sub_title-content">집구1</span>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>구획번호</th>
+                                            <th>구획ID</th>
+                                            <th>처리종류</th>
+                                            <th>반복</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>A1-B1-1</td>
+                                            <td>콩(방사), 50x20</td>
+                                            <td>1</td>
+                                        </tr>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>A1-B1-1</td>
+                                            <td>콩(방사), 50x20</td>
+                                            <td>1</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="box_content">
+                                <span class="sub_title-content">집구1</span>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>구획번호</th>
+                                            <th>구획ID</th>
+                                            <th>처리종류</th>
+                                            <th>반복</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>A1-B1-1</td>
+                                            <td>콩(방사), 50x20</td>
+                                            <td>1</td>
+                                        </tr>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>A1-B1-1</td>
+                                            <td>콩(방사), 50x20</td>
+                                            <td>1</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="right_content">
+                            <div class="img_inner">
+                                <div class="background-content">
+                                    <ul>
+                                        <li><a href="">A1-B1-1</a>
+                                            <div class="arrowMove">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-move" viewBox="0 0 16 16">
+                                                  <path fill-rule="evenodd" d="M7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708l2-2zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10zM.146 8.354a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L1.707 7.5H5.5a.5.5 0 0 1 0 1H1.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2zM10 8a.5.5 0 0 1 .5-.5h3.793l-1.147-1.146a.5.5 0 0 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L14.293 8.5H10.5A.5.5 0 0 1 10 8z"/>
+                                                </svg>
+                                            </div>
+                                        </li>
+                                        <li><a href="">A1-B1-1</a>
+                                            <div class="refresh">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                                                  <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                                                  <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+                                                </svg>
+                                            </div>
+                                        </li>
+                                        <li><a href="">A1-B1-1</a>
+                                            <div class="arrowMove">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-move" viewBox="0 0 16 16">
+                                                  <path fill-rule="evenodd" d="M7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708l2-2zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10zM.146 8.354a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L1.707 7.5H5.5a.5.5 0 0 1 0 1H1.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2zM10 8a.5.5 0 0 1 .5-.5h3.793l-1.147-1.146a.5.5 0 0 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L14.293 8.5H10.5A.5.5 0 0 1 10 8z"/>
+                                                </svg>
+                                            </div>
+                                        </li>
+                                        <li><a href="">A1-B1-1</a>
+                                            <div class="refresh">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                                                  <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                                                  <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+                                                </svg>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bottom_right-content">
+                            <select id="select1">
+                                <option></option>
+                                <option></option>
+                                <option></option>
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="bottom_content">
+                            <span class="bottom-span"><a href="">구획정보확인</a></span>
+                            <table id="step1_table">
+                                <thead>
+                                    <tr>
+                                        <th>개체</th>
+                                        <th>초장</th>
+                                        <th>협수</th>
+                                        <th>분지수</th>
+                                        <th>역병</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>58
+                                            <div class="cam" id="cam1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-fill" viewBox="0 0 16 16">
+                                                <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                                                <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/>
+                                            </svg>
+                                            </div>
+                                        </td>
+                                        <td>-
+                                            <div class="cam">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-fill" viewBox="0 0 16 16">
+                                                <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                                                <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/>
+                                                </svg>
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>58
+                                            <div class="cam">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-fill" viewBox="0 0 16 16">
+                                                <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                                                <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/>
+                                            </svg>
+                                            </div>
+                                        </td>
+                                        <td>-
+                                            <div class="cam">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-fill" viewBox="0 0 16 16">
+                                                <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                                                <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/>
+                                                </svg>
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="submit_btn" style="padding: 10px">
+                            <button class="type1">저장</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="step" id="step2">
+                <div class="step_inner clearfix" id="step2_inner">
+                    <div class="title">
+                        <h3>구획정보확인<span></span></h3>
+                    </div>
+                    <div class="content clearfix">
+                        <div class="content-center">
+                            <div class="content_box">
+                                <ul class="sangtaeLi clearfix">
+                                    <li>
+                                        <span class="sub_title-content regular_text"><i class="bi bi-arrows-move"></i>토양정보(수동조회)</span>
+                                        <ul class="clearfix sangtae">
+                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
+                                                <div class="lines">
+                                                    <select>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                    </select>
+                                                </div>
+                                            </li>
+                                            <li class="red"><a href="#"><img src="../img/icons/red.png" alt="red"></a>
+                                                <div class="lines">
+                                                    <select>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                    </select>
+                                                </div>
+                                            </li>
+                                             <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
+                                                <div class="lines">
+                                                    <select>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                    </select>
+                                                </div>
+                                            </li>
+                                             <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
+                                                <div class="lines">
+                                                    <select>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                    </select>
+                                                </div>
+                                            </li>
+                                             <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
+                                                <div class="lines">
+                                                    <select>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                    </select>
+                                                </div>
+                                            </li>
+                                             <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
+                                                <div class="lines">
+                                                    <select>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                    </select>
+                                                </div>
+                                            </li>
+                                             <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
+                                                <div class="lines">
+                                                    <select>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                    </select>
+                                                </div>
+                                            </li>
+                                             <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
+                                                <div class="lines">
+                                                    <select>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                    </select>
+                                                </div>
+                                            </li>
+                                             <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
+                                                <div class="lines">
+                                                    <select>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                    </select>
+                                                </div>
+                                            </li>
+                                             <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
+                                                <div class="lines">
+                                                    <select>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                    </select>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <span class="sub_title-content regular_text"><i class="bi bi-arrows-move"></i>토양정보(수동조회)</span>
+                                        <ul class="clearfix sangtae">
+                                            <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
+                                                <div class="lines">
+                                                    <select>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                    </select>
+                                                </div>
+                                            </li>
+                                            <li class="red"><a href="#"><img src="../img/icons/red.png" alt="red"></a>
+                                                <div class="lines">
+                                                    <select>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                    </select>
+                                                </div>
+                                            </li>
+                                             <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
+                                                <div class="lines">
+                                                    <select>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                    </select>
+                                                </div>
+                                            </li>
+                                             <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
+                                                <div class="lines">
+                                                    <select>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                    </select>
+                                                </div>
+                                            </li>
+                                             <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
+                                                <div class="lines">
+                                                    <select>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                    </select>
+                                                </div>
+                                            </li>
+                                             <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
+                                                <div class="lines">
+                                                    <select>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                    </select>
+                                                </div>
+                                            </li>
+                                             <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
+                                                <div class="lines">
+                                                    <select>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                    </select>
+                                                </div>
+                                            </li>
+                                             <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
+                                                <div class="lines">
+                                                    <select>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                    </select>
+                                                </div>
+                                            </li>
+                                             <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
+                                                <div class="lines">
+                                                    <select>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                    </select>
+                                                </div>
+                                            </li>
+                                             <li><a href="#"><img src="../img/icons/green.png" alt="green"></a>
+                                                <div class="lines">
+                                                    <select>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                        <option>상태선택</option>
+                                                    </select>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="submit_btn">
+                            <button class="type1">저장</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="step" id="step2">
+                <div class="step_inner clearfix" id="step2_inner">
+                    <div class="title">
+                        <h3>토양/기상 정보<span></span></h3>
+                    </div>
+                    <div class="content clearfix">
+                        <div class="content-center">
+                            <div class="content_box">
+                                <span class="sub_title-content bold_text">토양정보(수동조회)</span>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>산도(ph)</th>
+                                            <th>유효인산(mg/kg)</th>
+                                            <th>유효규산(mg/kg)</th>
+                                            <th>유기물(g/kg)</th>
+                                            <th>마그네슘(cmol+/kg)</th>
+                                            <th>칼륨(cmol+/kg)</th>
+                                            <th>칼슘(cmol+/kg)</th>
+                                            <th>전기전도도(dS/m)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>6.6</td>
+                                            <td>28</td>
+                                            <td>1</td>
+                                            <td>1</td>
+                                            <td>1</td>
+                                            <td>1</td>
+                                            <td>1</td>
+                                            <td>1</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="content_box">
+                                <span class="sub_title-content bold_text">토양정보(수동조회)</span>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>강수량</th>
+                                            <th>증발량</th>
+                                            <th>풍속(150CM)</th>
+                                            <th>풍속(300CM)</th>
+                                            <th>결로시간</th>
+                                            <th>초상온도</th>
+                                            <th>습도(150CM)</th>
+                                            <th>습도(400CM)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>0.0mm</td>
+                                            <td>Xmm</td>
+                                            <td>3.0</td>
+                                            <td>3.0</td>
+                                            <td>0.0hr</td>
+                                            <td>-3.2℃</td>
+                                            <td>26.4%</td>
+                                            <td>26.4%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="submit_btn">
+                            <button class="type1">저장</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class="step" id="step4">
+                <div class="step_inner clearfix card" id="step4_inner">
+                    <div class="title">
+                        <h3>변경이력<span></span></h3>
+                    </div>
+                    <div class="card-body content">
+                    	<div class="relative_box clearfix">
+	                    	<ul class="activity-timeline timeline-left list-unstyled">
+	                    		<li class="clearfix">
+	                    			<div class="box_table-check">
+	                    				<span class="box_table-check-inner"></span>
+	                    			</div>
+	                    			<div class="timeline-info">
+	                    				<span class="font-weight-bold mb-0">생육조사계획 : vp-o-002-00082 승인요청</span>
+	                    			</div>
+	                    			<small class="text-muted">2021-06-29 15:18:38</small>
+	                    		</li>
+	                    	</ul>
+	                    	<div class="lines_height"></div>
+                    	</div>
+                    </div>
+                </div>
+            </div>
+            <div class="submit_btns">
+                <div class="submit_btn-inner">
+                    <button class="list">목록</button>
+                    <button class="submit">등록</button>
+                </div>
+            </div>
+        </section>
+    </div>
+			</div>
+			
+		</div>
+        <div class="modal-basic modal fade show" id="modal1" tabindex="-1" role="dialog" aria-hidden="true" style="display: none">
+		    <div class="modal-dialog modal-lg" role="document">
+		        <div class="modal-content modal-bg-white">
+		            <div class="modal-body">
+		            	<div class="row">
+			        		<div class="col-12">
+			        			<h2 style="float: left;">측정 값</h2>
+					        	<div class="d-flex justify-content-end">
+			                		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span data-feather="x"></span></button>
+			                	</div>
+			        		</div>
+			        	</div>
+		            	<div class="row mt-3">
+		            		<div class="col-md-12">
+		            			<table>
+                                    <thead>
+                                    <tr>
+                                        <th>일시</th>
+                                        <th>색상</th>
+                                        <th>기상정보</th>
+                                        <th>토양정보</th>
+                                        <th>위치정보</th>
+                                        <th>사진</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <td>2021.08.06</td>
+                                        <td>#FFFFCC</td>
+                                        <td class="blue"><a href="">view</a></td>
+                                        <td class="blue"><a href="">view</a></td>
+                                        <td class="blue"><a href="">map</a></td>
+                                        <td class="blue"><a href="">view</a></td>
+                                    </tbody>
+                                </table>
+		            		</div>
+		            	</div>
+			            <div class="row" style="flex-direction:row-reverse; padding: 20px 17px;">
+			            	<div class="submit_btn">
+                                <ul>
+                                    <li><button class="type2">사진 선택</button></li>
+                                    <li><button class="type2">사진 선택</button></li>
+                                </ul>
+                            </div>
+			            </div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+	    <!-- ends: .modal-Basic -->
+	</main>
+	
+	 <!-- 공통 하단 -->
+    <th:block th:include="/../fragments/footer.html"></th:block>
+    <!-- 공통 js -->
+    <th:block th:include="/../fragments/commonjs.html"></th:block>
+     <script>
+		$("#cam1").on("click", function(e){
+			$("#modal1").modal("show");
+		});
+     </script>
+</body>    
+</html>

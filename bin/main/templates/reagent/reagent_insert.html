@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en" dir="ltr"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<style>
+	.content-header{margin-top:30px;}
+	.end-button
+	{
+		width:85px;
+		height:40px;
+		background-color:#768BF5;
+		border:0px;
+		margin-top:-15px;
+	}
+	.end{margin-left:10px;}
+	.select-hide{
+		display: none;
+	}
+	.select-show{
+		display: block;
+	    position: absolute;
+	    z-index :10;
+	    top: 30px;
+	    width: 97.5%;
+	    background-color: white;
+	    border:1px solid;
+	    border-radius: 5px;
+	    cursor: pointer;
+	    overflow-y: auto;
+	    height: auto;
+	}
+	
+	#eaches_id_select .select-show{
+		display: block;
+	    position: absolute;
+	    z-index :10;
+	    top: 30px;
+	    width: 97.5%;
+	    background-color: white;
+	    border:1px solid;
+	    border-radius: 5px;
+	    cursor: pointer;
+	    overflow-y: auto;
+	    height: 150px;
+	}
+
+	.select .select-show li{
+	    padding:0 0 0 5px;
+	    line-height: 30px;
+	}
+	[id *="_popup"]{
+		width:100vw; 
+		height:90vh; 
+		position:fixed; 
+		left:0px; 
+		top:0px; 
+		display:none; 
+		justify-content: center; 
+		align-items:center; 
+		z-index: 999999;
+	}
+	[id *="_popup"] > .card.card-default.card-md.mb-4{
+		border:1px solid #eee;
+		width:400px;
+		max-width: 400px;
+	}
+</style>
+<!-- 공통 헤더 -->
+<th:block th:include="/../fragments/header.html"></th:block>
+
+</head>
+
+<body class="layout-light top-menu overlayScroll">
+	<div class="mobile-search"></div>
+	
+	<div class="mobile-author-actions"></div>
+	
+	<!-- 공통 topbar -->
+	<th:block th:include="/../fragments/topbar.html"></th:block>
+	
+	<main class="main-content" style="background-color: #F9FBFD;">
+	
+		<div class="contents" style="background-color: #F9FBFD;">
+    
+		    <div class="container-fluid" style="padding: 0 50px;">
+		    	<div class="row">
+			        <div class="col-lg-12" style="padding: 0 17px;"> 
+			        	<div class="breadcrumb-main" style="float: left; padding:0;">
+			        		<h4 class="text-capitalize breadcrumb-title">시약 · 농약 · 비료</h4>
+			        		<span class="ml-20 mt-1">기초정보 - 시약 · 농약 · 비료</span>
+			        	</div>
+			        </div>
+		        </div>
+		    	<div class="row">
+			        <div class="col-lg-12">
+			        	<div class="card">
+			        		<div class="card-body">
+		        				<div class="row">
+		        					<div class="col-sm-1 d-flex aling-items-center">
+		                            	<label for="reagent_type" class="col-form-label color-dark align-center"><span class="red">*</span>종류</label>
+	                                </div>
+	                                <div class="col-sm-5">
+	                                	<div class="select" style="height: auto;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="reagent_type" placeholder="종류 선택" autocomplete="off">
+		                            		<ul class="select-hide">
+		                            			<li class="reagent_type_list" onclick="selectOpt(this);"><span data-value="시약">시약</span></li>
+		                            			<li class="reagent_type_list" onclick="selectOpt(this);"><span data-value="농약">농약</span></li>
+		                            			<li class="reagent_type_list" onclick="selectOpt(this);"><span data-value="비료">비료</span></li>
+		                            		</ul>
+		                            	</div>
+	                                   <!-- <select class="form-control b-light" id="reagent_type">
+		                                <option disabled="disabled" selected="selected" hidden="hidden">종류 선택</option>
+		                                <option th:value="시약">시약</option>
+		                                <option th:value="농약">농약</option>
+		                                <option th:value="비료">비료</option>
+		                               </select> -->
+	                                </div>
+		                         </div>
+		                         <div class="row mt-3">
+		        					<div class="col-sm-1 d-flex aling-items-center">
+		                            	<label for="reagent_name" class="color-dark align-center"><span class="red">*</span>품명</label>
+		                            </div>
+		                            <div class="col-sm-5">
+		                                <input type="text" class="form-control b-light" id="reagent_name">
+		                            </div>
+		                    	</div>
+		                    	<div class="row mt-3">
+		        					<div class="col-sm-1 d-flex aling-items-center">
+		                            	<label for="reagent_standard" class="color-dark align-center">규격</label>
+		                            </div>
+		                            <div class="col-sm-5">
+		                                <input type="text" class="form-control b-light" id="reagent_standard">
+		                            </div>
+		                    	</div>
+		                    	<div class="row mt-3">
+		        					<div class="col-sm-1 d-flex aling-items-center">
+		                            	<label for="reagent_formula" class="color-dark align-center">화학식</label>
+		                            </div>
+		                            <div class="col-sm-5">
+		                                <input type="text" class="form-control b-light" id="reagent_formula">
+		                            </div>
+		                    	</div>
+		                    	<div class="row mt-3">
+		        					<div class="col-sm-1 d-flex aling-items-center">
+		                            	<label for="reagent_nick_e" class="color-dark align-center">영문별칭</label>
+		                            </div>
+		                            <div class="col-sm-5">
+		                                <input type="text" class="form-control b-light" id="reagent_nick_e">
+		                            </div>
+		                    	</div>
+		                    	<div class="row mt-3">
+		        					<div class="col-sm-1 d-flex aling-items-center">
+		                            	<label for="reagent_nick_k" class="color-dark align-center">국문별칭</label>
+		                            </div>
+		                            <div class="col-sm-5">
+		                                <input type="text" class="form-control b-light" id="reagent_nick_k">
+		                            </div>
+		                    	</div>
+		                    	<div class="row mt-3">
+		        					<div class="col-sm-1 d-flex aling-items-center">
+		                            	<label for="reagent_manufacturer" class="color-dark align-center">제조사</label>
+		                            </div>
+		                            <div class="col-sm-5">
+		                                <input type="text" class="form-control b-light" id="reagent_manufacturer">
+		                            </div>
+		                    	</div>
+		                    	<div class="row mt-3">
+		        					<div class="col-sm-1 d-flex aling-items-center">
+		                            	<label for="reagent_quantity" class="color-dark align-center">수량</label>
+		                            </div>
+		                            <div class="col-sm-2">
+		                                <input type="text" class="form-control b-light" id="reagent_quantity">
+		                            </div>
+		                            <div class="col-sm-3">
+		                            	<div id="eaches_id_select" class="select" style="height: auto;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="eaches_id" placeholder="단위 선택" autocomplete="off">
+		                            		<ul class="select-hide">
+		                            			<th:block th:each="eaches : ${eaches}">
+		                            				<li class="eaches_id_list" onclick="selectOpt(this);"><span th:data-value="${eaches.eaches_id}" th:text="${eaches.eaches_name}"></span></li>
+		                            			</th:block>
+		                            		</ul>
+		                            	</div>
+		                                <!-- <select class="form-control b-light" name="eaches_id" id="eaches_id">
+			                                <option disabled="disabled" selected="selected" hidden="hidden">단위 선택</option>
+			                                <th:block th:each="eaches : ${eaches}">
+			                                	<option th:value="${eaches.eaches_id}" th:text="${eaches.eaches_name}"></option>
+			                                </th:block>
+			                            </select> -->
+		                            </div>
+		                    	</div>
+		                    	<div class="row mt-3">
+		        					<div class="col-sm-1 d-flex aling-items-center">
+		                            	<label for="reagent_purpose" class="color-dark align-center">용도</label>
+		                            </div>
+		                            <div class="col-sm-5">
+		                                <input type="text" class="form-control b-light" id="reagent_purpose">
+		                            </div>
+		                    	</div>
+			        		</div>
+			        	</div>
+			        </div>
+		        </div>
+		        <div class="row">
+					<div class="col-4">
+						<div class="action-btn d-flex justify-content-frist mt-30"></div>
+					</div>
+					<div class="col-4">
+						<div class="d-flex justify-content-center mt-30"></div>
+					</div>
+					<div class="col-4">
+						<div class="action-btn d-flex justify-content-end mt-30">
+							<a href="/data/reagent" class="btn btn-primary end-button end" style="background-color:#E2E3E5;">목록</a>
+							<button type="button" class="btn btn-primary end-button end" onclick="insertBtn();">등록</button>
+						</div>
+					</div>
+				</div>
+		        <div class="atbd-notice" id="success_popup">
+		        	<div class="card card-default card-md mb-4">
+		        		<div class="card-body">
+		        			<div class="atbd-notice__content">
+		        				<div class="atbd-notice__top text-center">
+		        					<div class="atbd-notice__icon bg-success">
+		        						<i class="fas fa-check color-white"></i>
+		        					</div>
+		        					<div class="atbd-notice__text">
+		        						<h4>등록이 완료되었습니다.</h4>
+		        					</div>
+		        					<div style="display: flex; justify-content: center; margin: 10% auto;">
+		        						<a class="btn btn-default btn-success" href="/data/reagent" style="color: #FFFFFF;">확인</a>
+		        					</div>
+		        				</div>
+		        			</div>
+		        		</div>
+		        	</div>
+		        </div>
+		    </div>
+     	</div>
+     
+     </main>
+     
+     <!-- 공통 하단 -->
+    <th:block th:include="/../fragments/footer.html"></th:block>
+    <!-- 공통 js -->
+    <th:block th:include="/../fragments/commonjs.html"></th:block>
+
+<script type="text/javascript">
+
+	let selectInputEls = document.querySelectorAll('input[name="select-input"]');
+	let select_this;
+	let select_prev;
+	let select_id;
+	
+	function selection(){
+		if(document.getSelection){
+			var selection = document.getSelection();
+			
+			if(selection.focusNode != null){
+				if(selection.focusNode.children != undefined){
+					var length = selection.focusNode.children.length;
+					if(length != 0){
+						var check = selection.focusNode.children[0].name;
+						var check2 = selection.focusOffset;
+						if(check == "select-input" && check2 == "1"){
+							selectFilter(selection.focusNode.children[0]);
+						}
+					}
+				}
+			}
+			
+		}
+	}
+	
+	function selectFilter(e){
+		
+		var selection = document.getSelection();
+		
+		select_prev = select_this;
+		select_this = e;
+		select_id = e.id;
+		
+		let selectOptionWrapEls = document.querySelectorAll('.select ul');
+		
+		var currTarget = e;
+		var delOption = currTarget.nextElementSibling;
+		
+		for(var i = 0 ; i < selectOptionWrapEls.length; i++){
+			
+			if(selectOptionWrapEls[i].classList.contains("select-show")){
+				selectOptionWrapEls[i].classList.add('select-hide');
+				selectOptionWrapEls[i].classList.remove('select-show');
+			}
+		}
+		
+		if(delOption.classList.contains('select-hide')){
+			delOption.classList.remove('select-hide');
+			delOption.classList.add('select-show');
+		}
+		
+	}
+	
+	let body = document.querySelector('body');
+	function hideSelect(e){
+		
+		let selectOptionWrapEls = document.querySelectorAll('.select ul');
+		var target = e.target.name;
+		
+		if(target == "select-input"){
+			if(select_prev != undefined && select_this != select_prev){
+				var prev_attr = select_prev.getAttribute("value");
+				var prev_text = select_prev.value;
+				if(prev_attr != prev_text){
+					select_prev.value = prev_attr;
+					var prev_textEl = select_prev.parentNode.children[1].children;
+					
+					for(var i = 0; i < prev_textEl.length; i++){
+						prev_textEl[i].style.display = "flex";
+					}
+					
+					var textEl = select_this.parentNode.children[1].children;
+					
+					for(var i = 0; i < textEl.length; i++){
+						textEl[i].style.display = "flex";
+					}
+				}
+			}
+		}
+		
+		if(target != "select-input"){
+			if(select_this != undefined && select_this.value != null){
+				var select_attr = select_this.getAttribute("value");
+				var select_text = select_this.value;
+				
+				if(select_attr != select_text && select_this.id == select_id){
+					select_this.value = select_attr;
+					
+					var textEl = select_this.parentNode.children[1].children;
+					
+					for(var i = 0; i < textEl.length; i++){
+						textEl[i].style.display = "flex";
+					}
+				}
+			}
+			
+			for(var i = 0 ; i < selectOptionWrapEls.length; i++){
+				
+				if(selectOptionWrapEls[i].classList.contains("select-show")){
+					selectOptionWrapEls[i].classList.add('select-hide');
+					selectOptionWrapEls[i].classList.remove('select-show');
+				}
+			}
+		}
+	}
+	body.addEventListener('click',hideSelect);
+	body.addEventListener('click', selection);
+	
+	/* 옵션선택 */
+	function selectOpt(e){
+	    var dataSelect = $(e).children().attr("data-value");
+	    var text = $(e).children().text();
+	    $(e).parent().prev().attr("data-select", dataSelect);
+	    $(e).parent().prev().attr("value", text);
+	    $(e).parent().attr("class", "select-hide");
+	}//end 옵션 선택
+	
+	//필터 함수
+	function textfilter(e){
+		
+		var search = $(e).val().toLowerCase();
+		var className = $(e).next().children().eq(0).attr('class');
+		
+		$(document).find("."+className).each(function(index, item){
+			var text = $(this).children().text();
+			
+			if(text.toLowerCase().includes(search)){
+				$(this).css("display", "flex");
+			}else{
+				$(this).css("display", "none");
+			}
+		});
+		
+	}//end 필터 함수
+	
+	//시약 등록
+	function insertBtn(){
+		
+		var reagent_name = $.trim($("#reagent_name").val());
+		var reagent_standard = $.trim($("#reagent_standard").val());
+		var reagent_formula = $.trim($("#reagent_formula").val());
+		var reagent_nick_k = $.trim($("#reagent_nick_k").val());
+		var reagent_nick_e = $.trim($("#reagent_nick_e").val());
+		var reagent_manufacturer = $.trim($("#reagent_manufacturer").val());
+		var reagent_quantity = $.trim($("#reagent_quantity").val());
+		var eaches_id = $.trim($("#eaches_id").attr("data-select"));
+		var reagent_purpose = $.trim($("#reagent_purpose").val());
+		var reagent_type = $.trim($("#reagent_type").attr("data-select"));
+		
+		if(reagent_type == ""){
+			alert("종류를 선택해주세요.");
+			$("#reagent_type").focus();
+		}else if(reagent_name == ""){
+			alert("품명를 선택하세요.");
+			$("#reagent_name").focus();
+		}else{
+			var data = {
+						"reagent_name" : reagent_name,
+						"reagent_standard" : reagent_standard,
+						"reagent_formula" : reagent_formula,
+						"reagent_nick_k" : reagent_nick_k,
+						"reagent_nick_e" : reagent_nick_e,
+						"reagent_manufacturer" : reagent_manufacturer,
+						"reagent_quantity" : reagent_quantity,
+						"eaches_id" : eaches_id,
+						"reagent_purpose" : reagent_purpose,
+						"reagent_type" : reagent_type
+						};
+			$.ajax({
+				url : "/data/reagent/insertReagent",
+				method : "POST",
+				dataType : "json",
+				data : data,
+				success : function(result){
+					if(result == 0){
+						
+					}else {
+						$("#success_popup").css("display", "flex");
+					}
+				}
+			});//end ajax
+		}//end else
+		
+	}//end 농자재 등록
+	
+</script>
+
+</body>
+
+</html>

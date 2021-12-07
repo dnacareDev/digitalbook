@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.digitalBook.Mapper.ResearchMapper">
+	<!-- 조사항목 조회 -->
+	<select id="SelectDivision" resultType="Division">
+		SELECT * FROM division
+		WHERE division_depth = #{division_depth}
+		<choose>
+			<when test="division_depth != 0">
+				AND division_parents = #{division_id}
+			</when>
+		</choose>
+	</select>
+	
+	<!-- 조사방법 상세 조회 -->
+	<select id="SelectResearchDetail" parameterType="int" resultType="Research">
+		SELECT r.research_id, r.research_code, r.research_contents, d1.division_id AS d1_id, d2.division_id AS d2_id, d3.division_id AS d3_id, d1.division AS d1, d2.division AS d2, d3.division AS d3, r.create_date, r.modify_date
+		FROM research r
+		LEFT JOIN division d3 ON r.division_id = d3.division_id
+		LEFT JOIN division d2 ON d3.division_parents = d2.division_id
+		LEFT JOIN division d1 ON d2.division_parents = d1.division_id
+		WHERE r.research_id = #{research_id}
+	</select>
+	
+	<!-- 최근 조사방법 조회 -->
+	<select id="SelectLastResearch" parameterType="int" resultType="Research">
+		SELECT * FROM research
+		WHERE user_group = #{user_group}
+		ORDER BY research_id DESC
+		LIMIT 1
+	</select>
+
+	
+	<!-- 조사방법 갯수 검색 -->
+	<select id="SearchResearchCount" resultType="int">
+		SELECT COUNT(*) FROM research r
+		LEFT JOIN division d3 ON r.division_id = d3.division_id
+		LEFT JOIN division d2 ON d3.division_parents = d2.division_id
+		LEFT JOIN division d1 ON d2.division_parents = d1.division_id
+		WHERE r.user_group = #{user_group}
+			<choose>
+				<when test="search_type == 0">
+					AND (r.research_code LIKE CONCAT('%', #{keyword}, '%') OR r.research_contents LIKE CONCAT('%', #{keyword}, '%') OR d1.division LIKE CONCAT('%', #{keyword}, '%') OR d2.division LIKE CONCAT('%', #{keyword}, '%') OR d3.division LIKE CONCAT('%', #{keyword}, '%'))
+				</when>
+				<when test="search_type == 1">
+					AND r.research_code LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<when test="search_type == 2">
+					AND r.research_contents LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<when test="search_type == 3">
+					AND d1.division LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<when test="search_type == 4">
+					AND d2.division LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<when test="search_type == 5">
+					AND d3.division LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+			</choose>
+	</select>
+	
+	<!-- 조사방법 검색 -->
+	<select id="SearchResearch" resultType="Research">
+		SELECT r.research_id, r.research_code, r.research_contents, d1.division AS d1, d2.division AS d2, d3.division AS d3, r.create_date, r.modify_date
+		FROM research r
+		LEFT JOIN division d3 ON r.division_id = d3.division_id
+		LEFT JOIN division d2 ON d3.division_parents = d2.division_id
+		LEFT JOIN division d1 ON d2.division_parents = d1.division_id
+		WHERE r.user_group = #{user_group}
+			<choose>
+				<when test="search_type == 0">
+					AND (r.research_code LIKE CONCAT('%', #{keyword}, '%') OR r.research_contents LIKE CONCAT('%', #{keyword}, '%') OR d1.division LIKE CONCAT('%', #{keyword}, '%') OR d2.division LIKE CONCAT('%', #{keyword}, '%') OR d3.division LIKE CONCAT('%', #{keyword}, '%'))
+				</when>
+				<when test="search_type == 1">
+					AND r.research_code LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<when test="search_type == 2">
+					AND r.research_contents LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<when test="search_type == 3">
+					AND d1.division LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<when test="search_type == 4">
+					AND d2.division LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<when test="search_type == 5">
+					AND d3.division LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+			</choose>
+		ORDER BY research_id DESC
+		LIMIT #{offset}, #{limit}
+	</select>
+	
+	<!-- 조사방법 등록 -->
+	<insert id="InsertResearch" parameterType="Research">
+		INSERT INTO research
+		(division_id, research_code, research_contents, create_date, modify_date, user_group)
+		VALUES
+		(#{division_id}, #{research_code}, #{research_contents}, NOW(), NOW(), #{user_group})
+	</insert>
+	
+	<!-- 조사방법 수정 -->
+	<update id="UpdateResearch">
+		UPDATE research
+		SET division_id = #{division_id}, research_contents = #{research_contents}, modify_date = NOW()
+		WHERE research_id = #{research_id}
+	</update>
+	
+	<!-- 조사방법 삭제 -->
+	<delete id="DeleteResearch" parameterType="int">
+		DELETE FROM research
+		WHERE research_id = #{research_id}
+	</delete>
+	
+	<!-- 엑셀 다운로드할 조사방법 list -->
+	<select id="selectResearchExcelList" parameterType="int" resultType="Research">
+		SELECT r.research_id, r.research_code, r.research_contents, d1.division AS d1, d2.division AS d2, d3.division AS d3, r.create_date, r.modify_date
+		FROM research r
+		LEFT JOIN division d3 ON r.division_id = d3.division_id
+		LEFT JOIN division d2 ON d3.division_parents = d2.division_id
+		LEFT JOIN division d1 ON d2.division_parents = d1.division_id
+		WHERE r.user_group = #{user_group}
+		ORDER BY research_id DESC
+	</select>
+	
+</mapper>

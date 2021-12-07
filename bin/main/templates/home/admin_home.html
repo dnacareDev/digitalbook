@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+	<style>
+		 .btn-result {background-color: #7C8798; color: #fff; border: none}
+		/* contents section 여백 */
+		.top-menu .main-content .contents {padding: 124px 40px 72px; background-color: #F8F9FA;}
+		
+		/* card 그림자 */
+		.main-content .contents .card {box-shadow: 0 3px 6px rgb(239 241 245 / 100%);}
+		
+		/* contents 첫번째 card */
+		.col-lg-5 .card:first-child {padding: 15px 15px 30px}
+		.col-lg-5 .card:first-child .card-body {padding-top: 0; margin-top: 1.56rem;}
+		
+		/* contents 두번째 card */
+		.card.mt-25.mb-md-50.mb-25 {padding: 15px 15px 30px}
+		.color-primary {font-size: 1.8rem; font-weight: 700}
+		.card.mt-25.mb-md-50.mb-25 .card-body {padding-top: 0; margin-top: 1.56rem;}
+		
+		/* 스코롤바 커스텀 */
+		.card-body {
+			scrollbar-arrow-color: #efefef;
+	        scrollbar-Track-Color: #efefef; 
+	        scrollbar-base-color: #dfdfdf;
+	        scrollbar-Face-Color: #dfdfdf;
+	        scrollbar-3dLight-Color: #dfdfdf;         
+	        scrollbar-DarkShadow-Color: #dfdfdf;
+	        scrollbar-Highlight-Color: #dfdfdf;
+	        scrollbar-Shadow-Color: #dfdfdf
+        }
+        .color-primary{
+			font-size: 16px !important; 
+		}
+		/* Chrome, Safari용 스크롤 바 */
+		.card-body::-webkit-scrollbar {width: 10px;}
+		.card-body::-webkit-scrollbar-button:start:decrement, 
+		.card-body::-webkit-scrollbar-button:end:increment {display: block; width:0px; height: 0px; background: url() rgba(0,0,0,.05);}
+		.card-body::-webkit-scrollbar-track {background: rgba(0,0,0,.05); -webkit-border-radius: 10px; border-radius:10px;}
+		.card-body::-webkit-scrollbar-thumb { background: rgba(0,0,0,.1); -webkit-border-radius: 8px; border-radius: 8px; border: 3px solid #efefef}
+		
+		/* table card section */
+		/* table card section - thead */
+		.col-lg-7 .card .fc-header-toolbar .fc-toolbar-chunk:first-child > div {display: flex; align-items: center}
+		.fc-toolbar-chunk:first-child > div > .fc-toolbar-title {font-size: 1.5rem; display: block;}
+		.fc-toolbar-chunk:first-child > div > button {height: 34px; position: relative; margin-right: 15px; background-color: #fff; border: 1px solid #E4E4E4}
+		.fc-toolbar-chunk:first-child > div > button:last-child {margin-right: 0; margin-left: 15px}
+		.fc-toolbar-chunk:first-child > div > button.fc-today-button {padding-top: 3px; margin-right: 35px; background-color: #5F63F2; border: 1px solid #5F63F2; color: #fff}
+		
+		.fc-toolbar-chunk:first-child > div > button.fc-today-button:disabled { background-color: #fff; border: 1px solid #E4E4E4; color: #9299B8; height: 33.99px;}
+		.fc-toolbar-chunk:first-child > div > button > span:before {position: absolute; top: 9.5px; left: 50%;  transform: translate(-50%); color: #9299B8}
+		
+		/* hover */
+		.fc-toolbar-chunk:first-child > div > button:hover { background-color: #5F63F2; border: 1px solid #5F63F2; color: #fff}
+		.fc-toolbar-chunk:first-child > div > button:hover> span:before {color: #fff}
+		
+		/* active */
+		.fc-toolbar-chunk:first-child > div > button:not(:disabled):active:focus { background-color: #4D50CF; border: 1px solid #4D50CF;}
+		.fc-toolbar-chunk:first-child > div > button:not(:disabled):active:focus > span:before {color: #fff}
+		
+		.col-lg-7 .card .fc-header-toolbar .fc-toolbar-chunk:last-child > .fc-button-group > button {background-color: #fff; border: 1px solid #E4E4E4; color: #9299B8; height: 33.99px;}
+		.col-lg-7 .card .fc-header-toolbar .fc-toolbar-chunk:last-child > .fc-button-group > button.fc-button-active {background-color: #5F63F2; border: 1px solid #5F63F2; color: #fff}
+		
+		/* hover */
+		.col-lg-7 .card .fc-header-toolbar .fc-toolbar-chunk:last-child > .fc-button-group > button:hover {background-color: #E9E9E9; border: 1px solid #E4E4E4; color: #9299B8}
+		.col-lg-7 .card .fc-header-toolbar .fc-toolbar-chunk:last-child > .fc-button-group > button.fc-button-active:hover {background-color: #5F63F2; border: 1px solid #5F63F2; color: #fff}
+		
+		/* table card section - tbody */
+		#fulled-calendar {max-width: 985px; width: 100%; margin: 0 auto}
+		#fulled-calendar .fc-view-harness {height: 764px !important;}
+		#fulled-calendar .fc-scrollgrid > thead {text-align: center}
+		#fulled-calendar .fc-view .fc-col-header tr th .fc-scrollgrid-sync-inner .fc-col-header-cell-cushion {display: block; text-align: center; padding-left: 0}
+		#ModalTable2 table.table, #ModalTable2 table.table th, #ModalTable2 table.table td{border:none;}
+		#ModalTable2 table.table td{text-align:left;}
+		/*#ModalTable2 table.table tr td:first-child{text-align:center}*/
+		#sch_list{border:none}
+		#ModalTable2 .button-group{padding-bottom:10px;}
+		@media (min-width: 1200px){
+			.modal-xl {
+	    		max-width: 700px;
+			}
+		}
+		p.color-primary{
+			margin: 15px 0 0 10px;
+		}
+		.fc-header-toolbar.fc-toolbar.fc-toolbar-ltr{position:relative}
+		.fc-today-button.fc-button.fc-button-primary{position:absolute; left:0;}
+		.fc .fc-toolbar-chunk:last-child{position:absolute !important; right:0;}
+		
+		.fc-daygrid-day .fc-daygrid-event{padding: 3px 10px !important; background-color: #5f63f2;}
+	</style>
+<head>
+<!-- 공통 헤더 -->
+<th:block th:include="/../fragments/header.html"></th:block>
+</head>
+<body class="layout-light top-menu overlayScroll">
+	<div class="mobile-search"></div>
+	<div class="mobile-author-actions"></div>
+	<!-- 공통 topbar -->
+	<th:block th:include="/../fragments/topbar.html"></th:block>
+	<main class="main-content" style="background-color: #F8F9FA;">
+		<div class="contents" style="background-color: #F8F9FA;">
+			<div class="container-fluid">
+		        <div class="row">
+		            <div class="col-lg-12">
+						<div class="card">
+		                      <p class="color-primary fa-lg mb-3 mt-5 ml-3" style="margin:30px 0 0 25px !important">연구자별 진행상황</p>
+		                      <div class="card-body">
+		                          <div>
+		                              <canvas id="chartExample"></canvas>
+		                          </div>
+		                      </div>
+		                  </div>
+		            </div>
+		        </div>
+		    </div>
+		    
+			<div class="atbd-page-content">
+				<div class="container-fluid mt-25">
+					<div class="row calendar-grid justify-content-center">
+						<div class="col-lg-5">
+							<div class="card">
+					            <p class="color-primary fa-lg mb-0 mt-3 ml-3">진행 이력</p>
+					            <div class="card-body overflow-auto" style="height: 316px;">
+					            	<div class="card-content">
+			                        	<div class="atbd-collapse atbd-collapse-custom" id="progress_list">
+			                        		<!-- <th:block th:each="p : ${progress_plan}">
+				                        		<div class="atbd-collapse-item">
+				                                    <p class="item-link" data-toggle="collapse" data-target="#coll-b-1" style="text-decoration: underline;"
+				                                    th:text="${p.report_title +'(' + p.start_date + ' - ' + p.end_date + ')' }">
+				                                        
+				                                    </p>
+				                                    <div id="coll-b-1" class="collapse atbd-collapse-item__body" style="background-color: #F7F7F8;">
+				                                        <div class="collapse-body-text">
+				                                            <div class="row">
+					                                            	<p>과제번호 :</p><p th:text="${p.report_code}"></p>
+					                                            </div>
+					                                            <div class="row">
+					                                            	<p>과제명 :</p><p th:text="${p.report_title}"></p>
+					                                            </div>
+					                                            <div class="row">
+					                                            	<p>과제 책임자 :</p><p th:text="${p.user_name_k}"></p>
+					                                            </div>
+				                                        </div>
+				                                          <div class="d-flex justify-content-end">
+											                	<a class="btn btn-xs btn-light btn-rounded btn-result" style="background-color: #7C8798; color:#fff" th:href="'/plan/insertResult?plan_id='+${p.plan_id}">결과 확인</a>
+											                </div>
+				                                    </div>
+				                                </div>
+				                                </th:block> -->
+			                        	</div>
+			                        </div>
+					            </div>
+				           	</div>
+				            <div class="card mt-25 mb-md-50 mb-25">
+					            <p class="color-primary fa-lg mb-0 mt-3 ml-3">전달 사항</p>
+					            <div class="card-body overflow-auto" style="height: 316px;">
+					            	<div class="card-content" id="content4" style="text-decoration: underline;">
+					            	</div>
+					            </div>
+				            </div>
+						</div>
+						<div class="col-lg-7">
+			                <div class="card card-default card-md mb-4">
+			                    <div class="card-body">
+			                        <div id='fulled-calendar'></div>
+			                    </div>
+			                </div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="modal-basic modal fade show" id="scheduleModal" tabindex="-1" role="dialog" aria-hidden="true">
+			    <div class="modal-dialog modal-xl" role="document">
+			        <div class="modal-content modal-bg-white ">
+			            <div class="modal-body">
+			            	<div class="d-flex justify-content-end">
+		                		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span data-feather="x"></span></button>
+		                	</div>
+		                    <div class="tab-content">
+		                    	<div class="tab-pane show active" id="modal-content1" role="tabpanel">
+		                    		<div class="row">
+		                    			<div class="col-lg-12">
+		                    				<div class="breadcrumb-main ml-2">
+		                    					<h6 class="text-capitalize breadcrumb-title">일정 정보</h6>
+		                    				</div>
+		                    			</div>
+		                    		</div>
+			                    	<div class="row">
+			                    		<div class="col-lg-12">
+			                    			<div class="bg-white">
+		                    					<div class="table-responsive" id="ModalTable2">
+		                    						<table class="table">
+					                            		<tbody id="sch_list">
+					                            		</tbody>
+		                    						</table>
+		                    					</div>
+		                    				</div>
+			                    		</div>
+			                    	</div>
+		                    	</div>
+		                    </div>
+			            </div>
+			            <div class="button-group d-flex justify-content-end mb-2 mr-4">
+		                   <a class="btn btn-primary btn-default btn-squared" id="sch_btn" style="color: #FFFFFF;">결과확인</a>
+		           		</div>
+			        </div>
+			    </div>
+			</div>
+    	</div>
+    </main>
+	
+	<!-- 공통 하단 -->
+    <th:block th:include="/../fragments/footer.html"></th:block>
+    <!-- 공통 js -->
+    <th:block th:include="/../fragments/commonjs.html"></th:block>
+<script type="text/javascript" th:inline="javascript">
+	let progress_plan = /*[[${progress_plan}]]*/ "null";
+	
+	function gridProgressPlan(){
+		
+		var progress_list = $("#progress_list");
+		var add_list = "";
+		
+		for(var i = 0; i < progress_plan.length; i++)
+		{
+			add_list += '<div class="atbd-collapse-item">';
+			add_list += '<p class="item-link" data-toggle="collapse" data-target="#pro-' + ( i + 1 ) + '" style="text-decoration: underline;">' + progress_plan[i].report_title + '<br>' + progress_plan[i].method_title + '(' + progress_plan[i].start_date + '-' + progress_plan[i].end_date + ')</p>';
+			add_list += '<div id="pro-'+(i+1)+'" class="collapse atbd-collapse-item__body" style="background-color: #F7F7F8;">';
+			add_list += '<div class="collapse-body-text">';
+			add_list += '<div class="row">';
+			add_list += '<p>과제번호 :</p><p>'+progress_plan[i].report_code+'</p>';
+			add_list += '</div>';
+			add_list += '<div class="row">';
+			add_list += '<p>과제명 :</p><p>'+progress_plan[i].report_title+'</p>';
+			add_list += '</div>';
+			add_list += '<div class="row">';
+			add_list += '<p>과제 책임자 :</p><p>'+progress_plan[i].user_name_k+'</p>';
+			add_list += '</div>';
+			add_list += '</div>';
+			add_list += '<div class="d-flex justify-content-end">';
+			add_list += '<a class="btn btn-xs btn-light btn-rounded btn-result" style="background-color: #7C8798; color:#fff" href="/plan/insertResult?plan_id='+progress_plan[i].plan_id+'">결과 확인</a>';
+			add_list += '</div>';
+			add_list += '</div>';
+			add_list += '</div>';
+		}
+		progress_list.empty();
+		progress_list.append(add_list);
+		
+	}
+	gridProgressPlan();
+</script>
+<script type="text/javascript">
+	// chart example
+	chartExample("chartExample");
+
+	function chartExample(selector, label = "Bar chart stacked")
+	{
+		var ctx = document.getElementById(selector);
+		
+		if(ctx)
+		{
+			$.ajax(
+			{
+				url: 'selectChart',
+				method: 'POST',
+				dataType: 'json',
+				data: data,
+				success: function(result)
+				{
+					var user = [];
+					var delay = [];
+					var now = [];
+					var future = [];
+					
+					for(var i = 0; i < result.user.length; i++)
+					{
+						console.log(result.user[i])
+						user.push(result.user[i].user_name_k);
+						delay.push(result.user[i].delay_count);
+						now.push(result.user[i].now_count);
+						future.push(result.user[i].future_count);
+					}
+					
+					ctx.getContext("2d");
+					ctx.height = 50;
+				  
+					var chart = new Chart(ctx,
+					{
+						type: "bar",
+						data:
+						{
+							labels:user,
+							datasets: [
+							{
+								data: delay,
+								backgroundColor: "#AFB1F8",
+								hoverBackgroundColor: "#C0A2FE",
+								label: "지난 일정",
+							},
+							{
+								data: now,
+								backgroundColor: "#94ABE0",
+								hoverBackgroundColor: "#C493E6",
+								label: "현재 일정",
+							},
+							{
+								data: future,
+								backgroundColor: "#A6D6FC",
+								hoverBackgroundColor: "#F2AEFC",
+								label: "예정 일정",
+							}]
+						},
+						options:
+						{
+							maintainAspectRatio: true,
+							responsive: true,
+							legend:
+							{
+								display: true,
+								position: "top",
+								align : "end",
+								labels:
+								{
+									boxWidth: 40,
+									padding : 30,
+									display: true,
+									usePointStyle: true,
+								},
+							},
+							layout:
+							{
+								padding:
+								{
+									left: "0",
+									right: 0,
+									top: 0,
+									bottom: "0",
+								},
+							},
+							scales:
+							{
+								yAxes: [
+								{
+									stacked: true,
+									gridLines:
+									{
+										color: "#e5e9f2",
+									},
+									ticks:
+									{
+										beginAtZero: true,
+										fontSize: 10,
+										fontColor: "#5a5f7d",
+										max: 10,
+										stepSize: 2,
+									},
+								}],
+								xAxes: [
+								{
+									stacked: true,
+									gridLines:
+									{
+										display: false,
+									},
+									barPercentage: 0.3,
+									ticks:
+									{
+										beginAtZero: true,
+										fontSize: 12,
+										fontColor: "#5a5f7d",
+									},
+								}],
+							},
+						},
+					});
+				}
+			});
+		}
+	}
+	
+	// 캘린더
+	document.addEventListener("DOMContentLoaded", function()
+	{
+		var fullCalendar = document.getElementById("fulled-calendar");
+		var arr = [];
+		
+		$.ajax(
+		{
+			url: 'selectAdminSchedule',
+			method: 'POST',
+			dataType: 'json',
+			data: data,
+			success: function(result)
+			{
+				var board_list = $("#content4");
+				var board_add = "";
+				
+				for(var i = 0; i < result.schedule.length; i++)
+				{
+					var title = result.schedule[i].u1_supervisor + "(" + result.schedule[i].u2_manager + "), " + result.schedule[i].method_title;
+					
+					var schedule = {"title" : title, "start" : result.schedule[i].start_date, "end" : result.schedule[i].end_date+" 23:59:59", "id" : result.schedule[i].sch_id, "classNames" : "schedule"};
+					
+					arr.push(schedule);
+				}
+				
+				for(var i = 0; i < result.board.length; i++)
+				{
+					var title = result.board[i].board_title;
+					
+					var board = {"title" : title, "start" : result.board[i].board_start, "end" : result.board[i].board_end, "id" : result.board[i].board_id, "classNames" : "board"};
+					
+					arr.push(board);
+					
+					board_add += '<a href="/schedule/board">' + title + " (" + result.board[i].board_start + " ~ " + result.board[i].board_end + ")" + '</a>';
+				}
+				
+				board_list.empty();
+				board_list.append(board_add);
+				
+				if(fullCalendar)
+				{
+					var calendar = new FullCalendar.Calendar(fullCalendar,
+					{
+						headerToolbar:
+						{
+							left: "today,prev,title,next",
+							right: "timeGridDay,timeGridWeek,dayGridMonth",
+						},
+						editable: false,//캘린더 이벤트 수정 가능 여부
+						/* eventSources: [data1, data2, data3], */ //이벤트 내용 소스 넣는곳
+						// contentHeight: 550,//달력 높이
+						height: 790,//달력 높이
+						expandRows: true,//화면에 맞게 높이 재설정
+						initialView: "dayGridMonth",//초기로딩시 보여줄 화면 월로 맞춤
+						navLinks : true,//날짜 선택하면 day 화면으로 이동
+						dayMaxEvents: true,//이벤트가 오버되면 높이 제한(+ 몇 개식으로 표현)
+						eventClick: function(e)
+						{
+							if(e.event.classNames[0] == "schedule")
+							{
+								var data = {"sch_id" : e.event.id};
+								
+								$.ajax(
+								{
+									url: 'schedule/selectScheduleDetail',
+									method: 'POST',
+									dataType: 'json',
+									data: data,
+									success: function(result)
+									{
+										var sch_list = $("#sch_list");
+										var add_list = "";
+										
+										add_list += '<tr>';
+										add_list += '<td>과제번호</td>';
+										add_list += '<td>' + result.method_code + '</td>';
+										add_list += '</tr>';
+										add_list += '<tr>';
+										add_list += '<td>과제명</td>';
+										add_list += '<td>' + result.method_title + '</td>';
+										add_list += '</tr>';
+										add_list += '<tr>';
+										add_list += '<td>책임자(정)</td>';
+										add_list += '<td>' + result.u1_supervisor + '</td>';
+										add_list += '</tr>';
+										add_list += '<tr>';
+										add_list += '<td>책임자(부)</td>';
+										add_list += '<td>' + result.u2_manager + '</td>';
+										add_list += '</tr>';
+										add_list += '<tr>';
+										add_list += '<td>일정</td>';
+										add_list += '<td>' + result.start_date + ' ~ ' + result.end_date + '</td>';
+										add_list += '</tr>';
+										
+										sch_list.empty();
+										sch_list.append(add_list);
+										
+										$("#sch_btn").attr("href", "plan/insertResult?plan_id=" + result.plan_id);
+									}
+								});
+							}
+							else
+							{
+								var data = {"board_id" : e.event.id};
+								
+								$.ajax(
+								{
+									url: 'schedule/selectBoardDetail',
+									method: 'POST',
+									dataType: 'json',
+									data: data,
+									success: function(result)
+									{
+										console.log(result)
+										var sch_list = $("#sch_list");
+										var add_list = "";
+										
+										add_list += '<tr>';
+										add_list += '<td>일정명</td>';
+										add_list += '<td>' + result.board_title + '</td>';
+										add_list += '</tr>';
+										add_list += '<tr>';
+										add_list += '<td>내용</td>';
+										add_list += '<td>' + result.board_content + '</td>';
+										add_list += '</tr>';
+										add_list += '<tr>';
+										add_list += '<td>등록자</td>';
+										add_list += '<td>' + result.user_name_k + '</td>';
+										add_list += '</tr>';
+										add_list += '<tr>';
+										add_list += '<td>일정</td>';
+										add_list += '<td>' + result.board_start + ' ~ ' + result.board_end + '</td>';
+										add_list += '</tr>';
+										
+										$("#sch_btn").css("display", "none");
+										
+										sch_list.empty();
+										sch_list.append(add_list);
+									}
+								});
+							}
+							
+							$("#scheduleModal").modal("show");
+						}
+					});
+					
+					for(var i = 0; i < arr.length; i++)
+					{
+						calendar.addEvent(arr[i]);
+					}
+					
+					calendar.render();
+				}
+			}
+		});
+	});
+</script>
+</body>
+</html>
