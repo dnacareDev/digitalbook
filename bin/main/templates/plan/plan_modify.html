@@ -463,19 +463,19 @@
 														<thead>
 															<tr>
 																<th></th>
+																<th>작목</th>
 																<th>분류</th>
 																<th>조사항목</th>
-																<th>작목</th>
 																<th>Method 명</th>
-																<th>method 설명</th>
+																<th>Method 설명</th>
 															</tr>
 														</thead>
 														<tbody style="max-height: 500px; orverfolw-y: auto;" id="method_list">
 															<tr class="method_tr" th:Each="m : ${method}">
 																<td><input type="checkbox" name="chk_method" th:value="${m.method_id}"></td>
+																<td class="d1_name" th:text="${m.d1_name}"></td>
 																<td class="d2_name" th:text="${m.d2_name}"></td>
 																<td class="d3_name" th:text="${m.d3_name}"></td>
-																<td class="d1_name" th:text="${m.d1_name}"></td>
 																<td class="method_title" th:text="${m.method_title}"></td>
 																<td class="method_contents" th:text="${m.method_contents}"></td>
 															</tr>
