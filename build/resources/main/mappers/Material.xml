@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.digitalBook.Mapper.MaterialMapper">
+	
+	<!-- 농자재 검색 -->
+	<select id="SearchMaterial" resultType="Material">
+		SELECT m.*, u.* FROM material m
+		LEFT JOIN user u ON m.user_id = u.user_id
+		WHERE m.user_group = #{user_group}
+		<choose>
+			<when test="search_type == null || search_type.equals('none')">
+				AND (material_code LIKE CONCAT('%', #{keyword}, '%') OR material_name LIKE CONCAT('%', #{keyword}, '%'))
+			</when>
+			<otherwise>
+				AND ${search_type} LIKE CONCAT('%', #{keyword}, '%')
+			</otherwise>
+		</choose>
+		ORDER BY material_id DESC
+		LIMIT #{offset}, #{limit}
+	</select>
+	
+	<!-- 농자재  갯수 검색 -->
+	<select id="SearchMaterialCount" resultType="int">
+		SELECT COUNT(*) FROM material m
+		LEFT JOIN user u ON m.user_id = u.user_id
+		WHERE m.user_group = #{user_group}
+		<choose>
+			<when test="search_type == null || search_type.equals('none')">
+				AND (material_code LIKE CONCAT('%', #{keyword}, '%') OR material_name LIKE CONCAT('%', #{keyword}, '%'))
+			</when>
+			<otherwise>
+				AND ${search_type} LIKE CONCAT('%', #{keyword}, '%')
+			</otherwise>
+		</choose>
+	</select>
+	
+	<!-- 농자재 등록 -->
+	<insert id="insertMaterial" parameterType="Material">
+		INSERT INTO material
+		(user_id, material_code, material_name, material_status, user_group, create_date, modify_date)
+		VALUES
+		(#{user_id}, #{material_code}, #{material_name}, 0, #{user_group}, NOW(), NOW())
+	</insert>
+	
+	<!-- 최근 농자재 ID -->
+	<select id="selectLastMeterialCode" parameterType="int" resultType="String">
+		SELECT material_code FROM material
+		WHERE user_group = #{user_group}
+		ORDER BY material_id DESC
+		LIMIT 1
+	</select>
+	
+	<!-- 농자재 상세 조회 -->
+	<select id="selectMaterialDetail" parameterType="int" resultType="Material">
+		SELECT * FROM material
+		WHERE material_id = #{material_id}
+	</select>
+	
+	<!-- 농자재 수정 -->
+	<update id="updateMaterial" parameterType="Material">
+		UPDATE material
+		SET material_name = #{material_name}, modify_date = NOW()
+		WHERE material_id = #{material_id}
+	</update>
+	
+	<!-- 농자재 삭제 -->
+	<delete id="deleteMaterial" parameterType="int">
+		DELETE FROM material
+		WHERE material_id = #{material_id}
+	</delete>
+	
+	<!-- 엑셀 다운로드할 농자재 list -->
+	<select id="selectMaterialExcelList" parameterType="int" resultType="Material">
+		SELECT m.*, u.* FROM material m
+		LEFT JOIN user u ON m.user_id = u.user_id
+		WHERE m.user_group = #{user_group}
+		ORDER BY material_id DESC
+	</select>
+	
+</mapper>

@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en" dir="ltr"
+	xmlns:th="http://www.thymeleaf.org">
+	
+<head>
+
+<!-- 공통 헤더 -->
+<th:block th:include="/../fragments/header.html"></th:block>
+
+<style>
+  .breadcrumb-main{
+  float: left;
+  }
+  table {
+    border-top: 1px solid grey;
+    
+    border-collapse: collapse;
+  }
+  th, td {
+  	border-bottom: 2px solid #E5E9F2;
+    padding: 10px;
+    text-align: center;
+    font-weight: initial;
+  }
+  th {
+    background-color: white;
+  }
+  tbody tr:nth-child(2n) {
+    background-color: white;
+  }
+  tbody tr:nth-child(2n+1) {
+    background-color: #F4F8FB;
+  }
+  button{ 
+   width: 101px;
+   height: 40px;
+   }
+   .page-numder{
+   	width:80px;
+   	height: 35px;
+   	
+   }
+   .atbd-button-list{
+   margin:0 5px;
+   }
+   .end-button{
+   width:126px;
+   height:47px;
+   background-color:#768BF5;
+   border:0px;
+   margin-top:-15px;
+   }
+   .end{
+   margin-left:10px;
+   }
+   .page-item a{
+    color:#7C8798;
+   }
+   .page-item.active{
+   background:none;
+   color: #768BF5;
+   }
+   .atbd-pagination__link{
+   width: 30px;
+   height: 10px;
+   }
+</style>
+
+</head>
+
+<body class="layout-light top-menu overlayScroll">
+	<div class="mobile-search"></div>
+	
+	<div class="mobile-author-actions"></div>
+	
+	<!-- 공통 topbar -->
+	<th:block th:include="/../fragments/topbar.html"></th:block>
+	
+	<main class="main-content" style="background-color: #F9FBFD;">
+	
+		<div class="contents" style="background-color: #F9FBFD;">
+    
+		    <div class="container-fluid">
+		    	<div class="row">
+			        <div class="col-lg-12" style="padding:0">
+			        	<div class="breadcrumb-main">
+			        		<h4 class="text-capitalize breadcrumb-title">종자(시료)</h4>
+			        		<span class="ml-20 mt-1">기초정보 - 종자(시료)</span>
+			        	</div>
+			        </div>
+		        </div>
+		        <div class="row">
+		        	<div class="col-lg-12 mb-30" style="padding:0 50px;">
+		        		<div class="card">
+		       				<div class="card-extra mt-20 mr-20">
+		       					<div class="d-flex justify-content-start" style="float: left;">
+		       						<span class="ml-30 mt-20 mr-10">show</span>
+		    						<select class="form-control form-control-lg mt-15 mr-10 page-numder" id="limit" name="page-number">
+		                          		<option value="10">10</option>
+		                          		<option value="20">20</option>
+		                          		<option value="30">30</option>
+		                      		</select>
+		                      		<span class="ml-1 mt-20">entries</span>
+		       					</div>
+		       					<!-- 버튼 등록하는 곳 -->
+		       					<div class="action-btn d-flex justify-content-end">
+				      				<div class="atbd-button-list d-flex flex-wrap">
+				      					<div class="d-flex align-items-center add-contact__form my-sm-0 my-2">
+				                            <select class="form-control form-control-lg mt-10 mb-10 mr-10" id="search_type" style="width: 238px;height:40px;">
+				                                <option value="none">전체</option>
+				                                <option value="r.report_code">과제번호</option>
+				                                 <option value="r.report_title">과제명</option>
+				                                 <option value="d.division">작목명</option>
+				                                 <option value="s.seed_amount">시료수</option>
+				                                 <option value="s.seed_sender">발송인</option>
+				                                 <option value="w.warehouse">보관장소</option>
+				                            </select>
+				                            <div class="input-container icon-right position-relative mr-10">
+			                                    <a href="#" onclick="searchSeed(1); return false;" class="input-icon icon-right"><span data-feather="search"></span></a>
+			                                    <input type="text" class="form-control form-control-lg" id="keyword" placeholder="Search" style="width: 238px;height:40px;">
+			                                </div>
+				      					</div>
+				      					<button class="btn btn-primary" id="excelBtn" style="margin:10px 0 0 0">CSV<span data-feather="download"style="margin:0;"></span></button>
+				      				</div>
+			      				</div>
+		       				</div>
+		        			<div class="card-body">
+		        				<div class="bg-white">
+		                        	<div class="table-responsive">
+		                            	<table class="table">
+		                            		<thead>
+		                            			<tr>
+		                            				<th>과제번호</th>
+		                            				<th>과제명</th>
+		                            				<th>작목명</th>
+		                            				<th>품종/유전자원명</th>
+		                            				<th>시료수</th>
+		                            				<th>발송인</th>
+		                            				<th>보관장소</th>
+		                            				<th>발송일자</th>
+		                            				<th>수취일자</th>
+		                            			</tr>
+		                            		</thead>
+		                            		<tbody id="seed_list">
+		                            			
+		                            		</tbody>
+		                            	</table>
+		                        	</div>
+		                        	<div class="row">
+		                        		<div class="col-4">
+			                        		<!-- <div class="action-btn d-flex justify-content-frist mt-30">
+				                        		<a href="#" class="btn btn-lg btn-primary end-button">활용</a>
+			                                </div> -->
+				                        </div>
+				                        <div class="col-4">
+				                        	<div class="row" style="justify-content: center;">
+					                        	<div id="pageNum" style="text-align:center; margin: 2% 0 0 0;"></div>
+				                        	</div>
+				                        </div>
+				                        <div class="col-4">
+				                        	<div class="action-btn d-flex justify-content-end mt-30">
+			                                    <a href="/data/seed/insert" class="btn btn-primary end-button end">등록</a>
+			                                </div>
+				                        </div>
+		                        	</div>
+		                        </div>
+		        			</div>
+		        		</div>
+		        	</div>
+		        </div>
+		    </div>
+    
+    	</div>
+    
+    </main>
+    
+    <!-- 공통 하단 -->
+    <th:block th:include="/../fragments/footer.html"></th:block>
+    <!-- 공통 js -->
+    <th:block th:include="/../fragments/commonjs.html"></th:block>
+
+<script type="text/javascript">
+	
+	$(document).ready(function(){
+		searchSeed(1);
+	});
+	
+	//페이지 보기 변경시 시약 검색 실행
+	$("#limit").on("change", function(){
+		searchSeed(1);
+	});
+	
+	//시료 검색
+	function searchSeed(e)
+	{
+		var limit = $("#limit").val();
+		var search_type = $("#search_type").val();
+		var keyword = $("#keyword").val();
+		
+		var data = {"search_type" : search_type, "keyword" : keyword, "page_num" : e, "limit" : limit};
+		
+		$.ajax(
+		{
+			url : '/data/seed/searchSeed',
+			method : 'POST',
+			dataType : 'json',
+			data : data,
+			success : function(result)
+			{
+				var seed_list = $("#seed_list");
+				var add_list = "";
+				
+				var pageNum = $("#pageNum");
+				var page_add = "";
+				
+				var length = result.seed.length;
+				
+				if(length == 0)
+				{
+					add_list = '<tr>' + '<td colspan="10">' + '<span>' + '등록된 데이터가 없습니다.' + '</span>' + '</td>' + '</tr>';
+					
+					seed_list.empty();
+					seed_list.append(add_list);
+				}
+				else
+				{
+					for(var i = 0; i < length; i++)
+					{
+						console.log(result.seed[i]);
+						add_list += '<tr>';
+						add_list += '<td><a href="/data/seed/modify?report_id=' + result.seed[i].report_id + '">' + result.seed[i].report_code + '</a></td>';
+						add_list += '<td><span>' + result.seed[i].report_title + '</span></td>';
+						add_list += '<td><span>' + result.seed[i].division + ' 외 ' + (result.seed[i].seed_count - 1) + '개</span></td>';
+						add_list += '<td><span>' + result.seed[i].genetic + '</span></td>';
+						add_list += '<td><span>' + result.seed[i].seed_amount + '</span></td>';
+						add_list += '<td><span>' + result.seed[i].seed_sender + '</span></td>';
+						add_list += '<td><span>' + result.seed[i].warehouse + '</span></td>';
+						add_list += '<td><span>' + result.seed[i].send_date + '</span></td>';
+						add_list += '<td><span>' + result.seed[i].receive_date + '</span></td>';
+						add_list += '</tr>';
+					}
+					
+					if(result.page_num > 10)
+					{
+						page_add += '<button class="atbd-pagination__link pagination-control" onclick="searchSeed(' + (result.start_page - 10) + ')"><</button>';
+					}
+					
+					for(var i = (result.start_page - 1); i < (result.start_page + 9); i++)
+					{
+						if(result.page_num == (i + 1))
+						{
+							page_add += '<button class="atbd-pagination__link active" onclick="searchSeed(' + (i + 1) + ')">' + (i + 1) + '</button>';
+						}
+						else if(i >= result.end_page)
+						{
+							
+						}
+						else
+						{
+							page_add += '<button class="atbd-pagination__link pagination-control" onclick="searchSeed(' + (i + 1) + ')">' + (i + 1) + '</button>';
+						}
+					}
+					
+					if(result.page_num < (result.end_page - 10))
+					{
+						page_add += '<button class="atbd-pagination__link pagination-control" onclick="searchSeed(' + (result.start_page + 10) + ')">></button>';
+					}
+					
+					seed_list.empty();
+					seed_list.append(add_list);
+					
+					pageNum.empty();
+					pageNum.append(page_add);
+				}
+			}
+		});
+		
+		return true;
+	}
+	
+	//엑셀 다운로드 버튼 이벤트
+	$("#excelBtn").on("click", function(){
+		window.location.href = "/data/seed/exceldownload";
+	});
+	
+</script>
+</body>
+</html>

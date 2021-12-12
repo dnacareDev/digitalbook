@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- 공통 헤더 -->
+<th:block th:include="/../fragments/header.html"></th:block>
+<style>
+  .breadcrumb-main{
+  float: left;
+  }
+  table {
+    border-top: 1px solid grey;
+    
+    border-collapse: collapse;
+  }
+  th, td {
+  	border-bottom: 2px solid #E5E9F2;
+    padding: 10px;
+    text-align: center;
+    font-weight: initial;
+  }
+  th {
+    background-color: white;
+  }
+  tbody tr:nth-child(2n) {
+    background-color: white;
+  }
+  tbody tr:nth-child(2n+1) {
+    background-color: #F4F8FB;
+  }
+  button{ 
+   width: 101px;
+   height: 40px;
+   }
+   .page-numder{
+   	width:80px;
+   	height: 35px;
+   	
+   }
+   .atbd-button-list{
+   margin:0 5px;
+   align-items: center;
+   }
+   .end-button{
+   width:126px;
+   height:47px;
+   background-color:#768BF5;
+   border:0px;
+   margin-top:-15px;
+   }
+   .end{
+   margin-left:10px;
+   }
+   .page-item a{
+    color:#7C8798;
+   }
+   .page-item.active{
+   background:none;
+   color: #768BF5;
+   }
+   .atbd-pagination__link{
+   width: 30px;
+   height: 10px;
+   }
+</style>
+</head>
+<body class="layout-light top-menu overlayScroll">
+	<div class="mobile-search"></div>
+	<div class="mobile-author-actions"></div>
+	<th:block th:include="/../fragments/topbar.html"></th:block>
+	<main class="main-content" style="background-color: #F9FBFD;">
+		<div class="contents" style="background-color: #F9FBFD;">
+		    <div class="container-fluid">
+		    	<div class="row">
+			        <div class="col-lg-12" style="padding:0">
+			        	<div class="breadcrumb-main">
+			        		<h4 class="text-capitalize breadcrumb-title">과제</h4>
+			        		<span class="ml-20 mt-1">기초정보 - 과제</span>
+			        	</div>
+			        </div>
+		        </div>
+		        <div class="row">
+		        	<div class="col-lg-12 mb-30" style="padding:0 50px;">
+		        		<div class="card">
+		       				<div class="card-extra mt-20 mr-20">
+		       					<div class="d-flex justify-content-start" style="float: left;">
+		       						<span class="ml-30 mt-20 mr-10">show</span>
+		    						<select class="form-control form-control-lg mt-15 mr-10 page-numder" id="limit">
+		                          		<option value="10">10</option>
+		                          		<option value="20">20</option>
+		                          		<option value="30">30</option>
+		                      		</select>
+		                      		<span class="ml-1 mt-20">entries</span>
+		       					</div>
+		       					<!-- 버튼 등록하는 곳 -->
+		       					<div class="action-btn d-flex justify-content-end">
+				      				<div class="atbd-button-list d-flex flex-wrap">
+				      					<div class="d-flex align-items-center add-contact__form my-sm-0 my-2">
+				                            <select class="form-control form-control-lg mt-10 mb-10 mr-10" id="search_type" style="width: 238px; height:40px;">
+				                                <option value="all">전체</option>
+				                                <option value="r.report_year">년도</option>
+				                                <option value="r.report_contents">설명</option>
+				                                <option value="r.user_id">등록자</option>
+				                            </select>
+				                            <div class="input-container icon-right position-relative mr-10">
+			                                    <a onclick="SearchReport(1)" class="input-icon icon-right"><span data-feather="search"></span></a>
+			                                    <input type="text" class="form-control form-control-lg" id="keyword" placeholder="Search" style="width: 238px;height:40px;">
+			                                </div>
+				      					</div>
+				      					<button class="btn btn-primary" id="excelBtn">CSV<span data-feather="download"style="margin:0;"></span></button>
+				      				</div>
+			      				</div>
+		       				</div>
+		        			<div class="card-body">
+		        				<div class="bg-white">
+		                        	<div class="table-responsive">
+		                            	<table class="table">
+		                            		<thead class="text-center">
+		                            			<tr>
+		                            				<th>년도</th>
+		                            				<th>설명</th>
+		                            				<th>등록자</th>
+		                            				<th>등록일</th>
+		                            			</tr>
+		                            		</thead>
+		                            		<tbody class="text-center" id="report_list">
+		                            		</tbody>
+		                            	</table>
+		                        	</div>
+		                        	<div class="row">
+		                        		<div class="col-4"></div>
+				                        <div class="col-4">
+				                        	<div class="row" style="justify-content: center;">
+					                        	<div id="pageNum" style="text-align:center; margin: 2% 0 0 0;"></div>
+				                        	</div>
+				                        </div>
+				                        <div class="col-4">
+				                        	<div class="action-btn d-flex justify-content-end mt-30">
+			                                    <a href="/data/report/insert" class="btn btn-primary end-button end">등록</a>
+			                                </div>
+				                        </div>
+		                        	</div>
+		                        </div>
+		        			</div>
+		        		</div>
+		        	</div>
+		        </div>
+		    </div>
+		</div>
+	</main>
+	<th:block th:include="/../fragments/footer.html"></th:block>
+	<th:block th:include="/../fragments/commonjs.html"></th:block>
+<script type="text/javascript">
+	$(document).ready(function()
+	{
+		SearchReport(1);
+	});
+	
+	function SearchReport(e)
+	{
+		var search_type = $("#search_type").val();
+		var keyword = $("#keyword").val();
+		var limit = $("#limit").val();
+		
+		var data = {"search_type" : search_type, "keyword" : keyword, "page_num" : e, "limit" : limit};
+		
+		$.ajax(
+		{
+			url : 'report/searchReport',
+			method : 'POST',
+			dataType : 'json',
+			data : data,
+			success : function(result)
+			{
+				var report_list = $("#report_list");
+				var add_list = "";
+				
+				var pageNum = $("#pageNum");
+				var page_add = "";
+				
+				for(var i = 0; i < result.report.length; i++)
+				{
+					add_list += '<tr>';
+					add_list += '<td><a href="report/modify?report_file_id='+ result.report[i].report_file_id + '">' + result.report[i].report_year + '</a></td>';
+					add_list += '<td><span>' + result.report[i].report_contents + '</span></td>';
+					add_list += '<td><span>' + result.report[i].user_name_k + '</span></td>';
+					add_list += '<td><span>' + result.report[i].create_date + '</span></td>';
+					add_list += '</tr>';
+				}
+
+				if(result.page_num > 10)
+				{
+					page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (result.start_page - 10) + ')"><</button>';
+				}
+				
+				for(var i = (result.start_page - 1); i < (result.start_page + 9); i++)
+				{
+					if(result.page_num == (i + 1))
+					{
+						page_add += '<button class="atbd-pagination__link active" onclick="SearchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
+					}
+					else if(i >= result.end_page)
+					{
+						
+					}
+					else
+					{
+						page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
+					}
+				}
+				
+				if(result.page_num < (result.end_page - 10))
+				{
+					page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (result.start_page + 10) + ')">></button>';
+				}
+				
+				report_list.empty();
+				report_list.append(add_list);
+				
+				pageNum.empty();
+				pageNum.append(page_add);
+			}
+		});
+	}
+	
+	//엑셀 다운로드 버튼 이벤트
+	$("#excelBtn").on("click", function(){
+		window.location.href = "/data/report/exceldownload";
+	});
+	
+</script>
+</body>
+</html>

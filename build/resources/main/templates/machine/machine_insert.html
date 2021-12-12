@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- 공통 헤더 -->
+<th:block th:include="/../fragments/header.html"></th:block>
+</head>
+<style>
+	.content-header{margin-top:30px;}
+	.end-button
+	{
+		width:85px;
+		height:40px;
+		background-color:#768BF5;
+		border:0px;
+		margin-top:-15px;
+	}
+	.end{margin-left:10px;}
+	.select-hide{
+		display: none;
+	}
+	.select-show{
+		display: block;
+	    position: absolute;
+	    z-index :10;
+	    top: 30px;
+	    width: 97.5%;
+	    background-color: white;
+	    border:1px solid;
+	    border-radius: 5px;
+	    cursor: pointer;
+	    overflow-y: auto;
+	    height: auto;
+	}
+
+	.select .select-show li{
+	    padding:0 0 0 5px;
+	    line-height: 30px;
+	}
+	[id *="_popup"]{
+		width:100vw; 
+		height:90vh; 
+		position:fixed; 
+		left:0px; 
+		top:0px; 
+		display:none; 
+		justify-content: center; 
+		align-items:center; 
+		z-index: 999999;
+	}
+	[id *="_popup"] > .card.card-default.card-md.mb-4{
+		border:1px solid #eee;
+		width:400px;
+		max-width: 400px;
+	}
+</style>
+<body class="layout-light top-menu overlayScroll">
+	<div class="mobile-search"></div>
+	<div class="mobile-author-actions"></div>
+	<!-- 공통 topbar -->
+	<th:block th:include="/../fragments/topbar.html"></th:block>
+	<main class="main-content" style="background-color: #F9FBFD;">
+		<div class="contents" style="background-color: #F9FBFD;">
+		    <div class="container-fluid" style="padding: 0 50px;">
+		    	<div class="row">
+			        <div class="col-lg-12" style="padding: 0 17px;">
+			        	<div class="breadcrumb-main" style="float: left; padding:0;">
+			        		<h4 class="text-capitalize breadcrumb-title">장비</h4>
+			        		<span class="ml-20 mt-1">기초정보 - 장비</span>
+			        	</div>
+			        </div>
+		        </div>
+		    	<div class="row">
+			        <div class="col-lg-12">
+			        	<div class="card">
+			        		<div class="card-body">
+		        				<div class="row">
+		        					<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="machine_name" class="col-form-label color-dark align-center"><span class="red">*</span>장비명</label>
+	                                </div>
+	                                <div class="col-sm-5">
+	                                   <input type="text" class="form-control b-light" id="machine_name">
+	                                </div>
+		                         </div>
+		                         <div class="row mt-3">
+		        					<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="machine_model" class="color-dark align-center">모델명</label>
+		                            </div>
+		                            <div class="col-sm-5">
+		                                <input type="text" class="form-control b-light" id="machine_model">
+		                            </div>
+		                    	</div>
+		                    	<div class="row mt-3">
+		        					<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="machine_date" class="color-dark align-center">취득일자</label>
+		                            </div>
+		                            <div class="col-sm-5">
+		                                <input type="text" class="form-control b-light" id="machine_date">
+		                            </div>
+		                    	</div>
+		                    	<div class="row mt-3">
+		        					<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="machine_price" class="color-dark align-center">취득금액</label>
+		                            </div>
+		                            <div class="col-sm-5">
+		                                <input type="number" class="form-control b-light" id="machine_price">
+		                            </div>
+		                    	</div>
+		                    	<div class="row mt-3">
+		        					<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="machine_range" class="color-dark align-center">활용범위</label>
+		                            </div>
+		                            <div class="col-sm-5">
+		                            	<div class="select" style="height: auto;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="machine_range" placeholder="활용범위 선택" autocomplete="off">
+		                            		<ul class="select-hide">
+		                            			<li class="machine_range_list" onclick="selectOpt(this);"><span data-value="0">공동활용허용가능</span></li>
+		                            			<li class="machine_range_list" onclick="selectOpt(this);"><span data-value="1">단독활용만 가능</span></li>
+		                            		</ul>
+		                            	</div>
+		                                <!-- <select class="form-control b-light" id="machine_range">
+			                                <option value="9">활용범위 선택</option>
+			                                <option value="0">공동활용허용가능</option>
+			                                <option value="1">단독활용만 가능</option>
+		                                </select> -->
+		                            </div>
+		                    	</div>
+		                    	<div class="row mt-3">
+		        					<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="machine_public" class="color-dark align-center">공동활용 허용범위</label>
+		                            </div>
+		                            <div class="col-sm-5">
+		                            	<div class="select" style="height: auto;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="machine_public" placeholder="공동활용 허용범위 선택" autocomplete="off">
+		                            		<ul class="select-hide">
+		                            			<li class="machine_public_list" onclick="selectOpt(this);"><span data-value="0">기관내부활용</span></li>
+		                            			<li class="machine_public_list" onclick="selectOpt(this);"><span data-value="1">기관외부활용</span></li>
+		                            		</ul>
+		                            	</div>
+		                                <!-- <select class="form-control b-light" id="machine_public">
+			                                <option value="9">공동활용 허용범위 선택</option>
+			                                <option value="0">기관내부활용</option>
+			                                <option value="1">기관외부활용</option>
+		                                </select> -->
+		                            </div>
+		                    	</div>
+		                    	<div class="row mt-3">
+		        					<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="machine_purpose" class="color-dark align-center">장비용도</label>
+		                            </div>
+		                            <div class="col-sm-5">
+		                            	<div class="select" style="height: auto;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="machine_purpose" placeholder="장비용도 선택" autocomplete="off">
+		                            		<ul class="select-hide">
+		                            			<li class="machine_purpose_list" onclick="selectOpt(this);"><span data-value="계측">계측</span></li>
+		                            			<li class="machine_purpose_list" onclick="selectOpt(this);"><span data-value="시험">시험</span></li>
+		                            			<li class="machine_purpose_list" onclick="selectOpt(this);"><span data-value="분석">분석</span></li>
+		                            			<li class="machine_purpose_list" onclick="selectOpt(this);"><span data-value="기타">기타</span></li>
+		                            		</ul>
+		                            	</div>
+		                                <!-- <select class="form-control b-light" id="machine_purpose">
+			                                <option value="">장비용도 선택</option>
+			                                <option value="계측">계측</option>
+			                                <option value="시험">시험</option>
+			                                <option value="분석">분석</option>
+			                                <option value="기타">기타</option>
+		                                </select> -->
+		                            </div>
+		                    	</div>
+		                    	<div class="row mt-3">
+		        					<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="machine_place" class="color-dark align-center">설치장소</label>
+		                            </div>
+		                            <div class="col-sm-5">
+		                                <input type="text" class="form-control b-light" id="machine_place">
+		                            </div>
+		                    	</div>
+		                    	<div class="row mt-3">
+		        					<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="machine_regist" class="color-dark align-center">등록번호</label>
+		                            </div>
+		                            <div class="col-sm-5">
+		                                <input type="text" class="form-control b-light" id="machine_regist">
+		                            </div>
+		                    	</div>
+		                    	<div class="row mt-3">
+		        					<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="machine_manage" class="color-dark align-center">고정자산관리번호</label>
+		                            </div>
+		                            <div class="col-sm-5">
+		                                <input type="text" class="form-control b-light" id="machine_manage">
+		                            </div>
+		                    	</div>
+			        		</div>
+			        	</div>
+			        </div>
+		        </div>
+		        <div class="row">
+					<div class="col-4">
+						<div class="action-btn d-flex justify-content-frist mt-30"></div>
+					</div>
+					<div class="col-4">
+						<div class="d-flex justify-content-center mt-30"></div>
+					</div>
+					<div class="col-4">
+						<div class="action-btn d-flex justify-content-end mt-30">
+							<a href="/data/machine" class="btn btn-primary end-button end" style="background-color:#E2E3E5;">목록</a>
+							<button type="button" class="btn btn-primary end-button end" onclick="InsertMachine();">등록</button>
+						</div>
+					</div>
+				</div>
+		    </div>
+
+	        <div class="atbd-notice" id="success_popup">
+	        	<div class="card card-default card-md mb-4">
+	        		<div class="card-body">
+	        			<div class="atbd-notice__content">
+	        				<div class="atbd-notice__top text-center">
+	        					<div class="atbd-notice__icon bg-success">
+	        						<i class="fas fa-check color-white"></i>
+	        					</div>
+	        					<div class="atbd-notice__text">
+	        						<h4>등록이 완료되었습니다.</h4>
+	        					</div>
+	        					<div style="display: flex; justify-content: center; margin: 10% auto;">
+	        						<a class="btn btn-default btn-success" href="/data/machine" style="color: #FFFFFF;">확인</a>
+	        					</div>
+	        				</div>
+	        			</div>
+	        		</div>
+	        	</div>
+	        </div>
+	        
+     	</div>
+     </main>
+     <!-- 공통 하단 -->
+    <th:block th:include="/../fragments/footer.html"></th:block>
+    <!-- 공통 js -->
+    <th:block th:include="/../fragments/commonjs.html"></th:block>
+<script type="text/javascript">
+	
+	let selectInputEls = document.querySelectorAll('input[name="select-input"]');
+	let select_this;
+	let select_prev;
+	let select_id;
+	
+	function selection(){
+		if(document.getSelection){
+			var selection = document.getSelection();
+			
+			if(selection.focusNode != null){
+				if(selection.focusNode.children != undefined){
+					var length = selection.focusNode.children.length;
+					if(length != 0){
+						var check = selection.focusNode.children[0].name;
+						var check2 = selection.focusOffset;
+						if(check == "select-input" && check2 == "1"){
+							selectFilter(selection.focusNode.children[0]);
+						}
+					}
+				}
+			}
+			
+		}
+	}
+	
+	function selectFilter(e){
+		
+		var selection = document.getSelection();
+		
+		select_prev = select_this;
+		select_this = e;
+		select_id = e.id;
+		
+		let selectOptionWrapEls = document.querySelectorAll('.select ul');
+		
+		var currTarget = e;
+		var delOption = currTarget.nextElementSibling;
+		
+		for(var i = 0 ; i < selectOptionWrapEls.length; i++){
+			
+			if(selectOptionWrapEls[i].classList.contains("select-show")){
+				selectOptionWrapEls[i].classList.add('select-hide');
+				selectOptionWrapEls[i].classList.remove('select-show');
+			}
+		}
+		
+		if(delOption.classList.contains('select-hide')){
+			delOption.classList.remove('select-hide');
+			delOption.classList.add('select-show');
+		}
+		
+	}
+	
+	let body = document.querySelector('body');
+	function hideSelect(e){
+		
+		let selectOptionWrapEls = document.querySelectorAll('.select ul');
+		var target = e.target.name;
+		
+		if(target == "select-input"){
+			if(select_prev != undefined && select_this != select_prev){
+				var prev_attr = select_prev.getAttribute("value");
+				var prev_text = select_prev.value;
+				if(prev_attr != prev_text){
+					select_prev.value = prev_attr;
+					var prev_textEl = select_prev.parentNode.children[1].children;
+					
+					for(var i = 0; i < prev_textEl.length; i++){
+						prev_textEl[i].style.display = "flex";
+					}
+					
+					var textEl = select_this.parentNode.children[1].children;
+					
+					for(var i = 0; i < textEl.length; i++){
+						textEl[i].style.display = "flex";
+					}
+				}
+			}
+		}
+		
+		if(target != "select-input"){
+			if(select_this != undefined && select_this.value != null){
+				var select_attr = select_this.getAttribute("value");
+				var select_text = select_this.value;
+				
+				if(select_attr != select_text && select_this.id == select_id){
+					select_this.value = select_attr;
+					
+					var textEl = select_this.parentNode.children[1].children;
+					
+					for(var i = 0; i < textEl.length; i++){
+						textEl[i].style.display = "flex";
+					}
+				}
+			}
+			
+			for(var i = 0 ; i < selectOptionWrapEls.length; i++){
+				
+				if(selectOptionWrapEls[i].classList.contains("select-show")){
+					selectOptionWrapEls[i].classList.add('select-hide');
+					selectOptionWrapEls[i].classList.remove('select-show');
+				}
+			}
+		}
+	}
+	body.addEventListener('click',hideSelect);
+	body.addEventListener('click', selection);
+	
+	/* 옵션선택 */
+	function selectOpt(e){
+	    var dataSelect = $(e).children().attr("data-value");
+	    var text = $(e).children().text();
+	    $(e).parent().prev().attr("data-select", dataSelect);
+	    $(e).parent().prev().attr("value", text);
+	    $(e).parent().attr("class", "select-hide");
+	    
+	}//end 옵션 선택
+	
+	//필터 함수
+	function textfilter(e){
+		
+		var search = $(e).val().toLowerCase();
+		var className = $(e).next().children().eq(0).attr('class');
+		
+		$(document).find("."+className).each(function(index, item){
+			var text = $(this).children().text();
+			
+			if(text.toLowerCase().includes(search)){
+				$(this).css("display", "flex");
+			}else{
+				$(this).css("display", "none");
+			}
+		});
+		
+	}//end 필터 함수
+	
+	//발송일자 datepicker
+	$("#machine_date").datepicker(
+	{
+		dateFormat: "yy-mm-dd",
+      	duration: "medium",
+      	changeMonth: true,
+      	changeYear: true,
+      	yearRange: "2010:2030",
+	});
+	
+	function InsertMachine()
+	{
+		var machine_name = $("#machine_name").val();
+		var machine_model = $("#machine_model").val();
+		var machine_date = $("#machine_date").val();
+		var machine_price = $("#machine_price").val();
+		var machine_range = $("#machine_range").attr("data-select");
+		var machine_public = $("#machine_public").attr("data-select");
+		var machine_purpose = $("#machine_purpose").attr("data-select");
+		var machine_place = $("#machine_place").val();
+		var machine_regist = $("#machine_regist").val();
+		var machine_manage = $("#machine_manage").val();
+		
+		if(machine_name == "")
+		{
+			alert("장비명을 입력하세요.");
+		}
+		else
+		{
+			var data = {"machine_name" : machine_name, "machine_model" : machine_model, "machine_date" : machine_date, "machine_price" : machine_price, "machine_range" : machine_range, "machine_public" : machine_public, "machine_purpose" : machine_purpose, "machine_place" : machine_place, "machine_regist" : machine_regist, "machine_manage" : machine_manage};
+			
+			$.ajax(
+			{
+				url : 'insertMachine',
+				method : 'POST',
+				dataType : 'json',
+				data : data,
+				success : function(result)
+				{
+					if(result == 0)
+					{
+						
+					}
+					else
+					{
+						$("#success_popup").css("display", "flex");
+					}
+				}
+			});
+		}
+	}
+</script>
+</body>
+</html>
