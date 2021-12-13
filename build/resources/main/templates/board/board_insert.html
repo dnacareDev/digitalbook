@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<head>
+<style>
+	.content-header{margin-top:30px;}
+	.end-button
+	{
+		width:85px;
+		height:40px;
+		background-color:#768BF5;
+		border:0px;
+		margin-top:-15px;
+	}
+	.end{margin-left:10px;}
+	[id *="_popup"]{
+		width:100vw; 
+		height:90vh; 
+		position:fixed; 
+		left:0px; 
+		top:0px; 
+		display:none; 
+		justify-content: center; 
+		align-items:center; 
+		z-index: 999999;
+	}
+	[id *="_popup"] > .card.card-default.card-md.mb-4{
+		border:1px solid #eee;
+		width:400px;
+		max-width: 400px;
+	}
+</style>
+<!-- 공통 헤더 -->
+<th:block th:include="/../fragments/header.html"></th:block>
+</head>
+<body class="layout-light top-menu overlayScroll">
+	<div class="mobile-search"></div>
+	<div class="mobile-author-actions"></div>
+	
+	<!-- 공통 topbar -->
+	<th:block th:include="/../fragments/topbar.html"></th:block>
+	<main class="main-content" style="background-color: #F9FBFD;">
+		<div class="contents" style="background-color: #F9FBFD;">
+		    <div class="container-fluid" style="padding: 0 50px;">
+				<div class="row">
+					<div class="col-lg-12" style="padding: 0 17px;">
+						<div class="breadcrumb-main" style="float: left; padding: 0">
+							<h4 class="text-capitalize breadcrumb-title">전달사항</h4>
+							<span class="ml-20 mt-1">일정관리 - 전달사항</span>
+						</div>
+					</div>
+				</div>
+		    	<div class="row">
+			        <div class="col-lg-12">
+			        	<div class="card">
+			        		<div class="card-body">
+		        				<div class="row mt-3">
+		        					<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="reagent_standard" class="color-dark align-center"><span class="red">*</span>제목</label>
+		                            </div>
+		                            <div class="col-sm-5">
+		                                <input type="text" class="form-control b-light" id="board_title">
+		                            </div>
+		                    	</div>
+		                         <div class="row mt-3">
+		        					<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="reagent_name" class="color-dark align-center"><span class="red">*</span>시작일</label>
+		                            </div>
+		                            <div class="col-sm-5">
+		                                <input type="text" class="form-control b-light" id="board_start" autocomplete="off">
+		                            </div>
+		                    	</div>
+		                    	<div class="row mt-3">
+		        					<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="reagent_standard" class="color-dark align-center"><span class="red">*</span>종료일</label>
+		                            </div>
+		                            <div class="col-sm-5">
+		                                <input type="text" class="form-control b-light" id="board_end" autocomplete="off">
+		                            </div>
+		                    	</div>
+		                    	<div class="row mt-3">
+		        					<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="reagent_formula" class="color-dark align-center">일정내용</label>
+		                            </div>
+		                            <div class="col-sm-5">
+		                                <textarea id="board_content" rows="8" col="12" style="bord-radius:5px; width:100%; height:auto; border:1px solid #d9d9d9"></textarea>
+		                            </div>
+		                    	</div>
+		                    	<div class="row mt-3">
+		        					<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="reagent_nick_e" class="color-dark align-center">일정공유</label>
+		                            </div>
+		                            <div class="col-sm-5">
+		                            	<div>
+		                                	<input type="checkbox" onclick = "selectAll(this)">
+		                                	<span> 전체 선택</span>
+		                                </div>
+		                                <th:block th:each="user : ${user}">
+		                                	<div>
+		                                		<input type="checkbox" th:value = "${user.user_id}" name="user_id">
+		                                		<span th:text="${user.user_name_k}"></span>
+		                                	</div>
+		                                </th:block>
+		                            </div>
+		                    	</div>
+		                    	
+			        		</div>
+			        	</div>
+			        </div>
+		        </div>
+		        <div class="row">
+					<div class="col-4">
+						<div class="action-btn d-flex justify-content-frist mt-30"></div>
+					</div>
+					<div class="col-4">
+						<div class="d-flex justify-content-center mt-30"></div>
+					</div>
+					<div class="col-4">
+						<div class="action-btn d-flex justify-content-end mt-30">
+							<a href="/schedule/board" class="btn btn-primary end-button end" style="background-color:#E2E3E5;">목록</a>
+							<button type="button" class="btn btn-primary end-button end" onclick="InsertModal();">등록</button>
+						</div>
+					</div>
+				</div>
+				
+		        <div class="atbd-notice" id="insert_popup">
+		        	<div class="card card-default card-md mb-4">
+		        		<div class="card-body">
+		        			<div class="atbd-notice__content">
+		        				<div class="atbd-notice__top text-center">
+		        					<div class="atbd-notice__icon bg-info">
+		        						<i class="fas fa-exclamation color-white"></i>
+		        					</div>
+		        					<div class="atbd-notice__text">
+		        						<h4>등록하시겠습니까?</h4>
+		        					</div>
+		        					<div style="display: flex; justify-content: center; margin: 10% auto;">
+		        						<button class="btn btn-default btn-primary mr-10" onclick="InsertBtn();" style="color: #FFFFFF;">등록</button>
+		        						<button class="btn btn-default btn-danger" onclick="CancelBtn();" style="color: #FFFFFF;">취소</button>
+		        					</div>
+		        				</div>
+		        			</div>
+		        		</div>
+		        	</div>
+		        </div>
+			
+				<div class="atbd-notice" id="success_popup">
+					<div class="card card-default card-md mb-4">
+						<div class="card-body">
+							<div class="atbd-notice__content">
+								<div class="atbd-notice__top text-center">
+									<div class="atbd-notice__icon bg-success">
+										<i class="fas fa-check color-white"></i>
+									</div>
+									<div class="atbd-notice__text">
+										<h4>등록이 완료되었습니다.</h4>
+									</div>
+									<div style="display: flex; justify-content: center; margin: 10% auto;">
+										<a class="btn btn-default btn-success" href="/schedule/board" style="color: #FFFFFF;">확인</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="atbd-notice" id="fail_popup">
+				<div class="card card-default card-md mb-4">
+					<div class="card-body">
+						<div class="atbd-notice__content">
+							<div class="atbd-notice__top text-center">
+								<div class="atbd-notice__icon bg-danger">
+									<i class="fas fa-times color-white"></i>
+								</div>
+								<div class="atbd-notice__text">
+									<h4>등록이 실패되었습니다.</h4>
+								</div>
+								<div style="display: flex; justify-content: center; margin: 10% auto;">
+									<a class="btn btn-default btn-danger" href="/schedule/board" style="color: #FFFFFF;">확인</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+     </main>
+     
+     <!-- 공통 하단 -->
+    <th:block th:include="/../fragments/footer.html"></th:block>
+    <!-- 공통 js -->
+    <th:block th:include="/../fragments/commonjs.html"></th:block>
+<script type="text/javascript">
+	function selectAll(selectAll)
+	{
+		const checkboxes = document.getElementsByName('user_id');
+		
+		checkboxes.forEach((checkbox) => {
+	    checkbox.checked = selectAll.checked;
+		})
+	}
+
+	//발송일자 datepicker
+	$("#board_start").datepicker(
+	{
+		dateFormat: "yy-mm-dd",
+  		duration: "medium",
+  		changeMonth: true,
+  		changeYear: true,
+  		yearRange: "2010:2030",
+	});
+	
+	$("#board_end").datepicker(
+	{
+		dateFormat: "yy-mm-dd",
+  		duration: "medium",
+  		changeMonth: true,
+  		changeYear: true,
+  		yearRange: "2010:2030",
+	});
+	
+	function CancelBtn()
+	{
+		$("#insert_popup").css("display", "none");
+	}
+
+	function InsertModal()
+	{
+		$("#insert_popup").css("display", "flex");
+	}
+	
+	//시약 등록
+	function InsertBtn()
+	{
+		var user_id = new Array();
+		
+		$(document).find("input:checkbox[name=user_id]:checked").each(function()
+		{
+			user_id.push($(this).val());
+		});
+		
+		var board_title = $.trim($("#board_title").val());
+		var board_start = $.trim($("#board_start").val());
+		var board_end = $.trim($("#board_end").val());
+		var board_content = $.trim($("#board_content").val());
+		var board_share = user_id;
+		
+		if(board_title == "")
+		{
+			alert("제목을 입력해주세요.");
+			
+			$("#insert_popup").css("display", "none");
+			$("#board_title").focus();
+		}
+		else if(board_start == "")
+		{
+			alert("시작일을 입력해주세요.");
+		}
+		else if(board_end == "board_end")
+		{
+			alert("종료일을 입력해주세요.");
+		}
+		else if(board_end < board_end)
+		{
+			alert("종료일이 시작일보다 빠릅니다.");
+		}
+		else
+		{
+			var data = {"board_title" : board_title, "board_start" : board_start, "board_end" : board_end, "board_content" : board_content, "board_share" : board_share};
+			
+			$.ajax(
+			{
+				url : "insertBoard",
+				method : "POST",
+				dataType : "json",
+				data : data,
+				success : function(result)
+				{
+					if(result == 0)
+					{
+						$("#insert_popup").css("display", "none");
+						$("#fail_popup").css("display", "flex");
+					}
+					else
+					{
+						$("#insert_popup").css("display", "none");
+						$("#success_popup").css("display", "flex");
+					}
+				}
+			});
+		}
+	}
+</script>
+</body>
+</html>

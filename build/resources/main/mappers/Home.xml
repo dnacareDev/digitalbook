@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.digitalBook.Mapper.HomeMapper">
+	<!-- 지난 일정 조회 -->
+	<select id="selectDelayPlanList" parameterType="int" resultType="Plan">
+		SELECT p.*, r.*, s.*, m.*, sc.*, u.*
+		FROM plan p
+		LEFT JOIN report r ON p.report_code = r.report_code
+		LEFT JOIN storage s ON p.storage_id = s.storage_id
+		LEFT JOIN method m ON p.plan_method = m.method_id
+		LEFT JOIN (select * from schedule where end_date  <![CDATA[<]]>  date(now())) sc ON p.plan_id = sc.plan_id
+		LEFT JOIN user u ON sc.sch_supervisor = u.user_id
+		WHERE p.user_group = #{user_group} AND sc.sch_supervisor = #{user_id} OR sch_manager = #{user_id}
+		GROUP BY p.plan_id
+		ORDER BY p.plan_id DESC
+	</select>
+	
+	<!-- 진행일정 조회 -->
+	<select id="selectCurrentPlanList" parameterType="int" resultType="Plan">
+		SELECT p.*, r.*, s.*, m.*, sc.*, u.*
+		FROM plan p
+		LEFT JOIN report r ON p.report_code = r.report_code
+		LEFT JOIN storage s ON p.storage_id = s.storage_id
+		LEFT JOIN method m ON p.plan_method = m.method_id
+		LEFT JOIN (select * from schedule where end_date  <![CDATA[>]]>  date(now())) sc ON p.plan_id = sc.plan_id
+		LEFT JOIN user u ON sc.sch_supervisor = u.user_id
+		WHERE p.user_group = #{user_group} AND sc.sch_supervisor = #{user_id} OR sch_manager = #{user_id}
+		GROUP BY p.plan_id
+		ORDER BY p.plan_id DESC
+	</select>
+	
+	<!-- 진행 이력 -->
+	<select id="selectProgressPlanList" resultType="Plan">
+		SELECT p.*, r.*, s.*, m.*, sc.*, u.*
+		FROM plan p
+		LEFT JOIN report r ON p.report_code = r.report_code
+		LEFT JOIN storage s ON p.storage_id = s.storage_id
+		LEFT JOIN method m ON p.plan_method = m.method_id
+		LEFT JOIN schedule sc ON p.plan_id = sc.plan_id
+		LEFT JOIN user u ON sc.sch_supervisor = u.user_id
+		WHERE p.user_group = #{user_group} AND sc.sch_supervisor = #{user_id} OR sch_manager = #{user_id}
+		GROUP BY p.plan_id
+		ORDER BY p.plan_id DESC
+	</select>
+	
+	<!-- 전체 일정(사용자) -->
+	<select id="SelectUserSchedule" parameterType="int" resultType="Schedule">
+		SELECT s.sch_id, s.start_date, s.end_date, p.plan_id, p.plan_code, m.method_id, m.method_code, m.method_title, u1.user_name_k AS u1_supervisor, u2.user_name_k AS u2_manager
+		FROM schedule s
+		LEFT JOIN plan p ON s.plan_id = p.plan_id
+		LEFT JOIN method m ON s.method_id = m.method_id
+		LEFT JOIN user u1 ON s.sch_supervisor = u1.user_id
+		LEFT JOIN user u2 ON s.sch_manager = u2.user_id
+		WHERE s.sch_supervisor = #{user_id} OR s.sch_manager = #{user_id}
+	</select>
+	
+	<!--  -->
+	<select id="SelectUserBoard" parameterType="int" resultType="Board">
+		SELECT * FROM board b
+		LEFT JOIN user u ON u.user_id = #{user_id}
+		WHERE b.user_id = #{user_id} OR b.board_share LIKE CONCAT("%", #{user_id}, "%")
+	</select>
+	
+	<!-- 전체 일정(관리자) -->
+	<select id="SelectAdminSchedule" parameterType="User" resultType="Schedule">
+		SELECT s.sch_id, s.start_date, s.end_date, p.plan_id, p.plan_code, m.method_id, m.method_code, m.method_title, u1.user_name_k AS u1_supervisor, u2.user_name_k AS u2_manager
+		FROM schedule s
+		LEFT JOIN plan p ON s.plan_id = p.plan_id
+		LEFT JOIN method m ON s.method_id = m.method_id
+		LEFT JOIN user u1 ON s.sch_supervisor = u1.user_id
+		LEFT JOIN user u2 ON s.sch_manager = u2.user_id
+		WHERE p.user_group = #{user_group}
+	</select>
+	
+	<select id="SelectUser" parameterType="User" resultType="User">
+		SELECT u.user_id, u.user_name_k, u.user_group, u.user_authority,
+		(SELECT COUNT(*) FROM schedule s WHERE (s.end_date <![CDATA[<]]> NOW()) AND (s.sch_supervisor = u.user_id OR s.sch_manager = u.user_id)) AS delay_count,
+		(SELECT COUNT(*) FROM schedule s WHERE (s.start_date <![CDATA[<]]> NOW() AND NOW() <![CDATA[<]]> s.end_date) AND (s.sch_supervisor = u.user_id OR s.sch_manager = u.user_id)) AS now_count,
+		(SELECT COUNT(*) FROM schedule s WHERE (NOW() <![CDATA[<]]> s.start_date) AND (s.sch_supervisor = u.user_id OR s.sch_manager = u.user_id)) AS future_count
+		FROM user u
+		LEFT JOIN schedule s1 ON u.user_id = s1.sch_supervisor
+		LEFT JOIN schedule s2 ON u.user_id = s2.sch_manager
+		WHERE u.user_group = #{user_group}
+		GROUP BY u.user_id
+	</select>
+	
+	<!-- 알림에 노출할 plan list -->
+	<select id="selectNonReadPlanList" parameterType="int" resultType="Plan">
+		SELECT p.*, m.*, sc.*, u.*
+		FROM plan p
+	    LEFT JOIN method m ON p.plan_method = m.method_id
+	    LEFT JOIN (select * from schedule where sch_supervisor = #{user_id} or sch_manager = #{user_id}) sc ON p.plan_id = sc.plan_id
+	    LEFT JOIN user u ON sc.sch_supervisor = u.user_id
+	    where p.plan_step = 1 and p.plan_read = 0 and (sc.sch_supervisor = #{user_id} or sc.sch_manager = #{user_id})
+	</select>
+	
+	<!-- 알림 내 plan 클릭시 읽음 처리 -->
+	<update id="updatePlanRead" parameterType="int">
+		UPDATE plan
+		SET plan_read = 1
+		WHERE plan_id = #{plan_id}
+	</update>
+	
+</mapper>

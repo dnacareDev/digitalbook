@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.digitalBook.Mapper.SeedMapper">
+	<!-- 시료  갯수 검색 -->
+	<select id="SearchSeedCount" resultType="int">
+		SELECT COUNT(*) FROM
+		(SELECT COUNT(*) FROM seed s
+		LEFT JOIN report r ON s.report_code = r.report_code
+		LEFT JOIN genetic g ON s.genetic_id = g.genetic_id
+		LEFT JOIN division d ON g.division_id = d.division_id
+		LEFT JOIN warehouse w ON s.ware_id = w.ware_id
+		WHERE s.user_group = #{user_group}
+		<choose>
+			<when test="search_type == null || search_type.equals('none')">
+				AND (
+					r.report_code LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					r.report_title LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					d.division LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					s.seed_amount = #{keyword}
+					OR
+					s.seed_sender LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					w.warehouse LIKE CONCAT('%', #{keyword}, '%')
+				)
+			</when>
+			<when test="search_type.equals('s.seed_amount')">
+				AND ${search_type} = #{keyword}
+			</when>
+			<otherwise>
+				AND ${search_type} LIKE CONCAT('%', #{keyword}, '%')
+			</otherwise>
+		</choose>
+		GROUP BY r.report_code) AS count
+	</select>
+	
+	<!-- 시료 검색 -->
+	<select id="SearchSeed" resultType="Seed">
+		SELECT r.report_id, r.report_code, r.report_title, s.seed_id, s.seed_amount, s.seed_sender, s.send_date, s.receive_date, s.user_group, d.division_id, d.division, g.genetic_id, g.genetic, w.ware_id, w.warehouse, COUNT(*) AS seed_count
+		FROM seed s
+		LEFT JOIN report r ON s.report_code = r.report_code
+		LEFT JOIN genetic g ON s.genetic_id = g.genetic_id
+		LEFT JOIN division d ON g.division_id = d.division_id
+		LEFT JOIN warehouse w ON s.ware_id = w.ware_id
+		WHERE s.user_group = #{user_group}
+		<choose>
+			<when test="search_type == null || search_type.equals('none')">
+				AND (r.report_code LIKE CONCAT('%', #{keyword}, '%') OR r.report_title LIKE CONCAT('%', #{keyword}, '%') OR d.division LIKE CONCAT('%', #{keyword}, '%') OR s.seed_amount = #{keyword} OR s.seed_sender LIKE CONCAT('%', #{keyword}, '%') OR w.warehouse LIKE CONCAT('%', #{keyword}, '%'))
+			</when>
+			<when test="search_type.equals('s.seed_amount')">
+				AND ${search_type} = #{keyword}
+			</when>
+			<otherwise>
+				AND ${search_type} LIKE CONCAT('%', #{keyword}, '%')
+			</otherwise>
+		</choose>
+		GROUP BY r.report_code
+		ORDER BY s.seed_id DESC
+		LIMIT #{offset}, #{limit}
+	</select>
+	
+	<!-- 과제 전체 조회 -->
+	<select id="SelectReportList" parameterType="String" resultType="Report">
+		SELECT * FROM report
+		WHERE user_name = #{user_name} and report_code NOT LIKE 'N%' and report_status = 1
+	</select>
+	
+	<!-- 사용자 전체 조회 -->
+	<select id="SelectUserList" parameterType="int" resultType="User">
+		SELECT * FROM user
+		WHERE user_group = #{user_group}
+	</select>
+	
+	<!-- 단위 전체 조회 -->
+	<select id="SelectEachesList" resultType="Eaches">
+		SELECT * FROM eaches
+		WHERE eaches_type = '시료'
+	</select>
+	
+	<!-- 저장 장소 전체 조회 -->
+	<select id="SelectWarehouseList" resultType="Warehouse">
+		SELECT * FROM warehouse
+	</select>
+	
+	<!-- 조사 항목(작목) 전체 조회 -->
+	<select id="SelectDivisionList" resultType="Division">
+		SELECT * FROM division
+		WHERE division_depth = 0
+	</select>
+	
+	<!-- 품종/유전정보 전체 조회 -->
+	<select id="SelectGeneticList" parameterType="int" resultType="Genetic">
+		SELECT * FROM genetic
+		WHERE division_id = #{division_id} and genetic_type = #{genetic_type}
+	</select>
+	
+	<!-- 시료 등록 -->
+	<insert id="InsertSeed" parameterType="Seed" useGeneratedKeys="true" keyProperty="last_seed_id">
+		INSERT INTO seed
+		(seed_manager,
+		seed_code,
+		seed_area,
+		seed_year,
+		seed_method,
+		seed_amount,
+		eaches_id,
+		seed_comment,
+		genetic_id,
+		report_code,
+		seed_report,
+		ware_id,
+		seed_sender,
+		send_date,
+		seed_receiver,
+		receive_date,
+		seed_share,
+		create_date,
+		modify_date,
+		user_group,
+		seed_status
+		)
+		VALUES
+		(#{seed_manager},
+		#{seed_code},
+		#{seed_area},
+		#{seed_year},
+		#{seed_method},
+		#{seed_amount},
+		#{eaches_id},
+		#{seed_comment},
+		#{genetic_id},
+		#{report_code},
+		#{seed_report},
+		#{ware_id},
+		#{seed_sender},
+		#{send_date},
+		#{seed_receiver},
+		#{receive_date},
+		#{seed_share},
+		NOW(),
+		NOW(),
+		#{user_group},
+		#{seed_status}
+		)
+	</insert>
+	
+	<!-- 최근 시료 ID -->
+	<select id="SelectLastSeedCode" parameterType="int" resultType="String">
+		SELECT seed_code FROM seed
+		WHERE user_group = #{user_group}
+		ORDER BY seed_id DESC
+		LIMIT 1
+	</select>
+	
+	<!-- 시료 detail list -->
+	<select id="SelectSeedDetailList" resultType="Seed">
+		SELECT s.*, u1.user_name_k AS manager_name, u2.user_name_k AS receive_name, r.user_name as report_user_name, u2.*, e.*, g.*, r.*, w.*, d.* 
+		FROM seed s
+		LEFT JOIN user u1 ON s.seed_manager = u1.user_id
+		LEFT JOIN user u2 ON s.seed_receiver = u2.user_id
+		LEFT JOIN eaches e ON s.eaches_id = e.eaches_id
+		LEFT JOIN genetic g ON s.genetic_id = g.genetic_id
+		LEFT JOIN division d ON g.division_id = d.division_id
+		LEFT JOIN report r ON s.report_code = r.report_code
+		LEFT JOIN warehouse w ON s.ware_id = w.ware_id
+		WHERE r.report_id = #{report_id}
+		ORDER BY seed_id
+	</select>
+	
+	<!-- 시료 수정 -->
+	<update id="UpdateSeed" parameterType="Seed">
+		UPDATE seed
+		SET seed_manager = #{seed_manager},
+			seed_area = #{seed_area},
+			seed_year = #{seed_year},
+			seed_method = #{seed_method},
+			seed_amount = #{seed_amount},
+			eaches_id = #{eaches_id},
+			seed_comment = #{seed_comment},
+			genetic_id = #{genetic_id},
+			seed_report = #{seed_report},
+			ware_id = #{ware_id},
+			seed_sender = #{seed_sender},
+			send_date = #{send_date},
+			seed_receiver = #{seed_receiver},
+			receive_date = #{receive_date},
+			seed_share = #{seed_share},
+			modify_date = NOW(),
+			seed_status = #{seed_status},
+			report_code = #{report_code}
+		WHERE seed_id = #{seed_id}
+	</update>
+	
+	<!-- 시료 삭제 -->
+	<delete id="DeleteSeed" parameterType="int">
+		DELETE FROM seed
+		WHERE seed_id = #{seed_id}
+	</delete>
+	
+	<!-- 시료 detail -->
+	<select id="SelectSeedDetail" parameterType="int" resultType="Seed">
+		SELECT * FROM seed
+		WHERE seed_id = #{seed_id}
+	</select>
+	
+	<!-- 과제 비연계 등록 -->
+	<insert id="InsertNonReport" parameterType="Report">
+		INSERT INTO report
+		(user_name, report_code, report_title, create_date, modify_date, user_group, report_status)
+		VALUES
+		(#{user_name}, #{report_code}, '과제 비연계', NOW(), NOW(), #{user_group}, #{report_status})
+	</insert>
+	
+	<!-- 최근 비연계 과제 ID 조회 -->
+	<select id="selectLastNonReportCode" parameterType="int" resultType="String">
+		SELECT report_code FROM report
+		WHERE user_group = #{user_group}
+			AND DATE(create_date) = DATE(NOW())
+		ORDER BY report_id DESC
+		LIMIT 1
+	</select>
+	
+	<!-- 시료 변경 이력 등록 -->
+	<insert id="insertRecord" parameterType="Record">
+		INSERT INTO record
+		(record_status, record_type, record_type_code, record_date)
+		VALUES
+		(#{record_status}, #{record_type}, #{record_type_code}, NOW())
+	</insert>
+	
+	<!-- 시료 변경 이력 조회 -->
+	<select id="selectRecordList" parameterType="String" resultType="Record">
+		SELECT * FROM record r
+		LEFT JOIN seed s ON r.record_type = s.seed_id
+		WHERE s.report_code = #{report_code}
+		ORDER BY record_id DESC
+	</select>
+	
+	<!-- 시료 승인 -->
+	<update id="updateSeedStatus" parameterType="int">
+		UPDATE seed
+		SET seed_status = 2
+		WHERE seed_id = #{seed_id}
+	</update>
+	
+	<!-- genetic 기타 등록 -->
+	<insert id="insertGeneticEtc" parameterType="Genetic" useGeneratedKeys="true" keyProperty="last_genetic_id">
+		INSERT INTO genetic
+		(genetic, genetic_type, division_id)
+		VALUES
+		(#{genetic}, 2, #{division_id})
+	</insert>
+	
+	<!-- 엑셀 다운로드할 seed list -->
+	<select id="selectSeedExcelList" parameterType="int" resultType="Seed">
+		SELECT r.report_id, r.report_code, r.report_title, s.seed_id, s.seed_amount, s.seed_sender, s.send_date, s.receive_date, s.user_group, d.division_id, d.division, g.genetic_id, g.genetic, w.ware_id, w.warehouse, COUNT(*) AS seed_count
+		FROM seed s
+		LEFT JOIN report r ON s.report_code = r.report_code
+		LEFT JOIN genetic g ON s.genetic_id = g.genetic_id
+		LEFT JOIN division d ON g.division_id = d.division_id
+		LEFT JOIN warehouse w ON s.ware_id = w.ware_id
+		WHERE s.user_group = #{user_group}
+		GROUP BY r.report_code
+		ORDER BY s.seed_id DESC
+	</select>
+	
+	<!-- 샘플 시료 detail -->
+	<select id="selectSampleSeedDetail" parameterType="int" resultType="Seed">
+		SELECT s.*, u1.user_name_k AS manager_name, u2.user_name_k AS receive_name, r.user_name as report_user_name, u2.*, e.*, g.*, r.*, w.*, d.*
+		FROM seed s
+		LEFT JOIN user u1 ON s.seed_manager = u1.user_id
+		LEFT JOIN user u2 ON s.seed_receiver = u2.user_id
+		LEFT JOIN eaches e ON s.eaches_id = e.eaches_id
+		LEFT JOIN genetic g ON s.genetic_id = g.genetic_id
+		LEFT JOIN division d ON g.division_id = d.division_id
+		LEFT JOIN report r ON s.report_code = r.report_code
+		LEFT JOIN warehouse w ON s.ware_id = w.ware_id
+		WHERE s.seed_id = #{seed_id}
+	</select>
+	
+</mapper>

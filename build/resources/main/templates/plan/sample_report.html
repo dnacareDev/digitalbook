@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en" dir="ltr"
+	xmlns:th="http://www.thymeleaf.org">
+	
+<head>
+
+<!-- 공통 헤더 -->
+<th:block th:include="/../fragments/header.html"></th:block>
+
+</head>
+
+<body class="layout-light top-menu overlayScroll">
+	<div class="mobile-search"></div>
+	
+	<div class="mobile-author-actions"></div>
+	
+	<main class="main-content" style="background-color: #fafef5;">
+	
+		<div class="contents" style="background-color: #fafef5;">
+    
+		    <div class="container-fluid">
+		    	<div class="row">
+		    		<h4>과제정보</h4>
+		    	</div>
+		    	<div class="row mt-2">
+			        <div class="col-lg-12">
+			        	<div class="table-responsive">
+			        		<table class="table">
+			        			<tbody>
+			        				<tr>
+			        					<td>과제번호</td>
+			        					<td th:text="${report.report_code}"></td>
+			        				</tr>
+			        				<tr>
+			        					<td>과제년도</td>
+			        					<td th:text="${report.report_year}"></td>
+			        				</tr>
+			        				<tr>
+			        					<td>과제명</td>
+			        					<td th:text="${report.report_title}"></td>
+			        				</tr>
+			        				<tr>
+			        					<td>과제책임자</td>
+			        					<td th:text="${report.user_name}"></td>
+			        				</tr>
+			        			</tbody>
+			        		</table>
+			        	</div>
+			        </div>
+		        </div>
+		    </div>
+    
+    	</div>
+    
+    </main>
+    
+    <!-- 공통 하단 -->
+    <th:block th:include="/../fragments/footer.html"></th:block>
+    <!-- 공통 js -->
+    <th:block th:include="/../fragments/commonjs.html"></th:block>
+    
+<script type="text/javascript">
+		
+</script>
+    
+</body>
+
+</html>
