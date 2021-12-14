@@ -727,13 +727,11 @@
     <script type="text/javascript" src="/../assets/vendor_assets/js/qrcode.min.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/eligrey/FileSaver.js/5ed507ef8aa53d8ecfea96d96bc7214cd2476fd2/FileSaver.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.js"></script>
-    
+ 
 <script type="text/javascript" th:inline="javascript">
-
 	let plan = /*[[${plan}]]*/ "null";
 	let method = /*[[${method}]]*/ "null";
 	let sch = /*[[${sch}]]*/ "null";
-	console.log(method);
 	let results = /*[[${results}]]*/ "null";
 	
 	let segment = /*[[${segment}]]*/ "null";
@@ -941,7 +939,6 @@
 		});
 		
 	}//end 필터 함수
-	
 	//구획정보 기존 데이터 만들기 함수
 	function loadSegment(){
 		for(var i = 0; i < segment.length; i++){
@@ -970,6 +967,7 @@
 		//결과입력 테이블 그리기 실행 함수
 		methodTableGrid();
 		
+		
 		//구획정보 첫번째에 active(선택) 이벤트 걸어주기
 		$("#table_body").children(":first").addClass("active");
 		$("#step4-segment").children(":first").addClass("active");
@@ -980,7 +978,8 @@
 			schId_arr.push(sch[i].sch_supervisor);
 			schId_arr.push(sch[i].sch_manager);
 		}
-		
+
+		console.log(schId_arr)
 		if(schId_arr.includes(user.user_id) == false){
 			$(".type1").css("display", "none");
 		}
@@ -1419,7 +1418,7 @@
 					}
 					
 					
-					add_list == '</td>';
+					add_list += '</td>';
 				}
 				add_list += '</tr>';
 			}
@@ -1495,7 +1494,7 @@
 					}
 					
 					
-					add_list == '</td>';
+					add_list += '</td>';
 				}
 				add_list += '</tr>';
 			}
@@ -1859,11 +1858,14 @@
 						add_list += '<img src="/../img/svg/download.svg">';
 						add_list += '</div>';
 
+					}
+
+					if(method[j].d2_name == "병해충"){
 						add_list += '<div class="cam" onclick="openAnalyzeModal(this)" >';
 						add_list += '<img src="/../img/anImgbtn.png">';
 						add_list += '</div>';
 					}
-					add_list == '</td>';
+					add_list += '</td>';
 				}
 				add_list += '</tr>';
 			}
@@ -2039,11 +2041,15 @@
 						add_list += '<img src="/../img/svg/download.svg">';
 						add_list += '</div>';
 
+					}
+					
+					if(method[j].d2_name == "병해충"){
 						add_list += '<div class="cam" onclick="openAnalyzeModal(this)" >';
 						add_list += '<img src="/../img/anImgbtn.png">';
 						add_list += '</div>';
 					}
-					add_list == '</td>';
+					
+					add_list += '</td>';
 				}
 				add_list += '</tr>';
 			}
@@ -2215,12 +2221,14 @@
 						add_list += '<div class="cam" onclick="imgDownload(this)" data-img="'+currentDataArr[i]['c_img'+j]+'">';
 						add_list += '<img src="/../img/svg/download.svg">';
 						add_list += '</div>';
-						
+					}
+
+					if(method[j].d2_name == "병해충"){
 						add_list += '<div class="cam" onclick="openAnalyzeModal(this)" >';
 						add_list += '<img src="/../img/anImgbtn.png">';
 						add_list += '</div>';
 					}
-					add_list == '</td>';
+					add_list += '</td>';
 				}
 				add_list += '</tr>';
 			}
@@ -2467,14 +2475,25 @@
 				add_list += '<td class="td_num">'+(i+1)+'</td>';
 				for(var j = 0; j < method.length; j++){
 					add_list += '<td><input type="text" name="input'+j+'" >';
-					add_list += '<div class="cam" onclick="fileFunction(this)">';
-					add_list += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-fill" viewBox="0 0 16 16">';
-					add_list += '<path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>';
-					add_list += '<path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/>';
-					add_list += '</svg>';
-					add_list += '</div>';
 					add_list += '<input type="file" name="file'+j+'" accept=".jpg, .gif, .png, .jpeg, .bmp" style="display:none">';
-					add_list == '</td>';
+					
+					/*
+					add_list += '<div class="cam" onclick="imgDownload(this)" >';
+					add_list += '<img src="/../img/svg/download.svg">';
+					add_list += '</div>';*/
+
+					if(method[j].d2_name == "병해충"){
+						add_list += '<div class="cam" onclick="openAnalyzeModal(this)" >';
+						add_list += '<img src="/../img/anImgbtn.png">';
+						add_list += '</div>';
+					}
+					else if(method[j].d2_name != "수소이온 농도 조사"){
+						add_list += '<div class="cam" onclick="imgDownload(this)" >';
+						add_list += '<img src="/../img/svg/download.svg">';
+						add_list += '</div>';
+					}
+					
+					add_list += '</td>';
 				}
 				add_list += '</tr>';
 			}

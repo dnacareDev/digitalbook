@@ -671,15 +671,12 @@
 		}
 		else
 		{
-			/* $("#insertUser").submit(); */
-			//var insertUser_form = $("#insertUser").serialize();
-			
 			var data = {
 				"user_username" : user_username,
 				"user_password" : user_password,
 				"user_name_k" : user_name_k,
 				"user_name_e" : user_name_e,
-				"depart_id" : depart_id,
+				"depart_id" : depart_id ? depart_id : depart_depth3 ? depart_depth3 : depart_depth2,
 				"user_position" : user_position,
 				"user_level" : user_level,
 				"user_post" : user_post,
@@ -692,7 +689,6 @@
 				"user_type" : user_type,
 				"user_group" : depart_depth3
 			};
-			console.log(data);
 			
 			$.ajax(
 			{

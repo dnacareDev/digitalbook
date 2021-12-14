@@ -65,7 +65,7 @@
 	<select id="SelectReportList" parameterType="String" resultType="Report">
 		SELECT DISTINCT * FROM report
 		WHERE user_name = #{user_name} and report_code NOT LIKE 'N%' and report_status = 1 
-		ORDER BY r.report_id DESC 
+		ORDER BY report_id DESC 
 	</select>
 	
 	<!-- 사용자 전체 조회 -->

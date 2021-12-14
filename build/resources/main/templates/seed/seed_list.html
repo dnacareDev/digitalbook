@@ -226,7 +226,6 @@
 				{
 					for(var i = 0; i < length; i++)
 					{
-						console.log(result.seed[i]);
 						add_list += '<tr>';
 						add_list += '<td><a href="/data/seed/modify?report_id=' + result.seed[i].report_id + '">' + result.seed[i].report_code + '</a></td>';
 						add_list += '<td><span>' + result.seed[i].report_title + '</span></td>';
@@ -235,8 +234,8 @@
 						add_list += '<td><span>' + result.seed[i].seed_amount + '</span></td>';
 						add_list += '<td><span>' + result.seed[i].seed_sender + '</span></td>';
 						add_list += '<td><span>' + result.seed[i].warehouse + '</span></td>';
-						add_list += '<td><span>' + result.seed[i].send_date + '</span></td>';
-						add_list += '<td><span>' + result.seed[i].receive_date + '</span></td>';
+						add_list += '<td><span>' + (result.seed[i].send_date?result.seed[i].send_date:"") + '</span></td>';
+						add_list += '<td><span>' + (result.seed[i].receive_date?result.seed[i].receive_date:"") + '</span></td>';
 						add_list += '</tr>';
 					}
 					

@@ -415,11 +415,11 @@ $(document).ready(function()
 							
 							add_list += '<tr>';
 							add_list += '<td><a href="/plan/modify?plan_id='+ result.plan[i].plan_id + '">' + result.plan[i].plan_code + '</a></td>';
-							add_list += '<td><span>' + result.plan[i].report_title + '</span></td>';
-							add_list += '<td><span>' + result.plan[i].storage_name + '</span></td>';
-							add_list += '<td><span>' + result.plan[i].method_title + '</span></td>';
-							add_list += '<td><span>' + result.plan[i].plan_repeat + '</span></td>';
-							add_list += '<td><span>' + result.plan[i].plan_segment + '</span></td>';
+							add_list += '<td><span>' + (result.plan[i].report_title ? result.plan[i].report_title : "") + '</span></td>';
+							add_list += '<td><span>' + (result.plan[i].storage_name ? result.plan[i].storage_name : "") + '</span></td>';
+							add_list += '<td><span>' + (result.plan[i].method_title ? result.plan[i].method_title : "") + '</span></td>';
+							add_list += '<td><span>' + (result.plan[i].plan_repeat ? result.plan[i].plan_repeat : "") + '</span></td>';
+							add_list += '<td><span>' + (result.plan[i].plan_segment ? result.plan[i].plan_segment : "") + '</span></td>';
 							add_list += '<td><span class="qr1" data-id="'+result.plan[i].plan_id+'" data-code="'+result.plan[i].plan_code+'" data-report-code="'+result.plan[i].report_code+'" style="color:blue; cursor:pointer;">Print QR</span></td>';
 							add_list += '<td><span class="qr2" data-id="'+result.plan[i].plan_id+'" style="color:blue; cursor:pointer;">Print QR</span></td>';
 							if(result.plan[i].plan_status == 0){

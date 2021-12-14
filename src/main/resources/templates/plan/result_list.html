@@ -228,10 +228,10 @@ $(document).ready(function()
 							
 							add_list += '<tr>';
 							add_list += '<td><a href="/plan/insertResult?plan_id='+ result.plan[i].plan_id + '">' + result.plan[i].plan_code + '</a></td>';
-							add_list += '<td><span>' + result.plan[i].report_title + '</span></td>';
-							add_list += '<td><span>' + result.plan[i].storage_name + '</span></td>';
-							add_list += '<td><span>' + result.plan[i].method_title + '</span></td>';
-							add_list += '<td><span>' + result.plan[i].plan_repeat + '</span></td>';
+							add_list += '<td><span>' + (result.plan[i].report_title?result.plan[i].report_title:"") + '</span></td>';
+							add_list += '<td><span>' + (result.plan[i].storage_name?result.plan[i].storage_name:"") + '</span></td>';
+							add_list += '<td><span>' + (result.plan[i].method_title?result.plan[i].method_title:"") + '</span></td>';
+							add_list += '<td><span>' + (result.plan[i].plan_repeat?result.plan[i].plan_repeat:"") + '</span></td>';
 							add_list += '<td><span>' + result.plan[i].plan_segment + '</span></td>';
 							if(result.plan[i].plan_status == 0){
 								add_list += '<td><span>승인요청</span></td>';
