@@ -727,13 +727,11 @@
     <script type="text/javascript" src="/../assets/vendor_assets/js/qrcode.min.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/eligrey/FileSaver.js/5ed507ef8aa53d8ecfea96d96bc7214cd2476fd2/FileSaver.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.js"></script>
-    
+ 
 <script type="text/javascript" th:inline="javascript">
-
 	let plan = /*[[${plan}]]*/ "null";
 	let method = /*[[${method}]]*/ "null";
 	let sch = /*[[${sch}]]*/ "null";
-	console.log(method);
 	let results = /*[[${results}]]*/ "null";
 	
 	let segment = /*[[${segment}]]*/ "null";
@@ -941,7 +939,6 @@
 		});
 		
 	}//end 필터 함수
-	
 	//구획정보 기존 데이터 만들기 함수
 	function loadSegment(){
 		for(var i = 0; i < segment.length; i++){
@@ -970,6 +967,7 @@
 		//결과입력 테이블 그리기 실행 함수
 		methodTableGrid();
 		
+		
 		//구획정보 첫번째에 active(선택) 이벤트 걸어주기
 		$("#table_body").children(":first").addClass("active");
 		$("#step4-segment").children(":first").addClass("active");
@@ -980,7 +978,8 @@
 			schId_arr.push(sch[i].sch_supervisor);
 			schId_arr.push(sch[i].sch_manager);
 		}
-		
+
+		console.log(schId_arr)
 		if(schId_arr.includes(user.user_id) == false){
 			$(".type1").css("display", "none");
 		}

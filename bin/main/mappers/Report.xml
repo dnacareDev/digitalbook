@@ -19,8 +19,9 @@
 			<when test="search_type != 'all'">
 				 WHERE #{search_type} LIKE CONCAT('%', #{keyword}, '%')
 			</when>
-		</choose>
-		LIMIT #{offset}, #{limit}
+		</choose> 
+		ORDER BY r.report_file_id DESC 
+		LIMIT #{offset}, #{limit} 
 	</select>
 	
 	<!-- 과제 상세 조회 -->
