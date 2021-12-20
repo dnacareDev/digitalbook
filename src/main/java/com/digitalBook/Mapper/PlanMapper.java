@@ -13,6 +13,7 @@ import com.digitalBook.Entity.Method;
 import com.digitalBook.Entity.Plan;
 import com.digitalBook.Entity.Record;
 import com.digitalBook.Entity.Report;
+import com.digitalBook.Entity.ResultPlan;
 import com.digitalBook.Entity.Results;
 import com.digitalBook.Entity.Schedule;
 import com.digitalBook.Entity.Seed;
@@ -149,6 +150,7 @@ public interface PlanMapper {
 	//재배 결과입력 개수 검색
 	int SearchResultPlanCount(@Param("search_type") String search_type, @Param("keyword") String keyword, @Param("user_group") int user_group, @Param("plan_step") int plan_step);
 	
+	ResultPlan selectResultPlanOne(int plan_id);
 	// 장소 갯수 조회
 	int SelectStorageCount(int user_id);
 	
@@ -166,5 +168,7 @@ public interface PlanMapper {
 	
 	//샘플 구획 detail
 	Segment selectSampleSegmentDetail(int segment_id);
+	
+	public int insertResultsPlan(ResultPlan plan_id);
 	
 }

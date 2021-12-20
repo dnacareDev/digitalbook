@@ -484,6 +484,30 @@
 		ORDER BY method_id
 	</select>
 	
+	
+	<select id="selectResultPlanOne" parameterType="ResultPlan" resultType="ResultPlan">
+		SELECT * from result_plan 
+		WHERE plan_id = #{plan_id} 
+		ORDER BY create_date DESC 
+		LIMIT 1 
+	</select>
+	
+	<!-- 결과입력 등록 -->
+	<insert id="insertResultsPlan" parameterType="ResultPlan">
+		INSERT INTO result_plan 
+		(
+			plan_id, 
+			rp_content,
+			rp_num
+		) 
+		VALUES 
+		( 
+			#{plan_id}, 
+			#{rp_content},
+			#{rp_num}
+		) 
+	</insert>
+	
 	<!-- 결과입력 등록 -->
 	<insert id="insertResults" parameterType="java.util.ArrayList">
 		<foreach collection="results" item="item" separator=";">

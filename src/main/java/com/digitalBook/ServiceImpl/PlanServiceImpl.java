@@ -13,6 +13,7 @@ import com.digitalBook.Entity.Method;
 import com.digitalBook.Entity.Plan;
 import com.digitalBook.Entity.Record;
 import com.digitalBook.Entity.Report;
+import com.digitalBook.Entity.ResultPlan;
 import com.digitalBook.Entity.Results;
 import com.digitalBook.Entity.Schedule;
 import com.digitalBook.Entity.Seed;
@@ -345,4 +346,13 @@ public class PlanServiceImpl implements PlanService {
 		return mapper.selectSampleSegmentDetail(segment_id);
 	}
 
+	@Override
+	public int insertResultsPlan(ResultPlan results) {
+		return mapper.insertResultsPlan(results);
+	}
+	
+	@Override
+	public ResultPlan selectResultPlanOne(int plan_id) {
+		return mapper.selectResultPlanOne(plan_id);
+	}
 }

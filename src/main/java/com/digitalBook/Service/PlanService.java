@@ -12,6 +12,7 @@ import com.digitalBook.Entity.Method;
 import com.digitalBook.Entity.Plan;
 import com.digitalBook.Entity.Record;
 import com.digitalBook.Entity.Report;
+import com.digitalBook.Entity.ResultPlan;
 import com.digitalBook.Entity.Results;
 import com.digitalBook.Entity.Schedule;
 import com.digitalBook.Entity.Seed;
@@ -88,6 +89,8 @@ public interface PlanService {
 	//재배계획 승인
 	int updatePlanStatus(int plan_id);
 	
+	int insertResultsPlan(ResultPlan results);
+	
 	//사용자 전체 조회
 	List<User> selectUserList(int user_group);
 	
@@ -126,6 +129,8 @@ public interface PlanService {
 	
 	//구획 조회
 	List<Segment> selectSegmentList(int plan_id);
+	
+	ResultPlan selectResultPlanOne(int plan_id);
 	
 	//구획정보 등록
 	int insertSegmentInfo(List<SegmentInfo> segmentInfo);

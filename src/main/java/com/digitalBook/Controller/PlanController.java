@@ -43,6 +43,7 @@ import com.digitalBook.Entity.Method;
 import com.digitalBook.Entity.Plan;
 import com.digitalBook.Entity.Record;
 import com.digitalBook.Entity.Report;
+import com.digitalBook.Entity.ResultPlan;
 import com.digitalBook.Entity.Results;
 import com.digitalBook.Entity.Schedule;
 import com.digitalBook.Entity.Seed;
@@ -584,19 +585,21 @@ public class PlanController
 		
 		List<Record> record = service.selectRecordList(plan_id);
 		
-		List<Results> results = service.selectResultsList(plan_id);
-		
+		List<Results> results = new ArrayList<Results>();//service.selectResultsList(plan_id);
+		ResultPlan resultPlan = service.selectResultPlanOne(plan_id);
 		List<Segment> segment = service.selectSegmentList(plan_id);
 		List<SegmentInfo> segmentInfo = service.selectSegmentInfoList(plan_id);
 		
 		int arr[] = Arrays.stream(plan.getPlan_method().split(",")).mapToInt(Integer::parseInt).toArray();
 		List<Method> method = service.selectPlanMethodList(arr);
 		
+		mv.addObject("plan_id", plan_id);
 		mv.addObject("plan", plan);
 		mv.addObject("record", record);
 		mv.addObject("sch", sch);
 		mv.addObject("method", method);
 		mv.addObject("results", results);
+		mv.addObject("resultPlan",resultPlan);
 		mv.addObject("segment", segment);
 		mv.addObject("segmentInfo", segmentInfo);
 		
@@ -722,6 +725,18 @@ public class PlanController
 			System.out.println(results.size()+"개 등록 완료");
 		}
 		
+		return result;
+	}
+	
+	
+
+	//결과입력 등록
+	@ResponseBody
+	@RequestMapping(value = "/insertResultPlan")
+	public int InsertResult(ResultPlan results) throws IOException
+	{
+		System.out.println(results);
+		int result = service.insertResultsPlan(results);
 		return result;
 	}
 	
