@@ -171,4 +171,5 @@ public interface PlanMapper {
 	
 	public int insertResultsPlan(ResultPlan plan_id);
 	
+	public int updateResultPlan(ResultPlan results);
 }

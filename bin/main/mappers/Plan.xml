@@ -498,15 +498,32 @@
 		(
 			plan_id, 
 			rp_content,
-			rp_num
+			rp_num,
+			rp_segment,
+			rp_segment_count
 		) 
 		VALUES 
 		( 
 			#{plan_id}, 
 			#{rp_content},
-			#{rp_num}
+			#{rp_num},
+			'',
+			0
 		) 
 	</insert>
+	
+	
+	<!-- 담당자 변경시 plan status 수정 -->
+	<update id="updateResultPlan" parameterType="ResultPlan" >
+		UPDATE result_plan
+		SET modify_date = NOW(),
+		rp_segment= #{rp_segment},
+		rp_segment_count = #{rp_segment_count} 
+		WHERE plan_id = #{plan_id} 
+		<if test="rp_id != 0"> 
+			AND rp_id=#{rp_id}   
+		</if> 
+	</update>
 	
 	<!-- 결과입력 등록 -->
 	<insert id="insertResults" parameterType="java.util.ArrayList">

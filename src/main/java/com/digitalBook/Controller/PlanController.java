@@ -683,11 +683,6 @@ public class PlanController
 		
 		List<MultipartFile> files = req.getFiles("file");
 		
-//		System.out.println(requst.getParameterValues("index")[0]);
-//		System.out.println(files.size());
-//		System.out.println(requst.getParameterValues("result")[0]);
-		
-		
 		//result list 만들기
 		JsonNode node = mapper.readTree(requst.getParameterValues("result")[0]);
 		
@@ -735,9 +730,16 @@ public class PlanController
 	@RequestMapping(value = "/insertResultPlan")
 	public int InsertResult(ResultPlan results) throws IOException
 	{
-		System.out.println(results);
 		int result = service.insertResultsPlan(results);
 		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/updateResultPlan")
+	public int updateResultPlan(ResultPlan results) throws IOException
+	{
+		int result = service.updateResultPlan(results);
+		return result > 0 ? 1 : 0;
 	}
 	
 	//결과입력 사진 저장

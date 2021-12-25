@@ -352,7 +352,13 @@ public class PlanServiceImpl implements PlanService {
 	}
 	
 	@Override
+	public int updateResultPlan(ResultPlan results) {
+		return mapper.updateResultPlan(results);
+	}
+	
+	@Override
 	public ResultPlan selectResultPlanOne(int plan_id) {
 		return mapper.selectResultPlanOne(plan_id);
 	}
+	
 }

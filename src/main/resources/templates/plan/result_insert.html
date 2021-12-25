@@ -290,7 +290,11 @@
 
 </head>
 <body class="layout-light top-menu overlayScroll">
-     
+
+    <div id="fl"></div>
+    <div id="target">Right-click</div>
+        
+        
 	<div class="mobile-search"></div>
 	
 	<div class="mobile-author-actions"></div>
@@ -758,9 +762,12 @@
 	let data3 = new Object();
 	
 	let resultArray = new Array();
-	
+
 	//결과입력 데이터
 	let tableResultArray = new Array();
+	
+	//구획정보 데이터 
+	let segmentResultArray = new Array();
 	
 	//결과입력 파일 데이터
 	let file_array = new Array();
@@ -782,9 +789,32 @@
 	var currentResultIndex = 0;
 	var imageTag = null;
 	var resultInputTag = null;
+
+	var resultGrid = null;
+	var curRow = "0";
+	var columnkey = "";
+
 	
 	function updateResult(e){
-		resultInputTag.value = e.getAttribute("title");
+		
+	  	  let curColumnIndex = 0;
+   	      let curColumnKey = columnkey.split("_")[0];
+   	      let curRowArray = tableResultArray[currentResultIndex][curRow];
+ 	  	  let originData = resultGrid.dataManager.getOriginData()
+ 	  	 
+   	      for(var i = 0;i<curRowArray.length;i++){
+   	    	if(curRowArray[i].method_id == curColumnKey){
+   	    		curColumnIndex = i;
+   	    		break;
+   	    	}
+   	      }
+ 	  	  
+   	   	  tableResultArray[currentResultIndex][curRow][curColumnIndex].content = e.getAttribute("title");
+   	   	  originData[curRow][columnkey] = e.getAttribute("title");
+
+   	      resultGrid.resetData(originData);
+  		  $("#anlModal").modal("hide");
+   	      
 	}
 	
 	function readURL(input) {
@@ -977,7 +1007,6 @@
 		$("#rowNum").val(rowNum);
 		
 		//결과입력 테이블 그리기 실행 함수
-		methodTableGrid();
 		
 		
 		//구획정보 첫번째에 active(선택) 이벤트 걸어주기
@@ -1060,7 +1089,6 @@
 	}
 	
 	function openAnalyzeModal(e){
-		resultInputTag = e.parentElement.children[0];
 		$("#anlModal").modal("show");
 	}
 	
@@ -1104,7 +1132,6 @@
 			headerColumns.push({
 				header : mapObject[key].method_title,
 				name : mapObject[key].method_id + "_" + headerCount++,
-				test :"test",
 				'editor': 'text'
 			});	
 		}
@@ -1118,7 +1145,8 @@
 			gridData.push(gridRowData);
 		}
 
-        var tempGrid = new tui.Grid({
+		
+        resultGrid = new tui.Grid({
             el: document.getElementById('grid'),
             columns: headerColumns, 
             scrollX: true,
@@ -1126,12 +1154,43 @@
             bodyHeight : 'auto',
 			rowHeight : 'auto',
             editingEvent: 'click',
+            contextMenu: ({ rowKey, columnName }) => (
+       	    [
+       	      [
+       	        {
+       	          name: '사진업로드',
+       	          label: '사진업로드',
+       	          action: (e) => {
+       	        	  
+ 	   	        	  curRow = rowKey;
+ 	   	        	columnkey = columnName;
+   	        	      
+       	        	  console.log(tempGrid);
+       	        	  console.log(rowKey);
+       	        	  console.log(columnkey);
+         	        	openAnalyzeModal(e);
+         	        	
+   	              }
+       	        },
+       	     	{
+       	          name: '사진분석',
+       	          label: '사진분석',
+       	          action: () => {
+
+   	   	        	  curRow = rowKey;
+   	   	        	  columnkey = columnName;
+   	        	      console.log(columnkey);
+       	        	  openAnalyzeModal(this);
+   	              }
+         	    }
+       	       ]
+  	      	]),
             data: []
         });
 
-        tempGrid.resetData(gridData);
-        tempGrid.on('beforeChange', ev => {});
-        tempGrid.on('afterChange', ev => {
+        resultGrid.resetData(gridData);
+        resultGrid.on('beforeChange', ev => {});
+        resultGrid.on('afterChange', ev => {
 
         	if(ev.origin != "cell" && ev.origin != "paste")
         		return;
@@ -1154,6 +1213,11 @@
         //Grid.applyTheme('striped'); 
     }
 	
+	function updateObjectSegmentRows(i,j,e){
+		segmentResultArray[currentResultIndex][i][j].state = e.value;
+		$(".sangtae li .lines").css({"display": "none"});
+	}
+	
 	//결과입력 테이블 그리기
 	function methodTableGrid(){
 		$("#result_title").text("결과입력 : " + resultArray[0].id);
@@ -1166,73 +1230,13 @@
 		//결과입력 데이터 만들어주기
 		var dataArray = new Array();
 		var data = new Object();
-		
-		//this 초기 구획정보 확인 데이터 만들기
-		var isSegmentInfo = false;
-		if(Object.keys(segmentInfo).length != 0){
-			isSegmentInfo = true;
-		}
-		
-		var info_arr = new Array();
-		if(isSegmentInfo){//기존 데이터 있으면
-			
-			for(var i = 0; i < segment.length; i++){
-				info_arr = [];
-				
-				var info_data = new Object();
-				
-				for(var j = 0; j < segmentInfo.length; j++){
-					
-					for(var k = 0; k < length; k++){
-						if(segmentInfo[j].segment_id == segment[i].segment_id && segmentInfo[j].segment_index == segment[i].segment_index && segmentInfo[j].info_index == (k+1)){
-							var status_data = {
-									"info_status" : segmentInfo[j].info_status,
-									"info_index" : (k+1)
-								};
-							info_arr.push(status_data);
-						}
-					}//end for3
-					
-					if(segmentInfo[j].segment_id == segment[i].segment_id && segmentInfo[j].segment_index == segment[i].segment_index){
-						info_data['segment_id'] = segmentInfo[j].segment_id;
-						info_data['segment_index'] = segmentInfo[j].segment_index;
-						info_data['plan_id'] = segmentInfo[j].plan_id;
-						info_data['segment_info'] = info_arr;
-						
-					}
-					
-				}//end for2
-				segmentInfo_array.push(info_data);
-			}//end for1
-			
-		}else{
-			
-			for(var i = 0; i < segment.length; i++){
-				info_arr = [];
-				var info_data = new Object();
-				info_data['segment_id'] = segment[i].segment_id;
-				info_data['segment_index'] = segment[i].segment_index;
-				info_data['plan_id'] = segment[i].plan_id;
-				for(var j = 0; j < length; j++){
-					var status_data = {
-						"info_status" : "",
-						"info_index" : (j+1)
-					};
-					info_arr.push(status_data);
-				}
-				info_data['segment_info'] = info_arr;
-				segmentInfo_array.push(info_data);
-				
-			}//end for1
-		}
-		
+
 		//초기 구획정보확인 화면 만들어주기
-		var segment_index = segment[0].segment_index;
-		
+		var segment_index = segment[currentResultIndex].segment_index;
 		//해당 구획정보 데이터
-		var segment_data = new Object();
-		segment_data = segment[0];
+		var segment_data = segment[currentResultIndex];
 		var title = segment_data.segment_code;
+
 		
 		//붙여줄 부모 태그
 		let sangtae_list = $("#sangtae_list");
@@ -1245,82 +1249,55 @@
 		
 		var add_list = "";
 		
-		if(rowNum <= segment_num){//개체수보다 기준개체수가 클때
-			
-			add_list += '<span class="sub_title-content regular_text" data-index="'+segment_data.segment_index+'"><i class="bi bi-arrows-move"></i>'+title+'</span>';
+		var length1 = parseInt(rowNum / segment_num);
+		var length2 = parseInt(rowNum % segment_num);
+		sangtae_list.empty();
+		var str = '<span class="sub_title-content regular_text" data-index="'+segment_data.segment_index+'"><i class="bi bi-arrows-move"></i>'+title+'</span>';
+		sangtae_list.append(str);
+		
+		
+		
+		for(var i = 0; i < length1; i++){
 			add_list += '<ul class="clearfix sangtae">';
-			
-			for(var i = 0; i < rowNum; i++){
-				add_list += '<li><a href="javascript:void(0);"><img class="sangtae_img" src="../img/icons/green.png" alt="green"></a>';
+			for(var j = 0; j < segment_num; j++){
+				add_list += '<li class="' + segmentResultArray[currentResultIndex][i][j].state + '"><a href="javascript:void(0);" ><img class="sangtae_img" src="../img/icons/' + segmentResultArray[currentResultIndex][i][j].state + '.png" alt="green"></a>';
 				add_list += '<div class="lines">';
-				add_list += '<select class="select_option">';
+				add_list += '<select class="select_option" onchange="updateObjectSegmentRows(' + i + ',' +  j +', this)">';
 				add_list += '<option value="none">상태선택</option>';
-				add_list += '<option class="s_red" value="red">관심개체</option>';
-				add_list += '<option class="s_blue" value="blue">병</option>';
-				add_list += '<option class="s_yellow" value="yellow">시드름</option>';
-				add_list += '<option class="s_black" value="black">초장큼</option>';
-				add_list += '<option class="s_purple" value="purple">초장작음</option>';
-				add_list += '<option value="etc">기타</option>';
-				add_list += '</select>';
-				add_list += '</div>';
-				add_list += '</li>';
-				
-			}
-			add_list += '</ul>';
-			
-			sangtae_list.empty();
-			sangtae_list.append(add_list);
-			
-		}else {
-			
-			var length1 = parseInt(rowNum / segment_num);
-			var length2 = parseInt(rowNum % segment_num);
-			sangtae_list.empty();
-			var str = '<span class="sub_title-content regular_text" data-index="'+segment_data.segment_index+'"><i class="bi bi-arrows-move"></i>'+title+'</span>';
-			sangtae_list.append(str);
-			
-			for(var i = 0; i < length1; i++){
-				add_list += '<ul class="clearfix sangtae">';
-				for(var j = 0; j < segment_num; j++){
-					add_list += '<li><a href="javascript:void(0);"><img class="sangtae_img" src="../img/icons/green.png" alt="green"></a>';
-					add_list += '<div class="lines">';
-					add_list += '<select class="select_option">';
-					add_list += '<option value="none">상태선택</option>';
-					add_list += '<option class="s_red" value="red">관심개체</option>';
-					add_list += '<option class="s_blue" value="blue">병</option>';
-					add_list += '<option class="s_yellow" value="yellow">시드름</option>';
-					add_list += '<option class="s_black" value="black">초장큼</option>';
-					add_list += '<option class="s_purple" value="purple">초장작음</option>';
-					add_list += '<option value="etc">기타</option>';
-					add_list += '</select>';
-					add_list += '</div>';
-					add_list += '</li>';
-				}
-				add_list += '</ul>';
-			}
-			
-			add_list += '<ul class="clearfix sangtae">';
-			for(var i = 0; i < length2; i++){
-				add_list += '<li><a href="javascript:void(0);"><img class="sangtae_img" src="../img/icons/green.png" alt="green"></a>';
-				add_list += '<div class="lines">';
-				add_list += '<select class="select_option">';
-				add_list += '<option value="none">상태선택</option>';
-				add_list += '<option class="s_red" value="red">관심개체</option>';
-				add_list += '<option class="s_blue" value="blue">병</option>';
-				add_list += '<option class="s_yellow" value="yellow">시드름</option>';
-				add_list += '<option class="s_black" value="black">초장큼</option>';
-				add_list += '<option class="s_purple" value="purple">초장작음</option>';
-				add_list += '<option value="etc">기타</option>';
+				add_list += '<option ' + (segmentResultArray[currentResultIndex][i][j] && segmentResultArray[currentResultIndex][i][j].state == 'red' ? "selected" : "") + ' class="s_red" value="red">관심개체</option>';
+				add_list += '<option ' + (segmentResultArray[currentResultIndex][i][j] && segmentResultArray[currentResultIndex][i][j].state == 'blue' ? "selected" : "") + ' class="s_blue" value="blue">병</option>';
+				add_list += '<option ' + (segmentResultArray[currentResultIndex][i][j] && segmentResultArray[currentResultIndex][i][j].state == 'yellow' ? "selected" : "") + ' class="s_yellow" value="yellow">시드름</option>';
+				add_list += '<option ' + (segmentResultArray[currentResultIndex][i][j] && segmentResultArray[currentResultIndex][i][j].state == 'black' ? "selected" : "") + ' class="s_black" value="black">초장큼</option>';
+				add_list += '<option ' + (segmentResultArray[currentResultIndex][i][j] && segmentResultArray[currentResultIndex][i][j].state == 'purple' ? "selected" : "") + ' class="s_purple" value="purple">초장작음</option>';
+				add_list += '<option ' + (segmentResultArray[currentResultIndex][i][j] && segmentResultArray[currentResultIndex][i][j].state == 'etc' ? "selected" : "") + ' value="etc">기타</option>';
 				add_list += '</select>';
 				add_list += '</div>';
 				add_list += '</li>';
 			}
 			add_list += '</ul>';
+		}
+		
+		add_list += '<ul class="clearfix sangtae">';
+		for(var i = 0; i < length2; i++){
+			add_list += '<li class="' + segmentResultArray[currentResultIndex][length1][i].state + '"><a href="javascript:void(0);" ><img class="sangtae_img" src="../img/icons/' + segmentResultArray[currentResultIndex][length1][i].state + '.png" alt="green"></a>';
+			add_list += '<div class="lines">';
+			add_list += '<select class="select_option" onchange="updateObjectSegmentRows(' + length1 + ',' +  i +', this)">';
+			add_list += '<option value="none">상태선택</option>';
+			add_list += '<option ' + (segmentResultArray[currentResultIndex][length1][i] && segmentResultArray[currentResultIndex][length1][i].state == 'red' ? "selected" : "") + ' class="s_red" value="red">관심개체</option>';
+			add_list += '<option ' + (segmentResultArray[currentResultIndex][length1][i] && segmentResultArray[currentResultIndex][length1][i].state == 'blue' ? "selected" : "") + ' class="s_blue" value="blue">병</option>';
+			add_list += '<option ' + (segmentResultArray[currentResultIndex][length1][i] && segmentResultArray[currentResultIndex][length1][i].state == 'yellow' ? "selected" : "") + ' class="s_yellow" value="yellow">시드름</option>';
+			add_list += '<option ' + (segmentResultArray[currentResultIndex][length1][i] && segmentResultArray[currentResultIndex][length1][i].state == 'black' ? "selected" : "") + ' class="s_black" value="black">초장큼</option>';
+			add_list += '<option ' + (segmentResultArray[currentResultIndex][length1][i] && segmentResultArray[currentResultIndex][length1][i].state == 'purple' ? "selected" : "") + ' class="s_purple" value="purple">초장작음</option>';
+			add_list += '<option ' + (segmentResultArray[currentResultIndex][length1][i] && segmentResultArray[currentResultIndex][length1][i].state == 'etc' ? "selected" : "") + ' value="etc">기타</option>';
+			add_list += '</select>';
+			add_list += '</div>';
+			add_list += '</li>';
+		}
+		add_list += '</ul>';
 			
-			sangtae_list.append(add_list);
+		sangtae_list.append(add_list);
 			
 			
-		}//end else
 		
 		$(".sangtae li").click(function(e){
 			e.preventDefault();
@@ -1482,14 +1459,13 @@
 		document.getElementById("segment_option").value = result_title + "(" + table_type + "/" + table_repeat + ")";
 		
 		drawGrid(method);
+		methodTableGrid();
 	});
 	
 	
 	//결과입력 등록
 	function insertResult(){
 		
-
-		console.log(tableResultArray);
 		//결과입력 데이터 만들어 주기
 		var formData = new FormData();
 		formData.append("rp_content", JSON.stringify(tableResultArray));
@@ -1527,6 +1503,7 @@
 			
 			document.getElementById("grid").innerHTML = "";
 			initResultArray();
+			initSegmentArray();
 			drawGrid(method);
 		}
 		
@@ -1537,6 +1514,8 @@
 	//기준개체수 확인 버튼 이벤트
 	$("#segment_check").on("click", function(){
 		
+		
+		initSegmentArray();
 		var segment_index = $(document).find("#table_body .active").find(".table_num").text();
 		checkSegment(segment_index);
 		
@@ -1945,75 +1924,29 @@
 	//구획정보확인 데이터 저장
 	function insertSegmentInfo(){
 		
-		var currentSegmentIndex = $(".regular_text").attr("data-index");
-		
-		//셀렉트박스 개수만큼 반복하여 segmentInfo_array 만들어주기
-		$(document).find(".select_option").each(function(index, item){
-			
-			//segmentInfo_array
-			for(var i = 0; i < segmentInfo_array.length; i++){
-				
-				if(currentSegmentIndex == segmentInfo_array[i].segment_index){
-					var data_arr = segmentInfo_array[i].segment_info;
-					
-					for(var j = 0; j < data_arr.length; j++){
-						if(data_arr[j].info_index == (index+1)){
-							if($(this).find("option:selected").val() != "none"){
-								data_arr[j].info_status = $(this).find("option:selected").val();
-							}
-						}
-					}
-					
-					segmentInfo_array[i].segment_info = data_arr;
-					
-				}//end if
-				
-			}//end for1
-			
-		});
-			
-		var segmentInfo_arr = new Array();
-		
-		for(var i = 0; i < segmentInfo_array.length; i++){
-			
-			var infoData = segmentInfo_array[i].segment_info;
-			
-			for(var j = 0; j < infoData.length; j++){
-				var data = new Object();
-				data['segment_id'] = segmentInfo_array[i].segment_id;
-				data['plan_id'] = segmentInfo_array[i].plan_id;
-				data['segment_index'] = segmentInfo_array[i].segment_index;
-				data['info_status'] = infoData[j].info_status;
-				data['info_index'] = infoData[j].info_index;
-				segmentInfo_arr.push(data);
-			}//end for2
-			
-		}//end for1
-		
-		//삭제 데이터 만들기
-		if(Object.keys(segmentInfo).length != 0){
-			for(var i = 0; i < segmentInfo.length; i ++){
-				cancelInfo.push(parseInt(segmentInfo[i].info_id));
-			}
-		}
-		
-		//console.log(cancelInfo);
+		var formData = new FormData();
+		formData.append("rp_id", rp_id);
+		formData.append("rp_segment", JSON.stringify(segmentResultArray));
+		formData.append("rp_segment_count", document.getElementById("segment_num").value);
+		formData.append("plan_id", plan_id);
 		
 		$.ajax({
-			url : "/plan/insertSegmentInfo?cancelInfo="+cancelInfo,
-			method : "POST",
-			contentType : "application/json; charset=utf-8",
-			data : JSON.stringify(segmentInfo_arr),
+			url : "/plan/updateResultPlan",
+			type : "PUT",
+			processData : false,
+			contentType : false,
+			enctype: 'multipart/form-data',
+			data : formData,
 			success : function(result){
-				
-				if(result == 0){
-					
-				}else {
+				if(result > 0){
+					$("#results_confirm_popup").css("display", "none");
 					$("#segmentInfo_confirm_popup").css("display", "none");
 					$("#segmentInfo_success_popup").css("display", "flex");
+				}else{
+					alert("저장 실패하였습니다.");
 				}
 			}
-		});//end ajax
+		});
 		
 	}//end 구획정보확인 데이터 저장
 	
@@ -2367,18 +2300,17 @@
 
 	function initResultArray(){
 		tableResultArray = [];
-
 		let num = document.getElementById("rowNum").value;
+		
 		for(var z =0;z<resultArray.length;z++){
 			let resultRows = [];
+			
 			for(var i = 0;i<num;i++){
 				let rows = [];
 				for(var j=0;j<method.length;j++){
 					let tempObject = {};
 					tempObject.method_title = method[j].method_title;	
 					tempObject.method_id = method[j].method_id;	
-					tempObject.d1_name = method[j].d1_name;	
-					tempObject.d2_name = method[j].d2_name;	
 					tempObject.d3_name = method[j].d3_name;	
 					tempObject.content = "";	
 					tempObject.image = "";	
@@ -2386,20 +2318,55 @@
 				}
 				resultRows.push(rows);
 			}
+			
 			tableResultArray.push(resultRows);
+		}
+		
+		
+	}
+	
+	function initSegmentArray(){
+		segmentResultArray = [];
+		
+		let num = document.getElementById("rowNum").value;
+		let segmentNum = document.getElementById("segment_num").value; 
+		let maxCount = 0;
+		
+		for(var z =0;z<resultArray.length;z++){
+			let resultSegmentRows = [];
+	
+			for(var i = 0;i<num;i++){
+				let segmentRows = [];
+				for(var j=0;j< segmentNum ;j++){
+						let ob = { state : "green"};
+						segmentRows.push(ob);
+				}
+				resultSegmentRows.push(segmentRows);
+			}
+			
+			segmentResultArray.push(resultSegmentRows);	
 		}
 	}
 	
+	initSegmentArray();
 	initResultArray();
-	
-	if(resultPlan && resultPlan.rp_content){
-		tableResultArray = JSON.parse(resultPlan.rp_content);
-		$("#rowNum").val(resultPlan.rp_num)
-	}
-	setTimeout(function(){ 	drawGrid(method); },1000);
 
-	console.log(resultPlan);
-	console.log(tableResultArray);
+	if(resultPlan && resultPlan.rp_content){
+		rp_id = resultPlan.rp_id;
+		tableResultArray = JSON.parse(resultPlan.rp_content);
+		$("#rowNum").val(resultPlan.rp_num);
+	}
+	if(resultPlan && resultPlan.rp_segment){
+		rp_id = resultPlan.rp_id;
+		segmentResultArray = JSON.parse(resultPlan.rp_segment);
+		$("#segment_num").val(resultPlan.rp_segment_count);
+	}
+	setTimeout(function(){ 	
+		
+		drawGrid(method); 
+		methodTableGrid();
+		
+	},1000);
 	
 </script>
 </body>    

@@ -88,8 +88,9 @@ public interface PlanService {
 	
 	//재배계획 승인
 	int updatePlanStatus(int plan_id);
-	
+
 	int insertResultsPlan(ResultPlan results);
+	int updateResultPlan(ResultPlan results);
 	
 	//사용자 전체 조회
 	List<User> selectUserList(int user_group);
