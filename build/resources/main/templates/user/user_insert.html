@@ -523,6 +523,12 @@
 						add_list += '</li>';
 					}
 					
+					if(result.length == 0){
+						add_list += '<li>';
+						add_list += '<span>없음</span>';
+						add_list += '</li>';
+					}
+					
 					depart_list.empty();
 					depart_list.append(add_list);
 				}
