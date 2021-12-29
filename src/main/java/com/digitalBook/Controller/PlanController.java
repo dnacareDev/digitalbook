@@ -636,7 +636,6 @@ public class PlanController
 	@RequestMapping("insertStorage")
 	public int InsertStorage(Authentication auth, Storage storage)
 	{
-		
 		User prin = (User)auth.getPrincipal();
 		Calendar cal = Calendar.getInstance();
 		
@@ -664,6 +663,13 @@ public class PlanController
 			{
 				storage.setStorage_code("fi-" + now + "-00001");
 			}
+		}
+		
+		// 좌표 설정시 주소에서 m2 제거하기
+		if(storage.getStorage_size() != null) {			
+			String[] storage_size = storage.getStorage_size().split(" ");
+			storage.setStorage_size(storage_size[0]);
+			storage.setStorage_unit(storage_size[1]);
 		}
 		
 		storage.setUser_id(prin.getUser_id());
