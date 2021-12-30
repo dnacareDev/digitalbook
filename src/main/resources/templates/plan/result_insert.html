@@ -727,7 +727,53 @@
 		        </div>
 		    </div>
 		</div>
-	    <!-- ends: .modal-Basic -->
+		
+		
+	    <div class="modal-basic modal fade show" id="anlSaveModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none">
+		    <div class="modal-dialog modal-lg" role="document"  style="max-width: max-content;">
+		        <div class="modal-content modal-bg-white">
+		        	
+		            <div class="modal-body" style="">
+		            	<div class="row">
+			        		<div class="col-12">
+			        			<h2 style="float: left;">이미지 저장</h2>
+					        	<div class="d-flex justify-content-end">
+			                		<button onclick='' type="button" class="close" data-dismiss="modal" aria-label="Close"><span data-feather="x"></span></button>
+			                	</div>
+			        		</div>
+			        	</div>
+		            	<script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		            	<div class="file-upload">
+							<button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
+					
+							<div class="image-upload-wrap">
+								<input id="curModalImg" class="file-upload-input" type="file" onchange="readURL(this);" accept="image/*">
+								<div class="drag-text">
+									<h3>Drag Image</h3>
+								</div>
+							</div>
+					
+							<div class="file-upload-content">
+								<img class="file-upload-image" id="face-image-" src="#" alt="your image">
+								<div class="image-title-wrap">
+									<!--<button type="button" onclick="removeUpload()" class="remove-image">Remove
+										<span class="image-title">Uploaded Image</span>
+									</button> -->
+									<a href="javascript:removeUpload();"><font size="3">업로드 이미지 파일 : <span class="image-title">Uploaded Image</span></font></a><font size="3"><br>
+					
+								</font></div><font size="3">
+										<div>
+										<center><br><button type="button" class="remove-image" onclick="saveModalImg()">이미지 저장</button><br>
+							</center></div><br>
+								<div class="label-container" id="label-container"></div>
+							</font></div><font size="3">
+						</font>
+						</div>			
+					
+		            </div>
+		        </div>
+		    </div>
+		</div>
 	    
 	</main>
 	
@@ -803,7 +849,7 @@
  	  	  let originData = resultGrid.dataManager.getOriginData()
  	  	 
    	      for(var i = 0;i<curRowArray.length;i++){
-   	    	if(curRowArray[i].method_id == curColumnKey){
+   	    	if(curRowArray[i].id == curColumnKey){
    	    		curColumnIndex = i;
    	    		break;
    	    	}
@@ -817,6 +863,28 @@
    	      
 	}
 	
+	function openImageModal(imagePath){
+		if(imagePath){
+			 $('.image-upload-wrap').hide();
+		      $('.file-upload-image').attr('src', "/upload/" + imagePath);
+		      $('.file-upload-content').show();
+		      $('.image-title').html(imagePath);
+		      $('.image-upload-wrap').addClass('image-dropping');
+		}else{
+			  $('.image-upload-wrap').show();
+		      $('.file-upload-image').attr('src', "");
+		      $('.file-upload-content').hide();
+		      $('.image-title').html("");
+		      $('.image-upload-wrap').removeClass('image-dropping');
+		}
+		 $("#anlSaveModal").modal("show");
+		 
+	}
+	
+	function saveModalImg(){
+		
+	}
+	
 	function readURL(input) {
 		  if (input.files && input.files[0]) {
 
@@ -824,7 +892,6 @@
 
 		    reader.onload = function(e) {
 		      $('.image-upload-wrap').hide();
-
 		      $('.file-upload-image').attr('src', e.target.result);
 		      $('.file-upload-content').show();
 
@@ -1091,6 +1158,11 @@
 	
 	function openAnalyzeModal(e){
 		$("#anlModal").modal("show");
+		  $('.image-upload-wrap').show();
+	      $('.file-upload-image').attr('src', "");
+	      $('.file-upload-content').hide();
+	      $('.image-title').html("");
+	      $('.image-upload-wrap').removeClass('image-dropping');
 	}
 	
 	//이미지 다운로드 이벤트
@@ -1162,15 +1234,25 @@
        	          name: '사진업로드',
        	          label: '사진업로드',
        	          action: (e) => {
-       	        	  
- 	   	        	  curRow = rowKey;
- 	   	        	columnkey = columnName;
-   	        	      
-       	        	  console.log(tempGrid);
-       	        	  console.log(rowKey);
-       	        	  console.log(columnkey);
-         	        	openAnalyzeModal(e);
-         	        	
+
+   	   	        	  curRow = rowKey;
+   	   	        	  columnkey = columnName;
+   	   	        	  
+	   	   	          let curColumnIndex = 0;
+		   	   	      let curColumnKey = columnkey.split("_")[0];
+		   	   	      let curRowArray = tableResultArray[currentResultIndex][curRow];
+		   	 	  	  let originData = resultGrid.dataManager.getOriginData()
+		   	 	  	 
+		   	   	      for(var i = 0;i<curRowArray.length;i++){
+		   	   	    	if(curRowArray[i].id == curColumnKey){
+		   	   	    		curColumnIndex = i;
+		   	   	    		break;
+		   	   	    	}
+		   	   	      }
+		   	 	  	  
+		   	 	  	  let imagePath = tableResultArray[currentResultIndex][curRow][curColumnIndex].img;
+	 	   	          openImageModal(imagePath);
+	         	        	
    	              }
        	        },
        	     	{
@@ -1180,7 +1262,6 @@
 
    	   	        	  curRow = rowKey;
    	   	        	  columnkey = columnName;
-   	        	      console.log(columnkey);
        	        	  openAnalyzeModal(this);
    	              }
          	    }
@@ -1939,6 +2020,49 @@
 		
 	}//구획정보 확인 그리기
 	
+	function updateCurCellImageState(fileName){
+		  let curColumnIndex = 0;
+  	      let curColumnKey = columnkey.split("_")[0];
+  	      let curRowArray = tableResultArray[currentResultIndex][curRow];
+	  	 
+  	      for(var i = 0;i<curRowArray.length;i++){
+  	    	if(curRowArray[i].id == curColumnKey){
+  	    		curColumnIndex = i;
+  	    		break;
+  	    	}
+  	      }
+	  	  
+  	   	  tableResultArray[currentResultIndex][curRow][curColumnIndex].img = fileName;
+ 		  $("#anlSaveModal").modal("hide");
+	}
+	
+	//이미지 저장 
+	function saveModalImg(){
+		
+		var formData = new FormData();
+		formData.append("file", document.getElementById("curModalImg").files[0]);
+		
+		$.ajax({
+			url : "/plan/insertImage",
+			type : "POST",
+			processData : false,
+			contentType : false,
+			enctype: 'multipart/form-data',
+			data : formData,
+			success : function(res){
+				console.log(res);
+				if(res.result == 1){
+					alert("이미지 업데이트에 성공하였습니다.");
+					updateCurCellImageState(res.file_name)
+				}
+				else{
+					alert("이미지 업데이트에 실패하였습니다.");
+				}
+				
+			}
+		});
+		
+	}
 	
 	//구획정보확인 데이터 저장
 	function insertSegmentInfo(){
@@ -2328,11 +2452,11 @@
 				let rows = [];
 				for(var j=0;j<method.length;j++){
 					let tempObject = {};
-					tempObject.method_title = method[j].method_title;	
-					tempObject.method_id = method[j].method_id;	
-					tempObject.d3_name = method[j].d3_name;	
+					tempObject.title = method[j].method_title;	
+					tempObject.id = method[j].method_id;	
+					tempObject.d3 = method[j].d3_name;	
 					tempObject.content = "";	
-					tempObject.image = "";	
+					tempObject.img = "";	
 					rows.push(tempObject);
 				}
 				resultRows.push(rows);

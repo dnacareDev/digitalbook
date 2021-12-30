@@ -715,7 +715,6 @@ public class PlanController
 		
 		if(files.size() != 0) {
 			result = SaveResultImg(files, indexList, results, cancel);
-			System.out.println(results.size()+"개 등록 완료");
 		}else {
 			
 			result = service.insertResults(results);
@@ -731,6 +730,35 @@ public class PlanController
 		return result;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/insertImage")
+	public Map<String, Object> InsertImageResult(MultipartFile file, HttpServletRequest requst) throws IOException
+	{
+
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+		
+		String[] extension = file.getOriginalFilename().split("\\.");
+		
+		String results_file = fileController.ChangeFileName(extension[1]);
+		String results_origin_file = file.getOriginalFilename();
+		
+		String path = "upload";
+		
+		File filePath = new File(path);
+		
+		if (!filePath.exists())
+            filePath.mkdirs();
+		
+		Path fileLocation = Paths.get(path).toAbsolutePath().normalize();
+       	Path targetLocation = fileLocation.resolve(results_file);
+		
+       	Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+
+       	result.put("result","1");
+       	result.put("file_name",results_file);
+       	
+		return result;
+	}
 	
 
 	//결과입력 등록

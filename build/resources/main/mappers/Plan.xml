@@ -442,10 +442,11 @@
 	
 	<!-- 장소 등록 -->
 	<insert id="InsertStorage" parameterType="Storage">
+		/* InsertStorage [plan.xml] */
 		INSERT INTO storage
-		(storage_code, storage_name, storage_type, storage_division, storage_size, depart_id, storage_location, create_date, modify_date, user_id)
+		(storage_code, storage_name, storage_address, storage_type, storage_division, storage_size, depart_id, storage_location, create_date, modify_date, user_id,storage_unit)
 		VALUES
-		(#{storage_code}, #{storage_name}, #{storage_type}, #{storage_division}, #{storage_size}, #{depart_id}, #{storage_location}, NOW(), NOW(), #{user_id})
+		(#{storage_code}, #{storage_name},#{storage_address}, #{storage_type}, #{storage_division}, #{storage_size}, #{depart_id}, #{storage_location}, NOW(), NOW(), 0,#{storage_unit})
 	</insert>
 	
 	<!-- 장소 갯수 조회 -->
@@ -483,6 +484,47 @@
 		</foreach>
 		ORDER BY method_id
 	</select>
+	
+	
+	<select id="selectResultPlanOne" parameterType="ResultPlan" resultType="ResultPlan">
+		SELECT * from result_plan 
+		WHERE plan_id = #{plan_id} 
+		ORDER BY create_date DESC 
+		LIMIT 1 
+	</select>
+	
+	<!-- 결과입력 등록 -->
+	<insert id="insertResultsPlan" parameterType="ResultPlan">
+		INSERT INTO result_plan 
+		(
+			plan_id, 
+			rp_content,
+			rp_num,
+			rp_segment,
+			rp_segment_count
+		) 
+		VALUES 
+		( 
+			#{plan_id}, 
+			#{rp_content},
+			#{rp_num},
+			'',
+			0
+		) 
+	</insert>
+	
+	
+	<!-- 담당자 변경시 plan status 수정 -->
+	<update id="updateResultPlan" parameterType="ResultPlan" >
+		UPDATE result_plan
+		SET modify_date = NOW(),
+		rp_segment= #{rp_segment},
+		rp_segment_count = #{rp_segment_count} 
+		WHERE plan_id = #{plan_id} 
+		<if test="rp_id != 0"> 
+			AND rp_id=#{rp_id}   
+		</if> 
+	</update>
 	
 	<!-- 결과입력 등록 -->
 	<insert id="insertResults" parameterType="java.util.ArrayList">
