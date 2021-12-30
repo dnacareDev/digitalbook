@@ -12,6 +12,13 @@
     
     border-collapse: collapse;
   	}
+  	.input-height {
+  		width: 70% !important;
+    	padding: 1px;
+    	height: 30px;
+    	padding:0 !important;
+  	}
+  	
 	th, td {
 	border-bottom: 2px solid #E5E9F2;
 	padding: 0 10px;
@@ -1292,7 +1299,6 @@
 	
 	/* 옵션선택 */
 	function selectOpt(e){
-		console.log($(e).children().attr("data-value"));
 	    var dataSelect = $(e).children().attr("data-value");
 	    var text = $(e).children().text();
 	    $(e).parent().prev().attr("data-select", dataSelect);
@@ -3237,6 +3243,29 @@
 	var resultArray = new Array();
 	var factorArray = new Array();
 	
+	/* s : segmentTitle */
+	var segmentTitleIndex = "";
+	var segmentTitleInput = "";
+	function onChangeSegmentTitle(e){
+		if(e.type === "click"){
+			var target = e.currentTarget;
+			segmentTitleIndex = segmentTitleInput.indexOf(target);
+		}else if(e.type === "change" || e.type === "input"){
+			var getDataArr = [...resultArray];
+			getDataArr[segmentTitleIndex].segment_title = e.target.value;
+		}
+		getDataResult(getDataArr, grow_type, 'innerText');
+	}
+	function setSegTitleEvent(){
+		segmentTitleInput = document.querySelectorAll(".step4-container .segment-title");
+		segmentTitleInput = Array.prototype.slice.call(segmentTitleInput);
+		for(var i = 0; i < segmentTitleInput.length; i++){
+			segmentTitleInput[i].addEventListener("change", onChangeSegmentTitle);
+			segmentTitleInput[i].addEventListener("input", onChangeSegmentTitle);
+			segmentTitleInput[i].addEventListener("click", onChangeSegmentTitle);
+		}
+	}
+	/* e : segmentTitle */
 	function gridFactors(){
 		resultArray = [];
 		factorArray = [];
@@ -3358,8 +3387,8 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : orderCount, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1, "segment_horizon": "", "segment_vertical" : "", "segment_zindex": ""};
 					
+					var data = {"num" : number,"segmentId" : factorArray[j].id, segment_title:"", "order" : orderCount, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1, "segment_horizon": "", "segment_vertical" : "", "segment_zindex": ""};
 					resultArray.push(data);
 					orderCount++;
 				}
@@ -3374,6 +3403,10 @@
 			add_list += '<tr class="title">';
 			add_list += '<th>구획번호</th>';
 			add_list += '<th>구획 ID</th>';
+			
+			// 구획이름 추가
+			add_list += '<th>구획 이름</th>';
+			
 			add_list += '<th>처리종류</th>';
 			add_list += '<th>반복</th>';
 			add_list += '<th>처리포장면적(㎡)</th>';
@@ -3385,6 +3418,10 @@
 				add_list += '<tr data-id="'+resultArray[i].id.split("-")[0]+"-"+resultArray[i].repeat+'" class="table_content">';
 			    add_list += '<td class="table_num">'+resultArray[i].num+'</td>';
 			    add_list += '<td class="table_id">'+resultArray[i].id+'</td>';
+			    
+			    //구획 이름 추가  
+			    add_list += '<td><input type="text" class="input-height segment-title"></td>';
+			    
 			    add_list += '<td class="table_type">'+resultArray[i].type+'</td>';
 			    add_list += '<td class="table_repeat">'+resultArray[i].repeat+'</td>';
 			    add_list += '<td><input type="text" id="mil" class="seg_area" value="0"></td>';
@@ -3478,7 +3515,8 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : orderCount, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1, "segment_horizon": "", "segment_vertical" : "", "segment_zindex": ""};
+					console.log("22222");
+					var data = {"num" : number,"segmentId" : factorArray[j].id, segment_title:"", "order" : orderCount, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1, "segment_horizon": "", "segment_vertical" : "", "segment_zindex": ""};
 					
 					resultArray.push(data);
 					orderCount++;
@@ -3505,6 +3543,10 @@
 				add_list += '<tr class="title">';
 				add_list += '<th>구획번호</th>';
 				add_list += '<th>구획 ID</th>';
+				
+				// 구획이름 추가
+				add_list += '<th>구획 이름</th>';
+				
 				add_list += '<th>처리종류</th>';
 				add_list += '<th>반복</th>';
 				add_list += '<th>처리포장면적(㎡)</th>';
@@ -3524,6 +3566,9 @@
 						}
 					    add_list += '<td class="table_num">'+resultArray[j].num+'</td>';
 					    add_list += '<td class="table_id">'+resultArray[j].id+'</td>';
+						  //구획 이름 추가  
+					    add_list += '<td><input type="text" class="input-height segment-title" value=""></td>';
+					    
 					    add_list += '<td class="table_type">'+resultArray[j].type+'</td>';
 					    add_list += '<td>'+resultArray[j].repeat+'</td>';
 					    add_list += '<td><input type="text" id="mil" class="seg_area" value="0"></td>';
@@ -3629,7 +3674,7 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : orderCount, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1, "segment_horizon": "", "segment_vertical" : "", "segment_zindex": ""};
+					var data = {"num" : number,"segmentId" : factorArray[j].id, segment_title:"", "order" : orderCount, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1, "segment_horizon": "", "segment_vertical" : "", "segment_zindex": ""};
 					
 					resultArray.push(data);
 					orderCount++;
@@ -3657,6 +3702,10 @@
 				add_list += '<tr class="title">';
 				add_list += '<th>구획번호</th>';
 				add_list += '<th>구획 ID</th>';
+				
+				// 구획이름 추가
+				add_list += '<th>구획 이름</th>';
+				
 				add_list += '<th>처리종류</th>';
 				add_list += '<th>반복</th>';
 				add_list += '<th>처리포장면적(㎡)</th>';
@@ -3675,6 +3724,10 @@
 						}
 					    add_list += '<td class="table_num">'+resultArray[j].num+'</td>';
 					    add_list += '<td class="table_id">'+resultArray[j].id+'</td>';
+					    
+						  //구획 이름 추가  
+					    add_list += '<td><input type="text" class="input-height segment-title" value=""></td>';
+					    
 					    add_list += '<td class="table_type">'+resultArray[j].type+'</td>';
 					    add_list += '<td>'+resultArray[j].repeat+'</td>';
 					    add_list += '<td><input type="text" id="mil" class="seg_area" value="0"></td>';
@@ -3794,7 +3847,8 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number,"segmentId" : factorArray[j].id, "order" : orderCount, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1, "segment_horizon": "", "segment_vertical" : "", "segment_zindex": ""};
+					console.log("44444");
+					var data = {"num" : number,"segmentId" : factorArray[j].id, segment_title:"", "order" : orderCount, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1, "segment_horizon": "", "segment_vertical" : "", "segment_zindex": ""};
 					resultArray.push(data);
 					orderCount++;
 				}
@@ -3822,6 +3876,10 @@
 				add_list += '<tr class="title">';
 				add_list += '<th>구획번호</th>';
 				add_list += '<th>구획 ID</th>';
+				
+				// 구획이름 추가
+				add_list += '<th>구획 이름</th>';
+				
 				add_list += '<th>처리종류</th>';
 				add_list += '<th>반복</th>';
 				add_list += '<th>처리포장면적(㎡)</th>';
@@ -3840,6 +3898,10 @@
 						}
 					    add_list += '<td class="table_num">'+resultArray[j].num+'</td>';
 					    add_list += '<td class="table_id">'+resultArray[j].id+'</td>';
+					    
+					    //구획 이름 추가  
+					    add_list += '<td><input type="text" class="input-height segment-title" value=""></td>';
+					    
 					    add_list += '<td class="table_type">'+resultArray[j].type+'</td>';
 					    add_list += '<td>'+resultArray[j].repeat+'</td>';
 					    add_list += '<td><input type="text" id="mil" class="seg_area" value="0"></td>';
@@ -3964,6 +4026,8 @@
 		}
 		
 		//이곳에서 데이터 받아와야함 : important
+		console.log("-------------------------------------------");
+		setSegTitleEvent();
 		var getDataArr = [...resultArray];
 		getDataResult(getDataArr , grow_type);
 		// console.log(resultArray,"all Type Apply");
@@ -4337,7 +4401,7 @@
 		gridStep6();
 	}
 	
-	//구획 등록
+	/* 구획 등록 */
 	function insertSegment(plan_id){
 
 		segment_array = [];
@@ -4354,6 +4418,7 @@
 				"segment_repeat" : arr.repeat, 
 				"segment_grid_code": arr.segmentId, 
 				"segment_order": arr.order, 
+				"segment_title": arr.segment_title, 
 				"segment_horizon": arr.segment_horizon, 
 				"segment_vertical" : arr.segment_vertical, 
 				"segment_zindex": arr.segment_zindex,

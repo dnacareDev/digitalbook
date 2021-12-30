@@ -520,6 +520,8 @@ input[type="text"]{
     transform:translateY(-50%) rotate(180deg);
 }
 #step4 .background-wrap ul li .segment{
+    overflow: hidden;
+    overflow-x: auto;
     color: #5E7156;
     border-radius:3px;
     display:block;

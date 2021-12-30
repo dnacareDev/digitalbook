@@ -589,15 +589,17 @@ public class PlanController
 		ResultPlan resultPlan = service.selectResultPlanOne(plan_id);
 		List<Segment> segment = service.selectSegmentList(plan_id);
 		List<SegmentInfo> segmentInfo = service.selectSegmentInfoList(plan_id);
-		
-		int arr[] = Arrays.stream(plan.getPlan_method().split(",")).mapToInt(Integer::parseInt).toArray();
-		List<Method> method = service.selectPlanMethodList(arr);
+
+		if(!plan.getPlan_method().isEmpty()) {			
+			int arr[] = Arrays.stream(plan.getPlan_method().split(",")).mapToInt(Integer::parseInt).toArray();
+			List<Method> method = service.selectPlanMethodList(arr);
+			mv.addObject("method", method);
+		}
 		
 		mv.addObject("plan_id", plan_id);
 		mv.addObject("plan", plan);
 		mv.addObject("record", record);
 		mv.addObject("sch", sch);
-		mv.addObject("method", method);
 		mv.addObject("results", results);
 		mv.addObject("resultPlan",resultPlan);
 		mv.addObject("segment", segment);

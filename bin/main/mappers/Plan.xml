@@ -591,7 +591,8 @@
 			segment_vertical,
 			segment_grid_code,
 			segment_order,
-			segment_zindex
+			segment_zindex,
+			segment_title
 		)
 		VALUES
 		(
@@ -607,14 +608,31 @@
 			#{item.segment_vertical},
 			#{item.segment_grid_code},
 			#{item.segment_order},
-			#{item.segment_zindex}
+			#{item.segment_zindex},
+			#{item.segment_title}
 		)
 		</foreach>
 	</insert>
 	
 	<!-- 구획 조회 -->
 	<select id="selectSegmentList" parameterType="int" resultType="Segment">
-		SELECT * FROM segment
+	/* selectSegmentList */
+		SELECT segment_id,
+			   plan_id,
+			   segment_code,
+			   segment_index,
+			   segment_type,
+			   segment_repeat,
+			   segment_area,
+			   segment_aspect,
+			   segment_horizon,
+			   segment_vertical,
+			   individual_num,
+			   segment_grid_code,
+			   segment_order,
+			   segment_zindex,
+			   ifnull(segment_title,"") as segment_title
+		 FROM segment
 		WHERE plan_id = #{plan_id}
 		ORDER BY segment_id
 	</select>

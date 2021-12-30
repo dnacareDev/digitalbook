@@ -26,5 +26,6 @@ public class Segment {
 	private String segment_grid_code;		//그리드 구획 ID
 	private int segment_order;				//그리드 구획 번호
 	private int segment_zindex;				//그리드 레이어 순번
+	private String segment_title; 			// 구획 이름
 	
 }

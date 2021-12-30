@@ -991,6 +991,7 @@
 				"type" : segment[i].segment_type,
 				"order": segment[i].segment_order,
 				"segmentId": segment[i].segment_grid_code,
+				"segment_title": segment[i].segment_title,
 				"segment_horizon": segment[i].segment_horizon,
 				"segment_vertical": segment[i].segment_vertical,
 				"segment_zindex": segment[i].segment_zindex,
@@ -1537,7 +1538,7 @@
 
 		//시험구 배치 종류에 따라 분기 처리
 		if(grow_type == "0"){	//완전임의배치
-			
+			console.log('11111');
 			//resultArray를 가지고 화면 그려주기
 			var add_list = "";
 			
@@ -1547,6 +1548,10 @@
 			add_list += '<tr>';
 			add_list += '<th>구획번호</th>';
 			add_list += '<th>구획ID</th>';
+			
+			// 구획 이름
+			add_list += '<th>구획이름</th>';
+			
 			add_list += '<th>처리종류</th>';
 			add_list += '<th>반복</th>';
 			add_list += '</tr>';
@@ -1557,6 +1562,10 @@
 				add_list += '<tr class="table_content">';
 			    add_list += '<td class="table_num">'+resultArray[i].num+'</td>';
 			    add_list += '<td class="table_id">'+resultArray[i].id+'</td>';
+			    
+			    // 구획 이름 추가 
+			    add_list += '<td >'+resultArray[i].segment_title+'</td>';
+			    
 			    add_list += '<td class="table_type">'+resultArray[i].type+'</td>';
 			    add_list += '<td class="table_repeat">'+resultArray[i].repeat+'</td>';
 			    add_list += '</tr>';
@@ -1573,7 +1582,7 @@
 			var result_add_list = "";
 			
 			for(var i = 0; i < plan_repeat; i++){
-				
+				console.log("222222222");
 				add_list += '<div class="box_content">';
 				add_list += '<span class="sub_title-content">집구'+(i+1)+'</span>'
 				add_list += '<table style="width:max-content;">';
@@ -1581,6 +1590,10 @@
 				add_list += '<tr>';
 				add_list += '<th>구획번호</th>';
 				add_list += '<th>구획ID</th>';
+				
+				// 구획 이름
+				add_list += '<th>구획이름</th>';
+				
 				add_list += '<th>처리종류</th>';
 				add_list += '<th>반복</th>';
 				add_list += '</tr>';
@@ -1588,11 +1601,15 @@
 				add_list += '<tbody id="table_body">';
 				
 				for(var j = 0; j < resultArray.length; j++){
-					
 					if(resultArray[j].repeat == (i+1)){
+					console.log(resultArray[j]);
 						add_list += '<tr class="table_content">';
 					    add_list += '<td class="table_num">'+resultArray[j].num+'</td>';
 					    add_list += '<td class="table_id">'+resultArray[j].id+'</td>';
+					    
+					 	// 구획 이름 추가 
+					    add_list += '<td >'+resultArray[j].segment_title+'</td>';
+					    
 					    add_list += '<td class="table_type">'+resultArray[j].type+'</td>';
 					    add_list += '<td class="table_repeat">'+resultArray[j].repeat+'</td>';
 					    add_list += '</tr>';
@@ -1631,6 +1648,7 @@
 				add_list += '<tr>';
 				add_list += '<th>구획번호</th>';
 				add_list += '<th>구획ID</th>';
+				
 				add_list += '<th>처리종류</th>';
 				add_list += '<th>반복</th>';
 				add_list += '</tr>';
@@ -1696,6 +1714,7 @@
 			var result_div = "";
 			
 			for(var i = 0; i < plan_repeat; i++){
+				console.log('44444444');
 				
 				add_list += '<div class="box_content">';
 				add_list += '<span class="sub_title-content">집구'+(i+1)+'</span>'
