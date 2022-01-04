@@ -1,11 +1,15 @@
 package com.digitalBook.Mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.digitalBook.Entity.Board;
+import com.digitalBook.Entity.Factor;
+import com.digitalBook.Entity.Plan;
+import com.digitalBook.Entity.Report;
 import com.digitalBook.Entity.Schedule;
 import com.digitalBook.Entity.User;
 
@@ -44,4 +48,14 @@ public interface ScheduleMapper
 	
 	// 전달사항 삭제
 	int DeleteBoard(int board_id);
+	
+	List<Plan> selectResult(User prin);
+
+	List<Factor> selectFactor(int plan_id);
+
+	List<Report> listResultReport();
+
+	int SearchReportCount(String report_code);
+
+	List<Plan> SearchReport(HashMap<String, Object> param);
 }

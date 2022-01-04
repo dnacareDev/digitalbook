@@ -1,5 +1,7 @@
 package com.digitalBook.Controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.digitalBook.Entity.Board;
+import com.digitalBook.Entity.Factor;
+import com.digitalBook.Entity.Plan;
+import com.digitalBook.Entity.Report;
 import com.digitalBook.Entity.Schedule;
 import com.digitalBook.Entity.User;
 import com.digitalBook.Service.ScheduleService;
@@ -59,6 +64,32 @@ public class ScheduleController
 		
 		result.put("schedule", schedule);
 		result.put("board", board);
+		
+		return result;
+	}
+	
+	// 연구결과 일정
+	@ResponseBody
+	@RequestMapping("selectResult")
+	public Map<String, Object> selectResult(Authentication auth)
+	{
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+		User prin = (User)auth.getPrincipal();
+		List<Plan> plan = service.selectResult(prin);
+		result.put("plan", plan);		
+		return result;
+	}
+	
+	// 연구결과 일정
+	@ResponseBody
+	@RequestMapping("selectFactor")
+	public Map<String, Object> selectFactor(@RequestParam("plan_id") int plan_id )
+	{
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+		List<Factor> list = new ArrayList<Factor>();
+		list = service.selectFactor(plan_id);
+		result.put("list", list);		
 		
 		return result;
 	}
@@ -216,5 +247,56 @@ public class ScheduleController
 		Board result = service.SelectBoardDetail(board_id);
 		
 		return result;
+	}
+	
+	@RequestMapping("listResultSchedule")
+	public ModelAndView listResultSchedule(ModelAndView mv) {
+
+		mv.setViewName("schedule/result_schedule");
+		return mv;
+	}
+	
+	@RequestMapping("listResultReport")
+	public ModelAndView listResultReport(ModelAndView mv) {
+		List<Report> report = service.listResultReport();
+		mv.addObject("report", report);
+		mv.setViewName("schedule/listResultReport");
+		return mv;
+	}
+	
+	
+	@RequestMapping("searchReport")
+	@ResponseBody
+	public Map<String,Object> searchReport(@RequestParam(name = "report_code", required = false) String report_code,
+												@RequestParam("page_num") int page_num,
+												@RequestParam("limit") int limit,
+												Authentication auth
+												) {
+	
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		
+		int count = service.SearchReportCount(report_code);
+		
+		int offset = (page_num - 1) * limit;
+		int start_page = ((page_num - 1) / 10) * 10 + 1;
+		int end_page = (count + limit - 1) / limit;
+		HashMap<String,Object> param = new HashMap<String,Object>();
+		User prin = (User)auth.getPrincipal();
+		
+		param.put("report_code", report_code);
+		param.put("offset", offset);
+		param.put("limit", limit);
+		param.put("user_group", prin.getUser_group());
+		
+		
+		List<Plan> report = service.SearchReport(param);
+		
+		map.put("page_num", page_num);
+		map.put("start_page", start_page);
+		map.put("end_page", end_page);
+		map.put("offset", offset);
+		map.put("report", report);
+		
+		return map;
 	}
 }

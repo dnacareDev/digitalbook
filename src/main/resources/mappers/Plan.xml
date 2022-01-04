@@ -501,7 +501,9 @@
 			rp_content,
 			rp_num,
 			rp_segment,
-			rp_segment_count
+			rp_segment_count,
+			user_id,
+			user_group
 		) 
 		VALUES 
 		( 
@@ -509,7 +511,10 @@
 			#{rp_content},
 			#{rp_num},
 			'',
-			0
+			0,
+			#{user_id},
+			#{user_group}
+			
 		) 
 	</insert>
 	
@@ -719,5 +724,97 @@
 		SELECT * FROM segment
 		WHERE segment_id = #{segment_id}
 	</select>
+	
+	<select id="selectStorageAddress" parameterType="int" resultType="String">
+		SELECT 
+			ifnull(storage_address,"") as storage_address
+		FROM
+			plan p
+		INNER JOIN 
+			storage s
+		ON
+			p.storage_id = s.storage_id
+		 WHERE
+		 	p.plan_id = #{plan_id}
+	</select>
+	<select id="selectAddressCode" parameterType="String" resultType="Long">
+		SELECT
+			address_code
+		FROM
+			address_code
+		WHERE
+			address_name like  CONCAT('%',#{address_name},'%')
+				and
+			address_YN = "존재"
+	</select>
+	<select id="selectWeatherInfo" parameterType="String" resultType="Map">
+		SELECT
+			city_name,
+			area_code
+		FROM
+			weather
+		WHERE
+			city_name like  CONCAT('%',#{address_name},'%')	
+	</select>
+	<select id="checkWeatherSoilInfo" parameterType="int" resultType="int">
+	/*checkWeatherSoilInfo*/
+		SELECT 
+			count(*)
+		FROM
+			weather_soil_info
+		WHERE
+			plan_id = #{plan_id}
+	</select>
+	<insert id="insertWeatherSoilInfo" parameterType="WeatherSoilInfo">
+	/*insertWeatherSoilInfo*/
+		INSERT INTO weather_soil_info
+		(
+			 weather_soil_info_id,
+			 weather,
+			 soil,
+			 plan_id,
+			 comment
+		 )
+		VALUES
+		(
+			#{weather_soil_info_id},
+			#{weather},
+			#{soil},
+			#{plan_id},
+			#{comment}
+		)
+	</insert>
+	<update id="updateWeatherSoilInfo" parameterType="WeatherSoilInfo">
+	/*updateWeatherSoilInfo*/
+		UPDATE
+			weather_soil_info
+		SET
+			weather = #{weather},
+			soil = #{soil},
+			comment = #{comment}
+		where
+			plan_id = #{plan_id}
+	</update>
+	<select id="checkResultsPlan" parameterType="int" resultType="int">
+	/*checkResultsPlan */
+		SELECT
+			count(rp_id) as rp_id 
+		FROM 
+			result_plan	
+		WHERE
+			plan_id = #{plan_id}
+	</select>
+	<update id="updateResultsPlan"  parameterType="ResultPlan">
+	/*updateResultsPlan */
+		UPDATE
+		  result_plan 
+		SET
+		  plan_id = #{plan_id},
+		  rp_content = #{rp_content},
+		  user_id = #{user_id},
+		  user_group = #{user_group} 	
+		WHERE
+		  plan_id = #{plan_id}
+	</update>
 	
 </mapper>

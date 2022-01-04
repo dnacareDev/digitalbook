@@ -3,6 +3,7 @@
 <mapper namespace="com.digitalBook.Mapper.ScheduleMapper">
 	<!-- 전체 일정(사용자) -->
 	<select id="SelectUserSchedule" parameterType="int" resultType="Schedule">
+	/*SelectUserSchedule*/
 		SELECT s.sch_id, s.start_date, s.end_date, p.plan_id, p.plan_code, m.method_id, m.method_code, m.method_title, u1.user_name_k AS u1_supervisor, u2.user_name_k AS u2_manager
 		FROM schedule s
 		LEFT JOIN plan p ON s.plan_id = p.plan_id
@@ -20,6 +21,7 @@
 	
 	<!-- 전체 일정(사용자) -->
 	<select id="SelectAdminSchedule" parameterType="User" resultType="Schedule">
+	/*SelectAdminSchedule*/
 		SELECT s.sch_id, s.start_date, s.end_date, p.plan_id, p.plan_code, m.method_id, m.method_code, m.method_title, u1.user_name_k AS u1_supervisor, u2.user_name_k AS u2_manager
 		FROM schedule s
 		LEFT JOIN plan p ON s.plan_id = p.plan_id
@@ -103,4 +105,67 @@
 		DELETE FROM board
 		WHERE board_id = #{board_id}
 	</delete>
+	
+	<select id="selectResult" resultType="Plan" parameterType="User">
+	/* selectResult */
+			SELECT p.*, r.*, s.*, m.*,rp.*,wsi.*
+			FROM plan p
+				LEFT JOIN report r ON p.report_code = r.report_code
+				LEFT JOIN storage s ON p.storage_id = s.storage_id
+				LEFT JOIN method m ON p.plan_method = m.method_id
+		        LEFT JOIN result_plan rp on p.plan_id = rp.plan_id
+		        LEFT JOIN weather_soil_info  wsi on p.plan_id = wsi.plan_id
+			WHERE
+				rp_id is not null
+					and
+				rp.user_id = #{user_id}
+	</select>
+	<select id="selectFactor" resultType="factor">
+	/* selectFactor */
+		SELECT
+			*
+		FROM
+			factor
+		where
+			plan_id = #{plan_id}
+	</select>
+	<select id="listResultReport" resultType="Report">
+	/* listResultReport */
+		SELECT
+			*
+		FROM
+			report
+		group by report_code;	
+	</select>
+	<select id="SearchReportCount" resultType="int">
+			SELECT count(report_id) as cnt
+			FROM plan p
+				LEFT JOIN report r ON p.report_code = r.report_code
+				LEFT JOIN storage s ON p.storage_id = s.storage_id
+				LEFT JOIN method m ON p.plan_method = m.method_id
+		        LEFT JOIN result_plan rp on p.plan_id = rp.plan_id
+		        LEFT JOIN weather_soil_info  wsi on p.plan_id = wsi.plan_id
+			WHERE
+				rp_id is not null
+					and
+				r.report_code = #{report_code}
+	</select>
+	<select id="SearchReport" resultType="plan" parameterType="Map">
+			SELECT p.*,r.*,s.*,m.*,rp.*,wsi.*,u.user_name_k
+			FROM plan p
+				LEFT JOIN report r ON p.report_code = r.report_code
+				LEFT JOIN storage s ON p.storage_id = s.storage_id
+				LEFT JOIN method m ON p.plan_method = m.method_id
+		        LEFT JOIN result_plan rp on p.plan_id = rp.plan_id
+		        LEFT JOIN weather_soil_info  wsi on p.plan_id = wsi.plan_id
+		        LEFT JOIN user u on u.user_id  = rp.user_id
+			WHERE
+				rp_id is not null
+					and
+				r.report_code = #{report_code}
+					and 
+				p.user_group = #{user_group}
+			limit
+				#{offset},#{limit}
+	</select>
 </mapper>

@@ -1,5 +1,6 @@
 package com.digitalBook.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -20,6 +21,7 @@ import com.digitalBook.Entity.Segment;
 import com.digitalBook.Entity.SegmentInfo;
 import com.digitalBook.Entity.Storage;
 import com.digitalBook.Entity.User;
+import com.digitalBook.Entity.WeatherSoilInfo;
 
 public interface PlanService {
 	
@@ -90,6 +92,7 @@ public interface PlanService {
 	int updatePlanStatus(int plan_id);
 
 	int insertResultsPlan(ResultPlan results);
+	
 	int updateResultPlan(ResultPlan results);
 	
 	//사용자 전체 조회
@@ -162,5 +165,21 @@ public interface PlanService {
 	
 	//샘플 구획 detail
 	Segment selectSampleSegmentDetail(int segment_id);
+
+	String selectStroageAddress(int plan_id);
+
+	long selectAddressCode(String address_name);
+
+	HashMap<String, Object> selectWeatherInfo(String address_name);
+
+	int insertWeatherSoilInfo(WeatherSoilInfo info);
+
+	int updateWeatherSoilInfo(WeatherSoilInfo info);
+
+	int checkWeatherSoilInfo(int parseInt);
+
+	int checkResultsPlan(int plan_id);
+
+	int updateResultsPlan(ResultPlan results);
 	
 }
