@@ -1,5 +1,6 @@
 package com.digitalBook.ServiceImpl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import com.digitalBook.Entity.Segment;
 import com.digitalBook.Entity.SegmentInfo;
 import com.digitalBook.Entity.Storage;
 import com.digitalBook.Entity.User;
+import com.digitalBook.Entity.WeatherSoilInfo;
 import com.digitalBook.Mapper.PlanMapper;
 import com.digitalBook.Service.PlanService;
 
@@ -359,6 +361,46 @@ public class PlanServiceImpl implements PlanService {
 	@Override
 	public ResultPlan selectResultPlanOne(int plan_id) {
 		return mapper.selectResultPlanOne(plan_id);
+	}
+
+	@Override
+	public String selectStroageAddress(int plan_id) {
+		return mapper.selectStorageAddress(plan_id);
+	}
+	
+	@Override
+	public long selectAddressCode(String address_name) {
+		return mapper.selectAddressCode(address_name);
+	}
+
+	@Override
+	public HashMap<String, Object> selectWeatherInfo(String address_name) {
+		return mapper.selectWeatherInfo(address_name);
+	}
+	
+	@Override
+	public int insertWeatherSoilInfo(WeatherSoilInfo info) {
+		return mapper.insertWeatherSoilInfo(info);
+	}
+
+	@Override
+	public int updateWeatherSoilInfo(WeatherSoilInfo info) {
+		return mapper.updateWeatherSoilInfo(info);
+	}
+
+	@Override
+	public int checkWeatherSoilInfo(int plan_id) {
+		return mapper.checkWeatherSoilInfo(plan_id);
+	}
+
+	@Override
+	public int checkResultsPlan(int plan_id) {
+		return mapper.checkResultsPlan(plan_id);
+	}
+
+	@Override
+	public int updateResultsPlan(ResultPlan results) {
+		return mapper.updateResultsPlan(results);
 	}
 	
 }

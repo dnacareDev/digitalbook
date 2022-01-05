@@ -1872,7 +1872,6 @@
 				dataType : 'json',
 				data : data,
 				success : function(result){
-					console.log(result);
 					//기존 데이터에 맞게 manureArray 만들어 주기
 					for(var i = 0; i < textArray.length; i++){
 						for(var j = 0; j < result.length; j ++){
@@ -3804,7 +3803,6 @@
 	var segmentTitleIndex = "";
 	var segmentTitleInput = "";
 	function onChangeSegmentTitle(e){
-		console.log("test----------",segmentTitleInput);
 		if(e.type === "click"){
 			/* var target = e.currentTarget;
 			segmentTitleIndex = segmentTitleInput.indexOf(target); */
@@ -3821,7 +3819,7 @@
 	function setSegTitleEvent(){
 		segmentTitleInput = document.querySelectorAll(".step4-container .segment-title");
 		segmentTitleInput = Array.prototype.slice.call(segmentTitleInput);
-		console.log("length:", segmentTitleInput, segmentTitleInput.length);
+		
 		for(var i = 0; i < segmentTitleInput.length; i++){
 			segmentTitleInput[i].addEventListener("change", onChangeSegmentTitle);
 			segmentTitleInput[i].addEventListener("input", onChangeSegmentTitle);
@@ -3839,9 +3837,10 @@
 		var grow_type = $("#grow_type").attr("data-select");
 		
 		var plan_repeat = $("#plan_repeat").val();
-		
+	
 		if(grow_type == "0"){
-			
+			console.log('111111111111111');
+			console.log(segment);
 			for(var i = 0; i < segment.length; i++){
 				var result_data = {
 					"id" : segment[i].segment_code,
@@ -3882,7 +3881,8 @@
 			add_list += '<tbody class="step4-container container1">';
 			
 			for(var i = 0; i < resultArray.length; i++){
-				
+
+
 				add_list += '<tr data-id="'+resultArray[i].id.split("-")[0]+"-"+resultArray[i].repeat+'" class="table_content">';
 			    add_list += '<td class="table_num">'+resultArray[i].num+'</td>';
 			    add_list += '<td class="table_id">'+resultArray[i].id+'</td>';
@@ -3966,7 +3966,7 @@
 			});//end sortable
 			
 		}else if(grow_type == "1"){ //난괴법
-
+			
 			for(var i = 0; i < segment.length; i++){
 				var result_data = {
 					"id" : segment[i].segment_code,
@@ -3979,6 +3979,8 @@
 					"segment_vertical": segment[i].segment_vertical,
 					"segment_zindex": segment[i].segment_zindex,
 					"segment_aspect": segment[i].segment_aspect,
+					"segment_title": segment[i].segment_title,
+					"area": segment[i].segment_area
 				};
 				resultArray.push(result_data);
 				var factor2 = resultArray[i].id.split("-")[1].split("B")[1];
@@ -4018,6 +4020,7 @@
 				
 				for(var j = 0; j < resultArray.length; j++){
 					
+						console.log(resultArray[j]);
 					if(resultArray[j].repeat == (i+1)){
 						var checkId = resultArray[j].id.split("-")[0];
 						for(var k = 0; k < idArray.length; k++){
@@ -4029,7 +4032,7 @@
 					    add_list += '<td class="table_id">'+resultArray[j].id+'</td>';
 					  
 					    //구획 이름 추가  
-					    add_list += '<td><input type="text" class="input-height segment-title"></td>';
+					    add_list += '<td>'+ resultArray[j].segment_title+'</td>';
 					     
 					    add_list += '<td class="table_type">'+resultArray[j].type+'</td>';
 					    add_list += '<td>'+resultArray[j].repeat+'</td>';
@@ -4288,6 +4291,8 @@
 			
 		}else if(grow_type == "3"){ //세세구배치법
 			for(var i = 0; i < segment.length; i++){
+				console.log('22222222222222');
+				console.log(segment);
 				var result_data = {
 					"id" : segment[i].segment_code,
 					"num" : segment[i].segment_index,
@@ -4745,7 +4750,6 @@
 			add_list = "";
 			var add_div = "";
 			var result_div = "";
-			
 			for(var i = 0; i < plan_repeat; i++){
 				
 				add_list += '<div>집구 '+(i+1)+'</div>';
@@ -5670,6 +5674,10 @@
 		var segInput = document.querySelectorAll('#copy-step-4 .seg_area');
 		
 		for(var i = 0; i < resultArray.length; i++){
+			
+			console.log('33333333333');
+			console.log(segment);
+			
 			var arr = resultArray[i];
 			var data = {
 				"plan_id" : plan.plan_id,

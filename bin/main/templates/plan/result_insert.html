@@ -1147,7 +1147,7 @@ function insertWeatherAndSoil(){
 	function openImageModal(imagePath){
 		if(imagePath){
 			 $('.image-upload-wrap').hide();
-		      $('.file-upload-image').attr('src', "http://3.37.64.204/upload/" + imagePath);
+		      $('.file-upload-image').attr('src', "/upload/" + imagePath);
 		      $('.file-upload-content').show();
 		      $('.image-title').html(imagePath);
 		      $('.image-upload-wrap').addClass('image-dropping');
@@ -1162,6 +1162,9 @@ function insertWeatherAndSoil(){
 		 
 	}
 	
+	function saveModalImg(){
+		
+	}
 	
 	function readURL(input) {
 		  if (input.files && input.files[0]) {
@@ -1184,7 +1187,7 @@ function insertWeatherAndSoil(){
 	}
 
 	function removeUpload() {
-		  //$('.file-upload-input').replaceWith($('.file-upload-input').clone());
+		  $('.file-upload-input').replaceWith($('.file-upload-input').clone());
 		  $('.file-upload-content').hide();
 		  $('.image-upload-wrap').show();
 		}
@@ -1448,7 +1451,7 @@ function insertWeatherAndSoil(){
 	//이미지 다운로드 이벤트
 	function imgDownload(e){
 		var file_name = $(e).attr("data-img");
-		var src = "http://3.37.64.204/upload/" + file_name;
+		var src = "/upload/"+file_name;
 		var href = "/plan/downloadImg?file_name="+file_name;
 		imageTag = e;
 		$("#downImg").css("display", "none");
@@ -2707,7 +2710,7 @@ function insertWeatherAndSoil(){
 
 
 	function removeUpload() {
-		//$('.file-upload-input').replaceWith($('.file-upload-input').clone());
+		$('.file-upload-input').replaceWith($('.file-upload-input').clone());
 		$('.file-upload-content').hide();
 		$('.label-container').html("");
 		$('.image-upload-wrap').show();

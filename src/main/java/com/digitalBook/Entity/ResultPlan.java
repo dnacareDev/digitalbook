@@ -22,4 +22,6 @@ public class ResultPlan {
 	private String create_date;			//프로토콜 값
 	private String modfiy_date;			//프로토콜 값
 	
+	private int user_id;
+	private int user_group;
 }

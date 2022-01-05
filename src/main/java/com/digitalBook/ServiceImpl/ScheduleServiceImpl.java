@@ -1,11 +1,15 @@
 package com.digitalBook.ServiceImpl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.digitalBook.Entity.Board;
+import com.digitalBook.Entity.Factor;
+import com.digitalBook.Entity.Plan;
+import com.digitalBook.Entity.Report;
 import com.digitalBook.Entity.Schedule;
 import com.digitalBook.Entity.User;
 import com.digitalBook.Mapper.ScheduleMapper;
@@ -96,4 +100,31 @@ public class ScheduleServiceImpl implements ScheduleService
 	{
 		return mapper.DeleteBoard(board_id);
 	}
+
+	@Override
+	public List<Plan> selectResult(User prin) {
+		return mapper.selectResult(prin);
+	}
+
+	@Override
+	public List<Factor> selectFactor(int plan_id) {
+		return mapper.selectFactor(plan_id);
+	}
+	
+	@Override
+	public List<Report> listResultReport(){
+		return mapper.listResultReport();
+	}
+
+	@Override
+	public int SearchReportCount(String report_code) {
+		return mapper.SearchReportCount(report_code);
+	}
+
+	@Override
+	public List<Plan> SearchReport(HashMap<String, Object> param) {
+		return mapper.SearchReport(param);
+	}
+
+
 }

@@ -1,5 +1,6 @@
 package com.digitalBook.Mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -21,6 +22,7 @@ import com.digitalBook.Entity.Segment;
 import com.digitalBook.Entity.SegmentInfo;
 import com.digitalBook.Entity.Storage;
 import com.digitalBook.Entity.User;
+import com.digitalBook.Entity.WeatherSoilInfo;
 
 @Mapper
 public interface PlanMapper {
@@ -172,4 +174,21 @@ public interface PlanMapper {
 	public int insertResultsPlan(ResultPlan plan_id);
 	
 	public int updateResultPlan(ResultPlan results);
+
+	String selectStorageAddress(int plan_id);
+
+	long selectAddressCode(String address_name);
+
+	HashMap<String, Object> selectWeatherInfo(String address_name);
+
+	int insertWeatherSoilInfo(WeatherSoilInfo info);
+
+	int updateWeatherSoilInfo(WeatherSoilInfo info);
+
+	int checkWeatherSoilInfo(int plan_id);
+
+	int updateResultsPlan(ResultPlan results);
+
+	int checkResultsPlan(int plan_id);
+
 }

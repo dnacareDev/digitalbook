@@ -456,8 +456,7 @@ function renderSegment(data){
 }
 
 function segmentSetting(data){
-console.log(data);
-	console.log("test1");
+
 	var dataGet = data;
 	// console.log(dataGet,"data");
 	// 2차 : query , array 반환, addEvent

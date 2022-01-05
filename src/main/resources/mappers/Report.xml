@@ -85,5 +85,5 @@
 			WHERE report_code = #{item.report_code}
 		</foreach>
 	</update>
-	
+
 </mapper>

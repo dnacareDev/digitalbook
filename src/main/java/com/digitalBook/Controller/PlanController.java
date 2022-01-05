@@ -1,14 +1,21 @@
 package com.digitalBook.Controller;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +23,7 @@ import java.util.stream.IntStream;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -51,8 +59,10 @@ import com.digitalBook.Entity.Segment;
 import com.digitalBook.Entity.SegmentInfo;
 import com.digitalBook.Entity.Storage;
 import com.digitalBook.Entity.User;
+import com.digitalBook.Entity.WeatherSoilInfo;
 import com.digitalBook.Service.PlanService;
 import com.digitalBook.Service.StorageService;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -772,7 +782,18 @@ public class PlanController
 	@RequestMapping(value = "/insertResultPlan")
 	public int InsertResult(ResultPlan results) throws IOException
 	{
-		int result = service.insertResultsPlan(results);
+	
+		// 중복 확인 
+		int count = service.checkResultsPlan(results.getPlan_id());
+		
+		int result = 0;
+		if(1 > count) {			
+			result = service.insertResultsPlan(results);
+		}else {
+			result = service.updateResultsPlan(results);
+		}
+		
+	
 		return result;
 	}
 	
@@ -950,6 +971,186 @@ public class PlanController
 		
 		return "plan/sample_segment";
 	}
+	
+	// 토양 정보 불러오는 API
+	@RequestMapping("getSoilInfo")
+	@ResponseBody
+	public Map<String,Object> getSoilInfo(@RequestParam("plan_id") int plan_id) throws Exception{
+		Map<String, Object> resultMap = new HashMap<>();
+
+		String storage_address = service.selectStroageAddress(plan_id);
+		
+	if(!storage_address.equals("")) {
+		String[] arr = storage_address.split(" ");
+		String address_name = "";
+		
+		for(int i=1;i<arr.length-1;i++) {
+				if(i > 1) {					
+					address_name	+=	" ";
+				}
+				address_name += arr[i];
+		}
+		
+		long address_code = service.selectAddressCode(address_name);
+		String code = Long.toString(address_code);
+		                                                                                                                                                                     
+	     StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1390802/SoilEnviron/SoilExam/getSoilExamList"); /*URL*/
+	        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=u5qnZTsRtR99gpLQQOpnPoUQvKi7VZtNToGrTyAkqCtFyoIHgAbEXhAR6nbI6YHStzltb9iWdDWHxjt2f8O3zA%3D%3D"); /*Service Key*/
+	        urlBuilder.append("&" + URLEncoder.encode("BJD_Code","UTF-8") + "=" + URLEncoder.encode(code, "UTF-8")); /*요청 값 포함 일치하는 지번코드에 대한 토양검정 화학성 정보 검색*/
+	        urlBuilder.append("&" + URLEncoder.encode("Page_Size","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*요청 값 포함 일치하는 지번코드에 대한 토양검정 화학성 정보 검색*/
+	        urlBuilder.append("&" + URLEncoder.encode("Page_No","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*요청 값 포함 일치하는 지번코드에 대한 토양검정 화학성 정보 검색*/
+
+	        URL url = new URL(urlBuilder.toString());
+	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	        conn.setRequestMethod("GET");
+	        conn.setRequestProperty("Content-type", "application/json");
+	        
+	        System.out.println("Response code: " + conn.getResponseCode());
+	        BufferedReader rd;
+	        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+	            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	        } else {
+	            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+	        }
+	        StringBuilder sb = new StringBuilder();
+	        String line;
+	        while ((line = rd.readLine()) != null) {
+	            sb.append(line);
+	        }
+	        rd.close();
+	        conn.disconnect();
+	        org.json.JSONObject xmlJSONObj = XML.toJSONObject(sb.toString());
+            String xmlJSONObjString = xmlJSONObj.toString();
+ 
+            ObjectMapper objectMapper = new ObjectMapper();
+            Map<String, Object> map = new HashMap<>();
+            map = objectMapper.readValue(xmlJSONObjString, new TypeReference<Map<String, Object>>(){});
+            Map<String, Object> dataResponse = (Map<String, Object>) map.get("response");
+            Map<String, Object> body = (Map<String, Object>) dataResponse.get("body");
+            Map<String, Object> items = null;
+            List<Map<String, Object>> itemList = null;
+ 
+            items = (Map<String, Object>) body.get("items");
+//            itemList = (List<Map<String, Object>>) items.get("item");
+ 
+ 
+       
+            resultMap.put("data", items);
+	}else {
+			resultMap.put("data", "no result");	
+	}
+
+		return resultMap;
+		
+	}
+	
+	
+	// 토양 정보 불러오는 API
+		@RequestMapping("getWeatherInfo")
+		@ResponseBody
+		public Map<String,Object> getWeatherInfo(@RequestParam("plan_id") int plan_id) throws Exception{
+			Map<String, Object> resultMap = new HashMap<>();
+
+			String storage_address = service.selectStroageAddress(plan_id);
+	
+			if(!storage_address.equals("")) {
+			String[] arr = storage_address.split(" ");
+			String address_name = "";
+			
+			for(int i=1;i<2;i++) {
+				if(i > 1) {					
+					address_name +=	" ";
+				}
+				address_name += arr[i];
+			}
+		
+			HashMap<String,Object> param = service.selectWeatherInfo(address_name);
+			String obsr_Spot_Code = param.get("area_code").toString();
+			String obsr_Spot_Nm = param.get("city_name").toString();
+			LocalDate now = LocalDate.now();
+
+			
+		     StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1390802/AgriWeather/WeatherObsrInfo/InsttWeather/getWeatherTenMinList"); /*URL*/
+		        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=u5qnZTsRtR99gpLQQOpnPoUQvKi7VZtNToGrTyAkqCtFyoIHgAbEXhAR6nbI6YHStzltb9iWdDWHxjt2f8O3zA%3D%3D"); /*Service Key*/
+		        urlBuilder.append("&" + URLEncoder.encode("time","UTF-8") + "=" + URLEncoder.encode("1300", "UTF-8")); /*요청 값 포함 일치하는 지번코드에 대한 토양검정 화학성 정보 검색*/
+		        urlBuilder.append("&" + URLEncoder.encode("date","UTF-8") + "=" + URLEncoder.encode(now.toString(), "UTF-8")); /*요청 값 포함 일치하는 지번코드에 대한 토양검정 화학성 정보 검색*/
+		        urlBuilder.append("&" + URLEncoder.encode("obsr_Spot_Code","UTF-8") + "=" + URLEncoder.encode(obsr_Spot_Code, "UTF-8")); /*요청 값 포함 일치하는 지번코드에 대한 토양검정 화학성 정보 검색*/
+		        urlBuilder.append("&" + URLEncoder.encode("obsr_Spot_Nm","UTF-8") + "=" + URLEncoder.encode(obsr_Spot_Nm, "UTF-8")); /*요청 값 포함 일치하는 지번코드에 대한 토양검정 화학성 정보 검색*/
+		        urlBuilder.append("&" + URLEncoder.encode("Page_Size","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*요청 값 포함 일치하는 지번코드에 대한 토양검정 화학성 정보 검색*/
+		        urlBuilder.append("&" + URLEncoder.encode("Page_No","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*요청 값 포함 일치하는 지번코드에 대한 토양검정 화학성 정보 검색*/
+
+		        URL url = new URL(urlBuilder.toString());
+		        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		        conn.setRequestMethod("GET");
+		        conn.setRequestProperty("Content-type", "application/json");
+		        
+		        System.out.println("Response code: " + conn.getResponseCode());
+		        BufferedReader rd;
+		        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+		            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		        } else {
+		            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+		        }
+		        StringBuilder sb = new StringBuilder();
+		        String line;
+		        while ((line = rd.readLine()) != null) {
+		            sb.append(line);
+		        }
+		        rd.close();
+		        conn.disconnect();
+		        org.json.JSONObject xmlJSONObj = XML.toJSONObject(sb.toString());
+	            String xmlJSONObjString = xmlJSONObj.toString();
+	 
+	            ObjectMapper objectMapper = new ObjectMapper();
+	            Map<String, Object> map = new HashMap<>();
+	            map = objectMapper.readValue(xmlJSONObjString, new TypeReference<Map<String, Object>>(){});
+	            Map<String, Object> dataResponse = (Map<String, Object>) map.get("response");
+	            Map<String, Object> body = (Map<String, Object>) dataResponse.get("body");
+	            Map<String, Object> items = null;
+	            List<Map<String, Object>> itemList = null;
+	 
+	            System.out.println(sb);
+	            Map<String, Object> resultCode = (Map<String, Object>) map.get("Result_Code");
+
+	            if(body != null) {	            	
+	            	items = (Map<String, Object>) body.get("items");
+	            	resultMap.put("data", items);
+	            }else {
+	    			resultMap.put("data", "no result");	
+	            }
+	       
+		}else {
+			resultMap.put("data", "no result");	
+		}
+
+			return resultMap;
+			
+		}
+		
+		
+		@RequestMapping("insertWeatherAndSoil")
+		@ResponseBody
+		public int insertWeatherAndSoil(@RequestParam HashMap<String,Object> param) throws Exception{
+
+			WeatherSoilInfo info = new WeatherSoilInfo();
+	
+			info.setPlan_id(Integer.parseInt(param.get("plan_id").toString()));			
+			info.setSoil(param.get("soil").toString());			
+			info.setWeather(param.get("weather").toString());
+			info.setComment(param.get("comment").toString());
+			
+			// 중복확인
+			int count = service.checkWeatherSoilInfo(Integer.parseInt(param.get("plan_id").toString()));
+			
+			int result = 0;
+			if(count < 1) {				
+				result = service.insertWeatherSoilInfo(info);
+			}else {
+				result = service.updateWeatherSoilInfo(info);				
+			}
+					
+			return result;
+		}
 	
 	
 }
