@@ -732,7 +732,7 @@ public class PlanController
 	
 	@ResponseBody
 	@RequestMapping(value = "/insertImage")
-	public Map<String, Object> InsertImageResult(MultipartFile file, HttpServletRequest requst) throws IOException
+	public Map<String, Object> InsertImageResult(MultipartFile file, HttpServletRequest requst) 
 	{
 
 		Map<String, Object> result = new LinkedHashMap<String, Object>();
@@ -742,7 +742,7 @@ public class PlanController
 		String results_file = fileController.ChangeFileName(extension[1]);
 		String results_origin_file = file.getOriginalFilename();
 		
-		String path = "upload";
+		String path = "/var/www/html/upload";
 		
 		File filePath = new File(path);
 		
@@ -752,7 +752,13 @@ public class PlanController
 		Path fileLocation = Paths.get(path).toAbsolutePath().normalize();
        	Path targetLocation = fileLocation.resolve(results_file);
 		
-       	Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+       	try {
+			Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
 
        	result.put("result","1");
        	result.put("file_name",results_file);
