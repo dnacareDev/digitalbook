@@ -3,6 +3,7 @@
 <head>
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
+
 <style>
   #ModalTable1 table {
     width: 99%;
@@ -274,6 +275,65 @@
 		.breadcrumb-main {justify-content: flex-start !important; padding: 0 30px !important; margin-top: 39px !important;}
 		.calendar-grid.justify-content-center {padding: 0 32px !important;}
 		.container-fluid.mt-25 {margin-top: 0 !important;}
+		
+	
+	#sch_list tr td {
+		padding-top: 2px;
+		padding-bottom: 2px;
+	}
+	
+	#sch_list tr:not(:last-child) {
+		border-bottom: 1px solid #212529;
+	}		
+	
+	#ModalTable2 #sch_list td.last_tr,
+	#sch_list tr.last_tr {
+		border-bottom: 2px solid #212529;
+	}	
+	
+	#ModalTable2 #sch_list td.last_tr {
+		padding-top: 1px;
+		padding-bottom: 1px;
+	}
+	
+	#sch_list tr.sec_table_tr {
+		margin-top: 20px;
+		position: relative;
+	}
+	
+	#sch_list tr.sec_table_tr > th {
+		background-color: #fff;
+		width: 250px;
+		min-width: 200px;
+		max-width: 250px;
+	}
+	
+	#sch_list .tr_ye {
+		    background-color: rgb(245, 236, 206);	
+	}
+	
+	#sch_list .tr_blu {
+		    background-color: rgb(206, 236, 245);
+	}
+	
+	
+	#sch_list .tr_gr {
+		background-color: rgb(227, 246, 206);		    
+	}
+	
+	
+	
+	.modal-xl {
+		max-width: 1200px;
+	}
+	
+	.modal-body {
+		width: 1200px !important;
+	}
+	
+	
+		
+		
 </style>
 </head>
 <body class="layout-light top-menu overlayScroll">
@@ -513,14 +573,17 @@
 			</div>
 			
 			
-			<div class="modal-basic modal fade show" id="scheduleModal" tabindex="-1" role="dialog" aria-hidden="true">
+    	</div>
+    </main>
+    		<div class="modal-basic modal fade show" id="scheduleModal" tabindex="-1" role="dialog" aria-hidden="true">
 			    <div class="modal-dialog modal-xl" role="document">
 			        <div class="modal-content modal-bg-white ">
 			            <div class="modal-body">
 			            	<div class="d-flex justify-content-end">
 		                		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span data-feather="x"></span></button>
 		                	</div>
-		                    <div class="tab-content">
+		                	
+		                    <div class="tab-content" id="pdfArea">
 		                    	<div class="tab-pane show active" id="modal-content1" role="tabpanel">
 		                    		<div class="row">
 		                    			<div class="col-lg-12">
@@ -532,11 +595,9 @@
 			                    	<div class="row">
 			                    		<div class="col-lg-12">
 			                    			<div class="bg-white">
-		                    					<div class="table-responsive" id="ModalTable2">
-		                    						<table class="table">
-					                            		<tbody id="sch_list" >
-					                            		</tbody>
-		                    						</table>
+		                    					<div class="table-responsive" id="ModalTable2">      					
+		                    						<div id="sch_list">
+		                    						</div>
 		                    					</div>
 		                    				</div>
 			                    		</div>
@@ -545,19 +606,97 @@
 		                    </div>
 			            </div>
 			            <div class="button-group d-flex justify-content-end mb-2 mr-4">
-		                   <a class="btn btn-primary btn-default btn-squared" id="sch_btn" style="color: #FFFFFF;">결과입력</a>
+		                   <a class="btn btn-primary btn-default btn-squared" id="sch_btn" style="color: #FFFFFF;" onclick="closeModal()">닫기</a>
+		           		</div>
+		           		<div class="button-group d-flex justify-content-end mb-2 mr-4">
+		                   <a class="btn btn-primary btn-default btn-squared" onclick="savePDF()" style="color: #FFFFFF;">PDF 다운로드</a>
 		           		</div>
 			        </div>
 			    </div>
 			</div>
-    	</div>
-    </main>
-    
     <!-- 공통 하단 -->
     <th:block th:include="/../fragments/footer.html"></th:block>
     <!-- 공통 js -->
     <th:block th:include="/../fragments/commonjs.html"></th:block>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+
+<script type="text/javascript">
+  function savePDF(){
+    //저장 영역 div id
+    html2canvas($('#pdfArea')[0] ,{	
+      //logging : true,		// 디버그 목적 로그
+      //proxy: "html2canvasproxy.php",
+      allowTaint : true,	// cross-origin allow 
+      useCORS: true,		// CORS 사용한 서버로부터 이미지 로드할 것인지 여부
+      scale : 2			// 기본 96dpi에서 해상도를 두 배로 증가
+      
+    }).then(function(canvas) {	
+      // 캔버스를 이미지로 변환
+      var imgData = canvas.toDataURL('image/png');
+
+      var imgWidth = 190; // 이미지 가로 길이(mm) / A4 기준 210mm
+      var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
+      var imgHeight = canvas.height * imgWidth / canvas.width;
+      var heightLeft = imgHeight;
+      var margin = 10; // 출력 페이지 여백설정
+      var doc = new jsPDF('p', 'mm');
+      var position = 0;
+
+      // 첫 페이지 출력
+      doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      // 한 페이지 이상일 경우 루프 돌면서 출력
+      while (heightLeft >= 20) {			// 35
+      position = heightLeft - imgHeight;
+      position = position - 20 ;		// -25
+
+      doc.addPage();
+      doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+      }
+
+      // 파일 저장
+      doc.save('filename.pdf');
+    });
+  }
+</script>
+
 <script type="text/javascript" th:inline="javascript">
+
+var doc = new jsPDF();
+var specialElementHandlers = {
+    '#editor': function(element, renderer) {
+        return true;
+    }
+}
+ 
+$('#savePdfBtn').click(function() {
+	html2canvas($('#pdfDiv')[0]).then(function(canvas) { // 캔버스를 이미지로 변환 	
+	let imgData = canvas.toDataURL('image/png'); 
+	let margin = 10; // 출력 페이지 여백설정 
+	let imgWidth = 210 - (10 * 2); // 이미지 가로 길이(mm) A4 기준 
+	let pageHeight = imgWidth * 1.414; // 출력 페이지 세로 길이 계산 A4 기준 
+	let imgHeight = canvas.height * imgWidth / canvas.width; 
+	let heightLeft = imgHeight; 
+	let doc = new jsPDF('p', 'mm',"a4"); 
+	let position = margin; // 첫 페이지 출력 
+	doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+	heightLeft -= pageHeight; // 한 페이지 이상일 경우 루프 돌면서 출력 
+	while (heightLeft >= 20) { 
+		position = heightLeft - imgHeight; 
+		doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight); 
+		doc.addPage(); heightLeft -= pageHeight; } // 파일 저장 
+		doc.save('연구 결과.pdf'); });
+});
+
+
+
+
+
 
 	var current_plan = /*[[${current_plan}]]*/ "null";
 
@@ -631,10 +770,12 @@
 							}
 						}
 							var title = "";
-							title += "<h6 class='text-capitalize breadcrumb-title'><u>* 재배계획:"+obj.plan_code; +"<h6></u><hr>";	
+							title += "<h3><u>* 재배계획:"+obj.plan_code; +"<h3></u><hr>";	
 							document.getElementById('vp_title').innerHTML = title;
 							
 							var html = "";
+							html += "<table>";
+							html += "<tbody>";
 							html += "<tr>"
 							html += 	"<td><u><b> * 조사정보 </b></u></td>";
 							html += "</tr>";
@@ -649,7 +790,7 @@
 							html += 	"<td>"+ obj.storage_name +"</td>";
 							html += "</tr>";
 							
-							html += "<tr>"
+							html += "<tr class='last_tr'>"
 							html += 	"<td> 반복 </td>";
 							html += 	"<td>"+ obj.plan_repeat + " </td>";
 							html += "</tr>";
@@ -681,61 +822,147 @@
 							
 	 listFactor = listFactor(obj.plan_id);		
 
-			for(var i=0;i<listFactor.length;i++){	
+			for(var i=0;i<listFactor.length;i++){
+						if(i === 0) {
+							html += "<tr class='last_tr'>"
+							html += 	"<td> 요인 " +(i+1)+"</td>";
+							html += 	"<td>"+ listFactor[i].factor_type +" " + listFactor[i].factor_interval + "</td>";
+							html += "</tr>";										
+							
+						} else {
 							html += "<tr>"
 							html += 	"<td> 요인 " +(i+1)+"</td>";
 							html += 	"<td>"+ listFactor[i].factor_type +" " + listFactor[i].factor_interval + "</td>";
 							html += "</tr>";										
+						};
 			}
 			
 							html += "<tr>"
-							html += 	"<td> 토양정보 </td>";
 						var weather = JSON.parse(obj.weather);
+						
+						html += 	"<td>정보</td>";
+						html += 	"<td class='last_tr tr_blu'> 기상정보 </td>";
 						for(let i in weather){
-							html += 	"<td>"+ weather[i]+"</td>";
+							
+							var category;
+							switch(i){
+							case "afp":
+								category = "강수량";
+								break;
+							case "afv":
+								category = "증발량";
+								break;
+							case "arvlty_300":
+								category = "풍속(300)";
+								break;
+							case "arvlty_150":
+								category = "풍속(150)";
+								break;
+							case "dwcn_Time":
+								category = "결로시간";
+								break;
+							case "frfr_Tp":
+								category = "초상온도";
+								break;
+							case "hd_150":
+								category = "습도(150CM)";
+								break;
+							case "hd_400":
+								category = "습도(400CM)";
+								break;	
+							}
+							
+							html += "<td class='last_tr tr_blu'>"+ category +":"+weather[i]+"</td>";
 						}
 							html += "</tr>";
 							
 							html += "<tr>"
-							html += 	"<td> 기상정보 </td>";
+							html += 	"<td></td>";
+							html += 	"<td class='last_tr tr_ye'> 토양정보 </td>";
 						var soil = JSON.parse(obj.soil);
 						for(let i in soil){
-							html += 	"<td>"+ soil[i]+"</td>";
+					var category;
+					switch(i){
+					case "ACID":
+						category = "산도(ph)";
+						break;
+					case "VLDPHA":
+						category = "유효인산(mg/kg)";
+						break;
+					case "VLDSIA":
+						category = "유효규산(mg/kg)";
+						break;
+					case "OM":
+						category = "유기물(g/kg)";
+						break;
+					case "POIFERT_MG":
+						category = "마그네슘(cmol+/kg)";
+						break;
+					case "POIFERT_K":
+						category = "칼륨(cmol+/kg)";
+						break;
+					case "POIFERT_CA":
+						category = "칼슘(cmol+/kg)";
+						break;
+					case "SELC":
+						category = "전기전도도(dS/m)";
+						break;	
+					}
+							html += "<td class='last_tr tr_ye'>";
+							html += category + ": ";
+							html += soil[i]+"</td>";
 						}
 							html += "</tr>";
+							html += "</tbody>";
+							html +="</table><br><br><br><br>";
 								
 					var content = JSON.parse(obj.rp_content);
 						for(let i in content){
 							var table = "";
+								table += "<tr class='sec_table_tr'>";
+								table += "<th>";
 								table += "<table>";
 								table +=   "<tbody>";
-							for(let j in content[i]){
 
-								var detail = content[i][j][0];
-
-								console.log(detail);
-								table +=       "<tr>";
+								table +=       "<tr class='tr_ye'>";
 								table +=          "<td>구획ID</td>";
-								table +=          "<td>"+ detail.seg_id+"</td>";
+								table +=          "<td colspan='3'>"+ content[i][0][0].seg_id+"</td>";
 								table +=       "</tr>";
-								table +=       "<tr>";
+								table +=       "<tr class='tr_gr'>";
 								table +=          "<td>처리 종류</td>";
-								table +=          "<td> 데이터 수정필요</td>";
+								table +=          "<td colspan='3'>"+content[i][0][0].title+"</td>";
 								table +=       "</tr>";
-								table +=       "<tr>";
-								table +=          "<td>개체</td>";
-								table +=          "<td> 데이터 수정필요</td>";
+								table +=       "<tr class='tr_blu'>";
+								table +=          "<td>조사항목</td>";
+							for(let j in content[i]){
+	
+								var detail = content[i][j][0];
+								table +=          "<td>"+ detail.d3+"</td>";
+								
+							}
 								table +=       "</tr>";
+
+							for(let f in content[i]){	
+								table += "<tr>";
+								table +=     "<td>개체</td>";
+										for(let k in content[i]){
+											table +=     "<td></td>";								
+										}
+								table += "</tr>";
+							}	
 								table +=       "<tr>";
 								table +=          "<td>등록사진</td>";
-								table +=          "<td> <img src='"+detail.img+"'></td>";
+								table +=          "<td colspan='"+content[i].length+"'> <img src='"+detail.img+"'></td>";
 								table +=       "</tr>";
-							}
 								table +=   "</tbody>";
 								table +="</table>";
+								table += "</th>";
+								table +=       "<tr>";
+								table += "</tr><br><br><br>";
 								
 								html += table;
 						}
+						
 							document.getElementById('sch_list').innerHTML = html;
 							
 							

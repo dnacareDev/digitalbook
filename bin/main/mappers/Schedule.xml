@@ -123,7 +123,8 @@
 	<select id="selectFactor" resultType="factor">
 	/* selectFactor */
 		SELECT
-			*
+			ifnull(factor_type,"") as factor_type,
+			ifnull(factor_interval,"")as factor_interval
 		FROM
 			factor
 		where
@@ -161,10 +162,17 @@
 		        LEFT JOIN user u on u.user_id  = rp.user_id
 			WHERE
 				rp_id is not null
+			<if test='report_code != null'>	
 					and
 				r.report_code = #{report_code}
+			</if>
 					and 
 				p.user_group = #{user_group}
+				
+			<if test='rp_id != null'>
+					and
+				rp_id = #{rp_id}
+			</if>
 			limit
 				#{offset},#{limit}
 	</select>

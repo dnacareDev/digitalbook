@@ -299,4 +299,26 @@ public class ScheduleController
 		
 		return map;
 	}
+	
+	
+	@RequestMapping("searchReportForAjax")
+	@ResponseBody
+	public Map<String,Object> searchReportForAjax(@RequestParam(name = "rp_id", required = false) int rp_id, Authentication auth
+												) {
+	
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		
+		HashMap<String,Object> param = new HashMap<String,Object>();
+		User prin = (User)auth.getPrincipal();
+		
+		param.put("offset", 0);
+		param.put("limit", 10);
+		param.put("user_group", prin.getUser_group());
+		param.put("rp_id", rp_id);
+		List<Plan> report = service.SearchReport(param);
+		
+		map.put("report", report);
+		
+		return map;
+	}
 }
