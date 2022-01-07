@@ -1485,6 +1485,7 @@
 		setTimeout(() => {
 			const options = { 
 					center: new kakao.maps.LatLng(37.264399, 126.987798),
+					mapTypeId: kakao.maps.MapTypeId.SKYVIEW,
     			    level: 1
     			};
     		map2 = new kakao.maps.Map(modalContainer, options);	 
@@ -5458,6 +5459,7 @@
 	        			
 	        			const options = { 
 	        				center: new kakao.maps.LatLng(37.264399, 126.987798),
+	    					mapTypeId: kakao.maps.MapTypeId.SKYVIEW,
 	        			    level: 0.5
 	        			};
 						if (map) map.setMap(null);	        				        			
