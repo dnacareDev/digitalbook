@@ -816,5 +816,40 @@
 		WHERE
 		  plan_id = #{plan_id}
 	</update>
-	
+	<select id="selectAreaCode" resultType="Map">
+	/* selectAreaCode */
+		SELECT
+			*
+		FROM
+			address_code
+		WHERE
+			address_YN = "존재"
+	</select>
+	<select id="addressForWeather" resultType="Map">
+	/* addressForWeather */
+		SELECT
+			*
+		FROM
+			weather
+		GROUP BY 
+			area_name;
+	</select>
+	<select id="findWeather" resultType="Map">
+	/* findWeather */
+		SELECT
+			*
+		FROM
+			weather
+		WHERE
+			area_name LIKE CONCAT('%', #{area_name}, '%')
+	</select>
+	<select id="selectWeatherSoilInfo" resultType="Map">
+	/* selectWeatherSoilInfo */
+		SELECT
+			*
+		FROM
+			weather_soil_info
+		WHERE
+			plan_id = #{plan_id}
+	</select>
 </mapper>

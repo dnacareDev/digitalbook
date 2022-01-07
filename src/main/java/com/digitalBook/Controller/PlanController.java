@@ -600,10 +600,23 @@ public class PlanController
 		List<Segment> segment = service.selectSegmentList(plan_id);
 		List<SegmentInfo> segmentInfo = service.selectSegmentInfoList(plan_id);
 
+//		List<HashMap<String,Object>> addressForSoil = service.selectAreaCode();
+
+		List<HashMap<String,Object>> addressForWeather = service.addressForWeather();
+		
 		if(!plan.getPlan_method().isEmpty()) {			
 			int arr[] = Arrays.stream(plan.getPlan_method().split(",")).mapToInt(Integer::parseInt).toArray();
 			List<Method> method = service.selectPlanMethodList(arr);
 			mv.addObject("method", method);
+		}
+		
+		Map<String,Object> map = service.selectWeatherSoilInfo(plan_id);
+	
+		if(map != null) {
+			// 토양및 기상정보
+			mv.addObject("map",map);
+		}else {			
+			mv.addObject("map","noData");
 		}
 		
 		mv.addObject("plan_id", plan_id);
@@ -615,11 +628,35 @@ public class PlanController
 		mv.addObject("segment", segment);
 		mv.addObject("segmentInfo", segmentInfo);
 		
+		// 토양 정보 address code
+//		mv.addObject("addressForSoil",addressForSoil);
+		mv.addObject("addressForWeather",addressForWeather);		
+		
+		
 		mv.setViewName("plan/result_insert");
 		
 		return mv;
 	}
 	
+	@RequestMapping("/addressForSoil")
+	@ResponseBody
+	public List<HashMap<String,Object>> addressForSoil(){
+		List<HashMap<String,Object>> addressForSoil = service.selectAreaCode();
+		
+		return addressForSoil;
+	}
+	
+	@RequestMapping("/findWeather")
+	@ResponseBody
+	public Map<String,Object> findWeather(@RequestParam(name = "area_name", required = true) String area_name)
+	{
+		Map<String,Object> result = new HashMap<String,Object>();
+		System.out.println(area_name);
+		List<Map<String,Object>> map = service.findWeather(area_name); 
+		
+		result.put("data", map);
+		return result;
+	}
 	//시비량 삭제
 	@ResponseBody
 	@RequestMapping("/deleteSchedule")
@@ -969,28 +1006,14 @@ public class PlanController
 	// 토양 정보 불러오는 API
 	@RequestMapping("getSoilInfo")
 	@ResponseBody
-	public Map<String,Object> getSoilInfo(@RequestParam("plan_id") int plan_id) throws Exception{
+	public Map<String,Object> getSoilInfo(@RequestParam("address_code") String address_code) throws Exception{
+		
 		Map<String, Object> resultMap = new HashMap<>();
-
-		String storage_address = service.selectStroageAddress(plan_id);
-		
-	if(!storage_address.equals("")) {
-		String[] arr = storage_address.split(" ");
-		String address_name = "";
-		
-		for(int i=1;i<arr.length-1;i++) {
-				if(i > 1) {					
-					address_name	+=	" ";
-				}
-				address_name += arr[i];
-		}
-		
-		long address_code = service.selectAddressCode(address_name);
-		String code = Long.toString(address_code);
-		                                                                                                                                                                     
+		                  System.out.println("!!!!!!!!!!!!");
+		                  System.out.println(address_code);
 	     StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1390802/SoilEnviron/SoilExam/getSoilExamList"); /*URL*/
 	        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=u5qnZTsRtR99gpLQQOpnPoUQvKi7VZtNToGrTyAkqCtFyoIHgAbEXhAR6nbI6YHStzltb9iWdDWHxjt2f8O3zA%3D%3D"); /*Service Key*/
-	        urlBuilder.append("&" + URLEncoder.encode("BJD_Code","UTF-8") + "=" + URLEncoder.encode(code, "UTF-8")); /*요청 값 포함 일치하는 지번코드에 대한 토양검정 화학성 정보 검색*/
+	        urlBuilder.append("&" + URLEncoder.encode("BJD_Code","UTF-8") + "=" + URLEncoder.encode(address_code, "UTF-8")); /*요청 값 포함 일치하는 지번코드에 대한 토양검정 화학성 정보 검색*/
 	        urlBuilder.append("&" + URLEncoder.encode("Page_Size","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*요청 값 포함 일치하는 지번코드에 대한 토양검정 화학성 정보 검색*/
 	        urlBuilder.append("&" + URLEncoder.encode("Page_No","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*요청 값 포함 일치하는 지번코드에 대한 토양검정 화학성 정보 검색*/
 
@@ -1024,15 +1047,15 @@ public class PlanController
             Map<String, Object> items = null;
             List<Map<String, Object>> itemList = null;
  
-            items = (Map<String, Object>) body.get("items");
+            int cnt = Integer.parseInt(body.get("Total_Count").toString());
+            if(cnt > 0) {            	
+            	items = (Map<String, Object>) body.get("items");
+            	resultMap.put("data", items);
+            }else {
+            	resultMap.put("data", "no result");
+            }
 //            itemList = (List<Map<String, Object>>) items.get("item");
- 
- 
        
-            resultMap.put("data", items);
-	}else {
-			resultMap.put("data", "no result");	
-	}
 
 		return resultMap;
 		
@@ -1042,32 +1065,23 @@ public class PlanController
 	// 토양 정보 불러오는 API
 		@RequestMapping("getWeatherInfo")
 		@ResponseBody
-		public Map<String,Object> getWeatherInfo(@RequestParam("plan_id") int plan_id) throws Exception{
+		public Map<String,Object> getWeatherInfo(@RequestParam("address_code") String address_code, @RequestParam("weather_date") String weather_date) throws Exception{
 			Map<String, Object> resultMap = new HashMap<>();
 
-			String storage_address = service.selectStroageAddress(plan_id);
-	
-			if(!storage_address.equals("")) {
-			String[] arr = storage_address.split(" ");
-			String address_name = "";
-			
-			for(int i=1;i<2;i++) {
-				if(i > 1) {					
-					address_name +=	" ";
-				}
-				address_name += arr[i];
-			}
-		
-			HashMap<String,Object> param = service.selectWeatherInfo(address_name);
+			HashMap<String,Object> param = service.selectWeatherInfo(address_code);
 			String obsr_Spot_Code = param.get("area_code").toString();
 			String obsr_Spot_Nm = param.get("city_name").toString();
+			
 			LocalDate now = LocalDate.now();
-
+			if(weather_date.equals("")) {
+				weather_date = now.toString();
+			}
+			System.out.println(weather_date);
 			
 		     StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1390802/AgriWeather/WeatherObsrInfo/InsttWeather/getWeatherTenMinList"); /*URL*/
 		        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=u5qnZTsRtR99gpLQQOpnPoUQvKi7VZtNToGrTyAkqCtFyoIHgAbEXhAR6nbI6YHStzltb9iWdDWHxjt2f8O3zA%3D%3D"); /*Service Key*/
 		        urlBuilder.append("&" + URLEncoder.encode("time","UTF-8") + "=" + URLEncoder.encode("1300", "UTF-8")); /*요청 값 포함 일치하는 지번코드에 대한 토양검정 화학성 정보 검색*/
-		        urlBuilder.append("&" + URLEncoder.encode("date","UTF-8") + "=" + URLEncoder.encode(now.toString(), "UTF-8")); /*요청 값 포함 일치하는 지번코드에 대한 토양검정 화학성 정보 검색*/
+		        urlBuilder.append("&" + URLEncoder.encode("date","UTF-8") + "=" + URLEncoder.encode(weather_date, "UTF-8")); /*요청 값 포함 일치하는 지번코드에 대한 토양검정 화학성 정보 검색*/
 		        urlBuilder.append("&" + URLEncoder.encode("obsr_Spot_Code","UTF-8") + "=" + URLEncoder.encode(obsr_Spot_Code, "UTF-8")); /*요청 값 포함 일치하는 지번코드에 대한 토양검정 화학성 정보 검색*/
 		        urlBuilder.append("&" + URLEncoder.encode("obsr_Spot_Nm","UTF-8") + "=" + URLEncoder.encode(obsr_Spot_Nm, "UTF-8")); /*요청 값 포함 일치하는 지번코드에 대한 토양검정 화학성 정보 검색*/
 		        urlBuilder.append("&" + URLEncoder.encode("Page_Size","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*요청 값 포함 일치하는 지번코드에 대한 토양검정 화학성 정보 검색*/
@@ -1103,23 +1117,21 @@ public class PlanController
 	            Map<String, Object> items = null;
 	            List<Map<String, Object>> itemList = null;
 	 
-	            System.out.println(sb);
 	            Map<String, Object> resultCode = (Map<String, Object>) map.get("Result_Code");
 
-	            if(body != null) {	            	
+	   
+	            System.out.println(sb);
+	            if(body != null) {             	
 	            	items = (Map<String, Object>) body.get("items");
 	            	resultMap.put("data", items);
 	            }else {
 	    			resultMap.put("data", "no result");	
 	            }
-	       
-		}else {
-			resultMap.put("data", "no result");	
-		}
+
 
 			return resultMap;
 			
-		}
+}
 		
 		
 		@RequestMapping("insertWeatherAndSoil")

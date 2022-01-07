@@ -624,7 +624,10 @@
 
 
 <script type="text/javascript">
-  function savePDF(){
+function closeModal(){
+	$("#scheduleModal").modal("hide");
+}
+  function savePDF1(){
     //저장 영역 div id
     html2canvas($('#pdfArea')[0] ,{	
       //logging : true,		// 디버그 목적 로그
@@ -634,19 +637,23 @@
       scale : 2			// 기본 96dpi에서 해상도를 두 배로 증가
       
     }).then(function(canvas) {	
+ 		
+   		var doc = new jsPDF('p', 'mm','a4');
       // 캔버스를 이미지로 변환
-      var imgData = canvas.toDataURL('image/png');
-
+      console.log(canvas);
+      var imgData = canvas.toDataURL('image/jpeg', 0.3);
+      console.log("imgData:----------------",canvas, imgData);
+      
       var imgWidth = 190; // 이미지 가로 길이(mm) / A4 기준 210mm
       var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
       var imgHeight = canvas.height * imgWidth / canvas.width;
       var heightLeft = imgHeight;
       var margin = 10; // 출력 페이지 여백설정
-      var doc = new jsPDF('p', 'mm');
+      
       var position = 0;
 
       // 첫 페이지 출력
-      doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+      doc.addImage(imgData, 'jpeg', margin, position, imgWidth, imgHeight);
       heightLeft -= pageHeight;
 
       // 한 페이지 이상일 경우 루프 돌면서 출력
@@ -655,48 +662,67 @@
       position = position - 20 ;		// -25
 
       doc.addPage();
-      doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+      doc.addImage(imgData, 'jpeg', margin, position, imgWidth, imgHeight);
       heightLeft -= pageHeight;
       }
 
       // 파일 저장
-      doc.save('filename.pdf');
+      doc.save('연구결과.pdf');
     });
   }
+  
+ 
+
+  function savePDF(){
+	  console.log('22222222222222');
+	  
+	  html2canvas(document.querySelector("#pdfArea") ,{	
+	      //logging : true,		// 디버그 목적 로그
+	      //proxy: "html2canvasproxy.php",
+	      allowTaint : true,	// cross-origin allow 
+	      useCORS: true,		// CORS 사용한 서버로부터 이미지 로드할 것인지 여부
+	      scale : 2			// 기본 96dpi에서 해상도를 두 배로 증가
+	      
+	    }).then(function(canvas) {	
+	 		
+	    	// 캔버스를 이미지로 변환
+            var imgData = canvas.toDataURL('image/png');
+	  console.log("img-------------------",imgData);
+
+            var imgWidth = 210; // 이미지 가로 길이(mm) A4 기준
+            var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
+            var imgHeight = canvas.height * imgWidth / canvas.width;
+            var heightLeft = imgHeight;
+
+            var doc = new jsPDF('p', 'mm');
+            var position = 0;
+
+            // 첫 페이지 출력
+            doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+
+            // 한 페이지 이상일 경우 루프 돌면서 출력
+            while (heightLeft >= 20) {
+                position = heightLeft - imgHeight;
+                doc.addPage();
+                doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
+
+            // 파일 저장
+            doc.save('1111111111111'+'.pdf');
+
+
+            //이미지로 표현
+            //document.write('<img src="'+imgData+'" />');
+	    });
+      
+  }
+
+
 </script>
 
 <script type="text/javascript" th:inline="javascript">
-
-var doc = new jsPDF();
-var specialElementHandlers = {
-    '#editor': function(element, renderer) {
-        return true;
-    }
-}
- 
-$('#savePdfBtn').click(function() {
-	html2canvas($('#pdfDiv')[0]).then(function(canvas) { // 캔버스를 이미지로 변환 	
-	let imgData = canvas.toDataURL('image/png'); 
-	let margin = 10; // 출력 페이지 여백설정 
-	let imgWidth = 210 - (10 * 2); // 이미지 가로 길이(mm) A4 기준 
-	let pageHeight = imgWidth * 1.414; // 출력 페이지 세로 길이 계산 A4 기준 
-	let imgHeight = canvas.height * imgWidth / canvas.width; 
-	let heightLeft = imgHeight; 
-	let doc = new jsPDF('p', 'mm',"a4"); 
-	let position = margin; // 첫 페이지 출력 
-	doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
-	heightLeft -= pageHeight; // 한 페이지 이상일 경우 루프 돌면서 출력 
-	while (heightLeft >= 20) { 
-		position = heightLeft - imgHeight; 
-		doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight); 
-		doc.addPage(); heightLeft -= pageHeight; } // 파일 저장 
-		doc.save('연구 결과.pdf'); });
-});
-
-
-
-
-
 
 	var current_plan = /*[[${current_plan}]]*/ "null";
 
@@ -737,7 +763,7 @@ $('#savePdfBtn').click(function() {
 				{
 					var title = result.plan[i].report_code + ":" + result.plan[i].report_title;
 					
-					var schedule = {"title" : title, "start":result.plan[i].create_date, "end":result.plan[i].create_date, "id":result.plan[i].plan_id,"classNames": "schedule"};
+					var schedule = {"title" : title, "start":result.plan[i].rp_create_date, "end":result.plan[i].rp_create_date, "id":result.plan[i].plan_id,"classNames": "schedule"};
 					
 					arr.push(schedule);
 				}
@@ -782,17 +808,17 @@ $('#savePdfBtn').click(function() {
 							
 							html += "<tr>"
 							html += 	"<td style='width:120px;'> 과제명 </td>";
-							html += 	"<td>"+ obj.report_title+"("+obj.report_code+")" +"</td>";
+							html += 	"<td colspan='12'>"+ obj.report_title+"("+obj.report_code+")" +"</td>";
 							html += "</tr>";
 							
 							html += "<tr>"
 							html += 	"<td> 포장위치 </td>";
-							html += 	"<td>"+ obj.storage_name +"</td>";
+							html += 	"<td colspan='12'>"+ obj.storage_name +"</td>";
 							html += "</tr>";
 							
 							html += "<tr class='last_tr'>"
 							html += 	"<td> 반복 </td>";
-							html += 	"<td>"+ obj.plan_repeat + " </td>";
+							html += 	"<td colspan='12'>"+ obj.plan_repeat + " </td>";
 							html += "</tr>";
 							
 	var grow_type;
@@ -812,27 +838,27 @@ $('#savePdfBtn').click(function() {
 	
 							html += "<tr>"
 							html += 	"<td> 시험구배치 종류 </td>";
-							html += 	"<td>"+ grow_type +  "</td>";
+							html += 	"<td colspan='12'>"+ grow_type +  "</td>";
 							html += "</tr>";
 							
 							html += "<tr>"
 							html += 	"<td> 조사항목 </td>";
-							html += 	"<td>"+ obj.method_title+ " </td>";
+							html += 	"<td colspan='12'>"+ obj.method_title+ " </td>";
 							html += "</tr>";
 							
-	 listFactor = listFactor(obj.plan_id);		
+	 var listFactor = listFactor2(obj.plan_id);		
 
 			for(var i=0;i<listFactor.length;i++){
 						if(i === 0) {
 							html += "<tr class='last_tr'>"
 							html += 	"<td> 요인 " +(i+1)+"</td>";
-							html += 	"<td>"+ listFactor[i].factor_type +" " + listFactor[i].factor_interval + "</td>";
+							html += 	"<td colspan='12'>"+ listFactor[i].factor_type +" " + listFactor[i].factor_interval + "</td>";
 							html += "</tr>";										
 							
 						} else {
 							html += "<tr>"
 							html += 	"<td> 요인 " +(i+1)+"</td>";
-							html += 	"<td>"+ listFactor[i].factor_type +" " + listFactor[i].factor_interval + "</td>";
+							html += 	"<td colspan='12'>"+ listFactor[i].factor_type +" " + listFactor[i].factor_interval + "</td>";
 							html += "</tr>";										
 						};
 			}
@@ -926,33 +952,35 @@ $('#savePdfBtn').click(function() {
 
 								table +=       "<tr class='tr_ye'>";
 								table +=          "<td>구획ID</td>";
-								table +=          "<td colspan='3'>"+ content[i][0][0].seg_id+"</td>";
+								table +=          "<td colspan='3'>"+ checkNullString(content[i][0][0].seg_id)+"</td>";
 								table +=       "</tr>";
 								table +=       "<tr class='tr_gr'>";
 								table +=          "<td>처리 종류</td>";
-								table +=          "<td colspan='3'>"+content[i][0][0].title+"</td>";
+								table +=          "<td colspan='3'>"+checkNullString(content[i][0][0].title)+"</td>";
 								table +=       "</tr>";
 								table +=       "<tr class='tr_blu'>";
 								table +=          "<td>조사항목</td>";
 							for(let j in content[i]){
 	
 								var detail = content[i][j][0];
-								table +=          "<td>"+ detail.d3+"</td>";
+								table +=          "<td></td>";
 								
 							}
 								table +=       "</tr>";
 
 							for(let f in content[i]){	
+								for(let k in content[i][f]){
 								table += "<tr>";
 								table +=     "<td>개체</td>";
-										for(let k in content[i]){
-											table +=     "<td></td>";								
-										}
+											table += "<td>"+checkNullString(content[i][f][k].title)+"</td>";								
+											table += "<td>"+checkNullString(content[i][f][k].d3)+"</td>";								
+											table += "<td></td>";								
 								table += "</tr>";
+								}
 							}	
 								table +=       "<tr>";
 								table +=          "<td>등록사진</td>";
-								table +=          "<td colspan='"+content[i].length+"'> <img src='"+detail.img+"'></td>";
+								table +=          "<td colspan='"+content[i].length+"'> <img src='"+checkNullString(detail.img)+"'></td>";
 								table +=       "</tr>";
 								table +=   "</tbody>";
 								table +="</table>";
@@ -980,8 +1008,15 @@ $('#savePdfBtn').click(function() {
 			}
 		});
 	});
+	function checkNullString(type){
+		if(type == null || type == "undefined"){
+			return "";
+		}else{
+			return type;
+		}
+	}	
 	
-function listFactor(plan_id){
+function listFactor2(plan_id){
 	  	var list;
 	  	 $.ajax({
 	  		 type:"GET",
