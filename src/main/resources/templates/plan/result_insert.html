@@ -477,7 +477,7 @@
 			                                </table>
 			                            </div>
 			                            <div class="content_box" id="soilAndWeathInfo2" style="display:none;">
-			                                <span class="sub_title-content bold_text">토양정보(수동조회)</span>
+			                                <span class="sub_title-content bold_text">기상정보(수동조회)</span>
 			                                <table>
 			                                    <thead>
 			                                        <tr>
@@ -547,6 +547,7 @@
 <script th:inline="javascript">
 loadData();
 function loadData(){
+	var obj = [[${map}]];
 	var soilView = document.querySelectorAll(".soilView");
 	var soilOne = document.querySelector("#soilAndWeathInfo1");
 	var soilTwo = document.querySelector("#soilAndWeathInfo2");
@@ -554,7 +555,6 @@ function loadData(){
 	for(var i = 0; i < soilView.length; i++){
 		soilView[i].style.display = "block";
 	}
-		var obj = [[${map}]];
 		var weather = JSON.parse(obj.weather);
 		
 		var weatherInfo = "";
@@ -588,7 +588,7 @@ function loadData(){
 				break;	
 			}
 			
-			weatherInfo += "<td>"+ category +":"+weather[i]+"</td>";
+			weatherInfo += "<td>"+weather[i]+"</td>";
 		}
 			var soilInfo = "";
 			
@@ -622,7 +622,6 @@ function loadData(){
 			break;	
 		}
 		soilInfo += "<td>";
-		soilInfo += category + ": ";
 		soilInfo += soil[i]+"</td>";
 		}
 
@@ -819,7 +818,7 @@ function getSoilAndWeatherInfo(type){
 }
 
 function insertWeatherAndSoil(){
-			
+		var plan_id = [[${plan_id}]];
 	$.ajax({
 		type:"post",
 		url:"/plan/insertWeatherAndSoil",
@@ -1336,103 +1335,20 @@ var hd_150 = 0;
 // 습도(%)
 var hd_400 = 0;
 
+
 var weatherData = "";
 var soilData = "";
 
-function closeModalForInfo(){
-	
-	var soilView = document.querySelectorAll(".soilView");
-	var soilOne = document.querySelector("#soilAndWeathInfo1");
-	var soilTwo = document.querySelector("#soilAndWeathInfo2");
+var obj = [[${map}]];
 
-	for(var i = 0; i < soilView.length; i++){
-		soilView[i].style.display = "block";
-	}
-	
-	// 토양정보 체크 했을시
-	if($('#checkSoil').is(':checked') == true){
-		var td = "";
-			 ACID = ACID;
-			 VLDPHA = VLDPHA;
-			 VLDSIA = VLDSIA;
-			 OM = OM;
-			 POIFERT_MG = POIFERT_MG;
-			 POIFERT_K = POIFERT_K;
-			 POIFERT_CA = POIFERT_CA;
-			 SELC = SELC;
-			 
-			 soilData = {
-				 "ACID" : ACID,
-				 "VLDPHA" : VLDPHA,
-				 "VLDSIA" : VLDSIA,
-				 "OM" : OM,
-				 "POIFERT_MG" : POIFERT_MG,
-				 "POIFERT_K" : POIFERT_K,
-				 "POIFERT_CA" : POIFERT_CA,
-				 "SELC" : SELC 
-			 }
-			 
-			td += "<td>" + ACID + "</td>";
-			td += "<td>" + VLDPHA + "</td>";
-			td += "<td>" + VLDSIA + "</td>";
-			td += "<td>" + OM + "</td>";
-			td += "<td>" + POIFERT_MG + "</td>";
-			td += "<td>" + POIFERT_K + "</td>";
-			td += "<td>" + POIFERT_CA + "</td>";
-			td += "<td>" + SELC + "</td>";
-			
-			document.getElementById('soilData').innerHTML = td;
-		soilOne.style.display = "block";
-	}else{
-		soilOne.style.display = "none";
-		 soilData = {}
-	}
-	
-	var td2 = "";
-	// 기상정보 체크 됬을시
-	if($('#checkWeather').is(':checked') == true){
-		weatherData = {
-			"afp" : afp,
-			"afv" : afv,
-			"arvlty_300" : arvlty_300,
-			"arvlty_150" : arvlty_150,
-			"dwcn_Time" : dwcn_Time,
-			"frfr_Tp" : frfr_Tp,
-			"hd_150" : hd_150,
-			"hd_400" : hd_400,
-		
-		};
-		
-		td2 += "<td>"+ afp + "mm</td>";
-		td2 += "<td>"+ afv + "mm</td>";
-		td2 += "<td>"+ arvlty_300 + "</td>";
-		td2 += "<td>"+ arvlty_150 + "</td>";
-		td2 += "<td>"+ dwcn_Time + "hr</td>";
-		td2 += "<td>"+ frfr_Tp + "℃</td>";
-		td2 += "<td>"+ hd_150 + "%</td>";
-		td2 += "<td>"+ hd_400 + "%</td>";
-			
-			document.getElementById('weatherData').innerHTML = td2;
-			soilTwo.style.display = "block";
-	}else{
-		soilTwo.style.display = "none";
-		
-		weatherData = {};
-	}
-	
-	
-	
-	// 작성자가 본인일때만 결과입력 저장가능
-	var schId_arr = new Array();
-	for(var i = 0; i < sch.length; i++){
-		schId_arr.push(sch[i].sch_supervisor);
-		schId_arr.push(sch[i].sch_manager);
-	}
-	if(schId_arr.includes(user.user_id) == false){
-		document.getElementsByClassName('type1 soilView')[0].style.display = "none";
-	}
-	
-	$("#scheduleModal").modal("hide");
+console.log(obj.soilData != "");
+console.log(obj.weather != "");
+
+if(obj.soil != ""){
+	soilData = JSON.parse(obj.soil);
+}
+if(obj.weather != ""){
+	weatherData = JSON.parse(obj.weather);
 }
 
 function findInfo(type){
@@ -1914,6 +1830,92 @@ function findInfo(type){
 	
 	
 	
+	function closeModalForInfo(){
+		
+		var soilView = document.querySelectorAll(".soilView");
+		var soilOne = document.querySelector("#soilAndWeathInfo1");
+		var soilTwo = document.querySelector("#soilAndWeathInfo2");
+
+		for(var i = 0; i < soilView.length; i++){
+			soilView[i].style.display = "block";
+		}
+		
+		// 토양정보 체크 했을시
+		if($('#checkSoil').is(':checked') == true){
+			var td = "";
+				 ACID = ACID;
+				 VLDPHA = VLDPHA;
+				 VLDSIA = VLDSIA;
+				 OM = OM;
+				 POIFERT_MG = POIFERT_MG;
+				 POIFERT_K = POIFERT_K;
+				 POIFERT_CA = POIFERT_CA;
+				 SELC = SELC;
+				 
+				 soilData = {
+					 "ACID" : ACID,
+					 "VLDPHA" : VLDPHA,
+					 "VLDSIA" : VLDSIA,
+					 "OM" : OM,
+					 "POIFERT_MG" : POIFERT_MG,
+					 "POIFERT_K" : POIFERT_K,
+					 "POIFERT_CA" : POIFERT_CA,
+					 "SELC" : SELC 
+				 }
+				 
+				td += "<td>" + ACID + "</td>";
+				td += "<td>" + VLDPHA + "</td>";
+				td += "<td>" + VLDSIA + "</td>";
+				td += "<td>" + OM + "</td>";
+				td += "<td>" + POIFERT_MG + "</td>";
+				td += "<td>" + POIFERT_K + "</td>";
+				td += "<td>" + POIFERT_CA + "</td>";
+				td += "<td>" + SELC + "</td>";
+				
+				document.getElementById('soilData').innerHTML = td;
+			soilOne.style.display = "block";
+			soilTwo.style.display = "block";
+		}else{
+//	 		soilOne.style.display = "none";
+		}
+		
+		var td2 = "";
+		// 기상정보 체크 됬을시
+		if($('#checkWeather').is(':checked') == true){
+			weatherData = {
+				"afp" : afp,
+				"afv" : afv,
+				"arvlty_300" : arvlty_300,
+				"arvlty_150" : arvlty_150,
+				"dwcn_Time" : dwcn_Time,
+				"frfr_Tp" : frfr_Tp,
+				"hd_150" : hd_150,
+				"hd_400" : hd_400,
+			
+			};
+			
+			td2 += "<td>"+ afp + "mm</td>";
+			td2 += "<td>"+ afv + "mm</td>";
+			td2 += "<td>"+ arvlty_300 + "</td>";
+			td2 += "<td>"+ arvlty_150 + "</td>";
+			td2 += "<td>"+ dwcn_Time + "hr</td>";
+			td2 += "<td>"+ frfr_Tp + "℃</td>";
+			td2 += "<td>"+ hd_150 + "%</td>";
+			td2 += "<td>"+ hd_400 + "%</td>";
+				
+				document.getElementById('weatherData').innerHTML = td2;
+				soilOne.style.display = "block";
+				soilTwo.style.display = "block";
+		}else{
+//	 		soilTwo.style.display = "none";
+			
+		}
+		
+		
+
+		
+		$("#scheduleModal").modal("hide");
+	}
 	//구획정보 select 박스 그리기
 	function gridSegmentSelect(){
 		//select important
