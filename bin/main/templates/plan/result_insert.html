@@ -418,22 +418,40 @@
 			                        <h3>토양/기상 정보<span></span></h3>
 			                    </div>
 			                    
-			                      <div class="content clearfix" >
+			              
+			                      <div class="content clearfix"  th:if="${map.toString() == 'noData'}">
 			                        <div class="content-center">
 			                            <div class="content_box info_box">
 			                                <span class="sub_title-content bold_text">토양정보</span>
-			                             	<button onclick="getSoilAndWeatherInfo(1)">토양정보조회</button>
+			                             	<button onclick="openModalForInfo(1)">토양정보조회</button>
 			                            </div>
 			                            <div class="content_box info_box">
 			                                <span class="sub_title-content bold_text">기상정보</span>
-			                             	<button onclick="getSoilAndWeatherInfo(2)">기상정보조회</button>
+			                             	<button onclick="openModalForInfo(2)">기상정보조회</button>
 			                            </div>
 			                            <div class="content_box info_box">
 			                                <span class="sub_title-content bold_text">Comment</span>
 			                             	<textarea id="comment"></textarea>
 			                            </div>
 			                        </div>
+			                    </div>
+			                    <div class="content clearfix"  th:unless="${map.toString() == 'noData'}">
+			                        <div class="content-center">
+			                            <div class="content_box info_box">
+			                                <span class="sub_title-content bold_text">토양정보</span>
+			                             	<button onclick="openModalForInfo(1)">토양정보조회</button>
+			                            </div>
+			                            <div class="content_box info_box">
+			                                <span class="sub_title-content bold_text">기상정보</span>
+			                             	<button onclick="openModalForInfo(2)">기상정보조회</button>
+			                            </div>
+			                            <div class="content_box info_box">
+			                                <span class="sub_title-content bold_text">Comment</span>
+			                             	<textarea id="comment">[[${map.comment}]]</textarea>
+			                            </div>
+			                        </div>
 			                    </div>		                    
+			                    
 			                    <div class="content clearfix soilView">
 			                        <div class="content-center">
 			                            <div class="content_box" id="soilAndWeathInfo1" style="display:none;">
@@ -459,7 +477,7 @@
 			                                </table>
 			                            </div>
 			                            <div class="content_box" id="soilAndWeathInfo2" style="display:none;">
-			                                <span class="sub_title-content bold_text">토양정보(수동조회)</span>
+			                                <span class="sub_title-content bold_text">기상정보(수동조회)</span>
 			                                <table>
 			                                    <thead>
 			                                        <tr>
@@ -527,7 +545,92 @@
         </div>
 			                    
 <script th:inline="javascript">
+loadData();
+function loadData(){
+	var obj = [[${map}]];
+	var soilView = document.querySelectorAll(".soilView");
+	var soilOne = document.querySelector("#soilAndWeathInfo1");
+	var soilTwo = document.querySelector("#soilAndWeathInfo2");
 
+	for(var i = 0; i < soilView.length; i++){
+		soilView[i].style.display = "block";
+	}
+		var weather = JSON.parse(obj.weather);
+		
+		var weatherInfo = "";
+		for(let i in weather){
+			
+			var category;
+			switch(i){
+			case "afp":
+				category = "강수량";
+				break;
+			case "afv":
+				category = "증발량";
+				break;
+			case "arvlty_300":
+				category = "풍속(300)";
+				break;
+			case "arvlty_150":
+				category = "풍속(150)";
+				break;
+			case "dwcn_Time":
+				category = "결로시간";
+				break;
+			case "frfr_Tp":
+				category = "초상온도";
+				break;
+			case "hd_150":
+				category = "습도(150CM)";
+				break;
+			case "hd_400":
+				category = "습도(400CM)";
+				break;	
+			}
+			
+			weatherInfo += "<td>"+weather[i]+"</td>";
+		}
+			var soilInfo = "";
+			
+		var soil = JSON.parse(obj.soil);
+		for(let i in soil){
+		var category;
+		switch(i){
+			case "ACID":
+			category = "산도(ph)";
+			break;
+			case "VLDPHA":
+			category = "유효인산(mg/kg)";
+			break;
+			case "VLDSIA":
+			category = "유효규산(mg/kg)";
+			break;
+			case "OM":
+			category = "유기물(g/kg)";
+			break;
+			case "POIFERT_MG":
+			category = "마그네슘(cmol+/kg)";
+			break;
+			case "POIFERT_K":
+			category = "칼륨(cmol+/kg)";
+			break;
+			case "POIFERT_CA":
+			category = "칼슘(cmol+/kg)";
+			break;
+			case "SELC":
+			category = "전기전도도(dS/m)";
+			break;	
+		}
+		soilInfo += "<td>";
+		soilInfo += soil[i]+"</td>";
+		}
+
+		document.getElementById('soilData').innerHTML = soilInfo;
+		document.getElementById("weatherData").innerHTML = weatherInfo;
+		soilOne.style.display = "block";
+		soilTwo.style.display = "block";
+}
+		
 //날씨정보 등록 팝업
 function confirminsertWeatherAndSoil(){
 	$("#soilAndWeather_confirm_popup").css("display", "flex");
@@ -544,44 +647,24 @@ function CancelBtnWeatherAndSoil(){
 	$("#soilAndWeather_confirm_popup").css("display", "none");
 }
 
-// 저장을 위해 전역 변수 토양 
-	//산도(ph)
-	var ACID = 0;
-	//유효인산(mg/kg)
-	var VLDPHA = 0;
-	//유효규산(mg/kg)
-	var VLDSIA = 0;
-	//유기물(g/kg)
-	var OM =  0;
-	//마그네슘(cmol+/kg)
-	var POIFERT_MG = 0;
-	//칼륨(cmol+/kg)
-	var POIFERT_K = 0;
-	//칼슘(cmol+/kg)
-	var POIFERT_CA = 0;
-	//전기전도도(dS/m)
-	var SELC = 0;
 
-// 저장을 위해 전역 변수 기상
-	// 강수량(mm)
-	var afp = 0;
-	// 증발량(mm)
-	var afv = 0;
-	// 풍속 300
-	var arvlty_300 = 0;
-	// 풍속 150
-	var arvlty_150 = 0;
-	// 결로시간 (hr)
-	var dwcn_Time = 0;
-	// 초상온도(℃)
-	var frfr_Tp = 0;
-	// 습도(%)
-	var hd_150 = 0;
-	// 습도(%)
-	var hd_400 = 0;
+
+function openModalForInfo(type){
 	
-	var weatherData = "";
-	var soilData = "";
+	
+	// 토양 정보 클릭일때
+	if(type == 1){
+		document.getElementById("modalWeather").style.display = "none";
+		document.getElementById("modalSoil").style.display = "block";		
+	
+	// 기상정보 클릭일때
+	}else{
+		document.getElementById("modalSoil").style.display = "none";		
+		document.getElementById("modalWeather").style.display = "block";
+	}	
+	$("#scheduleModal").modal("show");	
+}	
+	
 	
 function getSoilAndWeatherInfo(type){
 	var plan_id = [[${plan_id}]];
@@ -735,7 +818,7 @@ function getSoilAndWeatherInfo(type){
 }
 
 function insertWeatherAndSoil(){
-			
+		var plan_id = [[${plan_id}]];
 	$.ajax({
 		type:"post",
 		url:"/plan/insertWeatherAndSoil",
@@ -1056,6 +1139,118 @@ function insertWeatherAndSoil(){
 	    
 	</main>
 	
+	
+			<div class="modal-basic modal fade show" id="scheduleModal" tabindex="-1" role="dialog" aria-hidden="true">
+			    <div class="modal-dialog modal-xl" role="document">
+			        <div class="modal-content modal-bg-white ">
+			            <div class="modal-body">
+			            	<div class="d-flex justify-content-end">
+		                		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span data-feather="x"></span></button>
+		                	</div>
+		                    <div class="tab-content">
+		                    	<div class="tab-pane show active" id="modal-content1" role="tabpanel">
+		                    		<div class="row">
+		                    			<div class="col-lg-12">
+		                    				<div class="breadcrumb-main ml-2" id="vp_title">
+
+		                    				</div>
+		                    			</div>
+		                    		</div>
+			                    	<div class="row">
+			                    		<div class="col-lg-12">
+			                    			<div class="bg-white">
+		                    					<div class="table-responsive" id="ModalTable2">
+		                    						<div id="sch_list">
+		                    							
+								                <div id="modalWeather">
+							                         <span style="display:flex;">
+		                    							<select class="form-control form-control-lg mt-10 mb-10 mr-10" id="weather_area" style="width: 150px;height:40px;">
+		                    								<option value="">시/도</option>
+							                                <option th:each="address : ${addressForWeather}" th:value="${address.area_name}" th:text="${address.area_name}">시/도</option>
+							                            </select>
+							                            <select class="form-control form-control-lg mt-10 mb-10 mr-10" id="weather_city" style="width: 150px;height:40px;">
+							                                <option value="">시/군/구</option>
+							                            </select>
+							                            <input type="date" class="form-control form-control-lg mt-10 mb-10 mr-10" id="weather_date" style="width: 150px;height:40px;">
+							                                
+							                            <input type="text" placeholder="(시)00~23" class="form-control form-control-lg mt-10 mb-10 mr-10" id="weather_hour" style="width: 100px;height:40px;"> 
+							                            <span class=" mt-10 mb-10 mr-10">:</span>
+							                            <input type="text" placeholder="(분)00~59" class="form-control form-control-lg mt-10 mb-10 mr-10" id="weather_min" style="width: 100px;height:40px;">							                                
+							                            
+<!-- 							                            <select class="form-control form-control-lg mt-10 mb-10 mr-10" id="search_type" style="width: 238px;height:40px;"> -->
+<!-- 							                                <option value="">읍/면/동</option> -->
+<!-- 							                            </select> -->
+							                            <a class="btn btn-primary btn-default btn-squared" style="color: #FFFFFF;height:60px;" onclick="findInfo('weather')">조회</a>
+							                          </span> 
+								                          
+							                            <span class="sub_title-content bold_text">기상정보(수동조회)</span>
+							                                <table>
+							                                    <thead>
+							                                        <tr>
+							                                        	<th>선택</th>
+							                                            <th>강수량</th>
+							                                            <th>증발량</th>
+							                                            <th>풍속(150CM)</th>
+							                                            <th>풍속(300CM)</th>
+							                                            <th>결로시간</th>
+							                                            <th>초상온도</th>
+							                                            <th>습도(150CM)</th>
+							                                            <th>습도(400CM)</th>
+							                                        </tr>
+							                                    </thead>
+							                                    <tbody>
+							                                        <tr id="modalWeatherData">
+							                                        
+							                                        </tr>
+							                                    </tbody>
+							                                </table>
+							                       </div>
+							                            <div id="modalSoil"> 
+							                          <span style="display:flex;">
+			                    						 	<select class="form-control form-control-lg mt-10 mb-10 mr-10" id="address_soil" style="width: 238px;height:40px;">
+			                    								<option value="">지역</option>
+								                                <option th:each="address : ${addressForSoil}" th:value="${address.address_code}" th:text='${address.address_name}'></option>
+								                            </select>
+								                            <a class="btn btn-primary btn-default btn-squared" style="color: #FFFFFF;height:60px;" onclick="findInfo('soil')">조회</a>
+							                          </span>  
+								                            <span class="sub_title-content bold_text">토양정보(수동조회)</span>
+								                                <table>
+								                                    <thead>
+								                                        <tr>
+						                                        			<th>선택</th>
+								                                            <th>산도(ph)</th>
+								                                            <th>유효인산(mg/kg)</th>
+								                                            <th>유효규산(mg/kg)</th>
+								                                            <th>유기물(g/kg)</th>
+								                                            <th>마그네슘(cmol+/kg)</th>
+								                                            <th>칼륨(cmol+/kg)</th>
+								                                            <th>칼슘(cmol+/kg)</th>
+								                                            <th>전기전도도(dS/m)</th>
+								                                        </tr>
+								                                    </thead>
+								                                    <tbody>
+								                                        <tr id="modalSoilData">
+								                                          
+								                                        </tr>
+								                                    </tbody>
+								                                </table>
+								                        </div>
+		                    						</div>
+		                    					</div>
+		                    				</div>
+			                    		</div>
+			                    	</div>
+		                    	</div>
+		                    </div>
+			            </div>
+			            <div class="button-group d-flex justify-content-end mb-2 mr-4">
+		                   <a class="btn btn-primary btn-default btn-squared" id="sch_btn" style="color: #FFFFFF;" onclick="closeModalForInfo()">닫기</a>
+		           		</div>
+			        </div>
+			    </div>
+			</div>
+			
+			
 	 <!-- 공통 하단 -->
     <th:block th:include="/../fragments/footer.html"></th:block>
     <!-- 공통 js -->
@@ -1068,6 +1263,221 @@ function insertWeatherAndSoil(){
  
 <script type="text/javascript" th:inline="javascript">
 
+$.ajax({
+	url:"/plan/addressForSoil",
+	method:"POST",
+	success:function(result){
+		var td ="";
+		td += "<option value=''>선택</option>"
+		for(var i=0;i<result.length;i++){
+			td += "<option value='"+ result[i].address_code+"'>"+ result[i].address_name + "</option>";
+		}
+		document.getElementById('address_soil').innerHTML = td;
+		
+	}
+});
+
+$("#weather_area").change(function() {
+    $("#weather_area option:selected").each(function() {
+			var area = $(this).val();
+			$.ajax({
+					url: "/plan/findWeather?area_name="+area,
+					method:"POST",
+					success:function(result){
+						var list = result.data;
+						var opt = "";
+						var opt = "<option value=''>시/군/구</option>";
+						for(var i=0; i<list.length;i++){
+							opt += "<option value='"+ list[i].city_name+"'>"+ list[i].city_name+"</option>";
+						}
+						
+						document.getElementById('weather_city').innerHTML = opt;
+						
+					}
+			});
+    });
+
+});
+
+//저장을 위해 전역 변수 토양 
+//산도(ph)
+var ACID = 0;
+//유효인산(mg/kg)
+var VLDPHA = 0;
+//유효규산(mg/kg)
+var VLDSIA = 0;
+//유기물(g/kg)
+var OM =  0;
+//마그네슘(cmol+/kg)
+var POIFERT_MG = 0;
+//칼륨(cmol+/kg)
+var POIFERT_K = 0;
+//칼슘(cmol+/kg)
+var POIFERT_CA = 0;
+//전기전도도(dS/m)
+var SELC = 0;
+
+//저장을 위해 전역 변수 기상
+// 강수량(mm)
+var afp = 0;
+// 증발량(mm)
+var afv = 0;
+// 풍속 300
+var arvlty_300 = 0;
+// 풍속 150
+var arvlty_150 = 0;
+// 결로시간 (hr)
+var dwcn_Time = 0;
+// 초상온도(℃)
+var frfr_Tp = 0;
+// 습도(%)
+var hd_150 = 0;
+// 습도(%)
+var hd_400 = 0;
+
+
+var weatherData = "";
+var soilData = "";
+
+var obj = [[${map}]];
+
+console.log(obj.soilData != "");
+console.log(obj.weather != "");
+
+if(obj.soil != ""){
+	soilData = JSON.parse(obj.soil);
+}
+if(obj.weather != ""){
+	weatherData = JSON.parse(obj.weather);
+}
+
+function findInfo(type){
+	
+	if(type == "soil"){		
+		var address = $('#address_soil').val();
+		$.ajax({
+			url: "/plan/getSoilInfo?address_code="+ address,
+			method: "POST",
+			success: function(result){
+				
+				var td = "";
+				if(result.data == "no result"){
+
+					td += "<td><input type='checkbox' id='checkSoil' value=''></td>";
+					td += "<td>" + ACID + "</td>";
+					td += "<td>" + VLDPHA + "</td>";
+					td += "<td>" + VLDSIA + "</td>";
+					td += "<td>" + OM + "</td>";
+					td += "<td>" + POIFERT_MG + "</td>";
+					td += "<td>" + POIFERT_K + "</td>";
+					td += "<td>" + POIFERT_CA + "</td>";
+					td += "<td>" + SELC + "</td>";
+					
+					document.getElementById('modalSoilData').innerHTML = td;
+
+				}else{
+					 data = result.data.item;
+					 ACID = checkNull(data.ACID);
+					 VLDPHA = checkNull(data.VLDPHA);
+					 VLDSIA = checkNull(data.VLDSIA);
+					 OM =  checkNull(data.OM);
+					 POIFERT_MG = checkNull(data.POSIFERT_MG);
+					 POIFERT_K = checkNull(data.POSIFERT_K);
+					 POIFERT_CA = checkNull(data.POSIFERT_CA);
+					 SELC = checkNull(data.SELC);
+	
+					td += "<td><input type='checkbox' id='checkSoil' value=''></td>";
+					td += "<td>" + ACID + "</td>";
+					td += "<td>" + VLDPHA + "</td>";
+					td += "<td>" + VLDSIA + "</td>";
+					td += "<td>" + OM + "</td>";
+					td += "<td>" + POIFERT_MG + "</td>";
+					td += "<td>" + POIFERT_K + "</td>";
+					td += "<td>" + POIFERT_CA + "</td>";
+					td += "<td>" + SELC + "</td>";
+					
+					document.getElementById('modalSoilData').innerHTML = td;
+			}
+			}
+		});
+	}else if(type == "weather"){
+		
+		var address = $('#weather_city').val();
+		var weather_date = $('#weather_date').val();
+		var weather_hour = $('#weather_hour').val();
+		var weather_min = $('#weather_min').val();
+		
+		console.log(weather_date == "");
+		console.log(weather_hour == "");
+		console.log(weather_min == "");
+		
+// 		if(weather_date != "" && weather_hour != "" && weather_min != ""){
+// 			weather_date = weather_date + " " + weather_hour + ":" + weather_min;		
+// 		}
+		console.log(weather_date);
+		
+		$.ajax({
+			url: "/plan/getWeatherInfo?address_code="+ address + "&weather_date=" + weather_date,
+			method: "POST",
+			success: function(result){
+				console.log(result);
+				
+				
+				var td = "";
+				if(result.data == "no result"){
+					console.log('2222');
+
+					td += "<td><input type='checkbox' id='checkWeather' value=''></td>";
+					td += "<td>"+ afp + "mm</td>";
+					td += "<td>"+ afv + "mm</td>";
+					td += "<td>"+ arvlty_300 + "</td>";
+					td += "<td>"+ arvlty_150 + "</td>";
+					td += "<td>"+ dwcn_Time + "hr</td>";
+					td += "<td>"+ frfr_Tp + "℃</td>";
+					td += "<td>"+ hd_150 + "%</td>";
+					td += "<td>"+ hd_400 + "%</td>";
+					
+					document.getElementById('modalWeatherData').innerHTML = td;
+
+				}else{
+					var data = result.data.item;
+					
+					afp = data.afp;
+					afv = data.afv;
+					arvlty_300 = data.arvlty_300;
+					arvlty_150 = data.arvlty_150;
+					dwcn_Time = data.dwcn_Time;
+					frfr_Tp = data.frfr_Tp;
+					hd_150 = data.hd_150;
+					hd_400 = data.hd_400;
+					
+					weatherData = {
+						"afp" : data.afp,
+						"afv" : data.afv,
+						"arvlty_300" : data.arvlty_300,
+						"arvlty_150" : data.arvlty_150,
+						"dwcn_Time" : data.dwcn_Time,
+						"frfr_Tp" : data.frfr_Tp,
+						"hd_150" : data.hd_150,
+						"hd_400" : data.hd_400,
+					
+					};
+					td += "<td><input type='checkbox' id='checkWeather' value=''></td>";	
+					td += "<td>"+ afp + "mm</td>";
+					td += "<td>"+ afv + "mm</td>";
+					td += "<td>"+ arvlty_300 + "</td>";
+					td += "<td>"+ arvlty_150 + "</td>";
+					td += "<td>"+ dwcn_Time + "hr</td>";
+					td += "<td>"+ frfr_Tp + "℃</td>";
+					td += "<td>"+ hd_150 + "%</td>";
+					td += "<td>"+ hd_400 + "%</td>";
+					
+					document.getElementById('modalWeatherData').innerHTML = td;
+			}
+			}
+		});
+	}
+}
 
 	let plan = /*[[${plan}]]*/ "null";
 	let plan_id = /*[[${plan_id}]]*/ "0";
@@ -1121,6 +1531,14 @@ function insertWeatherAndSoil(){
 	var curRow = "0";
 	var columnkey = "";
 
+
+	function checkNull(data){
+		if(data == "" || data == null){
+			return 0 ;
+		}else{
+			return data;
+		}	
+	}
 	
 	function updateResult(e){
 		
@@ -1147,7 +1565,7 @@ function insertWeatherAndSoil(){
 	function openImageModal(imagePath){
 		if(imagePath){
 			 $('.image-upload-wrap').hide();
-		      $('.file-upload-image').attr('src', "/upload/" + imagePath);
+		      $('.file-upload-image').attr('src', "http://3.37.64.204/upload/" + imagePath);
 		      $('.file-upload-content').show();
 		      $('.image-title').html(imagePath);
 		      $('.image-upload-wrap').addClass('image-dropping');
@@ -1162,9 +1580,6 @@ function insertWeatherAndSoil(){
 		 
 	}
 	
-	function saveModalImg(){
-		
-	}
 	
 	function readURL(input) {
 		  if (input.files && input.files[0]) {
@@ -1187,7 +1602,7 @@ function insertWeatherAndSoil(){
 	}
 
 	function removeUpload() {
-		  $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+		  //$('.file-upload-input').replaceWith($('.file-upload-input').clone());
 		  $('.file-upload-content').hide();
 		  $('.image-upload-wrap').show();
 		}
@@ -1415,6 +1830,92 @@ function insertWeatherAndSoil(){
 	
 	
 	
+	function closeModalForInfo(){
+		
+		var soilView = document.querySelectorAll(".soilView");
+		var soilOne = document.querySelector("#soilAndWeathInfo1");
+		var soilTwo = document.querySelector("#soilAndWeathInfo2");
+
+		for(var i = 0; i < soilView.length; i++){
+			soilView[i].style.display = "block";
+		}
+		
+		// 토양정보 체크 했을시
+		if($('#checkSoil').is(':checked') == true){
+			var td = "";
+				 ACID = ACID;
+				 VLDPHA = VLDPHA;
+				 VLDSIA = VLDSIA;
+				 OM = OM;
+				 POIFERT_MG = POIFERT_MG;
+				 POIFERT_K = POIFERT_K;
+				 POIFERT_CA = POIFERT_CA;
+				 SELC = SELC;
+				 
+				 soilData = {
+					 "ACID" : ACID,
+					 "VLDPHA" : VLDPHA,
+					 "VLDSIA" : VLDSIA,
+					 "OM" : OM,
+					 "POIFERT_MG" : POIFERT_MG,
+					 "POIFERT_K" : POIFERT_K,
+					 "POIFERT_CA" : POIFERT_CA,
+					 "SELC" : SELC 
+				 }
+				 
+				td += "<td>" + ACID + "</td>";
+				td += "<td>" + VLDPHA + "</td>";
+				td += "<td>" + VLDSIA + "</td>";
+				td += "<td>" + OM + "</td>";
+				td += "<td>" + POIFERT_MG + "</td>";
+				td += "<td>" + POIFERT_K + "</td>";
+				td += "<td>" + POIFERT_CA + "</td>";
+				td += "<td>" + SELC + "</td>";
+				
+				document.getElementById('soilData').innerHTML = td;
+			soilOne.style.display = "block";
+			soilTwo.style.display = "block";
+		}else{
+//	 		soilOne.style.display = "none";
+		}
+		
+		var td2 = "";
+		// 기상정보 체크 됬을시
+		if($('#checkWeather').is(':checked') == true){
+			weatherData = {
+				"afp" : afp,
+				"afv" : afv,
+				"arvlty_300" : arvlty_300,
+				"arvlty_150" : arvlty_150,
+				"dwcn_Time" : dwcn_Time,
+				"frfr_Tp" : frfr_Tp,
+				"hd_150" : hd_150,
+				"hd_400" : hd_400,
+			
+			};
+			
+			td2 += "<td>"+ afp + "mm</td>";
+			td2 += "<td>"+ afv + "mm</td>";
+			td2 += "<td>"+ arvlty_300 + "</td>";
+			td2 += "<td>"+ arvlty_150 + "</td>";
+			td2 += "<td>"+ dwcn_Time + "hr</td>";
+			td2 += "<td>"+ frfr_Tp + "℃</td>";
+			td2 += "<td>"+ hd_150 + "%</td>";
+			td2 += "<td>"+ hd_400 + "%</td>";
+				
+				document.getElementById('weatherData').innerHTML = td2;
+				soilOne.style.display = "block";
+				soilTwo.style.display = "block";
+		}else{
+//	 		soilTwo.style.display = "none";
+			
+		}
+		
+		
+
+		
+		$("#scheduleModal").modal("hide");
+	}
 	//구획정보 select 박스 그리기
 	function gridSegmentSelect(){
 		//select important
@@ -1451,7 +1952,7 @@ function insertWeatherAndSoil(){
 	//이미지 다운로드 이벤트
 	function imgDownload(e){
 		var file_name = $(e).attr("data-img");
-		var src = "/upload/"+file_name;
+		var src = "http://3.37.64.204/upload/" + file_name;
 		var href = "/plan/downloadImg?file_name="+file_name;
 		imageTag = e;
 		$("#downImg").css("display", "none");
@@ -2710,7 +3211,7 @@ function insertWeatherAndSoil(){
 
 
 	function removeUpload() {
-		$('.file-upload-input').replaceWith($('.file-upload-input').clone());
+		//$('.file-upload-input').replaceWith($('.file-upload-input').clone());
 		$('.file-upload-content').hide();
 		$('.label-container').html("");
 		$('.image-upload-wrap').show();

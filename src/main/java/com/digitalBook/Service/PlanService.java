@@ -2,6 +2,7 @@ package com.digitalBook.Service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -181,5 +182,14 @@ public interface PlanService {
 	int checkResultsPlan(int plan_id);
 
 	int updateResultsPlan(ResultPlan results);
+
+	List<HashMap<String, Object>> selectAreaCode();
+
+	List<HashMap<String, Object>> addressForWeather();
+
+	List<Map<String, Object>> findWeather(String area_name);
+
+	Map<String, Object> selectWeatherSoilInfo(int plan_id);
+	
 	
 }

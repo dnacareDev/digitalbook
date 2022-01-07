@@ -108,7 +108,7 @@
 	
 	<select id="selectResult" resultType="Plan" parameterType="User">
 	/* selectResult */
-			SELECT p.*, r.*, s.*, m.*,rp.*,wsi.*
+			SELECT p.*, r.*, s.*, m.*,rp.*,wsi.*, rp.create_date as rp_create_date
 			FROM plan p
 				LEFT JOIN report r ON p.report_code = r.report_code
 				LEFT JOIN storage s ON p.storage_id = s.storage_id
@@ -152,7 +152,7 @@
 				r.report_code = #{report_code}
 	</select>
 	<select id="SearchReport" resultType="plan" parameterType="Map">
-			SELECT p.*,r.*,s.*,m.*,rp.*,wsi.*,u.user_name_k
+			SELECT p.*,r.*,s.*,m.*,rp.*,wsi.*,u.user_name_k,rp.create_date as rp_create_date
 			FROM plan p
 				LEFT JOIN report r ON p.report_code = r.report_code
 				LEFT JOIN storage s ON p.storage_id = s.storage_id

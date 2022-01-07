@@ -51,6 +51,7 @@ public class Plan
 	 private String rp_segment;
 	 private int rp_num;
 	 private int rp_segment_count;
+	 private String rp_create_date;  // result_plan 생성날짜
 	 
 	 private String weather;
 	 private String soil;

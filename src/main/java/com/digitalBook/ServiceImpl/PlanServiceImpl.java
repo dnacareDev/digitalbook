@@ -2,6 +2,7 @@ package com.digitalBook.ServiceImpl;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -401,6 +402,26 @@ public class PlanServiceImpl implements PlanService {
 	@Override
 	public int updateResultsPlan(ResultPlan results) {
 		return mapper.updateResultsPlan(results);
+	}
+
+	@Override
+	public List<HashMap<String, Object>> selectAreaCode() {
+		return mapper.selectAreaCode();
+	}
+
+	@Override
+	public List<HashMap<String, Object>> addressForWeather() {
+		return mapper.addressForWeather();
+	}
+
+	@Override
+	public List<Map<String, Object>> findWeather(String area_name) {
+		return mapper.findWeather(area_name);
+	}
+
+	@Override
+	public Map<String, Object> selectWeatherSoilInfo(int plan_id) {
+		return mapper.selectWeatherSoilInfo(plan_id);
 	}
 	
 }

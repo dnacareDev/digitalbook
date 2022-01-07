@@ -77,6 +77,8 @@ public class ScheduleController
 
 		User prin = (User)auth.getPrincipal();
 		List<Plan> plan = service.selectResult(prin);
+		System.out.println("@@@@@@@@@@@@@@@@@@");
+		System.out.println(plan.size());
 		result.put("plan", plan);		
 		return result;
 	}

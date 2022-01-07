@@ -2,6 +2,7 @@ package com.digitalBook.Mapper;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -190,5 +191,13 @@ public interface PlanMapper {
 	int updateResultsPlan(ResultPlan results);
 
 	int checkResultsPlan(int plan_id);
+
+	List<HashMap<String, Object>> selectAreaCode();
+
+	List<HashMap<String, Object>> addressForWeather();
+
+	List<Map<String, Object>> findWeather(String area_name);
+
+	Map<String, Object> selectWeatherSoilInfo(int plan_id);
 
 }

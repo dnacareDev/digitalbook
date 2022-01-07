@@ -514,206 +514,209 @@ $(document).ready(function()
 					data: {"rp_id": rp_id},
 					success: function(result)
 					{
-					
-								var obj;
-										obj = result.report[0];
-									var title = "";
-									title += "<h3><u>* 재배계획:"+obj.plan_code; +"<h3></u><hr>";	
-									document.getElementById('vp_title').innerHTML = title;
-									
-									var html = "";
-									html += "<table>";
-									html += "<tbody>";
-									html += "<tr>"
-									html += 	"<td><u><b> * 조사정보 </b></u></td>";
-									html += "</tr>";
-									
-									html += "<tr>"
-									html += 	"<td style='width:120px;'> 과제명 </td>";
-									html += 	"<td>"+ obj.report_title+"("+obj.report_code+")" +"</td>";
-									html += "</tr>";
-									
-									html += "<tr>"
-									html += 	"<td> 포장위치 </td>";
-									html += 	"<td>"+ obj.storage_name +"</td>";
-									html += "</tr>";
-									
-									html += "<tr class='last_tr'>"
-									html += 	"<td> 반복 </td>";
-									html += 	"<td>"+ obj.plan_repeat + " </td>";
-									html += "</tr>";
-									
-			var grow_type;
-			switch(obj.grow_type){	
-			case 0:
-				grow_type ="완전임의배치법";
-				break;
-			case 1:
-				grow_type ="난괴법";
-			case 2:
-				grow_type = "분할구배치법";
-			case 3:
-				grow_type = "세세구배치법";
+					console.log(result);
+						var obj;
+						obj = result.report[0];
+							var title = "";
+							title += "<h3><u>* 재배계획:"+obj.plan_code; +"<h3></u><hr>";	
+							document.getElementById('vp_title').innerHTML = title;
+							
+							var html = "";
+							html += "<table>";
+							html += "<tbody>";
+							html += "<tr>"
+							html += 	"<td><u><b> * 조사정보 </b></u></td>";
+							html += "</tr>";
+							
+							html += "<tr>"
+							html += 	"<td style='width:120px;'> 과제명 </td>";
+							html += 	"<td colspan='12'>"+ obj.report_title+"("+obj.report_code+")" +"</td>";
+							html += "</tr>";
+							
+							html += "<tr>"
+							html += 	"<td> 포장위치 </td>";
+							html += 	"<td colspan='12'>"+ obj.storage_name +"</td>";
+							html += "</tr>";
+							
+							html += "<tr class='last_tr'>"
+							html += 	"<td> 반복 </td>";
+							html += 	"<td colspan='12'>"+ obj.plan_repeat + " </td>";
+							html += "</tr>";
+							
+	var grow_type;
+	switch(obj.grow_type){	
+	case 0:
+		grow_type ="완전임의배치법";
+		break;
+	case 1:
+		grow_type ="난괴법";
+	case 2:
+		grow_type = "분할구배치법";
+	case 3:
+		grow_type = "세세구배치법";
+	}
+	
+	var factor;
+	
+							html += "<tr>"
+							html += 	"<td> 시험구배치 종류 </td>";
+							html += 	"<td colspan='12'>"+ grow_type +  "</td>";
+							html += "</tr>";
+							
+							html += "<tr>"
+							html += 	"<td> 조사항목 </td>";
+							html += 	"<td colspan='12'>"+ obj.method_title+ " </td>";
+							html += "</tr>";
+							
+	 var listFactor = listFactor2(obj.plan_id);		
+
+			for(var i=0;i<listFactor.length;i++){
+						if(i === 0) {
+							html += "<tr class='last_tr'>"
+							html += 	"<td> 요인 " +(i+1)+"</td>";
+							html += 	"<td colspan='12'>"+ listFactor[i].factor_type +" " + listFactor[i].factor_interval + "</td>";
+							html += "</tr>";										
+							
+						} else {
+							html += "<tr>"
+							html += 	"<td> 요인 " +(i+1)+"</td>";
+							html += 	"<td colspan='12'>"+ listFactor[i].factor_type +" " + listFactor[i].factor_interval + "</td>";
+							html += "</tr>";										
+						};
 			}
 			
-			var factor;
-			
-									html += "<tr>"
-									html += 	"<td> 시험구배치 종류 </td>";
-									html += 	"<td>"+ grow_type +  "</td>";
-									html += "</tr>";
-									
-									html += "<tr>"
-									html += 	"<td> 조사항목 </td>";
-									html += 	"<td>"+ obj.method_title+ " </td>";
-									html += "</tr>";
-									console.log(obj);
-			var listFactor = listFactor2(obj.plan_id);		
-		console.log(listFactor);
-					for(var i=0;i<listFactor.length;i++){
-								if(i === 0) {
-									html += "<tr class='last_tr'>"
-									html += 	"<td> 요인 " +(i+1)+"</td>";
-									html += 	"<td>"+ listFactor[i].factor_type +" " + listFactor[i].factor_interval + "</td>";
-									html += "</tr>";										
-									
-								} else {
-									html += "<tr>"
-									html += 	"<td> 요인 " +(i+1)+"</td>";
-									html += 	"<td>"+ listFactor[i].factor_type +" " + listFactor[i].factor_interval + "</td>";
-									html += "</tr>";										
-								};
-					}
-					
-									html += "<tr>"
-								var weather = JSON.parse(obj.weather);
-								
-								html += 	"<td>정보</td>";
-								html += 	"<td class='last_tr tr_blu'> 기상정보 </td>";
-								for(let i in weather){
-									
-									var category;
-									switch(i){
-									case "afp":
-										category = "강수량";
-										break;
-									case "afv":
-										category = "증발량";
-										break;
-									case "arvlty_300":
-										category = "풍속(300)";
-										break;
-									case "arvlty_150":
-										category = "풍속(150)";
-										break;
-									case "dwcn_Time":
-										category = "결로시간";
-										break;
-									case "frfr_Tp":
-										category = "초상온도";
-										break;
-									case "hd_150":
-										category = "습도(150CM)";
-										break;
-									case "hd_400":
-										category = "습도(400CM)";
-										break;	
-									}
-									
-									html += "<td class='last_tr tr_blu'>"+ category +":"+weather[i]+"</td>";
-								}
-									html += "</tr>";
-									
-									html += "<tr>"
-									html += 	"<td></td>";
-									html += 	"<td class='last_tr tr_ye'> 토양정보 </td>";
-								var soil = JSON.parse(obj.soil);
-								for(let i in soil){
+							html += "<tr>"
+						var weather = JSON.parse(obj.weather);
+						
+						html += 	"<td>정보</td>";
+						html += 	"<td class='last_tr tr_blu'> 기상정보 </td>";
+						for(let i in weather){
+							
 							var category;
 							switch(i){
-							case "ACID":
-								category = "산도(ph)";
+							case "afp":
+								category = "강수량";
 								break;
-							case "VLDPHA":
-								category = "유효인산(mg/kg)";
+							case "afv":
+								category = "증발량";
 								break;
-							case "VLDSIA":
-								category = "유효규산(mg/kg)";
+							case "arvlty_300":
+								category = "풍속(300)";
 								break;
-							case "OM":
-								category = "유기물(g/kg)";
+							case "arvlty_150":
+								category = "풍속(150)";
 								break;
-							case "POIFERT_MG":
-								category = "마그네슘(cmol+/kg)";
+							case "dwcn_Time":
+								category = "결로시간";
 								break;
-							case "POIFERT_K":
-								category = "칼륨(cmol+/kg)";
+							case "frfr_Tp":
+								category = "초상온도";
 								break;
-							case "POIFERT_CA":
-								category = "칼슘(cmol+/kg)";
+							case "hd_150":
+								category = "습도(150CM)";
 								break;
-							case "SELC":
-								category = "전기전도도(dS/m)";
+							case "hd_400":
+								category = "습도(400CM)";
 								break;	
 							}
-									html += "<td class='last_tr tr_ye'>";
-									html += category + ": ";
-									html += soil[i]+"</td>";
-								}
-									html += "</tr>";
-									html += "</tbody>";
-									html +="</table><br><br><br><br>";
-										
-							var content = JSON.parse(obj.rp_content);
-								for(let i in content){
-									var table = "";
-										table += "<tr class='sec_table_tr'>";
-										table += "<th>";
-										table += "<table>";
-										table +=   "<tbody>";
+							
+							html += "<td class='last_tr tr_blu'>"+ category +":"+weather[i]+"</td>";
+						}
+							html += "</tr>";
+							
+							html += "<tr>"
+							html += 	"<td></td>";
+							html += 	"<td class='last_tr tr_ye'> 토양정보 </td>";
+						var soil = JSON.parse(obj.soil);
+						for(let i in soil){
+					var category;
+					switch(i){
+					case "ACID":
+						category = "산도(ph)";
+						break;
+					case "VLDPHA":
+						category = "유효인산(mg/kg)";
+						break;
+					case "VLDSIA":
+						category = "유효규산(mg/kg)";
+						break;
+					case "OM":
+						category = "유기물(g/kg)";
+						break;
+					case "POIFERT_MG":
+						category = "마그네슘(cmol+/kg)";
+						break;
+					case "POIFERT_K":
+						category = "칼륨(cmol+/kg)";
+						break;
+					case "POIFERT_CA":
+						category = "칼슘(cmol+/kg)";
+						break;
+					case "SELC":
+						category = "전기전도도(dS/m)";
+						break;	
+					}
+							html += "<td class='last_tr tr_ye'>";
+							html += category + ": ";
+							html += soil[i]+"</td>";
+						}
+							html += "</tr>";
+							html += "</tbody>";
+							html +="</table><br><br><br><br>";
+								
+					var content = JSON.parse(obj.rp_content);
+						for(let i in content){
+							var table = "";
+								table += "<tr class='sec_table_tr'>";
+								table += "<th>";
+								table += "<table>";
+								table +=   "<tbody>";
 
-										table +=       "<tr class='tr_ye'>";
-										table +=          "<td>구획ID</td>";
-										table +=          "<td colspan='3'>"+ checkNullString(content[i][0][0].seg_id)+"</td>";
-										table +=       "</tr>";
-										table +=       "<tr class='tr_gr'>";
-										table +=          "<td>처리 종류</td>";
-										table +=          "<td colspan='3'>"+ checkNullString(content[i][0][0].title)+"</td>";
-										table +=       "</tr>";
-										table +=       "<tr class='tr_blu'>";
-										table +=          "<td>조사항목</td>";
-									for(let j in content[i]){
-			
-										var detail = content[i][j][0];
-										table +=          "<td>"+ checkNullString(detail.d3)+"</td>";
-										
-									}
-										table +=       "</tr>";
+								table +=       "<tr class='tr_ye'>";
+								table +=          "<td>구획ID</td>";
+								table +=          "<td colspan='3'>"+ checkNullString(content[i][0][0].seg_id)+"</td>";
+								table +=       "</tr>";
+								table +=       "<tr class='tr_gr'>";
+								table +=          "<td>처리 종류</td>";
+								table +=          "<td colspan='3'>"+checkNullString(content[i][0][0].title)+"</td>";
+								table +=       "</tr>";
+								table +=       "<tr class='tr_blu'>";
+								table +=          "<td>조사항목</td>";
+							for(let j in content[i]){
+	
+								var detail = content[i][j][0];
+								table +=          "<td></td>";
+								
+							}
+								table +=       "</tr>";
 
-									for(let f in content[i]){	
-										table += "<tr>";
-										table +=     "<td>개체</td>";
-												for(let k in content[i]){
-													table +=   "<td></td>";								
-												}
-										table += "</tr>";
-									}	
-										table +=       "<tr>";
-										table +=          "<td>등록사진</td>";
-										table +=          "<td colspan='"+content[i].length+"'> <img src='"+checkNullString(detail.img)+"'></td>";
-										table +=       "</tr>";
-										table +=   "</tbody>";
-										table +="</table>";
-										table += "</th>";
-										table +=       "<tr>";
-										table += "</tr><br><br><br>";
-										
-										html += table;
+							for(let f in content[i]){	
+								for(let k in content[i][f]){
+								table += "<tr>";
+								table +=     "<td>개체</td>";
+											table += "<td>"+checkNullString(content[i][f][k].title)+"</td>";								
+											table += "<td>"+checkNullString(content[i][f][k].d3)+"</td>";								
+											table += "<td></td>";								
+								table += "</tr>";
 								}
-									document.getElementById('sch_list').innerHTML = html;
-									
-									
-									$("#scheduleModal").modal("show");
+							}	
+								table +=       "<tr>";
+								table +=          "<td>등록사진</td>";
+								table +=          "<td colspan='"+content[i].length+"'> <img src='"+checkNullString(detail.img)+"'></td>";
+								table +=       "</tr>";
+								table +=   "</tbody>";
+								table +="</table>";
+								table += "</th>";
+								table +=       "<tr>";
+								table += "</tr><br><br><br>";
+								
+								html += table;
+						}
+						
+							document.getElementById('sch_list').innerHTML = html;
+							
+							
+							$("#scheduleModal").modal("show");
 								}
 							});
 							
@@ -770,8 +773,8 @@ function checkNullString(type){
 						for(var i = 0; i < length; i++){
 							
 							add_list += '<tr>';
-							add_list += '<td onclick="openModal('+result.report[i].rp_id+')">'+ result.report[i].rp_id +'</td>';
-							add_list += '<td><span>' + result.report[i].create_date + '</span></td>';
+							add_list += '<td><a href="#" onclick="openModal('+result.report[i].rp_id+')">'+ result.report[i].rp_id +'</a></td>';
+							add_list += '<td><span>' + result.report[i].rp_create_date + '</span></td>';
 							add_list += '<td><span>' + result.report[i].user_name_k + '</span></td>';
 							add_list += '<td><span> </span></td>';
 							add_list += '</tr>';
@@ -804,8 +807,6 @@ function checkNullString(type){
 						}
 						
 						plan_list.empty();
-						console.log(plan_list);
-						console.log(add_list);
 						plan_list.append(add_list);
 						
 						pageNum.empty();
