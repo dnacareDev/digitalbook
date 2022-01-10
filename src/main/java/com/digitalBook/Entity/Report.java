@@ -23,6 +23,6 @@ public class Report {
 	private String modify_date;					// 수정일
 	private int report_status;					// 과제 사용가능 여부
 	
-	private int report_year;
+	private String report_year;
 	
 }

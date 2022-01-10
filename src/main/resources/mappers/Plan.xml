@@ -144,7 +144,7 @@
 	<select id="selectReportList" resultType="Report">
 		SELECT * FROM report r 
 		INNER JOIN seed s ON r.report_code = s.report_code
-		WHERE r.report_status = 1
+		 WHERE r.report_status = 1 
 		GROUP BY r.report_code
 		ORDER BY r.report_id
 	</select>

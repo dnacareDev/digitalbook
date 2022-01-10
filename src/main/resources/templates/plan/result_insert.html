@@ -545,13 +545,15 @@
         </div>
 			                    
 <script th:inline="javascript">
-loadData();
 function loadData(){
 	var obj = [[${map}]];
 	var soilView = document.querySelectorAll(".soilView");
 	var soilOne = document.querySelector("#soilAndWeathInfo1");
 	var soilTwo = document.querySelector("#soilAndWeathInfo2");
 
+	if(!obj.weather)
+		return;
+	
 	for(var i = 0; i < soilView.length; i++){
 		soilView[i].style.display = "block";
 	}
@@ -630,7 +632,8 @@ function loadData(){
 		soilOne.style.display = "block";
 		soilTwo.style.display = "block";
 }
-		
+
+loadData();
 //날씨정보 등록 팝업
 function confirminsertWeatherAndSoil(){
 	$("#soilAndWeather_confirm_popup").css("display", "flex");
@@ -1299,6 +1302,59 @@ $("#weather_area").change(function() {
 
 });
 
+
+let plan = /*[[${plan}]]*/ "null";
+let plan_id = /*[[${plan_id}]]*/ "0";
+let method = /*[[${method}]]*/ "null";
+let sch = /*[[${sch}]]*/ "null";
+let results = /*[[${results}]]*/ "null";
+let resultPlan = /*[[${resultPlan}]]*/ "null";
+
+let segment = /*[[${segment}]]*/ "null";
+
+let segmentInfo = /*[[${segmentInfo}]]*/ "null";
+
+//로그인한 user 객체
+let user = /*[[${#authentication.principal}]]*/ "null";
+
+//시험구 배치 데이터
+let data1 = new Object();
+let data2 = new Object();
+let data3 = new Object();
+
+let resultArray = new Array();
+
+//결과입력 데이터
+let tableResultArray = new Array();
+
+//구획정보 데이터 
+let segmentResultArray = new Array();
+
+//결과입력 파일 데이터
+let file_array = new Array();
+
+//결과입력 삭제 데이터
+let cancelArr = new Array();
+
+//구획정보 데이터
+let segmentInfo_array = new Array();
+
+//구획정보 삭제 데이터
+let cancelInfo = new Array();
+
+let selectInputEls = document.querySelectorAll('input[name="select-input"]');
+let select_this;
+let select_prev;
+let select_id;
+
+var currentResultIndex = 0;
+var imageTag = null;
+var resultInputTag = null;
+
+var resultGrid = null;
+var curRow = "0";
+var columnkey = "";
+
 //저장을 위해 전역 변수 토양 
 //산도(ph)
 var ACID = 0;
@@ -1341,13 +1397,10 @@ var soilData = "";
 
 var obj = [[${map}]];
 
-console.log(obj.soilData != "");
-console.log(obj.weather != "");
-
-if(obj.soil != ""){
+if(obj.soil && obj.soil != ""){
 	soilData = JSON.parse(obj.soil);
 }
-if(obj.weather != ""){
+if(obj.weather && obj.weather != ""){
 	weatherData = JSON.parse(obj.weather);
 }
 
@@ -1479,57 +1532,6 @@ function findInfo(type){
 	}
 }
 
-	let plan = /*[[${plan}]]*/ "null";
-	let plan_id = /*[[${plan_id}]]*/ "0";
-	let method = /*[[${method}]]*/ "null";
-	let sch = /*[[${sch}]]*/ "null";
-	let results = /*[[${results}]]*/ "null";
-	let resultPlan = /*[[${resultPlan}]]*/ "null";
-	
-	let segment = /*[[${segment}]]*/ "null";
-	
-	let segmentInfo = /*[[${segmentInfo}]]*/ "null";
-	
-	//로그인한 user 객체
-	let user = /*[[${#authentication.principal}]]*/ "null";
-
-	//시험구 배치 데이터
-	let data1 = new Object();
-	let data2 = new Object();
-	let data3 = new Object();
-	
-	let resultArray = new Array();
-
-	//결과입력 데이터
-	let tableResultArray = new Array();
-	
-	//구획정보 데이터 
-	let segmentResultArray = new Array();
-	
-	//결과입력 파일 데이터
-	let file_array = new Array();
-	
-	//결과입력 삭제 데이터
-	let cancelArr = new Array();
-	
-	//구획정보 데이터
-	let segmentInfo_array = new Array();
-	
-	//구획정보 삭제 데이터
-	let cancelInfo = new Array();
-	
-	let selectInputEls = document.querySelectorAll('input[name="select-input"]');
-	let select_this;
-	let select_prev;
-	let select_id;
-	
-	var currentResultIndex = 0;
-	var imageTag = null;
-	var resultInputTag = null;
-
-	var resultGrid = null;
-	var curRow = "0";
-	var columnkey = "";
 
 
 	function checkNull(data){

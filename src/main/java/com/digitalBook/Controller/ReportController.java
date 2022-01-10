@@ -233,6 +233,7 @@ public class ReportController
        			item.setReport_code((String)obj.get("report_code"));
        			item.setReport_number((String)obj.get("report_number"));
        			item.setReport_title((String)obj.get("report_title"));
+       			item.setReport_year((String)obj.get("report_year"));
        			item.setReport_file_id(reportFile.getReport_file_id());
        			
        			reports.add(item);

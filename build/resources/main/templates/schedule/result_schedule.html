@@ -1,0 +1,1037 @@
+<!doctype html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- 공통 헤더 -->
+<th:block th:include="/../fragments/header.html"></th:block>
+
+<style>
+  #ModalTable1 table {
+    width: 99%;
+    height: 50%;
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+    border-collapse: collapse;
+  }
+  #ModalTable1 th, td {
+    padding: 10px;
+    text-align: center;
+    font-weight: initial;
+    font-size: 12px;
+  }
+  #ModalTable1 th {
+    background-color: white;
+  }
+  #ModalTable1 td {
+    background-color: #fafef5;
+  }
+  #ModalTable2 table {
+    width: 100%;
+    height: 50%;
+    border: 1px solid #dcdcdc;
+  }
+  #ModalTable2 th, td {
+  	border: 1px solid #dcdcdc;
+    padding: 10px;
+    text-align: center;
+    font-weight: initial;
+    font-size: 12px;
+  }
+  #ModalTable2 th {
+    background-color: #FDF5E6;
+  }
+  	.atbd-nav-controller{justify-content: space-between;}
+  /* contents section 여백 */
+	.top-menu .main-content .contents {padding: 104px 40px 72px;}
+	
+	/* card 공통 - 그림자 */
+	.main-content .contents .card {box-shadow: 0 3px 6px rgb(239 241 245 / 100%);}
+	
+	/* 첫번째 카드 탭메뉴 border-radius 수정 */
+	.col-lg-5 .card .atbd-nav-controller .btn-group > .btn:not(:first-child) {border-radius: 0 5px 5px 0;}
+	
+	/* 첫번째 카드 QR코드 버튼 추가 */
+	.btn-group-area{display: flex;}
+	.col-lg-5 .card .btn-group-area .qr-code-btn {
+		height: 35px; 
+		width:100px; 
+		padding-left: 30px; 
+		margin-top: 5px; 
+		border: none; 
+		font-size: 14px; 
+		background-color: #5F63F2; 
+		color: #fff; 
+		-webkit-border-radius: 5px; 
+		border-radius: 5px;
+	}
+	.col-lg-5 .card .btn-group-area .qr-code-btn span{position: relative}
+	.col-lg-5 .card .btn-group-area .qr-code-btn span:before {
+		content: '';
+		position: absolute;
+		top: 50%;
+		margin-top: -9px;
+		left: -30px;
+		width: 19px;
+		height: 19px;
+		background: url(../img/icons/qrcode.png) no-repeat;
+		background-size: 100%;
+		z-index: 2;
+	}
+	
+	/* 반응형 media 1400px */
+	@media only screen and (max-width: 1400px){
+		
+	}
+	
+	@media only screen and (max-width: 1200px){
+		.col-lg-5 .card .btn-group-area .qr-code-btn{
+			
+			font-size: 14px;
+		}
+		.atbd-nav-controller .nav .nav-link{
+			font-size: 14px;
+		}
+		.fc .fc-toolbar.fc-header-toolbar{
+			display:block;
+		}
+		.fc-toolbar-chunk{
+			width: 100%;
+		    display: block;
+		    text-align: center;
+		}
+		.fc-toolbar-chunk:first-child > div{
+			display: inline-block !important;
+		    text-align: center;
+		}
+		.fc-toolbar-chunk:first-child > div > button.fc-today-button:disabled{
+		    position: absolute;
+		    top: 70px;
+		    left: 20px;
+		}
+		.fc .fc-button-group{
+			float: right;
+   		    margin-top: 10px;
+		}
+		.fc-toolbar-chunk:first-child > div > button:nth-child(2),
+		.fc-toolbar-chunk:first-child > div > button:last-child,
+		.fc-toolbar-chunk:first-child > div .fc-toolbar-title{
+			float:left;
+			
+		}
+		/*
+		.fc-toolbar-chunk:first-child > div .fc-toolbar-title{
+			font-size: 14px !important;
+			margin-top: 6px;
+		}
+		.fc-toolbar-chunk:first-child > div > button > span:before,
+		.fc-toolbar-chunk:first-child > div > button > span:before{
+			top:0 !important;
+		}
+		.fc-toolbar-chunk:first-child > div > button{
+			height: 30px !important;
+		}
+		.fc-toolbar-chunk:first-child > div > button:nth-child(2){
+			margin-right:5px !important;
+		}
+		.fc-toolbar-chunk:first-child > div > button:last-child{
+			margin-left:5px !important;
+		}
+		*/
+	}
+	
+	@media only screen and (max-width: 1000px){
+		.col-lg-5 .card .btn-group-area .qr-code-btn{
+		    float: right;
+		    margin-bottom: 10px;
+		    align-self: flex-end;
+		}
+	}
+	
+	@media only screen and (max-width: 700px){
+		.col-lg-5 .card-body .tab-pane .atbd-collapse-item .item-link{
+			text-decoration: underline;
+		    white-space: nowrap;
+		    text-overflow: ellipsis;
+		    overflow: hidden;
+		}
+		.top-menu .main-content .contents {
+			padding: 104px 0 72px;
+		}
+		.fc-toolbar-chunk:first-child > div .fc-toolbar-title{
+			font-size: 14px !important;
+			margin-top: 6px;
+		}
+		.fc-toolbar-chunk:first-child > div > button > span:before,
+		.fc-toolbar-chunk:first-child > div > button > span:before{
+			top:0 !important;
+		}
+		.fc-toolbar-chunk:first-child > div > button{
+			height: 30px !important;
+		}
+		.fc-toolbar-chunk:first-child > div > button:nth-child(2){
+			margin-right:5px !important;
+		}
+		.fc-toolbar-chunk:first-child > div > button:last-child{
+			margin-left:5px !important;
+		}
+		.col-lg-7 .card .fc-header-toolbar .fc-toolbar-chunk:last-child > .fc-button-group > button{
+			font-size:14px;
+		}
+		/* 첫번째 카드 QR코드 버튼 추가 */
+		.btn-group-area{display: flex;flex-direction: column-reverse;}
+		.fc-toolbar-chunk:first-child > div > .fc-toolbar-title{
+			font-size: 18px;
+		}
+	}
+	@media only screen and (max-width : 450px){
+		.atbd-nav-controller .nav .nav-link{
+			flex: 1;
+		}
+	}
+	
+	/* QR코드 버튼 active, focus */
+	.col-lg-5 .card .btn-group-area .qr-code-btn:active:focus {background-color: #4D50CF;}
+	
+	/* card 공통 - 드룹다운 */
+	.col-lg-5 .card-body .tab-pane .atbd-collapse-item .item-link {color: #222222}
+	.col-lg-5 .card-body .tab-pane .atbd-collapse-item .atbd-collapse-item__body {padding: 10px}
+	.col-lg-5 .card-body .tab-pane .atbd-collapse-item .atbd-collapse-item__body .collapse-body-text {padding-bottom: 0; }
+	.col-lg-5 .card-body .tab-pane .atbd-collapse-item .atbd-collapse-item__body .collapse-body-text .row:not(:last-child) {margin-bottom: 5px; }
+	.col-lg-5 .card-body .tab-pane .atbd-collapse-item .atbd-collapse-item__body .btn {background-color: #7C8798; color: #fff; border: none}
+	
+	/* contents 첫번째 card */
+	.col-lg-5 .card:first-child {padding: 15px 15px 30px}
+	.col-lg-5 .card:first-child .card-body {padding-top: 0; margin-top: 1.56rem;}
+	
+	/* contents 두번째 card */
+	.card.mt-25.mb-md-50.mb-25 {padding: 15px 15px 30px}
+	.color-primary {font-size: 1.8rem; font-weight: 700}
+	.card.mt-25.mb-md-50.mb-25 .card-body {padding-top: 0; margin-top: 1.56rem;}
+	
+	/* 스코롤바 커스텀 */
+	.card-body {
+		scrollbar-arrow-color: #efefef;
+        scrollbar-Track-Color: #efefef; 
+        scrollbar-base-color: #dfdfdf;
+        scrollbar-Face-Color: #dfdfdf;
+        scrollbar-3dLight-Color: #dfdfdf;         
+        scrollbar-DarkShadow-Color: #dfdfdf;
+        scrollbar-Highlight-Color: #dfdfdf;
+        scrollbar-Shadow-Color: #dfdfdf
+       }
+       
+	/* Chrome, Safari용 스크롤 바 */
+	.card-body::-webkit-scrollbar {width: 10px;}
+	.card-body::-webkit-scrollbar-button:start:decrement, 
+	.card-body::-webkit-scrollbar-button:end:increment {display: block; width:0px; height: 0px; background: url() rgba(0,0,0,.05);}
+	.card-body::-webkit-scrollbar-track {background: rgba(0,0,0,.05); -webkit-border-radius: 10px; border-radius:10px;}
+	.card-body::-webkit-scrollbar-thumb { background: rgba(0,0,0,.1); -webkit-border-radius: 8px; border-radius: 8px; border: 3px solid #efefef}
+  
+ 	 /* table card section */
+	/* table card section - thead */
+	.col-lg-7 .card .fc-header-toolbar .fc-toolbar-chunk:first-child > div {display: flex; align-items: center}
+	.fc-toolbar-chunk:first-child > div > .fc-toolbar-title {font-size: 1.5rem; display: block;}
+	.fc-toolbar-chunk:first-child > div > button {height: 34px; position: relative; margin-right: 15px; background-color: #fff; border: 1px solid #E4E4E4}
+	.fc-toolbar-chunk:first-child > div > button:last-child {margin-right: 0; margin-left: 15px}
+	.fc-toolbar-chunk:first-child > div > button.fc-today-button {padding-top: 3px; margin-right: 35px; background-color: #5F63F2; border: 1px solid #5F63F2; color: #fff}
+	
+	.fc-toolbar-chunk:first-child > div > button.fc-today-button:disabled { background-color: #fff; border: 1px solid #E4E4E4; color: #9299B8}
+	.fc-toolbar-chunk:first-child > div > button > span:before {position: absolute; top: 4px; left: 50%;  transform: translate(-50%); color: #9299B8}
+	
+	/* hover */
+	.fc-toolbar-chunk:first-child > div > button:hover { background-color: #5F63F2; border: 1px solid #5F63F2; color: #fff}
+	.fc-toolbar-chunk:first-child > div > button:hover> span:before {color: #fff}
+	
+	/* active */
+	.fc-toolbar-chunk:first-child > div > button:not(:disabled):active:focus { background-color: #4D50CF; border: 1px solid #4D50CF;}
+	.fc-toolbar-chunk:first-child > div > button:not(:disabled):active:focus > span:before {color: #fff}
+	
+	.col-lg-7 .card .fc-header-toolbar .fc-toolbar-chunk:last-child > .fc-button-group > button {background-color: #fff; border: 1px solid #E4E4E4; color: #9299B8}
+	.col-lg-7 .card .fc-header-toolbar .fc-toolbar-chunk:last-child > .fc-button-group > button.fc-button-active {background-color: #5F63F2; border: 1px solid #5F63F2; color: #fff}
+	
+	/* hover */
+	.col-lg-7 .card .fc-header-toolbar .fc-toolbar-chunk:last-child > .fc-button-group > button:hover {background-color: #E9E9E9; border: 1px solid #E4E4E4; color: #9299B8}
+	.col-lg-7 .card .fc-header-toolbar .fc-toolbar-chunk:last-child > .fc-button-group > button.fc-button-active:hover {background-color: #5F63F2; border: 1px solid #5F63F2; color: #fff}
+	
+	/* table card section - tbody */
+	#fulled-calendar {max-width: 985px; width: 100%; margin: 0 auto}
+	#fulled-calendar .fc-view-harness {height: 764px !important;}
+	#fulled-calendar .fc-scrollgrid > thead {text-align: center}
+	#fulled-calendar .fc-view .fc-col-header tr th .fc-scrollgrid-sync-inner .fc-col-header-cell-cushion {display: block; text-align: center; padding-left: 0}
+	#ModalTable2 table.table, #ModalTable2 table.table th, #ModalTable2 table.table td{border:none;}
+	#ModalTable2 table.table td{text-align:left;}
+	/*#ModalTable2 table.table tr td:first-child{text-align:center}*/
+	#sch_list{border:none}
+	#ModalTable2 .button-group{padding-bottom:10px;}
+	@media (min-width: 1200px){
+		.modal-xl {
+    		max-width: 700px;
+		}
+	}
+	
+	.fc-daygrid-day .fc-daygrid-event{padding: 3px 10px !important; background-color: #5f63f2;}
+	
+	
+		.container-fluid .col-lg-12 {padding: 0 !important;}
+		.breadcrumb-main {justify-content: flex-start !important; padding: 0 30px !important; margin-top: 39px !important;}
+		.calendar-grid.justify-content-center {padding: 0 32px !important;}
+		.container-fluid.mt-25 {margin-top: 0 !important;}
+		
+	
+	#sch_list tr td {
+		padding-top: 2px;
+		padding-bottom: 2px;
+	}
+	
+	#sch_list tr:not(:last-child) {
+		border-bottom: 1px solid #212529;
+	}		
+	
+	#ModalTable2 #sch_list td.last_tr,
+	#sch_list tr.last_tr {
+		border-bottom: 2px solid #212529;
+	}	
+	
+	#ModalTable2 #sch_list td.last_tr {
+		padding-top: 1px;
+		padding-bottom: 1px;
+	}
+	
+	#sch_list tr.sec_table_tr {
+		margin-top: 20px;
+		position: relative;
+	}
+	
+	#sch_list tr.sec_table_tr > th {
+		background-color: #fff;
+		width: 250px;
+		min-width: 200px;
+		max-width: 250px;
+	}
+	
+	#sch_list .tr_ye {
+		    background-color: rgb(245, 236, 206);	
+	}
+	
+	#sch_list .tr_blu {
+		    background-color: rgb(206, 236, 245);
+	}
+	
+	
+	#sch_list .tr_gr {
+		background-color: rgb(227, 246, 206);		    
+	}
+	
+	
+	
+	.modal-xl {
+		max-width: 1200px;
+	}
+	
+	.modal-body {
+		width: 1200px !important;
+	}
+	
+	
+		
+		
+</style>
+</head>
+<body class="layout-light top-menu overlayScroll">
+	<div class="mobile-search"></div>
+	<div class="mobile-author-actions"></div>
+	<!-- 공통 topbar -->
+	<th:block th:include="/../fragments/topbar.html"></th:block>
+
+		        
+	
+	<main class="main-content" style="background-color: #F8F9FA;">
+	
+	
+		<div class="contents" style="background-color: #F8F9FA;">
+		
+		
+			<div class="container-fluid">
+		    	<div class="row">
+			        <div class="col-lg-12" style="padding:0">
+			        	<div class="breadcrumb-main">
+			        		<h4 class="text-capitalize breadcrumb-title">연구 노트</h4>
+			        		<span class="ml-20 mt-1 font_sub_title">일정관리 - 연구노트</span>
+			        	</div>
+			        </div>
+		        </div>
+	        </div>
+		
+			<div class="atbd-page-content">
+				<div class="container-fluid mt-25">
+					<div class="row calendar-grid justify-content-center">
+						<div class="col-lg-7">
+			                <div class="card card-default card-md mb-4">
+			                    <div class="card-body">
+			                        <div id='fulled-calendar'></div>
+			                    </div>
+			                </div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="modal-basic modal fade show" id="userModal" tabindex="-1" role="dialog" aria-hidden="true">
+			    <div class="modal-dialog modal-xl" role="document">
+			        <div class="modal-content modal-bg-white ">
+			            <div class="modal-body">
+			            	<div class="d-flex justify-content-end">
+		                		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span data-feather="x"></span></button>
+		                	</div>
+		                	<div class="atbd-nav-controller d-flex fa-lg mb-0">
+		                        <div class="btn-group atbd-button-group btn-group-normal nav" role="tablist">
+		                            <a href="#modal-content1" class="btn btn-sm btn-outline-light fa-xs nav-link active"
+		                            	id="modal-tab1" data-toggle="tab" role="tab" aria-selected="true">구획정보</a>
+		                            <a href="#modal-content2" class="btn btn-sm btn-outline-light fa-xs nav-link"
+		                            	id="modal-tab2" data-toggle="tab" role="tab">토양/기상 정보</a>
+		                        </div>
+		                    </div>
+		                    <div class="tab-content">
+		                    	<!-- 구획정보 content -->
+		                    	<div class="tab-pane show active" id="modal-content1" role="tabpanel">
+		                    		<div class="row">
+		                    			<div class="col-lg-12">
+		                    				<div class="breadcrumb-main ml-2">
+		                    					<h6 class="text-capitalize breadcrumb-title">구획정보</h6>
+		                    				</div>
+		                    			</div>
+		                    		</div>
+		                    		<div class="row" id="ModalTable1">
+		                    			<div class="col-lg-6">
+		                    				<div class="bg-white">
+		                    					<div class="table-responsive">
+		                    						<div style="font-size: 12px; color: initial;">집구1</div>
+		                            				<table class="table">
+		                            					<thead>
+					                            			<tr>
+					                            				<th>구획번호</th>
+					                            				<th>구획ID</th>
+					                            				<th>처리종류</th>
+					                            				<th>반복</th>
+					                            			</tr>
+					                            		</thead>
+					                            		<tbody>
+					                            			<tr>
+					                            				<td><span>1</span></td>
+					                            				<td><span>A1-B1-1</span></td>
+					                            				<td><span>콩(방사),60x20</span></td>
+					                            				<td><span>1</span></td>
+					                            			</tr>
+					                            			<tr>
+					                            				<td><span>1</span></td>
+					                            				<td><span>A1-B1-2</span></td>
+					                            				<td><span>콩(방사),60x20</span></td>
+					                            				<td><span>1</span></td>
+					                            			</tr>
+					                            		</tbody>
+		                            				</table>
+		                            			</div>
+		                            			<div class="table-responsive">
+		                    						<div style="font-size: 12px; color: initial;">집구2</div>
+		                            				<table class="table">
+		                            					<thead>
+					                            			<tr>
+					                            				<th>구획번호</th>
+					                            				<th>구획ID</th>
+					                            				<th>처리종류</th>
+					                            				<th>반복</th>
+					                            			</tr>
+					                            		</thead>
+					                            		<tbody>
+					                            			<tr>
+					                            				<td><span>1</span></td>
+					                            				<td><span>A1-B1-1</span></td>
+					                            				<td><span>콩(방사),60x20</span></td>
+					                            				<td><span>1</span></td>
+					                            			</tr>
+					                            			<tr>
+					                            				<td><span>1</span></td>
+					                            				<td><span>A1-B1-2</span></td>
+					                            				<td><span>콩(방사),60x20</span></td>
+					                            				<td><span>1</span></td>
+					                            			</tr>
+					                            		</tbody>
+		                            				</table>
+		                            			</div>
+		                            			<div class="table-responsive">
+		                    						<div style="font-size: 12px; color: initial;">집구3</div>
+		                            				<table class="table">
+		                            					<thead>
+					                            			<tr>
+					                            				<th>구획번호</th>
+					                            				<th>구획ID</th>
+					                            				<th>처리종류</th>
+					                            				<th>반복</th>
+					                            			</tr>
+					                            		</thead>
+					                            		<tbody>
+					                            			<tr>
+					                            				<td><span>1</span></td>
+					                            				<td><span>A1-B1-1</span></td>
+					                            				<td><span>콩(방사),60x20</span></td>
+					                            				<td><span>1</span></td>
+					                            			</tr>
+					                            			<tr>
+					                            				<td><span>1</span></td>
+					                            				<td><span>A1-B1-2</span></td>
+					                            				<td><span>콩(방사),60x20</span></td>
+					                            				<td><span>1</span></td>
+					                            			</tr>
+					                            		</tbody>
+		                            				</table>
+		                            			</div>
+		                    				</div>
+		                    			</div>
+		                    			<div class="col-lg-6">
+		                    				<div style="border: 1px solid dark; background: grey; height: 300px;">
+		                    					<p style="color: white;">구획 이미지 들어갈 자리</p>
+		                    				</div>
+		                    			</div>
+		                    		</div>
+		                    		<div class="row">
+		                    			<div class="col-lg-12">
+			                    			<div class="d-flex justify-content-end">
+			                    				<select class="form-control b-light" style="width: 200px;">
+					                                <option></option>
+					                                <option>option1</option>
+					                                <option>option2</option>
+					                            </select>
+			                    			</div>
+			                    			<div class="d-flex justify-content-end mt-2">
+			                    			<a href="#"><span>구획정보확인</span></a>
+			                    			</div>
+			                    		</div>
+			                    	</div>
+			                    	<div class="row">
+			                    		<div class="col-lg-12">
+			                    			<div class="bg-white">
+		                    					<div class="table-responsive" id="ModalTable2">
+		                    						<table class="table">
+		                    							<thead>
+					                            			<tr>
+					                            				<th>개체</th>
+					                            				<th>초장</th>
+					                            				<th>협수</th>
+					                            				<th>분지수</th>
+					                            				<th>역병</th>
+					                            			</tr>
+					                            		</thead>
+					                            		<tbody>
+					                            			<tr>
+					                            				<td><span>1</span></td>
+					                            				<td>
+					                            					<span class="text-center">58</span>
+					                            					<a href="" class="" style="float: right;">
+		                                                            <span data-feather="camera"></span></a>
+					                            				</td>
+					                            				<td>
+					                            					<span>-</span>
+					                            					<a href="" class="" style="float: right;">
+		                                                            <span data-feather="camera"></span></a>
+					                            				</td>
+					                            				<td><span></span></td>
+					                            				<td><span></span></td>
+					                            			</tr>
+					                            			<tr>
+					                            				<td><span>1</span></td>
+					                            				<td>
+					                            					<span class="text-center">58</span>
+					                            					<a href="" class="" style="float: right;">
+		                                                            <span data-feather="camera"></span></a>
+					                            				</td>
+					                            				<td>
+					                            					<span>-</span>
+					                            					<a href="" class="" style="float: right;">
+		                                                            <span data-feather="camera"></span></a>
+					                            				</td>
+					                            				<td><span></span></td>
+					                            				<td><span></span></td>
+					                            			</tr>
+					                            		</tbody>
+		                    						</table>
+		                    					</div>
+		                    				</div>
+			                    		</div>
+			                    	</div>
+		                    	</div>
+		                    	<!-- 토양/기상 정보 content -->
+		                    	<div class="tab-pane" id="modal-content2" role="tabpanel">
+		                    	
+		                    	</div>
+		                    </div>
+			            </div>
+			            <div class="button-group d-flex justify-content-end mb-2 mr-4">
+		                   <button class="btn btn-primary btn-default btn-squared">저장</button>
+		           		</div>
+			        </div>
+			    </div>
+			</div>
+			
+			
+    	</div>
+    </main>
+    		<div class="modal-basic modal fade show" id="scheduleModal" tabindex="-1" role="dialog" aria-hidden="true">
+			    <div class="modal-dialog modal-xl" role="document">
+			        <div class="modal-content modal-bg-white ">
+			            <div class="modal-body">
+			            	<div class="d-flex justify-content-end">
+		                		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span data-feather="x"></span></button>
+		                	</div>
+		                	
+		                    <div class="tab-content" id="pdfArea">
+		                    	<div class="tab-pane show active" id="modal-content1" role="tabpanel">
+		                    		<div class="row">
+		                    			<div class="col-lg-12">
+		                    				<div class="breadcrumb-main ml-2" id="vp_title">
+
+		                    				</div>
+		                    			</div>
+		                    		</div>
+			                    	<div class="row">
+			                    		<div class="col-lg-12">
+			                    			<div class="bg-white">
+		                    					<div class="table-responsive" id="ModalTable2">      					
+		                    						<div id="sch_list">
+		                    						</div>
+		                    					</div>
+		                    				</div>
+			                    		</div>
+			                    	</div>
+		                    	</div>
+		                    </div>
+			            </div>
+			            <div class="button-group d-flex justify-content-end mb-2 mr-4">
+		                   <a class="btn btn-primary btn-default btn-squared" id="sch_btn" style="color: #FFFFFF;" onclick="closeModal()">닫기</a>
+		           		</div>
+		           		<div class="button-group d-flex justify-content-end mb-2 mr-4">
+		                   <a class="btn btn-primary btn-default btn-squared" onclick="savePDF()" style="color: #FFFFFF;">PDF 다운로드</a>
+		           		</div>
+			        </div>
+			    </div>
+			</div>
+    <!-- 공통 하단 -->
+    <th:block th:include="/../fragments/footer.html"></th:block>
+    <!-- 공통 js -->
+    <th:block th:include="/../fragments/commonjs.html"></th:block>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+
+<script type="text/javascript">
+function closeModal(){
+	$("#scheduleModal").modal("hide");
+}
+  function savePDF1(){
+    //저장 영역 div id
+    html2canvas($('#pdfArea')[0] ,{	
+      //logging : true,		// 디버그 목적 로그
+      //proxy: "html2canvasproxy.php",
+      allowTaint : true,	// cross-origin allow 
+      useCORS: true,		// CORS 사용한 서버로부터 이미지 로드할 것인지 여부
+      scale : 2			// 기본 96dpi에서 해상도를 두 배로 증가
+      
+    }).then(function(canvas) {	
+ 		
+   		var doc = new jsPDF('p', 'mm','a4');
+      // 캔버스를 이미지로 변환
+      console.log(canvas);
+      var imgData = canvas.toDataURL('image/jpeg', 0.3);
+      console.log("imgData:----------------",canvas, imgData);
+      
+      var imgWidth = 190; // 이미지 가로 길이(mm) / A4 기준 210mm
+      var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
+      var imgHeight = canvas.height * imgWidth / canvas.width;
+      var heightLeft = imgHeight;
+      var margin = 10; // 출력 페이지 여백설정
+      
+      var position = 0;
+
+      // 첫 페이지 출력
+      doc.addImage(imgData, 'jpeg', margin, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      // 한 페이지 이상일 경우 루프 돌면서 출력
+      while (heightLeft >= 20) {			// 35
+      position = heightLeft - imgHeight;
+      position = position - 20 ;		// -25
+
+      doc.addPage();
+      doc.addImage(imgData, 'jpeg', margin, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+      }
+
+      // 파일 저장
+      doc.save('연구결과.pdf');
+    });
+  }
+  
+ 
+
+  function savePDF(){
+	  console.log('22222222222222');
+	  
+	  html2canvas(document.querySelector("#pdfArea") ,{	
+	      //logging : true,		// 디버그 목적 로그
+	      //proxy: "html2canvasproxy.php",
+	      allowTaint : true,	// cross-origin allow 
+	      useCORS: true,		// CORS 사용한 서버로부터 이미지 로드할 것인지 여부
+	      scale : 2			// 기본 96dpi에서 해상도를 두 배로 증가
+	      
+	    }).then(function(canvas) {	
+	 		
+	    	// 캔버스를 이미지로 변환
+            var imgData = canvas.toDataURL('image/png');
+	  console.log("img-------------------",imgData);
+
+            var imgWidth = 210; // 이미지 가로 길이(mm) A4 기준
+            var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
+            var imgHeight = canvas.height * imgWidth / canvas.width;
+            var heightLeft = imgHeight;
+
+            var doc = new jsPDF('p', 'mm');
+            var position = 0;
+
+            // 첫 페이지 출력
+            doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+
+            // 한 페이지 이상일 경우 루프 돌면서 출력
+            while (heightLeft >= 20) {
+                position = heightLeft - imgHeight;
+                doc.addPage();
+                doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
+
+            // 파일 저장
+            doc.save('1111111111111'+'.pdf');
+
+
+            //이미지로 표현
+            //document.write('<img src="'+imgData+'" />');
+	    });
+      
+  }
+
+
+</script>
+
+<script type="text/javascript" th:inline="javascript">
+
+	var current_plan = /*[[${current_plan}]]*/ "null";
+
+	$(document).find(".data_target").each(function(i, item){
+		$(this).attr("data-target", "#current-"+(i+1));
+		$(this).next().attr("id", "current-"+(i+1));
+	});
+	
+	$(document).find(".data_target1").each(function(i, item){
+		$(this).attr("data-target", "#delay-"+(i+1));
+		$(this).next().attr("id", "delay-"+(i+1));
+	});
+
+	//modal show
+	$(".modalBtn").on("click", function(){
+		$("#userModal").modal("show");
+	})
+	
+	 
+	// 캘린더
+	document.addEventListener("DOMContentLoaded", function()
+	{
+		var fullCalendar = document.getElementById("fulled-calendar");
+		var arr = [];
+		
+		$.ajax(
+		{
+			url: 'selectResult',
+			method: 'POST',
+			dataType: 'json',
+			data: data,
+			success: function(result)
+			{
+				
+				var list = result.plan;
+				
+				for(var i = 0; i < result.plan.length; i++)
+				{
+					var title = result.plan[i].report_code + ":" + result.plan[i].report_title;
+					
+					var schedule = {"title" : title, "start":result.plan[i].rp_create_date, "end":result.plan[i].rp_create_date, "id":result.plan[i].plan_id,"classNames": "schedule"};
+					
+					arr.push(schedule);
+				}
+				
+			
+				
+				if(fullCalendar)
+				{
+					var calendar = new FullCalendar.Calendar(fullCalendar,
+					{
+						headerToolbar:
+						{
+							left: "today,prev,title,next",
+							right: "timeGridDay,timeGridWeek,dayGridMonth",
+						},
+						editable: false,//캘린더 이벤트 수정 가능 여부
+						/* eventSources: [data1, data2, data3], */ //이벤트 내용 소스 넣는곳
+						contentHeight: 550,//달력 높이
+						expandRows: true,//화면에 맞게 높이 재설정
+						initialView: "dayGridMonth",//초기로딩시 보여줄 화면 월로 맞춤
+						navLinks : true,//날짜 선택하면 day 화면으로 이동
+						dayMaxEvents: true,//이벤트가 오버되면 높이 제한(+ 몇 개식으로 표현)
+						eventClick: function(e)
+						{
+
+						var obj;
+						for(var i=0; i<list.length;i++){
+							if(list[i].plan_id == e.event._def.publicId){
+								obj = list[i];
+							}
+						}
+							var title = "";
+							title += "<h3><u>* 재배계획:"+obj.plan_code; +"<h3></u><hr>";	
+							document.getElementById('vp_title').innerHTML = title;
+							
+							var html = "";
+							html += "<table>";
+							html += "<tbody>";
+							html += "<tr>"
+							html += 	"<td><u><b> * 조사정보 </b></u></td>";
+							html += "</tr>";
+							
+							html += "<tr>"
+							html += 	"<td style='width:120px;'> 과제명 </td>";
+							html += 	"<td colspan='12'>"+ obj.report_title+"("+obj.report_code+")" +"</td>";
+							html += "</tr>";
+							
+							html += "<tr>"
+							html += 	"<td> 포장위치 </td>";
+							html += 	"<td colspan='12'>"+ obj.storage_name +"</td>";
+							html += "</tr>";
+							
+							html += "<tr class='last_tr'>"
+							html += 	"<td> 반복 </td>";
+							html += 	"<td colspan='12'>"+ obj.plan_repeat + " </td>";
+							html += "</tr>";
+							
+	var grow_type;
+	switch(obj.grow_type){	
+	case 0:
+		grow_type ="완전임의배치법";
+		break;
+	case 1:
+		grow_type ="난괴법";
+	case 2:
+		grow_type = "분할구배치법";
+	case 3:
+		grow_type = "세세구배치법";
+	}
+	
+	var factor;
+	
+							html += "<tr>"
+							html += 	"<td> 시험구배치 종류 </td>";
+							html += 	"<td colspan='12'>"+ grow_type +  "</td>";
+							html += "</tr>";
+							
+							html += "<tr>"
+							html += 	"<td> 조사항목 </td>";
+							html += 	"<td colspan='12'>"+ obj.method_title+ " </td>";
+							html += "</tr>";
+							
+	 var listFactor = listFactor2(obj.plan_id);		
+
+			for(var i=0;i<listFactor.length;i++){
+						if(i === 0) {
+							html += "<tr class='last_tr'>"
+							html += 	"<td> 요인 " +(i+1)+"</td>";
+							html += 	"<td colspan='12'>"+ listFactor[i].factor_type +" " + listFactor[i].factor_interval + "</td>";
+							html += "</tr>";										
+							
+						} else {
+							html += "<tr>"
+							html += 	"<td> 요인 " +(i+1)+"</td>";
+							html += 	"<td colspan='12'>"+ listFactor[i].factor_type +" " + listFactor[i].factor_interval + "</td>";
+							html += "</tr>";										
+						};
+			}
+			
+							html += "<tr>"
+						var weather = JSON.parse(obj.weather);
+						
+						html += 	"<td>정보</td>";
+						html += 	"<td class='last_tr tr_blu'> 기상정보 </td>";
+						for(let i in weather){
+							
+							var category;
+							switch(i){
+							case "afp":
+								category = "강수량";
+								break;
+							case "afv":
+								category = "증발량";
+								break;
+							case "arvlty_300":
+								category = "풍속(300)";
+								break;
+							case "arvlty_150":
+								category = "풍속(150)";
+								break;
+							case "dwcn_Time":
+								category = "결로시간";
+								break;
+							case "frfr_Tp":
+								category = "초상온도";
+								break;
+							case "hd_150":
+								category = "습도(150CM)";
+								break;
+							case "hd_400":
+								category = "습도(400CM)";
+								break;	
+							}
+							
+							html += "<td class='last_tr tr_blu'>"+ category +":"+weather[i]+"</td>";
+						}
+							html += "</tr>";
+							
+							html += "<tr>"
+							html += 	"<td></td>";
+							html += 	"<td class='last_tr tr_ye'> 토양정보 </td>";
+						var soil = JSON.parse(obj.soil);
+						for(let i in soil){
+					var category;
+					switch(i){
+					case "ACID":
+						category = "산도(ph)";
+						break;
+					case "VLDPHA":
+						category = "유효인산(mg/kg)";
+						break;
+					case "VLDSIA":
+						category = "유효규산(mg/kg)";
+						break;
+					case "OM":
+						category = "유기물(g/kg)";
+						break;
+					case "POIFERT_MG":
+						category = "마그네슘(cmol+/kg)";
+						break;
+					case "POIFERT_K":
+						category = "칼륨(cmol+/kg)";
+						break;
+					case "POIFERT_CA":
+						category = "칼슘(cmol+/kg)";
+						break;
+					case "SELC":
+						category = "전기전도도(dS/m)";
+						break;	
+					}
+							html += "<td class='last_tr tr_ye'>";
+							html += category + ": ";
+							html += soil[i]+"</td>";
+						}
+							html += "</tr>";
+							html += "</tbody>";
+							html +="</table><br><br><br><br>";
+								
+					var content = JSON.parse(obj.rp_content);
+						for(let i in content){
+							var table = "";
+								table += "<tr class='sec_table_tr'>";
+								table += "<th>";
+								table += "<table>";
+								table +=   "<tbody>";
+
+								table +=       "<tr class='tr_ye'>";
+								table +=          "<td>구획ID</td>";
+								table +=          "<td colspan='3'>"+ checkNullString(content[i][0][0].seg_id)+"</td>";
+								table +=       "</tr>";
+								table +=       "<tr class='tr_gr'>";
+								table +=          "<td>처리 종류</td>";
+								table +=          "<td colspan='3'>"+checkNullString(content[i][0][0].title)+"</td>";
+								table +=       "</tr>";
+								table +=       "<tr class='tr_blu'>";
+								table +=          "<td>조사항목</td>";
+							for(let j in content[i]){
+	
+								var detail = content[i][j][0];
+								table +=          "<td></td>";
+								
+							}
+								table +=       "</tr>";
+
+							for(let f in content[i]){	
+								for(let k in content[i][f]){
+								table += "<tr>";
+								table +=     "<td>개체</td>";
+											table += "<td>"+checkNullString(content[i][f][k].title)+"</td>";								
+											table += "<td>"+checkNullString(content[i][f][k].d3)+"</td>";								
+											table += "<td></td>";								
+								table += "</tr>";
+								}
+							}	
+								table +=       "<tr>";
+								table +=          "<td>등록사진</td>";
+								table +=          "<td colspan='"+content[i].length+"'> <img src='"+checkNullString(detail.img)+"'></td>";
+								table +=       "</tr>";
+								table +=   "</tbody>";
+								table +="</table>";
+								table += "</th>";
+								table +=       "<tr>";
+								table += "</tr><br><br><br>";
+								
+								html += table;
+						}
+						
+							document.getElementById('sch_list').innerHTML = html;
+							
+							
+							$("#scheduleModal").modal("show");
+						}
+					});
+					
+					for(var i = 0; i < arr.length; i++)
+					{
+						calendar.addEvent(arr[i]);
+					}
+					
+					calendar.render();
+				}
+			}
+		});
+	});
+	function checkNullString(type){
+		if(type == null || type == "undefined"){
+			return "";
+		}else{
+			return type;
+		}
+	}	
+	
+function listFactor2(plan_id){
+	  	var list;
+	  	 $.ajax({
+	  		 type:"GET",
+	  		 url:"/schedule/selectFactor",
+	  		 async: false,   
+	  		 data:{
+	  			 "plan_id": plan_id
+	  		 },
+	  		 success:function(data){
+	  			 list = data.list
+	  		 }
+	  	 });
+	  	 console.log('111');
+	  		 return list;
+	}
+</script>
+</body>
+</html>
