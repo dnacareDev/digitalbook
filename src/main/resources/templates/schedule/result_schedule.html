@@ -640,9 +640,9 @@ function closeModal(){
  		
    		var doc = new jsPDF('p', 'mm','a4');
       // 캔버스를 이미지로 변환
-      console.log(canvas);
+
       var imgData = canvas.toDataURL('image/jpeg', 0.3);
-      console.log("imgData:----------------",canvas, imgData);
+//       console.log("imgData:----------------",canvas, imgData);
       
       var imgWidth = 190; // 이미지 가로 길이(mm) / A4 기준 210mm
       var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
@@ -681,13 +681,14 @@ function closeModal(){
 	      //proxy: "html2canvasproxy.php",
 	      allowTaint : true,	// cross-origin allow 
 	      useCORS: true,		// CORS 사용한 서버로부터 이미지 로드할 것인지 여부
-	      scale : 2			// 기본 96dpi에서 해상도를 두 배로 증가
+	      scale : 0.8,			// 기본 96dpi에서 해상도를 두 배로 증가
+	      //dpi:300
+	      logging:true
 	      
 	    }).then(function(canvas) {	
 	 		
 	    	// 캔버스를 이미지로 변환
             var imgData = canvas.toDataURL('image/png');
-	  console.log("img-------------------",imgData);
 
             var imgWidth = 210; // 이미지 가로 길이(mm) A4 기준
             var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
@@ -710,7 +711,7 @@ function closeModal(){
             }
 
             // 파일 저장
-            doc.save('1111111111111'+'.pdf');
+            doc.save('연구 결과'+'.pdf');
 
 
             //이미지로 표현
@@ -952,35 +953,41 @@ function closeModal(){
 
 								table +=       "<tr class='tr_ye'>";
 								table +=          "<td>구획ID</td>";
-								table +=          "<td colspan='3'>"+ checkNullString(content[i][0][0].seg_id)+"</td>";
+								table +=          "<td colspan='100'>"+ checkNullString(content[i][0][0].seg_id)+"</td>";
 								table +=       "</tr>";
 								table +=       "<tr class='tr_gr'>";
 								table +=          "<td>처리 종류</td>";
-								table +=          "<td colspan='3'>"+checkNullString(content[i][0][0].title)+"</td>";
+								table +=          "<td colspan='100'>"+checkNullString(content[i][0][0].title)+"</td>";
 								table +=       "</tr>";
 								table +=       "<tr class='tr_blu'>";
 								table +=          "<td>조사항목</td>";
-							for(let j in content[i]){
-	
-								var detail = content[i][j][0];
-								table +=          "<td></td>";
+					
+					var length = content[i][0].length;
+					for(var e=0;e<length;e++){
+						table += "<td>";
+						table += checkNullString(content[i][0][e].title);
+						table += "</td>";
+					}
 								
-							}
 								table +=       "</tr>";
+						   var outerLength = content[i].length;
+							var length = content[i][0].length;
+								for(t=0;t<outerLength;t++){
+									table +=      "<tr>";
+										table +=      "<td>개체</td>";
+						
+									for(var e=0;e<length;e++){
+										table += "<td>";
+											table += content[i][t][e].content;
+										table += "</td>";
+									}
+									
+									table +=      "</tr>";
+								}	
 
-							for(let f in content[i]){	
-								for(let k in content[i][f]){
-								table += "<tr>";
-								table +=     "<td>개체</td>";
-											table += "<td>"+checkNullString(content[i][f][k].title)+"</td>";								
-											table += "<td>"+checkNullString(content[i][f][k].d3)+"</td>";								
-											table += "<td></td>";								
-								table += "</tr>";
-								}
-							}	
 								table +=       "<tr>";
 								table +=          "<td>등록사진</td>";
-								table +=          "<td colspan='"+content[i].length+"'> <img src='"+checkNullString(detail.img)+"'></td>";
+								table +=          "<td colspan='100'> <img src='"+checkNullString("")+"'></td>";
 								table +=       "</tr>";
 								table +=   "</tbody>";
 								table +="</table>";
@@ -1029,7 +1036,6 @@ function listFactor2(plan_id){
 	  			 list = data.list
 	  		 }
 	  	 });
-	  	 console.log('111');
 	  		 return list;
 	}
 </script>
