@@ -45,9 +45,9 @@
 	<insert id="InsertReport" parameterType="java.util.ArrayList">
 		<foreach collection="list" item="item" separator=";">
 			INSERT INTO report
-			(user_name, report_code, report_number, report_title, report_file_id, create_date, modify_date, report_status,report_year)
+			(user_name, report_code, report_number, report_title, report_file_id, create_date, modify_date, report_status)
 			VALUES
-			(#{item.user_name}, #{item.report_code}, #{item.report_number}, #{item.report_title}, #{item.report_file_id}, NOW(), NOW(), 1,#{report_year})
+			(#{item.user_name}, #{item.report_code}, #{item.report_number}, #{item.report_title}, #{item.report_file_id}, NOW(), NOW(), 1)
 		</foreach>
 	</insert>
 	
