@@ -674,35 +674,39 @@ $(document).ready(function()
 
 								table +=       "<tr class='tr_ye'>";
 								table +=          "<td>구획ID</td>";
-								table +=          "<td colspan='3'>"+ checkNullString(content[i][0][0].seg_id)+"</td>";
+								table +=          "<td colspan='100'>"+ checkNullString(content[i][0][0].seg_id)+"</td>";
 								table +=       "</tr>";
 								table +=       "<tr class='tr_gr'>";
 								table +=          "<td>처리 종류</td>";
-								table +=          "<td colspan='3'>"+checkNullString(content[i][0][0].title)+"</td>";
+								table +=          "<td colspan='100'>"+checkNullString(content[i][0][0].title)+"</td>";
 								table +=       "</tr>";
 								table +=       "<tr class='tr_blu'>";
 								table +=          "<td>조사항목</td>";
-							for(let j in content[i]){
-	
-								var detail = content[i][j][0];
-								table +=          "<td></td>";
-								
-							}
-								table +=       "</tr>";
-
-							for(let f in content[i]){	
-								for(let k in content[i][f]){
-								table += "<tr>";
-								table +=     "<td>개체</td>";
-											table += "<td>"+checkNullString(content[i][f][k].title)+"</td>";								
-											table += "<td>"+checkNullString(content[i][f][k].d3)+"</td>";								
-											table += "<td></td>";								
-								table += "</tr>";
+								var length = content[i][0].length;
+								for(var e=0;e<length;e++){
+									table += "<td>";
+									table += checkNullString(content[i][0][e].title);
+									table += "</td>";
 								}
-							}	
+											
+											table +=       "</tr>";
+									   var outerLength = content[i].length;
+										var length = content[i][0].length;
+											for(t=0;t<outerLength;t++){
+												table +=      "<tr>";
+													table +=      "<td>개체</td>";
+									
+												for(var e=0;e<length;e++){
+													table += "<td>";
+														table += content[i][t][e].content;
+													table += "</td>";
+												}
+												
+												table +=      "</tr>";
+											}
 								table +=       "<tr>";
 								table +=          "<td>등록사진</td>";
-								table +=          "<td colspan='"+content[i].length+"'> <img src='"+checkNullString(detail.img)+"'></td>";
+								table +=          "<td colspan='100'> <img src='"+checkNullString()+"'></td>";
 								table +=       "</tr>";
 								table +=   "</tbody>";
 								table +="</table>";
