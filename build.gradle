@@ -46,8 +46,14 @@ dependencies
 	annotationProcessor 'org.projectlombok:lombok'
 	implementation group: 'org.json', name: 'json', version: '20160810'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.2'
+	
 	
 	 implementation group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4.1', version: '1.16'
+
+
+
+
 }
 
 test
