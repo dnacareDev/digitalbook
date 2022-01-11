@@ -227,12 +227,11 @@ public class ReportController
        			
        			JSONObject obj = arr.getJSONObject(i);
        			
-       			String report_year = (String)obj.get("report_year");
-       			
        			item.setUser_name((String)obj.get("user_name"));
        			item.setReport_code((String)obj.get("report_code"));
        			item.setReport_number((String)obj.get("report_number"));
        			item.setReport_title((String)obj.get("report_title"));
+       			item.setReport_year(reportFile.getReport_year());
        			item.setReport_file_id(reportFile.getReport_file_id());
        			
        			reports.add(item);

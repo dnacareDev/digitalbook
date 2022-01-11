@@ -4,6 +4,40 @@
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
 <style>
+  #ModalTable1 table {
+    width: 99%;
+    height: 50%;
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+    border-collapse: collapse;
+  }
+  #ModalTable1 th, td {
+    padding: 10px;
+    text-align: center;
+    font-weight: initial;
+    font-size: 12px;
+  }
+  #ModalTable1 th {
+    background-color: white;
+  }
+  #ModalTable1 td {
+    background-color: #fafef5;
+  }
+  #ModalTable2 table {
+    width: 100%;
+    height: 50%;
+    border: 1px solid #dcdcdc;
+  }
+  #ModalTable2 th, td {
+  	border: 1px solid #dcdcdc;
+    padding: 10px;
+    text-align: center;
+    font-weight: initial;
+    font-size: 12px;
+  }
+  #ModalTable2 th {
+    background-color: #FDF5E6;
+  }
   .breadcrumb-main{
   float: left;
   }
@@ -183,6 +217,60 @@
 	.font_sub_title{
 		font-size: 15px !important;
 	}
+	
+		#sch_list tr td {
+		padding-top: 2px;
+		padding-bottom: 2px;
+	}
+	
+	#sch_list tr:not(:last-child) {
+		border-bottom: 1px solid #212529;
+	}		
+	
+	#ModalTable2 #sch_list td.last_tr,
+	#sch_list tr.last_tr {
+		border-bottom: 2px solid #212529;
+	}	
+	
+	#ModalTable2 #sch_list td.last_tr {
+		padding-top: 1px;
+		padding-bottom: 1px;
+	}
+	
+	#sch_list tr.sec_table_tr {
+		margin-top: 20px;
+		position: relative;
+	}
+	
+	#sch_list tr.sec_table_tr > th {
+		background-color: #fff;
+		width: 250px;
+		min-width: 200px;
+		max-width: 250px;
+	}
+	
+	#sch_list .tr_ye {
+		    background-color: rgb(245, 236, 206);	
+	}
+	
+	#sch_list .tr_blu {
+		    background-color: rgb(206, 236, 245);
+	}
+	
+	
+	#sch_list .tr_gr {
+		background-color: rgb(227, 246, 206);		    
+	}
+	
+	
+	
+	.modal-xl {
+		max-width: 1200px;
+	}
+	
+	.modal-body {
+		width: 1200px !important;
+	}
    
 </style>
 </head>
@@ -197,8 +285,8 @@
 		    	<div class="row">
 			        <div class="col-lg-12" style="padding:0">
 			        	<div class="breadcrumb-main">
-			        		<h4 class="text-capitalize breadcrumb-title">계획수립</h4>
-			        		<span class="ml-20 mt-1 font_sub_title">재배관리 - 계획수립</span>
+			        		<h4 class="text-capitalize breadcrumb-title">결과 보고서</h4>
+			        		<span class="ml-20 mt-1 font_sub_title">일정관리 - 결과보고서</span>
 			        	</div>
 			        </div>
 		        </div>
@@ -220,19 +308,11 @@
 				      				<div class="atbd-button-list d-flex flex-wrap">
 				      					<div class="d-flex align-items-center add-contact__form my-sm-0 my-2">
 				                            <select class="form-control form-control-lg mt-10 mb-10 mr-10" id="search_type" style="width: 238px;height:40px;">
-				                                <option value="p.plan_code">생육조사 ID</option>
-				                                <option value="r.report_title">과제명</option>
-				                                <option value="s.storage_name">포장</option>
-				                                <option value="m.method_title">조사항목</option>
-				                                <option value="p.plan_repeat">반복수</option>
-				                                <option value="p.plan_segment">처리수</option>
+				                                <option value="">선택</option>
+				                                <option th:each="r : ${report}" th:value="${r.report_code}" th:text="|${r.report_title}(${r.report_code})|" th:selected="${param.report_id == r.report_id}"></option>
 				                            </select>
-				                            <div class="input-container icon-right position-relative mr-10">
-			                                    <a href="#" onclick="SearchPlan(1); return false;" class="input-icon icon-right"><span data-feather="search"></span></a>
-			                                    <input type="text" class="form-control form-control-lg" id="keyword" placeholder="Search" style="width: 238px;height:40px;">
-			                                </div>
 				      					</div>
-				      					<button class="btn btn-primary" id="excelBtn" style="margin:10px 0 0 0">CSV<span data-feather="download"style="margin:0;"></span></button>
+				      					<button class="btn btn-primary" onclick="searchReport()" style="margin:10px 0 0 0">조회</button>
 				      				</div>
 			      				</div>
 		       				</div>
@@ -243,15 +323,9 @@
 		                            		<thead>
 		                            			<tr>
 		                            				<th>생육조사 ID</th>
-		                            				<th>과제명</th>
-		                            				<th>포장</th>
-		                            				<th>조사항목</th>
-		                            				<th>반복수</th>
-		                            				<th>처리수</th>
-		                            				<th>포장QR</th>
-		                            				<th>과제QR</th>
-		                            				<th>상태</th>
-		                            				<th>등록일</th>
+		                            				<th>조사날짜-시간</th>
+		                            				<th>등록자</th>
+		                            				<th>비고</th>
 		                            			</tr>
 		                            		</thead>
 		                            		<tbody id="plan_list">
@@ -333,6 +407,9 @@
 		        </div>
 		    </div>
 		</div>
+			
+			
+    </main>
 	    <!-- ends: .modal-Basic -->
 	    
 	    <div class="modal-basic modal fade show" id="qr1Modal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -359,8 +436,41 @@
 		    </div>
 		</div>
 	    <!-- ends: .modal-Basic -->
-    	
-    </main>
+    			<div class="modal-basic modal fade show" id="scheduleModal" tabindex="-1" role="dialog" aria-hidden="true">
+			    <div class="modal-dialog modal-xl" role="document">
+			        <div class="modal-content modal-bg-white ">
+			            <div class="modal-body">
+			            	<div class="d-flex justify-content-end">
+		                		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span data-feather="x"></span></button>
+		                	</div>
+		                    <div class="tab-content">
+		                    	<div class="tab-pane show active" id="modal-content1" role="tabpanel">
+		                    		<div class="row">
+		                    			<div class="col-lg-12">
+		                    				<div class="breadcrumb-main ml-2" id="vp_title">
+
+		                    				</div>
+		                    			</div>
+		                    		</div>
+			                    	<div class="row">
+			                    		<div class="col-lg-12">
+			                    			<div class="bg-white">
+		                    					<div class="table-responsive" id="ModalTable2">
+		                    						<div id="sch_list">
+		                    						</div>
+		                    					</div>
+		                    				</div>
+			                    		</div>
+			                    	</div>
+		                    	</div>
+		                    </div>
+			            </div>
+			            <div class="button-group d-flex justify-content-end mb-2 mr-4">
+		                   <a class="btn btn-primary btn-default btn-squared" id="sch_btn" style="color: #FFFFFF;" onclick="closeModal()">닫기</a>
+		           		</div>
+			        </div>
+			    </div>
+			</div>
     <!-- 공통 하단 -->
     <th:block th:include="/../fragments/footer.html"></th:block>
     <!-- 공통 js -->
@@ -368,38 +478,288 @@
     <script type="text/javascript" src="/../assets/vendor_assets/js/qrcode.min.js"></script>
 </body>
 <script type="text/javascript">
+function closeModal(){
+	$("#scheduleModal").modal("hide");
+}
+
 $(document).ready(function()
 		{
 			SearchPlan(1);
 		});
 		
 	let plans;
+
+	function listFactor2(plan_id){
+		var list;
+	  	 $.ajax({
+	  		 type:"GET",
+	  		 url:"/schedule/selectFactor",
+	  		 async: false,   
+	  		 data:{
+	  			 "plan_id": plan_id
+	  		 },
+	  		 success:function(data){
+	  			 list = data.list
+	  		 }
+	  	 });
+	  		 return list;
+	}
+	
+	function openModal(rp_id){
 		
+		$.ajax(
+				{
+					url: 'searchReportForAjax',
+					method: 'POST',
+					data: {"rp_id": rp_id},
+					success: function(result)
+					{
+					console.log(result);
+						var obj;
+						obj = result.report[0];
+							var title = "";
+							title += "<h3><u>* 재배계획:"+obj.plan_code; +"<h3></u><hr>";	
+							document.getElementById('vp_title').innerHTML = title;
+							
+							var html = "";
+							html += "<table>";
+							html += "<tbody>";
+							html += "<tr>"
+							html += 	"<td><u><b> * 조사정보 </b></u></td>";
+							html += "</tr>";
+							
+							html += "<tr>"
+							html += 	"<td style='width:120px;'> 과제명 </td>";
+							html += 	"<td colspan='12'>"+ obj.report_title+"("+obj.report_code+")" +"</td>";
+							html += "</tr>";
+							
+							html += "<tr>"
+							html += 	"<td> 포장위치 </td>";
+							html += 	"<td colspan='12'>"+ obj.storage_name +"</td>";
+							html += "</tr>";
+							
+							html += "<tr class='last_tr'>"
+							html += 	"<td> 반복 </td>";
+							html += 	"<td colspan='12'>"+ obj.plan_repeat + " </td>";
+							html += "</tr>";
+							
+	var grow_type;
+	switch(obj.grow_type){	
+	case 0:
+		grow_type ="완전임의배치법";
+		break;
+	case 1:
+		grow_type ="난괴법";
+	case 2:
+		grow_type = "분할구배치법";
+	case 3:
+		grow_type = "세세구배치법";
+	}
+	
+	var factor;
+	
+							html += "<tr>"
+							html += 	"<td> 시험구배치 종류 </td>";
+							html += 	"<td colspan='12'>"+ grow_type +  "</td>";
+							html += "</tr>";
+							
+							html += "<tr>"
+							html += 	"<td> 조사항목 </td>";
+							html += 	"<td colspan='12'>"+ obj.method_title+ " </td>";
+							html += "</tr>";
+							
+	 var listFactor = listFactor2(obj.plan_id);		
+
+			for(var i=0;i<listFactor.length;i++){
+						if(i === 0) {
+							html += "<tr class='last_tr'>"
+							html += 	"<td> 요인 " +(i+1)+"</td>";
+							html += 	"<td colspan='12'>"+ listFactor[i].factor_type +" " + listFactor[i].factor_interval + "</td>";
+							html += "</tr>";										
+							
+						} else {
+							html += "<tr>"
+							html += 	"<td> 요인 " +(i+1)+"</td>";
+							html += 	"<td colspan='12'>"+ listFactor[i].factor_type +" " + listFactor[i].factor_interval + "</td>";
+							html += "</tr>";										
+						};
+			}
+			
+							html += "<tr>"
+						var weather = JSON.parse(obj.weather);
+						
+						html += 	"<td>정보</td>";
+						html += 	"<td class='last_tr tr_blu'> 기상정보 </td>";
+						for(let i in weather){
+							
+							var category;
+							switch(i){
+							case "afp":
+								category = "강수량";
+								break;
+							case "afv":
+								category = "증발량";
+								break;
+							case "arvlty_300":
+								category = "풍속(300)";
+								break;
+							case "arvlty_150":
+								category = "풍속(150)";
+								break;
+							case "dwcn_Time":
+								category = "결로시간";
+								break;
+							case "frfr_Tp":
+								category = "초상온도";
+								break;
+							case "hd_150":
+								category = "습도(150CM)";
+								break;
+							case "hd_400":
+								category = "습도(400CM)";
+								break;	
+							}
+							
+							html += "<td class='last_tr tr_blu'>"+ category +":"+weather[i]+"</td>";
+						}
+							html += "</tr>";
+							
+							html += "<tr>"
+							html += 	"<td></td>";
+							html += 	"<td class='last_tr tr_ye'> 토양정보 </td>";
+						var soil = JSON.parse(obj.soil);
+						for(let i in soil){
+					var category;
+					switch(i){
+					case "ACID":
+						category = "산도(ph)";
+						break;
+					case "VLDPHA":
+						category = "유효인산(mg/kg)";
+						break;
+					case "VLDSIA":
+						category = "유효규산(mg/kg)";
+						break;
+					case "OM":
+						category = "유기물(g/kg)";
+						break;
+					case "POIFERT_MG":
+						category = "마그네슘(cmol+/kg)";
+						break;
+					case "POIFERT_K":
+						category = "칼륨(cmol+/kg)";
+						break;
+					case "POIFERT_CA":
+						category = "칼슘(cmol+/kg)";
+						break;
+					case "SELC":
+						category = "전기전도도(dS/m)";
+						break;	
+					}
+							html += "<td class='last_tr tr_ye'>";
+							html += category + ": ";
+							html += soil[i]+"</td>";
+						}
+							html += "</tr>";
+							html += "</tbody>";
+							html +="</table><br><br><br><br>";
+								
+					var content = JSON.parse(obj.rp_content);
+						for(let i in content){
+							var table = "";
+								table += "<tr class='sec_table_tr'>";
+								table += "<th>";
+								table += "<table>";
+								table +=   "<tbody>";
+
+								table +=       "<tr class='tr_ye'>";
+								table +=          "<td>구획ID</td>";
+								table +=          "<td colspan='3'>"+ checkNullString(content[i][0][0].seg_id)+"</td>";
+								table +=       "</tr>";
+								table +=       "<tr class='tr_gr'>";
+								table +=          "<td>처리 종류</td>";
+								table +=          "<td colspan='3'>"+checkNullString(content[i][0][0].title)+"</td>";
+								table +=       "</tr>";
+								table +=       "<tr class='tr_blu'>";
+								table +=          "<td>조사항목</td>";
+							for(let j in content[i]){
+	
+								var detail = content[i][j][0];
+								table +=          "<td></td>";
+								
+							}
+								table +=       "</tr>";
+
+							for(let f in content[i]){	
+								for(let k in content[i][f]){
+								table += "<tr>";
+								table +=     "<td>개체</td>";
+											table += "<td>"+checkNullString(content[i][f][k].title)+"</td>";								
+											table += "<td>"+checkNullString(content[i][f][k].d3)+"</td>";								
+											table += "<td></td>";								
+								table += "</tr>";
+								}
+							}	
+								table +=       "<tr>";
+								table +=          "<td>등록사진</td>";
+								table +=          "<td colspan='"+content[i].length+"'> <img src='"+checkNullString(detail.img)+"'></td>";
+								table +=       "</tr>";
+								table +=   "</tbody>";
+								table +="</table>";
+								table += "</th>";
+								table +=       "<tr>";
+								table += "</tr><br><br><br>";
+								
+								html += table;
+						}
+						
+							document.getElementById('sch_list').innerHTML = html;
+							
+							
+							$("#scheduleModal").modal("show");
+								}
+							});
+							
+						
+
+	}
+
+function checkNullString(type){
+	if(type == null || type == "undefined"){
+		return "";
+	}else{
+		return type;
+	}
+}
+
 		//페이지 보기 변경시 시약 검색 실행
 		$("#limit").on("change", function(){
 			SearchPlan(1);
 		});
 
-		function SearchPlan(e){
+		function searchReport(e){
+			var report_code = document.getElementById("search_type").value;
+
 			var limit = $("#limit").val();
 			var search_type = $("#search_type").val();
 			var keyword = $("#keyword").val();
-			var data = {"search_type" : search_type, "keyword" : keyword, "page_num" : e, "limit" : limit};
+			
+			var data = {"report_code" : report_code, "page_num" : 1, "limit" : limit};
 			
 			$.ajax({
-				url : '/plan/searchPlan',
+				url : '/schedule/searchReport',
 				method : 'POST',
 				dataType : 'json',
 				data : data,
 				success : function(result){
-					
+					console.log(result);
 					var plan_list = $("#plan_list");
 					var add_list = "";
 					
 					var pageNum = $("#pageNum");
 					var page_add = "";
 					
-					var length = result.plan.length;
+					var length = result.report.length;
 					
 					if(length == 0){
 						add_list = '<tr>' + '<td colspan="11">' + '<span>' + '등록된 데이터가 없습니다.' + '</span>' + '</td>' + '</tr>';
@@ -413,35 +773,23 @@ $(document).ready(function()
 						for(var i = 0; i < length; i++){
 							
 							add_list += '<tr>';
-							add_list += '<td><a href="/plan/modify?plan_id='+ result.plan[i].plan_id + '">' + result.plan[i].plan_code + '</a></td>';
-							add_list += '<td><span>' + (result.plan[i].report_title ? result.plan[i].report_title : "") + '</span></td>';
-							add_list += '<td><span>' + (result.plan[i].storage_name ? result.plan[i].storage_name : "") + '</span></td>';
-							add_list += '<td><span>' + (result.plan[i].method_title ? result.plan[i].method_title : "") + '</span></td>';
-							add_list += '<td><span>' + (result.plan[i].plan_repeat ? result.plan[i].plan_repeat : "") + '</span></td>';
-							add_list += '<td><span>' + (result.plan[i].plan_segment ? result.plan[i].plan_segment : "") + '</span></td>';
-							add_list += '<td><span class="qr1" data-id="'+result.plan[i].plan_id+'" data-code="'+result.plan[i].plan_code+'" data-report-code="'+result.plan[i].report_code+'" style="color:blue; cursor:pointer;">Print QR</span></td>';
-							add_list += '<td><span class="qr2" data-id="'+result.plan[i].plan_id+'" style="color:blue; cursor:pointer;">Print QR</span></td>';
-							if(result.plan[i].plan_status == 0){
-								add_list += '<td><span>승인요청</span></td>';
-							}else if(result.plan[i].plan_status == 1){
-								add_list += '<td><span>수정요청</span></td>';
-							}else if(result.plan[i].plan_status == 2){
-								add_list += '<td><span>승인</span></td>';
-							}
-							add_list += '<td><span>' + result.plan[i].create_date + '</span></td>';
+							add_list += '<td><a href="#" onclick="openModal('+result.report[i].rp_id+')">'+ result.report[i].rp_id +'</a></td>';
+							add_list += '<td><span>' + result.report[i].rp_create_date + '</span></td>';
+							add_list += '<td><span>' + result.report[i].user_name_k + '</span></td>';
+							add_list += '<td><span> </span></td>';
 							add_list += '</tr>';
 						}//end for
 						
 						if(result.page_num > 10)
 						{
-							page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchPlan(' + (result.start_page - 10) + ')"><</button>';
+							page_add += '<button class="atbd-pagination__link pagination-control" onclick="searchReport(' + (result.start_page - 10) + ')"><</button>';
 						}
 						
 						for(var i = (result.start_page - 1); i < (result.start_page + 9); i++)
 						{
 							if(result.page_num == (i + 1))
 							{
-								page_add += '<button class="atbd-pagination__link active" onclick="SearchPlan(' + (i + 1) + ')">' + (i + 1) + '</button>';
+								page_add += '<button class="atbd-pagination__link active" onclick="searchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
 							}
 							else if(i >= result.end_page)
 							{
@@ -449,13 +797,13 @@ $(document).ready(function()
 							}
 							else
 							{
-								page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchPlan(' + (i + 1) + ')">' + (i + 1) + '</button>';
+								page_add += '<button class="atbd-pagination__link pagination-control" onclick="searchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
 							}
 						}
 						
 						if(result.page_num < (result.end_page - 10))
 						{
-							page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchPlan(' + (result.start_page + 10) + ')">></button>';
+							page_add += '<button class="atbd-pagination__link pagination-control" onclick="searchReport(' + (result.start_page + 10) + ')">></button>';
 						}
 						
 						plan_list.empty();
@@ -678,6 +1026,8 @@ $(document).ready(function()
 			window.print();//인쇄 실행
 			
 		}
+		
+	
 		
 </script>
 </html>
