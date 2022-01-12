@@ -27,4 +27,6 @@ public class Storage
 	private String storage_unit;
 	private int depart_id;							// 장소 이용과
 	private String department;
+	private String storage_type_name; // 장소이름
+	private String storage_contents;
 }

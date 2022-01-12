@@ -24,5 +24,7 @@ public class Report {
 	private int report_status;					// 과제 사용가능 여부
 	
 	private int report_year;
+
+	
 	
 }

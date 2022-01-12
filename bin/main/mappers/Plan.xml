@@ -444,9 +444,9 @@
 	<insert id="InsertStorage" parameterType="Storage">
 		/* InsertStorage [plan.xml] */
 		INSERT INTO storage
-		(storage_code, storage_name, storage_address, storage_type, storage_division, storage_size, depart_id, storage_location, create_date, modify_date, user_id,storage_unit)
+		(storage_code, storage_name, storage_address, storage_type, storage_division, storage_size, depart_id, storage_location, create_date, modify_date, user_id,storage_unit,storage_contents)
 		VALUES
-		(#{storage_code}, #{storage_name},#{storage_address}, #{storage_type}, #{storage_division}, #{storage_size}, #{depart_id}, #{storage_location}, NOW(), NOW(), 0,#{storage_unit})
+		(#{storage_code}, #{storage_name},#{storage_address}, #{storage_type}, #{storage_division}, #{storage_size}, #{depart_id}, #{storage_location}, NOW(), NOW(), 0,#{storage_unit},#{storage_contents})
 	</insert>
 	
 	<!-- 장소 갯수 조회 -->

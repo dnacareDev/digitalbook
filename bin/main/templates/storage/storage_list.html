@@ -4,12 +4,34 @@
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
 <style>
+	/* The Modal (background) */
+	.searchModal {
+		display: none; /* Hidden by default */
+		position: fixed; /* Stay in place */
+		z-index: 10; /* Sit on top */
+		left: 0;
+		top: 0;
+		width: 100%; /* Full width */
+		height: 100%; /* Full height */
+		background-color: rgb(0,0,0); /* Fallback color */
+		background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	}
+	/* Modal Content/Box */
+	.search-modal-content {
+		background-color: #fefefe;
+		margin: 15% auto; /* 15% from the top and centered */
+		padding: 20px;
+		border: 1px solid #888;
+		width: 40%; /* Could be more or less, depending on screen size */
+		height:40%;
+	}
+
+
   .breadcrumb-main{
-  float: left;
+ 	 float: left;
   }
   table {
     border-top: 1px solid grey;
-    
     border-collapse: collapse;
   }
   th, td {
@@ -116,8 +138,10 @@
 								                            		<thead>
 								                            			<tr>
 								                            				<th>위치ID</th>
-								                            				<th>위치</th>
+								                            				<th>위치 이름</th>
+								                            				<th>장소 유형</th>
 								                            				<th>구획구분</th>
+								                            				<th>주소</th>
 								                            				<th>면적</th>
 								                            				<th>이용과</th>
 								                            			</tr>
@@ -262,6 +286,36 @@
 			</div>
     	</div>
     </main>
+    
+    
+    
+    <!-- comment modal -->
+<div id="modal" class="searchModal">
+	<div class="search-modal-content">
+		<div class="page-header">
+
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="row">
+					<div class="col-sm-12" style="height:20%;">
+							<h2>Comment</h2>
+					<div id="comment" style="margin-top:40px;"></div>
+					</div>
+					<hr>
+				</div>
+			</div>
+		</div>
+		<div style="cursor:pointer;background-color:#DDDDDD;text-align: center;padding-bottom: 10px;padding-top: 10px;margin-top:160px;" onClick="closeModal();">
+			<span class="pop_bt modalCloseBtn" style="font-size: 13pt;width:100px;">
+				닫기
+			</span>
+		</div>
+	</div>
+</div>
+
+
+
     <!-- 공통 하단 -->
     <th:block th:include="/../fragments/footer.html"></th:block>
     <!-- 공통 js -->
@@ -273,7 +327,8 @@
 		
 	    const options = { 
 	        center: new kakao.maps.LatLng(37.264399, 126.987798),
-	        level: 1
+	        level: 1,
+			mapTypeId: kakao.maps.MapTypeId.SKYVIEW
 	        
 	    };	    
 		
@@ -532,6 +587,18 @@
 			}
 		}
 		
+		function openPopUpForComment(comment){
+			if(comment == ""){
+				comment = "등록된 커멘트가 없습니다.";
+			}
+			$('#comment').html(comment);
+		    $("#modal").show();
+		}
+		
+		function closeModal(){
+		      $("#modal").hide();
+		}
+		
 		function SearchStorage(e)
 		{
 			var data = {"page_num" : e};
@@ -561,9 +628,11 @@
 						// add_list += '</tr>';						
 						add_list += `
 						  <tr class='storage_tr' data-coord='${result.storage[i].storage_location}'>
-							<td><span>${result.storage[i].storage_code}</span></td>
+							<td onclick='openPopUpForComment("${result.storage[i].storage_contents}")'><span><a href='#'>${result.storage[i].storage_code}</a></span></td>
 							<td><span>${result.storage[i].storage_name}</span></td>
+						  	<td><span>${result.storage[i].storage_type_name}</span></td>
 							<td><span>${result.storage[i].storage_division}</span></td>
+						  	<td><span>${result.storage[i].storage_address}</span></td>
 							<td><span>${result.storage[i].storage_size}</span></td>
 							<td><span>${result.storage[i].department}</span></td>
 						  </tr>';

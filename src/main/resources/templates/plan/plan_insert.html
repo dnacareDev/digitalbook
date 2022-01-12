@@ -571,9 +571,28 @@
 		            <div class="modal-body">
 		            	<div class="col-12">
 			            	<form action="#" id="insertStorageForm" method="POST" enctype="multipart/form-data">
+			            		<div class="row mt-3">
+			            			<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="storage_search" class="col-form-label color-dark align-center"><span class="red">*</span>검색</label>
+	                                </div>
+	                                <div class="col-sm-10" style="display:flex">
+		                                <input type="text" class="form-control b-light" id="storage_search" name="storage_search" style="width:90%">
+		                                <input type="button" class="btn btn-primary btn-default btn-squared"  onclick="searchPlaces()" value="검색" style="margin-left:5px;width:10%">
+		                            </div>
+			            		</div>
+                
+			            		<div class="row mt-3">
+			            			<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label class="col-form-label color-dark align-center">지도</label>
+	                                </div>
+	                                <div class="col-sm-10" id="modal_map" style="height: 300px;">
+		                                
+		                            </div>
+			            		</div>
+			            		<br>
 			            		<div class="row">
 			            			<div class="col-sm-2 d-flex aling-items-center">
-		                            	<label for="storage_name" class="col-form-label color-dark align-center"><span class="red">*</span>위치</label>
+		                            	<label for="storage_name" class="col-form-label color-dark align-center"><span class="red">*</span>위치 이름</label>
 	                                </div>
 	                                <div class="col-sm-10">
 		                                <input type="text" class="form-control b-light" id="storage_name" name="storage_name">
@@ -623,14 +642,6 @@
 	                                </div>
 	                                <div class="col-sm-10">
 		                                <textarea class="form-control" id="storage_contents" name="storage_contents" rows="10"></textarea>
-		                            </div>
-			            		</div>
-			            		<div class="row mt-3">
-			            			<div class="col-sm-2 d-flex aling-items-center">
-		                            	<label class="col-form-label color-dark align-center">지도</label>
-	                                </div>
-	                                <div class="col-sm-10" id="modal_map" style="height: 300px;">
-		                                
 		                            </div>
 			            		</div>
 			            		<div class="button-group d-flex justify-content-end mt-2">
@@ -1165,6 +1176,7 @@
     <script type="text/javascript" src="/../assets/vendor_assets/js/plan-segment.js"></script>
     <script type="text/javascript" src="/../assets/vendor_assets/js/plan-render.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=	e93e65b3e9a407aa43d05f993408db95&libraries=clusterer,services"></script>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" th:inline="javascript">
 
 	var user = /*[[${user}]]*/ "null";
@@ -1484,9 +1496,9 @@
 		
 		setTimeout(() => {
 			const options = { 
-					center: new kakao.maps.LatLng(37.264399, 126.987798),
+					center: new kakao.maps.LatLng(latForMap, langForMap),
 					mapTypeId: kakao.maps.MapTypeId.SKYVIEW,
-    			    level: 1
+    			    level: levelForMap
     			};
     		map2 = new kakao.maps.Map(modalContainer, options);	 
 //     		map2 = new kakao.maps.Map(modalContainer, options)
@@ -4903,7 +4915,42 @@
 			
 		})//end return
 	}//end function
+	
+	var latForMap = 37.264399;
+	var langForMap = 126.987798;
 	var map2;
+	var levelForMap = 1; 
+	
+	var ps = new kakao.maps.services.Places(); 
+	//키워드 검색을 요청하는 함수입니다
+	function searchPlaces() {
+	    var keyword = document.getElementById('storage_search').value;
+
+	    // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
+	    ps.keywordSearch( keyword, placesSearchCB); 
+	}
+
+	//키워드 검색 완료 시 호출되는 콜백함수 입니다
+	function placesSearchCB (data, status, pagination) {
+	    if (status === kakao.maps.services.Status.OK) {
+
+	        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+	        // LatLngBounds 객체에 좌표를 추가합니다
+	        var bounds = new kakao.maps.LatLngBounds();
+
+	        for (var i=0; i<data.length; i++) {
+	            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+	        }       
+	        
+	        latForMap = bounds.pa;
+	        langForMap = bounds.ha;
+	        levelForMap = 1;
+	        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+			$('#storageBtn').click();
+	    } 
+	}
+	
+	
 	const modalContainer = document.querySelector('#modal_map');
 	//다음 버튼 이벤트 함수
 	function nextStep(i){
@@ -5488,6 +5535,7 @@
 	    eventList.initEvent("click");
 	    document.querySelector("#step1 .title").dispatchEvent(eventList);
 	}, 1);
+	
 </script>
 </body>    
 </html>
