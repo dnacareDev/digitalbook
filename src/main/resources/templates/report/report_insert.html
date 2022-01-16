@@ -132,6 +132,15 @@
 		year_list.append(add_list);
 	}
 	
+	function getExcelTitleFromData(data,search){
+		for(var key in data){
+			if(key.toLowerCase().replace(/ /gi,"").includes(search)){
+				return key;
+			}
+		}
+		return search;
+	}
+	
 	function InsertBtn()
 	{
 		var year = $("#report_year").val();
@@ -143,10 +152,18 @@
 		
 		var report = new Array(excel.length);
 		
+		
 		for(var i = 0; i < data.length; i++)
 		{
-			report[i] = {"report_year" : data[i]["어젠다년도(등록시 어젠다)"], "report_number" : data[i].과제번호, "report_code" : data[i].협약번호, "report_title" : data[i].과제명, "user_name" : data[i].책임자, "report_contents" : report_contents};
+			report[i] = {
+					"report_year" : data[i][getExcelTitleFromData(data[i],"어젠다년도")], 
+					"report_number" : data[i][getExcelTitleFromData(data[i],"과제번호")], //.과제번호, 
+					"report_code" : data[i][getExcelTitleFromData(data[i],"연구번호")] ? data[i][getExcelTitleFromData(data[i],"연구번호")] : data[i][getExcelTitleFromData(data[i],"협약번호")], //.협약번호, .,
+					"report_title" : data[i][getExcelTitleFromData(data[i],"과제명")], //과제명 
+					"user_name" : data[i][getExcelTitleFromData(data[i],"책임자")], 
+					"report_contents" : report_contents};
 		}
+		
 		
 		if(report[0].report_year != year)
 		{
@@ -178,6 +195,7 @@
                 
                 xlsxData = JSON.parse(JSON.stringify(rows));
                 
+                console.log(xlsxData);
                 excel.val(JSON.stringify(xlsxData));
             });
         };
