@@ -348,10 +348,10 @@
 			                        
 			                        	<div class="left_type">
 			                        		<span style="vertical-align:middle;"><span class="red">*</span>영역 타입</span>
-				                            <select  style="width:300px;" onchange="onChangeResultType(this);">
-				                            	<option value="0">개체</option>
-				                            	<option value="1">줄</option>
-				                            	<option value="2">플롯</option>
+				                            <select  style="width:300px;" onchange="onChangeResultType(this);" >
+				                            	<option id="res_type0" value="0">개체</option>
+				                            	<option id="res_type1" value="1">줄</option>
+				                            	<option id="res_type2" value="2">플롯</option>
 				                            </select>
 			                        	</div>
 			                        </div>
@@ -2370,6 +2370,7 @@ function findInfo(type){
 		formData.append("rp_num", $("#rowNum").val());
 		formData.append("user_id", user.user_id);
 		formData.append("user_group", user.user_group);
+		formData.append("rp_type", resultGridType);
 		
 		$.ajax({
 			url : "/plan/insertResultPlan",
@@ -3315,13 +3316,27 @@ function findInfo(type){
 
 	if(resultPlan && resultPlan.rp_content){
 		rp_id = resultPlan.rp_id;
+		resultGridType = resultPlan.rp_type;
+		if(resultGridType == 2)
+			document.getElementById("rowNum").value = document.getElementsByClassName("table_content").length;
+		document.getElementById("res_type" + resultGridType).selected = true
+		
+		console.log(document.getElementById("res_type" + resultGridType))
+		
 		tableResultArray = JSON.parse(resultPlan.rp_content);
 		$("#rowNum").val(resultPlan.rp_num);
 	}
 	if(resultPlan && resultPlan.rp_segment){
 		rp_id = resultPlan.rp_id;
+		resultGridType = resultPlan.rp_type;
+		if(resultGridType == 2)
+			document.getElementById("rowNum").value = document.getElementsByClassName("table_content").length;
+		
+		document.getElementById("res_type" + resultGridType).selected = true
 		segmentResultArray = JSON.parse(resultPlan.rp_segment);
 		$("#segment_num").val(resultPlan.rp_segment_count);
+		
+		
 	}
 	setTimeout(function(){ 	
 		

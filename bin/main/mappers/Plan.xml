@@ -503,7 +503,8 @@
 			rp_segment,
 			rp_segment_count,
 			user_id,
-			user_group
+			user_group,
+			rp_type
 		) 
 		VALUES 
 		( 
@@ -513,7 +514,8 @@
 			'',
 			0,
 			#{user_id},
-			#{user_group}
+			#{user_group},
+			#{rp_type}
 			
 		) 
 	</insert>
@@ -812,7 +814,8 @@
 		  plan_id = #{plan_id},
 		  rp_content = #{rp_content},
 		  user_id = #{user_id},
-		  user_group = #{user_group} 	
+		  user_group = #{user_group},
+		  rp_type = #{rp_type}
 		WHERE
 		  plan_id = #{plan_id}
 	</update>
