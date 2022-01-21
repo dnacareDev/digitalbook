@@ -63,18 +63,18 @@
 		                            </div>
 		                            <div class="row mt-3">
 			        					<div class="col-sm-2 d-flex aling-items-center">
-		                                    <label for="report_contents" class="color-dark align-center">설명</label>
-		                                </div>
-		                                <div class="col-sm-5">
-		                                    <textarea class="form-control" id="report_contents" name="report_contents" rows="5"></textarea>
-		                                </div>
-		                            </div>
-		                            <div class="row mt-3">
-			        					<div class="col-sm-2 d-flex aling-items-center">
 		                                    <label class="color-dark align-center mt-1">ATIS 파일</label>
 		                                </div>
 		                                <div class="col-sm-5">
 		                                    <input type="file" id="file" name="file" onchange="readExcel();">
+		                                </div>
+		                            </div>
+		                             <div class="row mt-3">
+			        					<div class="col-sm-2 d-flex aling-items-center">
+		                                    <label for="report_contents" class="color-dark align-center">설명</label>
+		                                </div>
+		                                <div class="col-sm-5">
+		                                    <textarea class="form-control" id="report_contents" name="report_contents" rows="3"></textarea>
 		                                </div>
 		                            </div>
 		                            <div class="row mt-3">
@@ -123,7 +123,7 @@
 		
 		add_list += '<option value="0">년도 선택</option>';
 		add_list += '<option value="' + (2020) + '">' + (2020) + '</option>';		
-		for(var i = -1; i < 5; i++)
+		for(var i = -1; i < 50; i++)
 		{
 			add_list += '<option value="' + (year + i) + '">' + (year + i) + '</option>';
 		}
@@ -163,11 +163,6 @@
 					"user_name" : data[i][getExcelTitleFromData(data[i],"책임자")], 
 					"report_contents" : report_contents};
 		}
-<<<<<<< HEAD
-=======
-		
-		
->>>>>>> 840a370cb9e8c67788a442c6fd381426868d677e
 		if(report[0].report_year != year)
 		{
 			alert("선택된 년도가 다릅니다.");

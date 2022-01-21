@@ -137,7 +137,7 @@
 				        		<div class="card-body">
 				        			<div class="row">
 				        				<div class="col-sm-2 checkbox-theme-default custom-checkbox" style="margin-bottom: 20px;">
-				        					<input type="checkbox" id="not_report" class="checkbox">
+				        					<input type="checkbox" id="not_report" class="checkbox" onclick="checkReport()">
 				        					<label for="not_report">
 				        						<span class="checkbox-text color-dark">과제 비연계</span>
 				        					</label>
@@ -150,7 +150,7 @@
 		                                <div class="col-sm-8"  style="-webkit-box-flex: 0;-ms-flex: 0 0 75%;flex: 0 0 70% !important;max-width: 70% !important;">
 		                                	<div class="select" style="height: auto;">
 		                                		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="report_code" placeholder="과제 선택" autocomplete="off">
-		                                		<ul class="select-hide">
+		                                		<ul class="select-hide" id="select-hide">
 		                                			<th:block th:each="report : ${report}">
 		                                				<li class="report_list" onclick="selectOpt(this);">
 		                                					<span th:data-value="${report.report_code}" th:text="${report.report_title +'('+ report.report_code} +')'"></span>
@@ -197,7 +197,7 @@
 							        									</div>
 							        									<div class="col-md-4 mb-25">
 							        										<input type="text" class="form-control b-light genetic_id input1" id="actor" readonly="readonly">
-							        										<label class="btn btn-light genetic_show label1">조회</label>
+							        										<label class="btn btn-light genetic_show label1" style="background-color:gray;color:white">조회</label>
 							        									</div>
 							        									<div class="col-md-5 content_cover">
 								        									<div class="titles">
@@ -451,7 +451,28 @@
 			            <div class="modal-body">
 			            	<div class="col-12">
 				            	<div class="row">
-				            		<div class="col-md-2 d-flex aling-items-center">
+				            	<div class="col-md-2 mb-25 d-flex aling-items-center">
+   										<label for="division_slt" class="title_asd" style="align-items: self-start">작목</label>
+   									</div>
+     								<div class="col-md-4 mb-25">
+     									<div class="select" style="height: auto;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control division_slt" id="division_slt" placeholder="대상 작목 선택" autocomplete="off">
+		                            		<ul class="select-hide">
+		                            			<th:block th:each="division : ${division}">
+		                            				<li class="division_slt_list" onclick="selectOpt(this);"><span th:data-value="${division.division_id}" th:text="${division.division}"></span></li>
+		                            			</th:block>
+		                            		</ul>
+		                            	</div>
+     									<!-- <select class="form-control b-light" name="division_slt" id="division_slt">
+			                                <option value="0" disabled="disabled" selected="selected" hidden="hidden">작목명을 선택하세요</option>
+			                                <th:block th:each="division : ${division}">
+			                                	<option th:value="${division.division_id}" th:text="${division.division}"></option>
+			                                </th:block>
+		                            	</select> -->
+     								</div>
+				            	</div>
+				            	<div class="row mt-2" id="division_row">
+				            	<div class="col-md-2 d-flex aling-items-center">
 	                                    <label class="color-dark align-center">품종/유전정보 선택</label>
 	                                </div>
 				            		<div class="col-md-4">
@@ -476,27 +497,6 @@
 					            			</div>
 					            		</div>
 				            		</div>
-				            	</div>
-				            	<div class="row mt-2" id="division_row">
-				            		<div class="col-md-2 mb-25 d-flex aling-items-center">
-   										<label for="division_slt" class="title_asd" style="align-items: self-start">작목</label>
-   									</div>
-     								<div class="col-md-4 mb-25">
-     									<div class="select" style="height: auto;">
-		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control division_slt" id="division_slt" placeholder="대상 작목 선택" autocomplete="off">
-		                            		<ul class="select-hide">
-		                            			<th:block th:each="division : ${division}">
-		                            				<li class="division_slt_list" onclick="selectOpt(this);"><span th:data-value="${division.division_id}" th:text="${division.division}"></span></li>
-		                            			</th:block>
-		                            		</ul>
-		                            	</div>
-     									<!-- <select class="form-control b-light" name="division_slt" id="division_slt">
-			                                <option value="0" disabled="disabled" selected="selected" hidden="hidden">작목명을 선택하세요</option>
-			                                <th:block th:each="division : ${division}">
-			                                	<option th:value="${division.division_id}" th:text="${division.division}"></option>
-			                                </th:block>
-		                            	</select> -->
-     								</div>
      								<div class="col-md-6 d-flex" id="division_col">
 	     								<div class="col-md-4 mb-25 d-flex aling-items-center">
 	   										<label class="title_asd genetic_title">품종</label>
@@ -515,7 +515,7 @@
      								</div>
      								<div class="col-md-6 d-flex" id="genetic_col">
 	     								<div class="col-md-4 mb-25 d-flex aling-items-center">
-	   										<label class="title_asd genetic_title">유전자원명</label>
+	   										<label class="title_asd genetic_title">유전자원</label>
 	   									</div>
 	     								<div class="col-md-8 mb-25">
 	     									<div class="select" style="height: auto;">
@@ -566,7 +566,45 @@
     <th:block th:include="/../fragments/commonjs.html"></th:block>
 
 <script type="text/javascript">
+var text = '';
+	function checkReport(){
+
+		var selectBox = document.querySelector("#report_code");
+		var textBox = document.querySelector("#seed_report");
+		var listBox = document.querySelector("#select-hide");
+		
+		if(document.querySelector("#not_report").checked){
+			selectBox.disabled = true;
+			textBox.disabled = true;
+			listBox.style.display = 'none';
+			text = textBox.value; 
+			textBox.value = '';
+		}else{
+			selectBox.disabled = false;
+			textBox.disabled = false;
+			listBox.style.display = '';
+			textBox.value = text;
+		}
+		
+	}
 	
+function textfilterForTitle(e){
+		
+		var search = $(e).val().toLowerCase();
+		var className = $(e).next().children().eq(0).attr('class');
+		
+		var textEl = $(e).next().children();
+		
+		for(var i = 0; i < textEl.length; i++){
+			var text = textEl[i].children[0].innerText;
+			if(text.toLowerCase().includes(search)){
+				textEl[i].style.display = "flex";
+			}else{
+				textEl[i].style.display = "none";
+			}
+		}
+		
+	}//end 필터 함수
 	
 	let selectInputEls = document.querySelectorAll('input[name="select-input"]');
 	let select_this;
