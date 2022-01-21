@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:with=" user = ${#authentication.principal}">
 <style>
 
 *{
@@ -52,7 +52,7 @@
                                     <li>
                                         <a href="/data/seed" class="seed">②종자(시료)</a>
                                     </li>
-                                    <li>
+                                    <li th:if="${user.user_authority == 'ADMIN'}">
                                         <a href="/data/storage" class="storage">③시험장소</a>
                                     </li>
                                     <li>
@@ -62,9 +62,9 @@
                                         <a href="/data/reagent" class="reagent">⑤시약 · 농약 · 비료</a>
                                     </li>
                                     <li>
-                                        <a href="/data/machine" class="machine">⑥장비</a>
+                                        <a href="/data/machine" class="machine">⑥장비 · 물품</a>
                                     </li>
-                                    <li>
+                                    <li th:if="${user.user_authority == 'ADMIN'}">
                                         <a href="/data/material" class="material">⑦기타(농자재)</a>
                                     </li>
                                     <li>

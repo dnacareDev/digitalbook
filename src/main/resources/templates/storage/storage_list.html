@@ -204,7 +204,7 @@
 			        	</div>
 			      <div class="modal-body">
 		            	<div class="col-12">
-			            	<form action="#" id="insertStorageForm" method="POST" enctype="multipart/form-data">
+			            	<form action="storage/insertStorage" id="insertForm" method="POST" enctype="multipart/form-data">
 			            		<div class="row mt-3">
 			            			<div class="col-sm-2 d-flex aling-items-center">
 		                            	<label for="storage_search" class="col-form-label color-dark align-center"><span class="red">*</span>검색</label>
@@ -226,7 +226,7 @@
 			            		<br>
 			            		<div class="row">
 			            			<div class="col-sm-2 d-flex aling-items-center">
-		                            	<label for="storage_name" class="col-form-label color-dark align-center"><span class="red">*</span>위치 이름</label>
+		                            	<label for="storage_name" class="col-form-label color-dark align-center"><span class="red">*</span>실험 장소</label>
 	                                </div>
 	                                <div class="col-sm-10">
 		                                <input type="text" class="form-control b-light" id="storage_name" name="storage_name">
@@ -234,25 +234,25 @@
 			            		</div>
 			            		<div class="row mt-3">
 			            			<div class="col-sm-2 d-flex aling-items-center">
-		                            	<label for="storage_type" class="col-form-label color-dark align-center"><span class="red">*</span>장소유형</label>
+		                            	<label for="storage_type" class="col-form-label color-dark align-center">장소유형</label>
 	                                </div>
 	                                <div class="col-sm-10">
 		                                <select class="form-control b-light" id="storage_type" name="storage_type">
 	                                		<option value="9">유형 선택</option>
-	                                		<option value="0">작물 연구동</option>
-	                                		<option value="1">가공이용 연구동</option>
-	                                		<option value="2">연천 시험지</option>
-	                                		<option value="3">외부 포장지</option>
+	                                		<option value="0">논</option>
+	                                		<option value="1">밭</option>
+	                                		<option value="2">온실</option>
+	                                		<option value="3">실내</option>
 		                                </select>
 		                            </div>
 			            		</div>
 			            		<div class="row mt-3">
 				            			<div class="col-sm-2 d-flex aling-items-center">
-			                            	<label for="depart_id" class="col-form-label color-dark align-center">이용과</label>
+			                            	<label for="depart_id" class="col-form-label color-dark align-center">과</label>
 		                                </div>
 		                                <div class="col-sm-10">
 			                                <select class="form-control b-light" id="depart_id" name="depart_id">
-		                                		<option value="0">이용과 선택</option>
+		                                		<option value="0">과 선택</option>
 			                                	<th:block th:each="depart : ${department}">
 			                                		<option th:value="${depart.depart_id}" th:text="${depart.department}"></option>
 			                                	</th:block>
@@ -293,7 +293,7 @@
 			            		</div>
 			            		<div class="button-group d-flex justify-content-end mt-2">
 			            			<input type="hidden" id="storage_location" name="storage_location">
-			            			<button type="button" class="btn btn-primary btn-default btn-squared" onclick="alert('개발중에있습니다')">저장</button>
+			            			<button type="button" class="btn btn-primary btn-default btn-squared" onclick="InsertStorage()">저장</button>
 				           		</div>
 			            	</form>
 		            	</div>
@@ -654,10 +654,10 @@
 			{
 				alert("위치를 입력하세요.");
 			}
-			else if(storage_type == 9)
-			{
-				alert("장소유형을 입력하세요.");
-			}
+// 			else if(storage_type == 9)
+// 			{
+// 				alert("장소유형을 입력하세요.");
+// 			}
 			else if(storage_location.length == 2)
 			{
 				alert("지도에서 영역을 정하세요.");

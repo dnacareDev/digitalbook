@@ -105,6 +105,9 @@ public class PlanController
 		List<Method> method = service.selectMethodList(prin.getUser_group(), prin.getUser_id());
 		List<User> user = service.selectUserList(prin.getUser_group());
 		
+		List<Department> department = storageService.SelectDepartment();
+		
+		mv.addObject("department", department);
 		mv.addObject("report", report);
 		mv.addObject("fert", fert);
 		mv.addObject("method", method);
@@ -722,7 +725,6 @@ public class PlanController
 		}
 		
 		storage.setUser_id(prin.getUser_id());
-		storage.setDepart_id(prin.getUser_group());
 		int result = service.InsertStorage(storage);
 		
 		return result;

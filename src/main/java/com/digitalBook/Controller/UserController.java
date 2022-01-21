@@ -36,6 +36,11 @@ public class UserController
 		
 		return mv;
 	}
+	@RequestMapping("/checkId")
+	@ResponseBody
+	public int checkId(@RequestParam(value="id",required=true) String id) {
+		return  service.checkId(id);
+	}
 	
 	// 사용자 등록 페이지
 	@RequestMapping("/user/insert")

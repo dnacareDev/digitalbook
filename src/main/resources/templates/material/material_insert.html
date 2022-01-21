@@ -69,6 +69,28 @@
 	                                   <input type="text" class="form-control b-light" id="material_name">
 	                                </div>
 		                         </div>
+		                         <br>
+		                         <div class="row">
+		        					<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="material_name" class="col-form-label color-dark align-center"><span class="red">*</span>구입연도</label>
+	                                </div>
+	                                <div class="col-sm-5">
+	                                   <select class="form-control b-light" name="buy_date" id="buy_date">
+	                                   		<option value="">구입년도</option>	
+	                                   		<option th:each="i: ${#numbers.sequence(1980,2022)}" th:text="${i}" th:value="${i}"></option>	
+	                                   </select>
+	                                </div>
+		                         </div>
+		                         <br>
+		                         <div class="row">
+		        					<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="material_name" class="col-form-label color-dark align-center"><span class="red">*</span>제조사</label>
+	                                </div>
+	                                <div class="col-sm-5">
+	                                   <input type="text" class="form-control b-light" id="material_company" name='material_company'>
+	                                </div>
+		                         </div>
+		                         <br>
 			        		</div>
 			        	</div>
 			        </div>
@@ -123,12 +145,22 @@
 	function insertBtn(){
 		
 		var material_name = $.trim($("#material_name").val());
+		var buy_date = document.querySelector("#buy_date").value.trim();
+		var material_company = document.querySelector("#material_company").value.trim();
 		
 		if(material_name == ""){
 			alert("항목명을 입력하세요.");
 			$("#material_name").focus();
+		}else if(buy_date == ""){
+			alert("구입년도 선택하세요.");
+		}else if(material_company == ""){
+			alert("제조사 입력하세요.");
 		}else{
-			var data = {"material_name" : material_name};
+			var data = {
+						"material_name" : material_name,
+						"buy_date" : buy_date,
+ 						"material_company" : material_company
+						};
 			
 			$.ajax({
 				url : "/data/material/insertMaterial",

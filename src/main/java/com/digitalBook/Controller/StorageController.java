@@ -95,6 +95,13 @@ public class StorageController
 			}
 		}
 		
+		// 좌표 설정시 주소에서 m2 제거하기
+		if(storage.getStorage_size() != null) {			
+			String[] storage_size = storage.getStorage_size().split(" ");
+			storage.setStorage_size(storage_size[0]);
+			storage.setStorage_unit(storage_size[1]);
+		}
+				
 		int result = service.InsertStorage(storage);
 		
 		mv.setViewName("redirect:/data/storage");

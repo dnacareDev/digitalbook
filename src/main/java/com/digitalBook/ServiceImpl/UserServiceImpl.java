@@ -66,4 +66,9 @@ public class UserServiceImpl implements UserService
 		
 		return mapper.DeleteUser(user_id);
 	}
+
+	@Override
+	public int checkId(String id) {
+		return mapper.checkId(id);
+	}
 }
