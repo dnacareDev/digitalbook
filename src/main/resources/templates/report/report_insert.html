@@ -122,7 +122,7 @@
 		var add_list = "";
 		
 		add_list += '<option value="0">년도 선택</option>';
-		
+		add_list += '<option value="' + (2020) + '">' + (2020) + '</option>';		
 		for(var i = -1; i < 5; i++)
 		{
 			add_list += '<option value="' + (year + i) + '">' + (year + i) + '</option>';
@@ -140,14 +140,13 @@
 		
 		var excel = $("#excel");
 		var data = JSON.parse($("#excel").val());
-		
+		console.log(data);
 		var report = new Array(excel.length);
 		
 		for(var i = 0; i < data.length; i++)
 		{
 			report[i] = {"report_year" : data[i]["어젠다년도(등록시 어젠다)"], "report_number" : data[i].과제번호, "report_code" : data[i].협약번호, "report_title" : data[i].과제명, "user_name" : data[i].책임자, "report_contents" : report_contents};
 		}
-		
 		if(report[0].report_year != year)
 		{
 			alert("선택된 년도가 다릅니다.");
