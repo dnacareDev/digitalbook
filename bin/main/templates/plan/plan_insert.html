@@ -4516,27 +4516,41 @@ var type_name = [1,2,3];
 	var startDate =[];
 	var endDate =[];
 	$("#planInsertBtn").on("click", function(){
+		
 		var startDateList = document.getElementsByName("start_date");
 		var endDateList = document.getElementsByName("end_date");		
-		var validate = true;
+		var dateValidate = true;
+		var inputValidate = true;
 		var count1 = 0;
 		var count2 = 0;
 		
 		for(var i=0;i<startDateList.length;i++){
 			startDate.push(startDateList[i].value);
+			
+			if($("#select_user"+i).val() == ""){
+				inputValidate = false;
+			}
 		}
 		
 		for(var i=0;i<endDateList.length;i++){
+			if(endDateList[i].value == ""){
+				dateValidate = false;					
+			}
+			
 			endDate.push(endDateList[i].value);			
 		}
 		
 		var lastDate;
 		for(var i=0;i<startDateList.length;i++){
-			var start = new Date(startDateList[i].value);
-
-			if(lastDate > start){
-					validate = false;	
+			if(startDateList[i].value == ""){
+				dateValidate = false;					
 			}
+			var start = new Date(startDateList[i].value);
+			
+			if(lastDate > start){
+					dateValidate = false;	
+			}
+			
 			lastDate = new Date(endDateList[i].value);
 			
 		}
@@ -4556,10 +4570,12 @@ var type_name = [1,2,3];
 		console.log(etcArray1);
 		console.log(etcArray2);
 		console.log(etcArray3); */
-		if(validate == false){
-			alert("일정 중복 날짜 확인해주세요.");	
+		if(inputValidate == false){
+			alert("담당자 입력해 주세요");
+		}else if(dateValidate == false){
+			alert("일정 중복 날짜 확인해주세요");	
 		}else if($("#grow_type").attr("data-select") == "" || $("#grow_type").attr("data-select") == null){
-			alert("시험구배치 종류를 선택해주세요.");
+			alert("시험구배치 종류를 선택해주세요");
 			$("#grow_type").focus();
 		}else if($("#storage_input").val() == ""){
 			alert("포장을 선택해 주세요");
@@ -4599,7 +4615,7 @@ var type_name = [1,2,3];
 	});
 	
 	//plan 등록 함수
-	function insertPlan(){
+	function insertPlan()	{
 		return new Promise(function(resolve){
 			
 			var plan_method = "";
@@ -5263,7 +5279,7 @@ var type_name = [1,2,3];
 			add_list += '<li>';
 			add_list += '<span><span class="red" style="color: #FF4141">*</span>담당자(정)</span>';
 	    	add_list += '<div class="select" style="height: auto;">';
-	    	add_list += '<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control select_user1" id="select_user1" placeholder="담당자 선택" autocomplete="off" style="border-right:1px solid #E4E4E4;">';
+	    	add_list += '<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control select_user1" id="select_user'+i+'" placeholder="담당자 선택" autocomplete="off" style="border-right:1px solid #E4E4E4;">';
 	    	add_list += '<ul class="select-hide" style="width: 400px !important; top: 85px !important; padding-top: 0 !important;">';
 	    	for(var j = 0; j < user.length; j++){
 	    		add_list += '<li class="select_user1_list" onclick="selectOpt(this);" style="line-height: 30px; padding:0 0 0 5px; float: none !important; margin-left: 0;"><span data-value="'+user[j].user_id+'">'+user[j].user_name_k+'</span></li>';
