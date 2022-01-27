@@ -150,7 +150,14 @@
 		border:1px solid #eee;
 		width:400px;
 		max-width: 400px;
+	}	
+	
+	#divisionModal .select-show {
+		top: 65px !important;
+		width: 100%;
 	}
+	
+	
 </style>
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
@@ -205,6 +212,7 @@
 		                            			<li class="seed_method_list" onclick="selectOpt(this);"><span data-value="넓이">넓이</span></li>
 		                            			<li class="seed_method_list" onclick="selectOpt(this);"><span data-value="무게">무게</span></li>
 		                            			<li class="seed_method_list" onclick="selectOpt(this);"><span data-value="부피">부피</span></li>
+		                            			<li class="seed_method_list" onclick="selectOpt(this);"><span data-value="농도">농도</span></li>
 		                            			<li class="seed_method_list" onclick="selectOpt(this);"><span data-value="온도">온도</span></li>
 		                            			<li class="seed_method_list" onclick="selectOpt(this);"><span data-value="압력">압력</span></li>
 		                            			<li class="seed_method_list" onclick="selectOpt(this);"><span data-value="속도">속도</span></li>
@@ -282,7 +290,9 @@
 										<div class="row">
 											<input type="text" onkeyup="filter();" class="form-control b-light" id="searchResearch" placeholder="조사방법 검색" style="height:40px;"> 
 											<button id="addResearchBtn" class="btn btn-dark mt-2" onclick="InsertPopup();" style="height:40px;">조사방법 추가</button>
-											
+										</div>
+										<div class="row">
+											<input type="checkbox" class="btn btn-dark mt-2" id="allCheckBox" onclick="checkAll(1)">
 										</div>
 										<div class="row" style="overflow:auto; height: 459.74px; border: 1px solid #D9D9D9; border-top: transparent">
 											<div class="list-group mt-2" style="height: 100%; overflow: auto; width: 100%;" id="research_list">
@@ -469,6 +479,36 @@
     <!-- 공통 js -->
     <th:block th:include="/../fragments/commonjs.html"></th:block>
 <script type="text/javascript">
+	function checkAll(type){
+		if(type == 1){
+			var allCheckBox = document.querySelector("#allCheckBox").checked;
+			var checkBoxList = document.querySelectorAll("[name=chk_research]");
+	
+			if(allCheckBox){
+				for(var i=0;i<checkBoxList.length;i++){
+					checkBoxList[i].checked = true;
+				}
+			}else{
+				for(var i=0;i<checkBoxList.length;i++){
+					checkBoxList[i].checked = false;
+				}
+			}
+		}else if(type == 2){
+			var allCheckBox2 = document.querySelector("#allCheckBox2").checked;
+			var checkBoxList2 = document.querySelectorAll("[name=mis_research]");
+
+			if(allCheckBox2){
+				for(var i=0;i<checkBoxList2.length;i++){
+					checkBoxList2[i].checked = true;
+				}
+			}else{
+				for(var i=0;i<checkBoxList2.length;i++){
+					checkBoxList2[i].checked = false;
+				}
+			}
+		}	
+	}
+
 	$(function(){
 		let w =0;
 		
@@ -862,7 +902,7 @@
 		var length = $("#step-container").children().length;
 		
 		var add_list = "";
-		
+// 		add_list += '<input type="checkbox" class="btn btn-dark mt-2" id="allCheckBox2" onclick="(2)">';
 		
 		$(document).find("input:checkbox[name=chk_research]:checked").each(function()
 		{

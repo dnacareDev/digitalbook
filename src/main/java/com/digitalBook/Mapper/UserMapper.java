@@ -34,5 +34,7 @@ public interface UserMapper
 	
 	//엑셀 다운로드할 사용자 list
 	List<User> selectUserExcelList();
+
+	int checkId(String id);
 	
 }

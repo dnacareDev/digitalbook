@@ -27,5 +27,7 @@ public interface UserService
 	
 	// 사용자 삭제
 	int DeleteUser(int user_id);
+
+	int checkId(String id);
 	
 }

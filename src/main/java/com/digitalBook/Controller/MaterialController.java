@@ -82,7 +82,9 @@ public class MaterialController {
 	@ResponseBody
 	@RequestMapping("/material/insertMaterial")
 	public int insertMaterial(Authentication auth, 
-							@RequestParam(name = "material_name", required = true) String material_name) {
+							@RequestParam(name = "material_name", required = true) String material_name,
+							@RequestParam(name = "buy_date", required = true) String buy_date,
+							@RequestParam(name = "material_company", required = true) String material_company) {
 		
 		User prin = (User)auth.getPrincipal();
 		
@@ -105,6 +107,9 @@ public class MaterialController {
 		material.setUser_id(prin.getUser_id());
 		material.setUser_group(prin.getUser_group());
 		material.setMaterial_name(material_name);
+		material.setMaterial_company(material_company);
+		material.setBuy_date(buy_date);		
+		
 		int result = service.insertMaterial(material);
 		
 		return result;
@@ -127,11 +132,15 @@ public class MaterialController {
 	@ResponseBody
 	@RequestMapping("/material/updateMaterial")
 	public int updateMaterial(@RequestParam(name = "material_id", required = true) int material_id,
-							@RequestParam(name = "material_name", required = true) String material_name) {
+							@RequestParam(name = "material_name", required = true) String material_name,
+							@RequestParam(name = "buy_date", required = true) String buy_date,
+							@RequestParam(name = "material_company", required = true) String material_company) {
 		
 		Material material = service.selectMaterialDetail(material_id);
 		material.setMaterial_name(material_name);
-		
+		material.setMaterial_company(material_company);
+		material.setBuy_date(buy_date);
+
 		int result = service.updateMaterial(material);
 		
 		return result;

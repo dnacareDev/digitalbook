@@ -14,7 +14,44 @@
 	
 	<!-- 장소 검색 -->
 	<select id="SearchStorage" resultType="Storage">
-		SELECT * FROM storage s
+		SELECT 
+			storage_id,
+			storage_code,
+			storage_name,
+			ifnull(storage_address,"") as storage_address,
+			(CASE
+				WHEN
+					storage_type = 0
+				THEN
+					'작물연구동'
+				WHEN
+					storage_type = 1
+				THEN
+					'가공이용연구동'
+				WHEN
+					storage_type = 2
+				THEN
+					'연천시험지'
+				WHEN
+					storage_type = 3
+				THEN
+					'외부포장'
+			END)
+			 AS storage_type_name,
+			storage_division,
+			storage_size,
+			storage_location,
+			create_date,
+			modify_date,
+			storage_status,
+			user_id,
+			storage_unit,
+			s.depart_id,
+			ifnull(department, "") as department,
+			depart_depth,
+			depart_parents,
+			ifnull(storage_contents,"")as storage_contents
+		FROM storage s
 		LEFT JOIN department d ON s.depart_id = d.depart_id
 		ORDER BY storage_id DESC
 		LIMIT #{offset}, #{limit}
@@ -29,9 +66,10 @@
 	
 	<!-- 장소 등록 -->
 	<insert id="InsertStorage" parameterType="Storage">
+		/* InsertStorage [storage.xml] */
 		INSERT INTO storage
-		(storage_code, storage_name, storage_type, storage_division, storage_size, depart_id, storage_location, create_date, modify_date, user_id)
+		(storage_code, storage_name, storage_address, storage_type, storage_division, storage_size, depart_id, storage_location, create_date, modify_date, user_id,storage_unit,storage_contents)
 		VALUES
-		(#{storage_code}, #{storage_name}, #{storage_type}, #{storage_division}, #{storage_size}, #{depart_id}, #{storage_location}, NOW(), NOW(), 0)
+		(#{storage_code}, #{storage_name},#{storage_address}, #{storage_type}, #{storage_division}, #{storage_size}, #{depart_id}, #{storage_location}, NOW(), NOW(), 0,#{storage_unit},#{storage_contents})
 	</insert>
 </mapper>

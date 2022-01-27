@@ -4,7 +4,7 @@
 	
 	<!-- 농자재 검색 -->
 	<select id="SearchMaterial" resultType="Material">
-		SELECT m.*, u.* FROM material m
+		SELECT m.material_id,m.user_id,m.material_code,m.material_name,m.material_status,m.user_group,m.create_date,ifnull(m.buy_date,"") as buy_date, ifnull(m.material_company,"") as material_company, u.* FROM material m
 		LEFT JOIN user u ON m.user_id = u.user_id
 		WHERE m.user_group = #{user_group}
 		<choose>
@@ -37,9 +37,9 @@
 	<!-- 농자재 등록 -->
 	<insert id="insertMaterial" parameterType="Material">
 		INSERT INTO material
-		(user_id, material_code, material_name, material_status, user_group, create_date, modify_date)
+		(user_id, material_code, material_name, material_status, user_group, create_date, modify_date,buy_date,material_company)
 		VALUES
-		(#{user_id}, #{material_code}, #{material_name}, 0, #{user_group}, NOW(), NOW())
+		(#{user_id}, #{material_code}, #{material_name}, 0, #{user_group}, NOW(), NOW(),#{buy_date},#{material_company})
 	</insert>
 	
 	<!-- 최근 농자재 ID -->
@@ -59,8 +59,13 @@
 	<!-- 농자재 수정 -->
 	<update id="updateMaterial" parameterType="Material">
 		UPDATE material
-		SET material_name = #{material_name}, modify_date = NOW()
-		WHERE material_id = #{material_id}
+		SET 
+			material_name = #{material_name}, 
+			modify_date = NOW(),
+			material_company = #{material_company},
+			buy_date = #{buy_date}
+		WHERE 
+			material_id = #{material_id}
 	</update>
 	
 	<!-- 농자재 삭제 -->

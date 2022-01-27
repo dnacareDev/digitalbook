@@ -20,6 +20,8 @@ public class Material {
 	private int user_group;						// 사용자 그룹번호
 	private String create_date;					// 농자재 등록일
 	private String modify_date;					// 농자재 수정일
+	private String material_company;
+	private String buy_date;
 	
 	//사용자 user 컬럼
 	private String user_name_k;					// 등록자
