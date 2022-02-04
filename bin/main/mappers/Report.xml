@@ -15,9 +15,13 @@
 	<select id="SearchReportFile" resultType="ReportFile">
 		SELECT * FROM report_file r
 		LEFT JOIN user u ON r.user_id = u.user_id
+		WHERE
+			1=1
+			AND
+			delete_yn = "N"
 		<choose>
 			<when test="search_type != 'all'">
-				 WHERE #{search_type} LIKE CONCAT('%', #{keyword}, '%')
+				 AND #{search_type} LIKE CONCAT('%', #{keyword}, '%')
 			</when>
 		</choose> 
 		ORDER BY r.report_file_id DESC 
@@ -60,8 +64,12 @@
 	
 	<!-- 과제 파일 삭제 -->
 	<delete id="DeleteReportFile" parameterType="int">
-		DELETE FROM report_file
-		WHERE report_file_id = #{report_file_id}
+		UPDATE
+			report_file
+		SET
+			delete_yn = 'Y'
+		WHERE 
+			report_file_id = #{report_file_id}
 	</delete>
 	
 	<!-- 과제 삭제 -->

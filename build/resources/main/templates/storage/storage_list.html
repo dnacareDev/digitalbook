@@ -4,12 +4,34 @@
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
 <style>
+	/* The Modal (background) */
+	.searchModal {
+		display: none; /* Hidden by default */
+		position: fixed; /* Stay in place */
+		z-index: 10; /* Sit on top */
+		left: 0;
+		top: 0;
+		width: 100%; /* Full width */
+		height: 100%; /* Full height */
+		background-color: rgb(0,0,0); /* Fallback color */
+		background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	}
+	/* Modal Content/Box */
+	.search-modal-content {
+		background-color: #fefefe;
+		margin: 15% auto; /* 15% from the top and centered */
+		padding: 20px;
+		border: 1px solid #888;
+		width: 40%; /* Could be more or less, depending on screen size */
+		height:40%;
+	}
+
+
   .breadcrumb-main{
-  float: left;
+ 	 float: left;
   }
   table {
     border-top: 1px solid grey;
-    
     border-collapse: collapse;
   }
   th, td {
@@ -116,8 +138,10 @@
 								                            		<thead>
 								                            			<tr>
 								                            				<th>위치ID</th>
-								                            				<th>위치</th>
+								                            				<th>위치 이름</th>
+								                            				<th>장소 유형</th>
 								                            				<th>구획구분</th>
+								                            				<th>주소</th>
 								                            				<th>면적</th>
 								                            				<th>이용과</th>
 								                            			</tr>
@@ -178,102 +202,193 @@
 	                        	<span data-feather="x"></span>
 	                        </button>
 			        	</div>
-			            <div class="modal-body">
-			            	<div class="col-12">
-				            	<form action="storage/insertStorage" id="insertForm" method="POST" enctype="multipart/form-data">
-				            		<div class="row">
+			      <div class="modal-body">
+		            	<div class="col-12">
+			            	<form action="storage/insertStorage" id="insertForm" method="POST" enctype="multipart/form-data">
+			            		<div class="row mt-3">
+			            			<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="storage_search" class="col-form-label color-dark align-center"><span class="red">*</span>검색</label>
+	                                </div>
+	                                <div class="col-sm-10" style="display:flex">
+		                                <input type="text" class="form-control b-light" id="storage_search" name="storage_search" style="width:90%">
+		                                <input type="button" class="btn btn-primary btn-default btn-squared"  onclick="searchPlaces()" value="검색" style="margin-left:5px;width:10%">
+		                            </div>
+			            		</div>
+                
+			            		<div class="row mt-3">
+			            			<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label class="col-form-label color-dark align-center">지도</label>
+	                                </div>
+	                                <div class="col-sm-10" id="modal_map" style="height: 300px;">
+		                                
+		                            </div>
+			            		</div>
+			            		<br>
+			            		<div class="row">
+			            			<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="storage_name" class="col-form-label color-dark align-center"><span class="red">*</span>실험 장소</label>
+	                                </div>
+	                                <div class="col-sm-10">
+		                                <input type="text" class="form-control b-light" id="storage_name" name="storage_name">
+		                            </div>
+			            		</div>
+			            		<div class="row mt-3">
+			            			<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="storage_type" class="col-form-label color-dark align-center">장소유형</label>
+	                                </div>
+	                                <div class="col-sm-10">
+		                                <select class="form-control b-light" id="storage_type" name="storage_type">
+	                                		<option value="9">유형 선택</option>
+	                                		<option value="0">논</option>
+	                                		<option value="1">밭</option>
+	                                		<option value="2">온실</option>
+	                                		<option value="3">실내</option>
+		                                </select>
+		                            </div>
+			            		</div>
+			            		<div class="row mt-3">
 				            			<div class="col-sm-2 d-flex aling-items-center">
-			                            	<label for="storage_name" class="col-form-label color-dark align-center"><span class="red">*</span>위치</label>
-		                                </div>
-		                                <div class="col-sm-10">
-			                                <input type="text" class="form-control b-light" id="storage_name" name="storage_name">
-			                            </div>
-				            		</div>
-				            		<div class="row mt-3">
-				            			<div class="col-sm-2 d-flex aling-items-center">
-			                            	<label for="storage_division" class="col-form-label color-dark align-center">구획구분</label>
-		                                </div>
-		                                <div class="col-sm-10">
-			                                <input type="text" class="form-control b-light" id="storage_division" name="storage_division">
-			                            </div>
-				            		</div>
-				            		<div class="row mt-3">
-				            			<div class="col-sm-2 d-flex aling-items-center">
-			                            	<label for="storage_size" class="col-form-label color-dark align-center">면적</label>
-		                                </div>
-		                                <div class="col-sm-10">
-			                                <input type="text" class="form-control b-light" id="storage_size" name="storage_size">
-			                            </div>
-				            		</div>
-				            		<div class="row mt-3">
-				            			<div class="col-sm-2 d-flex aling-items-center">
-			                            	<label for="storage_type" class="col-form-label color-dark align-center"><span class="red">*</span>장소유형</label>
-		                                </div>
-		                                <div class="col-sm-10">
-			                                <select class="form-control b-light" id="storage_type" name="storage_type">
-		                                		<option value="9">유형 선택</option>
-		                                		<option value="0">작물 연구동</option>
-		                                		<option value="1">가공이용 연구동</option>
-		                                		<option value="2">연천 시험지</option>
-		                                		<option value="3">외부 포장지</option>
-			                                </select>
-			                            </div>
-				            		</div>
-				            		<div class="row mt-3">
-				            			<div class="col-sm-2 d-flex aling-items-center">
-			                            	<label for="depart_id" class="col-form-label color-dark align-center">이용과</label>
+			                            	<label for="depart_id" class="col-form-label color-dark align-center">과</label>
 		                                </div>
 		                                <div class="col-sm-10">
 			                                <select class="form-control b-light" id="depart_id" name="depart_id">
-		                                		<option value="0">이용과 선택</option>
+		                                		<option value="0">과 선택</option>
 			                                	<th:block th:each="depart : ${department}">
 			                                		<option th:value="${depart.depart_id}" th:text="${depart.department}"></option>
 			                                	</th:block>
 			                                </select>
 			                            </div>
-				            		</div>
-				            		<div class="row mt-3">
-				            			<div class="col-sm-2 d-flex aling-items-center">
-			                            	<label for="storage_contents" class="col-form-label color-dark align-center">Comment</label>
-		                                </div>
-		                                <div class="col-sm-10">
-			                                <textarea class="form-control" id="storage_contents" name="storage_contents" rows="10"></textarea>
-			                            </div>
-				            		</div>
-				            		<div class="row mt-3">
-				            			<div class="col-sm-2 d-flex aling-items-center">
-			                            	<label class="col-form-label color-dark align-center">지도</label>
-		                                </div>
-		                                <div class="col-sm-10">
-			                                <div class="mapping" id="modal_map" style="height: 300px;">
-			                                
-			                            	</div>
-			                            </div>
-				            		</div>
-				            		<div class="button-group d-flex justify-content-end mt-2">
-				            			<input type="hidden" id="storage_location" name="storage_location">
-				            			<button type="button" class="btn btn-primary btn-default btn-squared" onclick="InsertStorage();" style="padding: 5px 35px !important;line-height: 2;">저장</button>
-					           		</div>
-				            	</form>
-			            	</div>
-			            </div>
+			            		</div>
+			            		<div class="row mt-3">
+			            			<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="storage_division" class="col-form-label color-dark align-center">구획구분</label>
+	                                </div>
+	                                <div class="col-sm-10">
+		                                <input type="text" class="form-control b-light" id="storage_division" name="storage_division">
+		                            </div>
+			            		</div>
+			            		<div class="row mt-3">
+			            			<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="storage_address" class="col-form-label color-dark align-center">주소</label>
+	                                </div>
+	                                <div class="col-sm-10">
+		                                <input type="text" class="form-control b-light" id="storage_address" name="storage_address">
+		                            </div>
+			            		</div>
+			            		<div class="row mt-3">
+			            			<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="storage_size" class="col-form-label color-dark align-center">면적</label>
+	                                </div>
+	                                <div class="col-sm-10">
+		                                <input type="text" class="form-control b-light" id="storage_size" name="storage_size">
+		                            </div>
+			            		</div>
+			            		<div class="row mt-3">
+			            			<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="storage_contents" class="col-form-label color-dark align-center">Comment</label>
+	                                </div>
+	                                <div class="col-sm-10">
+		                                <textarea class="form-control" id="storage_contents" name="storage_contents" rows="10"></textarea>
+		                            </div>
+			            		</div>
+			            		<div class="button-group d-flex justify-content-end mt-2">
+			            			<input type="hidden" id="storage_location" name="storage_location">
+			            			<button type="button" class="btn btn-primary btn-default btn-squared" onclick="InsertStorage()">저장</button>
+				           		</div>
+			            	</form>
+		            	</div>
+		            </div>
 			        </div>
 			    </div>
 			</div>
     	</div>
     </main>
+    
+    
+    
+    <!-- comment modal -->
+<div id="modal" class="searchModal">
+	<div class="search-modal-content">
+		<div class="page-header">
+
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="row">
+					<div class="col-sm-12" style="height:20%;">
+							<h2>Comment</h2>
+					<div id="comment" style="margin-top:40px;"></div>
+					</div>
+					<hr>
+				</div>
+			</div>
+		</div>
+		<div style="cursor:pointer;background-color:#DDDDDD;text-align: center;padding-bottom: 10px;padding-top: 10px;margin-top:160px;" onClick="closeModal();">
+			<span class="pop_bt modalCloseBtn" style="font-size: 13pt;width:100px;">
+				닫기
+			</span>
+		</div>
+	</div>
+</div>
+
+
+
     <!-- 공통 하단 -->
     <th:block th:include="/../fragments/footer.html"></th:block>
     <!-- 공통 js -->
     <th:block th:include="/../fragments/commonjs.html"></th:block>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=	e93e65b3e9a407aa43d05f993408db95&libraries=clusterer,services"></script>
 	<script type="text/javascript">
+	
+	var latForMap = 37.264399;
+	var langForMap = 126.987798;
+	var map2;
+	var levelForMap = 1; 
+	
+	var ps = new kakao.maps.services.Places(); 
+	//키워드 검색을 요청하는 함수입니다
+	function searchPlaces() {
+	    var keyword = document.getElementById('storage_search').value;
+
+	    // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
+	    ps.keywordSearch( keyword, placesSearchCB); 
+	}
+
+	//키워드 검색 완료 시 호출되는 콜백함수 입니다
+	function placesSearchCB (data, status, pagination) {
+	    if (status === kakao.maps.services.Status.OK) {
+
+	        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+	        // LatLngBounds 객체에 좌표를 추가합니다
+	        var bounds = new kakao.maps.LatLngBounds();
+
+	        for (var i=0; i<data.length; i++) {
+	            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+	        }       
+	        
+	        console.log(latForMap);
+	        latForMap = bounds.pa;
+	        langForMap = bounds.ha;
+	        
+
+	        levelForMap = 1;
+	        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+	        panTo(latForMap,langForMap);
+	    } 
+	}
+	
+    function panTo() {
+    	var moveLatLon = new kakao.maps.LatLng(latForMap, langForMap);
+    	map2.panTo(moveLatLon);
+    }
+    
 		const container = document.querySelector('#map');
 		const modalContainer = document.querySelector('#modal_map');
 		
 	    const options = { 
 	        center: new kakao.maps.LatLng(37.264399, 126.987798),
-	        level: 1
+	        level: 1,
+			mapTypeId: kakao.maps.MapTypeId.SKYVIEW
 	        
 	    };	    
 		
@@ -346,13 +461,23 @@
 			SearchStorage(1);
 		});
 	
+		
+	    const options2 = { 
+		        center: new kakao.maps.LatLng(latForMap, langForMap),
+		        level: levelForMap,
+				mapTypeId: kakao.maps.MapTypeId.SKYVIEW
+		        
+		    };	    
+	    
+
+	    
 		//modal show
 		function InsertBtn()
 		{
 			$("#storageOutModal").modal("show");
 
 			setTimeout(() => {
-				map2 = new kakao.maps.Map(modalContainer, options)
+				map2 = new kakao.maps.Map(modalContainer, options2)
 				var mapTypeControl = new kakao.maps.MapTypeControl();
 				map2.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
 			kakao.maps.event.addListener(map2, 'click', function(mouseEvent) { 
@@ -469,6 +594,14 @@
 		            // 클릭된 죄표로 그릴 다각형의 좌표배열을 얻어옵니다
 		            var path = polygon.getPath();
 		        
+		            var geocoder = new kakao.maps.services.Geocoder();
+					let callback = function(result, status) {
+		                $("#storage_address").val(result[0].address.address_name);
+		            };
+		            
+        			geocoder.coord2Address(path[0].La, path[0].Ma, callback);
+
+        			
 		            // 다각형을 구성하는 좌표의 개수가 3개 이상이면 
 		            if (path.length > 2) {
 		                
@@ -487,6 +620,9 @@
 		                    position: path[path.length-1]  // 커스텀오버레이를 표시할 위치입니다. 위치는 다각형의 마지막 좌표로 설정합니다
 		                });      
 		                clearMarkers(true)
+		                
+		             // 그려진 polygon 총 면적 면적 inputbox 에 넣어주기
+			            $('#storage_size').val(area+" ㎡");
 		                
 		            } else { 
 		                
@@ -518,10 +654,10 @@
 			{
 				alert("위치를 입력하세요.");
 			}
-			else if(storage_type == 9)
-			{
-				alert("장소유형을 입력하세요.");
-			}
+// 			else if(storage_type == 9)
+// 			{
+// 				alert("장소유형을 입력하세요.");
+// 			}
 			else if(storage_location.length == 2)
 			{
 				alert("지도에서 영역을 정하세요.");
@@ -530,6 +666,18 @@
 			{
 				$("#insertForm").submit();
 			}
+		}
+		
+		function openPopUpForComment(comment){
+			if(comment == ""){
+				comment = "등록된 커멘트가 없습니다.";
+			}
+			$('#comment').html(comment);
+		    $("#modal").show();
+		}
+		
+		function closeModal(){
+		      $("#modal").hide();
 		}
 		
 		function SearchStorage(e)
@@ -561,9 +709,11 @@
 						// add_list += '</tr>';						
 						add_list += `
 						  <tr class='storage_tr' data-coord='${result.storage[i].storage_location}'>
-							<td><span>${result.storage[i].storage_code}</span></td>
+							<td onclick='openPopUpForComment("${result.storage[i].storage_contents}")'><span><a href='#'>${result.storage[i].storage_code}</a></span></td>
 							<td><span>${result.storage[i].storage_name}</span></td>
+						  	<td><span>${result.storage[i].storage_type_name}</span></td>
 							<td><span>${result.storage[i].storage_division}</span></td>
+						  	<td><span>${result.storage[i].storage_address}</span></td>
 							<td><span>${result.storage[i].storage_size}</span></td>
 							<td><span>${result.storage[i].department}</span></td>
 						  </tr>';
@@ -631,6 +781,12 @@
 						// 지도에 선을 표시합니다 
 						polyline.setMap(map);
 						__polygon = polyline;
+						
+						let storage_name = $(this).find(".storage_name").text();
+						let storage_id = $(this).data('id');
+						$("#storage_input").val(storage_name);
+						$("#storage_input").attr("th:data-storage-id", storage_id);
+						
 					});
 				}
 			});

@@ -343,7 +343,21 @@
 			                                </div>
 			                            </div>
 			                        </div>
-			                        <div class="bottom_right-content clearfix" style="padding:20px 0"> <!-- 2021-11-01 추가  -->
+			                        
+			                         <div class="bottom_right-content clearfix" style="padding:20px 0"> 
+			                        
+			                        	<div class="left_type">
+			                        		<span style="vertical-align:middle;"><span class="red">*</span>영역 타입</span>
+				                            <select  style="width:300px;" onchange="onChangeResultType(this);" >
+				                            	<option id="res_type0" value="0">개체</option>
+				                            	<option id="res_type1" value="1">줄</option>
+				                            	<option id="res_type2" value="2">플롯</option>
+				                            </select>
+			                        	</div>
+			                        </div>
+			                        
+			                        <div class="bottom_right-content clearfix" style="padding:20px 0"> 
+			                        
 			                        	<div class="left_type">
 			                        		<span style="vertical-align:middle;"><span class="red">*</span>개채수</span>
 				                            <input type="text" id="rowNum">
@@ -1302,7 +1316,7 @@ $("#weather_area").change(function() {
 
 });
 
-
+let resultGridType = 1;
 let plan = /*[[${plan}]]*/ "null";
 let plan_id = /*[[${plan_id}]]*/ "0";
 let method = /*[[${method}]]*/ "null";
@@ -1402,6 +1416,14 @@ if(obj.soil && obj.soil != ""){
 }
 if(obj.weather && obj.weather != ""){
 	weatherData = JSON.parse(obj.weather);
+}
+
+function onChangeResultType(e){
+	resultGridType = e.value; 
+	if(resultGridType == 2){
+		document.getElementById("rowNum").value = document.getElementsByClassName("table_content").length;
+	}
+	addRow();
 }
 
 function findInfo(type){
@@ -2314,13 +2336,21 @@ function findInfo(type){
 	var tableCont = document.querySelectorAll("#table_body .table_content");
 	tableCont = Array.prototype.slice.call(tableCont);
 	$(document).on("click", "#table_body .table_content", function(e){
+
+		if(resultGridType == 2){
+			return;
+		}
+		
+		
 		var target = e.currentTarget;
 		var index = tableCont.indexOf(target);
 		currentResultIndex = index;
+		
 		let result_title =  $(this).find(".table_id").text();
 		let table_type =  $(this).find(".table_type").text();
 		let table_repeat =  $(this).find(".table_repeat").text();
-		$("#result_title").text("결과입력 : " + result_title);
+		
+		setTimeout(function(){ document.getElementById("result_title").innerHTML = "결과입력 : " + result_title; },200);
 		document.getElementById("grid").innerHTML = "";
 		
 		
@@ -2340,6 +2370,7 @@ function findInfo(type){
 		formData.append("rp_num", $("#rowNum").val());
 		formData.append("user_id", user.user_id);
 		formData.append("user_group", user.user_group);
+		formData.append("rp_type", resultGridType);
 		
 		$.ajax({
 			url : "/plan/insertResultPlan",
@@ -2935,9 +2966,14 @@ function findInfo(type){
 		var cGet = 1;
 		
 		for(var i = 0; i < arr.length; i++){
-			var aSplit = arr[i].id.split("-B")[0].split("A")[1];
-			var bSplit = arr[i].id.split("-C")[0].split("B")[1];
-			var cSplit = arr[i].id.split("-C")[1].split("-")[0];
+			
+			//var aSplit = arr[i].id.split("-B")[0].split("A")[1];
+			//var bSplit = arr[i].id.split("-C")[0].split("B")[1];
+			//var cSplit = arr[i].id.split("-C")[1].split("-")[0];
+			
+			var aSplit = arr[i].id.split("-")[0].replace(/[^0-9]/g, "");
+			var bSplit = arr[i].id.split("-")[1].replace(/[^0-9]/g, "");
+			var cSplit = arr[i].id.split("-")[2].replace(/[^0-9]/g, "");
 			
 			if(aSplit > aGet){
 				aGet = aSplit;
@@ -3280,13 +3316,27 @@ function findInfo(type){
 
 	if(resultPlan && resultPlan.rp_content){
 		rp_id = resultPlan.rp_id;
+		resultGridType = resultPlan.rp_type;
+		if(resultGridType == 2)
+			document.getElementById("rowNum").value = document.getElementsByClassName("table_content").length;
+		document.getElementById("res_type" + resultGridType).selected = true
+		
+		console.log(document.getElementById("res_type" + resultGridType))
+		
 		tableResultArray = JSON.parse(resultPlan.rp_content);
 		$("#rowNum").val(resultPlan.rp_num);
 	}
 	if(resultPlan && resultPlan.rp_segment){
 		rp_id = resultPlan.rp_id;
+		resultGridType = resultPlan.rp_type;
+		if(resultGridType == 2)
+			document.getElementById("rowNum").value = document.getElementsByClassName("table_content").length;
+		
+		document.getElementById("res_type" + resultGridType).selected = true
 		segmentResultArray = JSON.parse(resultPlan.rp_segment);
 		$("#segment_num").val(resultPlan.rp_segment_count);
+		
+		
 	}
 	setTimeout(function(){ 	
 		

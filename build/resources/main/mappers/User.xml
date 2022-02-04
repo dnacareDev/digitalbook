@@ -130,5 +130,12 @@
 		LEFT JOIN department d1 ON d2.depart_parents = d1.depart_id
 		ORDER BY user_id DESC
 	</select>
-	
+	<select id="checkId" resultType="int">
+		SELECT 
+			count(*)
+		FROM
+			user
+		where
+			user_username = #{id}
+	</select>
 </mapper>

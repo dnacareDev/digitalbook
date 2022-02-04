@@ -267,7 +267,7 @@
 			                        	<div class="select" style="height: auto;">
 		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="grow_type" placeholder="시험구배치 선택" autocomplete="off" style="width: 300px;">
 		                            		<ul class="select-hide">
-		                            			<li class="grow_type_list" onclick="selectOpt(this);"><span data-value="0">완전임의배치</span></li>
+		                            			<li class="grow_type_list" onclick="selectOpt(this);"><span data-value="0">완전임의배치법</span></li>
 		                            			<li class="grow_type_list" onclick="selectOpt(this);"><span data-value="1">난괴법</span></li>
 		                            			<li class="grow_type_list" onclick="selectOpt(this);"><span data-value="2">분할구배치법</span></li>
 		                            			<li class="grow_type_list" onclick="selectOpt(this);"><span data-value="3">세세구배치법</span></li>
@@ -571,9 +571,28 @@
 		            <div class="modal-body">
 		            	<div class="col-12">
 			            	<form action="#" id="insertStorageForm" method="POST" enctype="multipart/form-data">
+			            		<div class="row mt-3">
+			            			<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label for="storage_search" class="col-form-label color-dark align-center"><span class="red">*</span>검색</label>
+	                                </div>
+	                                <div class="col-sm-10" style="display:flex">
+		                                <input type="text" class="form-control b-light" id="storage_search" name="storage_search" style="width:90%">
+		                                <input type="button" class="btn btn-primary btn-default btn-squared"  onclick="searchPlaces()" value="검색" style="margin-left:5px;width:10%">
+		                            </div>
+			            		</div>
+                
+			            		<div class="row mt-3">
+			            			<div class="col-sm-2 d-flex aling-items-center">
+		                            	<label class="col-form-label color-dark align-center">지도</label>
+	                                </div>
+	                                <div class="col-sm-10" id="modal_map" style="height: 300px;">
+		                                
+		                            </div>
+			            		</div>
+			            		<br>
 			            		<div class="row">
 			            			<div class="col-sm-2 d-flex aling-items-center">
-		                            	<label for="storage_name" class="col-form-label color-dark align-center"><span class="red">*</span>위치</label>
+		                            	<label for="storage_name" class="col-form-label color-dark align-center"><span class="red">*</span>실험 장소</label>
 	                                </div>
 	                                <div class="col-sm-10">
 		                                <input type="text" class="form-control b-light" id="storage_name" name="storage_name">
@@ -581,17 +600,30 @@
 			            		</div>
 			            		<div class="row mt-3">
 			            			<div class="col-sm-2 d-flex aling-items-center">
-		                            	<label for="storage_type" class="col-form-label color-dark align-center"><span class="red">*</span>장소유형</label>
+		                            	<label for="storage_type" class="col-form-label color-dark align-center">장소유형</label>
 	                                </div>
 	                                <div class="col-sm-10">
 		                                <select class="form-control b-light" id="storage_type" name="storage_type">
 	                                		<option value="9">유형 선택</option>
-	                                		<option value="0">작물 연구동</option>
-	                                		<option value="1">가공이용 연구동</option>
-	                                		<option value="2">연천 시험지</option>
-	                                		<option value="3">외부 포장지</option>
+	                                		<option value="0">논</option>
+	                                		<option value="1">밭</option>
+	                                		<option value="2">온실</option>
+	                                		<option value="3">실내</option>
 		                                </select>
 		                            </div>
+			            		</div>
+			            		<div class="row mt-3">
+				            			<div class="col-sm-2 d-flex aling-items-center">
+			                            	<label for="depart_id" class="col-form-label color-dark align-center">과</label>
+		                                </div>
+		                                <div class="col-sm-10">
+			                                <select class="form-control b-light" id="depart_id" name="depart_id">
+		                                		<option value="0">과 선택</option>
+			                                	<th:block th:each="depart : ${department}">
+			                                		<option th:value="${depart.depart_id}" th:text="${depart.department}"></option>
+			                                	</th:block>
+			                                </select>
+			                            </div>
 			            		</div>
 			            		<div class="row mt-3">
 			            			<div class="col-sm-2 d-flex aling-items-center">
@@ -623,14 +655,6 @@
 	                                </div>
 	                                <div class="col-sm-10">
 		                                <textarea class="form-control" id="storage_contents" name="storage_contents" rows="10"></textarea>
-		                            </div>
-			            		</div>
-			            		<div class="row mt-3">
-			            			<div class="col-sm-2 d-flex aling-items-center">
-		                            	<label class="col-form-label color-dark align-center">지도</label>
-	                                </div>
-	                                <div class="col-sm-10" id="modal_map" style="height: 300px;">
-		                                
 		                            </div>
 			            		</div>
 			            		<div class="button-group d-flex justify-content-end mt-2">
@@ -779,6 +803,7 @@
 		            			<div class="row" id="intervaletcForm">
 		            				<div class="col-md-3"></div>
 		            			</div>
+		            			<p>(cm)</p>
 		            		</div>
 		            		<div class="col-md-6">
 		            			<div class="row">
@@ -786,7 +811,7 @@
 										<table class="table">
 											<thead>
 												<tr>
-													<th colspan="2">재식거리</th>
+													<th colspan="2">재식거리(cm)</th>
 												</tr>
 											</thead>
 											<tbody id="interval_body">
@@ -885,7 +910,7 @@
 						                <button type="button" onclick="PlusAmount();" style="padding: 10px 4px!important; border-radius: 0 5px 5px 0; border-left: 0;">수준 추가</button>
 						            </div>
 		            			</div>
-		                            <p style="color:red;">(kg/ha)</span>
+		                            <p style="color:red;">(g/m2)</span>
 		            		</div>
 		            		<div class="col-md-6">
 		            			<div class="row">
@@ -893,7 +918,7 @@
 										<table class="table">
 											<thead>
 												<tr>
-													<th colspan="2">파종량<span class="red">(kg/ha)</span></th>
+													<th colspan="2">파종량<span class="red">(g/m2)</span></th>
 												</tr>
 											</thead>
 											<tbody id="amount_body">
@@ -1165,6 +1190,7 @@
     <script type="text/javascript" src="/../assets/vendor_assets/js/plan-segment.js"></script>
     <script type="text/javascript" src="/../assets/vendor_assets/js/plan-render.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=	e93e65b3e9a407aa43d05f993408db95&libraries=clusterer,services"></script>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" th:inline="javascript">
 
 	var user = /*[[${user}]]*/ "null";
@@ -1484,13 +1510,14 @@
 		
 		setTimeout(() => {
 			const options = { 
-					center: new kakao.maps.LatLng(37.264399, 126.987798),
+					center: new kakao.maps.LatLng(latForMap, langForMap),
 					mapTypeId: kakao.maps.MapTypeId.SKYVIEW,
-    			    level: 1
+    			    level: levelForMap
     			};
     		map2 = new kakao.maps.Map(modalContainer, options);	 
 //     		map2 = new kakao.maps.Map(modalContainer, options)
 			var mapTypeControl = new kakao.maps.MapTypeControl();
+			
 			map2.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
 			kakao.maps.event.addListener(map2, 'click', function(mouseEvent) { 
 			    // 마커 생성   
@@ -3267,6 +3294,7 @@
 		}
 	}
 	/* e : segmentTitle */
+var type_name = [1,2,3];
 	function gridFactors(){
 		resultArray = [];
 		factorArray = [];
@@ -3275,6 +3303,7 @@
 		var factor3 = "";
 		
 		if(Object.keys(data1).length != 0){
+			
 			if(data1.type == "시비량"){
 				factor1 = data1.level.split(",");
 			}else if(data1.type == "시험재료"){
@@ -3282,6 +3311,15 @@
 			}else{
 				factor1 = data1.content.split(",");
 			}
+			
+			if(data1.type == '재식거리'){
+				data1.type = '재식거리(cm)';
+			}else if(data1.type == '파종량'){
+				data1.type = '파종량(g/m2)';				
+			}
+			
+			type_name[0]=data1.type;
+		
 		}
 		if(Object.keys(data2).length != 0){
 			if(data2.type == "시비량"){
@@ -3291,6 +3329,14 @@
 			}else{
 				factor2 = data2.content.split(",");
 			}
+			
+			if(data2.type == '재식거리'){
+				data2.type = '재식거리(cm)';
+			}else if(data1.type == '파종량'){
+				data2.type = '파종량(g/m2)';				
+			}
+			
+			type_name[1]=data2.type;
 		}
 		if(Object.keys(data3).length != 0){
 			if(data3.type == "시비량"){
@@ -3300,8 +3346,15 @@
 			}else{
 				factor3 = data3.content.split(",");
 			}
+			
+			if(data3.type == '재식거리'){
+				data3.type = '재식거리(cm)';
+			}else if(data3.type == '파종량'){
+				data3.type = '파종량(g/m2)';				
+			}
+
+			type_name[2]=data3.type;
 		}
-		
 		var plan_repeat = $("#plan_repeat").val();
 		
 		var grow_type = $("#grow_type").attr("data-select");
@@ -3326,7 +3379,7 @@
 				num++;
 				var number = num;
 				
-				var data = {"num" : number, "id" : id, "type" : type};
+				var data = {"num" : number, "id" : id, "type" : type, "type_name": type_name};
 				factorArray.push(data);
 				
 				id = "";
@@ -3345,7 +3398,7 @@
 					num++;
 					var number = num;
 					
-					var data = {"num" : number, "id" : id2, "type" : type2};
+					var data = {"num" : number, "id" : id2, "type" : type2, "type_name": type_name};
 					factorArray.push(data);
 				}
 				id = "";
@@ -3355,6 +3408,7 @@
 			for(var i = 0; i < factor1.length; i++){
 				id = "A"+(i+1);
 				type = factor1[i];
+
 				
 				for(var j = 0; j < factor2.length; j++){
 					id2 = id;
@@ -3370,7 +3424,7 @@
 						type3 = type2;
 						type3 = type3 + ',' + factor3[k];
 						
-						var data = {"num" : number, "id" : id3, "type" : type3};
+						var data = {"num" : number, "id" : id3, "type" : type3, "type_name": type_name};
 						factorArray.push(data);
 					}//end for3
 					
@@ -3389,7 +3443,7 @@
 					num1++;
 					var number = num1;
 					
-					var data = {"num" : number,"segmentId" : factorArray[j].id, segment_title:"", "order" : orderCount, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1, "segment_horizon": "", "segment_vertical" : "", "segment_zindex": ""};
+					var data = {"num" : number,"segmentId" : factorArray[j].id, segment_title:"", "order" : orderCount, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "type_name": factorArray[j].type_name, "repeat" : i+1, "segment_horizon": "", "segment_vertical" : "", "segment_zindex": ""};
 					resultArray.push(data);
 					orderCount++;
 				}
@@ -3423,7 +3477,17 @@
 			    //구획 이름 추가  
 			    add_list += '<td><input type="text" class="input-height segment-title"></td>';
 			    
-			    add_list += '<td class="table_type">'+resultArray[i].type+'</td>';
+			    add_list += '<td class="table_type">';
+		    	
+			    var list = resultArray[i].type.split(',');
+			    for(var j=0;j<resultArray[i].type_name.length;j++){
+			    	if(list[j] != null){
+			    		add_list += resultArray[i].type_name[j] + ":"+list[j] +"<br>";
+			    	}
+			    }
+			    
+			    add_list +='</td>';
+			    
 			    add_list += '<td class="table_repeat">'+resultArray[i].repeat+'</td>';
 			    add_list += '<td><input type="text" id="mil" class="seg_area" value="0"></td>';
 			    add_list += '</tr>';
@@ -3516,8 +3580,7 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					console.log("22222");
-					var data = {"num" : number,"segmentId" : factorArray[j].id, segment_title:"", "order" : orderCount, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1, "segment_horizon": "", "segment_vertical" : "", "segment_zindex": ""};
+					var data = {"num" : number,"segmentId" : factorArray[j].id, segment_title:"", "order" : orderCount, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "type_name": factorArray[j].type_name,  "repeat" : i+1, "segment_horizon": "", "segment_vertical" : "", "segment_zindex": ""};
 					
 					resultArray.push(data);
 					orderCount++;
@@ -3675,7 +3738,7 @@
 				for(var j = 0; j < factorArray.length; j++){
 					num1++;
 					var number = num1;
-					var data = {"num" : number,"segmentId" : factorArray[j].id, segment_title:"", "order" : orderCount, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "repeat" : i+1, "segment_horizon": "", "segment_vertical" : "", "segment_zindex": ""};
+					var data = {"num" : number,"segmentId" : factorArray[j].id, segment_title:"", "order" : orderCount, "id" : factorArray[j].id+"-"+level, "type" : factorArray[j].type, "type_name": factorArray[j].type_name, "repeat" : i+1, "segment_horizon": "", "segment_vertical" : "", "segment_zindex": ""};
 					
 					resultArray.push(data);
 					orderCount++;
@@ -4450,7 +4513,49 @@
 	}
 	
 	//등록 버튼 이벤트
+	var startDate =[];
+	var endDate =[];
 	$("#planInsertBtn").on("click", function(){
+		
+		var startDateList = document.getElementsByName("start_date");
+		var endDateList = document.getElementsByName("end_date");		
+		var dateValidate = true;
+		var inputValidate = true;
+		var count1 = 0;
+		var count2 = 0;
+		
+		for(var i=0;i<startDateList.length;i++){
+			startDate.push(startDateList[i].value);
+			
+			if($("#select_user"+i).val() == ""){
+				inputValidate = false;
+			}
+		}
+		
+		for(var i=0;i<endDateList.length;i++){
+			if(endDateList[i].value == ""){
+				dateValidate = false;					
+			}
+			
+			endDate.push(endDateList[i].value);			
+		}
+		
+		var lastDate;
+		for(var i=0;i<startDateList.length;i++){
+			if(startDateList[i].value == ""){
+				dateValidate = false;					
+			}
+			var start = new Date(startDateList[i].value);
+			
+			if(lastDate > start){
+					dateValidate = false;	
+			}
+			
+			lastDate = new Date(endDateList[i].value);
+			
+		}
+		
+		
 		/* console.log("data!!!!!");
 		console.log(data1);
 		console.log(data2);
@@ -4465,9 +4570,12 @@
 		console.log(etcArray1);
 		console.log(etcArray2);
 		console.log(etcArray3); */
-		
-		if($("#grow_type").attr("data-select") == "" || $("#grow_type").attr("data-select") == null){
-			alert("시험구배치 종류를 선택해주세요.");
+		if(inputValidate == false){
+			alert("담당자 입력해 주세요");
+		}else if(dateValidate == false){
+			alert("일정 중복 날짜 확인해주세요");	
+		}else if($("#grow_type").attr("data-select") == "" || $("#grow_type").attr("data-select") == null){
+			alert("시험구배치 종류를 선택해주세요");
 			$("#grow_type").focus();
 		}else if($("#storage_input").val() == ""){
 			alert("포장을 선택해 주세요");
@@ -4507,7 +4615,7 @@
 	});
 	
 	//plan 등록 함수
-	function insertPlan(){
+	function insertPlan()	{
 		return new Promise(function(resolve){
 			
 			var plan_method = "";
@@ -4903,7 +5011,42 @@
 			
 		})//end return
 	}//end function
+	
+	var latForMap = 37.264399;
+	var langForMap = 126.987798;
 	var map2;
+	var levelForMap = 1; 
+	
+	var ps = new kakao.maps.services.Places(); 
+	//키워드 검색을 요청하는 함수입니다
+	function searchPlaces() {
+	    var keyword = document.getElementById('storage_search').value;
+
+	    // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
+	    ps.keywordSearch( keyword, placesSearchCB); 
+	}
+
+	//키워드 검색 완료 시 호출되는 콜백함수 입니다
+	function placesSearchCB (data, status, pagination) {
+	    if (status === kakao.maps.services.Status.OK) {
+
+	        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+	        // LatLngBounds 객체에 좌표를 추가합니다
+	        var bounds = new kakao.maps.LatLngBounds();
+
+	        for (var i=0; i<data.length; i++) {
+	            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+	        }       
+	        
+	        latForMap = bounds.pa;
+	        langForMap = bounds.ha;
+	        levelForMap = 1;
+	        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+			$('#storageBtn').click();
+	    } 
+	}
+	
+	
 	const modalContainer = document.querySelector('#modal_map');
 	//다음 버튼 이벤트 함수
 	function nextStep(i){
@@ -5071,10 +5214,10 @@
 		{
 			alert("위치를 입력하세요.");
 		}
-		else if(storage_type == 9)
-		{
-			alert("장소유형을 입력하세요.");
-		}
+// 		else if(storage_type == 9)
+// 		{
+// 			alert("장소유형을 입력하세요.");
+// 		}
 		else if(storage_location.length == 2)
 		{
 			alert("지도에서 영역을 정하세요.");
@@ -5136,7 +5279,7 @@
 			add_list += '<li>';
 			add_list += '<span><span class="red" style="color: #FF4141">*</span>담당자(정)</span>';
 	    	add_list += '<div class="select" style="height: auto;">';
-	    	add_list += '<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control select_user1" id="select_user1" placeholder="담당자 선택" autocomplete="off" style="border-right:1px solid #E4E4E4;">';
+	    	add_list += '<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control select_user1" id="select_user'+i+'" placeholder="담당자 선택" autocomplete="off" style="border-right:1px solid #E4E4E4;">';
 	    	add_list += '<ul class="select-hide" style="width: 400px !important; top: 85px !important; padding-top: 0 !important;">';
 	    	for(var j = 0; j < user.length; j++){
 	    		add_list += '<li class="select_user1_list" onclick="selectOpt(this);" style="line-height: 30px; padding:0 0 0 5px; float: none !important; margin-left: 0;"><span data-value="'+user[j].user_id+'">'+user[j].user_name_k+'</span></li>';
@@ -5178,7 +5321,7 @@
 			add_list += '<ul>';
 			add_list += '<li>';
 			add_list += '<span style="float: left;">시작일</span>';
-			add_list += '<input type="text" class="start_date" name="">';
+			add_list += '<input type="text" class="start_date" name="start_date" autocomplete="off">';
 			add_list += '<div class="cal">';
 			add_list += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">';
 			add_list += '<path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>';
@@ -5188,7 +5331,7 @@
 			
 			add_list += '<li>';
 			add_list += '<span style="float: left;">종료일</span>';
-			add_list += '<input type="text" class="end_date" name="">';
+			add_list += '<input type="text" class="end_date" name="end_date" autocomplete="off">';
 			add_list += '<div class="cal">';
 			add_list += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">';
 			add_list += '<path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>';
@@ -5196,14 +5339,14 @@
 			add_list += '</div>';
 			add_list += '</li>';
 			add_list += '<li>';
+			add_list += '<button type="button" class="add_manager" style="margin-top:10%;height:40px;">확인</button>';
+			add_list += '</li>';
 			
 			add_list += '</ul>';
 			add_list += '</div>';
 			add_list += '</div>'; //end row2
 			
-			add_list += '<div class="btn">';
-			add_list += '<button type="button" class="add_manager">추가</button>';
-			add_list += '</div>';
+
 			add_list += '</div>'; //end top1
 			
 			add_list += '<div class="top1">';
@@ -5488,6 +5631,7 @@
 	    eventList.initEvent("click");
 	    document.querySelector("#step1 .title").dispatchEvent(eventList);
 	}, 1);
+	
 </script>
 </body>    
 </html>

@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,6 +76,18 @@ public class ReportController
 		
 		return mv;
 	}
+	
+	// 과제 삭제 페이지
+	@RequestMapping("report/delete")
+	@ResponseBody
+	public Map ReportDelete(ModelAndView mv, @RequestParam("report_file_id") int report_file_id)
+	{
+		Map<String,Object> map = new HashMap<String,Object>();
+		int count = service.DeleteReportFile(report_file_id);
+		map.put("count", count);
+		return map;
+	}
+		
 	
 	// 과제 검색
 	@ResponseBody
