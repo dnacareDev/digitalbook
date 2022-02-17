@@ -457,7 +457,7 @@
 													<table class="table">
 														<thead>
 															<tr>
-																<th></th>
+																<th><input type="checkbox" name="" onclick="selectAllMethod(this);"></th>
 																<th>작목</th>
 																<th>분류</th>
 																<th>조사항목</th>
@@ -1219,6 +1219,14 @@
 	let select_this;
 	let select_prev;
 	let select_id;
+
+	function selectAllMethod(e){
+		let checkNameList = document.getElementsByName("chk_method");
+		let checked = e.checked;
+		for(var i =0;i<checkNameList.length;i++){
+			checkNameList[i].checked = checked
+		}
+	}
 	
 	function selection(e){
 		if(document.getSelection){
@@ -4431,7 +4439,7 @@ var type_name = [1,2,3];
 			add_list += '</div>';
 			
 			//선택 항목 숨기기
-			$(this).parent().parent().css("display", "none");
+			//$(this).parent().parent().css("display", "none");
 			
 			//체크 해제
 			$(this).prop("checked", false);
@@ -4525,11 +4533,12 @@ var type_name = [1,2,3];
 		var count2 = 0;
 		
 		for(var i=0;i<startDateList.length;i++){
-			startDate.push(startDateList[i].value);
 			
-			if($("#select_user"+i).val() == ""){
-				inputValidate = false;
+			if(startDateList[i].value == ""){
+				dateValidate = false;					
 			}
+			
+			startDate.push(startDateList[i].value);
 		}
 		
 		for(var i=0;i<endDateList.length;i++){
@@ -5048,10 +5057,63 @@ var type_name = [1,2,3];
 	
 	
 	const modalContainer = document.querySelector('#modal_map');
+	
+	
+	function addMemberEvent(e){
+
+		console.log($(e));
+		console.log($(e).parent());
+		var manager1_id = $(e).parent().parent().parent().parent().parent().find(".select_user1").attr("data-select");
+		
+		var manager1_text = $(e).parent().parent().parent().parent().parent().find(".select_user1").attr("value");
+		if(manager1_id == "" || manager1_id == null){
+			manager1_text = "";
+		}
+		var manager2_id = $(e).parent().parent().parent().parent().parent().find(".select_user2").attr("data-select");
+		var manager2_text = $(e).parent().parent().parent().parent().parent().find(".select_user2").attr("value");
+		if(manager2_id == "" || manager2_id == null){
+			manager2_text = "";
+		}
+		var start_date = $(e).parent().parent().parent().parent().parent().find(".start_date").val();
+		var end_date = $(e).parent().parent().parent().parent().parent().find(".end_date").val();
+		
+		var input_manager = $(e).parent().parent().parent().parent().parent().next().find(".input_manager");
+		
+		var checkId = $(e).parent().parent().parent().parent().parent().next().find(".input_manager:eq(0)").find(".mng_input1").attr("data-id");
+		// console.log(checkId);
+		
+		if(checkId != undefined && checkId != manager1_id){
+			alert("담당자(정)은 한명만 지정이 가능합니다.");
+		}else{
+			var str = "";
+			
+			str += '<tr class="input_manager_tr">';
+			str += '<td class="mng_input1" data-id="'+manager1_id+'">'+manager1_text+'</td>';
+			str += '<td class="mng_input2" data-id="'+manager2_id+'">'+manager2_text+'</td>';
+			str += '<td class="mng_input3">'+start_date+'</td>';
+			str += '<td class="mng_input4">'+end_date+'</td>';
+			str += '<td><a href="" class="del_manager" onclick="deleteMemberEvent(this)">삭제</a></td>';
+			str += '</tr>';
+			console.log(str);
+			input_manager.append(str);
+			
+		}
+		
+		
+		
+	}
+
+	//담당자 삭제 이벤트
+	function deleteMemberEvent(e){
+		$(e).parent().parent().remove();
+	}
+	 
+	
 	//다음 버튼 이벤트 함수
 	function nextStep(i){
 		$("#step"+i+" .content").slideDown();
 		$("#step3"+i+" .title").addClass("active");
+		
 		
 	}
 	
@@ -5339,7 +5401,7 @@ var type_name = [1,2,3];
 			add_list += '</div>';
 			add_list += '</li>';
 			add_list += '<li>';
-			add_list += '<button type="button" class="add_manager" style="margin-top:10%;height:40px;">확인</button>';
+			add_list += '<button type="button" class="add_manager" onclick="addMemberEvent(this);" style="margin-top:10%;height:40px;">확인</button>';
 			add_list += '</li>';
 			
 			add_list += '</ul>';

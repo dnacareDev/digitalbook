@@ -102,9 +102,20 @@ function setFactorData(data){
 	var cGet = 1;
 	
 	for(var i = 0; i < arr.length; i++){
-		var aSplit = arr[i].id.split("-B")[0].split("A")[1];
-		var bSplit = arr[i].id.split("-C")[0].split("B")[1];
-		var cSplit = arr[i].id.split("-C")[1].split("-")[0];
+		
+				
+	/*
+		var aSplit = arr[i].id.split("-").length > 0 ? arr[i].id.split("-")[0].replace(/[^0-9]/g,'') :  //arr[i].id.split("-B")[0].split("A")[1];
+		var bSplit = //arr[i].id.split("-C")[0].split("B")[1];
+		var cSplit = //arr[i].id.split("-C")[1].split("-")[0];
+	*/
+	
+		let splitStr = arr[i].id.split("-");
+	
+		var aSplit = splitStr.length > 0 ? splitStr[0].replace(/[^0-9]/g,'') : 0;
+		var bSplit = splitStr.length > 1 ? splitStr[1].replace(/[^0-9]/g,'') : 0;
+		var cSplit = splitStr.length > 2 ? splitStr[2].replace(/[^0-9]/g,'') : 0;
+
 		
 		if(aSplit > aGet){
 			aGet = aSplit;

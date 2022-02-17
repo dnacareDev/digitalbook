@@ -470,7 +470,7 @@
 													<table class="table">
 														<thead>
 															<tr>
-																<th></th>
+																<th><input type="checkbox" name="" onclick="selectAllMethod(this);"></th>
 																<th>작목</th>
 																<th>분류</th>
 																<th>조사항목</th>
@@ -1341,6 +1341,16 @@
 	let select_this;
 	let select_prev;
 	let select_id;
+	
+	
+	function selectAllMethod(e){
+		let checkNameList = document.getElementsByName("chk_method");
+		let checked = e.checked;
+		for(var i =0;i<checkNameList.length;i++){
+			checkNameList[i].checked = checked
+		}
+	}
+	
 	
 	function selection(e){
 		if(document.getSelection){
@@ -5270,9 +5280,12 @@
 		var cGet = 1;
 		
 		for(var i = 0; i < arr.length; i++){
-			var aSplit = arr[i].id.split("-B")[0].split("A")[1];
-			var bSplit = arr[i].id.split("-C")[0].split("B")[1];
-			var cSplit = arr[i].id.split("-C")[1].split("-")[0];
+
+			let splitStr = arr[i].id.split("-");
+			
+			var aSplit = splitStr.length > 0 ? splitStr[0].replace(/[^0-9]/g,'') : 0;
+			var bSplit = splitStr.length > 1 ? splitStr[1].replace(/[^0-9]/g,'') : 0;
+			var cSplit = splitStr.length > 2 ? splitStr[2].replace(/[^0-9]/g,'') : 0;
 			
 			if(aSplit > aGet){
 				aGet = aSplit;
@@ -5631,7 +5644,7 @@
 			add_list += '</div>';
 			
 			//선택 항목 숨기기
-			$(this).parent().parent().css("display", "none");
+			//$(this).parent().parent().css("display", "none");
 			
 			//체크 해제
 			$(this).prop("checked", false);
