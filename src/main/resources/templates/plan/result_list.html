@@ -117,8 +117,12 @@
 		       					<div class="action-btn d-flex justify-content-end">
 				      				<div class="atbd-button-list d-flex flex-wrap">
 				      					<div class="d-flex align-items-center add-contact__form my-sm-0 my-2">
+				                            <select class="form-control form-control-lg mt-10 mb-10 mr-10" id="isMineOnly" style="width: 238px;height:40px;" onchange="SearchPlan(1);">
+				                                <option value="0">전체</option>
+				                                <option value="1">본인</option>
+				                            </select>
 				                            <select class="form-control form-control-lg mt-10 mb-10 mr-10" id="search_type" style="width: 238px;height:40px;">
-				                                <option value="p.plan_code">생육조사 ID</option>
+				                                <option value="r.report_title">과제명</option>
 				                                <option value="r.report_title">과제명</option>
 				                                <option value="s.storage_name">포장</option>
 				                                <option value="m.method_title">조사항목</option>
@@ -127,7 +131,7 @@
 				                            </select>
 				                            <div class="input-container icon-right position-relative mr-10">
 			                                    <a href="#" onclick="SearchPlan(1); return false;" class="input-icon icon-right"><span data-feather="search"></span></a>
-			                                    <input type="text" class="form-control form-control-lg" id="keyword" placeholder="Search" style="width: 238px;height:40px;">
+			                                    <input onkeyup="if(window.event.keyCode==13){SearchPlan(1)}" type="text" class="form-control form-control-lg" id="keyword" placeholder="Search" style="width: 238px;height:40px;" >
 			                                </div>
 				      					</div>
 				      					<button class="btn btn-primary" id="excelBtn" style="margin:10px 0 0 0">CSV<span data-feather="download"style="margin:0;"></span></button>
@@ -198,9 +202,10 @@ $(document).ready(function()
 			var limit = $("#limit").val();
 			var search_type = $("#search_type").val();
 			var keyword = $("#keyword").val();
+			var isMineOnly = $("#isMineOnly").val();
 			var plan_step = 1;
 			
-			var data = {"search_type" : search_type, "keyword" : keyword, "page_num" : e, "limit" : limit, "plan_step" : plan_step};
+			var data = {"search_type" : search_type, "keyword" : keyword, "page_num" : e, "limit" : limit, "plan_step" : plan_step, "isMineOnly" : isMineOnly};
 			
 			$.ajax({
 				url : '/plan/searchResultPlan',
@@ -289,6 +294,8 @@ $(document).ready(function()
 		$("#excelBtn").on("click", function(){
 			window.location.href = "/plan/result/exceldownload";
 		});
+		
+		
 		
 </script>
 </html>

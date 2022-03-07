@@ -54,10 +54,10 @@ public interface PlanService {
 	int insertManure(Manure manure);
 	
 	//재배 계획 검색
-	List<Plan> SearchPlan(String search_type, String keyword, int offset, int limit, int user_group);
+	List<Plan> SearchPlan(Plan planParam);
 	
 	//재배 계획 검색 개수
-	int SearchPlanCount(String search_type, String keyword, int user_group);
+	int SearchPlanCount(Plan planParam);
 	
 	//재배 계획 Detail
 	Plan selectPlanDetail(int plan_id);
@@ -150,10 +150,10 @@ public interface PlanService {
 	int deleteSegment(int[] arr);
 	
 	//재배 계획 검색
-	List<Plan> SearchResultPlan(String search_type, String keyword, int offset, int limit, int user_group, int plan_step);
+	List<Plan> SearchResultPlan(Plan planParam);
 	
 	//재배 계획 검색 개수
-	int SearchResultPlanCount(String search_type, String keyword, int user_group, int plan_step);
+	int SearchResultPlanCount(Plan planParam);
 	
 	// 장소 갯수 조회
 	int SelectStorageCount(int user_id);

@@ -3,14 +3,17 @@
 <mapper namespace="com.digitalBook.Mapper.PlanMapper">
 	
 	<!-- 재배계획 검색 -->
-	<select id="SearchPlan" resultType="Plan">
+	<select id="SearchPlan" resultType="Plan" parameterType="Plan">
 		SELECT p.*, r.*, s.*, m.*, r.user_name AS report_user_name, rf.report_year
 		FROM plan p
 		LEFT JOIN report r ON p.report_code = r.report_code
 		LEFT JOIN report_file rf ON r.report_file_id = rf.report_file_id
 		LEFT JOIN storage s ON p.storage_id = s.storage_id
 		LEFT JOIN method m ON p.plan_method = m.method_id 
-		WHERE p.user_group = #{user_group}
+		WHERE p.user_group = #{user_group} 
+			<if test="user_id != 0">
+				AND ${user_id} = p.user_id 
+			</if> 
 		<choose>
 			<when test="search_type == null || search_type.equals('none')">
 				AND (
@@ -40,13 +43,16 @@
 	</select>
 	
 	<!-- 재배계획 갯수 검색 -->
-	<select id="SearchPlanCount" resultType="int">
+	<select id="SearchPlanCount" resultType="int" parameterType="Plan">
 		SELECT COUNT(*) FROM plan p
 		LEFT JOIN report r ON p.report_code = r.report_code
 		LEFT JOIN report_file rf ON r.report_file_id = rf.report_file_id
 		LEFT JOIN storage s ON p.storage_id = s.storage_id
 		LEFT JOIN method m ON p.plan_method = m.method_id
-		WHERE p.user_group = #{user_group}
+		WHERE p.user_group = #{user_group} 
+			<if test="user_id != 0">
+				AND ${user_id} = p.user_id 
+			</if>
 		<choose>
 			<when test="search_type == null || search_type.equals('none')">
 				AND (
@@ -66,6 +72,7 @@
 			<when test="search_type.equals('p.plan_repeat') || search_type.equals('p.plan_segment')">
 				AND ${search_type} = #{keyword}
 			</when>
+			
 			<otherwise>
 				AND ${search_type} LIKE CONCAT('%', #{keyword}, '%')
 			</otherwise>
@@ -73,13 +80,17 @@
 	</select>
 	
 	<!-- 결과입력 검색 -->
-	<select id="SearchResultPlan" resultType="Plan">
+	<select id="SearchResultPlan" resultType="Plan" parameterType="Plan">
 		SELECT p.*, r.*, s.*, m.*
 		FROM plan p
 		LEFT JOIN report r ON p.report_code = r.report_code
 		LEFT JOIN storage s ON p.storage_id = s.storage_id
 		LEFT JOIN method m ON p.plan_method = m.method_id
 		WHERE p.user_group = #{user_group} AND p.plan_step = #{plan_step}
+		
+			<if test="user_id != 0">
+				AND ${user_id} = p.user_id 
+			</if>
 		<choose>
 			<when test="search_type == null || search_type.equals('none')">
 				AND (
@@ -109,12 +120,17 @@
 	</select>
 	
 	<!-- 결과입력 갯수 검색 -->
-	<select id="SearchResultPlanCount" resultType="int">
+	<select id="SearchResultPlanCount" resultType="int" parameterType="Plan">
 		SELECT COUNT(*) FROM plan p
 		LEFT JOIN report r ON p.report_code = r.report_code
 		LEFT JOIN storage s ON p.storage_id = s.storage_id
 		LEFT JOIN method m ON p.plan_method = m.method_id
 		WHERE p.user_group = #{user_group} AND p.plan_step = #{plan_step}
+		
+			<if test="user_id != 0">
+				AND ${user_id} = p.user_id 
+			</if>
+			
 		<choose>
 			<when test="search_type == null || search_type.equals('none')">
 				AND (
@@ -195,7 +211,8 @@
 			user_group,
 			create_date,
 			modify_date,
-			plan_step
+			plan_step,
+			user_id
 		)
 		VALUES
 		(
@@ -210,7 +227,8 @@
 			#{user_group},
 			NOW(),
 			NOW(),
-			0
+			0,
+			#{user_id}
 		)
 		
 	</insert>

@@ -114,7 +114,7 @@
 							</div>
 							<div class="col-8 col-md-4 col-lg-2">
 								<div class="select" style="height: auto;">
-                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="depart_depth1" placeholder="원 선택" autocomplete="off">
+                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="depart_depth1" placeholder="원 선택" autocomplete="new-password">
                             		<ul class="select-hide">
                             			<th:block th:each="d1 : ${d1}">
                             				<li class="depart_depth1_list" onclick="selectOpt(this);"><span th:data-value="${d1.depart_id}" th:text="${d1.department}"></span></li>
@@ -134,7 +134,7 @@
 								</div>
 								<div class="col-8 col-md-4 col-lg-9" style="float:right">
 									<div class="select" style="height: auto;">
-	                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="depart_depth2" placeholder="부 선택" autocomplete="off">
+	                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="depart_depth2" placeholder="부 선택" autocomplete="new-password">
 	                            		<ul class="select-hide">
 	                            			<th:block th:each="d2 : ${d2}">
 	                            				<li class="depart_depth2_list" onclick="selectOpt(this);"><span th:data-value="${d2.depart_id}" th:text="${d2.department}"></span></li>
@@ -155,7 +155,7 @@
 								</div>
 								<div class="col-8 col-md-4 col-lg-9" style="float:right">
 									<div class="select" style="height: auto;">
-	                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="depart_depth3" placeholder="과 선택" autocomplete="off">
+	                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="depart_depth3" placeholder="과 선택" autocomplete="new-password">
 	                            		<ul class="select-hide">
 	                            			<th:block th:each="d3 : ${d3}">
 	                            				<li class="depart_depth3_list" onclick="selectOpt(this);"><span th:data-value="${d3.depart_id}" th:text="${d3.department}"></span></li>
@@ -177,7 +177,7 @@
 							</div>
 							<div class="col-8 col-md-4 col-lg-2">
 								<div class="select" style="height: auto;">
-                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="depart_depth4" placeholder="소속실 선택" autocomplete="off">
+                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="depart_depth4" placeholder="소속실 선택" autocomplete="new-password">
                             		<ul class="select-hide">
                             			<th:block th:each="d4 : ${d4}">
                             				<li class="depart_depth4_list" onclick="selectOpt(this);"><span th:data-value="${d4.depart_id}" th:text="${d4.department}"></span></li>
@@ -197,7 +197,7 @@
 								</div>
 								<div class="col-8 col-md-4 col-lg-9" style="float:right">
 									<div class="select" style="height: auto;">
-	                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="user_position" placeholder="직종 선택" autocomplete="off">
+	                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="user_position" placeholder="직종 선택" autocomplete="new-password">
 	                            		<ul class="select-hide">
 	                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="연구직">연구직</span></li>
 	                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="전문연구직">전문연구직</span></li>
@@ -220,7 +220,7 @@
 								</div>
 								<div class="col-8 col-md-4 col-lg-9" style="float:right">
 									<div class="select" style="height: auto;">
-	                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="user_level" placeholder="직급 선택" autocomplete="off">
+	                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="user_level" placeholder="직급 선택" autocomplete="new-password">
 	                            		<ul class="select-hide">
 	                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="수확후이용과">농업연구관</span></li>
 	                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="농업연구사">농업연구사</span></li>
@@ -307,7 +307,7 @@
 								</div>
 								<div class="col-8 col-md-4 col-lg-9" style="float:right">
 									<div class="select" style="height: auto;">
-	                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="user_type" placeholder="권한 선택" autocomplete="off">
+	                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="user_type" placeholder="권한 선택" autocomplete="new-password">
 	                            		<ul class="select-hide">
 	                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="0">관리자</span></li>
 	                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="1">운영자</span></li>

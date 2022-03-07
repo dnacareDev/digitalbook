@@ -102,7 +102,7 @@
 	                                </div>
 	                                <div class="col-sm-5">
 	                                	<div class="select" style="height: auto;">
-		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="reagent_type" placeholder="종류 선택" autocomplete="off">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="reagent_type" placeholder="종류 선택" autocomplete="new-password">
 		                            		<ul class="select-hide">
 		                            			<li class="reagent_type_list" onclick="selectOpt(this);"><span data-value="시약">시약</span></li>
 		                            			<li class="reagent_type_list" onclick="selectOpt(this);"><span data-value="농약">농약</span></li>
@@ -174,7 +174,7 @@
 		                            </div>
 		                            <div class="col-sm-3">
 		                            	<div id="eaches_id_select" class="select" style="height: auto;">
-		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="eaches_id" placeholder="단위 선택" autocomplete="off">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="eaches_id" placeholder="단위 선택" autocomplete="new-password">
 		                            		<ul class="select-hide">
 		                            			<th:block th:each="eaches : ${eaches}">
 		                            				<li class="eaches_id_list" onclick="selectOpt(this);"><span th:data-value="${eaches.eaches_id}" th:text="${eaches.eaches_name}"></span></li>

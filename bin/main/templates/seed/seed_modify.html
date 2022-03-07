@@ -213,7 +213,7 @@
 										                                </div>
 										                                <div class="col-md-10 mb-25 title_inner">
 										                                	<div class="select" style="height: auto; width:100%">
-											                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control seed_manager" id="seed_manager" placeholder="담당자 선택" autocomplete="off">
+											                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control seed_manager" id="seed_manager" placeholder="담당자 선택" autocomplete="new-password">
 											                            		<ul class="select-hide">
 											                            			<th:block th:each="user : ${user}">
 											                            				<li class="seed_manager_list" onclick="selectOpt(this);"><span th:data-value="${user.user_id}" th:text="${user.user_name_k}"></span></li>
@@ -251,7 +251,7 @@
 						        									</div>
 						        									<div class="col-md-4 mb-25">
 						        										<div class="select" style="height: auto;">
-										                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control seed_method" id="seed_method" placeholder="생산방법 선택" autocomplete="off">
+										                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control seed_method" id="seed_method" placeholder="생산방법 선택" autocomplete="new-password">
 										                            		<ul class="select-hide">
 										                            			<li class="seed_method_list" onclick="selectOpt(this);"><span data-value="시험연구">시험연구</span></li>
 										                            			<li class="seed_method_list" onclick="selectOpt(this);"><span data-value="증식">증식</span></li>
@@ -277,7 +277,7 @@
 						        									
 						        									<div class="col-md-5 mb-25 title_inner1">
 						        										<div class="select" style="height: auto;">
-										                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control eaches_id" id="eaches_id" placeholder="단위 선택" autocomplete="off">
+										                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control eaches_id" id="eaches_id" placeholder="단위 선택" autocomplete="new-password">
 										                            		<ul class="select-hide" style="width: 89%;">
 										                            			<th:block th:each="eaches : ${eaches}">
 										                            				<li class="eaches_id_list" onclick="selectOpt(this);"><span th:data-value="${eaches.eaches_id}" th:text="${eaches.eaches_name}"></span></li>
@@ -299,7 +299,7 @@
 						        									</div>
 						        									<div class="col-md-4 mb-25">
 						        										<div class="select" style="height: auto;">
-										                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control ware_id" id="ware_id" placeholder="저장 장소 선택" autocomplete="off">
+										                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control ware_id" id="ware_id" placeholder="저장 장소 선택" autocomplete="new-password">
 										                            		<ul class="select-hide">
 										                            			<th:block th:each="ware : ${warehouse}">
 										                            				<li class="eaches_id_list" onclick="selectOpt(this);"><span th:data-value="${ware.ware_id}" th:data-condition="${ware.ware_condition}" th:text="${ware.warehouse}"></span></li>
@@ -350,7 +350,7 @@
 							        									</div>
 							        									<div class="col-md-10 mb-25 title_inner">
 							        										<div class="select" style="height: auto; width:100%;">
-											                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control seed_receiver" id="seed_receiver" placeholder="수취인 선택" autocomplete="off">
+											                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control seed_receiver" id="seed_receiver" placeholder="수취인 선택" autocomplete="new-password">
 											                            		<ul class="select-hide">
 											                            			<th:block th:each="user : ${user}">
 											                            				<li class="seed_manager_list" onclick="selectOpt(this);"><span th:data-value="${user.user_id}" th:text="${user.user_name_k}"></span></li>
@@ -624,7 +624,7 @@
    									</div>
      								<div class="col-md-4 mb-25">
      									<div class="select" style="height: auto;">
-		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control division_slt" id="division_slt" placeholder="대상 작목 선택" autocomplete="off">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control division_slt" id="division_slt" placeholder="대상 작목 선택" autocomplete="new-password">
 		                            		<ul class="select-hide">
 		                            			<th:block th:each="division : ${division}">
 		                            				<li class="division_slt_list" onclick="selectOpt(this);"><span th:data-value="${division.division_id}" th:text="${division.division}"></span></li>
@@ -644,7 +644,7 @@
 	   									</div>
 	     								<div class="col-md-8 mb-25">
 	     									<div class="select" style="height: auto;">
-			                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control genetic_input" id="genetic_input" placeholder="품종 선택" autocomplete="off">
+			                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control genetic_input" id="genetic_input" placeholder="품종 선택" autocomplete="new-password">
 			                            		<ul class="select-hide">
 			                            			
 			                            		</ul>
@@ -660,7 +660,7 @@
 	   									</div>
 	     								<div class="col-md-8 mb-25">
 	     									<div class="select" style="height: auto;">
-			                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control genetic_input" id="genetic_input" placeholder="유전자원명 선택" autocomplete="off">
+			                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control genetic_input" id="genetic_input" placeholder="유전자원명 선택" autocomplete="new-password">
 			                            		<ul class="select-hide">
 			                            			
 			                            		</ul>
@@ -676,7 +676,7 @@
 	   									</div>
 	     								<div class="col-md-8 mb-25" id="etc_inner_col">
 	     									<div class="select" style="height: auto;">
-			                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control genetic_input" id="genetic_input" placeholder="기타 선택" autocomplete="off">
+			                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control genetic_input" id="genetic_input" placeholder="기타 선택" autocomplete="new-password">
 			                            		<ul class="select-hide">
 			                            			
 			                            		</ul>

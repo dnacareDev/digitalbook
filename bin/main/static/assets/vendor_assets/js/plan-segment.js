@@ -739,7 +739,7 @@ function segmentSetting(data){
 			}
 			
 			
-		}else{ //*******************나머지(완전임의배치, 난괴법)
+		}else{ //*******************나머지(완전임의배치법, 난괴법)
 			for(var r = 0; r < row; r++){
 				for(var c = 0; c < column; c++){
 					if(segmentLi[elRender] !== undefined && segmentLi[elRender] !== null){

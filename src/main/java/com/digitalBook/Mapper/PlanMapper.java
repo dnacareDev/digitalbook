@@ -56,11 +56,10 @@ public interface PlanMapper {
 	int insertManure(Manure manure);
 	
 	//재배 계획 검색
-	List<Plan> SearchPlan(@Param("search_type") String search_type, @Param("keyword") String keyword,
-		@Param("offset") int offset, @Param("limit") int limit, @Param("user_group") int user_group);
-		
-	//재배 계획 개수 검색
-	int SearchPlanCount(@Param("search_type") String search_type, @Param("keyword") String keyword, @Param("user_group") int user_group);
+	List<Plan> SearchPlan(Plan planParam);
+	
+	//재배 계획 검색 개수
+	int SearchPlanCount(Plan planParam);
 	
 	//재배 계획 Detail
 	Plan selectPlanDetail(int plan_id);
@@ -147,11 +146,10 @@ public interface PlanMapper {
 	int deleteSegment(int[] arr);
 	
 	//재배 결과입력 검색
-	List<Plan> SearchResultPlan(@Param("search_type") String search_type, @Param("keyword") String keyword,
-		@Param("offset") int offset, @Param("limit") int limit, @Param("user_group") int user_group, @Param("plan_step") int plan_step);
+	List<Plan> SearchResultPlan(Plan planParam);
 		
 	//재배 결과입력 개수 검색
-	int SearchResultPlanCount(@Param("search_type") String search_type, @Param("keyword") String keyword, @Param("user_group") int user_group, @Param("plan_step") int plan_step);
+	int SearchResultPlanCount(Plan planParam);
 	
 	ResultPlan selectResultPlanOne(int plan_id);
 	// 장소 갯수 조회

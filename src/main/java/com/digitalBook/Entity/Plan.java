@@ -1,6 +1,7 @@
 package com.digitalBook.Entity;
 
 import org.apache.ibatis.type.Alias;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +13,9 @@ import lombok.ToString;
 @Alias("Plan")
 public class Plan
 {
+	
+	private int user_id;	
+	
 	private int plan_id;					// 재배 계획 고유번호
 	private int storage_id;					// 장소 고유번호
 	private String plan_code;				// 재배 계획 ID
@@ -55,4 +59,11 @@ public class Plan
 	 
 	 private String weather;
 	 private String soil;
+
+	 private String search_type;
+	 private String keyword;
+	 private int isMineOnly;
+	 private int page_num;
+	 private int limit;
+	 private int offset;
 }

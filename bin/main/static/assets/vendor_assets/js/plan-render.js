@@ -14,7 +14,7 @@ function segmentTextLeft(data){
 			segmentEls[i].innerText = data[i].id;
 			segmentElsType[i].innerText = data[i].type;
 			if(growType && growType == 0 && segmentElsId){
-					segmentElsId[i].innerText = data[i].repeat;	// 완전임의배치일 경우
+					segmentElsId[i].innerText = data[i].repeat;	// 완전임의배치법일 경우
 			}
 		
 			

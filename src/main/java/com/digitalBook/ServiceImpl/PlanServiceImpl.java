@@ -98,16 +98,16 @@ public class PlanServiceImpl implements PlanService {
 	
 	//재배 계획 검색
 	@Override
-	public List<Plan> SearchPlan(String search_type, String keyword, int offset, int limit, int user_group) {
+	public List<Plan> SearchPlan(Plan planParam){
 		
-		return mapper.SearchPlan(search_type, keyword, offset, limit, user_group);
+		return mapper.SearchPlan(planParam);
 	}
 	
 	//재배 계획 검색 개수
 	@Override
-	public int SearchPlanCount(String search_type, String keyword, int user_group) {
+	public int SearchPlanCount(Plan planParam) {
 		
-		return mapper.SearchPlanCount(search_type, keyword, user_group);
+		return mapper.SearchPlanCount(planParam);
 	}
 	
 	//재배 계획 detail
@@ -308,17 +308,16 @@ public class PlanServiceImpl implements PlanService {
  
 	//결과입력 검색
 	@Override
-	public List<Plan> SearchResultPlan(String search_type, String keyword, int offset, int limit, int user_group,
-			int plan_step) {
+	public List<Plan> SearchResultPlan(Plan planParam) {
 		
-		return mapper.SearchResultPlan(search_type, keyword, offset, limit, user_group, plan_step);
+		return mapper.SearchResultPlan(planParam);
 	}
 	
 	//결과입력 개수 검색
 	@Override
-	public int SearchResultPlanCount(String search_type, String keyword, int user_group, int plan_step) {
+	public int SearchResultPlanCount(Plan planParam) {
 		
-		return mapper.SearchResultPlanCount(search_type, keyword, user_group, plan_step);
+		return mapper.SearchResultPlanCount(planParam);
 	}
 	
 	//장소 갯수 조회

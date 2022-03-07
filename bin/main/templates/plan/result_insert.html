@@ -366,7 +366,7 @@
 			                        	<div class="right_type">
 			                        		<div class="right_type_cover">
 			                        			<div class="select" style="height: auto;">
-				                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="segment_option" placeholder="구획 선택" autocomplete="off">
+				                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="segment_option" placeholder="구획 선택" autocomplete="new-password">
 				                            		<ul class="select-hide" style="width: 40% !important">
 				                            			
 				                            		</ul>
@@ -379,7 +379,7 @@
 			                        	</div>
 			                        </div>
 			                        
-			                        <div class="bottom_content" style="width: 100%; ">
+			                        <div class="bottom_content" style="width: 100%; max-height: 600px;">
 					                     <h3 style="float:left;" id="result_title"></h3>
 			               	 			<div style="width:100%;" id="grid"></div>
 			                        </div>
@@ -408,7 +408,7 @@
 			                            <div class="content_box">
 				                            <div class="bottom_right-content clearfix"> <!-- 2021-11-01 추가  -->
 						                      	<div class="left_type" style="width:60%;">
-						                      		<span><span class="red">*</span>기준개채수</span>
+						                      		<span><span class="red">*</span>기준개체수</span>
 						                           	<input type="text" id="segment_num" value="10">
 						                           	<button type="button" id="segment_check" style="width:90.88px">확인</button>
 						                      	</div>
@@ -2437,7 +2437,7 @@ function findInfo(type){
 		setFactorData(resultArray);
 
 		//시험구 배치 종류에 따라 분기 처리
-		if(grow_type == "0"){	//완전임의배치
+		if(grow_type == "0"){	//완전임의배치법
 			console.log('11111');
 			//resultArray를 가지고 화면 그려주기
 			var add_list = "";

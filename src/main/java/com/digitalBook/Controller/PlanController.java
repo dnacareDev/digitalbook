@@ -152,6 +152,9 @@ public class PlanController
 		
 		Calendar cal = Calendar.getInstance();
 		
+		
+		plan.setUser_id(prin.getUser_id());
+		
 		String last_plan_code = service.selectLastPlanCode(prin.getUser_group());
 		String code1 = "vp-";
 		String code2 = String.valueOf(cal.get(Calendar.YEAR))+"-";
@@ -266,6 +269,7 @@ public class PlanController
 	public Map<String, Object> SearchPlan(Authentication auth,
 											@RequestParam(name = "search_type", required = false) String search_type,
 											@RequestParam(name = "keyword", required = false) String keyword,
+											@RequestParam(name = "isMineOnly", required = false) int isMineOnly,
 											@RequestParam("page_num") int page_num,
 											@RequestParam("limit") int limit)
 	{
@@ -274,13 +278,23 @@ public class PlanController
 		
 		Map<String, Object> result = new LinkedHashMap<>();
 		
-		int count = service.SearchPlanCount(search_type, keyword, prin.getUser_group());
+		Plan planParam = new Plan();
+		planParam.setSearch_type(search_type);
+		planParam.setUser_group(prin.getUser_group());
+		planParam.setIsMineOnly(isMineOnly);
+		planParam.setUser_id(isMineOnly == 1 ? prin.getUser_id() : 0);
+		planParam.setPage_num(page_num);
+		planParam.setKeyword(keyword);
+		planParam.setLimit(limit);
+		
+		int count = service.SearchPlanCount(planParam);
 		
 		int offset = (page_num - 1) * limit;
 		int start_page = ((page_num - 1) / 10) * 10 + 1;
 		int end_page = (count + limit - 1) / limit;
+		planParam.setOffset(offset);
 		
-		List<Plan> plan = service.SearchPlan(search_type, keyword, offset, limit, prin.getUser_group());
+		List<Plan> plan = service.SearchPlan(planParam);
 		
 		result.put("plan", plan);
 		result.put("page_num", page_num);
@@ -297,6 +311,7 @@ public class PlanController
 	public Map<String, Object> SearchResultPlan(Authentication auth,
 											@RequestParam(name = "search_type", required = false) String search_type,
 											@RequestParam(name = "keyword", required = false) String keyword,
+											@RequestParam(name = "isMineOnly", required = false) int isMineOnly,
 											@RequestParam("page_num") int page_num,
 											@RequestParam("limit") int limit,
 											@RequestParam("plan_step") int plan_step)
@@ -305,14 +320,23 @@ public class PlanController
 		User prin = (User)auth.getPrincipal();
 		
 		Map<String, Object> result = new LinkedHashMap<>();
+		Plan planParam = new Plan();
+		planParam.setSearch_type(search_type);
+		planParam.setUser_group(prin.getUser_group());
+		planParam.setIsMineOnly(isMineOnly);
+		planParam.setUser_id(isMineOnly == 1 ? prin.getUser_id() : 0);
+		planParam.setPage_num(page_num);
+		planParam.setKeyword(keyword);
+		planParam.setLimit(limit);
 		
-		int count = service.SearchResultPlanCount(search_type, keyword, prin.getUser_group(), plan_step);
+		int count = service.SearchResultPlanCount(planParam);
 		
 		int offset = (page_num - 1) * limit;
 		int start_page = ((page_num - 1) / 10) * 10 + 1;
 		int end_page = (count + limit - 1) / limit;
+		planParam.setOffset(offset);
 		
-		List<Plan> plan = service.SearchResultPlan(search_type, keyword, offset, limit, prin.getUser_group(), plan_step);
+		List<Plan> plan = service.SearchResultPlan(planParam);
 		
 		result.put("plan", plan);
 		result.put("page_num", page_num);

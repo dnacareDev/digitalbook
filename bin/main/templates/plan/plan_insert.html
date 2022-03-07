@@ -239,7 +239,7 @@
 			                                </th:block>
 			                            </select> -->
 			                            <div class="select">
-	                                		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="select_view1" placeholder="과제 선택" autocomplete="off">
+	                                		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="select_view1" placeholder="과제 선택" autocomplete="new-password">
 	                                		<ul class="select-hide">
 	                                			<th:block th:each="report : ${report}">
 	                                				<li class="select_view1_list" onclick="selectOpt(this);">
@@ -265,7 +265,7 @@
 			                        <div class="btn btn2">
 			                        	<span class="title">시험구배치 종류</span>
 			                        	<div class="select" style="height: auto;">
-		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="grow_type" placeholder="시험구배치 선택" autocomplete="off" style="width: 300px;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" class="form-control" id="grow_type" placeholder="시험구배치 선택" autocomplete="new-password" style="width: 300px;">
 		                            		<ul class="select-hide">
 		                            			<li class="grow_type_list" onclick="selectOpt(this);"><span data-value="0">완전임의배치법</span></li>
 		                            			<li class="grow_type_list" onclick="selectOpt(this);"><span data-value="1">난괴법</span></li>
@@ -275,7 +275,7 @@
 		                            	</div>
 			                            <!-- <select id="grow_type" class="select_view" name="">
 			                            	<option value="none" disabled="disabled" selected="selected" hidden="hidden">시험구배치 선택</option>
-			                                <option value="0">완전임의배치</option>
+			                                <option value="0">완전임의배치법</option>
 			                                <option value="1">난괴법</option>
 			                                <option value="2">분할구배치법</option>
 			                                <option value="3">세세구배치법</option>
@@ -285,7 +285,7 @@
 			                            <li class="btn sub_btn">
 			                                <span class="sub_title">요인1</span>
 				                            <div class="select" data-index="1">
-			                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="factor_type_1" placeholder="시험구배치 선택" autocomplete="off" style="width: 100%; height:37px; float: left; padding: 0 20px;">
+			                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="factor_type_1" placeholder="시험구배치 선택" autocomplete="new-password" style="width: 100%; height:37px; float: left; padding: 0 20px;">
 			                            		<ul class="select-hide" style="width: 65%">
 			                            			<li class="factor_type_1_list" onclick="selectOpt(this);"><span data-value="시험재료">시험재료</span></li>
 			                            			<li class="factor_type_1_list" onclick="selectOpt(this);"><span data-value="재식거리">재식거리</span></li>
@@ -313,7 +313,7 @@
 			                            <li class="btn sub_btn">
 			                                <span class="sub_title">요인2</span>
 				                            <div class="select" style="height: 37px;width: calc((100% - 139px)/1);" data-index="2">
-			                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="factor_type_2" placeholder="시험구배치 선택" autocomplete="off" style="width: 100%; height:37px; float: left; padding: 0 20px;">
+			                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="factor_type_2" placeholder="시험구배치 선택" autocomplete="new-password" style="width: 100%; height:37px; float: left; padding: 0 20px;">
 			                            		<ul class="select-hide" style="width: 65%">
 			                            			<li class="factor_type_2_list" onclick="selectOpt(this);"><span data-value="시험재료">시험재료</span></li>
 			                            			<li class="factor_type_2_list" onclick="selectOpt(this);"><span data-value="재식거리">재식거리</span></li>
@@ -341,7 +341,7 @@
 			                            <li class="btn sub_btn">
 			                                <span class="sub_title">요인3</span>
 			                                <div class="select" style="height: 37px;width: calc((100% - 139px)/1);" data-index="3">
-			                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="factor_type_3" placeholder="시험구배치 선택" autocomplete="off" style="width: 100%; height:37px; float: left; padding: 0 20px;">
+			                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="factor_type_3" placeholder="시험구배치 선택" autocomplete="new-password" style="width: 100%; height:37px; float: left; padding: 0 20px;">
 			                            		<ul class="select-hide" style="width: 65%">
 			                            			<li class="factor_type_3_list" onclick="selectOpt(this);"><span data-value="시험재료">시험재료</span></li>
 			                            			<li class="factor_type_3_list" onclick="selectOpt(this);"><span data-value="재식거리">재식거리</span></li>
@@ -570,7 +570,7 @@
 		        	</div>
 		            <div class="modal-body">
 		            	<div class="col-12">
-			            	<form action="#" id="insertStorageForm" method="POST" enctype="multipart/form-data">
+			            	<form action="#" id="insertStorageForm" method="POST" enctype="multipart/form-data" autocomplete="new-password">
 			            		<div class="row mt-3">
 			            			<div class="col-sm-2 d-flex aling-items-center">
 		                            	<label for="storage_search" class="col-form-label color-dark align-center"><span class="red">*</span>검색</label>
@@ -752,7 +752,7 @@
 		                            </div>
 		                            <div class="col-sm-8" style="padding:0;">
 		                            	<div class="select" style="height: auto;">
-		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="intervalSelect" placeholder="재식거리 선택" autocomplete="off" style="width: 100%;padding: 10px 35px !important;height:37.78px; border-radius:5px 0 0 5px; border-right:0;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="intervalSelect" placeholder="재식거리 선택" autocomplete="new-password" style="width: 100%;padding: 10px 35px !important;height:37.78px; border-radius:5px 0 0 5px; border-right:0;">
 		                            		<ul class="select-hide" style="top: 40px; width: 100%;">
 		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="60x10">60x10</span></li>
 		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="60x15">60x15</span></li>
@@ -967,7 +967,7 @@
 		                            </div>
 		                            <div class="col-sm-5">
 		                            	<div class="select" style="height: auto;">
-		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="fert_1" placeholder="비료성분 선택" autocomplete="off" style="width: 100%;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="fert_1" placeholder="비료성분 선택" autocomplete="new-password" style="width: 100%;">
 		                            		<ul class="select-hide" style="top: 40px; width: 95%;">
 		                            			<th:block th:each="fert : ${fert}">
 		                            				<li class="fert_1_list" onclick="selectOpt(this);"><span th:data-value="${fert.fert_id}" th:text="${fert.fertilizer}"></span></li>
@@ -985,7 +985,7 @@
 		                            </div>
 		                            <div class="col-sm-5">
 		                            	<div class="select" style="height: auto;">
-		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="fert_2" placeholder="비료종류 선택" autocomplete="off" style="width: 100%;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="fert_2" placeholder="비료종류 선택" autocomplete="new-password" style="width: 100%;">
 		                            		<ul class="select-hide" style="top: 40px; width: 95%;">
 		                            			
 		                            		</ul>
@@ -1094,7 +1094,7 @@
 		                            </div>
 		                            <div class="col-sm-8">
 		                            	<div class="select" style="height: auto;">
-		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="etc_type" placeholder="기타요인 선택" autocomplete="off" style="width: 100%;">
+		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="etc_type" placeholder="기타요인 선택" autocomplete="new-password" style="width: 100%;">
 		                            		<ul class="select-hide" style="top: 40px; width: 90%;">
 		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="온도">온도</span></li>
 		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="관수">관수</span></li>
@@ -4564,26 +4564,13 @@ var type_name = [1,2,3];
 			
 		}
 		
-		
-		/* console.log("data!!!!!");
-		console.log(data1);
-		console.log(data2);
-		console.log(data3);
-		console.log("manure!!!!");
-		console.log(manureArray);
-		console.log(manureArray1);
-		console.log(manureArray2);
-		console.log(manureArray3);
-		console.log("etc!!!!");
-		console.log(etcArray);
-		console.log(etcArray1);
-		console.log(etcArray2);
-		console.log(etcArray3); */
 		if(inputValidate == false){
 			alert("담당자 입력해 주세요");
-		}else if(dateValidate == false){
-			alert("일정 중복 날짜 확인해주세요");	
-		}else if($("#grow_type").attr("data-select") == "" || $("#grow_type").attr("data-select") == null){
+		}
+		//else if(dateValidate == false){
+		//	alert("일정 중복 날짜 확인해주세요");	
+		//}
+		else if($("#grow_type").attr("data-select") == "" || $("#grow_type").attr("data-select") == null){
 			alert("시험구배치 종류를 선택해주세요");
 			$("#grow_type").focus();
 		}else if($("#storage_input").val() == ""){
@@ -5061,14 +5048,16 @@ var type_name = [1,2,3];
 	
 	function addMemberEvent(e){
 
-		console.log($(e));
-		console.log($(e).parent());
 		var manager1_id = $(e).parent().parent().parent().parent().parent().find(".select_user1").attr("data-select");
 		
 		var manager1_text = $(e).parent().parent().parent().parent().parent().find(".select_user1").attr("value");
 		if(manager1_id == "" || manager1_id == null){
 			manager1_text = "";
+			alert("담당자(정)을 선택해주세요");
+			return;
 		}
+		
+		
 		var manager2_id = $(e).parent().parent().parent().parent().parent().find(".select_user2").attr("data-select");
 		var manager2_text = $(e).parent().parent().parent().parent().parent().find(".select_user2").attr("value");
 		if(manager2_id == "" || manager2_id == null){
@@ -5341,7 +5330,7 @@ var type_name = [1,2,3];
 			add_list += '<li>';
 			add_list += '<span><span class="red" style="color: #FF4141">*</span>담당자(정)</span>';
 	    	add_list += '<div class="select" style="height: auto;">';
-	    	add_list += '<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control select_user1" id="select_user'+i+'" placeholder="담당자 선택" autocomplete="off" style="border-right:1px solid #E4E4E4;">';
+	    	add_list += '<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control select_user1" id="select_user'+i+'" placeholder="담당자 선택" autocomplete="new-password" style="border-right:1px solid #E4E4E4;">';
 	    	add_list += '<ul class="select-hide" style="width: 400px !important; top: 85px !important; padding-top: 0 !important;">';
 	    	for(var j = 0; j < user.length; j++){
 	    		add_list += '<li class="select_user1_list" onclick="selectOpt(this);" style="line-height: 30px; padding:0 0 0 5px; float: none !important; margin-left: 0;"><span data-value="'+user[j].user_id+'">'+user[j].user_name_k+'</span></li>';
@@ -5359,7 +5348,7 @@ var type_name = [1,2,3];
 			add_list += '<li>';
 			add_list += '<span>담당자(부)</span>';
 			add_list += '<div class="select" style="height: auto;">';
-	    	add_list += '<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control select_user2" id="select_user2" placeholder="담당자 선택" autocomplete="off" style="border-right:1px solid #E4E4E4;">';
+	    	add_list += '<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control select_user2" id="select_user2" placeholder="담당자 선택" autocomplete="new-password" style="border-right:1px solid #E4E4E4;">';
 	    	add_list += '<ul class="select-hide" style="width: 400px !important; top: 85px !important; padding-top: 0 !important;">';
 	    	for(var j = 0; j < user.length; j++){
 	    		add_list += '<li class="select_user1_list" onclick="selectOpt(this);" style="line-height: 30px; padding:0 0 0 5px; float: none !important; margin-left: 0;"><span data-value="'+user[j].user_id+'">'+user[j].user_name_k+'</span></li>';
@@ -5383,9 +5372,9 @@ var type_name = [1,2,3];
 			add_list += '<ul>';
 			add_list += '<li>';
 			add_list += '<span style="float: left;">시작일</span>';
-			add_list += '<input type="text" class="start_date" name="start_date" autocomplete="off">';
+			add_list += '<input type="text" class="start_date" name="start_date" autocomplete="new-password" onchange="this.parentElement.parentElement.getElementsByClassName(`end_date`)[0].value = this.value;">';
 			add_list += '<div class="cal">';
-			add_list += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">';
+			add_list += '<svg onclick="this.parentElement.parentElement.getElementsByClassName(`start_date`)[0].focus();" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">';
 			add_list += '<path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>';
 			add_list += '</svg>';
 			add_list += '</div>';
@@ -5393,9 +5382,9 @@ var type_name = [1,2,3];
 			
 			add_list += '<li>';
 			add_list += '<span style="float: left;">종료일</span>';
-			add_list += '<input type="text" class="end_date" name="end_date" autocomplete="off">';
+			add_list += '<input type="text" class="end_date" name="end_date" autocomplete="new-password">';
 			add_list += '<div class="cal">';
-			add_list += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">';
+			add_list += '<svg onclick="this.parentElement.parentElement.getElementsByClassName(`end_date`)[0].focus();" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">';
 			add_list += '<path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>';
 			add_list += '</svg>';
 			add_list += '</div>';
