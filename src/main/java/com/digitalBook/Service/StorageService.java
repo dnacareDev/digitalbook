@@ -21,4 +21,5 @@ public interface StorageService
 
 	// 장소 등록
 	int InsertStorage(Storage storage);
+	int deleteStorage(Storage storage);
 }

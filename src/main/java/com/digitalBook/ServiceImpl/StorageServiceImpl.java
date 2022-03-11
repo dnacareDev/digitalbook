@@ -50,4 +50,10 @@ public class StorageServiceImpl implements StorageService
 	{
 		return mapper.InsertStorage(storage);
 	}
+	// 장소 삭제
+	@Override
+	public int deleteStorage(Storage storage)
+	{
+		return mapper.deleteStorage(storage);
+	}
 }

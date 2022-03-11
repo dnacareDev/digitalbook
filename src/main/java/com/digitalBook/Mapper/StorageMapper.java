@@ -25,4 +25,6 @@ public interface StorageMapper
 
 	// 장소 등록
 	int InsertStorage(Storage storage);
+	
+	int deleteStorage(Storage storage);
 }

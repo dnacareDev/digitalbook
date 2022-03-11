@@ -323,7 +323,12 @@
 				</div>
 			</div>
 		</div>
-		<div style="cursor:pointer;background-color:#DDDDDD;text-align: center;padding-bottom: 10px;padding-top: 10px;margin-top:160px;" onClick="closeModal();">
+		<div style="cursor:pointer;background-color:darkseagreen;text-align: center;padding-bottom: 10px;padding-top: 10px;margin-top:100px;" onClick="deleteModal();">
+			<span class="pop_bt modalCloseBtn" style="font-size: 13pt;width:100px;">
+				삭제
+			</span>
+		</div>
+		<div style="cursor:pointer;background-color:#DDDDDD;text-align: center;padding-bottom: 10px;padding-top: 10px;margin-top:10px;" onClick="closeModal();">
 			<span class="pop_bt modalCloseBtn" style="font-size: 13pt;width:100px;">
 				닫기
 			</span>
@@ -668,17 +673,42 @@
 			}
 		}
 		
-		function openPopUpForComment(comment){
+		var deleteStorageId = 0;
+		function openPopUpForComment(id,comment){
 			if(comment == ""){
 				comment = "등록된 커멘트가 없습니다.";
 			}
+			
+			deleteStorageId = id;
 			$('#comment').html(comment);
 		    $("#modal").show();
 		}
 		
+		function deleteModal(){
+			
+			var data = {"storage_id" : deleteStorageId};
+			
+			$.ajax(
+				{
+					url : 'storage/deleteStorage',
+					method : 'POST',
+					dataType : 'json',
+					data : data,
+					success : function(result)
+					{
+						window.location.reload();
+					}
+				}
+			);
+		}
+		
+		
 		function closeModal(){
 		      $("#modal").hide();
 		}
+		
+		
+		
 		
 		function SearchStorage(e)
 		{
@@ -709,7 +739,7 @@
 						// add_list += '</tr>';						
 						add_list += `
 						  <tr class='storage_tr' data-coord='${result.storage[i].storage_location}'>
-							<td onclick='openPopUpForComment("${result.storage[i].storage_contents}")'><span><a href='#'>${result.storage[i].storage_code}</a></span></td>
+							<td onclick='openPopUpForComment(${result.storage[i].storage_id},"${result.storage[i].storage_contents}")'><span><a href='#'>${result.storage[i].storage_code}</a></span></td>
 							<td><span>${result.storage[i].storage_name}</span></td>
 						  	<td><span>${result.storage[i].storage_type_name}</span></td>
 							<td><span>${result.storage[i].storage_division}</span></td>

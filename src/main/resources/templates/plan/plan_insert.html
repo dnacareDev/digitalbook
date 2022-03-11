@@ -149,6 +149,11 @@
 		background-color: rgb(255, 77, 79) !important;
 	}
 	
+	
+	#storage_list .on {
+		border-style: solid;
+	}
+	
 
 </style>
 <!-- 공통 헤더 -->
@@ -1513,6 +1518,8 @@
 		window.location.href = "/plan/list";
 	});
 	
+	var isFinishDraw = false;
+	
 	$("#storageBtn").on("click", function(){
 		$("#storageModal").modal("show");	
 		
@@ -1530,12 +1537,13 @@
 			kakao.maps.event.addListener(map2, 'click', function(mouseEvent) { 
 			    // 마커 생성   
 			    const coord = mouseEvent.latLng;
-			    createMarker(coord.La, coord.Ma, map)    
-			    
 			    var clickPosition = mouseEvent.latLng; 
 			    
 			    // 지도 클릭이벤트가 발생했는데 다각형이 그려지고 있는 상태가 아니면
 			    if (!drawingFlag) {
+				    coords = [];
+				    createMarker(coord.La, coord.Ma, map)    
+			    	//$("#storage_location").val("")
 			        // 상태를 true로, 다각형을 그리고 있는 상태로 변경합니다
 			        drawingFlag = true;
 			        
@@ -1576,7 +1584,8 @@
 			
 			        
 			    } else { // 다각형이 그려지고 있는 상태이면 
-			        
+
+				    createMarker(coord.La, coord.Ma, map)    
 			        // 그려지고 있는 다각형의 좌표에 클릭위치를 추가합니다
 			        // 다각형의 좌표 배열을 얻어옵니다
 			        var drawingPath = drawingPolygon.getPath();
@@ -4447,7 +4456,9 @@ var type_name = [1,2,3];
 		});
 		
 		method_container.append(add_list);
-		gridStep6();
+		
+		if(document.getElementsByClassName("mng_input1").length == 0)
+			gridStep6();
 	}
 	
 	//조사항목 체크박스 삭제
@@ -5209,6 +5220,11 @@ var type_name = [1,2,3];
 				pageNum.append(page_add);
 				
 				$(".storage_tr").click(function(){
+					
+
+					$('.storage_tr').removeClass("on");
+					$(this).addClass("on");				
+					
 					const targetCoord = $(this).data('coord');
 					const lat = targetCoord[0].lat;
 					const lng = targetCoord[0].lng;

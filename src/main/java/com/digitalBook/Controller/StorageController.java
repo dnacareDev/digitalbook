@@ -38,6 +38,14 @@ public class StorageController
 		return mv;
 	}
 	
+	@ResponseBody
+	@RequestMapping("/storage/deleteStorage")
+	public int Storage(@ModelAttribute Storage storage)
+	{
+		return service.deleteStorage(storage) != 0 ? 1 : 0;
+	}
+	
+	
 	// 실험장소 검색
 	@ResponseBody
 	@RequestMapping("/storage/searchStorage")

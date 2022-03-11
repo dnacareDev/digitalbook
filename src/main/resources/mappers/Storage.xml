@@ -9,7 +9,8 @@
 	
 	<!-- 장소 갯수 조회 -->
 	<select id="SelectStorageCount" resultType="int">
-		SELECT COUNT(*) FROM storage
+		SELECT COUNT(*) FROM storage 
+		WHERE storage_active = 0 
 	</select>
 	
 	<!-- 장소 검색 -->
@@ -53,6 +54,7 @@
 			ifnull(storage_contents,"")as storage_contents
 		FROM storage s
 		LEFT JOIN department d ON s.depart_id = d.depart_id
+		WHERE s.storage_active = 0 
 		ORDER BY storage_id DESC
 		LIMIT #{offset}, #{limit}
 	</select>
@@ -60,16 +62,26 @@
 	<!-- 최신 장소 코드 조회 -->
 	<select id="SelectLastStorage" resultType="Storage">
 		SELECT * FROM storage
+		WHERE storage_active = 0 
 		ORDER BY storage_id DESC
 		LIMIT 1
 	</select>
+	
+	
+	<!-- 비활성화 스토리지 -->
+	<update id="deleteStorage" parameterType="Storage">
+		UPDATE storage
+		SET storage_active = 1
+		WHERE storage_id = #{storage_id}
+	</update>
+	
 	
 	<!-- 장소 등록 -->
 	<insert id="InsertStorage" parameterType="Storage">
 		/* InsertStorage [storage.xml] */
 		INSERT INTO storage
-		(storage_code, storage_name, storage_address, storage_type, storage_division, storage_size, depart_id, storage_location, create_date, modify_date, user_id,storage_unit,storage_contents)
+		(storage_code, storage_name, storage_address, storage_type, storage_division, storage_size, depart_id, storage_location, create_date, modify_date, user_id,storage_unit,storage_contents,storage_active)
 		VALUES
-		(#{storage_code}, #{storage_name},#{storage_address}, #{storage_type}, #{storage_division}, #{storage_size}, #{depart_id}, #{storage_location}, NOW(), NOW(), 0,#{storage_unit},#{storage_contents})
+		(#{storage_code}, #{storage_name},#{storage_address}, #{storage_type}, #{storage_division}, #{storage_size}, #{depart_id}, #{storage_location}, NOW(), NOW(), 0,#{storage_unit},#{storage_contents},0)
 	</insert>
 </mapper>

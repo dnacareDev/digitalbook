@@ -615,7 +615,7 @@ public class PlanController
 	public ModelAndView insertResult(Authentication auth, ModelAndView mv, @RequestParam(name = "plan_id", required = true) int plan_id)
 	{
 		
-		User prin = (User)auth.getPrincipal();
+		//User prin = (User)auth.getPrincipal();
 		
 		Plan plan = service.selectPlanDetail(plan_id);
 		List<Schedule> sch = service.selectScheduleList(plan_id);

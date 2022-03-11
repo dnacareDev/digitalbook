@@ -54,11 +54,13 @@ public class SecurityConfig
 			.antMatchers("/join").permitAll()
 			.anyRequest().authenticated()
 			.and()
+			
 			.formLogin()
 			.loginPage("/login")
 			.usernameParameter("user_username")
 			.passwordParameter("user_password")
 			.successHandler(successHandler)
+			
 			.and()
 			.logout()
 			.logoutUrl("/logout")

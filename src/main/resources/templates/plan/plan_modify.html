@@ -154,6 +154,11 @@
 	#manure_body td .btn-danger span.minus{
 		background-color: #fff !important;
 	}
+	
+	#storage_list .on {
+		border-style: solid;
+	}
+	
 </style>
 <!-- 공통 헤더 -->
 <th:block th:include="/../fragments/header.html"></th:block>
@@ -2139,15 +2144,16 @@
 			map2.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
 			kakao.maps.event.addListener(map2, 'click', function(mouseEvent) { 
 			    // 마커 생성   
-			    const coord = mouseEvent.latLng;
-			    createMarker(coord.La, coord.Ma, map)    
+			    const coord = mouseEvent.latLng;  
 			    
 			    var clickPosition = mouseEvent.latLng; 
 			    
 			    // 지도 클릭이벤트가 발생했는데 다각형이 그려지고 있는 상태가 아니면
 			    if (!drawingFlag) {
 			        // 상태를 true로, 다각형을 그리고 있는 상태로 변경합니다
+				    coords = [];
 			        drawingFlag = true;
+				    createMarker(coord.La, coord.Ma, map)  
 			        
 			        // 지도 위에 다각형이 표시되고 있다면 지도에서 제거합니다
 			        if (polygon) {  
@@ -2186,7 +2192,8 @@
 			
 			        
 			    } else { // 다각형이 그려지고 있는 상태이면 
-			        
+
+				    createMarker(coord.La, coord.Ma, map)  
 			        // 그려지고 있는 다각형의 좌표에 클릭위치를 추가합니다
 			        // 다각형의 좌표 배열을 얻어옵니다
 			        var drawingPath = drawingPolygon.getPath();
@@ -5653,8 +5660,9 @@
 		});
 		
 		method_container.append(add_list);
-		
-		gridStep6();
+
+		if(document.getElementsByClassName("mng_input1").length == 0)
+			gridStep6();
 	}
 	
 	//조사항목 체크박스 삭제
@@ -6411,6 +6419,12 @@
 				pageNum.append(page_add);
 				
 				$(".storage_tr").click(function(){
+					
+
+					$('.storage_tr').removeClass("on");
+					$(this).addClass("on");				
+					
+					
 					const targetCoord = $(this).data('coord');
 					const lat = targetCoord[0].lat;
 					const lng = targetCoord[0].lng;
