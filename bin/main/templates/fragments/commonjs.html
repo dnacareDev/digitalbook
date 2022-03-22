@@ -57,46 +57,55 @@
 	var pathname = window.location.pathname;
 	var pathArray = pathname.split("/");
 	
-	if(pathArray[1] == "method")
-	{
-		$("#" + pathArray[1]).addClass("active");
-		$("."+pathArray[1]).addClass("active");
-	}
-	else if(pathArray[1] == "plan")
-	{
-		$("#"+pathArray[1]).addClass("active");
-		
-		if(pathArray[2] == "list")
+	
+	try{
+		if(pathArray[1] == "method")
 		{
-			$("."+pathArray[2]).addClass("active");
+			$("#" + pathArray[1]).addClass("active");
+			$("."+pathArray[1]).addClass("active");
+		}
+		else if(pathArray[1] == "plan")
+		{
+			$("#"+pathArray[1]).addClass("active");
+			
+			if(pathArray[2] == "list")
+			{
+				$("."+pathArray[2]).addClass("active");
+			}
+			else
+			{
+				$("."+pathArray[2]).addClass("active");
+			}
+		}
+		else if(pathArray[1] == "schedule")
+		{
+			$("#"+pathArray[1]).addClass("active");
+			
+			if(pathArray[2] == "list")
+			{
+				$("."+pathArray[2]).addClass("active");
+			}
+			else
+			{
+				$("."+pathArray[2]).addClass("active");
+			}
 		}
 		else
 		{
-			$("."+pathArray[2]).addClass("active");
+			$("#" + pathArray[1]).addClass("active");
+			
+			if(pathArray[2] != null)
+			{
+				$("."+pathArray[2]).addClass("active");
+			}
 		}
 	}
-	else if(pathArray[1] == "schedule")
-	{
-		$("#"+pathArray[1]).addClass("active");
+	catch(e){
 		
-		if(pathArray[2] == "list")
-		{
-			$("."+pathArray[2]).addClass("active");
-		}
-		else
-		{
-			$("."+pathArray[2]).addClass("active");
-		}
 	}
-	else
-	{
-		$("#" + pathArray[1]).addClass("active");
-		
-		if(pathArray[2] != null)
-		{
-			$("."+pathArray[2]).addClass("active");
-		}
-	}
+	
+	
+	
 	
 	
 	//알림에 노출할 plan 데이터 가져오기
@@ -104,6 +113,10 @@
 		url : "/selectNonReadPlan",
 		method: "GET",
 		success : function(result){
+			
+			if(result.length == 0){
+				document.getElementById("alarm_count").style.display = "none";
+			}
 			
 			$("#alarm_count").text(result.length);
 			let alarm_list = $("#alarm_list");

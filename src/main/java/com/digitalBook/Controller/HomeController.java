@@ -26,6 +26,21 @@ public class HomeController
 	@Autowired
 	private HomeService service;
 	
+	
+	
+	@GetMapping("/readAllAlarm")
+	public ModelAndView readAllAlarm(ModelAndView mv, Authentication auth)
+	{
+		User prin = (User)auth.getPrincipal();
+		
+		
+		service.updateAllAlarm(prin.getUser_id());
+		
+		
+		mv.setViewName("redirect:/");
+		return mv;
+	}
+	
 	@GetMapping("/")
 	public ModelAndView Home(ModelAndView mv, Authentication auth)
 	{

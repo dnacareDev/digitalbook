@@ -38,7 +38,8 @@
 	
 	<!-- 시료 검색 -->
 	<select id="SearchSeed" resultType="Seed">
-		SELECT r.report_id, r.report_code, r.report_title, s.seed_id, s.seed_amount, s.seed_sender, s.send_date, s.receive_date, s.user_group, d.division_id, d.division, g.genetic_id, g.genetic, w.ware_id, w.warehouse, COUNT(*) AS seed_count
+		SELECT r.report_id, r.report_code, r.report_title, s.seed_id, s.seed_amount, s.seed_sender, s.send_date, s.receive_date, s.user_group, d.division_id, d.division, g.genetic_id, g.genetic, w.ware_id, w.warehouse 
+		
 		FROM seed s
 		LEFT JOIN report r ON s.report_code = r.report_code
 		LEFT JOIN genetic g ON s.genetic_id = g.genetic_id
@@ -56,9 +57,10 @@
 				AND ${search_type} LIKE CONCAT('%', #{keyword}, '%')
 			</otherwise>
 		</choose>
-		GROUP BY r.report_code
+		GROUP BY s.seed_id 
+		<!--  GROUP BY r.report_code  -->
 		ORDER BY s.seed_id DESC
-		LIMIT #{offset}, #{limit}
+		LIMIT #{offset}, #{limit} 
 	</select>
 	
 	<!-- 과제 전체 조회 -->

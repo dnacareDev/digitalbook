@@ -2262,14 +2262,16 @@ function findInfo(type){
 		var dataArray = new Array();
 
 		let height = 0;
-		let tableList = document.getElementsByClassName("box_content");
+		let tableList = document.getElementsByClassName("box_content")[0].getElementsByClassName("table_id");
 		for(var i =0;i<tableList.length;i++){
 			height += $(tableList[i]).height();
-			if(tableList[i].getElementsByClassName("table_id")[0].innerHTML == result_title){
+
+			console.log(result_title , tableList[i]);
+			if(tableList[i].innerHTML == result_title){
 			    $([document.getElementById("segment_list")]).animate({
 			        scrollTop: height - $(tableList[i]).height()
 			    }, 2000);
-				tableList[i].getElementsByClassName("table_id")[0].click();
+				tableList[i].click();
 			    
 				break;
 			}

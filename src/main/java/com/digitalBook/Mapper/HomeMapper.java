@@ -34,5 +34,5 @@ public interface HomeMapper
 	
 	//알림 내 plan 클릭시 읽음 처리
 	int updatePlanRead(int plan_id);
-	
+	public int updateAllAlarm(int user_id);
 }

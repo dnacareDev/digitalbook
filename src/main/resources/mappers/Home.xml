@@ -101,4 +101,10 @@
 		WHERE plan_id = #{plan_id}
 	</update>
 	
+	<update id="updateAllAlarm" parameterType="int">
+		UPDATE plan
+		SET plan_read = 1
+		WHERE user_id = #{user_id}
+	</update>
+	
 </mapper>

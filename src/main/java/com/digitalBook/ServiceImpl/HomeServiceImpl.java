@@ -18,6 +18,10 @@ public class HomeServiceImpl implements HomeService
 	@Autowired
 	private HomeMapper mapper;
 	
+	@Override
+	public int updateAllAlarm(int user_id) {
+		return mapper.updateAllAlarm(user_id);
+	}
 	// 지난 일정
 	@Override
 	public List<Plan> selectDelayPlanList(int user_group, int user_id)
@@ -74,7 +78,6 @@ public class HomeServiceImpl implements HomeService
 	//알림 내 plan 클릭시 읽음 처리
 	@Override
 	public int updatePlanRead(int plan_id) {
-		
 		return mapper.updatePlanRead(plan_id);
 	}
 }

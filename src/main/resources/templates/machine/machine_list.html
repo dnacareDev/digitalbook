@@ -125,7 +125,7 @@
 		                            				<th>취득금액</th>
 		                            				<th>장비용도</th>
 		                            				<th>등록자</th>
-		                            				<th>사용여부</th>
+		                            				<!--  th>사용여부</th-->
 		                            				<th>등록일</th>
 		                            			</tr>
 		                            		</thead>
@@ -205,7 +205,7 @@
 					add_list += '<td><span>' + result.machine[i].machine_price.toLocaleString() + '</span></td>';
 					add_list += '<td><span>' + result.machine[i].machine_purpose + '</span></td>';
 					add_list += '<td><span>' + result.machine[i].user_name_k + '</span></td>';
-					add_list += '<td><span>' + (result.machine[i].machine_status == 0 ? "N" : "Y") + '</span></td>';
+					//add_list += '<td><span>' + (result.machine[i].machine_status == 0 ? "N" : "Y") + '</span></td>';
 					add_list += '<td><span>' + result.machine[i].create_date + '</span></td>';
 					add_list += '</tr>';
 				}

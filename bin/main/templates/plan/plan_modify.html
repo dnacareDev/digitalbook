@@ -506,6 +506,9 @@
 											</div>
 										</div>
 										<div class="col-lg-6" style="padding:0">
+											<div style=" display: flex; margin:2px;">
+												<input type="checkbox" name="" onclick="selectAllSelectedMethod(this);" style="margin-right:10px;"><h1>전체 선택</h1>
+											</div>
 											<ul class="list-group" id="method-container" style="min-height: 400px; max-height: 400px;
 												overflow-y: auto; background-color: rgb(243, 243, 243) ">
 												
@@ -1347,7 +1350,7 @@
 	let select_this;
 	let select_prev;
 	let select_id;
-	
+
 	
 	function selectAllMethod(e){
 		let checkNameList = document.getElementsByName("chk_method");
@@ -1356,6 +1359,16 @@
 			checkNameList[i].checked = checked
 		}
 	}
+	
+	function selectAllSelectedMethod(e){
+		let checkNameList = document.getElementsByClassName("mr-2");
+		let checked = e.checked;
+		for(var i =0;i<checkNameList.length;i++){
+			checkNameList[i].checked = checked
+		}
+	}
+	
+	
 	
 	
 	function selection(e){

@@ -141,7 +141,7 @@
 		                            				<th>제조사</th>
 		                            				<th>수량</th>
 		                            				<th>등록자</th>
-		                            				<th>사용여부</th>
+		                            				<!-- th>사용여부</th -->
 		                            				<th>등록일</th>
 		                            			</tr>
 		                            		</thead>
@@ -238,7 +238,7 @@
 						add_list += '<td><span>' + result.reagent[i].reagent_manufacturer + '</span></td>';
 						add_list += '<td><span>' + result.reagent[i].reagent_quantity.toLocaleString() + '</span></td>';
 						add_list += '<td><span>' + result.reagent[i].user_name_k + '</span></td>';
-						add_list += '<td><span>' + status + '</span></td>';
+						//add_list += '<td><span>' + status + '</span></td>';
 						add_list += '<td><span>' + result.reagent[i].create_date + '</span></td>';
 						add_list += '</tr>';
 					}//end for
