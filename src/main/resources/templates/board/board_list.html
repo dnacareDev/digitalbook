@@ -119,7 +119,7 @@
 				                            </select>
 				                            <div class="input-container icon-right position-relative mr-10">
 			                                    <a href="#" onclick="searchReagent(1); return false;" class="input-icon icon-right"><span data-feather="search"></span></a>
-			                                    <input type="text" class="form-control form-control-lg" id="keyword" placeholder="Search" style="width: 238px;height:40px;">
+			                                    <input onkeyup="if(window.event.keyCode==13){searchReagent(1)}" type="text" class="form-control form-control-lg" id="keyword" placeholder="Search" style="width: 238px;height:40px;">
 			                                </div>
 				      					</div>
 				      				</div>

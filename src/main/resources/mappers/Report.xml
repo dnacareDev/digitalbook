@@ -20,8 +20,11 @@
 			AND
 			delete_yn = "N"
 		<choose>
+			<when test="search_type == 'all'">
+				AND ( report_year LIKE '%${keyword}%' OR report_contents LIKE '%${keyword}%' OR user_name_k LIKE '%${keyword}%' )
+			</when>
 			<when test="search_type != 'all'">
-				 AND #{search_type} LIKE CONCAT('%', #{keyword}, '%')
+				AND #{search_type} LIKE '%${keyword}%' 
 			</when>
 		</choose> 
 		ORDER BY r.report_file_id DESC 

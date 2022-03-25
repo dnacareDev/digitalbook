@@ -279,26 +279,28 @@
 							        									<div class="titles">
 										                                    <label for="seed_amount" class="title_asd"><span class="red">*</span>수량(개수)</label>
 										                                </div>
+						        									
+							        									<div class="col-md-5 mb-25 title_inner1">
+							        										<div class="select" style="height: auto;">
+											                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control eaches_id" id="eaches_id" placeholder="단위 선택" autocomplete="new-password">
+											                            		<ul class="select-hide" style="width: 89%;">
+											                            			<th:block th:each="eaches : ${eaches}">
+											                            				<li class="eaches_id_list" onclick="selectOpt(this);"><span th:data-value="${eaches.eaches_id}" th:text="${eaches.eaches_name}"></span></li>
+											                            			</th:block>
+											                            		</ul>
+											                            	</div>
+							        										<!-- <select class="form-control b-light eaches_id" name="each" id="eaches_id">
+												                                <option disabled="disabled" selected="selected" hidden="hidden">단위 선택</option>
+												                                <th:block th:each="eaches : ${eaches}">
+												                                	<option th:value="${eaches.eaches_id}" th:text="${eaches.eaches_name}"></option>
+												                                </th:block>
+												                            </select> -->
+							        									</div>
+						        									
 										                                <div class="col-md-5 mb-25 title_inner1">
 							        										<input type="number" class="form-control b-light seed_amount" id="seed_amount">
 							        									</div>
 						        									
-						        									<div class="col-md-5 mb-25 title_inner1">
-						        										<div class="select" style="height: auto;">
-										                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control eaches_id" id="eaches_id" placeholder="단위 선택" autocomplete="new-password">
-										                            		<ul class="select-hide" style="width: 89%;">
-										                            			<th:block th:each="eaches : ${eaches}">
-										                            				<li class="eaches_id_list" onclick="selectOpt(this);"><span th:data-value="${eaches.eaches_id}" th:text="${eaches.eaches_name}"></span></li>
-										                            			</th:block>
-										                            		</ul>
-										                            	</div>
-						        										<!-- <select class="form-control b-light eaches_id" name="each" id="eaches_id">
-											                                <option disabled="disabled" selected="selected" hidden="hidden">단위 선택</option>
-											                                <th:block th:each="eaches : ${eaches}">
-											                                	<option th:value="${eaches.eaches_id}" th:text="${eaches.eaches_name}"></option>
-											                                </th:block>
-											                            </select> -->
-						        									</div>
 						        									</div>
 						        								</div>
 						        								<div class="row">

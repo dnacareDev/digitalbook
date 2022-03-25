@@ -2005,13 +2005,25 @@ function findInfo(type){
 		for(var i =0;i<data.length;i++){
 			mapObject[data[i].method_title] = data[i];
 		}
+
+		console.log(data);
+		console.log(data);
+		console.log(data);
+		console.log(data);
+		console.log(data);
+		console.log(data);
+		console.log(data);
+		console.log(data);
+		console.log(data);
+		console.log(data);
+		console.log(data);
 		
 		var headerColumns = [];
 		var headerCount = 0;
 		
 		for(var key in mapObject){
 			headerColumns.push({
-				header : mapObject[key].method_title,
+				header : mapObject[key].method_title + " (" + mapObject[key].method_input + ")",
 				name : mapObject[key].method_id + "_" + headerCount++,
 				'editor': 'text'
 			});	

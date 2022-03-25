@@ -761,7 +761,7 @@
    						add_list += '<li class="method_input_list" onclick="selectOpt(this);">';
    						add_list += '<span data-value="'+result[i].eaches_id+'">'+result[i].eaches_name+'</span>';
    						add_list += '</li>';
-   					}
+   					}  
    					
    					method_eaches.empty();
    					method_eaches.append(add_list);
@@ -912,7 +912,7 @@
 				
 				for(var i = 0; i < result.length; i++)
 				{
-					add_list += '<li class="list-group-item step-list">';
+					add_list += '<li class="check_research_list list-group-item step-list">';
 					add_list += '<input type="checkbox" class="checkbox mr-2" name="chk_research" value="' + result[i].research_id + '">';
 					add_list += '<span>'+ result[i].research_contents + '</span>';
 					add_list += '</li>';
@@ -920,6 +920,19 @@
 				
 				research_list.empty();
 				research_list.append(add_list);
+				
+				
+
+				setTimeout(function(){
+					
+					$( ".check_research_list" ).click(function(e) {
+
+						if(e.target.tagName != "input" && e.target.tagName != "INPUT")
+							this.children[0].checked = this.children[0].checked == true ? false : true;
+					});
+					
+				},500);
+				
 			}
 		});
 		

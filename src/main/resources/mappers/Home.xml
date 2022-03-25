@@ -91,7 +91,7 @@
 	    LEFT JOIN method m ON p.plan_method = m.method_id
 	    LEFT JOIN (select * from schedule where sch_supervisor = #{user_id} or sch_manager = #{user_id}) sc ON p.plan_id = sc.plan_id
 	    LEFT JOIN user u ON sc.sch_supervisor = u.user_id
-	    where p.plan_step = 1 and p.plan_read = 0 and (sc.sch_supervisor = #{user_id} or sc.sch_manager = #{user_id})
+	    where p.plan_step = 1 and (sc.sch_supervisor = #{user_id} or sc.sch_manager = #{user_id})
 	</select>
 	
 	<!-- 알림 내 plan 클릭시 읽음 처리 -->
