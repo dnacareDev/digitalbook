@@ -194,7 +194,7 @@
 		                            	<label for="input_title" class="col-form-label color-dark align-center">Method 명<span style="color: red;">*</span></label>
 	                                </div>
 	                                <div class="col-sm-10">
-	                                   <input type="text" class="form-control" style="float: left; width: 90%; border-right:none; border-radius: 5px 0 0 5px" id="input_title" readonly>
+	                                   <input autocomplete="off"  type="text" class="form-control" style="float: left; width: 90%; border-right:none; border-radius: 5px 0 0 5px" id="input_title" readonly>
 	                                   <button class="btn btn-primary type_1 noprint" onclick="DivisionBtn();" style="height:34.13px;width: 10%;">항목 수정</button>
 	                                </div>
 		                         </div>
@@ -203,7 +203,7 @@
 		                            	<label for="method_contents" class="color-dark align-center">Method 설명</label>
 		                            </div>
 		                            <div class="col-sm-10">
-		                                <input type="text" class="form-control b-light" id="method_contents" th:value="${method.method_contents}">
+		                                <input autocomplete="off"  type="text" class="form-control b-light" id="method_contents" th:value="${method.method_contents}" >
 		                            </div>
 		                    	</div>
 		                    	<div class="row mt-3">
@@ -212,7 +212,7 @@
 		                            </div>
 		                            <div class="col-sm-5">
 		                            	<div class="select" style="height: auto;">
-		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="method_input" placeholder="입력단위 선택" autocomplete="new-password">
+		                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="method_input" placeholder="입력단위 선택" >
 		                            		<ul class="select-hide">
 		                            			<li class="seed_method_list" onclick="selectOpt(this);"><span data-value="길이">길이</span></li>
 		                            			<li class="seed_method_list" onclick="selectOpt(this);"><span data-value="넓이">넓이</span></li>
@@ -242,7 +242,7 @@
 		                            </div>
 		                            <div class="col-sm-5">
 		                            	<div class="select" style="height: auto;">
-		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="method_eaches" placeholder="단위 종류 선택" autocomplete="new-password">
+		                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="method_eaches" placeholder="단위 종류 선택" >
 		                            		<ul class="select-hide">
 		                            			
 		                            		</ul>
@@ -274,7 +274,7 @@
 			        					<label for="method_share">
 			        						<span class="color-dark" th:text="${#authentication.principal.d3_department_name} + | 공유|"></span>
 			        					</label>
-			        					<input type="checkbox" id="method_share" th:value="0">
+			        					<input autocomplete="off"  type="checkbox" id="method_share" th:value="0">
 			        				</div>
 			        			</div>
 			        		</div>
@@ -294,7 +294,7 @@
 								<div class="row mt-4" style="justify-content: center;">
 									<div class="col-lg-3">
 										<div class="row">
-											<input type="text" onkeyup="filter();" class="form-control b-light" id="searchResearch" placeholder="조사방법 검색" style="height: 40px;">
+											<input autocomplete="off"  type="text" onkeyup="filter();" class="form-control b-light" id="searchResearch" placeholder="조사방법 검색" style="height: 40px;" >
 											<button id="addResearchBtn" class="btn btn-dark mt-2" onclick="InsertPopup();" style="height: 40px">조사방법 추가</button>
 										</div>
 										<div class="row" style="overflow:auto; height: 459.74px; border: 1px solid #D9D9D9; border-top: transparent">
@@ -393,7 +393,7 @@
 			        				<div class="col-md-6 mb-25">
 	                                    <label for="division_depth1" class="color-dark fw-500">대상작목</label>
 	                                    <div class="select" style="height: auto;">
-		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="division_depth1" placeholder="대상 작목 선택" autocomplete="new-password">
+		                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="division_depth1" placeholder="대상 작목 선택" >
 		                            		<ul class="select-hide">
 		                            			<th:block th:each="d1 : ${d1}">
 		                            				<li class="division_depth1_list" onclick="selectOpt(this);"><span th:data-value="${d1.division_id}" th:text="${d1.division}"></span></li>
@@ -409,7 +409,7 @@
 	                                <div class="col-md-6 mb-25">
 	                                    <label for="division_depth2" class="color-dark fw-500">분류</label>
 	                                    <div class="select" style="height: auto;">
-		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="division_depth2" placeholder="분류 선택" autocomplete="new-password">
+		                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="division_depth2" placeholder="분류 선택" >
 		                            		<ul class="select-hide">
 		                            			<th:block th:each="d2 : ${d2}">
 		                            				<li class="division_depth2_list" onclick="selectOpt(this);"><span th:data-value="${d2.division_id}" th:text="${d2.division}"></span></li>
@@ -427,7 +427,7 @@
 			        				<div class="col-md-6 mb-25">
 	                                    <label for="division_depth3" class="color-dark fw-500">항목</label>
 	                                    <div class="select" style="height: auto;">
-		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="division_depth3" placeholder="항목 선택" autocomplete="new-password">
+		                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="division_depth3" placeholder="항목 선택" >
 		                            		<ul class="select-hide">
 		                            			<th:block th:each="d3 : ${d3}">
 		                            				<li class="division_depth3_list" onclick="selectOpt(this);"><span th:data-value="${d3.division_id}" th:text="${d3.division}"></span></li>
@@ -442,7 +442,7 @@
 	                                </div>
 	                                <div class="col-md-6 mb-25">
 	                                    <label for="research_contents" class="color-dark fw-500">Method 명</label>
-	                                    <input type="text" class="form-control b-deep" id="method_title" th:value="${method.method_title}">
+	                                    <input autocomplete="off"  type="text" class="form-control b-deep" id="method_title" th:value="${method.method_title}" >
 	                                </div>
 	                            </div>
 			            		<div class="button-group d-flex justify-content-end">
@@ -569,7 +569,7 @@
 		                            	<label for="storage_out_address" class="col-form-label color-dark align-center">조사방법<span style="color: red;">*</span></label>
 	                                </div>
 	                                <div class="col-sm-10">
-		                                <input type="text" class="form-control b-light" id="research_contents">
+		                                <input autocomplete="off"  type="text" class="form-control b-light" id="research_contents" >
 		                            </div>
 			            		</div>
 			            		<div class="button-group d-flex justify-content-end mt-2">
@@ -913,7 +913,7 @@
 				for(var i = 0; i < result.length; i++)
 				{
 					add_list += '<li class="check_research_list list-group-item step-list">';
-					add_list += '<input type="checkbox" class="checkbox mr-2" name="chk_research" value="' + result[i].research_id + '">';
+					add_list += '<input autocomplete="off"  type="checkbox" class="checkbox mr-2" name="chk_research" value="' + result[i].research_id + '">';
 					add_list += '<span>'+ result[i].research_contents + '</span>';
 					add_list += '</li>';
 				}
@@ -951,7 +951,7 @@
 			add_list += '<div class="row">';
 			
 			add_list += '<div class="mb-1 col-2">';
-			add_list += '<input type="checkbox" class="checkbox mr-2" name="mis_research">';
+			add_list += '<input autocomplete="off"  type="checkbox" class="checkbox mr-2" name="mis_research">';
 			add_list += '<span class="step-text">step ' + step[i].step_index + '</span>';
 			add_list += '</div>';
 			
@@ -1030,7 +1030,7 @@
 				for(var i = 0; i < result.length; i++)
 				{
 					add_list += '<li class="list-group-item step-list" style="width: 355px;">';
-					add_list += '<input type="checkbox" class="checkbox mr-2" name="chk_research" value="' + result[i].research_id + '">';
+					add_list += '<input autocomplete="off"  type="checkbox" class="checkbox mr-2" name="chk_research" value="' + result[i].research_id + '">';
 					add_list += '<span>'+ result[i].research_contents + '</span>';
 					add_list += '</li>';
 				}
@@ -1078,7 +1078,7 @@
 			add_list += '<div class="row">';
 			
 			add_list += '<div class="mb-1 col-2">';
-			add_list += '<input type="checkbox" class="checkbox mr-2" name="mis_research">';
+			add_list += '<input autocomplete="off"  type="checkbox" class="checkbox mr-2" name="mis_research">';
 			add_list += '<span class="step-text">step ' + length + '</span>';
 			add_list += '</div>';
 			

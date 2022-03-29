@@ -353,7 +353,8 @@
 						dayMaxEvents: true,//이벤트가 오버되면 높이 제한(+ 몇 개식으로 표현)
 						eventClick: function(e)
 						{
-							if(e.event.classNames[0] == "schdule")
+							console.log(e.event.classNames[0])
+							if(e.event.classNames[0] == "schedule")
 							{
 								var data = {"sch_id" : e.event.id};
 								
@@ -392,7 +393,7 @@
 										sch_list.empty();
 										sch_list.append(add_list);
 										
-										$("#sch_btn").attr("href", "plan/insertResult?plan_id=" + result.plan_id);
+										$("#sch_btn").attr("href", "/plan/insertResult?plan_id=" + result.plan_id);
 									}
 								});
 							}

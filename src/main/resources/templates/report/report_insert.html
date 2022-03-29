@@ -51,7 +51,7 @@
 			        <div class="col-12">
 			        	<div class="card">
 			        		<div class="card-body">
-			        			<form action="insertReport" id="insertForm" method="POST" enctype="multipart/form-data">
+			        			<form autocomplete="off"  action="insertReport" id="insertForm" method="POST" enctype="multipart/form-data">
 			        				<div class="row">
 			        					<div class="col-sm-2 d-flex aling-items-center">
 		                                    <label for="report_year" class="col-form-label color-dark align-center">년도</label>
@@ -66,7 +66,7 @@
 		                                    <label class="color-dark align-center mt-1">ATIS 파일</label>
 		                                </div>
 		                                <div class="col-sm-5">
-		                                    <input type="file" id="file" name="file" onchange="readExcel();">
+		                                    <input autocomplete="off"  type="file" id="file" name="file" onchange="readExcel();">
 		                                </div>
 		                            </div>
 		                             <div class="row mt-3">
@@ -82,7 +82,7 @@
 		                                    <!-- <label class="color-danger">*탭으로 분리 된 txt만 업로드 가능.</label> -->
 		                                </div>
 		                            </div>
-									<input type="hidden" id="excel" name="report">
+									<input autocomplete="off"  type="hidden" id="excel" name="report">
 			        			</form>
 			        		</div>
 			        	</div>

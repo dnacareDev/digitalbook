@@ -141,7 +141,7 @@
 		                            	<label for="input_title" class="col-form-label color-dark align-center">Method 명<span style="color: red;">*</span></label>
 	                                </div>
 	                                <div class="col-sm-5">
-	                                   <input type="text" class="form-control" style="float: left; width: 465px;" id="input_title" readonly>
+	                                   <input autocomplete="off"  type="text" class="form-control" style="float: left; width: 465px;" id="input_title" readonly >
 	                                   <button class="btn btn-primary" onclick="DivisionBtn();">항목 조회</button>
 	                                </div>
 		                         </div>
@@ -150,7 +150,7 @@
 		                            	<label for="method_contents" class="color-dark align-center">Method 설명</label>
 		                            </div>
 		                            <div class="col-sm-5">
-		                                <input type="text" class="form-control b-light" id="method_contents">
+		                                <input autocomplete="off"  type="text" class="form-control b-light" id="method_contents" >
 		                            </div>
 		                    	</div>
 		                    	<div class="row mt-3">
@@ -211,7 +211,7 @@
 								<div class="row mt-4">
 									<div class="col-lg-3">
 										<div class="row">
-											<input type="text" onkeyup="filter();" class="form-control b-light" id="searchResearch" placeholder="조사방법 검색">
+											<input autocomplete="off"  type="text" onkeyup="filter();" class="form-control b-light" id="searchResearch" placeholder="조사방법 검색" >
 										</div>
 										<div class="row">
 											<button id="addResearchBtn" class="btn btn-dark mt-2" onclick="InsertPopup();">조사방법 추가</button>
@@ -298,7 +298,7 @@
 	                                </div>
 	                                <div class="col-md-6 mb-25">
 	                                    <label for="research_contents" class="color-dark fw-500">Method 명</label>
-	                                    <input type="text" class="form-control b-deep" id="method_title">
+	                                    <input autocomplete="off"  type="text" class="form-control b-deep" id="method_title" >
 	                                </div>
 	                            </div>
 			            		<div class="button-group d-flex justify-content-end">
@@ -365,7 +365,7 @@
 		                            	<label for="storage_out_address" class="col-form-label color-dark align-center">조사방법<span style="color: red;">*</span></label>
 	                                </div>
 	                                <div class="col-sm-10">
-		                                <input type="text" class="form-control b-light" id="research_contents">
+		                                <input autocomplete="off"  type="text" class="form-control b-light" id="research_contents" >
 		                            </div>
 			            		</div>
 			            		<div class="button-group d-flex justify-content-end mt-2">
@@ -479,7 +479,7 @@
 				for(var i = 0; i < result.length; i++)
 				{
 					add_list += '<li class="list-group-item step-list">';
-					add_list += '<input type="checkbox" class="checkbox mr-2" name="chk_research" value="' + result[i].research_id + '">';
+					add_list += '<input autocomplete="off"  type="checkbox" class="checkbox mr-2" name="chk_research" value="' + result[i].research_id + '" >';
 					add_list += '<span>'+ result[i].research_contents + '</span>';
 					add_list += '</li>';
 				}
@@ -558,7 +558,7 @@
 			add_list += '<div class="row">';
 			
 			add_list += '<div class="mb-1 col-2">';
-			add_list += '<input type="checkbox" class="checkbox mr-2" name="mis_research">';
+			add_list += '<input autocomplete="off"  type="checkbox" class="checkbox mr-2" name="mis_research" >';
 			add_list += '<span class="step-text">step ' + length + '</span>';
 			add_list += '</div>';
 			

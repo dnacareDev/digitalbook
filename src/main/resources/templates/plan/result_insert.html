@@ -360,13 +360,13 @@
 			                        
 			                        	<div class="left_type">
 			                        		<span style="vertical-align:middle;"><span class="red">*</span>개체수</span>
-				                            <input type="text" id="rowNum">
+				                            <input autocomplete='off'  type="text" id="rowNum">
 				                            <button type="button" onclick="addRow()">확인</button>
 			                        	</div>
 			                        	<div class="right_type">
 			                        		<div class="right_type_cover">
 			                        			<div class="select" style="height: auto;">
-				                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="segment_option" placeholder="구획 선택" autocomplete="new-password">
+				                            		<input autocomplete='off'  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="segment_option" placeholder="구획 선택" >
 				                            		<ul class="select-hide" style="width: 40% !important">
 				                            			
 				                            		</ul>
@@ -409,7 +409,7 @@
 				                            <div class="bottom_right-content clearfix"> <!-- 2021-11-01 추가  -->
 						                      	<div class="left_type" style="width:60%;">
 						                      		<span><span class="red">*</span>기준개체수</span>
-						                           	<input type="text" id="segment_num" value="10">
+						                           	<input autocomplete='off'  type="text" id="segment_num" value="10">
 						                           	<button type="button" id="segment_check" style="width:90.88px">확인</button>
 						                      	</div>
 						                    </div>
@@ -1079,7 +1079,7 @@ function insertWeatherAndSoil(){
 							<button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
 					
 							<div class="image-upload-wrap">
-								<input class="file-upload-input" type="file" onchange="readURL(this);" accept="image/*">
+								<input autocomplete='off'  class="file-upload-input" type="file" onchange="readURL(this);" accept="image/*">
 								<div class="drag-text">
 									<h3>Drag and drop a file or select add Image</h3>
 								</div>
@@ -1126,7 +1126,7 @@ function insertWeatherAndSoil(){
 							<button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
 					
 							<div class="image-upload-wrap">
-								<input id="curModalImg" class="file-upload-input" type="file" onchange="readURL(this);" accept="image/*">
+								<input autocomplete='off'  id="curModalImg" class="file-upload-input" type="file" onchange="readURL(this);" accept="image/*">
 								<div class="drag-text">
 									<h3>Drag Image</h3>
 								</div>
@@ -1188,11 +1188,11 @@ function insertWeatherAndSoil(){
 							                            <select class="form-control form-control-lg mt-10 mb-10 mr-10" id="weather_city" style="width: 150px;height:40px;">
 							                                <option value="">시/군/구</option>
 							                            </select>
-							                            <input type="date" class="form-control form-control-lg mt-10 mb-10 mr-10" id="weather_date" style="width: 150px;height:40px;">
+							                            <input autocomplete='off'  type="date" class="form-control form-control-lg mt-10 mb-10 mr-10" id="weather_date" style="width: 150px;height:40px;">
 							                                
-							                            <input type="text" placeholder="(시)00~23" class="form-control form-control-lg mt-10 mb-10 mr-10" id="weather_hour" style="width: 100px;height:40px;"> 
+							                            <input autocomplete='off'  type="text" placeholder="(시)00~23" class="form-control form-control-lg mt-10 mb-10 mr-10" id="weather_hour" style="width: 100px;height:40px;"> 
 							                            <span class=" mt-10 mb-10 mr-10">:</span>
-							                            <input type="text" placeholder="(분)00~59" class="form-control form-control-lg mt-10 mb-10 mr-10" id="weather_min" style="width: 100px;height:40px;">							                                
+							                            <input autocomplete='off'  type="text" placeholder="(분)00~59" class="form-control form-control-lg mt-10 mb-10 mr-10" id="weather_min" style="width: 100px;height:40px;">							                                
 							                            
 <!-- 							                            <select class="form-control form-control-lg mt-10 mb-10 mr-10" id="search_type" style="width: 238px;height:40px;"> -->
 <!-- 							                                <option value="">읍/면/동</option> -->
@@ -1319,7 +1319,7 @@ $("#weather_area").change(function() {
 let resultGridType = 1;
 let plan = /*[[${plan}]]*/ "null";
 let plan_id = /*[[${plan_id}]]*/ "0";
-let method = /*[[${method}]]*/ "null";
+let method = /*[[${method}]]*/ [];
 let sch = /*[[${sch}]]*/ "null";
 let results = /*[[${results}]]*/ "null";
 let resultPlan = /*[[${resultPlan}]]*/ "null";
@@ -1438,7 +1438,7 @@ function findInfo(type){
 				var td = "";
 				if(result.data == "no result"){
 
-					td += "<td><input type='checkbox' id='checkSoil' value=''></td>";
+					td += "<td><input autocomplete='off'  type='checkbox' id='checkSoil' value=''></td>";
 					td += "<td>" + ACID + "</td>";
 					td += "<td>" + VLDPHA + "</td>";
 					td += "<td>" + VLDSIA + "</td>";
@@ -1461,7 +1461,7 @@ function findInfo(type){
 					 POIFERT_CA = checkNull(data.POSIFERT_CA);
 					 SELC = checkNull(data.SELC);
 	
-					td += "<td><input type='checkbox' id='checkSoil' value=''></td>";
+					td += "<td><input autocomplete='off'  type='checkbox' id='checkSoil' value=''></td>";
 					td += "<td>" + ACID + "</td>";
 					td += "<td>" + VLDPHA + "</td>";
 					td += "<td>" + VLDSIA + "</td>";
@@ -1502,7 +1502,7 @@ function findInfo(type){
 				if(result.data == "no result"){
 					console.log('2222');
 
-					td += "<td><input type='checkbox' id='checkWeather' value=''></td>";
+					td += "<td><input autocomplete='off'  type='checkbox' id='checkWeather' value=''></td>";
 					td += "<td>"+ afp + "mm</td>";
 					td += "<td>"+ afv + "mm</td>";
 					td += "<td>"+ arvlty_300 + "</td>";
@@ -1537,7 +1537,7 @@ function findInfo(type){
 						"hd_400" : data.hd_400,
 					
 					};
-					td += "<td><input type='checkbox' id='checkWeather' value=''></td>";	
+					td += "<td><input autocomplete='off'  type='checkbox' id='checkWeather' value=''></td>";	
 					td += "<td>"+ afp + "mm</td>";
 					td += "<td>"+ afv + "mm</td>";
 					td += "<td>"+ arvlty_300 + "</td>";
@@ -1787,8 +1787,7 @@ function findInfo(type){
 			};
 			resultArray.push(result_data);
 		}
-		//console.log(resultArray, segment);
-		//구획정보 그리기 함수 실행
+		
 		gridSegment();
 		
 		var rowNum = segment[0].individual_num;
@@ -1998,32 +1997,21 @@ function findInfo(type){
 	}
 	
 	function drawGrid(data) {
-		
+
+
 		var mapObject = {};
 		var gridData = [];
 		
 		for(var i =0;i<data.length;i++){
-			mapObject[data[i].method_title] = data[i];
+			mapObject[data[i].method_title + i] = data[i];
 		}
 
-		console.log(data);
-		console.log(data);
-		console.log(data);
-		console.log(data);
-		console.log(data);
-		console.log(data);
-		console.log(data);
-		console.log(data);
-		console.log(data);
-		console.log(data);
-		console.log(data);
-		
 		var headerColumns = [];
 		var headerCount = 0;
 		
 		for(var key in mapObject){
 			headerColumns.push({
-				header : mapObject[key].method_title + " (" + mapObject[key].method_input + ")",
+				header : mapObject[key].method_title,
 				name : mapObject[key].method_id + "_" + headerCount++,
 				'editor': 'text'
 			});	
@@ -2449,7 +2437,6 @@ function findInfo(type){
 		var plan_repeat = plan.plan_repeat;
 		
 		setFactorData(resultArray);
-
 		//시험구 배치 종류에 따라 분기 처리
 		if(grow_type == "0"){	//완전임의배치법
 			console.log('11111');
@@ -2545,6 +2532,7 @@ function findInfo(type){
 			for(var i = 0; i < resultArray.length; i++){
 				arr[i] = resultArray[i].id.split("-")[0];
 			}
+			
 			var idArray = Array.from(new Set(arr));
 			
 			add_list = "";
@@ -2594,12 +2582,7 @@ function findInfo(type){
 			}//end for1
 			
 			segment_list.append(result_div);
-			
-			var factor2 = 0;
-			for(var i = 0; i < resultArray.length; i++){
-				var idTemp = resultArray[i].segmentId;
-				var splitA = idTemp.split("-")[1].split("B")[1];
-			}
+
 			
 			//그룹별 색깔 적용해주기
 			$(document).find(".table_content").each(function(i, item){
@@ -2614,7 +2597,6 @@ function findInfo(type){
 			});
 			
 		}else if(grow_type == "3"){//세세구배치법
-			
 			var arr = new Array();
 			for(var i = 0; i < resultArray.length; i++){
 				arr[i] = resultArray[i].id.split("-")[0]+"-"+resultArray[i].id.split("-")[1];
@@ -2626,7 +2608,6 @@ function findInfo(type){
 			var result_div = "";
 			
 			for(var i = 0; i < plan_repeat; i++){
-				console.log('44444444');
 				
 				add_list += '<div class="box_content">';
 				add_list += '<span class="sub_title-content">집구'+(i+1)+'</span>'
@@ -3277,8 +3258,7 @@ function findInfo(type){
 
 	function initResultArray(){
 		tableResultArray = [];
-		let num = document.getElementById("rowNum").value;
-		
+		let num = document.getElementById("rowNum").value.length == 0 ? 1 : document.getElementById("rowNum").value;
 		for(var z =0;z<resultArray.length;z++){
 			let resultRows = [];
 			for(var i = 0;i<num;i++){
@@ -3297,7 +3277,7 @@ function findInfo(type){
 			}
 			tableResultArray.push(resultRows);
 		}
-		
+
 		
 	}
 	

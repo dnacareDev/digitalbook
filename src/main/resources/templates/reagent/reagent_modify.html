@@ -101,7 +101,7 @@
 		                            	<label for="reagent_code" class="color-dark align-center"><span class="red">*</span>시약 ID</label>
 		                            </div>
 		                            <div class="col-sm-5">
-		                                <input type="text" class="form-control b-light" id="reagent_code" th:value="${reagent.reagent_code}" readonly="readonly">
+		                                <input autocomplete="off"  type="text" class="form-control b-light" id="reagent_code" th:value="${reagent.reagent_code}" readonly="readonly">
 		                            </div>
 		                    	</div>
 		        				<div class="row mt-3">
@@ -110,7 +110,7 @@
 	                                </div>
 	                                <div class="col-sm-5">
 	                                	<div class="select" style="height: auto;">
-		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="reagent_type" placeholder="종류 선택" autocomplete="new-password">
+		                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="reagent_type" placeholder="종류 선택" >
 		                            		<ul class="select-hide">
 		                            			<li class="reagent_type_list" onclick="selectOpt(this);"><span data-value="시약">시약</span></li>
 		                            			<li class="reagent_type_list" onclick="selectOpt(this);"><span data-value="농약">농약</span></li>
@@ -130,7 +130,7 @@
 		                            	<label for="reagent_name" class="color-dark align-center"><span class="red">*</span>품명</label>
 		                            </div>
 		                            <div class="col-sm-5">
-		                                <input type="text" class="form-control b-light" id="reagent_name" th:value="${reagent.reagent_name}">
+		                                <input autocomplete="off"  type="text" class="form-control b-light" id="reagent_name" th:value="${reagent.reagent_name}">
 		                            </div>
 		                    	</div>
 		                    	<div class="row mt-3">
@@ -138,7 +138,7 @@
 		                            	<label for="reagent_standard" class="color-dark align-center">규격</label>
 		                            </div>
 		                            <div class="col-sm-5">
-		                                <input type="text" class="form-control b-light" id="reagent_standard" th:value="${reagent.reagent_standard}">
+		                                <input autocomplete="off"  type="text" class="form-control b-light" id="reagent_standard" th:value="${reagent.reagent_standard}">
 		                            </div>
 		                    	</div>
 		                    	<div class="row mt-3">
@@ -146,7 +146,7 @@
 		                            	<label for="reagent_formula" class="color-dark align-center">화학식</label>
 		                            </div>
 		                            <div class="col-sm-5">
-		                                <input type="text" class="form-control b-light" id="reagent_formula" th:value="${reagent.reagent_formula}">
+		                                <input autocomplete="off"  type="text" class="form-control b-light" id="reagent_formula" th:value="${reagent.reagent_formula}">
 		                            </div>
 		                    	</div>
 		                    	<div class="row mt-3">
@@ -154,7 +154,7 @@
 		                            	<label for="reagent_nick_e" class="color-dark align-center">영문별칭</label>
 		                            </div>
 		                            <div class="col-sm-5">
-		                                <input type="text" class="form-control b-light" id="reagent_nick_e" th:value="${reagent.reagent_nick_e}">
+		                                <input autocomplete="off"  type="text" class="form-control b-light" id="reagent_nick_e" th:value="${reagent.reagent_nick_e}">
 		                            </div>
 		                    	</div>
 		                    	<div class="row mt-3">
@@ -162,7 +162,7 @@
 		                            	<label for="reagent_nick_k" class="color-dark align-center">국문별칭</label>
 		                            </div>
 		                            <div class="col-sm-5">
-		                                <input type="text" class="form-control b-light" id="reagent_nick_k" th:value="${reagent.reagent_nick_k}">
+		                                <input autocomplete="off"  type="text" class="form-control b-light" id="reagent_nick_k" th:value="${reagent.reagent_nick_k}">
 		                            </div>
 		                    	</div>
 		                    	<div class="row mt-3">
@@ -170,7 +170,7 @@
 		                            	<label for="reagent_manufacturer" class="color-dark align-center">제조사</label>
 		                            </div>
 		                            <div class="col-sm-5">
-		                                <input type="text" class="form-control b-light" id="reagent_manufacturer" th:value="${reagent.reagent_manufacturer}">
+		                                <input autocomplete="off"  type="text" class="form-control b-light" id="reagent_manufacturer" th:value="${reagent.reagent_manufacturer}">
 		                            </div>
 		                    	</div>
 		                    	<div class="row mt-3">
@@ -178,11 +178,11 @@
 		                            	<label for="reagent_quantity" class="color-dark align-center">수량</label>
 		                            </div>
 		                            <div class="col-sm-2">
-		                                <input type="text" class="form-control b-light" id="reagent_quantity" th:value="${reagent.reagent_quantity}">
+		                                <input autocomplete="off"  type="text" class="form-control b-light" id="reagent_quantity" th:value="${reagent.reagent_quantity}">
 		                            </div>
 		                            <div class="col-sm-3">
 		                            	<div id="eaches_id_select" class="select" style="height: auto;">
-		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="eaches_id" placeholder="단위 선택" autocomplete="new-password">
+		                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="eaches_id" placeholder="단위 선택" >
 		                            		<ul class="select-hide">
 		                            			<th:block th:each="eaches : ${eaches}">
 		                            				<li class="eaches_id_list" onclick="selectOpt(this);"><span th:data-value="${eaches.eaches_id}" th:text="${eaches.eaches_name}"></span></li>
@@ -202,10 +202,10 @@
 		                            	<label for="reagent_purpose" class="color-dark align-center">용도</label>
 		                            </div>
 		                            <div class="col-sm-5">
-		                                <input type="text" class="form-control b-light" id="reagent_purpose" th:value="${reagent.reagent_purpose}">
+		                                <input autocomplete="off"  type="text" class="form-control b-light" id="reagent_purpose" th:value="${reagent.reagent_purpose}">
 		                            </div>
 		                    	</div>
-		                    	<input type="hidden" id="reagent_id" th:value="${reagent.reagent_id}">
+		                    	<input autocomplete="off"  type="hidden" id="reagent_id" th:value="${reagent.reagent_id}">
 			        		</div>
 			        	</div>
 			        </div>

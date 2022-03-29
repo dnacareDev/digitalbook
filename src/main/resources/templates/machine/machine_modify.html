@@ -71,7 +71,7 @@
 		        </div>
 		    	<div class="row">
 			        <div class="col-lg-12">
-			        	<form action="#">
+			        	<form autocomplete="off"  action="#">
 				        	<div class="card">
 				        		<div class="card-body">
 			        				<div class="row">
@@ -79,7 +79,7 @@
 			                            	<label for="machine_name" class="col-form-label color-dark align-center"><span class="red">*</span>장비명</label>
 		                                </div>
 		                                <div class="col-sm-5">
-		                                   <input type="text" class="form-control b-light" id="machine_name" th:value="${machine.machine_name}">
+		                                   <input autocomplete="off"  type="text" class="form-control b-light" id="machine_name" th:value="${machine.machine_name}" >
 		                                </div>
 			                         </div>
 			                         <div class="row mt-3">
@@ -87,7 +87,7 @@
 			                            	<label for="machine_model" class="color-dark align-center">모델명</label>
 			                            </div>
 			                            <div class="col-sm-5">
-			                                <input type="text" class="form-control b-light" id="machine_model" th:value="${machine.machine_model}">
+			                                <input autocomplete="off"  type="text" class="form-control b-light" id="machine_model" th:value="${machine.machine_model}" >
 			                            </div>
 			                    	</div>
 			                    	<div class="row mt-3">
@@ -95,7 +95,7 @@
 			                            	<label for="machine_date" class="color-dark align-center">취득일자</label>
 			                            </div>
 			                            <div class="col-sm-5">
-			                                <input type="text" class="form-control b-light" id="machine_date" th:value="${machine.machine_date}">
+			                                <input autocomplete="off"  type="text" class="form-control b-light" id="machine_date" th:value="${machine.machine_date}" >
 			                            </div>
 			                    	</div>
 			                    	<div class="row mt-3">
@@ -103,7 +103,7 @@
 			                            	<label for="machine_price" class="color-dark align-center">취득금액</label>
 			                            </div>
 			                            <div class="col-sm-5">
-			                                <input type="number" class="form-control b-light" id="machine_price" th:value="${machine.machine_price}">
+			                                <input autocomplete="off"  type="number" class="form-control b-light" id="machine_price" th:value="${machine.machine_price}" >
 			                            </div>
 			                    	</div>
 			                    	<div class="row mt-3">
@@ -112,7 +112,7 @@
 			                            </div>
 			                            <div class="col-sm-5">
 			                            	<div class="select" style="height: auto;">
-			                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="machine_range" placeholder="활용범위 선택" autocomplete="new-password">
+			                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="machine_range" placeholder="활용범위 선택" >
 			                            		<ul class="select-hide">
 			                            			<li class="machine_range_list" onclick="selectOpt(this);"><span data-value="0">공동활용허용가능</span></li>
 			                            			<li class="machine_range_list" onclick="selectOpt(this);"><span data-value="1">단독활용만 가능</span></li>
@@ -131,7 +131,7 @@
 			                            </div>
 			                            <div class="col-sm-5">
 			                            	<div class="select" style="height: auto;">
-			                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="machine_public" placeholder="공동활용 허용범위 선택" autocomplete="new-password">
+			                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="machine_public" placeholder="공동활용 허용범위 선택" >
 			                            		<ul class="select-hide">
 			                            			<li class="machine_public_list" onclick="selectOpt(this);"><span data-value="0">기관내부활용</span></li>
 			                            			<li class="machine_public_list" onclick="selectOpt(this);"><span data-value="1">기관외부활용</span></li>
@@ -150,7 +150,7 @@
 			                            </div>
 			                            <div class="col-sm-5">
 			                            	<div class="select" style="height: auto;">
-			                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="machine_purpose" placeholder="장비용도 선택" autocomplete="new-password">
+			                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="machine_purpose" placeholder="장비용도 선택" >
 			                            		<ul class="select-hide">
 			                            			<li class="machine_purpose_list" onclick="selectOpt(this);"><span data-value="계측">계측</span></li>
 			                            			<li class="machine_purpose_list" onclick="selectOpt(this);"><span data-value="시험">시험</span></li>
@@ -172,7 +172,7 @@
 			                            	<label for="machine_place" class="color-dark align-center">설치장소</label>
 			                            </div>
 			                            <div class="col-sm-5">
-			                                <input type="text" class="form-control b-light" id="machine_place" th:value="${machine.machine_place}">
+			                                <input autocomplete="off"  type="text" class="form-control b-light" id="machine_place" th:value="${machine.machine_place}" >
 			                            </div>
 			                    	</div>
 			                    	<div class="row mt-3">
@@ -180,7 +180,7 @@
 			                            	<label for="machine_regist" class="color-dark align-center">등록번호</label>
 			                            </div>
 			                            <div class="col-sm-5">
-			                                <input type="text" class="form-control b-light" id="machine_regist" th:value="${machine.machine_regist}">
+			                                <input autocomplete="off"  type="text" class="form-control b-light" id="machine_regist" th:value="${machine.machine_regist}" > 
 			                            </div>
 			                    	</div>
 			                    	<div class="row mt-3">
@@ -188,13 +188,13 @@
 			                            	<label for="machine_manage" class="color-dark align-center">고정자산관리번호</label>
 			                            </div>
 			                            <div class="col-sm-5">
-			                                <input type="text" class="form-control b-light" id="machine_manage" th:value="${machine.machine_manage}">
+			                                <input autocomplete="off"  type="text" class="form-control b-light" id="machine_manage" th:value="${machine.machine_manage}" >
 			                            </div>
 			                    	</div>
 				        		</div>
 				        	</div>
 			        	</form>
-		                <input type="hidden" id="machine_id" th:value="${machine.machine_id}">
+		                <input autocomplete="off"  type="hidden" id="machine_id" th:value="${machine.machine_id}">
 			        </div>
 		        </div>
 		        <div class="row">

@@ -64,7 +64,7 @@
 										<label for="reagent_standard" class="color-dark align-center">제목</label>
 									</div>
 									<div class="col-sm-5">
-										<input type="text" class="form-control b-light" id="board_title" th:value="${board.board_title}">
+										<input autocomplete="off"  type="text" class="form-control b-light" id="board_title" th:value="${board.board_title}" >
 									</div>
 								</div>
 								<div class="row mt-3">
@@ -72,7 +72,7 @@
 										<label for="reagent_name" class="color-dark align-center">시작일</label>
 									</div>
 									<div class="col-sm-5">
-										<input type="text" class="form-control b-light" id="board_start" th:value="${board.board_start}" autocomplete="new-password">
+										<input autocomplete="off"  type="text" class="form-control b-light" id="board_start" th:value="${board.board_start}" >
 									</div>
 								</div>
 								<div class="row mt-3">
@@ -80,7 +80,7 @@
 										<label for="reagent_standard" class="color-dark align-center">종료일</label>
 									</div>
 									<div class="col-sm-5">
-										<input type="text" class="form-control b-light" id="board_end" th:value="${board.board_end}" autocomplete="new-password">
+										<input autocomplete="off"  type="text" class="form-control b-light" id="board_end" th:value="${board.board_end}" >
 									</div>
 								</div>
 								<div class="row mt-3">
@@ -97,13 +97,13 @@
 									</div>
 									<div class="col-sm-5">
 		                            	<div>
-		                            		<input type="checkbox" onclick="selectAll(this)">
+		                            		<input autocomplete="off"  type="checkbox" onclick="selectAll(this)">
 		                            		<span>전체 선택</span>
 		                            	</div>
 		                            	<th:block th:each = "user : ${user}">
 		                            		<div>
-		                            			<input type="checkbox" th:value="${user.user_id}" name="user_id" th:if="${user.D1_id} == 1" checked>
-		                            			<input type="checkbox" th:value="${user.user_id}" name="user_id" th:if="${user.D1_id} != 1">
+		                            			<input autocomplete="off"  type="checkbox" th:value="${user.user_id}" name="user_id" th:if="${user.D1_id} == 1" checked>
+		                            			<input autocomplete="off"  type="checkbox" th:value="${user.user_id}" name="user_id" th:if="${user.D1_id} != 1">
 		                            			<span th:text="${user.user_name_k}"></span>
 		                            		</div>
 		                           		</th:block>

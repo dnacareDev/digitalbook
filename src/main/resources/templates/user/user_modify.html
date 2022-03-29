@@ -59,7 +59,7 @@
 	<main class="main-content" style="background-color: #F9FBFD;">
 		<div class="contents" style="background-color: #F9FBFD;">
 			<div class="container-fluid" style="padding: 0 50px;">
-				<form action="#" id="updateUser" method="POST" enctype="multipart/form-data">
+				<form autocomplete="off"  action="#" id="updateUser" method="POST" enctype="multipart/form-data">
 				<div class="row">
 					<div class="col-lg-12" style="padding: 0 17px;">
 						<div class="breadcrumb-main" style="float: left; padding:0;">
@@ -75,7 +75,7 @@
 								<label class="" for="user_username"><span class="red">*</span>사용자 ID </label>
 							</div>
 							<div class="col-8 col-md-4 col-lg-2">
-								<input type="text" class="form-control inputText" id="user_username" name="user_username" th:value="${user.user_username}" readonly="readonly">
+								<input autocomplete="off"  type="text" class="form-control inputText" id="user_username" name="user_username" th:value="${user.user_username}" readonly="readonly">
 							</div>
 						</div>
 						<div class="row form-group">
@@ -83,28 +83,28 @@
 								<label class="" for="user_password"><span class="red">*</span>비밀번호 </label>
 							</div>
 							<div class="col-8 col-md-4 col-lg-2">
-								<input type="password" class="form-control inputText" id="user_password" name="user_password" th:value="${user.user_password}">
+								<input autocomplete="off"  type="password" class="form-control inputText" id="user_password" name="user_password" th:value="${user.user_password}">
 							</div>
 						</div>
 						<div class="row form-group">
 							<div class="pr-0 col-4 col-md-2 col-lg-2">
 								<label class="" for="chk_password"><span class="red">*</span>비밀번호 확인</label>
 							</div><div class="col-8 col-md-4 col-lg-2">
-								<input type="password" class="form-control inputText" id="chk_password" name="chk_password" th:value="${user.user_password}">
+								<input autocomplete="off"  type="password" class="form-control inputText" id="chk_password" name="chk_password" th:value="${user.user_password}">
 							</div>
 						</div>
 						<div class="row form-group md-0">
 							<div class="pr-0 col-4 col-md-2 col-lg-2">
 								<label class="" for="user_name_k"><span class="red">*</span>성명</label>
 							</div><div class="col-8 col-md-4 col-lg-2">
-								<input type="text" class="form-control inputText" id="user_name_k" name="user_name_k" th:value="${user.user_name_k}">
+								<input autocomplete="off"  type="text" class="form-control inputText" id="user_name_k" name="user_name_k" th:value="${user.user_name_k}">
 							</div>
 							<div class="content_cover">
 								<div class="next_text">
 									<label class="" for="user_name_e">영문</label>
 								</div>
 								<div class="col-8 col-md-4 col-lg-9" style="float:right">
-									<input type="text" class="form-control inputText" id="user_name_e" name="user_name_e" th:value="${user.user_name_e}">
+									<input autocomplete="off"  type="text" class="form-control inputText" id="user_name_e" name="user_name_e" th:value="${user.user_name_e}">
 								</div>
 							</div>
 						</div>
@@ -114,7 +114,7 @@
 							</div>
 							<div class="col-8 col-md-4 col-lg-2">
 								<div class="select" style="height: auto;">
-                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="depart_depth1" placeholder="원 선택" autocomplete="new-password">
+                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="depart_depth1" placeholder="원 선택" >
                             		<ul class="select-hide">
                             			<th:block th:each="d1 : ${d1}">
                             				<li class="depart_depth1_list" onclick="selectOpt(this);"><span th:data-value="${d1.depart_id}" th:text="${d1.department}"></span></li>
@@ -134,7 +134,7 @@
 								</div>
 								<div class="col-8 col-md-4 col-lg-9" style="float:right">
 									<div class="select" style="height: auto;">
-	                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="depart_depth2" placeholder="부 선택" autocomplete="new-password">
+	                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="depart_depth2" placeholder="부 선택" >
 	                            		<ul class="select-hide">
 	                            			<th:block th:each="d2 : ${d2}">
 	                            				<li class="depart_depth2_list" onclick="selectOpt(this);"><span th:data-value="${d2.depart_id}" th:text="${d2.department}"></span></li>
@@ -155,7 +155,7 @@
 								</div>
 								<div class="col-8 col-md-4 col-lg-9" style="float:right">
 									<div class="select" style="height: auto;">
-	                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="depart_depth3" placeholder="과 선택" autocomplete="new-password">
+	                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="depart_depth3" placeholder="과 선택" >
 	                            		<ul class="select-hide">
 	                            			<th:block th:each="d3 : ${d3}">
 	                            				<li class="depart_depth3_list" onclick="selectOpt(this);"><span th:data-value="${d3.depart_id}" th:text="${d3.department}"></span></li>
@@ -177,7 +177,7 @@
 							</div>
 							<div class="col-8 col-md-4 col-lg-2">
 								<div class="select" style="height: auto;">
-                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="depart_depth4" placeholder="소속실 선택" autocomplete="new-password">
+                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="depart_depth4" placeholder="소속실 선택" >
                             		<ul class="select-hide">
                             			<th:block th:each="d4 : ${d4}">
                             				<li class="depart_depth4_list" onclick="selectOpt(this);"><span th:data-value="${d4.depart_id}" th:text="${d4.department}"></span></li>
@@ -197,7 +197,7 @@
 								</div>
 								<div class="col-8 col-md-4 col-lg-9" style="float:right">
 									<div class="select" style="height: auto;">
-	                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="user_position" placeholder="직종 선택" autocomplete="new-password">
+	                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="user_position" placeholder="직종 선택" >
 	                            		<ul class="select-hide">
 	                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="연구직">연구직</span></li>
 	                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="전문연구직">전문연구직</span></li>
@@ -220,7 +220,7 @@
 								</div>
 								<div class="col-8 col-md-4 col-lg-9" style="float:right">
 									<div class="select" style="height: auto;">
-	                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="user_level" placeholder="직급 선택" autocomplete="new-password">
+	                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="user_level" placeholder="직급 선택" >
 	                            		<ul class="select-hide">
 	                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="수확후이용과">농업연구관</span></li>
 	                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="농업연구사">농업연구사</span></li>
@@ -253,7 +253,7 @@
 								<label class="" for="user_post">주소</label>
 							</div>
 							<div class="col-8 col-md-4 col-lg-2">
-								<input type="text" class="form-control inputText" id="user_post" name="user_post" th:value="${user.user_post}" placeholder="우편번호">
+								<input autocomplete="off"  type="text" class="form-control inputText" id="user_post" name="user_post" th:value="${user.user_post}" placeholder="우편번호">
 							</div>
 						</div>
 						<div class="mb-0 row form-group" style="margin-bottom:10px !important">
@@ -261,13 +261,13 @@
 								<label class="">&nbsp;</label>
 							</div>
 							<div class="mb-2 col-8 col-md-5 col-lg-3">
-								<input type="text" class="form-control inputText" id="user_address" name="user_address" th:value="${user.user_address}" placeholder="주소">
+								<input autocomplete="off"  type="text" class="form-control inputText" id="user_address" name="user_address" th:value="${user.user_address}" placeholder="주소">
 							</div>
 							<div class="d-flex d-md-none mb-2 col-4 col-md-2 col-lg-2">
 								<label class="">&nbsp;</label>
 							</div>
 							<div class="mb-2 col-8 col-md-5 col-lg-3">
-								<input type="text" class="form-control inputText" id="user_address_detail" name="user_address_detail" th:value="${user.user_address_detail}" placeholder="상세주소">
+								<input autocomplete="off"  type="text" class="form-control inputText" id="user_address_detail" name="user_address_detail" th:value="${user.user_address_detail}" placeholder="상세주소">
 							</div>
 						</div>
 						<div class="mb-0 row form-group"  style="margin-bottom:10px !important">
@@ -275,14 +275,14 @@
 								<label class="" for="user_tel">전화번호</label>
 							</div>
 							<div class="mb-2 col-8 col-md-4 col-lg-2">
-								<input type="text" class="form-control inputText" id="user_tel" name="user_tel" th:value="${user.user_tel}">
+								<input autocomplete="off"  type="text" class="form-control inputText" id="user_tel" name="user_tel" th:value="${user.user_tel}">
 							</div>
 							<div class="content_cover">
 								<div class="next_text">
 									<label class="" for="user_pax">팩스번호</label>
 								</div>
 								<div class="col-8 col-md-4 col-lg-9" style="float:right">
-									<input type="text" class="form-control inputText" id="user_pax" name="user_pax" th:value="${user.user_pax}">
+									<input autocomplete="off"  type="text" class="form-control inputText" id="user_pax" name="user_pax" th:value="${user.user_pax}">
 								</div>
 							</div>
 							<div class="content_cover">
@@ -290,7 +290,7 @@
 									<label class="" for="user_phone">휴대번호</label>
 								</div>
 								<div class="col-8 col-md-4 col-lg-9" style="float:right">
-									<input type="text" class="form-control inputText" id="user_phone" name="user_phone" th:value="${user.user_phone}">
+									<input autocomplete="off"  type="text" class="form-control inputText" id="user_phone" name="user_phone" th:value="${user.user_phone}">
 								</div>
 							</div>
 						</div>
@@ -299,7 +299,7 @@
 								<label class="" for="user_scientist">과학기술인번호</label>
 							</div>
 							<div class="mb-2 col-8 col-md-4 col-lg-2">
-								<input type="text" class="form-control inputText" id="user_scientist" name="user_scientist" th:value="${user.user_scientist}">
+								<input autocomplete="off"  type="text" class="form-control inputText" id="user_scientist" name="user_scientist" th:value="${user.user_scientist}">
 							</div>
 							<div class="content_cover">
 								<div class="next_text">
@@ -307,7 +307,7 @@
 								</div>
 								<div class="col-8 col-md-4 col-lg-9" style="float:right">
 									<div class="select" style="height: auto;">
-	                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="user_type" placeholder="권한 선택" autocomplete="new-password">
+	                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="user_type" placeholder="권한 선택" >
 	                            		<ul class="select-hide">
 	                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="0">관리자</span></li>
 	                            			<li class="user_position_list" onclick="selectOpt(this);"><span data-value="1">운영자</span></li>
@@ -339,8 +339,8 @@
 							<a href="/data/user" class="btn btn-primary end-button end" style="background-color:#E2E3E5;">목록</a>
 							<button type="button" class="btn btn-default btn-danger end-button end" onclick="DeleteBtn();">삭제</button>
 		                	<button type="button" class="btn btn-default btn-primary end-button end" onclick="UpdateBtn();">수정</button>
-		                	<input type="hidden" id="user_id" name="user_id" th:value="${user.user_id}">
-		                	<input type="hidden" id="origin_pwd" name="origin_pwd" th:value="${user.user_password}">
+		                	<input autocomplete="off"  type="hidden" id="user_id" name="user_id" th:value="${user.user_id}">
+		                	<input autocomplete="off"  type="hidden" id="origin_pwd" name="origin_pwd" th:value="${user.user_password}">
 						</div>
 					</div>
 				</div>

@@ -204,14 +204,14 @@
 			        	</div>
 			      <div class="modal-body">
 		            	<div class="col-12">
-			            	<form action="storage/insertStorage" id="insertForm" method="POST" enctype="multipart/form-data">
+			            	<form autocomplete="off"  action="storage/insertStorage" id="insertForm" method="POST" enctype="multipart/form-data">
 			            		<div class="row mt-3">
 			            			<div class="col-sm-2 d-flex aling-items-center">
 		                            	<label for="storage_search" class="col-form-label color-dark align-center"><span class="red">*</span>검색</label>
 	                                </div>
 	                                <div class="col-sm-10" style="display:flex">
-		                                <input  onkeyup="if(window.event.keyCode==13){searchPlaces()}" type="text" class="form-control b-light" id="storage_search" name="storage_search" style="width:90%">
-		                                <input type="button" class="btn btn-primary btn-default btn-squared"  onclick="searchPlaces()" value="검색" style="margin-left:5px;width:10%">
+		                                <input autocomplete="off"   onkeyup="if(window.event.keyCode==13){searchPlaces()}" type="text" class="form-control b-light" id="storage_search" name="storage_search" style="width:90%">
+		                                <input autocomplete="off"  type="button" class="btn btn-primary btn-default btn-squared"  onclick="searchPlaces()" value="검색" style="margin-left:5px;width:10%">
 		                            </div>
 			            		</div>
                 
@@ -229,7 +229,7 @@
 		                            	<label for="storage_name" class="col-form-label color-dark align-center"><span class="red">*</span>실험 장소</label>
 	                                </div>
 	                                <div class="col-sm-10">
-		                                <input type="text" class="form-control b-light" id="storage_name" name="storage_name">
+		                                <input autocomplete="off"  type="text" class="form-control b-light" id="storage_name" name="storage_name" >
 		                            </div>
 			            		</div>
 			            		<div class="row mt-3">
@@ -237,7 +237,7 @@
 		                            	<label for="storage_type" class="col-form-label color-dark align-center">장소유형</label>
 	                                </div>
 	                                <div class="col-sm-10">
-		                                <select class="form-control b-light" id="storage_type" name="storage_type">
+		                                <select class="form-control b-light" id="storage_type" name="storage_type" >
 	                                		<option value="9">유형 선택</option>
 	                                		<option value="0">논</option>
 	                                		<option value="1">밭</option>
@@ -264,7 +264,7 @@
 		                            	<label for="storage_division" class="col-form-label color-dark align-center">구획구분</label>
 	                                </div>
 	                                <div class="col-sm-10">
-		                                <input type="text" class="form-control b-light" id="storage_division" name="storage_division">
+		                                <input autocomplete="off"  type="text" class="form-control b-light" id="storage_division" name="storage_division" >
 		                            </div>
 			            		</div>
 			            		<div class="row mt-3">
@@ -272,7 +272,7 @@
 		                            	<label for="storage_address" class="col-form-label color-dark align-center">주소</label>
 	                                </div>
 	                                <div class="col-sm-10">
-		                                <input type="text" class="form-control b-light" id="storage_address" name="storage_address">
+		                                <input autocomplete="off"  type="text" class="form-control b-light" id="storage_address" name="storage_address" >
 		                            </div>
 			            		</div>
 			            		<div class="row mt-3">
@@ -280,7 +280,7 @@
 		                            	<label for="storage_size" class="col-form-label color-dark align-center">면적</label>
 	                                </div>
 	                                <div class="col-sm-10">
-		                                <input type="text" class="form-control b-light" id="storage_size" name="storage_size">
+		                                <input autocomplete="off"  type="text" class="form-control b-light" id="storage_size" name="storage_size" >
 		                            </div>
 			            		</div>
 			            		<div class="row mt-3">
@@ -292,7 +292,7 @@
 		                            </div>
 			            		</div>
 			            		<div class="button-group d-flex justify-content-end mt-2">
-			            			<input type="hidden" id="storage_location" name="storage_location">
+			            			<input autocomplete="off"  type="hidden" id="storage_location" name="storage_location">
 			            			<button type="button" class="btn btn-primary btn-default btn-squared" onclick="InsertStorage()">저장</button>
 				           		</div>
 			            	</form>

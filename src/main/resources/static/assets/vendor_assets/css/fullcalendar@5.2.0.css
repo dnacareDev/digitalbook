@@ -849,6 +849,8 @@ A HORIZONTAL event
 .fc .fc-more-popover .fc-popover-body {
     min-width: 220px;
     padding: 10px;
+    max-height: 350px;
+    overflow: scroll; 
   }
 .fc-direction-ltr .fc-daygrid-event.fc-event-start,
 .fc-direction-rtl .fc-daygrid-event.fc-event-end {

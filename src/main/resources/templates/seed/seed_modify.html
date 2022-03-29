@@ -155,7 +155,7 @@
 			        		<div class="card-body">
 			        			<div class="row">
 			        				<div class="col-sm-2 checkbox-theme-default custom-checkbox" style="margin-bottom: 20px;">
-			        					<input type="checkbox" id="not_report" class="checkbox">
+			        					<input autocomplete="off"  type="checkbox" id="not_report" class="checkbox">
 			        					<label for="not_report">
 			        						<span class="checkbox-text color-dark">과제 비연계</span>
 			        					</label>
@@ -166,7 +166,7 @@
 		                                   <label for="report_year" class="col-form-label color-dark align-center">과제명</label>
 	                                </div>
 	                                <div class="col-sm-8"  style="-webkit-box-flex: 0;-ms-flex: 0 0 75%;flex: 0 0 70% !important;max-width: 70% !important;">
-	                                	<input type="text" class="form-control b-light seed_code" id="report_code" th:data-report-code="${seeds.get(0).report_code}" th:value="${seeds.get(0).report_title}" readonly="readonly">
+	                                	<input autocomplete="off"  type="text" class="form-control b-light seed_code" id="report_code" th:data-report-code="${seeds.get(0).report_code}" th:value="${seeds.get(0).report_title}" readonly="readonly">
 	                                </div>
 		                         </div>
 		                         <div class="row mt-3">
@@ -199,7 +199,7 @@
 						        										<label for="seed_code" class="title_asd">샘플 ID</label>
 						        									</div>
 						        									<div class="col-md-3 mb-25" style="flex:0 0 27%;padding-right:0;max-width:27%">
-						        										<input type="text" class="form-control b-light seed_code" id="seed_code" readonly="readonly" style="width:100%">
+						        										<input autocomplete="off"  type="text" class="form-control b-light seed_code" id="seed_code" readonly="readonly" style="width:100%">
 						        									</div>
 						        									<div class="col-md-1 mb-25" style="float:right; padding: 0; padding-left: 10px;">
 						        										<button type="button" class="btn btn-sm btn-info qr-btn" style="float:left; padding: 0 5px;">QR Code</button>
@@ -212,7 +212,7 @@
 						        										<label class="title_asd"><span class="red">*</span>품종/유전자원정보</label>
 						        									</div>
 						        									<div class="col-md-4 mb-25">
-						        										<input type="text" class="form-control b-light genetic_id input1" style="float: left;width: 80%;vertical-align: middle;border-radius: 5px 0 0 5px !important;border-right: 0;" readonly="readonly">
+						        										<input autocomplete="off"  type="text" class="form-control b-light genetic_id input1" style="float: left;width: 80%;vertical-align: middle;border-radius: 5px 0 0 5px !important;border-right: 0;" readonly="readonly">
 						        										<label class="btn btn-light genetic_show label1" style="float: left;margin: 0 !important;border-radius: 0 5px 5px 0;height: 34.12px;border: 1px solid #e3e6ef;border-left: 0;width: 20%; padding:0;">조회</label>
 						        									</div>
 						        									<div class="col-md-5 content_cover">
@@ -221,7 +221,7 @@
 										                                </div>
 										                                <div class="col-md-10 mb-25 title_inner">
 										                                	<div class="select" style="height: auto; width:100%">
-											                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control seed_manager" id="seed_manager" placeholder="담당자 선택" autocomplete="new-password">
+											                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control seed_manager" id="seed_manager" placeholder="담당자 선택" >
 											                            		<ul class="select-hide">
 											                            			<th:block th:each="user : ${user}">
 											                            				<li class="seed_manager_list" onclick="selectOpt(this);"><span th:data-value="${user.user_id}" th:text="${user.user_name_k}"></span></li>
@@ -242,14 +242,14 @@
 						        										<label for="seed_area" class="title_asd"><span class="red">*</span>생산지역</label>
 						        									</div>
 						        									<div class="col-md-4 mb-25">
-						        										<input type="text" class="form-control b-light seed_area" id="seed_area">
+						        										<input autocomplete="off"  type="text" class="form-control b-light seed_area" id="seed_area">
 						        									</div>
 						        									<div class="col-md-5 content_cover">
 							        									<div class="titles">
 										                                    <label for="seed_year" class="title_asd">생산연도</label>
 										                                </div>
 										                                <div class="col-md-10 mb-25 title_inner">
-							        										<input type="number" class="form-control b-light seed_year" id="seed_year" >
+							        										<input autocomplete="off"  type="number" class="form-control b-light seed_year" id="seed_year" >
 							        									</div>
 						        									</div>
 						        								</div>
@@ -259,7 +259,7 @@
 						        									</div>
 						        									<div class="col-md-4 mb-25">
 						        										<div class="select" style="height: auto;">
-										                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control seed_method" id="seed_method" placeholder="생산방법 선택" autocomplete="new-password">
+										                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control seed_method" id="seed_method" placeholder="생산방법 선택" >
 										                            		<ul class="select-hide">
 										                            			<li class="seed_method_list" onclick="selectOpt(this);"><span data-value="시험연구">시험연구</span></li>
 										                            			<li class="seed_method_list" onclick="selectOpt(this);"><span data-value="증식">증식</span></li>
@@ -282,7 +282,7 @@
 						        									
 							        									<div class="col-md-5 mb-25 title_inner1">
 							        										<div class="select" style="height: auto;">
-											                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control eaches_id" id="eaches_id" placeholder="단위 선택" autocomplete="new-password">
+											                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control eaches_id" id="eaches_id" placeholder="단위 선택" >
 											                            		<ul class="select-hide" style="width: 89%;">
 											                            			<th:block th:each="eaches : ${eaches}">
 											                            				<li class="eaches_id_list" onclick="selectOpt(this);"><span th:data-value="${eaches.eaches_id}" th:text="${eaches.eaches_name}"></span></li>
@@ -298,7 +298,7 @@
 							        									</div>
 						        									
 										                                <div class="col-md-5 mb-25 title_inner1">
-							        										<input type="number" class="form-control b-light seed_amount" id="seed_amount">
+							        										<input autocomplete="off"  type="number" class="form-control b-light seed_amount" id="seed_amount">
 							        									</div>
 						        									
 						        									</div>
@@ -309,7 +309,7 @@
 						        									</div>
 						        									<div class="col-md-4 mb-25">
 						        										<div class="select" style="height: auto;">
-										                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control ware_id" id="ware_id" placeholder="저장 장소 선택" autocomplete="new-password">
+										                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control ware_id" id="ware_id" placeholder="저장 장소 선택" >
 										                            		<ul class="select-hide">
 										                            			<th:block th:each="ware : ${warehouse}">
 										                            				<li class="eaches_id_list" onclick="selectOpt(this);"><span th:data-value="${ware.ware_id}" th:data-condition="${ware.ware_condition}" th:text="${ware.warehouse}"></span></li>
@@ -328,7 +328,7 @@
 										                                    <label for="ware_condition" class="title_asd">저장조건</label>
 										                                </div>
 										                                <div class="col-md-10 mb-25 title_inner">
-							        										<input type="text" class="form-control b-light ware_condition" id="ware_condition" readonly="readonly">
+							        										<input autocomplete="off"  type="text" class="form-control b-light ware_condition" id="ware_condition" readonly="readonly">
 							        									</div>
 						        									</div>
 						        								</div>
@@ -352,7 +352,7 @@
 									                                    <label for="seed_sender" class="color-dark fw-500 align-center">발송인 정보</label>
 									                                </div>
 									                                <div class="col-md-4 mb-25">
-						        										<input type="text" class="form-control b-light seed_sender" id="seed_sender">
+						        										<input autocomplete="off"  type="text" class="form-control b-light seed_sender" id="seed_sender">
 						        									</div>
 						        									<div class="col-md-5 content_cover">
 							        									<div class="titles">
@@ -360,7 +360,7 @@
 							        									</div>
 							        									<div class="col-md-10 mb-25 title_inner">
 							        										<div class="select" style="height: auto; width:100%;">
-											                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control seed_receiver" id="seed_receiver" placeholder="수취인 선택" autocomplete="new-password">
+											                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control seed_receiver" id="seed_receiver" placeholder="수취인 선택" >
 											                            		<ul class="select-hide">
 											                            			<th:block th:each="user : ${user}">
 											                            				<li class="seed_manager_list" onclick="selectOpt(this);"><span th:data-value="${user.user_id}" th:text="${user.user_name_k}"></span></li>
@@ -381,20 +381,20 @@
 									                                    <label class="title_asd">발송일자</label>
 									                                </div>
 									                                <div class="col-md-4 mb-25">
-						        										<input type="text" class="form-control b-light send_date send-datepicker0">
+						        										<input autocomplete="off"  type="text" class="form-control b-light send_date send-datepicker0">
 						        									</div>
 						        									<div class="col-md-5 content_cover">
 							        									<div class="titles">
 							        										<label class="title_asd">수취일자</label>
 							        									</div>
 							        									<div class="col-md-10 mb-25 title_inner">
-							        										<input type="text" class="form-control b-light receive_date receive-datepicker0">
+							        										<input autocomplete="off"  type="text" class="form-control b-light receive_date receive-datepicker0">
 							        									</div>
 							        								</div>
 						        								</div>
 						        								<div class="row">
 											        				<div class="col-sm-2 mb-4">
-											        					<input type="checkbox" class="seed_share" th:value="0">
+											        					<input autocomplete="off"  type="checkbox" class="seed_share" th:value="0">
 											        					<label>
 											        						<span class="color-dark" th:text="${#authentication.principal.d3_department_name} + | 공유|"></span>
 											        					</label>
@@ -608,19 +608,19 @@
 				            		<div class="col-md-4">
 					            		<div class="radio-horizontal-list d-flex">
 					            			<div class="radio-theme-default custom-radio">
-					            				<input class="radio" type="radio" name="radio" value=0 id="division_radio" checked="checked">
+					            				<input autocomplete="off"  class="radio" type="radio" name="radio" value=0 id="division_radio" checked="checked">
 	                                            <label for="division_radio">
 	                                                <span class="radio-text">품종</span>
 	                                            </label>
 					            			</div>
 					            			<div class="radio-theme-default custom-radio">
-					            				<input class="radio" type="radio" name="radio" value=1 id="genetic_radio">
+					            				<input autocomplete="off"  class="radio" type="radio" name="radio" value=1 id="genetic_radio">
 	                                            <label for="genetic_radio">
 	                                                <span class="radio-text">유전자원명</span>
 	                                            </label>
 					            			</div>
 					            			<div class="radio-theme-default custom-radio">
-					            				<input class="radio" type="radio" name="radio" value=2 id="etc_radio">
+					            				<input autocomplete="off"  class="radio" type="radio" name="radio" value=2 id="etc_radio">
 	                                            <label for="etc_radio">
 	                                                <span class="radio-text">기타</span>
 	                                            </label>
@@ -634,7 +634,7 @@
    									</div>
      								<div class="col-md-4 mb-25">
      									<div class="select" style="height: auto;">
-		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control division_slt" id="division_slt" placeholder="대상 작목 선택" autocomplete="new-password">
+		                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control division_slt" id="division_slt" placeholder="대상 작목 선택" >
 		                            		<ul class="select-hide">
 		                            			<th:block th:each="division : ${division}">
 		                            				<li class="division_slt_list" onclick="selectOpt(this);"><span th:data-value="${division.division_id}" th:text="${division.division}"></span></li>
@@ -654,7 +654,7 @@
 	   									</div>
 	     								<div class="col-md-8 mb-25">
 	     									<div class="select" style="height: auto;">
-			                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control genetic_input" id="genetic_input" placeholder="품종 선택" autocomplete="new-password">
+			                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control genetic_input" id="genetic_input" placeholder="품종 선택" >
 			                            		<ul class="select-hide">
 			                            			
 			                            		</ul>
@@ -670,7 +670,7 @@
 	   									</div>
 	     								<div class="col-md-8 mb-25">
 	     									<div class="select" style="height: auto;">
-			                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control genetic_input" id="genetic_input" placeholder="유전자원명 선택" autocomplete="new-password">
+			                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control genetic_input" id="genetic_input" placeholder="유전자원명 선택" >
 			                            		<ul class="select-hide">
 			                            			
 			                            		</ul>
@@ -686,7 +686,7 @@
 	   									</div>
 	     								<div class="col-md-8 mb-25" id="etc_inner_col">
 	     									<div class="select" style="height: auto;">
-			                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control genetic_input" id="genetic_input" placeholder="기타 선택" autocomplete="new-password">
+			                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control genetic_input" id="genetic_input" placeholder="기타 선택" >
 			                            		<ul class="select-hide">
 			                            			
 			                            		</ul>
@@ -911,7 +911,7 @@
 	    if(dataSelect == "etc"){
 			var etc_inner_col = $("#etc_inner_col");
 			
-			var str = '<input type="text" class="form-control" id="etc_input" style="margin-top: 10px;">';
+			var str = '<input autocomplete="off"  type="text" class="form-control" id="etc_input" style="margin-top: 10px;">';
 			etc_inner_col.append(str);
 	    }
 	    
@@ -1101,7 +1101,7 @@
 		}
 		
 		var hidden_seed_id = "";
-		hidden_seed_id += '<input type="hidden" id="hidden_seed_id" value='+seeds[0].seed_id+'>';
+		hidden_seed_id += '<input autocomplete="off"  type="hidden" id="hidden_seed_id" value='+seeds[0].seed_id+'>';
 		
 		//동적 생성한 태그에 기존 값 노출
 		$(document).find(".copy-form-standard").each(function(index, item)

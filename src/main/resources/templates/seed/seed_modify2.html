@@ -57,7 +57,7 @@
 			        		<div class="card-body">
 			        			<div class="row">
 			        				<div class="col-sm-2 checkbox-theme-default custom-checkbox">
-			        					<input type="checkbox" id="not_report" class="checkbox">
+			        					<input autocomplete="off"  type="checkbox" id="not_report" class="checkbox">
 			        					<label for="not_report">
 			        						<span class="checkbox-text color-dark">과제 비연계</span>
 			        					</label>
@@ -106,7 +106,7 @@
 						        										<label class="color-dark fw-500 align-center mt-1"><span class="red">*</span>품종/유전자원정보</label>
 						        									</div>
 						        									<div class="col-md-4 mb-25">
-						        										<input type="text" class="form-control b-light genetic_id" style="float: left; width: 315px;" readonly="readonly">
+						        										<input autocomplete="off"  type="text" class="form-control b-light genetic_id" style="float: left; width: 315px;" readonly="readonly">
 						        										<label class="btn btn-light genetic_show">조회</label>
 						        									</div>
 						        									<div class="col-md-2 mb-25 d-flex aling-items-center">
@@ -126,13 +126,13 @@
 						        										<label for="seed_area" class="color-dark fw-500 align-center mt-1"><span class="red">*</span>생산지역</label>
 						        									</div>
 						        									<div class="col-md-4 mb-25">
-						        										<input type="text" class="form-control b-light seed_area" id="seed_area" th:value="${seed.seed_area}">
+						        										<input autocomplete="off"  type="text" class="form-control b-light seed_area" id="seed_area" th:value="${seed.seed_area}">
 						        									</div>
 						        									<div class="col-md-2 mb-25 d-flex aling-items-center">
 									                                    <label for="seed_year" class="color-dark fw-500 align-center"><span class="red">*</span>생산연도</label>
 									                                </div>
 									                                <div class="col-md-4 mb-25">
-						        										<input type="number" class="form-control b-light seed_year" id="seed_year" th:value="${seed.seed_year}">
+						        										<input autocomplete="off"  type="number" class="form-control b-light seed_year" id="seed_year" th:value="${seed.seed_year}">
 						        									</div>
 						        								</div>
 						        								<div class="row">
@@ -152,7 +152,7 @@
 									                                    <label for="seed_amount" class="color-dark fw-500 align-center"><span class="red">*</span>수량(개수)</label>
 									                                </div>
 									                                <div class="col-md-2 mb-25">
-						        										<input type="number" class="form-control b-light seed_amount" id="seed_amount" th:value="${seed.seed_amount}">
+						        										<input autocomplete="off"  type="number" class="form-control b-light seed_amount" id="seed_amount" th:value="${seed.seed_amount}">
 						        									</div>
 						        									<div class="col-md-2 mb-25">
 						        										<select class="form-control b-light eaches_id" name="each" id="eaches_id">
@@ -179,7 +179,7 @@
 									                                    <label for="ware_condition" class="color-dark fw-500 align-center">저장조건</label>
 									                                </div>
 									                                <div class="col-md-4 mb-25">
-						        										<input type="text" class="form-control b-light ware_condition" id="ware_condition" th:value="${seed.ware_condition}" readonly="readonly">
+						        										<input autocomplete="off"  type="text" class="form-control b-light ware_condition" id="ware_condition" th:value="${seed.ware_condition}" readonly="readonly">
 						        									</div>
 						        								</div>
 						        								<div class="row">
@@ -202,7 +202,7 @@
 									                                    <label for="seed_sender" class="color-dark fw-500 align-center">발송인 정보</label>
 									                                </div>
 									                                <div class="col-md-4 mb-25">
-						        										<input type="text" class="form-control b-light seed_sender" id="seed_sender" th:value="${seed.seed_sender}">
+						        										<input autocomplete="off"  type="text" class="form-control b-light seed_sender" id="seed_sender" th:value="${seed.seed_sender}">
 						        									</div>
 						        									<div class="col-md-2 mb-25 d-flex aling-items-center">
 						        										<label for="seed_sender" class="color-dark fw-500 align-center mt-1">수취인 정보</label>
@@ -221,18 +221,18 @@
 									                                    <label class="color-dark fw-500 align-center mt-1">발송일자</label>
 									                                </div>
 									                                <div class="col-md-4 mb-25">
-						        										<input type="text" class="form-control b-light send_date send-datepicker0" th:value="${seed.send_date}">
+						        										<input autocomplete="off"  type="text" class="form-control b-light send_date send-datepicker0" th:value="${seed.send_date}">
 						        									</div>
 						        									<div class="col-md-2 mb-25 d-flex aling-items-center">
 						        										<label class="color-dark fw-500 align-center mt-1">수취일자</label>
 						        									</div>
 						        									<div class="col-md-4 mb-25">
-						        										<input type="text" class="form-control b-light receive_date receive-datepicker0" th:value="${seed.receive_date}">
+						        										<input autocomplete="off"  type="text" class="form-control b-light receive_date receive-datepicker0" th:value="${seed.receive_date}">
 						        									</div>
 						        								</div>
 						        								<div class="row">
 											        				<div class="col-sm-2 mb-4">
-											        					<input type="checkbox" class="seed_share" th:checked="${seed.seed_share == 1}">
+											        					<input autocomplete="off"  type="checkbox" class="seed_share" th:checked="${seed.seed_share == 1}">
 											        					<label>
 											        						<span class="color-dark">수확 후 이용과 공유</span>
 											        					</label>
@@ -341,14 +341,14 @@
 			        	</div>
 			            <div class="modal-body">
 			            	<div class="col-12">
-				            	<form action="#">
+				            	<form autocomplete="off"  action="#">
 				            		<div class="row">
 				            			<div class="col-sm-3 d-flex aling-items-center mt-4">
 		                                    <label class="color-dark align-center">엑셀 파일</label>
 		                                </div>
 		                                <div class="col-sm-5 mb-2">
 		                                	<label for="uploadFile"></label>
-		                                    <input type="file" id="uploadFile">
+		                                    <input autocomplete="off"  type="file" id="uploadFile">
 		                                </div>
 				            		</div>
 				            		<div class="button-group d-flex justify-content-end">
@@ -381,19 +381,19 @@
 				            		<div class="col-md-4">
 					            		<div class="radio-horizontal-list d-flex">
 					            			<div class="radio-theme-default custom-radio">
-					            				<input class="radio" type="radio" name="radio" value=0 id="division_radio" checked="checked">
+					            				<input autocomplete="off"  class="radio" type="radio" name="radio" value=0 id="division_radio" checked="checked">
 	                                            <label for="division_radio">
 	                                                <span class="radio-text">품종</span>
 	                                            </label>
 					            			</div>
 					            			<div class="radio-theme-default custom-radio">
-					            				<input class="radio" type="radio" name="radio" value=1 id="genetic_radio">
+					            				<input autocomplete="off"  class="radio" type="radio" name="radio" value=1 id="genetic_radio">
 	                                            <label for="genetic_radio">
 	                                                <span class="radio-text">유전자원명</span>
 	                                            </label>
 					            			</div>
 					            			<div class="radio-theme-default custom-radio">
-					            				<input class="radio" type="radio" name="radio" value=2 id="etc_radio">
+					            				<input autocomplete="off"  class="radio" type="radio" name="radio" value=2 id="etc_radio">
 	                                            <label for="etc_radio">
 	                                                <span class="radio-text">기타</span>
 	                                            </label>

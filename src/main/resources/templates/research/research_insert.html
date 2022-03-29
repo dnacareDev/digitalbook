@@ -77,7 +77,7 @@
 			        				<div class="col-md-6 mb-25">
 	                                    <label for="division_depth1" class="color-dark fw-500">대상작목</label>
 	                                    <div class="select" style="height: auto;">
-		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="division_depth1" placeholder="대상 작목 선택" autocomplete="new-password">
+		                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="division_depth1" placeholder="대상 작목 선택" >
 		                            		<ul class="select-hide">
 		                            			<th:block th:each="dvs : ${division}">
 		                            				<li class="division_depth1_list" onclick="selectOpt(this);"><span th:data-value="${dvs.division_id}" th:text="${dvs.division}"></span></li>
@@ -94,7 +94,7 @@
 	                                <div class="col-md-6 mb-25">
 	                                    <label for="division_depth2" class="color-dark fw-500">분류</label>
 	                                    <div class="select" style="height: auto;">
-		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="division_depth2" placeholder="분류 선택" autocomplete="new-password">
+		                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="division_depth2" placeholder="분류 선택" >
 		                            		<ul class="select-hide">
 		                            			
 		                            		</ul>
@@ -108,7 +108,7 @@
 			        				<div class="col-md-6 mb-25">
 	                                    <label for="division_depth3" class="color-dark fw-500">항목</label>
 	                                    <div class="select" style="height: auto;">
-		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="division_depth3" placeholder="항목 선택" autocomplete="new-password">
+		                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="division_depth3" placeholder="항목 선택" >
 		                            		<ul class="select-hide">
 		                            			
 		                            		</ul>
@@ -119,7 +119,7 @@
 	                                </div>
 	                                <div class="col-md-6 mb-25">
 	                                    <label for="research_contents" class="color-dark fw-500"><span class="red">*</span>조사방법</label>
-	                                    <input type="text" class="form-control b-deep" id="research_contents">
+	                                    <input autocomplete="off"  type="text" class="form-control b-deep" id="research_contents">
 	                                </div>
 	                            </div>
 			        		</div>

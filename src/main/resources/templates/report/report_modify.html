@@ -51,11 +51,11 @@
 			        <div class="col-12">
 			        	<div class="card">
 			        		<div class="card-body">
-			        			<form action="updateReport" id="insertForm" method="POST" enctype="multipart/form-data">
+			        			<form autocomplete="off"  action="updateReport" id="insertForm" method="POST" enctype="multipart/form-data">
 			        				<div class="row">
 			        					<div class="col-sm-2 d-flex aling-items-center">
 		                                    <label for="report_year" class="col-form-label color-dark align-center">년도</label>
-		                                    <input type="hidden" id="origin_year" th:value="${report.report_year}">
+		                                    <input autocomplete="off"  type="hidden" id="origin_year" th:value="${report.report_year}">
 		                                </div>
 		                                <div class="col-sm-5">
 		                                    <select class="form-control b-light" id="report_year" name="report_year">
@@ -75,7 +75,7 @@
 		                                    <label class="color-dark align-center mt-1">기존 파일</label>
 		                                </div>
 		                                <div class="col-sm-5">
-		                                	<input type="checkbox" id="check_file" checked>
+		                                	<input autocomplete="off"  type="checkbox" id="check_file" checked>
 		                                    <a th:href="|downloadFile?report_file=${report.report_file}|" th:text="${report.report_file}"></a>
 		                                </div>
 		                            </div>
@@ -84,13 +84,13 @@
 		                                    <label class="color-dark align-center mt-1">ATIS 파일</label>
 		                                </div>
 		                                <div class="col-sm-5">
-		                                    <input type="file" id="file" name="file" onchange="readExcel();">
+		                                    <input autocomplete="off"  type="file" id="file" name="file" onchange="readExcel();">
 		                                </div>
 		                            </div>
-									<input type="hidden" id="excel" name="report">
-									<input type="hidden" id="report_file_id" name="report_file_id" th:value="${report.report_file_id}">
-									<input type="hidden" id="report_file" name="report_file" th:value="${report.report_file}">
-									<input type="hidden" id="type" name="type" value="0">
+									<input autocomplete="off"  type="hidden" id="excel" name="report">
+									<input autocomplete="off"  type="hidden" id="report_file_id" name="report_file_id" th:value="${report.report_file_id}">
+									<input autocomplete="off"  type="hidden" id="report_file" name="report_file" th:value="${report.report_file}">
+									<input autocomplete="off"  type="hidden" id="type" name="type" value="0">
 			        			</form>
 			        		</div>
 			        	</div>

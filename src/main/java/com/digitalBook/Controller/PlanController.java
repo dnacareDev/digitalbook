@@ -630,10 +630,14 @@ public class PlanController
 //		List<HashMap<String,Object>> addressForSoil = service.selectAreaCode();
 
 		List<HashMap<String,Object>> addressForWeather = service.addressForWeather();
-		
 		if(!plan.getPlan_method().isEmpty()) {			
 			int arr[] = Arrays.stream(plan.getPlan_method().split(",")).mapToInt(Integer::parseInt).toArray();
-			List<Method> method = service.selectPlanMethodList(arr);
+
+			List<Method> method = new ArrayList<Method>();
+			for(int i = 0;i < arr.length;i++) {
+				int temp[] = {arr[i]};
+				method.addAll(service.selectPlanMethodList(temp));
+			}
 			mv.addObject("method", method);
 		}
 		

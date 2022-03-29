@@ -195,7 +195,7 @@
 			                    <div class="content clearfix">
 			                    	<div class="row ml-4 first_child_start" style="float: left; margin-left: 15px;">
 			        					<label class="color-dark align-center" style="margin-bottom:0;">포장</label>
-			                            <input type="text" class="form-control b-light" id="storage_input" readonly="readonly" style="width: 300px; margin-left: 10px; padding: 0;">
+			                            <input autocomplete="off"  type="text" class="form-control b-light" id="storage_input" readonly="readonly" style="width: 300px; margin-left: 10px; padding: 0;" >
 			                    	</div>
 			                        <div class="btn_ver">
 			                            <button type="button" id="storageBtn">신규등록</button>
@@ -244,7 +244,7 @@
 			                                </th:block>
 			                            </select> -->
 			                            <div class="select">
-	                                		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="select_view1" placeholder="과제 선택" autocomplete="new-password">
+	                                		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="select_view1" placeholder="과제 선택" >
 	                                		<ul class="select-hide">
 	                                			<th:block th:each="report : ${report}">
 	                                				<li class="select_view1_list" onclick="selectOpt(this);">
@@ -270,7 +270,7 @@
 			                        <div class="btn btn2">
 			                        	<span class="title">시험구배치 종류</span>
 			                        	<div class="select" style="height: auto;">
-		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" class="form-control" id="grow_type" placeholder="시험구배치 선택" autocomplete="new-password" style="width: 300px;">
+		                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" class="form-control" id="grow_type" placeholder="시험구배치 선택"  style="width: 300px;">
 		                            		<ul class="select-hide">
 		                            			<li class="grow_type_list" onclick="selectOpt(this);"><span data-value="0">완전임의배치법</span></li>
 		                            			<li class="grow_type_list" onclick="selectOpt(this);"><span data-value="1">난괴법</span></li>
@@ -290,7 +290,7 @@
 			                            <li class="btn sub_btn">
 			                                <span class="sub_title">요인1</span>
 				                            <div class="select" data-index="1">
-			                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="factor_type_1" placeholder="시험구배치 선택" autocomplete="new-password" style="width: 100%; height:37px; float: left; padding: 0 20px;">
+			                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="factor_type_1" placeholder="시험구배치 선택"  style="width: 100%; height:37px; float: left; padding: 0 20px;">
 			                            		<ul class="select-hide" style="width: 65%">
 			                            			<li class="factor_type_1_list" onclick="selectOpt(this);"><span data-value="시험재료">시험재료</span></li>
 			                            			<li class="factor_type_1_list" onclick="selectOpt(this);"><span data-value="재식거리">재식거리</span></li>
@@ -318,7 +318,7 @@
 			                            <li class="btn sub_btn">
 			                                <span class="sub_title">요인2</span>
 				                            <div class="select" style="height: 37px;width: calc((100% - 139px)/1);" data-index="2">
-			                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="factor_type_2" placeholder="시험구배치 선택" autocomplete="new-password" style="width: 100%; height:37px; float: left; padding: 0 20px;">
+			                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="factor_type_2" placeholder="시험구배치 선택"  style="width: 100%; height:37px; float: left; padding: 0 20px;">
 			                            		<ul class="select-hide" style="width: 65%">
 			                            			<li class="factor_type_2_list" onclick="selectOpt(this);"><span data-value="시험재료">시험재료</span></li>
 			                            			<li class="factor_type_2_list" onclick="selectOpt(this);"><span data-value="재식거리">재식거리</span></li>
@@ -346,7 +346,7 @@
 			                            <li class="btn sub_btn">
 			                                <span class="sub_title">요인3</span>
 			                                <div class="select" style="height: 37px;width: calc((100% - 139px)/1);" data-index="3">
-			                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="factor_type_3" placeholder="시험구배치 선택" autocomplete="new-password" style="width: 100%; height:37px; float: left; padding: 0 20px;">
+			                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="factor_type_3" placeholder="시험구배치 선택"  style="width: 100%; height:37px; float: left; padding: 0 20px;">
 			                            		<ul class="select-hide" style="width: 65%">
 			                            			<li class="factor_type_3_list" onclick="selectOpt(this);"><span data-value="시험재료">시험재료</span></li>
 			                            			<li class="factor_type_3_list" onclick="selectOpt(this);"><span data-value="재식거리">재식거리</span></li>
@@ -374,7 +374,7 @@
 			                        </ul>
 			                        <div class="repeat">
 			                            <h6><span class="red" style="color: #FF4141">*</span>반복</h6>
-			                            <input type="text" id="plan_repeat" value="1" style="padding:10px 20px !important;">
+			                            <input autocomplete="off"  type="text" id="plan_repeat" value="1" style="padding:10px 20px !important;" >
 			                        </div>
 			                        <div class="submit clearfix">
 			                            <button type="button" id="step-3-btn">다음</button>
@@ -408,7 +408,7 @@
 			                            <div class="img_inner">
 			                                <div class="top_btn-left">
 			                                    <h6 style="margin-top: 10px;"><span class="red" style="color: #FF4141">*</span>열의 갯수</h6>
-			                                    <input type="text" value="10" id="mil2" style="height: 37.77px;border-radius: 5px 0 0 5px; width: 40%; margin-left: 10px;">
+			                                    <input autocomplete="off"  type="text" value="10" id="mil2" style="height: 37.77px;border-radius: 5px 0 0 5px; width: 40%; margin-left: 10px;" >
 			                                    <button id="step4-columnBtn" style="height: 37.77px; border-radius: 0 5px 5px 0; ">적용</button>
 			                                </div>
 			                                <div class="top_btn-right clearfix">
@@ -454,15 +454,15 @@
 			                        <div class="row" style="justify-content: center;">
 					            		<div class="col-lg-5">
 											<div class="row">
-												<input type="text" onkeyup="filterMethod();" class="form-control b-light" id="searchMethod" placeholder="조사항목, 프로토콜명 검색"
-														style="width: 100%; padding: 20px 20px;">
+												<input autocomplete="off"  type="text" onkeyup="filterMethod();" class="form-control b-light" id="searchMethod" placeholder="조사항목, 프로토콜명 검색"
+														style="width: 100%; padding: 20px 20px;" >
 											</div>
 											<div class="row">
 												<div class="table-responsive">
 													<table class="table">
 														<thead>
 															<tr>
-																<th><input type="checkbox" name="" onclick="selectAllMethod(this);"></th>
+																<th><input autocomplete="off"  type="checkbox" name="" onclick="selectAllMethod(this);"></th>
 																<th>작목</th>
 																<th>분류</th>
 																<th>조사항목</th>
@@ -472,7 +472,7 @@
 														</thead>
 														<tbody style="max-height: 500px; orverfolw-y: auto;" id="method_list">
 															<tr class="method_tr" th:Each="m : ${method}">
-																<td><input type="checkbox" name="chk_method" th:value="${m.method_id}"></td>
+																<td><input autocomplete="off"  type="checkbox" name="chk_method" th:value="${m.method_id}"></td>
 																<td class="d1_name" th:text="${m.d1_name}"></td>
 																<td class="d2_name" th:text="${m.d2_name}"></td>
 																<td class="d3_name" th:text="${m.d3_name}"></td>
@@ -495,7 +495,7 @@
 										
 										<div class="col-lg-6" style="padding:0;">
 											<div style=" display: flex; margin:2px;">
-												<input type="checkbox" name="" onclick="selectAllSelectedMethod(this);" style="margin-right:10px;"><h1>전체 선택</h1>
+												<input autocomplete="off"  type="checkbox" name="" onclick="selectAllSelectedMethod(this);" style="margin-right:10px;"><h1>전체 선택</h1>
 											</div>
 											<ul class="list-group" id="method-container" style="min-height: 400px; max-height: 400px;
 												overflow-y: auto; background-color: rgb(243, 243, 243) ">
@@ -578,14 +578,14 @@
 		        	</div>
 		            <div class="modal-body">
 		            	<div class="col-12">
-			            	<form action="#" id="insertStorageForm" method="POST" enctype="multipart/form-data" autocomplete="new-password">
+			            	<form autocomplete="off"  action="#" id="insertStorageForm" method="POST" enctype="multipart/form-data" >
 			            		<div class="row mt-3">
 			            			<div class="col-sm-2 d-flex aling-items-center">
 		                            	<label for="storage_search" class="col-form-label color-dark align-center"><span class="red">*</span>검색</label>
 	                                </div>
 	                                <div class="col-sm-10" style="display:flex">
-		                                <input type="text" class="form-control b-light" id="storage_search" name="storage_search" style="width:90%">
-		                                <input type="button" class="btn btn-primary btn-default btn-squared"  onclick="searchPlaces()" value="검색" style="margin-left:5px;width:10%">
+		                                <input autocomplete="off"  type="text" class="form-control b-light" id="storage_search" name="storage_search" style="width:90%" >
+		                                <input autocomplete="off"  type="button" class="btn btn-primary btn-default btn-squared"  onclick="searchPlaces()" value="검색" style="margin-left:5px;width:10%">
 		                            </div>
 			            		</div>
                 
@@ -603,7 +603,7 @@
 		                            	<label for="storage_name" class="col-form-label color-dark align-center"><span class="red">*</span>실험 장소</label>
 	                                </div>
 	                                <div class="col-sm-10">
-		                                <input type="text" class="form-control b-light" id="storage_name" name="storage_name">
+		                                <input autocomplete="off"  type="text" class="form-control b-light" id="storage_name" name="storage_name" >
 		                            </div>
 			            		</div>
 			            		<div class="row mt-3">
@@ -638,7 +638,7 @@
 		                            	<label for="storage_division" class="col-form-label color-dark align-center">구획구분</label>
 	                                </div>
 	                                <div class="col-sm-10">
-		                                <input type="text" class="form-control b-light" id="storage_division" name="storage_division">
+		                                <input autocomplete="off"  type="text" class="form-control b-light" id="storage_division" name="storage_division" >
 		                            </div>
 			            		</div>
 			            		<div class="row mt-3">
@@ -646,7 +646,7 @@
 		                            	<label for="storage_address" class="col-form-label color-dark align-center">주소</label>
 	                                </div>
 	                                <div class="col-sm-10">
-		                                <input type="text" class="form-control b-light" id="storage_address" name="storage_address">
+		                                <input autocomplete="off"  type="text" class="form-control b-light" id="storage_address" name="storage_address" >
 		                            </div>
 			            		</div>
 			            		<div class="row mt-3">
@@ -654,7 +654,7 @@
 		                            	<label for="storage_size" class="col-form-label color-dark align-center">면적</label>
 	                                </div>
 	                                <div class="col-sm-10">
-		                                <input type="text" class="form-control b-light" id="storage_size" name="storage_size">
+		                                <input autocomplete="off"  type="text" class="form-control b-light" id="storage_size" name="storage_size" >
 		                            </div>
 			            		</div>
 			            		<div class="row mt-3">
@@ -666,7 +666,7 @@
 		                            </div>
 			            		</div>
 			            		<div class="button-group d-flex justify-content-end mt-2">
-			            			<input type="hidden" id="storage_location" name="storage_location">
+			            			<input autocomplete="off"  type="hidden" id="storage_location" name="storage_location">
 			            			<button type="button" class="btn btn-primary btn-default btn-squared" onclick="insertStorage();">저장</button>
 				           		</div>
 			            	</form>
@@ -692,8 +692,8 @@
 		            	<div class="row mt-3">
 		            		<div class="col-lg-5">
 								<div class="row">
-									<input type="text" onkeyup="filterSeed();" class="form-control b-light" id="searchSeed" placeholder="작목명, 품종명 검색"
-											style="width: 100%; padding: 20px 20px;">
+									<input autocomplete="off"  type="text" onkeyup="filterSeed();" class="form-control b-light" id="searchSeed" placeholder="작목명, 품종명 검색"
+											style="width: 100%; padding: 20px 20px;" >
 								</div>
 								<div class="row">
 									<div class="table-responsive">
@@ -760,7 +760,7 @@
 		                            </div>
 		                            <div class="col-sm-8" style="padding:0;">
 		                            	<div class="select" style="height: auto;">
-		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="intervalSelect" placeholder="재식거리 선택" autocomplete="new-password" style="width: 100%;padding: 10px 35px !important;height:37.78px; border-radius:5px 0 0 5px; border-right:0;">
+		                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="intervalSelect" placeholder="재식거리 선택"  style="width: 100%;padding: 10px 35px !important;height:37.78px; border-radius:5px 0 0 5px; border-right:0;">
 		                            		<ul class="select-hide" style="top: 40px; width: 100%;">
 		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="60x10">60x10</span></li>
 		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="60x15">60x15</span></li>
@@ -859,7 +859,7 @@
 	                            		<label class="color-dark align-center"><span class="red">*</span>재식주수<br>(포기당 식물체수)</label>
 		                            </div>
 		                            <div class="col-sm-6" style="padding:0;">
-	                                	<input type="text" class="form-control b-light" id="plants_text" style="width: 100%;padding: 10px 35px !important;height:37.78px; border-radius:5px 0 0 5px; border-right:0;">
+	                                	<input autocomplete="off"   type="text" class="form-control b-light" id="plants_text" style="width: 100%;padding: 10px 35px !important;height:37.78px; border-radius:5px 0 0 5px; border-right:0;">
 		                            </div>
 		                            <div class="col-sm-2 input_submit" style="padding:0;">
 						                <button type="button" onclick="PlusPlants();" style="padding: 10px 4px!important; border-radius: 0 5px 5px 0; border-left: 0;">수준 추가</button>
@@ -912,7 +912,7 @@
 	                            		<label class="color-dark align-center"><span class="red">*</span>파종량</label>
 		                            </div>
 		                            <div class="col-sm-8" style="padding:0;">
-	                                	<input type="text" class="form-control b-light" id="amount_text" style="width: 100%;padding: 10px 35px !important;height:37.78px; border-radius:5px 0 0 5px; border-right:0;">
+	                                	<input autocomplete="off"   type="text" class="form-control b-light" id="amount_text" style="width: 100%;padding: 10px 35px !important;height:37.78px; border-radius:5px 0 0 5px; border-right:0;">
 		                            </div>
 		                            <div class="col-sm-2 input_submit" style="padding: 0;">
 						                <button type="button" onclick="PlusAmount();" style="padding: 10px 4px!important; border-radius: 0 5px 5px 0; border-left: 0;">수준 추가</button>
@@ -966,7 +966,7 @@
 		                            	<label class="color-dark align-center"><span class="red">*</span>면적(m2)</label>
 		                            </div>
 		                            <div class="col-sm-10">
-		                                <input type="text" class="form-control b-light" id="manure_area" style="width: 100%;">
+		                                <input autocomplete="off"   type="text" class="form-control b-light" id="manure_area" style="width: 100%;">
 		                            </div>
 		                    	</div>
 		                    	<div class="row mt-3">
@@ -975,7 +975,7 @@
 		                            </div>
 		                            <div class="col-sm-5">
 		                            	<div class="select" style="height: auto;">
-		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="fert_1" placeholder="비료성분 선택" autocomplete="new-password" style="width: 100%;">
+		                            		<input autocomplete="off"   type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="fert_1" placeholder="비료성분 선택"  style="width: 100%;">
 		                            		<ul class="select-hide" style="top: 40px; width: 95%;">
 		                            			<th:block th:each="fert : ${fert}">
 		                            				<li class="fert_1_list" onclick="selectOpt(this);"><span th:data-value="${fert.fert_id}" th:text="${fert.fertilizer}"></span></li>
@@ -993,7 +993,7 @@
 		                            </div>
 		                            <div class="col-sm-5">
 		                            	<div class="select" style="height: auto;">
-		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="fert_2" placeholder="비료종류 선택" autocomplete="new-password" style="width: 100%;">
+		                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="fert_2" placeholder="비료종류 선택"  style="width: 100%;">
 		                            		<ul class="select-hide" style="top: 40px; width: 95%;">
 		                            			
 		                            		</ul>
@@ -1008,10 +1008,10 @@
 		                            	
 		                            </div>
 		                            <div class="col-sm-5">
-		                                <input type="text" class="form-control b-light" id="manure_etc1" placeholder="비료성분" style="width: 100%;">
+		                                <input autocomplete="off"  type="text" class="form-control b-light" id="manure_etc1" placeholder="비료성분" style="width: 100%;" >
 		                            </div>
 		                            <div class="col-sm-5">
-		                                <input type="text" class="form-control b-light" id="manure_etc2" placeholder="비료종류" style="width: 100%;">
+		                                <input autocomplete="off"  type="text" class="form-control b-light" id="manure_etc2" placeholder="비료종류" style="width: 100%;" >
 		                            </div>
 		                    	</div>
 		                    	<div class="row mt-3">
@@ -1019,7 +1019,7 @@
 		                            	<label class="color-dark align-center">시비량(kg/10a)</label>
 		                            </div>
 		                            <div class="col-sm-10">
-		                                <input type="text" class="form-control b-light" id="manure_amount" placeholder="시비량(kg/10a)" style="width: 100%;">
+		                                <input autocomplete="off"  type="text" class="form-control b-light" id="manure_amount" placeholder="시비량(kg/10a)" style="width: 100%;" >
 		                            </div>
 		                    	</div>
 		                    	<div class="row mt-3">
@@ -1027,7 +1027,7 @@
 		                            	<label class="color-dark align-center">성분량(%)</label>
 		                            </div>
 		                            <div class="col-sm-10">
-		                                <input type="text" class="form-control b-light" id="manure_percent" placeholder="성분량(%)" style="width: 100%;">
+		                                <input autocomplete="off"  type="text" class="form-control b-light" id="manure_percent" placeholder="성분량(%)" style="width: 100%;" >
 		                            </div>
 		                    	</div>
 		                    	<div class="row mt-3">
@@ -1035,7 +1035,7 @@
 		                            	<label class="color-dark align-center">값(kg)</label>
 		                            </div>
 		                            <div class="col-sm-10">
-		                                <input type="text" class="form-control b-light" id="manure_result" placeholder="값(kg)" style="width: 100%;" readonly="readonly">
+		                                <input autocomplete="off"  type="text" class="form-control b-light" id="manure_result" placeholder="값(kg)" style="width: 100%;" readonly="readonly" >
 		                            </div>
 		                    	</div>
 		            			<div class="row">
@@ -1102,7 +1102,7 @@
 		                            </div>
 		                            <div class="col-sm-8">
 		                            	<div class="select" style="height: auto;">
-		                            		<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="etc_type" placeholder="기타요인 선택" autocomplete="new-password" style="width: 100%;">
+		                            		<input autocomplete="off"  type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control" id="etc_type" placeholder="기타요인 선택"  style="width: 100%;">
 		                            		<ul class="select-hide" style="top: 40px; width: 90%;">
 		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="온도">온도</span></li>
 		                            			<li class="intervalSelect_list" onclick="selectOpt(this);"><span data-value="관수">관수</span></li>
@@ -1142,7 +1142,7 @@
 	                            		<label class="color-dark align-center"><span class="red">*</span>값</label>
 		                            </div>
 		                            <div class="col-sm-8">
-	                                	<input type="text" class="form-control b-light" id="etc_value" style="width: 100%;">
+	                                	<input autocomplete="off"  type="text" class="form-control b-light" id="etc_value" style="width: 100%;" >
 		                            </div>
 		            			</div>
 		            			<div class="row mt-3">
@@ -1370,9 +1370,9 @@
 				add_list += '<div class="form-group" style="position: relative; display: flex; flex-wrap: wrap; justify-content: center;">';
 				
 				add_list += '<div class="col-sm-2" style="font-size: 0.75em; display: flex;">조간거리<br>(이량사이)</div>';
-				add_list += '<input class="col-sm-3" id="etc_text1" type="text" style="width: 80px; height: 20px;">';
+				add_list += '<input autocomplete="off"  class="col-sm-3" id="etc_text1" type="text" style="width: 80px; height: 20px;" >';
 				add_list += '<div class="col-sm-2" style="font-size: 0.75em; display: flex;"">주간거리<br>(포기사이)</div>';
-				add_list += '<input class="col-sm-3" id="etc_text2" type="text" style="width: 80px; height: 20px;">';
+				add_list += '<input autocomplete="off"  class="col-sm-3" id="etc_text2" type="text" style="width: 80px; height: 20px;" >';
 				
 				add_list += '</div>';
 				add_list += '</div>';
@@ -1757,7 +1757,7 @@
 					for(var i = 0; i < result.length; i++){
 						add_list += '<tr class="seed_tr">';
 						
-						add_list += '<td><input type="checkbox" class="checkbox" name="chk_seed" value="' + result[i].seed_id + '"></td>';
+						add_list += '<td><input autocomplete="off"  type="checkbox" class="checkbox" name="chk_seed" value="' + result[i].seed_id + '"></td>';
 						add_list += '<td>'+result[i].seed_code+'</td>';
 						add_list += '<td class="text_1">'+result[i].division+'</td>';
 						add_list += '<td class="text_2">'+result[i].genetic+'</td>';
@@ -1781,12 +1781,12 @@
 							for(var i = 0; i < seed_ids.length; i++){
 								for(var j = 0; j < result.length; j++){
 									if(seed_ids[i] == result[j].seed_id){
-										str += '<div th:data-id='+result[j].seed_id+' class="list-group list-step">';
+										str += '<div data-id='+result[j].seed_id+' class="list-group list-step">';
 										str += '<li class="list-group-item-sm list-group-item">';
 										str += '<div class="row">';
 										
 										str += '<div class="mb-1 col-4">';
-										str += '<input type="checkbox" class="checkbox mr-2" name="mis_seed">';
+										str += '<input autocomplete="off"  type="checkbox" class="checkbox mr-2" name="mis_seed">';
 										str += '<span>' + result[j].seed_code + '</span>';
 										str += '</div>';
 										
@@ -1817,12 +1817,12 @@
 							for(var i = 0; i < seed_ids.length; i++){
 								for(var j = 0; j < result.length; j++){
 									if(seed_ids[i] == result[j].seed_id){
-										str += '<div th:data-id='+result[j].seed_id+' class="list-group list-step">';
+										str += '<div data-id='+result[j].seed_id+' class="list-group list-step">';
 										str += '<li class="list-group-item-sm list-group-item">';
 										str += '<div class="row">';
 										
 										str += '<div class="mb-1 col-4">';
-										str += '<input type="checkbox" class="checkbox mr-2" name="mis_seed">';
+										str += '<input autocomplete="off"  type="checkbox" class="checkbox mr-2" name="mis_seed">';
 										str += '<span>' + result[j].seed_code + '</span>';
 										str += '</div>';
 										
@@ -1853,12 +1853,12 @@
 							for(var i = 0; i < seed_ids.length; i++){
 								for(var j = 0; j < result.length; j++){
 									if(seed_ids[i] == result[j].seed_id){
-										str += '<div th:data-id='+result[j].seed_id+' class="list-group list-step">';
+										str += '<div data-id='+result[j].seed_id+' class="list-group list-step">';
 										str += '<li class="list-group-item-sm list-group-item">';
 										str += '<div class="row">';
 										
 										str += '<div class="mb-1 col-4">';
-										str += '<input type="checkbox" class="checkbox mr-2" name="mis_seed">';
+										str += '<input autocomplete="off"  type="checkbox" class="checkbox mr-2" name="mis_seed">';
 										str += '<span>' + result[j].seed_code + '</span>';
 										str += '</div>';
 										
@@ -1917,12 +1917,12 @@
 				length++;
 			}
 			
-			add_list += '<div th:data-id='+seed_id+' class="list-group list-step">';
+			add_list += '<div data-id='+seed_id+' class="list-group list-step">';
 			add_list += '<li class="list-group-item-sm list-group-item">';
 			add_list += '<div class="row">';
 			
 			add_list += '<div class="mb-1 col-4">';
-			add_list += '<input type="checkbox" class="checkbox mr-2" name="mis_seed">';
+			add_list += '<input autocomplete="off"  type="checkbox" class="checkbox mr-2" name="mis_seed">';
 			add_list += '<span>' + seed_code + '</span>';
 			add_list += '</div>';
 			
@@ -1986,10 +1986,10 @@
 		$(document).find(".list-step").each(function(i, item){
 			
 			if(i == (length-1)){
-				content += $(this).attr("th:data-id");
+				content += $(this).attr("data-id");
 				text += $(this).find(".list_division").text() + " " + "(" + $(this).find(".list_genetic").text() + ")";
 			}else{
-				content += $(this).attr("th:data-id")+',';
+				content += $(this).attr("data-id")+',';
 				text += $(this).find(".list_division").text() + " " + "(" + $(this).find(".list_genetic").text() + ")" +",";
 			}
 			
@@ -2138,9 +2138,9 @@
 			add_list += '<div class="form-group ml-2" style="position: relative; display: flex; flex-wrap: wrap;">';
 			
 			add_list += '<div class="pl-2" style="font-size: 0.75em; display: flex;">조간거리<br>(이량사이)</div>';
-			add_list += '<input id="etc_text1" type="text" style="width: 80px; height: 20px;">';
+			add_list += '<input autocomplete="off"  id="etc_text1" type="text" style="width: 80px; height: 20px;">';
 			add_list += '<div class="pl-2" style="font-size: 0.75em; display: flex;"">주간거리<br>(포기사이)</div>';
-			add_list += '<input id="etc_text2" type="text" style="width: 80px; height: 20px;">';
+			add_list += '<input autocomplete="off"  id="etc_text2" type="text" style="width: 80px; height: 20px;">';
 			
 			add_list += '</div>';
 			add_list += '</div>';
@@ -3505,7 +3505,7 @@ var type_name = [1,2,3];
 			    add_list += '<td class="table_id">'+resultArray[i].id+'</td>';
 			    
 			    //구획 이름 추가  
-			    add_list += '<td><input type="text" class="input-height segment-title"></td>';
+			    add_list += '<td><input autocomplete="off"  type="text" class="input-height segment-title" ></td>';
 			    
 			    add_list += '<td class="table_type">';
 		    	
@@ -3519,7 +3519,7 @@ var type_name = [1,2,3];
 			    add_list +='</td>';
 			    
 			    add_list += '<td class="table_repeat">'+resultArray[i].repeat+'</td>';
-			    add_list += '<td><input type="text" id="mil" class="seg_area" value="0"></td>';
+			    add_list += '<td><input autocomplete="off"  type="text" id="mil" class="seg_area" value="0" ></td>';
 			    add_list += '</tr>';
 			}
 			
@@ -3661,11 +3661,11 @@ var type_name = [1,2,3];
 					    add_list += '<td class="table_num">'+resultArray[j].num+'</td>';
 					    add_list += '<td class="table_id">'+resultArray[j].id+'</td>';
 						  //구획 이름 추가  
-					    add_list += '<td><input type="text" class="input-height segment-title" value=""></td>';
+					    add_list += '<td><input autocomplete="off"  type="text" class="input-height segment-title" value="" ></td>';
 					    
 					    add_list += '<td class="table_type">'+resultArray[j].type+'</td>';
 					    add_list += '<td>'+resultArray[j].repeat+'</td>';
-					    add_list += '<td><input type="text" id="mil" class="seg_area" value="0"></td>';
+					    add_list += '<td><input autocomplete="off"  type="text" id="mil" class="seg_area" value="0" ></td>';
 					    add_list += '</tr>';
 					}
 				}//end for2
@@ -3820,11 +3820,11 @@ var type_name = [1,2,3];
 					    add_list += '<td class="table_id">'+resultArray[j].id+'</td>';
 					    
 						  //구획 이름 추가  
-					    add_list += '<td><input type="text" class="input-height segment-title" value=""></td>';
+					    add_list += '<td><input autocomplete="off"  type="text" class="input-height segment-title" value="" ></td>';
 					    
 					    add_list += '<td class="table_type">'+resultArray[j].type+'</td>';
 					    add_list += '<td>'+resultArray[j].repeat+'</td>';
-					    add_list += '<td><input type="text" id="mil" class="seg_area" value="0"></td>';
+					    add_list += '<td><input autocomplete="off"  type="text" id="mil" class="seg_area" value="0" ></td>';
 					    add_list += '</tr>';
 					}
 				}//end for2
@@ -3994,11 +3994,11 @@ var type_name = [1,2,3];
 					    add_list += '<td class="table_id">'+resultArray[j].id+'</td>';
 					    
 					    //구획 이름 추가  
-					    add_list += '<td><input type="text" class="input-height segment-title" value=""></td>';
+					    add_list += '<td><input autocomplete="off"  type="text" class="input-height segment-title" value="" ></td>';
 					    
 					    add_list += '<td class="table_type">'+resultArray[j].type+'</td>';
 					    add_list += '<td>'+resultArray[j].repeat+'</td>';
-					    add_list += '<td><input type="text" id="mil" class="seg_area" value="0"></td>';
+					    add_list += '<td><input autocomplete="off"  type="text" id="mil" class="seg_area" value="0" ></td>';
 					    add_list += '</tr>';
 					}
 				}//end for2
@@ -4428,12 +4428,12 @@ var type_name = [1,2,3];
 			var method_title = $(this).parent().parent().find(".method_title").text();
 			var method_contents = $(this).parent().parent().find(".method_contents").text();
 			
-			add_list += '<div th:data-id='+method_id+' class="list-group method-step">';
+			add_list += '<div data-id='+method_id+' class="list-group method-step">';
 			add_list += '<li class="list-group-item-sm list-group-item">';
 			add_list += '<div class="row">';
 			
 			add_list += '<div class="mb-1 col-1">';
-			add_list += '<input type="checkbox" class="checkbox mr-2" name="mis_method">';
+			add_list += '<input autocomplete="off"  type="checkbox" class="checkbox mr-2" name="mis_method">';
 			add_list += '</div>';
 			
 			add_list += '<div class="mb-1 col-2">';
@@ -4483,7 +4483,7 @@ var type_name = [1,2,3];
 		{	
 			var del_div = $(this).parent().parent().parent().parent();
 			del_div.remove();
-			showArr.push($(this).parent().parent().parent().parent().attr("th:data-id"));
+			showArr.push($(this).parent().parent().parent().parent().attr("data-id"));
 		});
 		
 		$(document).find("#method_list .method_tr").each(function(){
@@ -4642,7 +4642,7 @@ var type_name = [1,2,3];
 			
 			var length = $(document).find(".method-step").length;
 			$(document).find(".method-step").each(function(index, item){
-				var id = $(this).attr("th:data-id");
+				var id = $(this).attr("data-id");
 				
 				if(index == (length-1)){
 					plan_method += id;
@@ -5359,7 +5359,7 @@ var type_name = [1,2,3];
 			add_list += '<li>';
 			add_list += '<span><span class="red" style="color: #FF4141">*</span>담당자(정)</span>';
 	    	add_list += '<div class="select" style="height: auto;">';
-	    	add_list += '<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control select_user1" id="select_user'+i+'" placeholder="담당자 선택" autocomplete="new-password" style="border-right:1px solid #E4E4E4;">';
+	    	add_list += '<input autocomplete="off"   type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control select_user1" id="select_user'+i+'" placeholder="담당자 선택"  style="border-right:1px solid #E4E4E4;">';
 	    	add_list += '<ul class="select-hide" style="width: 400px !important; top: 85px !important; padding-top: 0 !important;">';
 	    	for(var j = 0; j < user.length; j++){
 	    		add_list += '<li class="select_user1_list" onclick="selectOpt(this);" style="line-height: 30px; padding:0 0 0 5px; float: none !important; margin-left: 0;"><span data-value="'+user[j].user_id+'">'+user[j].user_name_k+'</span></li>';
@@ -5377,7 +5377,7 @@ var type_name = [1,2,3];
 			add_list += '<li>';
 			add_list += '<span>담당자(부)</span>';
 			add_list += '<div class="select" style="height: auto;">';
-	    	add_list += '<input type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control select_user2" id="select_user2" placeholder="담당자 선택" autocomplete="new-password" style="border-right:1px solid #E4E4E4;">';
+	    	add_list += '<input autocomplete="off"   type="text" onkeyup="textfilter(this);" onclick="selectFilter(this);" name="select-input" data-select="" class="form-control select_user2" id="select_user2" placeholder="담당자 선택"  style="border-right:1px solid #E4E4E4;">';
 	    	add_list += '<ul class="select-hide" style="width: 400px !important; top: 85px !important; padding-top: 0 !important;">';
 	    	for(var j = 0; j < user.length; j++){
 	    		add_list += '<li class="select_user1_list" onclick="selectOpt(this);" style="line-height: 30px; padding:0 0 0 5px; float: none !important; margin-left: 0;"><span data-value="'+user[j].user_id+'">'+user[j].user_name_k+'</span></li>';
@@ -5401,7 +5401,7 @@ var type_name = [1,2,3];
 			add_list += '<ul>';
 			add_list += '<li>';
 			add_list += '<span style="float: left;">시작일</span>';
-			add_list += '<input type="text" class="start_date" name="start_date" autocomplete="new-password" onchange="this.parentElement.parentElement.getElementsByClassName(`end_date`)[0].value = this.value;">';
+			add_list += '<input autocomplete="off"  type="text" class="start_date" name="start_date"  onchange="this.parentElement.parentElement.getElementsByClassName(`end_date`)[0].value = this.value;">';
 			add_list += '<div class="cal">';
 			add_list += '<svg onclick="this.parentElement.parentElement.getElementsByClassName(`start_date`)[0].focus();" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">';
 			add_list += '<path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>';
@@ -5411,7 +5411,7 @@ var type_name = [1,2,3];
 			
 			add_list += '<li>';
 			add_list += '<span style="float: left;">종료일</span>';
-			add_list += '<input type="text" class="end_date" name="end_date" autocomplete="new-password">';
+			add_list += '<input autocomplete="off"  type="text" class="end_date" name="end_date" >';
 			add_list += '<div class="cal">';
 			add_list += '<svg onclick="this.parentElement.parentElement.getElementsByClassName(`end_date`)[0].focus();" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">';
 			add_list += '<path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>';
@@ -5432,7 +5432,7 @@ var type_name = [1,2,3];
 			add_list += '<div class="top1">';
 			add_list += '<table>';
 			add_list += '<thead>';
-			add_list += '<tr class="mng_method" data-method="'+$(this).attr("th:data-id")+'">';
+			add_list += '<tr class="mng_method" data-method="'+$(this).attr("data-id")+'">';
 			add_list += '<th>담당자(정)</th>';
 			add_list += '<th>담당자(부)</th>';
 			add_list += '<th>시작일</th>';
